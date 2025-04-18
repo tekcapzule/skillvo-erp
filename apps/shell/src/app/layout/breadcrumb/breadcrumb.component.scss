@@ -1,0 +1,59 @@
+.breadcrumb-container {
+  padding: 0;
+  padding-left: 24px; /* Increase padding to match the content area */
+  background-color: #ffffff;
+  border-bottom: 1px solid #e9ecef;
+  height: 56px; /* Match header height exactly */
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  position: relative; /* Changed from sticky to prevent overlap issues */
+  z-index: 10;
+  justify-content: flex-start; /* Force left alignment */
+  transition: padding-left 0.3s ease; /* Smooth transition when sidenav collapses */
+  width: 100%;
+  
+  &.collapsed-sidenav {
+    padding-left: 24px; /* Keep consistent padding when sidenav is collapsed */
+  }
+}
+
+.breadcrumb {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  
+  .breadcrumb-item {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    
+    &:not(:first-child)::before {
+      content: '/';
+      padding: 0 8px;
+      color: #6c757d;
+    }
+    
+    a {
+      color: #1976d2;
+      text-decoration: none;
+      
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+    
+    &.active {
+      color: #6c757d;
+    }
+  }
+}
+
+// Responsive adjustments
+@media screen and (max-width: 768px) {
+  .breadcrumb-container {
+    display: none; /* Hide breadcrumb on mobile screens */
+  }
+}

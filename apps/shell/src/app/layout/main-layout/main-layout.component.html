@@ -1,0 +1,26 @@
+<app-header (toggleSidenav)="toggleSidenav()"></app-header>
+
+<!-- Floating Mobile Menu Button -->
+<button mat-fab class="mobile-fab-menu" (click)="toggleSidenav()" aria-label="Menu">
+  <mat-icon>menu</mat-icon>
+</button>
+
+<mat-sidenav-container class="sidenav-container" [ngClass]="{'collapsed-sidenav-container': sidenavCollapsed}">
+  <mat-sidenav #drawer
+               class="sidenav"
+               [ngClass]="{'collapsed-sidenav': sidenavCollapsed}"
+               fixedInViewport
+               [mode]="(isHandset$ | async) ? 'over' : 'side'"
+               [opened]="!(isHandset$ | async)">
+    <app-sidenav (toggleSidenav)="toggleSidenav(drawer)" [collapsed]="sidenavCollapsed"></app-sidenav>
+  </mat-sidenav>
+
+  <mat-sidenav-content [ngStyle]="{'margin-left': (!(isHandset$ | async) && drawer.opened) ? (sidenavCollapsed ? '56px' : '240px') : '0'}">
+    <div class="content-wrapper">
+      <app-breadcrumb [sidenavCollapsed]="sidenavCollapsed"></app-breadcrumb>
+      <div class="content-container">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container> 

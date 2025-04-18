@@ -1,0 +1,33 @@
+<mat-toolbar class="header-toolbar">
+  <div class="header-left">
+    <!-- App Switcher -->
+    <button mat-icon-button class="app-switcher-button">
+      <mat-icon>apps</mat-icon>
+    </button>
+    
+    <!-- Logo with Learn text -->
+    <div class="app-logo">
+      <mat-icon>school</mat-icon>
+      <span class="app-name">Learn</span>
+    </div>
+  </div>
+  
+  <div class="header-spacer"></div>
+  
+  <div class="header-right">
+    <!-- Theme Toggle -->
+    <button mat-icon-button class="theme-toggle" aria-label="Toggle dark mode" (click)="toggleDarkMode()">
+      <mat-icon>dark_mode</mat-icon>
+    </button>
+    
+    <!-- Notifications -->
+    <button mat-icon-button class="notification-button" aria-label="Notifications">
+      <mat-icon>notifications</mat-icon>
+    </button>
+    
+    <!-- User Profile - Avatar only -->
+    <button mat-icon-button class="user-profile">
+      <div class="avatar">JD</div>
+    </button>
+  </div>
+</mat-toolbar> 

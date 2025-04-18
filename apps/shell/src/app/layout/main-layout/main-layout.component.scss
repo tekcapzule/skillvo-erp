@@ -1,0 +1,83 @@
+.sidenav-container {
+  height: 100vh;
+  width: 100%;
+  margin-top: 56px; /* Space for fixed header */
+}
+
+.sidenav {
+  width: 240px;
+  border-right: none; /* Border is already defined in sidenav component */
+  margin-top: 56px; /* Account for fixed header */
+  transition: width 0.3s ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.collapsed-sidenav {
+  width: 56px !important;
+}
+
+mat-sidenav-content {
+  transition: margin-left 0.3s ease; /* Smooth transition when sidenav collapses */
+}
+
+.content-wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background-color: #ffffff;
+}
+
+.content-container {
+  padding: 24px;
+  height: calc(100vh - 56px - 56px); /* Header height (56px) + breadcrumb height (56px) */
+  overflow-y: auto;
+  background-color: #ffffff;
+}
+
+/* Floating mobile hamburger button */
+.mobile-fab-menu {
+  display: none; /* Hidden by default */
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 2000;
+  background-color: #1976d2;
+  color: white;
+}
+
+/* Ensure hamburger menu is accessible on all screen sizes */
+.mat-drawer-backdrop.mat-drawer-shown {
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+/* Style the sidenav for mobile */
+:host ::ng-deep .mat-drawer-over {
+  box-shadow: 0 8px 10px -5px rgba(0,0,0,.2), 
+              0 16px 24px 2px rgba(0,0,0,.14), 
+              0 6px 30px 5px rgba(0,0,0,.12);
+}
+
+// Responsive adjustments
+@media screen and (max-width: 768px) {
+  .sidenav {
+    width: 240px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 999;
+  }
+  
+  mat-sidenav-content {
+    margin-left: 0 !important; /* No margin on mobile */
+  }
+  
+  .content-container {
+    padding: 16px;
+    height: calc(100vh - 56px); /* Only account for header height since breadcrumb is hidden */
+  }
+  
+  /* Show floating hamburger button on mobile */
+  .mobile-fab-menu {
+    display: flex;
+  }
+} 

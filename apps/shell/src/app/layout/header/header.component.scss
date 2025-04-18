@@ -1,0 +1,133 @@
+.header-toolbar {
+  display: flex;
+  justify-content: space-between;
+  background-color: #ffffff;
+  color: #333333;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  height: 56px;
+  padding: 0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  width: 100%;
+}
+
+.header-left, .header-right {
+  display: flex;
+  align-items: center;
+  height: 56px;
+}
+
+.header-right {
+  padding-right: 16px;
+}
+
+.header-spacer {
+  flex: 1;
+}
+
+.app-switcher-button {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 56px;
+  width: 56px;
+}
+
+.app-logo {
+  display: flex;
+  align-items: center;
+  margin-left: 8px;
+  height: 56px;
+
+  .app-name {
+    margin-left: 8px;
+    font-weight: 500;
+    font-size: 16px;
+    letter-spacing: 0.2px;
+  }
+
+  mat-icon {
+    color: #2196f3;
+  }
+}
+
+.breadcrumb-container {
+  margin-right: 16px;
+  font-size: 14px;
+}
+
+.search-container {
+  margin-right: 16px;
+}
+
+.user-profile {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 16px;
+  padding: 4px 8px;
+  border-radius: 20px;
+  
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.04);
+  }
+
+  .avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background-color: #2196f3;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 500;
+  }
+
+  .username {
+    font-size: 14px;
+    font-weight: 400;
+  }
+}
+
+// Notification and theme buttons
+.notification-button, .theme-toggle {
+  margin: 0 4px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+}
+
+// Responsive styles
+@media screen and (max-width: 768px) {
+  .header-toolbar {
+    padding: 0;
+  }
+
+  .user-profile .username {
+    display: none;
+  }
+  
+  .app-logo .app-name {
+    display: none;
+  }
+  
+  .breadcrumb-container, .search-container {
+    display: none;
+  }
+}
+
+// Material icon sizing
+mat-icon {
+  height: 24px;
+  width: 24px;
+  
+  &[svgIcon] {
+    display: inline-block;
+  }
+} 
