@@ -1,0 +1,51 @@
+# SkillVo Platform - Project Patterns & Intelligence
+
+## Project Structure
+- This is an Nx Angular monorepo with a shell app and feature apps (Learn, Hire, Onboard, Settings)
+- All shared code is in libs/ directory with specific categorization:
+  - UI components in libs/ui-components/
+  - Data access and state management in libs/data-access/
+  - Authentication functionality in libs/feature-auth/
+  - Utility functions in libs/shared-utils/
+- Global styles are in the styles/ directory at the workspace root
+
+## Component Patterns
+- Smart components (with data access) are placed in 'pages/' directories
+- Dumb components (UI only) are placed in 'components/' directories
+- Always separate component class, template, and styles into different files
+- Follow mobile-first responsive design in all UI components
+
+## Naming Conventions
+- Use kebab-case for filenames: user-profile.component.ts
+- Use PascalCase for class names: UserProfileComponent
+- Use kebab-case for selectors with appropriate prefix: app-user-profile
+- Use camelCase for methods and properties: getUserProfile(), userName
+
+## State Management
+- Use NgRx for state management
+- Follow Redux pattern: actions, reducers, selectors, effects
+- Organize state by feature modules
+- Use the facade pattern for component interaction with the store
+
+## Code Style
+- Strict TypeScript typing is enforced
+- OnPush change detection strategy preferred
+- Async pipe for Observable subscription in templates
+- No any types allowed (strict typing)
+- Services injected at the appropriate level (component, module, or root)
+
+## Development Workflow
+- Component development follows TDD approach
+- New features should have unit tests
+- Pull requests require passing tests and lint checks
+- Commits follow conventional commit format
+
+## White-labeling Implementation
+- Tenant-specific styling via CSS variables and theme configs
+- Logo and branding assets stored by tenant ID
+- Custom routing handled via route interceptors based on tenant
+
+## Mobile-First Strategy
+- All component layouts must work on mobile screens first
+- SCSS breakpoints progress from mobile → tablet → desktop
+- No desktop-only features; all functionality must work on mobile 

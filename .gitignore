@@ -1,0 +1,82 @@
+# See http://help.github.com/ignore-files/ for more about ignoring files.
+
+# Compiled output
+/dist
+/tmp
+/out-tsc
+/bazel-out
+
+# Node
+/node_modules
+npm-debug.log
+yarn-error.log
+
+# IDEs and editors
+.idea/
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+
+# Visual Studio Code
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+.history/*
+
+# Miscellaneous
+/.angular/cache
+.sass-cache/
+/connect.lock
+/coverage
+/libpeerconnection.log
+testem.log
+/typings
+
+# System Files
+.DS_Store
+Thumbs.db
+
+# Nx specific
+.nx/
+
+# Angular cache
+.angular/
+
+# Environments (keep templates only, avoid committing secrets)
+**/environments/*.ts
+!**/environments/environment.ts
+!**/environments/environment.prod.ts
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Dependency directories
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Testing
+/coverage
+/.nyc_output
+
+# Build outputs
+*.js.map
+*.d.ts.map
+
+# e2e
+/e2e/cypress/videos
+/e2e/cypress/screenshots
+
+# Local env files
+.env
+.env.* 
