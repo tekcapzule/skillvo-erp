@@ -91,22 +91,12 @@
   flex-grow: 1;
   overflow-y: auto;
   padding: 0;
-  margin: 0;
-
-  mat-nav-list {
-    padding: 0;
-  }
-
-  a.mat-list-item:first-child {
-    margin-top: 0;
-  }
 
   .menu-item {
     display: flex;
     align-items: center;
     height: 56px;
     width: 100%;
-    margin: 0;
     
     mat-icon {
       margin-right: 12px;
@@ -168,7 +158,6 @@
   a.mat-list-item {
     height: 56px;
     padding: 0;
-    margin: 0;
     
     &:hover {
       background-color: rgba(0, 0, 0, 0.04);
@@ -197,29 +186,10 @@ mat-icon {
   display: inline-block;
 }
 
-// Override Angular Material list styles to remove unwanted spacing
-::ng-deep .mat-nav-list .mat-list-item {
-  height: 56px !important;
-  margin: 0 !important;
-}
-
-::ng-deep .mat-nav-list {
-  padding: 0 !important;
-}
-
 // Responsive adjustments
 @media screen and (max-width: 768px) {
   .sidenav-list {
     padding: 0;
-    margin: 0;
-    
-    mat-nav-list {
-      padding: 0;
-    }
-    
-    a.mat-list-item:first-child {
-      margin-top: 0;
-    }
     
     .menu-item .menu-label {
       font-size: 13px;

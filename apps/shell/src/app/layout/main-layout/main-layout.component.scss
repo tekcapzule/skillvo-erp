@@ -24,14 +24,14 @@ mat-sidenav-content {
   display: flex;
   flex-direction: column;
   height: 100%;
-  background-color: #ffffff;
+  background-color: var(--surface-background, #ffffff);
 }
 
 .content-container {
   padding: 24px;
   height: calc(100vh - 56px - 56px); /* Header height (56px) + breadcrumb height (56px) */
   overflow-y: auto;
-  background-color: #ffffff;
+  background-color: var(--surface-background, #ffffff);
 }
 
 /* Floating mobile hamburger button */
@@ -41,7 +41,7 @@ mat-sidenav-content {
   bottom: 24px;
   right: 24px;
   z-index: 2000;
-  background-color: #1976d2;
+  background-color: var(--primary, #1976d2);
   color: white;
 }
 

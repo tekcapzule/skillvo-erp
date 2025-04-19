@@ -1,8 +1,8 @@
 .header-toolbar {
   display: flex;
   justify-content: space-between;
-  background-color: #ffffff;
-  color: #333333;
+  background-color: var(--surface-background, #ffffff);
+  color: var(--text-primary, #333333);
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
   height: 56px;
   padding: 0;
@@ -18,6 +18,7 @@
   display: flex;
   align-items: center;
   height: 56px;
+  position: relative;
 }
 
 .header-right {
@@ -28,13 +29,108 @@
   flex: 1;
 }
 
-.app-switcher-button {
-  margin: 0;
+/* Common styles for all header buttons */
+.app-switcher-button, .notification-button, .theme-toggle, .user-profile {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 56px;
-  width: 56px;
+  width: 40px;
+  height: 40px;
+  margin: 0 8px;
+  padding: 0;
+  border-radius: 50%;
+  overflow: hidden;
+  
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.04);
+  }
+  
+  mat-icon {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+/* App Switcher Menu */
+.app-switcher-menu {
+  position: absolute;
+  top: 56px;
+  left: 0;
+  background-color: var(--surface-background, #ffffff);
+  border-radius: 4px;
+  box-shadow: 0px 4px 4px rgba(150, 150, 150, 0.25);
+  padding: 12px;
+  z-index: 1100;
+  width: 240px;
+  transform-origin: top left;
+  animation: fadeIn 0.2s ease-in-out;
+}
+
+.app-switcher-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 10px;
+}
+
+.app-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 8px;
+  border-radius: 4px;
+  border: 1px solid var(--surface-border, #e3e3e3);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background-color: #fff;
+  height: 80px;
+  
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.02);
+    transform: translateY(-2px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .app-icon {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 6px;
+    
+    mat-icon {
+      width: 32px !important;
+      height: 32px !important;
+      
+      ::ng-deep svg {
+        width: 100% !important;
+        height: 100% !important;
+      }
+    }
+  }
+  
+  .app-label {
+    font-family: 'Work Sans', sans-serif;
+    font-weight: 500;
+    font-size: 14px;
+    color: var(--text-primary, #000000);
+    text-align: center;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .app-logo {
@@ -51,7 +147,7 @@
   }
 
   mat-icon {
-    color: #2196f3;
+    color: var(--primary, #2196f3);
   }
 }
 
@@ -65,22 +161,11 @@
 }
 
 .user-profile {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-left: 16px;
-  padding: 4px 8px;
-  border-radius: 20px;
-  
-  &:hover {
-    background-color: rgba(0, 0, 0, 0.04);
-  }
-
   .avatar {
     width: 32px;
     height: 32px;
     border-radius: 50%;
-    background-color: #2196f3;
+    background-color: var(--primary, #2196f3);
     color: white;
     display: flex;
     align-items: center;
@@ -92,15 +177,14 @@
   .username {
     font-size: 14px;
     font-weight: 400;
+    margin-left: 8px;
   }
 }
 
-// Notification and theme buttons
-.notification-button, .theme-toggle {
-  margin: 0 4px;
-  height: 56px;
-  display: flex;
-  align-items: center;
+// Material icon styles
+mat-icon {
+  // Use default Material icon sizing
+  // Angular Material handles the sizing automatically
 }
 
 // Responsive styles
@@ -120,14 +204,47 @@
   .breadcrumb-container, .search-container {
     display: none;
   }
+  
+  .app-switcher-button, .notification-button, .theme-toggle, .user-profile {
+    margin: 0 4px;
+  }
+  
+  .app-switcher-menu {
+    width: 100vw;
+    min-width: auto;
+    left: 0;
+    border-radius: 0;
+  }
 }
 
-// Material icon sizing
-mat-icon {
-  height: 24px;
-  width: 24px;
+.app-icon {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 6px;
   
-  &[svgIcon] {
-    display: inline-block;
+  mat-icon {
+    width: 32px !important;
+    height: 32px !important;
+    
+    ::ng-deep svg {
+      width: 100% !important;
+      height: 100% !important;
+    }
+  }
+  
+  .icon-placeholder {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #1E78E2;
+    color: white;
+    font-weight: bold;
+    font-size: 16px;
+    border-radius: 4px;
   }
 } 

@@ -1,5 +1,4 @@
 import { Route } from '@angular/router';
-import { PlaceholderComponent } from './layout/placeholder/placeholder.component';
 
 export const appRoutes: Route[] = [
   {
@@ -12,53 +11,43 @@ export const appRoutes: Route[] = [
     data: { breadcrumb: 'Learn' },
     children: [
       {
+        path: '',
+        redirectTo: 'home',
+        pathMatch: 'full'
+      },
+      {
         path: 'home',
-        component: PlaceholderComponent,
+        loadChildren: () => import('../../../learn/src/app/feature-modules/dashboard/dashboard.module').then(m => m.DashboardModule),
         data: { breadcrumb: 'Home' }
       },
       {
+        path: 'activity',
+        loadChildren: () => import('../../../learn/src/app/feature-modules/activity/activity.module').then(m => m.ActivityModule),
+        data: { breadcrumb: 'My Activity' }
+      },
+      {
         path: 'courses',
-        component: PlaceholderComponent,
+        loadChildren: () => import('../../../learn/src/app/feature-modules/courses/courses.module').then(m => m.CoursesModule),
         data: { breadcrumb: 'Courses' }
       },
       {
-        path: 'activity',
-        data: { breadcrumb: 'My Activity' },
-        children: [
-          {
-            path: '',
-            component: PlaceholderComponent
-          },
-          {
-            path: 'learnings',
-            component: PlaceholderComponent,
-            data: { breadcrumb: 'Learnings' }
-          },
-          {
-            path: 'tasks',
-            component: PlaceholderComponent,
-            data: { breadcrumb: 'Tasks' }
-          }
-        ]
-      },
-      {
         path: 'references',
-        component: PlaceholderComponent,
+        loadChildren: () => import('../../../learn/src/app/feature-modules/references/references.module').then(m => m.ReferencesModule),
         data: { breadcrumb: 'References' }
       },
       {
         path: 'calendar',
-        component: PlaceholderComponent,
+        loadChildren: () => import('../../../learn/src/app/feature-modules/calendar/calendar.module').then(m => m.CalendarModule),
         data: { breadcrumb: 'Calendar' }
       },
       {
         path: 'reports',
-        component: PlaceholderComponent,
+        loadChildren: () => import('../../../learn/src/app/feature-modules/reports/reports.module').then(m => m.ReportsModule),
         data: { breadcrumb: 'Reports' }
       },
       {
         path: 'help',
-        component: PlaceholderComponent,
+        loadChildren: () => import('../../../learn/src/app/feature-modules/help/help.module').then(m => m.HelpModule),
         data: { breadcrumb: 'Help' }
       }
     ]
