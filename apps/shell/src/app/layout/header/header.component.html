@@ -54,7 +54,7 @@
     </button>
     
     <!-- Notifications -->
-    <button mat-icon-button class="notification-button" aria-label="Notifications">
+    <button mat-icon-button class="notification-button" aria-label="Notifications" (click)="toggleNotificationPanel($event)">
       <mat-icon>notifications</mat-icon>
     </button>
     
@@ -63,4 +63,10 @@
       <div class="avatar">JD</div>
     </button>
   </div>
-</mat-toolbar> 
+</mat-toolbar>
+
+<!-- Notification Panel -->
+<app-notification 
+  [isOpen]="isNotificationPanelOpen" 
+  (closeNotification)="closeNotificationPanel()">
+</app-notification> 

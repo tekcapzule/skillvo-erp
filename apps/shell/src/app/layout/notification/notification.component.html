@@ -1,0 +1,61 @@
+<div class="notification-overlay" [class.open]="isOpen" (click)="closePanel()"></div>
+
+<div class="notification-panel" [class.open]="isOpen">
+  <div class="notification-header">
+    <div class="header-content">
+      <h2>Notification <span class="notification-count">({{ notifications?.length || 0 }})</span></h2>
+      <button class="close-button" (click)="closePanel()" aria-label="Close notifications">
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+    <div class="search-container">
+      <div class="search-field-container">
+        <mat-icon class="search-icon">search</mat-icon>
+        <input type="text" class="search-input" placeholder="Search notification" [(ngModel)]="searchQuery" (input)="filterNotifications()">
+        <button *ngIf="searchQuery" class="clear-search-button" (click)="clearSearch()">
+          <mat-icon>close</mat-icon>
+        </button>
+        <button class="filter-button" (click)="toggleFilterMenu()">
+          <mat-icon>filter_list</mat-icon>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="notification-scroll-container">
+    <div class="notification-list">
+      <div *ngFor="let notification of filteredNotifications" 
+           class="notification-item" 
+           [class.unread]="!notification.read"
+           (click)="markAsRead(notification)">
+        <div class="notification-content">
+          <h3 class="notification-title">{{ notification.title }}</h3>
+          <p class="notification-message">{{ notification.message }}</p>
+          <div class="notification-footer-row">
+            <div class="notification-category" [attr.data-category]="notification.category.toLowerCase()">
+              {{ notification.category }}
+            </div>
+            <span class="notification-time">
+              {{ getFormattedDate(notification.timestamp) }}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="empty-state" *ngIf="!loading && filteredNotifications.length === 0">
+      <mat-icon class="empty-icon">notifications_off</mat-icon>
+      <h3 *ngIf="searchQuery || selectedCategory">No notifications match your filters</h3>
+      <h3 *ngIf="!searchQuery && !selectedCategory">No notifications yet</h3>
+      <p *ngIf="searchQuery || selectedCategory">Try adjusting your search or filters</p>
+      <button mat-button color="primary" *ngIf="searchQuery || selectedCategory" (click)="clearAllFilters()">
+        Clear all filters
+      </button>
+    </div>
+
+    <div class="loading-state" *ngIf="loading">
+      <mat-spinner diameter="40"></mat-spinner>
+      <p>Loading notifications...</p>
+    </div>
+  </div>
+</div> 

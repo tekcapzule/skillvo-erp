@@ -2,6 +2,7 @@ import { Component, OnInit, Output, EventEmitter, HostListener } from '@angular/
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
+import { ThemeService } from '../../core/services/theme.service';
 
 @Component({
   selector: 'app-header',
@@ -13,11 +14,13 @@ export class HeaderComponent implements OnInit {
   @Output() toggleSidenav = new EventEmitter<void>();
   
   isAppSwitcherOpen = false;
+  isNotificationPanelOpen = false;
   
   constructor(
     private matIconRegistry: MatIconRegistry,
     private domSanitizer: DomSanitizer,
-    private router: Router
+    private router: Router,
+    private themeService: ThemeService
   ) {
     // Register custom SVG icons
     this.registerIcons();
@@ -73,6 +76,8 @@ export class HeaderComponent implements OnInit {
       // Close the app switcher if the click was outside
       this.isAppSwitcherOpen = false;
     }
+    
+    // We don't need to handle notification panel here as it's handled by the notification component
   }
   
   toggleAppSwitcher(event?: MouseEvent): void {
@@ -80,11 +85,31 @@ export class HeaderComponent implements OnInit {
       event.stopPropagation();
     }
     this.isAppSwitcherOpen = !this.isAppSwitcherOpen;
+    
+    // Close notification panel if open
+    if (this.isNotificationPanelOpen) {
+      this.isNotificationPanelOpen = false;
+    }
+  }
+  
+  toggleNotificationPanel(event?: MouseEvent): void {
+    if (event) {
+      event.stopPropagation();
+    }
+    this.isNotificationPanelOpen = !this.isNotificationPanelOpen;
+    
+    // Close app switcher if open
+    if (this.isAppSwitcherOpen) {
+      this.isAppSwitcherOpen = false;
+    }
+  }
+  
+  closeNotificationPanel(): void {
+    this.isNotificationPanelOpen = false;
   }
   
   toggleDarkMode(): void {
-    // This will be implemented later with theme service
-    console.log('Toggle dark mode');
+    this.themeService.toggleDarkMode();
   }
   
   navigateToApp(appName: string): void {

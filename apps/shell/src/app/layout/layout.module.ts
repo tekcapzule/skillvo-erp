@@ -20,6 +20,9 @@ import { MainLayoutComponent } from './main-layout/main-layout.component';
 import { BreadcrumbComponent } from './breadcrumb/breadcrumb.component';
 import { PlaceholderComponent } from './placeholder/placeholder.component';
 
+// Notification Component
+import { NotificationModule } from './notification/notification.module';
+
 @NgModule({
   declarations: [
     HeaderComponent,
@@ -39,7 +42,8 @@ import { PlaceholderComponent } from './placeholder/placeholder.component';
     MatListModule,
     MatMenuModule,
     MatSlideToggleModule,
-    MatTooltipModule
+    MatTooltipModule,
+    NotificationModule
   ],
   exports: [
     MainLayoutComponent,
