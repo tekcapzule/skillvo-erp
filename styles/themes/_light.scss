@@ -1,5 +1,5 @@
 // ========================================
-// Light Theme
+// Light Theme (SkillVo Branding)
 // ========================================
 
 :root {
@@ -7,147 +7,92 @@
   // Color Palette
   // =========================
 
-  // Primary Colors
-  --primary-50: #f0f7ff;
-  --primary-100: #e0eefe;
-  --primary-200: #bae0fd;
-  --primary-300: #7cc7fb;
-  --primary-400: #35a6f2;
-  --primary-500: #1088e4;
-  --primary-600: #0a6ac2;
-  --primary-700: #0d569e;
-  --primary-800: #114883;
-  --primary-900: #133d6d;
-  --primary-950: #0d2648;
+  // Primary (SkillVo Blue)
+  --primary-50: #edf7ff;
+  --primary-100: #d6eaff;
+  --primary-200: #add8ff;
+  --primary-300: #80c2ff;
+  --primary-400: #4da9ff;
+  --primary-500: #1971e5; /* Brand Primary */
+  --primary-600: #155ab7;
+  --primary-700: #0f4390;
+  --primary-800: #0a326d;
+  --primary-900: #05204a;
 
-  // Secondary Colors
-  --secondary-50: #f9f5ff;
-  --secondary-100: #f1e9fe;
-  --secondary-200: #e4d3fd;
-  --secondary-300: #d0b1fa;
-  --secondary-400: #b683f5;
-  --secondary-500: #9454eb;
-  --secondary-600: #8038dc;
-  --secondary-700: #6a28be;
-  --secondary-800: #59249b;
-  --secondary-900: #4a207c;
-  --secondary-950: #2c114c;
+  // Secondary (Text/Backgrounds)
+  --secondary-50: #f8f8f8;
+  --secondary-100: #eeeeee;
+  --secondary-200: #d9d9d9;
+  --secondary-300: #bfbfbf;
+  --secondary-400: #a6a6a6;
+  --secondary-500: #808080;
+  --secondary-600: #666666;
+  --secondary-700: #4d4d4d;
+  --secondary-800: #333333;
+  --secondary-900: #1a1a1a; /* Brand Secondary */
 
-  // Accent Colors
-  --accent-50: #fff1f3;
-  --accent-100: #ffe2e8;
-  --accent-200: #ffcad3;
-  --accent-300: #ffa2b3;
-  --accent-400: #fe708d;
-  --accent-500: #f83f67;
-  --accent-600: #e41e4e;
-  --accent-700: #c11240;
-  --accent-800: #a0133b;
-  --accent-900: #851336;
-  --accent-950: #4c0518;
+  // Tertiary (Success Green)
+  --tertiary-50: #e6f0da;
+  --tertiary-100: #c3d9a8;
+  --tertiary-200: #a0c276;
+  --tertiary-300: #7daa44;
+  --tertiary-400: #689f38; /* Brand Tertiary */
+  --tertiary-500: #4f7b2b;
+  --tertiary-600: #3e6122;
+  --tertiary-700: #2e471a;
+  --tertiary-800: #1e2d11;
 
   // Status Colors
-  --success-50: #f0fdf6;
-  --success-100: #dbfae6;
-  --success-200: #b8f1cf;
-  --success-300: #86e3af;
-  --success-400: #4dcc89;
-  --success-500: #2bb06b;
-  --success-600: #1f8f58;
-  --success-700: #1d714a;
-  --success-800: #1b5a3d;
-  --success-900: #184a35;
-  --success-950: #052e1f;
+  --success-color: #4caf50;
+  --warning-color: #ff9800;
+  --danger-color: #f44336;
+  --info-color: #03a9f4;
 
-  --warning-50: #fefbe8;
-  --warning-100: #fef7c3;
-  --warning-200: #feee95;
-  --warning-300: #fcdd5b;
-  --warning-400: #f8c22f;
-  --warning-500: #eda812;
-  --warning-600: #ca820a;
-  --warning-700: #a45b0a;
-  --warning-800: #874811;
-  --warning-900: #733b13;
-  --warning-950: #421e05;
-
-  --error-50: #fef2f2;
-  --error-100: #ffe1e1;
-  --error-200: #ffc9c9;
-  --error-300: #fea3a3;
-  --error-400: #fb7171;
-  --error-500: #f53f3f;
-  --error-600: #e02424;
-  --error-700: #bc1f1f;
-  --error-800: #9c1d1d;
-  --error-900: #801d1d;
-  --error-950: #450a0a;
-
-  --info-50: #f0f8ff;
-  --info-100: #dbeefe;
-  --info-200: #bce0fe;
-  --info-300: #8eccfc;
-  --info-400: #58b0f8;
-  --info-500: #3991f0;
-  --info-600: #2574e4;
-  --info-700: #205fd0;
-  --info-800: #214fa9;
-  --info-900: #213f87;
-  --info-950: #172853;
-
-  // Neutral Colors
-  --neutral-50: #f9fafb;
-  --neutral-100: #f3f4f6;
-  --neutral-200: #e5e7eb;
-  --neutral-300: #d1d5db;
-  --neutral-400: #9ca3af;
-  --neutral-500: #6b7280;
-  --neutral-600: #4b5563;
-  --neutral-700: #374151;
-  --neutral-800: #1f2937;
-  --neutral-900: #111827;
-  --neutral-950: #030712;
+  // Neutral Greys (Material Design Gray palette)
+  --neutral-50: #fafafa;
+  --neutral-100: #f5f5f5;
+  --neutral-200: #eeeeee;
+  --neutral-300: #e0e0e0;
+  --neutral-400: #bdbdbd;
+  --neutral-500: #9e9e9e;
+  --neutral-600: #757575;
+  --neutral-700: #616161;
+  --neutral-800: #424242;
+  --neutral-900: #212121;
 
   // =========================
-  // Semantic Colors
+  // Semantic Tokens
   // =========================
 
-  // Text Colors
-  --text-primary: var(--neutral-900);
-  --text-secondary: var(--neutral-700);
-  --text-tertiary: var(--neutral-500);
-  --text-disabled: var(--neutral-400);
-  --text-inverse: var(--neutral-50);
+  // Text
+  --text-primary: var(--secondary-900);
+  --text-secondary: var(--secondary-700);
+  --text-tertiary: var(--secondary-600);
+  --text-disabled: var(--secondary-400);
+  --text-inverse: #ffffff;
   --text-link: var(--primary-600);
-  --text-link-hover: var(--primary-700);
-  --text-error: var(--error-600);
-  --text-success: var(--success-600);
-  --text-warning: var(--warning-700);
+  --text-link-hover: var(--primary-800);
+  --text-error: var(--danger-color);
+  --text-success: var(--success-color);
+  --text-warning: var(--warning-color);
 
-  // Background Colors
-  --bg-app: var(--neutral-50);
-  --bg-surface: white;
-  --bg-element: var(--neutral-100);
+  // Background
+  --bg-app: var(--neutral-100);
+  --bg-surface: #ffffff;
+  --bg-element: var(--neutral-50);
   --bg-element-hover: var(--neutral-200);
-  --bg-element-active: var(--neutral-300);
-  --bg-primary: var(--primary-600);
-  --bg-primary-hover: var(--primary-700);
-  --bg-primary-active: var(--primary-800);
-  --bg-secondary: var(--secondary-600);
-  --bg-secondary-hover: var(--secondary-700);
-  --bg-success: var(--success-100);
-  --bg-warning: var(--warning-100);
-  --bg-error: var(--error-100);
-  --bg-info: var(--info-100);
+  --bg-primary: var(--primary-500);
+  --bg-primary-hover: var(--primary-600);
+  --bg-primary-active: var(--primary-700);
 
-  // Border Colors
+  // Borders
   --border-default: var(--neutral-200);
   --border-strong: var(--neutral-300);
   --border-focus: var(--primary-500);
-  --border-error: var(--error-400);
+  --border-error: var(--danger-color);
 
-  // Shadow Colors
+  // Shadows
   --shadow-color: rgba(0, 0, 0, 0.1);
-  --shadow-colored-default: 0 4px 6px var(--shadow-color);
-  --shadow-colored-lg: 0 10px 15px var(--shadow-color);
-} 
+  --shadow-default: 0 2px 4px var(--shadow-color);
+  --shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.12);
+}

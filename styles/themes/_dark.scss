@@ -1,153 +1,94 @@
 // ========================================
-// Dark Theme
+// Dark Theme (SkillVo Modern Dark)
 // ========================================
 
-.dark-theme {
+[data-theme="dark"] {
   // =========================
   // Color Palette
   // =========================
 
-  // Primary Colors - Adjusted for dark mode
-  --primary-50: #0d2648;
-  --primary-100: #133d6d;
-  --primary-200: #114883;
-  --primary-300: #0d569e;
-  --primary-400: #0a6ac2;
-  --primary-500: #1088e4;
-  --primary-600: #35a6f2;
-  --primary-700: #7cc7fb;
-  --primary-800: #bae0fd;
-  --primary-900: #e0eefe;
-  --primary-950: #f0f7ff;
+  // Primary (Slightly Lighter for Dark Mode)
+  --primary-50: #e0f0ff;
+  --primary-100: #b2d4ff;
+  --primary-200: #84b8ff;
+  --primary-300: #559dff;
+  --primary-400: #2681ff;
+  --primary-500: #4c8ff8; /* Dark Mode Primary */
+  --primary-600: #3a70c8;
+  --primary-700: #285097;
+  --primary-800: #1a3366;
+  --primary-900: #0c1933;
 
-  // Secondary Colors - Adjusted for dark mode
-  --secondary-50: #2c114c;
-  --secondary-100: #4a207c;
-  --secondary-200: #59249b;
-  --secondary-300: #6a28be;
-  --secondary-400: #8038dc;
-  --secondary-500: #9454eb;
-  --secondary-600: #b683f5;
-  --secondary-700: #d0b1fa;
-  --secondary-800: #e4d3fd;
-  --secondary-900: #f1e9fe;
-  --secondary-950: #f9f5ff;
+  // Secondary (Text/Backgrounds)
+  --secondary-50: #f8f8f8;
+  --secondary-100: #e0e0e0;
+  --secondary-200: #c0c0c0;
+  --secondary-300: #a0a0a0;
+  --secondary-400: #808080;
+  --secondary-500: #606060;
+  --secondary-600: #404040; /* App Background */
+  --secondary-700: #303030;
+  --secondary-800: #202020;
+  --secondary-900: #121212;
 
-  // Accent Colors - Adjusted for dark mode
-  --accent-50: #4c0518;
-  --accent-100: #851336;
-  --accent-200: #a0133b;
-  --accent-300: #c11240;
-  --accent-400: #e41e4e;
-  --accent-500: #f83f67;
-  --accent-600: #fe708d;
-  --accent-700: #ffa2b3;
-  --accent-800: #ffcad3;
-  --accent-900: #ffe2e8;
-  --accent-950: #fff1f3;
+  // Tertiary (Success Green Muted)
+  --tertiary-400: #81c784;
+  --tertiary-500: #66bb6a;
+  --tertiary-600: #4caf50;
+  --tertiary-700: #388e3c;
+  --tertiary-800: #2e7d32;
 
-  // Status Colors - Adjusted for dark mode
-  --success-50: #052e1f;
-  --success-100: #184a35;
-  --success-200: #1b5a3d;
-  --success-300: #1d714a;
-  --success-400: #1f8f58;
-  --success-500: #2bb06b;
-  --success-600: #4dcc89;
-  --success-700: #86e3af;
-  --success-800: #b8f1cf;
-  --success-900: #dbfae6;
-  --success-950: #f0fdf6;
+  // Status Colors (Adjusted for dark theme visibility)
+  --success-color: #81c784;
+  --warning-color: #ffb74d;
+  --danger-color: #e57373;
+  --info-color: #4fc3f7;
 
-  --warning-50: #421e05;
-  --warning-100: #733b13;
-  --warning-200: #874811;
-  --warning-300: #a45b0a;
-  --warning-400: #ca820a;
-  --warning-500: #eda812;
-  --warning-600: #f8c22f;
-  --warning-700: #fcdd5b;
-  --warning-800: #feee95;
-  --warning-900: #fef7c3;
-  --warning-950: #fefbe8;
-
-  --error-50: #450a0a;
-  --error-100: #801d1d;
-  --error-200: #9c1d1d;
-  --error-300: #bc1f1f;
-  --error-400: #e02424;
-  --error-500: #f53f3f;
-  --error-600: #fb7171;
-  --error-700: #fea3a3;
-  --error-800: #ffc9c9;
-  --error-900: #ffe1e1;
-  --error-950: #fef2f2;
-
-  --info-50: #172853;
-  --info-100: #213f87;
-  --info-200: #214fa9;
-  --info-300: #205fd0;
-  --info-400: #2574e4;
-  --info-500: #3991f0;
-  --info-600: #58b0f8;
-  --info-700: #8eccfc;
-  --info-800: #bce0fe;
-  --info-900: #dbeefe;
-  --info-950: #f0f8ff;
-
-  // Neutral Colors - Adjusted for dark mode
-  --neutral-50: #030712;
-  --neutral-100: #111827;
-  --neutral-200: #1f2937;
-  --neutral-300: #374151;
-  --neutral-400: #4b5563;
-  --neutral-500: #6b7280;
-  --neutral-600: #9ca3af;
-  --neutral-700: #d1d5db;
-  --neutral-800: #e5e7eb;
-  --neutral-900: #f3f4f6;
-  --neutral-950: #f9fafb;
+  // Neutral Greys
+  --neutral-50: #fafafa;
+  --neutral-100: #f5f5f5;
+  --neutral-200: #eeeeee;
+  --neutral-300: #e0e0e0;
+  --neutral-400: #bdbdbd;
+  --neutral-500: #9e9e9e;
+  --neutral-600: #757575;
+  --neutral-700: #616161;
+  --neutral-800: #424242;
+  --neutral-900: #212121;
 
   // =========================
-  // Semantic Colors
+  // Semantic Tokens
   // =========================
 
-  // Text Colors
-  --text-primary: var(--neutral-100);
-  --text-secondary: var(--neutral-300);
-  --text-tertiary: var(--neutral-500);
-  --text-disabled: var(--neutral-700);
-  --text-inverse: var(--neutral-950);
-  --text-link: var(--primary-400);
-  --text-link-hover: var(--primary-300);
-  --text-error: var(--error-400);
-  --text-success: var(--success-400);
-  --text-warning: var(--warning-400);
+  // Text
+  --text-primary: #ffffff;
+  --text-secondary: #cccccc;
+  --text-tertiary: #9e9e9e;
+  --text-disabled: #757575;
+  --text-inverse: #121212;
+  --text-link: var(--primary-300);
+  --text-link-hover: var(--primary-200);
+  --text-error: #e57373;
+  --text-success: #81c784;
+  --text-warning: #ffb74d;
 
-  // Background Colors
-  --bg-app: var(--neutral-950);
-  --bg-surface: var(--neutral-900);
-  --bg-element: var(--neutral-800);
-  --bg-element-hover: var(--neutral-700);
-  --bg-element-active: var(--neutral-600);
-  --bg-primary: var(--primary-400);
-  --bg-primary-hover: var(--primary-300);
-  --bg-primary-active: var(--primary-200);
-  --bg-secondary: var(--secondary-400);
-  --bg-secondary-hover: var(--secondary-300);
-  --bg-success: var(--success-900);
-  --bg-warning: var(--warning-900);
-  --bg-error: var(--error-900);
-  --bg-info: var(--info-900);
+  // Background
+  --bg-app: #1e1e1e;
+  --bg-surface: #252526;
+  --bg-element: #2d2d30;
+  --bg-element-hover: #3e3e42;
+  --bg-primary: var(--primary-500);
+  --bg-primary-hover: var(--primary-400);
+  --bg-primary-active: var(--primary-300);
 
-  // Border Colors
-  --border-default: var(--neutral-700);
-  --border-strong: var(--neutral-600);
-  --border-focus: var(--primary-400);
-  --border-error: var(--error-500);
+  // Borders
+  --border-default: #3e3e42;
+  --border-strong: #555555;
+  --border-focus: var(--primary-300);
+  --border-error: var(--danger-color);
 
-  // Shadow Colors
-  --shadow-color: rgba(0, 0, 0, 0.6);
-  --shadow-colored-default: 0 4px 6px var(--shadow-color);
-  --shadow-colored-lg: 0 10px 15px var(--shadow-color);
-} 
+  // Shadows
+  --shadow-color: rgba(0, 0, 0, 0.5);
+  --shadow-default: 0 4px 6px var(--shadow-color);
+  --shadow-lg: 0 10px 15px var(--shadow-color);
+}
