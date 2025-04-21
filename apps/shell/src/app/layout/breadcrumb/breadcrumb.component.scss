@@ -53,9 +53,9 @@
   }
 }
 
-// Responsive adjustments
+// Responsive adjustments - hide completely on mobile
 @media screen and (max-width: 768px) {
   .breadcrumb-container {
-    display: none; /* Hide breadcrumb on mobile screens */
+    display: none !important; /* Ensure breadcrumb is hidden on mobile screens */
   }
 }
