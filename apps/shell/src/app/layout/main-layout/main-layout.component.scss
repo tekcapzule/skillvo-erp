@@ -75,11 +75,18 @@ mat-sidenav-content {
 // Responsive adjustments
 @media screen and (max-width: 768px) {
   .sidenav {
-    width: 240px;
+    width: 100%;  /* Full width on mobile */
     position: fixed;
     top: 0;
     left: 0;
-    z-index: 999;
+    height: 100vh; /* Full viewport height */
+    z-index: 1001; /* Higher z-index to ensure it appears above everything else */
+    
+    /* Make sure inner content takes full height */
+    ::ng-deep .mat-drawer-inner-container {
+      height: 100vh !important;
+      overflow-y: auto !important;
+    }
   }
   
   mat-sidenav-content {
@@ -94,5 +101,18 @@ mat-sidenav-content {
   /* Show floating hamburger button on mobile */
   .mobile-fab-menu {
     display: flex;
+  }
+  
+  /* Make sure the backdrop covers everything */
+  ::ng-deep .mat-drawer-backdrop.mat-drawer-shown {
+    background-color: rgba(0, 0, 0, 0.6);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 100vh;
+    width: 100vw;
+    z-index: 1000;
   }
 } 

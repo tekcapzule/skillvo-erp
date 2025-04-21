@@ -201,8 +201,17 @@ mat-icon {
 
 // Responsive adjustments
 @media screen and (max-width: 768px) {
+  .sidenav-container {
+    height: 100vh; /* Full viewport height */
+    max-width: 100%; /* Full width */
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+  
   .sidenav-list {
     padding: 0;
+    flex: 1; /* Take up available space */
     
     .menu-item .menu-label {
       font-size: 13px;
@@ -210,10 +219,22 @@ mat-icon {
   }
   
   .sidenav-header {
-    display: none;
+    display: flex; /* Show the header on mobile */
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background-color: #ffffff;
+    border-bottom: 1px solid #e0e0e0;
   }
   
   .menu-button {
     background-color: rgba(0, 0, 0, 0.05);
+  }
+  
+  .sidenav-footer {
+    position: sticky;
+    bottom: 0;
+    background-color: #ffffff;
+    border-top: 1px solid #e0e0e0;
   }
 }
