@@ -1,0 +1,31 @@
+<div class="app-switcher-container">
+  <!-- App Switcher Button -->
+  <button mat-icon-button 
+          class="app-switcher-btn" 
+          (click)="toggleMenu()" 
+          #appSwitcherButton>
+    <mat-icon>apps</mat-icon>
+  </button>
+  
+  <!-- App Switcher Menu -->
+  <div class="app-menu" 
+       *ngIf="isMenuOpen" 
+       #appSwitcherMenu>
+    <div class="app-menu-header">
+      <h3>Applications</h3>
+    </div>
+    <div class="app-menu-content">
+      <div *ngFor="let app of apps" 
+           class="app-item" 
+           (click)="navigateTo(app)">
+        <div class="app-icon">
+          <mat-icon>{{app.icon}}</mat-icon>
+        </div>
+        <div class="app-details">
+          <h4>{{app.name}}</h4>
+          <p *ngIf="app.description">{{app.description}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> 
