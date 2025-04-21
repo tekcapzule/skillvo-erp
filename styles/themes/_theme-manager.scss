@@ -13,7 +13,7 @@
 // 1. CSS Custom Properties (Variables)
 //    - All theme colors and properties are defined as CSS variables
 //    - The light theme is defined on :root as the default
-//    - Dark theme overrides these variables using data-theme attribute
+//    - Other themes override these variables using class selectors
 //
 // 2. Theme Switching
 //    - Themes are toggled via data-theme attribute on the html element
@@ -51,7 +51,7 @@ html.theme-transition * {
 // Apply dark theme if user prefers dark color scheme
 @media (prefers-color-scheme: dark) {
   html:not([data-theme]) {
-    @extend [data-theme="dark"];
+    @extend .dark-theme;
   }
 }
 
@@ -61,6 +61,11 @@ html[data-theme="light"] {
   // Light theme is the default (CSS variables are set on :root)
 }
 
+html[data-theme="dark"] {
+  @extend .dark-theme;
+}
+
+
 // ========================================
 // Theme Utility Classes
 // ========================================
@@ -69,16 +74,38 @@ html[data-theme="light"] {
 .text-theme-primary {
   color: var(--primary-600);
   
+  .dark-theme &, 
   html[data-theme="dark"] & {
     color: var(--primary-400);
+  }
+  
+  .ocean-theme &, 
+  html[data-theme="ocean"] & {
+    color: var(--primary-600);
+  }
+  
+  .classic-theme &, 
+  html[data-theme="classic"] & {
+    color: var(--primary-700);
   }
 }
 
 .text-theme-secondary {
   color: var(--secondary-600);
   
+  .dark-theme &, 
   html[data-theme="dark"] & {
     color: var(--secondary-400);
+  }
+  
+  .ocean-theme &, 
+  html[data-theme="ocean"] & {
+    color: var(--secondary-600);
+  }
+  
+  .classic-theme &, 
+  html[data-theme="classic"] & {
+    color: var(--secondary-600);
   }
 }
 
@@ -125,7 +152,7 @@ html[data-theme="light"] {
     }
     
     // Set a specific theme
-    setTheme(themeName: 'light' | 'dark'): void {
+    setTheme(themeName: 'light' | 'dark' | 'ocean' | 'classic'): void {
       // Add transition class for smooth theme change
       document.documentElement.classList.add('theme-transition');
       
@@ -149,7 +176,7 @@ html[data-theme="light"] {
       // Check for stored preference
       const savedTheme = localStorage.getItem('theme');
       
-      if (savedTheme && ['light', 'dark'].includes(savedTheme)) {
+      if (savedTheme && ['light', 'dark', 'ocean', 'classic'].includes(savedTheme)) {
         // Use saved preference
         this.setTheme(savedTheme as any);
       } else {

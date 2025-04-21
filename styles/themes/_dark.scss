@@ -1,5 +1,5 @@
 // ========================================
-// Dark Theme (SkillVo Modern Dark)
+// Dark Theme (SkillVo Modern Dark / VS Code Dark Inspired)
 // ========================================
 
 [data-theme="dark"] {
@@ -20,75 +20,73 @@
   --primary-900: #0c1933;
 
   // Secondary (Text/Backgrounds)
-  --secondary-50: #f8f8f8;
-  --secondary-100: #e0e0e0;
-  --secondary-200: #c0c0c0;
-  --secondary-300: #a0a0a0;
-  --secondary-400: #808080;
-  --secondary-500: #606060;
-  --secondary-600: #404040; /* App Background */
-  --secondary-700: #303030;
-  --secondary-800: #202020;
-  --secondary-900: #121212;
+  --secondary-50: #d1d5db;
+  --secondary-100: #9ca3af;
+  --secondary-200: #6b7280;
+  --secondary-300: #4b5563;
+  --secondary-400: #374151;
+  --secondary-500: #1f2937;
+  --secondary-600: #1e1e1e; /* App Background */
+  --secondary-700: #181818;
+  --secondary-800: #121212;
+  --secondary-900: #0b0b0b;
 
   // Tertiary (Success Green Muted)
   --tertiary-400: #81c784;
   --tertiary-500: #66bb6a;
   --tertiary-600: #4caf50;
-  --tertiary-700: #388e3c;
-  --tertiary-800: #2e7d32;
 
-  // Status Colors (Adjusted for dark theme visibility)
+  // Status Colors
   --success-color: #81c784;
-  --warning-color: #ffb74d;
-  --danger-color: #e57373;
-  --info-color: #4fc3f7;
+  --warning-color: #fbc02d;
+  --danger-color: #f28b82;
+  --info-color: #4dd0e1;
 
   // Neutral Greys
-  --neutral-50: #fafafa;
-  --neutral-100: #f5f5f5;
-  --neutral-200: #eeeeee;
-  --neutral-300: #e0e0e0;
-  --neutral-400: #bdbdbd;
-  --neutral-500: #9e9e9e;
-  --neutral-600: #757575;
-  --neutral-700: #616161;
-  --neutral-800: #424242;
-  --neutral-900: #212121;
+  --neutral-50: #f9fafb;
+  --neutral-100: #f3f4f6;
+  --neutral-200: #e5e7eb;
+  --neutral-300: #d1d5db;
+  --neutral-400: #9ca3af;
+  --neutral-500: #6b7280;
+  --neutral-600: #4b5563;
+  --neutral-700: #374151;
+  --neutral-800: #1f2937;
+  --neutral-900: #111827;
 
   // =========================
   // Semantic Tokens
   // =========================
 
   // Text
-  --text-primary: #ffffff;
-  --text-secondary: #cccccc;
-  --text-tertiary: #9e9e9e;
-  --text-disabled: #757575;
-  --text-inverse: #121212;
-  --text-link: var(--primary-300);
-  --text-link-hover: var(--primary-200);
-  --text-error: #e57373;
-  --text-success: #81c784;
-  --text-warning: #ffb74d;
+  --text-primary: #e0e0e0;
+  --text-secondary: #b0b0b0;
+  --text-tertiary: #808080;
+  --text-disabled: #555555;
+  --text-inverse: #1e1e1e;
+  --text-link: var(--primary-400);
+  --text-link-hover: var(--primary-500);
+  --text-error: var(--danger-color);
+  --text-success: var(--success-color);
+  --text-warning: var(--warning-color);
 
   // Background
   --bg-app: #1e1e1e;
   --bg-surface: #252526;
-  --bg-element: #2d2d30;
-  --bg-element-hover: #3e3e42;
+  --bg-element: #2c2c2c;
+  --bg-element-hover: #333333;
   --bg-primary: var(--primary-500);
-  --bg-primary-hover: var(--primary-400);
-  --bg-primary-active: var(--primary-300);
+  --bg-primary-hover: var(--primary-600);
+  --bg-primary-active: var(--primary-700);
 
   // Borders
-  --border-default: #3e3e42;
+  --border-default: #3c3c3c;
   --border-strong: #555555;
-  --border-focus: var(--primary-300);
+  --border-focus: var(--primary-400);
   --border-error: var(--danger-color);
 
   // Shadows
-  --shadow-color: rgba(0, 0, 0, 0.5);
+  --shadow-color: rgba(0, 0, 0, 0.4);
   --shadow-default: 0 4px 6px var(--shadow-color);
   --shadow-lg: 0 10px 15px var(--shadow-color);
 }

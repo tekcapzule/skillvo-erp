@@ -3,7 +3,7 @@
 <div class="notification-panel" [class.open]="isOpen">
   <div class="notification-header">
     <div class="header-content">
-      <h2>Notification <span class="notification-count">({{ notifications?.length || 0 }})</span></h2>
+      <h2>Notification <span class="notification-count">({{ notifications.length || 0 }})</span></h2>
       <button class="close-button" (click)="closePanel()" aria-label="Close notifications">
         <mat-icon>close</mat-icon>
       </button>
