@@ -13,33 +13,35 @@
     
     <!-- App Switcher Menu -->
     <div class="app-switcher-menu" *ngIf="isAppSwitcherOpen">
-      <div class="app-switcher-grid">
-        <div class="app-item" (click)="navigateToApp('hire')">
-          <div class="app-icon">
-            <div class="icon-placeholder">H</div>
+      <div class="app-switcher-container">
+        <div class="app-switcher-grid">
+          <div class="app-item" (click)="navigateToApp('hire')">
+            <div class="app-icon">
+              <div class="icon-placeholder">H</div>
+            </div>
+            <span class="app-label">Hire</span>
           </div>
-          <span class="app-label">Hire</span>
-        </div>
-        
-        <div class="app-item" (click)="navigateToApp('onboard')">
-          <div class="app-icon">
-            <div class="icon-placeholder">O</div>
+          
+          <div class="app-item" (click)="navigateToApp('onboard')">
+            <div class="app-icon">
+              <div class="icon-placeholder">O</div>
+            </div>
+            <span class="app-label">Onboard</span>
           </div>
-          <span class="app-label">Onboard</span>
-        </div>
-        
-        <div class="app-item" (click)="navigateToApp('learn')">
-          <div class="app-icon">
-            <div class="icon-placeholder">L</div>
+          
+          <div class="app-item" (click)="navigateToApp('learn')">
+            <div class="app-icon">
+              <div class="icon-placeholder">L</div>
+            </div>
+            <span class="app-label">Learn</span>
           </div>
-          <span class="app-label">Learn</span>
-        </div>
-        
-        <div class="app-item" (click)="navigateToApp('admin')">
-          <div class="app-icon">
-            <div class="icon-placeholder">A</div>
+          
+          <div class="app-item" (click)="navigateToApp('admin')">
+            <div class="app-icon">
+              <div class="icon-placeholder">A</div>
+            </div>
+            <span class="app-label">Admin</span>
           </div>
-          <span class="app-label">Admin</span>
         </div>
       </div>
     </div>

@@ -62,17 +62,23 @@
   background-color: var(--surface-background, #ffffff);
   border-radius: 4px;
   box-shadow: 0px 4px 4px rgba(150, 150, 150, 0.25);
-  padding: 12px;
   z-index: 1100;
   width: 240px;
   transform-origin: top left;
   animation: fadeIn 0.2s ease-in-out;
 }
 
+.app-switcher-container {
+  padding: 12px;
+  box-sizing: border-box;
+  width: 100%;
+}
+
 .app-switcher-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-gap: 10px;
+  width: 100%;
 }
 
 .app-item {
@@ -214,6 +220,21 @@ mat-icon {
     min-width: auto;
     left: 0;
     border-radius: 0;
+    box-sizing: border-box;
+  }
+  
+  .app-switcher-container {
+    padding: 16px;
+  }
+  
+  .app-switcher-grid {
+    width: 100%;
+    box-sizing: border-box;
+  }
+  
+  .app-item {
+    width: 100%;
+    box-sizing: border-box;
   }
 }
 
