@@ -86,13 +86,13 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 12px 8px;
+  padding: 16px 8px 12px;
   border-radius: 4px;
   border: 1px solid var(--surface-border, #e3e3e3);
   cursor: pointer;
   transition: all 0.2s ease;
   background-color: #fff;
-  height: 80px;
+  height: 85px;
   
   &:hover {
     background-color: rgba(0, 0, 0, 0.02);
@@ -106,7 +106,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: 6px;
+    margin-bottom: 8px;
     
     mat-icon {
       width: 32px !important;
@@ -235,6 +235,12 @@ mat-icon {
   .app-item {
     width: 100%;
     box-sizing: border-box;
+    padding: 20px 8px 12px;
+    height: 90px;
+    
+    .app-icon {
+      margin-bottom: 10px;
+    }
   }
 }
 
