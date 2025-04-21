@@ -13,7 +13,9 @@
           routerLinkActive="active-link"
           *ngIf="!item.children">
           <div class="menu-item" [class.centered]="collapsed">
-            <mat-icon>{{ getStandardIcon(item.icon) }}</mat-icon>
+            <div class="icon-container">
+              <mat-icon>{{ getStandardIcon(item.icon) }}</mat-icon>
+            </div>
             <span class="menu-label" *ngIf="!collapsed">{{ item.label }}</span>
           </div>
         </a>
@@ -22,7 +24,9 @@
           (click)="toggleExpanded(item, $event)"
           *ngIf="item.children && item.children.length > 0">
           <div class="menu-item" [class.centered]="collapsed">
-            <mat-icon>{{ getStandardIcon(item.icon) }}</mat-icon>
+            <div class="icon-container">
+              <mat-icon>{{ getStandardIcon(item.icon) }}</mat-icon>
+            </div>
             <span class="menu-label" *ngIf="!collapsed">{{ item.label }}</span>
             <mat-icon class="expand-icon" *ngIf="!collapsed">
               {{ item.expanded ? 'expand_less' : 'expand_more' }}
