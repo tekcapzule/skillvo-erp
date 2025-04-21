@@ -7,17 +7,20 @@
   right: 0;
   bottom: 0;
   overflow: hidden; /* Hide scrollbar on container level */
+  background-color: var(--bg-app, #f9fafb);
+  transition: background-color 0.3s ease;
 }
 
 .sidenav {
   width: 240px;
   border-right: none; /* Border is already defined in sidenav component */
-  transition: width 0.3s ease;
+  transition: width 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   overflow-x: hidden !important;
   position: absolute;
   top: 0;
   bottom: 0;
+  background-color: var(--bg-surface, #ffffff);
 }
 
 .collapsed-sidenav {
@@ -25,8 +28,9 @@
 }
 
 mat-sidenav-content {
-  transition: margin-left 0.3s ease; /* Smooth transition when sidenav collapses */
+  transition: margin-left 0.3s ease, background-color 0.3s ease; /* Smooth transition when sidenav collapses */
   overflow: hidden; /* Hide scrollbar at this level */
+  background-color: var(--bg-app, #f9fafb);
 }
 
 :host ::ng-deep .mat-drawer-inner-container {
@@ -37,8 +41,9 @@ mat-sidenav-content {
   display: flex;
   flex-direction: column;
   height: 100%;
-  background-color: var(--surface-background, #ffffff);
+  background-color: var(--bg-app, #f9fafb);
   overflow: hidden; /* Hide scrollbar at this level */
+  transition: background-color 0.3s ease;
 }
 
 .content-container {
@@ -46,7 +51,24 @@ mat-sidenav-content {
   height: calc(100% - 56px); /* Full height minus breadcrumb height */
   overflow-y: auto; /* Show scrollbar only when needed */
   overflow-x: hidden; /* Prevent horizontal scrollbar */
-  background-color: var(--surface-background, #ffffff);
+  background-color: var(--bg-app, #f9fafb);
+  transition: background-color 0.3s ease;
+}
+
+/* Dark theme overrides */
+:host-context([data-theme="dark"]) {
+  .sidenav-container,
+  mat-sidenav-content,
+  .content-wrapper,
+  .content-container {
+    background-color: var(--bg-app, #1e1e1e);
+  }
+  
+  .sidenav {
+    background-color: var(--bg-surface, #1e1e1e);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+    border-right: 1px solid var(--border-default, #333333);
+  }
 }
 
 /* Floating mobile hamburger button */
@@ -56,7 +78,7 @@ mat-sidenav-content {
   bottom: 24px;
   right: 24px;
   z-index: 2000;
-  background-color: var(--primary, #1976d2);
+  background-color: var(--primary-500, #1971e5);
   color: white;
 }
 

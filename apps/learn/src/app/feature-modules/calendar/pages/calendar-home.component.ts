@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -35,56 +35,16 @@ import { CommonModule } from '@angular/common';
         </div>
         
         <div class="calendar-days">
-          <!-- First row (May 28 - June 3) -->
-          <div class="day other-month">28</div>
-          <div class="day other-month">29</div>
-          <div class="day other-month">30</div>
-          <div class="day other-month">31</div>
-          <div class="day">1</div>
-          <div class="day">2</div>
-          <div class="day">3</div>
-          
-          <!-- Second row (June 4-10) -->
-          <div class="day">4</div>
-          <div class="day">5</div>
-          <div class="day">6</div>
-          <div class="day">7</div>
-          <div class="day">8</div>
-          <div class="day">9</div>
-          <div class="day">10</div>
-          
-          <!-- Third row (June 11-17) -->
-          <div class="day">11</div>
-          <div class="day">12</div>
-          <div class="day">13</div>
-          <div class="day">14</div>
-          <div class="day current-day">15</div>
-          <div class="day">16</div>
-          <div class="day">17</div>
-          
-          <!-- Fourth row (June 18-24) -->
-          <div class="day">18</div>
-          <div class="day">19</div>
-          <div class="day">20</div>
-          <div class="day">21</div>
-          <div class="day">22</div>
-          <div class="day">23</div>
-          <div class="day">24</div>
-          
-          <!-- Fifth row (June 25 - July 1) -->
-          <div class="day">25</div>
-          <div class="day">26</div>
-          <div class="day">27</div>
-          <div class="day">28</div>
-          <div class="day">29</div>
-          <div class="day">30</div>
-          <div class="day other-month">1</div>
+          <div *ngFor="let day of days" [class]="'day ' + (day.otherMonth ? 'other-month' : '') + (day.isToday ? ' current-day' : '')">
+            {{ day.date }}
+            <div *ngIf="day.hasEvents" class="event-indicator"></div>
+          </div>
         </div>
       </div>
       
       <div class="upcoming-events">
         <h3>Upcoming Events</h3>
-        <div class="event-empty">
+        <div class="event-empty" *ngIf="!hasEvents">
           <p>You don't have any upcoming events.</p>
           <button class="add-event-btn">Add Event</button>
         </div>
@@ -92,50 +52,110 @@ import { CommonModule } from '@angular/common';
     </div>
   `,
   styles: [`
+    :host {
+      display: block;
+      color: var(--text-primary, #1a1a1a);
+      transition: all 0.3s ease;
+      background-color: transparent;
+    }
+
+    /* Dark Theme for the entire component */
+    :host-context([data-theme="dark"]) {
+      color: var(--text-primary, #e0e0e0);
+    }
+
     .calendar-container {
-      padding: 24px;
-      max-width: 1200px;
-      margin: 0 auto;
+      max-width: 100%;
+      background-color: var(--bg-surface, #ffffff);
+      border-radius: 8px;
+      padding: 20px;
+      box-shadow: var(--shadow-sm, 0 1px 3px rgba(0,0,0,0.1));
+      transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    /* Dark Theme overrides */
+    :host-context([data-theme="dark"]) .calendar-container {
+      background-color: var(--bg-surface, #1e1e1e) !important;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.4);
+      color: var(--text-primary, #e0e0e0);
     }
     
     h1 {
-      margin-bottom: 8px;
-      color: #333;
+      margin: 0 0 8px 0;
+      font-size: 24px;
+      font-weight: 600;
+      color: var(--text-primary, #1a1a1a);
+    }
+    
+    :host-context([data-theme="dark"]) h1 {
+      color: var(--text-primary, #e0e0e0);
+    }
+    
+    p {
+      margin: 0 0 24px 0;
+      color: var(--text-secondary, #666666);
+      font-size: 14px;
+    }
+    
+    :host-context([data-theme="dark"]) p {
+      color: var(--text-secondary, #a0a0a0);
     }
     
     .calendar-controls {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin: 24px 0;
-      flex-wrap: wrap;
-      gap: 16px;
+      margin-bottom: 20px;
     }
     
     .month-navigation {
       display: flex;
       align-items: center;
-      gap: 16px;
+      gap: 15px;
       
       h2 {
         margin: 0;
-        font-size: 20px;
+        font-size: 18px;
+        font-weight: 500;
+        color: var(--text-primary, #1a1a1a);
       }
+    }
+    
+    :host-context([data-theme="dark"]) .month-navigation h2 {
+      color: var(--text-primary, #e0e0e0);
     }
     
     .nav-btn {
       width: 32px;
       height: 32px;
-      border-radius: 50%;
-      border: 1px solid #ddd;
-      background: none;
-      cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
+      border: 1px solid var(--border-default, #e0e0e0);
+      background-color: var(--bg-element, #f5f5f5);
+      color: var(--text-primary, #1a1a1a);
+      cursor: pointer;
+      font-weight: bold;
+      border-radius: 4px;
+      transition: all 0.2s ease;
       
       &:hover {
-        background-color: #f0f0f0;
+        background-color: var(--bg-element-hover, rgba(0,0,0,0.05));
+      }
+      
+      &:focus {
+        outline: none;
+        box-shadow: 0 0 0 2px var(--primary-300, #80c2ff);
+      }
+    }
+    
+    :host-context([data-theme="dark"]) .nav-btn {
+      background-color: var(--bg-element, #2a2a2a) !important;
+      border-color: var(--border-default, #333333);
+      color: var(--text-primary, #e0e0e0);
+      
+      &:hover {
+        background-color: var(--bg-element-hover, rgba(255,255,255,0.1)) !important;
       }
     }
     
@@ -145,108 +165,297 @@ import { CommonModule } from '@angular/common';
     }
     
     .view-btn {
-      padding: 8px 16px;
-      border: 1px solid #ddd;
-      background: none;
+      padding: 6px 12px;
+      background-color: var(--bg-element, #f5f5f5);
+      border: 1px solid var(--border-default, #e0e0e0);
       border-radius: 4px;
+      color: var(--text-primary, #1a1a1a);
       cursor: pointer;
+      font-size: 14px;
+      transition: all 0.2s ease;
       
       &.active {
-        background-color: #1976d2;
+        background-color: var(--primary-500, #1971e5);
         color: white;
-        border-color: #1976d2;
+        border-color: var(--primary-500, #1971e5);
       }
       
       &:hover:not(.active) {
-        background-color: #f0f0f0;
+        background-color: var(--bg-element-hover, rgba(0,0,0,0.05));
+      }
+      
+      &:focus {
+        outline: none;
+        box-shadow: 0 0 0 2px var(--primary-300, #80c2ff);
       }
     }
     
+    :host-context([data-theme="dark"]) .view-btn:not(.active) {
+      background-color: var(--bg-element, #2a2a2a) !important;
+      border-color: var(--border-default, #333333);
+      color: var(--text-primary, #e0e0e0);
+      
+      &:hover {
+        background-color: var(--bg-element-hover, rgba(255,255,255,0.1)) !important;
+      }
+    }
+    
+    :host-context([data-theme="dark"]) .view-btn.active {
+      background-color: var(--primary-600, #155ab7) !important;
+      border-color: var(--primary-600, #155ab7);
+    }
+    
     .calendar-grid {
-      background-color: white;
+      border: 1px solid var(--border-default, #e0e0e0);
       border-radius: 8px;
       overflow: hidden;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      transition: border-color 0.3s ease;
+    }
+    
+    :host-context([data-theme="dark"]) .calendar-grid {
+      border-color: var(--border-default, #333333);
+      background-color: var(--bg-surface, #1e1e1e);
     }
     
     .weekday-header {
       display: grid;
       grid-template-columns: repeat(7, 1fr);
-      background-color: #f0f0f0;
-      border-bottom: 1px solid #ddd;
+      background-color: var(--bg-element, #f5f5f5);
+      border-bottom: 1px solid var(--border-default, #e0e0e0);
+      transition: background-color 0.3s ease, border-color 0.3s ease;
+    }
+    
+    :host-context([data-theme="dark"]) .weekday-header {
+      background-color: var(--bg-element, #2a2a2a) !important;
+      border-color: var(--border-default, #333333);
     }
     
     .weekday {
-      padding: 12px;
+      padding: 10px;
       text-align: center;
       font-weight: 500;
+      font-size: 14px;
+      color: var(--text-secondary, #666666);
+    }
+    
+    :host-context([data-theme="dark"]) .weekday {
+      color: var(--text-secondary, #a0a0a0);
     }
     
     .calendar-days {
       display: grid;
       grid-template-columns: repeat(7, 1fr);
+      background-color: var(--bg-surface, #ffffff);
+      transition: background-color 0.3s ease;
+    }
+    
+    :host-context([data-theme="dark"]) .calendar-days {
+      background-color: var(--bg-surface, #1e1e1e) !important;
     }
     
     .day {
-      height: 80px;
-      border-right: 1px solid #f0f0f0;
-      border-bottom: 1px solid #f0f0f0;
+      aspect-ratio: 1 / 1;
+      border-right: 1px solid var(--border-default, #e0e0e0);
+      border-bottom: 1px solid var(--border-default, #e0e0e0);
       padding: 8px;
+      position: relative;
+      color: var(--text-primary, #1a1a1a);
+      min-height: 80px;
+      transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+      background-color: var(--bg-surface, #ffffff);
+      
+      &:nth-child(7n) {
+        border-right: none;
+      }
+      
+      &:nth-last-child(-n+7) {
+        border-bottom: none;
+      }
       
       &.other-month {
-        color: #ccc;
-        background-color: #f9f9f9;
+        color: var(--text-disabled, #bdbdbd);
+        background-color: var(--bg-element, #f8f8f8);
       }
       
       &.current-day {
-        background-color: #e3f2fd;
         font-weight: bold;
-        color: #1976d2;
+        color: var(--primary-700, #0f4390);
+        
+        &::after {
+          content: '';
+          position: absolute;
+          top: 6px;
+          right: 6px;
+          width: 8px;
+          height: 8px;
+          border-radius: 50%;
+          background-color: var(--primary-500, #1971e5);
+        }
       }
+
+      &:hover {
+        background-color: var(--bg-element-hover, rgba(0,0,0,0.05));
+        cursor: pointer;
+      }
+    }
+    
+    :host-context([data-theme="dark"]) .day {
+      background-color: var(--bg-surface, #1e1e1e) !important;
+      border-color: var(--border-default, #333333);
+      color: var(--text-primary, #e0e0e0);
+      
+      &.other-month {
+        background-color: var(--bg-element, #2a2a2a) !important;
+        color: var(--text-disabled, #666666);
+      }
+      
+      &.current-day {
+        color: var(--primary-400, #4da9ff);
+        background-color: rgba(77, 169, 255, 0.08) !important;
+        
+        &::after {
+          background-color: var(--primary-400, #4da9ff);
+          width: 8px;
+          height: 8px;
+        }
+      }
+      
+      &:hover {
+        background-color: rgba(255, 255, 255, 0.08) !important;
+      }
+    }
+
+    .event-indicator {
+      position: absolute;
+      bottom: 6px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background-color: var(--primary-500, #1971e5);
+    }
+    
+    :host-context([data-theme="dark"]) .event-indicator {
+      background-color: var(--primary-400, #4da9ff);
+      box-shadow: 0 0 4px rgba(77, 169, 255, 0.5);
     }
     
     .upcoming-events {
       margin-top: 24px;
-      background-color: white;
-      border-radius: 8px;
-      padding: 24px;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
       
       h3 {
         margin: 0 0 16px 0;
-        color: #333;
+        font-size: 18px;
+        font-weight: 500;
+        color: var(--text-primary, #1a1a1a);
       }
+    }
+    
+    :host-context([data-theme="dark"]) .upcoming-events h3 {
+      color: var(--text-primary, #e0e0e0);
     }
     
     .event-empty {
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: 24px;
-      color: #757575;
+      justify-content: center;
+      padding: 40px 20px;
+      background-color: var(--bg-element, #f5f5f5);
+      border-radius: 8px;
       text-align: center;
+      transition: background-color 0.3s ease;
       
       p {
         margin-bottom: 16px;
+        color: var(--text-secondary, #666666);
+      }
+    }
+    
+    :host-context([data-theme="dark"]) .event-empty {
+      background-color: var(--bg-element, #2a2a2a) !important;
+      
+      p {
+        color: var(--text-secondary, #a0a0a0);
       }
     }
     
     .add-event-btn {
       padding: 8px 16px;
-      background-color: #1976d2;
+      background-color: var(--primary-500, #1971e5);
       color: white;
       border: none;
       border-radius: 4px;
       cursor: pointer;
+      font-size: 14px;
+      transition: background-color 0.2s ease;
       
       &:hover {
-        background-color: #1565c0;
+        background-color: var(--primary-600, #155ab7);
+      }
+      
+      &:focus {
+        outline: none;
+        box-shadow: 0 0 0 2px var(--primary-300, #80c2ff);
+      }
+    }
+    
+    @media (max-width: 768px) {
+      .calendar-controls {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+      }
+      
+      .view-options {
+        width: 100%;
+      }
+      
+      .day {
+        min-height: 60px;
+        font-size: 14px;
       }
     }
   `]
 })
-export class CalendarHomeComponent {
-  constructor() {
-    console.log('Calendar Home Component initialized');
+export class CalendarHomeComponent implements OnInit {
+  days: Array<{date: number, otherMonth: boolean, isToday: boolean, hasEvents: boolean}> = [];
+  hasEvents = false;
+
+  constructor() {}
+
+  ngOnInit(): void {
+    this.generateCalendarDays();
+  }
+
+  generateCalendarDays() {
+    // Previous month days (May)
+    for (let i = 28; i <= 31; i++) {
+      this.days.push({
+        date: i,
+        otherMonth: true,
+        isToday: false,
+        hasEvents: false
+      });
+    }
+    
+    // Current month days (June)
+    for (let i = 1; i <= 30; i++) {
+      this.days.push({
+        date: i,
+        otherMonth: false,
+        isToday: i === 15,
+        hasEvents: i === 15 // Add event indicator to current day
+      });
+    }
+    
+    // Next month days (July)
+    this.days.push({
+      date: 1,
+      otherMonth: true,
+      isToday: false,
+      hasEvents: false
+    });
   }
 } 
