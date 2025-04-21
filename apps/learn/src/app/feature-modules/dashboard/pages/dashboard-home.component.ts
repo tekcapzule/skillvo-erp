@@ -13,12 +13,16 @@ import { CommonModule } from '@angular/common';
         <div class="dashboard-card">
           <h2>Your Progress</h2>
           <p>You have completed 0 courses.</p>
-          <button class="primary-btn">View Courses</button>
+          <div class="card-actions">
+            <button class="primary-btn">View Courses</button>
+          </div>
         </div>
         <div class="dashboard-card">
           <h2>Upcoming Deadlines</h2>
           <p>You have no upcoming deadlines.</p>
-          <button class="primary-btn">View Calendar</button>
+          <div class="card-actions">
+            <button class="primary-btn">View Calendar</button>
+          </div>
         </div>
       </div>
     </div>
@@ -43,8 +47,8 @@ import { CommonModule } from '@angular/common';
     }
     
     .dashboard-content {
-      display: flex;
-      flex-wrap: wrap;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
       gap: 24px;
       margin-top: 24px;
     }
@@ -52,20 +56,30 @@ import { CommonModule } from '@angular/common';
     .dashboard-card {
       background-color: var(--bg-surface, #ffffff);
       border-radius: 8px;
-      padding: 16px;
+      padding: 24px;
       box-shadow: var(--shadow-sm, 0 2px 4px rgba(0,0,0,0.1));
       min-height: 200px;
       height: 100%;
       display: flex;
       flex-direction: column;
-      transition: background-color 0.3s ease, box-shadow 0.3s ease, border 0.3s ease;
+      transition: all 0.3s ease;
       border: 1px solid transparent;
     }
     
+    .dashboard-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-default, 0 6px 12px rgba(0,0,0,0.15));
+    }
+    
     :host-context([data-theme="dark"]) .dashboard-card {
-      background-color: var(--bg-element, #2a2a2a);
-      box-shadow: 0 3px 6px rgba(0,0,0,0.3);
-      border: 1px solid var(--border-default, #333333);
+      background-color: var(--bg-surface, #252526);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+      border-color: var(--border-default, #333333);
+    }
+    
+    :host-context([data-theme="dark"]) .dashboard-card:hover {
+      box-shadow: 0 8px 16px rgba(0,0,0,0.6);
+      border-color: var(--primary-700, #0f4390);
     }
     
     h1 {
@@ -74,12 +88,13 @@ import { CommonModule } from '@angular/common';
     }
     
     :host-context([data-theme="dark"]) h1 {
-      color: var(--text-primary, #e0e0e0);
+      color: var(--text-primary, #ffffff);
     }
     
     h2 {
       margin-bottom: 16px;
       color: var(--primary-500, #1971e5);
+      font-size: 20px;
     }
     
     :host-context([data-theme="dark"]) h2 {
@@ -88,10 +103,17 @@ import { CommonModule } from '@angular/common';
     
     p {
       color: var(--text-secondary, #666666);
+      flex-grow: 1;
     }
     
     :host-context([data-theme="dark"]) p {
       color: var(--text-secondary, #a0a0a0);
+    }
+    
+    .card-actions {
+      margin-top: 16px;
+      display: flex;
+      justify-content: flex-end;
     }
     
     .primary-btn {

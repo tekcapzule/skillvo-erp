@@ -65,10 +65,11 @@ import { CommonModule } from '@angular/common';
     }
 
     .calendar-container {
-      max-width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 24px;
       background-color: var(--bg-surface, #ffffff);
       border-radius: 8px;
-      padding: 20px;
       box-shadow: var(--shadow-sm, 0 1px 3px rgba(0,0,0,0.1));
       transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
     }
