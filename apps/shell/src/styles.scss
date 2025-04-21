@@ -9,6 +9,15 @@ html, body {
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
+/* Material Sidenav scrollbar fixes */
+.mat-drawer-inner-container {
+  overflow-x: hidden !important;
+}
+
+.mat-sidenav {
+  overflow-x: hidden !important;
+}
+
 /* Material icons sizing */
 .material-icons {
   font-size: 24px;
