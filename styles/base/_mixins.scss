@@ -1,0 +1,297 @@
+// ========================================
+// Mixins
+// ========================================
+
+// Create responsive media queries
+@mixin breakpoint($point) {
+  @if $point == xs {
+    @media (min-width: map-get($breakpoints, xs)) { @content; }
+  } @else if $point == sm {
+    @media (min-width: map-get($breakpoints, sm)) { @content; }
+  } @else if $point == md {
+    @media (min-width: map-get($breakpoints, md)) { @content; }
+  } @else if $point == lg {
+    @media (min-width: map-get($breakpoints, lg)) { @content; }
+  } @else if $point == xl {
+    @media (min-width: map-get($breakpoints, xl)) { @content; }
+  } @else if $point == xxl {
+    @media (min-width: map-get($breakpoints, xxl)) { @content; }
+  }
+}
+
+// Flexbox shortcuts
+@mixin flex($direction: row, $justify: flex-start, $align: stretch, $wrap: nowrap) {
+  display: flex;
+  flex-direction: $direction;
+  justify-content: $justify;
+  align-items: $align;
+  flex-wrap: $wrap;
+}
+
+// Center content both vertically and horizontally
+@mixin flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+// Grid layout shortcut
+@mixin grid($columns: 1, $gap: $space-4) {
+  display: grid;
+  grid-template-columns: repeat($columns, 1fr);
+  gap: $gap;
+}
+
+// Truncate text with ellipsis
+@mixin truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+// Multi-line truncation
+@mixin truncate-multiline($lines: 2) {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: $lines;
+  overflow: hidden;
+}
+
+// Visually hide element but keep it accessible for screen readers
+@mixin visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+// Create a square container
+@mixin square($size) {
+  width: $size;
+  height: $size;
+}
+
+// Create transition for specific properties
+@mixin transition($properties...) {
+  $transitions: ();
+  @each $property in $properties {
+    $transitions: append($transitions, $property $transition-normal ease, comma);
+  }
+  transition: $transitions;
+}
+
+// Apply box shadow
+@mixin shadow($level: md) {
+  @if $level == sm {
+    box-shadow: $shadow-sm;
+  } @else if $level == md {
+    box-shadow: $shadow-md;
+  } @else if $level == lg {
+    box-shadow: $shadow-lg;
+  } @else if $level == xl {
+    box-shadow: $shadow-xl;
+  } @else if $level == 2xl {
+    box-shadow: $shadow-2xl;
+  } @else if $level == inner {
+    box-shadow: $shadow-inner;
+  }
+}
+
+// Create focus state styles
+@mixin focus-ring($color: $primary) {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba($color, 0.4);
+}
+
+// Set aspect ratio for responsive elements
+@mixin aspect-ratio($width: 16, $height: 9) {
+  position: relative;
+  
+  &::before {
+    content: '';
+    display: block;
+    padding-top: ($height / $width) * 100%;
+  }
+  
+  > * {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+}
+
+// Button styles
+@mixin button-base {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: $space-2 $space-4;
+  font-weight: 500;
+  border-radius: $border-radius-md;
+  text-align: center;
+  cursor: pointer;
+  transition: 
+    background-color $transition-fast ease,
+    color $transition-fast ease,
+    border-color $transition-fast ease,
+    box-shadow $transition-fast ease;
+  
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}
+
+// Hide scrollbars while allowing scrolling
+@mixin no-scrollbar {
+  -ms-overflow-style: none;  // IE and Edge
+  scrollbar-width: none;     // Firefox
+  
+  &::-webkit-scrollbar {
+    display: none;           // Chrome, Safari and Opera
+  }
+}
+
+// Container mixin
+@mixin container {
+  width: 100%;
+  margin-right: auto;
+  margin-left: auto;
+  padding-right: $space-4;
+  padding-left: $space-4;
+  
+  @include breakpoint(sm) {
+    max-width: map-get($container-max-widths, sm);
+  }
+  
+  @include breakpoint(md) {
+    max-width: map-get($container-max-widths, md);
+  }
+  
+  @include breakpoint(lg) {
+    max-width: map-get($container-max-widths, lg);
+  }
+  
+  @include breakpoint(xl) {
+    max-width: map-get($container-max-widths, xl);
+  }
+  
+  @include breakpoint(xxl) {
+    max-width: map-get($container-max-widths, xxl);
+  }
+} 
+
+// ========================================
+// Touch Target Accessibility Mixins
+// ========================================
+// The WCAG Target Size (2.5.5) criterion requires interactive elements to be at least 44x44px
+
+// Base touch target that ensures minimum tap area size
+@mixin touch-target-base {
+  min-width: 44px;
+  min-height: 44px;
+  // Display as inline-flex to ensure proper sizing when used on inline elements
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+// Standard touch target for clickable elements
+@mixin touch-target {
+  @include touch-target-base;
+  
+  // For elements where we can't directly size, create an accessible hit area
+  &::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 100%;
+    min-width: 44px;
+    min-height: 44px;
+    z-index: -1;
+  }
+}
+
+// Applies touch target size only on touch devices
+@mixin touch-target-responsive {
+  @media (pointer: coarse) {
+    @include touch-target;
+  }
+}
+
+// Touch target for icon buttons (common UI pattern)
+@mixin touch-target-icon {
+  @include touch-target-base;
+  // Center the icon while maintaining the touch area
+  padding: 10px; // Creates space around icon while maintaining minimum 44px hit area
+  
+  // Ensure icon itself is properly sized within the touch area
+  > svg,
+  > img,
+  > .icon {
+    width: 24px;
+    height: 24px;
+  }
+}
+
+// Touch target for form controls (inputs, selects, etc.)
+@mixin touch-target-form-control {
+  @include touch-target-base;
+  padding: 10px 16px;
+  height: 44px; // Explicit height for form controls
+
+  // Tablets and above can have slightly smaller targets
+  @media (min-width: 768px) and (pointer: fine) {
+    height: 40px;
+    min-height: 40px;
+  }
+}
+
+// Touch target for links that should remain inline
+@mixin touch-target-inline-link {
+  // Increase the tap target without breaking text flow
+  position: relative;
+  margin: -10px; // Negative margin to expand clickable area
+  padding: 10px; // Padding to create the larger hit target
+  
+  // If link is in a container that might clip the expanded area
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    min-width: 44px;
+    min-height: 44px;
+    z-index: -1;
+  }
+}
+
+// Accessibility: Reduced Motion
+// Use this mixin to provide alternative animations for users who prefer reduced motion
+@mixin reduced-motion {
+    @media (prefers-reduced-motion: reduce) {
+      @content;
+    }
+  }
+  
+  // Apply this to all animations and transitions for a global setting
+  @mixin respect-reduced-motion {
+    @include reduced-motion {
+      animation-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.001ms !important;
+      scroll-behavior: auto !important;
+    }
+  }

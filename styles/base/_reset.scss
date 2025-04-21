@@ -1,0 +1,191 @@
+/* 
+ * Reset and Normalize
+ * A modern CSS reset that provides a solid foundation
+ * Removes browser inconsistencies and provides better defaults
+ */
+
+/* Box sizing for all elements */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* Root element styles */
+html {
+  font-size: 16px;
+  -webkit-text-size-adjust: 100%;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  height: 100%;
+}
+
+/* Body */
+body {
+  min-height: 100%;
+  line-height: 1.5;
+  text-rendering: optimizeSpeed;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Headers */
+h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+  font-weight: inherit;
+  font-size: inherit;
+  line-height: inherit;
+}
+
+/* Inline elements */
+a {
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+}
+
+a:focus {
+  outline: none;
+}
+
+/* Lists */
+ol, ul, dl {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* Form elements */
+button,
+input,
+optgroup,
+select,
+textarea {
+  font-family: inherit;
+  font-size: 100%;
+  line-height: 1.15;
+  margin: 0;
+}
+
+button,
+input {
+  overflow: visible;
+}
+
+button,
+select {
+  text-transform: none;
+}
+
+button,
+[type="button"],
+[type="reset"],
+[type="submit"] {
+  -webkit-appearance: button;
+  appearance: button;
+  cursor: pointer;
+}
+
+button::-moz-focus-inner,
+[type="button"]::-moz-focus-inner,
+[type="reset"]::-moz-focus-inner,
+[type="submit"]::-moz-focus-inner {
+  border-style: none;
+  padding: 0;
+}
+
+/* Remove all animations and transitions for people who prefer not to see them */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Fallback for browsers that don't support prefers-reduced-motion */
+@supports not (prefers-reduced-motion: reduce) {
+  /* We can't detect if a user would prefer reduced motion, so we 
+     rely on a .reduce-motion class that can be added programmatically
+     when the user indicates this preference through UI controls */
+  .reduce-motion *,
+  .reduce-motion *::before,
+  .reduce-motion *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* When reduced-motion is active, these utility classes help maintain 
+   essential animations despite the global motion reduction settings */
+.motion-safe {
+  @media (prefers-reduced-motion: no-preference) {
+    transition-property: inherit;
+    animation-duration: inherit;
+  }
+}
+
+.motion-critical {
+  /* Critical animations still run even with reduced motion preference
+     Use this class only for animations that are essential to functionality */
+  transition-property: inherit !important;
+  animation-duration: inherit !important;
+}
+
+/* Images */
+img, svg {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Tables */
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/* Make line-height work properly in flex containers */
+.flex {
+  display: flex;
+  align-items: baseline;
+}
+
+/* Remove default fieldset styles */
+fieldset {
+  min-width: 0;
+  padding: 0;
+  margin: 0;
+  border: 0;
+}
+
+/* Hidden elements */
+[hidden] {
+  display: none !important;
+}
+
+/* Disable iOS/Safari zooming on focus */
+input, textarea, select, button {
+  font-size: 16px;
+}
+
+/* Fix for Firefox */
+abbr[title] {
+  text-decoration: underline dotted;
+}
+
+/* Normalize line breaks */
+pre, code, kbd, samp {
+  font-family: monospace, monospace;
+}
+
+/* Prevent text from being selectable */
+.no-select {
+  user-select: none;
+}

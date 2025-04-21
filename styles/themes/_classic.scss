@@ -1,0 +1,153 @@
+// ========================================
+// Classic Theme
+// ========================================
+
+.classic-theme {
+  // =========================
+  // Color Palette
+  // =========================
+
+  // Primary Colors - Rich browns
+  --primary-50: #fdf8f6;
+  --primary-100: #f2e8e5;
+  --primary-200: #eaddd7;
+  --primary-300: #d6bfb2;
+  --primary-400: #b8a296;
+  --primary-500: #a18072;
+  --primary-600: #846358;
+  --primary-700: #604e47;
+  --primary-800: #422b24;
+  --primary-900: #381f1a;
+  --primary-950: #1f0f0b;
+
+  // Secondary Colors - Muted blues
+  --secondary-50: #f6f7f9;
+  --secondary-100: #edeef1;
+  --secondary-200: #d8dbe2;
+  --secondary-300: #b6bcc9;
+  --secondary-400: #8e97ab;
+  --secondary-500: #717d93;
+  --secondary-600: #5d6779;
+  --secondary-700: #4d5463;
+  --secondary-800: #3d4351;
+  --secondary-900: #333945;
+  --secondary-950: #21232c;
+
+  // Accent Colors - Warm reds
+  --accent-50: #fff5f5;
+  --accent-100: #ffe0e0;
+  --accent-200: #ffc7c7;
+  --accent-300: #ffa0a0;
+  --accent-400: #ff7474;
+  --accent-500: #fa5252;
+  --accent-600: #e03131;
+  --accent-700: #c92a2a;
+  --accent-800: #b02525;
+  --accent-900: #962929;
+  --accent-950: #521111;
+
+  // Status Colors - Traditional
+  --success-50: #e9f9ee;
+  --success-100: #c8edd6;
+  --success-200: #a3e0bc;
+  --success-300: #74ca9b;
+  --success-400: #42ad77;
+  --success-500: #2f9e6a;
+  --success-600: #208456;
+  --success-700: #1e6c49;
+  --success-800: #1a573b;
+  --success-900: #164a32;
+  --success-950: #06291b;
+
+  --warning-50: #fef9e7;
+  --warning-100: #fdf1c7;
+  --warning-200: #fce28a;
+  --warning-300: #fbcd4c;
+  --warning-400: #fbb824;
+  --warning-500: #e29e0b;
+  --warning-600: #c78509;
+  --warning-700: #9c610b;
+  --warning-800: #82500f;
+  --warning-900: #724511;
+  --warning-950: #422707;
+
+  --error-50: #fef2f2;
+  --error-100: #fde1e1;
+  --error-200: #fdcbcb;
+  --error-300: #faa5a5;
+  --error-400: #f46a6a;
+  --error-500: #e63535;
+  --error-600: #d92020;
+  --error-700: #b91919;
+  --error-800: #991a1a;
+  --error-900: #7f1d1d;
+  --error-950: #470b0b;
+
+  --info-50: #f0f7ff;
+  --info-100: #e0eefe;
+  --info-200: #bad9fe;
+  --info-300: #85b9fc;
+  --info-400: #5391f7;
+  --info-500: #316cee;
+  --info-600: #2558e0;
+  --info-700: #1e44ca;
+  --info-800: #1d3aa1;
+  --info-900: #1e337e;
+  --info-950: #141d47;
+
+  // Neutral Colors - Warm grays
+  --neutral-50: #fbfaf8;
+  --neutral-100: #f7f5f2;
+  --neutral-200: #eeebe5;
+  --neutral-300: #dfd9d0;
+  --neutral-400: #b8b2a7;
+  --neutral-500: #948c7e;
+  --neutral-600: #7c746a;
+  --neutral-700: #645c54;
+  --neutral-800: #4b4740;
+  --neutral-900: #38342f;
+  --neutral-950: #211f1c;
+
+  // =========================
+  // Semantic Colors
+  // =========================
+
+  // Text Colors
+  --text-primary: var(--neutral-900);
+  --text-secondary: var(--neutral-700);
+  --text-tertiary: var(--neutral-500);
+  --text-disabled: var(--neutral-400);
+  --text-inverse: var(--neutral-50);
+  --text-link: var(--primary-700);
+  --text-link-hover: var(--primary-800);
+  --text-error: var(--error-600);
+  --text-success: var(--success-600);
+  --text-warning: var(--warning-700);
+
+  // Background Colors
+  --bg-app: var(--neutral-100);
+  --bg-surface: white;
+  --bg-element: var(--neutral-100);
+  --bg-element-hover: var(--neutral-200);
+  --bg-element-active: var(--neutral-300);
+  --bg-primary: var(--primary-700);
+  --bg-primary-hover: var(--primary-800);
+  --bg-primary-active: var(--primary-900);
+  --bg-secondary: var(--secondary-600);
+  --bg-secondary-hover: var(--secondary-700);
+  --bg-success: var(--success-100);
+  --bg-warning: var(--warning-100);
+  --bg-error: var(--error-100);
+  --bg-info: var(--info-100);
+
+  // Border Colors
+  --border-default: var(--neutral-200);
+  --border-strong: var(--neutral-300);
+  --border-focus: var(--primary-400);
+  --border-error: var(--error-400);
+
+  // Shadow Colors
+  --shadow-color: rgba(33, 31, 28, 0.08);
+  --shadow-colored-default: 0 4px 6px var(--shadow-color);
+  --shadow-colored-lg: 0 10px 15px var(--shadow-color);
+} 

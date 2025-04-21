@@ -1,0 +1,91 @@
+// ========================================
+// Color Variables
+// ========================================
+// Important: All color combinations should maintain minimum contrast ratios:
+// - Normal text (under 18pt): 4.5:1 ratio
+// - Large text (18pt+): 3:1 ratio
+// - UI components and graphics: 3:1 ratio
+// Use tools like Stark, WebAIM contrast checker, or axe DevTools to verify.
+
+// Light Theme Palette Reference
+// ----------------------------------------
+// Primary - Blue
+$light-primary-base: #1088e4;     // Primary-500
+
+// Secondary - Purple
+$light-secondary-base: #9454eb;   // Secondary-500
+
+// Accent - Pink
+$light-accent-base: #f83f67;      // Accent-500
+
+// Dark Theme Palette Reference
+// ----------------------------------------
+// Primary - Blue (inverted)
+$dark-primary-base: #35a6f2;     // Primary-600
+
+// Secondary - Purple (inverted)
+$dark-secondary-base: #b683f5;   // Secondary-600
+
+// Accent - Pink (inverted)
+$dark-accent-base: #fe708d;      // Accent-600
+
+// Ocean Theme Palette Reference
+// ----------------------------------------
+// Primary - Sky blue
+$ocean-primary-base: #0ea5e9;    // Primary-500
+
+// Secondary - Teal
+$ocean-secondary-base: #14b8a6;  // Secondary-500
+
+// Accent - Coral
+$ocean-accent-base: #f43f5e;     // Accent-500
+
+// Classic Theme Palette Reference
+// ----------------------------------------
+// Primary - Rich brown
+$classic-primary-base: #846358;   // Primary-600
+
+// Secondary - Muted blue
+$classic-secondary-base: #5d6779; // Secondary-600
+
+// Accent - Warm red
+$classic-accent-base: #e03131;    // Accent-600
+
+// Status Colors
+// ----------------------------------------
+$success: #10b981;
+$warning: #f59e0b;
+$error: #ef4444;
+$info: #3b82f6;
+
+// Primary Brand Colors
+$primary-blue: #1971E5;
+$secondary-dark-gray: #1A1A1A;
+$tertiary-green: #689F38;
+
+// Neutrals
+$white: #FFFFFF;
+$black: #000000;
+$gray-50: #FAFAFA;
+$gray-100: #F5F5F5;
+$gray-200: #EEEEEE;
+$gray-300: #E0E0E0;
+$gray-400: #BDBDBD;
+$gray-500: #9E9E9E;
+$gray-600: #757575;
+$gray-700: #616161;
+$gray-800: #424242;
+$gray-900: #212121;
+
+// Additional Colors
+$accent-blue-light: #64B5F6;
+$accent-blue-dark: #0D47A1;
+$accent-green-light: #AED581;
+$accent-green-dark: #33691E;
+$accent-gray-light: #E0E0E0;
+$accent-gray-dark: #424242;
+
+// Function to convert color to RGB format for CSS variables
+@function as-rgb($color) {
+  @return red($color), green($color), blue($color);
+}

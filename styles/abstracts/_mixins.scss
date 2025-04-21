@@ -1,0 +1,259 @@
+// ========================================
+// Mixins
+// ========================================
+
+// ========================================
+// Media Queries / Breakpoints
+// ========================================
+
+// Breakpoint values from _variables.scss
+// Usage: @include breakpoint(md) { ... }
+@mixin breakpoint($breakpoint) {
+  @if map-has-key($breakpoints, $breakpoint) {
+    @media (min-width: map-get($breakpoints, $breakpoint)) {
+      @content;
+    }
+  } @else {
+    @error "Unknown breakpoint: #{$breakpoint}. Available breakpoints: #{map-keys($breakpoints)}";
+  }
+}
+
+// ========================================
+// Layout Helpers
+// ========================================
+
+// Clear floats
+@mixin clearfix() {
+  &::after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+}
+
+// Truncate text with ellipsis
+@mixin truncate() {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+// ========================================
+// UI Helpers
+// ========================================
+
+// Box shadow levels
+@mixin shadow($level: 1) {
+  @if $level == 1 {
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  } @else if $level == 2 {
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15), 0 2px 4px rgba(0, 0, 0, 0.12);
+  } @else if $level == 3 {
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15), 0 3px 6px rgba(0, 0, 0, 0.1);
+  } @else if $level == 4 {
+    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.15), 0 5px 10px rgba(0, 0, 0, 0.05);
+  } @else if $level == 5 {
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+  }
+}
+
+// Flex centered items both horizontally and vertically
+@mixin flex-center() {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+// ========================================
+// Accessibility Helpers
+// ========================================
+
+// Visually hide elements while keeping them accessible to screen readers
+@mixin visually-hidden() {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+// Keyboard focus styles
+@mixin focus-ring($color: var(--border-focus), $offset: 2px, $width: 2px) {
+  outline: $width solid $color;
+  outline-offset: $offset;
+}
+
+// Touch target
+// Ensures interactive elements are at least 44x44px (WCAG 2.1 for Level AAA)
+// Usage: @include touch-target(); or @include touch-target(48px);
+@mixin touch-target($size: 44px) {
+  position: relative;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: max(100%, $size);
+    height: max(100%, $size);
+    min-width: $size;
+    min-height: $size;
+    z-index: -1; // Place it behind the actual content
+  }
+}
+
+// Alternative simplified touch target (apply to the element directly)
+// Usage: @include touch-target-simple();
+@mixin touch-target-simple($size: 44px) {
+  min-width: $size;
+  min-height: $size;
+  
+  // If the element is inline, we need to ensure it's displayed properly
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+// Creates an extended touch area without changing visual size
+// Usage: @include extended-touch-area(10px);
+@mixin extended-touch-area($padding: 10px) {
+  position: relative;
+  
+  &::after {
+    content: '';
+    position: absolute;
+    top: -$padding;
+    right: -$padding;
+    bottom: -$padding;
+    left: -$padding;
+    z-index: 1; // Place it above the element to capture touches
+    pointer-events: auto; // Ensure it catches events
+  }
+}
+
+// Reduced motion
+// Simplifies animations for users who prefer reduced motion
+// Usage: @include reduced-motion { ... }
+@mixin reduced-motion {
+  @media (prefers-reduced-motion: reduce) {
+    @content;
+  }
+}
+
+// ========================================
+// Animation / Transition Helpers
+// ========================================
+
+// Hardware acceleration for animations
+@mixin hardware-accelerate() {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+// Standard transition
+@mixin transition($property: all, $duration: 0.3s, $timing: ease, $delay: 0s) {
+  transition: $property $duration $timing $delay;
+}
+
+// ========================================
+// Grid Helpers
+// ========================================
+
+// Create a responsive grid layout
+@mixin grid-columns($columns: 12, $gap: $space-4) {
+  display: grid;
+  grid-template-columns: repeat($columns, 1fr);
+  gap: $gap;
+}
+
+// Create a column span in a grid
+@mixin grid-column($span: 1, $total: 12) {
+  grid-column: span #{$span} / span #{$span};
+}
+
+// ========================================
+// Form Element Helpers
+// ========================================
+
+// Reset form element styles
+@mixin form-reset() {
+  appearance: none;
+  background-color: transparent;
+  border: none;
+  padding: 0;
+  margin: 0;
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+}
+
+// ========================================
+// Text Helpers
+// ========================================
+
+// Gradient text
+@mixin text-gradient($gradient) {
+  background-image: $gradient;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+// Responsive font size with clamp
+@mixin responsive-font-size($min-size, $max-size, $min-width: 320px, $max-width: 1200px) {
+  font-size: $min-size;
+  
+  @media (min-width: $min-width) {
+    font-size: calc(#{$min-size} + #{strip-unit($max-size - $min-size)} * ((100vw - #{$min-width}) / #{strip-unit($max-width - $min-width)}));
+  }
+  
+  @media (min-width: $max-width) {
+    font-size: $max-size;
+  }
+}
+
+// Strip unit from a value
+@function strip-unit($value) {
+  @return $value / ($value * 0 + 1);
+}
+
+// ========================================
+// Container Helpers
+// ========================================
+
+// Container with maximum width and centered
+@mixin container($max-width: 1200px, $padding: $space-4) {
+  width: 100%;
+  max-width: $max-width;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: $padding;
+  padding-right: $padding;
+}
+
+// ========================================
+// Theme Helpers
+// ========================================
+
+// Apply styles only in dark mode
+@mixin dark-mode() {
+  .dark-theme &, 
+  [data-theme="dark"] & {
+    @content;
+  }
+}
+
+// Apply styles only in light mode
+@mixin light-mode() {
+  .light-theme &,
+  [data-theme="light"] &,
+  :not(.dark-theme) & {
+    @content;
+  }
+} 

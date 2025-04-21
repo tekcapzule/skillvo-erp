@@ -6,11 +6,11 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
 import { MatDividerModule } from '@angular/material/divider';
-import { ThemeService } from '../../core/services/theme.service';
+import { ThemeService, ThemeName } from '../../core/services/theme.service';
 import { Router } from '@angular/router';
 
 export interface Theme {
-  id: string;
+  id: ThemeName;
   name: string;
 }
 
@@ -50,7 +50,7 @@ export class UserProfileComponent implements OnInit {
     { id: 'ocean', name: 'Ocean' },
     { id: 'classic', name: 'Classic' }
   ];
-  selectedTheme: string = 'light';
+  selectedTheme: ThemeName = 'light';
   
   // Language options
   languages: Language[] = [
@@ -90,9 +90,9 @@ export class UserProfileComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // Subscribe to the dark mode observable
-    this.themeService.darkMode$.subscribe(isDark => {
-      this.selectedTheme = isDark ? 'dark' : 'light';
+    // Subscribe to the current theme to update the selected value
+    this.themeService.currentTheme$.subscribe(theme => {
+      this.selectedTheme = theme;
     });
   }
 
@@ -100,31 +100,9 @@ export class UserProfileComponent implements OnInit {
     this.closeProfile.emit();
   }
 
-  onThemeChange(themeId: string): void {
+  onThemeChange(themeId: ThemeName): void {
     this.selectedTheme = themeId;
-    
-    // If the theme is dark/light, update the theme service
-    if (themeId === 'dark') {
-      // Check if we need to toggle
-      this.themeService.darkMode$.subscribe(isDark => {
-        if (!isDark) {
-          this.themeService.toggleDarkMode();
-        }
-      }).unsubscribe();
-    } else if (themeId === 'light') {
-      // Check if we need to toggle
-      this.themeService.darkMode$.subscribe(isDark => {
-        if (isDark) {
-          this.themeService.toggleDarkMode();
-        }
-      }).unsubscribe();
-    }
-    
-    // For ocean and classic themes, we would implement additional logic here
-    if (themeId === 'ocean' || themeId === 'classic') {
-      // This would be implemented based on the theme implementation strategy
-      console.log(`Theme changed to ${themeId}`);
-    }
+    this.themeService.setTheme(themeId);
   }
 
   onLanguageChange(langCode: string): void {

@@ -1,0 +1,337 @@
+// ========================================
+// Accessibility
+// ========================================
+// Core accessibility styles and mixins for improved user experience
+// This file provides tools to enhance web accessibility across the application
+
+// ========================================
+// High Contrast Mode
+// ========================================
+
+// High contrast mode detection mixin
+@mixin high-contrast-mode {
+  @media (forced-colors: active), (-ms-high-contrast: active) {
+    @content;
+  }
+}
+
+// Apply high contrast adaptations
+@mixin high-contrast-adapt {
+  @include high-contrast-mode {
+    // Force elements to use system colors for maximum contrast
+    forced-color-adjust: none;
+    
+    // Basic overrides for common elements
+    border-color: ButtonText;
+    color: ButtonText;
+    background-color: ButtonFace;
+    
+    // Ensure focus indicators are visible
+    &:focus {
+      outline: 2px solid CanvasText;
+      outline-offset: 2px;
+    }
+    
+    @content;
+  }
+}
+
+// ========================================
+// Reduced Motion
+// ========================================
+
+// Reduced motion detection mixin
+@mixin reduced-motion {
+  @media (prefers-reduced-motion: reduce) {
+    @content;
+  }
+}
+
+// Apply reduced motion adaptations
+@mixin respect-reduced-motion {
+  @include reduced-motion {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+// Smart animation mixin with reduced motion fallback
+// Usage: @include smart-animation(transform, 300ms, ease-out);
+@mixin smart-animation($properties, $duration: 300ms, $timing-function: ease, $delay: 0ms) {
+  transition-property: $properties;
+  transition-duration: $duration;
+  transition-timing-function: $timing-function;
+  transition-delay: $delay;
+  
+  @include reduced-motion {
+    transition-duration: var(--reduced-motion-duration, 0.001ms);
+    transition-delay: 0ms;
+  }
+}
+
+// Smart keyframe animation mixin with reduced motion fallback
+// Usage: @include smart-keyframes(fade-in, 1s, 1, forwards);
+@mixin smart-keyframes($name, $duration: 1s, $iterations: 1, $fill-mode: none, $delay: 0s) {
+  animation-name: $name;
+  animation-duration: $duration;
+  animation-iteration-count: $iterations;
+  animation-fill-mode: $fill-mode;
+  animation-delay: $delay;
+  
+  @include reduced-motion {
+    animation-duration: var(--reduced-motion-duration, 0.001ms);
+    animation-delay: 0s;
+    animation-iteration-count: 1;
+  }
+}
+
+// Disable animations completely when reduced motion is preferred
+@mixin no-motion-animation {
+  @include reduced-motion {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+// Alternative animation for reduced motion
+// Provides a less jarring alternative when reduced motion is preferred
+// Usage: @include motion-safe { /* complex animation */ } @include motion-reduce { /* simpler animation */ }
+@mixin motion-safe {
+  @media (prefers-reduced-motion: no-preference) {
+    @content;
+  }
+}
+
+@mixin motion-reduce {
+  @media (prefers-reduced-motion: reduce) {
+    @content;
+  }
+}
+
+// ========================================
+// Touch Targets
+// ========================================
+
+// Ensure minimum touch target size of 44x44px (WCAG 2.5.5)
+@mixin touch-target($size: 44px) {
+  min-width: $size;
+  min-height: $size;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: $size;
+    height: $size;
+    min-width: 100%;
+    min-height: 100%;
+  }
+}
+
+// Extended touch area without changing visual size
+@mixin extended-touch-area($padding: 10px) {
+  position: relative;
+  
+  &::after {
+    content: '';
+    position: absolute;
+    top: -$padding;
+    right: -$padding;
+    bottom: -$padding;
+    left: -$padding;
+    z-index: 1;
+  }
+}
+
+// ========================================
+// Focus Styles
+// ========================================
+
+// Enhanced focus visible styles
+@mixin focus-visible {
+  &:focus-visible {
+    outline: 2px solid var(--border-focus);
+    outline-offset: 2px;
+    box-shadow: 0 0 0 4px rgba(var(--primary-rgb), 0.25);
+    
+    @include high-contrast-mode {
+      outline: 2px solid CanvasText;
+      outline-offset: 2px;
+    }
+    
+    @content;
+  }
+}
+
+// ========================================
+// Screen Reader Only
+// ========================================
+
+// Hide content visually but keep available for screen readers
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+// Make SR-only content visible on focus (for skip links)
+.sr-only-focusable {
+  &:focus,
+  &:active {
+    position: static;
+    width: auto;
+    height: auto;
+    overflow: visible;
+    clip: auto;
+    white-space: normal;
+  }
+}
+
+// ========================================
+// Skip Links
+// ========================================
+
+.skip-link {
+  position: absolute;
+  top: -100px;
+  left: 0;
+  z-index: 9999;
+  padding: var(--space-sm) var(--space-md);
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  text-decoration: none;
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-md);
+  
+  // Use the smart animation mixin
+  @include smart-animation(top, 0.2s, ease);
+  
+  &:focus {
+    top: var(--space-sm);
+  }
+}
+
+// ========================================
+// Contrast and Color Utilities
+// ========================================
+
+// Enhanced text contrast
+.contrast-text {
+  color: var(--text-high-contrast);
+  font-weight: var(--font-medium);
+}
+
+// Color blind safe palette utility classes
+.color-blind-safe-red { color: var(--color-blind-red); }
+.color-blind-safe-green { color: var(--color-blind-green); }
+.color-blind-safe-blue { color: var(--color-blind-blue); }
+.color-blind-safe-orange { color: var(--color-blind-orange); }
+.color-blind-safe-purple { color: var(--color-blind-purple); }
+
+.bg-color-blind-safe-red { background-color: var(--color-blind-red); }
+.bg-color-blind-safe-green { background-color: var(--color-blind-green); }
+.bg-color-blind-safe-blue { background-color: var(--color-blind-blue); }
+.bg-color-blind-safe-orange { background-color: var(--color-blind-orange); }
+.bg-color-blind-safe-purple { background-color: var(--color-blind-purple); }
+
+// ========================================
+// Common Accessibility Enhancements
+// ========================================
+
+// Basic elements that should have enhanced accessibility
+a, button, input, select, textarea, [role="button"] {
+  @include focus-visible;
+}
+
+// Interactive elements should have appropriate touch targets on mobile
+@media (max-width: 768px) {
+  button, 
+  [role="button"],
+  .interactive-element,
+  input[type="submit"],
+  input[type="button"] {
+    @include touch-target;
+  }
+}
+
+// Apply global reduced motion preferences
+html {
+  @include respect-reduced-motion;
+}
+
+// Global animation classes with reduced motion support
+.animate-fade-in {
+  @include motion-safe {
+    opacity: 0;
+    @include smart-keyframes(fade-in, 0.5s, 1, forwards);
+  }
+  
+  @include motion-reduce {
+    opacity: 1;
+  }
+}
+
+.animate-slide-up {
+  @include motion-safe {
+    transform: translateY(20px);
+    opacity: 0;
+    @include smart-animation((transform, opacity), 0.5s, ease-out);
+  }
+  
+  @include motion-reduce {
+    transform: none;
+    opacity: 1;
+  }
+}
+
+.animate-scale {
+  @include motion-safe {
+    transform: scale(0.95);
+    @include smart-animation(transform, 0.3s, ease-in-out);
+    
+    &:hover {
+      transform: scale(1.05);
+    }
+  }
+  
+  @include motion-reduce {
+    transform: none;
+    
+    &:hover {
+      transform: none;
+    }
+  }
+}
+
+// Define keyframes for animations
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slide-in-right {
+  from { transform: translateX(-30px); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes slide-in-up {
+  from { transform: translateY(30px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+} 

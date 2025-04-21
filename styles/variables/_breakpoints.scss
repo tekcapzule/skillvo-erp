@@ -1,0 +1,42 @@
+// Breakpoints
+$breakpoint-xs: 0;      // Small mobile
+$breakpoint-sm: 576px;  // Mobile
+$breakpoint-md: 768px;  // Tablet
+$breakpoint-lg: 992px;  // Small desktop
+$breakpoint-xl: 1200px; // Large desktop
+$breakpoint-xxl: 1400px; // Extra large desktop
+
+// Breakpoint Mixins
+@mixin respond-to($breakpoint) {
+  @if $breakpoint == xs {
+    @media (max-width: #{$breakpoint-sm - 1px}) { @content; }
+  }
+  @else if $breakpoint == sm {
+    @media (min-width: #{$breakpoint-sm}) and (max-width: #{$breakpoint-md - 1px}) { @content; }
+  }
+  @else if $breakpoint == md {
+    @media (min-width: #{$breakpoint-md}) and (max-width: #{$breakpoint-lg - 1px}) { @content; }
+  }
+  @else if $breakpoint == lg {
+    @media (min-width: #{$breakpoint-lg}) and (max-width: #{$breakpoint-xl - 1px}) { @content; }
+  }
+  @else if $breakpoint == xl {
+    @media (min-width: #{$breakpoint-xl}) and (max-width: #{$breakpoint-xxl - 1px}) { @content; }
+  }
+  @else if $breakpoint == xxl {
+    @media (min-width: #{$breakpoint-xxl}) { @content; }
+  }
+}
+
+// Convenience mixins
+@mixin mobile {
+  @media (max-width: #{$breakpoint-md - 1px}) { @content; }
+}
+
+@mixin tablet-and-up {
+  @media (min-width: #{$breakpoint-md}) { @content; }
+}
+
+@mixin desktop-and-up {
+  @media (min-width: #{$breakpoint-lg}) { @content; }
+}

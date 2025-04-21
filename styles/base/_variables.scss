@@ -1,0 +1,150 @@
+// ========================================
+// SCSS Variable Mappings
+// ========================================
+// This file maps CSS variables from our theme system to SCSS variables
+// for backwards compatibility with existing code. This allows older
+// components to continue working while we transition to CSS variables.
+// 
+// Note: For new code, prefer using CSS variables directly.
+// Example: color: var(--text-primary); instead of color: $text-primary;
+
+// ----------------------------------------
+// Core color mappings
+// ----------------------------------------
+// These map to CSS variables from _colors.scss
+
+// Primary palette
+$primary-50: var(--primary-50);
+$primary-100: var(--primary-100);
+$primary-200: var(--primary-200);
+$primary-300: var(--primary-300);
+$primary-400: var(--primary-400);
+$primary-500: var(--primary-500);
+$primary-600: var(--primary-600);
+$primary-700: var(--primary-700);
+$primary-800: var(--primary-800);
+$primary-900: var(--primary-900);
+$primary-950: var(--primary-950);
+
+// Secondary palette
+$secondary-50: var(--secondary-50);
+$secondary-100: var(--secondary-100);
+$secondary-200: var(--secondary-200);
+$secondary-300: var(--secondary-300);
+$secondary-400: var(--secondary-400);
+$secondary-500: var(--secondary-500);
+$secondary-600: var(--secondary-600);
+$secondary-700: var(--secondary-700);
+$secondary-800: var(--secondary-800);
+$secondary-900: var(--secondary-900);
+$secondary-950: var(--secondary-950);
+
+// Accent colors
+$accent-50: var(--accent-50);
+$accent-100: var(--accent-100);
+$accent-200: var(--accent-200);
+$accent-300: var(--accent-300);
+$accent-400: var(--accent-400);
+$accent-500: var(--accent-500);
+$accent-600: var(--accent-600);
+$accent-700: var(--accent-700);
+$accent-800: var(--accent-800);
+$accent-900: var(--accent-900);
+$accent-950: var(--accent-950);
+
+// Status colors
+$success: var(--success-500);
+$warning: var(--warning-500);
+$error: var(--error-500);
+$info: var(--info-500);
+
+// Neutral colors
+$neutral-50: var(--neutral-50);
+$neutral-100: var(--neutral-100);
+$neutral-200: var(--neutral-200);
+$neutral-300: var(--neutral-300);
+$neutral-400: var(--neutral-400);
+$neutral-500: var(--neutral-500);
+$neutral-600: var(--neutral-600);
+$neutral-700: var(--neutral-700);
+$neutral-800: var(--neutral-800);
+$neutral-900: var(--neutral-900);
+$neutral-950: var(--neutral-950);
+
+$white: white;
+$black: black;
+
+// Semantic colors
+$text-primary: var(--text-primary);
+$text-secondary: var(--text-secondary);
+$text-tertiary: var(--text-tertiary);
+$text-disabled: var(--text-disabled);
+$text-inverse: var(--text-inverse);
+$text-link: var(--text-link);
+$text-link-hover: var(--text-link-hover);
+$text-error: var(--text-error);
+$text-success: var(--text-success);
+$text-warning: var(--text-warning);
+
+$bg-app: var(--bg-app);
+$bg-surface: var(--bg-surface);
+$bg-element: var(--bg-element);
+$bg-element-hover: var(--bg-element-hover);
+$bg-element-active: var(--bg-element-active);
+$bg-primary: var(--bg-primary);
+$bg-primary-hover: var(--bg-primary-hover);
+$bg-primary-active: var(--bg-primary-active);
+$bg-secondary: var(--bg-secondary);
+$bg-secondary-hover: var(--bg-secondary-hover);
+$bg-success: var(--bg-success);
+$bg-warning: var(--bg-warning);
+$bg-error: var(--bg-error);
+$bg-info: var(--bg-info);
+
+$border-default: var(--border-default);
+$border-strong: var(--border-strong);
+$border-focus: var(--border-focus);
+$border-error: var(--border-error);
+
+// Transitions
+$transition-fast: 150ms;
+$transition-normal: 300ms;
+$transition-slow: 500ms;
+$transition-property-common: background-color, border-color, color, fill, stroke, opacity, box-shadow, transform;
+$transition-timing-common: cubic-bezier(0.4, 0, 0.2, 1);
+
+// Breakpoints map (used by breakpoint mixin)
+$breakpoints: (
+  xs: 0,
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px,
+  xxl: 1400px
+);
+
+// Breakpoints (also defined in _mixins.scss for media queries)
+// ----------------------------------------
+$breakpoint-xs: 0;       // Extra small (mobile portrait)
+$breakpoint-sm: 576px;   // Small (mobile landscape)
+$breakpoint-md: 768px;   // Medium (tablet)
+$breakpoint-lg: 992px;   // Large (laptop)
+$breakpoint-xl: 1200px;  // Extra large (desktop)
+$breakpoint-xxl: 1400px; // Extra extra large (large desktop)
+
+// Container max widths
+// ----------------------------------------
+$container-max-sm: 540px;
+$container-max-md: 720px;
+$container-max-lg: 960px;
+$container-max-xl: 1140px;
+$container-max-xxl: 1320px;
+
+// Grid columns
+$grid-columns: 12;
+$grid-gutter-width: 1.5rem;
+
+// Borders
+// ----------------------------------------
+$border-width-none: 0;
+$border-width-thin: 1px;

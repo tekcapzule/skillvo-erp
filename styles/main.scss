@@ -1,0 +1,95 @@
+// ==========================================================================
+// SkillVo Main Stylesheet
+// ==========================================================================
+
+// 1. Configuration & Helpers
+// These files contain no actual CSS, but are used for variables, mixins, etc.
+// --------------------------------------------------
+
+// Import variables first as they're used throughout the system
+@import 'variables/colors';
+@import 'variables/typography';
+@import 'variables/spacing';
+@import 'variables/breakpoints';
+@import 'variables/layout';
+@import 'variables/accessibility';
+
+// Import mixins after variables
+@import 'abstracts/mixins';
+
+// 2. Base Styles
+// Common and global styling
+// --------------------------------------------------
+
+@import 'base/reset';
+@import 'base/variables'; // Maps CSS vars to SCSS vars for backward compatibility
+@import 'base/typography';
+@import 'base/accessibility';
+
+// 3. Themes
+// Theme management and theme-specific files
+// The application supports four themes:
+// - Light (default)
+// - Dark
+// - Ocean
+// - Classic
+// --------------------------------------------------
+
+@import 'themes/theme-manager';
+
+// 4. Layout
+// Styling for macro layout components, not specific features
+// --------------------------------------------------
+
+@import 'layout/grid';
+@import 'layout/container';
+@import 'layout/header';
+@import 'layout/footer';
+@import 'layout/sidebar';
+@import 'layout/section';
+
+// 5. Components
+// Individual components that can be reused across many pages
+// --------------------------------------------------
+
+@import 'components/buttons';
+@import 'components/forms';
+@import 'components/cards';
+@import 'components/modals';
+@import 'components/alerts';
+@import 'components/avatars';
+@import 'components/loaders';
+@import 'components/tables';
+@import 'components/pagination';
+@import 'components/breadcrumbs';
+@import 'components/tabs';
+@import 'components/badges';
+@import 'components/tooltips';
+
+// 6. Utilities
+// Utility classes with a single purpose
+// --------------------------------------------------
+
+@import 'utilities/spacing';
+@import 'utilities/visibility';
+@import 'utilities/colors';
+@import 'utilities/text';
+@import 'utilities/flex';
+@import 'utilities/borders';
+@import 'utilities/responsive';
+
+// 7. Pages
+// Page-specific styles
+// --------------------------------------------------
+
+@import 'pages/home';
+@import 'pages/auth';
+@import 'pages/dashboard';
+@import 'pages/profile';
+
+// 8. Vendor Overrides
+// Styles that override third-party libraries
+// --------------------------------------------------
+
+@import 'vendor/material';
+@import 'vendor/angular'; 
