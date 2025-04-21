@@ -1,16 +1,23 @@
 .sidenav-container {
-  height: 100vh;
+  height: calc(100vh - 56px); /* Viewport height minus header height */
   width: 100%;
-  margin-top: 56px; /* Space for fixed header */
+  position: absolute;
+  top: 56px; /* Position below fixed header */
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow: hidden; /* Hide scrollbar on container level */
 }
 
 .sidenav {
   width: 240px;
   border-right: none; /* Border is already defined in sidenav component */
-  margin-top: 56px; /* Account for fixed header */
   transition: width 0.3s ease;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   overflow-x: hidden !important;
+  position: absolute;
+  top: 0;
+  bottom: 0;
 }
 
 .collapsed-sidenav {
@@ -19,6 +26,7 @@
 
 mat-sidenav-content {
   transition: margin-left 0.3s ease; /* Smooth transition when sidenav collapses */
+  overflow: hidden; /* Hide scrollbar at this level */
 }
 
 :host ::ng-deep .mat-drawer-inner-container {
@@ -30,12 +38,14 @@ mat-sidenav-content {
   flex-direction: column;
   height: 100%;
   background-color: var(--surface-background, #ffffff);
+  overflow: hidden; /* Hide scrollbar at this level */
 }
 
 .content-container {
   padding: 24px;
-  height: calc(100vh - 56px - 56px); /* Header height (56px) + breadcrumb height (56px) */
-  overflow-y: auto;
+  height: calc(100% - 56px); /* Full height minus breadcrumb height */
+  overflow-y: auto; /* Show scrollbar only when needed */
+  overflow-x: hidden; /* Prevent horizontal scrollbar */
   background-color: var(--surface-background, #ffffff);
 }
 
@@ -78,7 +88,7 @@ mat-sidenav-content {
   
   .content-container {
     padding: 16px;
-    height: calc(100vh - 56px); /* Only account for header height since breadcrumb is hidden */
+    height: 100%; /* Full height on mobile since breadcrumb is hidden */
   }
   
   /* Show floating hamburger button on mobile */
