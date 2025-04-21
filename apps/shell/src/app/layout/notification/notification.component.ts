@@ -1,9 +1,11 @@
-import { Component, OnInit, Output, EventEmitter, Input, HostListener } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input, HostListener, OnDestroy, ElementRef, Renderer2 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { ThemeService, ThemeName } from '../../core/services/theme.service';
+import { Subscription } from 'rxjs';
 
 export interface NotificationCategory {
   id: string;
@@ -32,7 +34,7 @@ export interface Notification {
     MatProgressSpinnerModule
   ]
 })
-export class NotificationComponent implements OnInit {
+export class NotificationComponent implements OnInit, OnDestroy {
   @Input() isOpen = false;
   @Output() closeNotification = new EventEmitter<void>();
 
@@ -44,6 +46,8 @@ export class NotificationComponent implements OnInit {
   searchQuery = '';
   loading = false;
   unreadCount = 0;
+  
+  private themeSubscription: Subscription | null = null;
 
   @HostListener('document:click', ['$event'])
   onDocumentClick(event: MouseEvent): void {
@@ -66,9 +70,66 @@ export class NotificationComponent implements OnInit {
     }
   }
 
+  constructor(
+    private themeService: ThemeService,
+    private el: ElementRef,
+    private renderer: Renderer2
+  ) {}
+
   ngOnInit(): void {
     this.loadNotifications();
     this.calculateUnreadCount();
+    
+    // Subscribe to theme changes
+    this.themeSubscription = this.themeService.currentTheme$.subscribe(theme => {
+      this.updateNotificationTheme(theme);
+    });
+    
+    // Apply current theme on initialization
+    if (this.themeService.isDarkMode()) {
+      this.updateNotificationTheme('dark');
+    } else {
+      this.updateNotificationTheme('light');
+    }
+  }
+  
+  ngOnDestroy(): void {
+    // Clean up subscription when component is destroyed
+    if (this.themeSubscription) {
+      this.themeSubscription.unsubscribe();
+    }
+  }
+  
+  /**
+   * Updates the notification panel with the appropriate theme classes and attributes
+   */
+  private updateNotificationTheme(theme: ThemeName): void {
+    const notificationPanel = this.el.nativeElement.querySelector('.notification-panel');
+    const notificationOverlay = this.el.nativeElement.querySelector('.notification-overlay');
+    
+    if (notificationPanel) {
+      // Remove all theme classes
+      this.renderer.removeClass(notificationPanel, 'light-theme');
+      this.renderer.removeClass(notificationPanel, 'dark-theme');
+      this.renderer.removeClass(notificationPanel, 'ocean-theme');
+      this.renderer.removeClass(notificationPanel, 'classic-theme');
+      
+      // Add current theme class
+      this.renderer.addClass(notificationPanel, `${theme}-theme`);
+      
+      // Set data-theme attribute
+      this.renderer.setAttribute(notificationPanel, 'data-theme', theme);
+    }
+    
+    if (notificationOverlay) {
+      // Do the same for overlay
+      this.renderer.removeClass(notificationOverlay, 'light-theme');
+      this.renderer.removeClass(notificationOverlay, 'dark-theme');
+      this.renderer.removeClass(notificationOverlay, 'ocean-theme');
+      this.renderer.removeClass(notificationOverlay, 'classic-theme');
+      this.renderer.addClass(notificationOverlay, `${theme}-theme`);
+      this.renderer.setAttribute(notificationOverlay, 'data-theme', theme);
+    }
   }
 
   loadNotifications(): void {

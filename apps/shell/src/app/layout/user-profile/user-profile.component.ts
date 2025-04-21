@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter, Input, HostListener } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input, HostListener, Renderer2, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
@@ -80,14 +80,46 @@ export class UserProfileComponent implements OnInit {
 
   constructor(
     private themeService: ThemeService,
-    private router: Router
+    private router: Router,
+    private renderer: Renderer2,
+    private el: ElementRef
   ) {}
 
   ngOnInit(): void {
     // Subscribe to the current theme to update the selected value
     this.themeService.currentTheme$.subscribe(theme => {
       this.selectedTheme = theme;
+      this.updateProfilePanelTheme(theme);
     });
+  }
+
+  /**
+   * Ensures profile panel has the correct theme classes
+   * This helps with theme inheritance in the overlay
+   */
+  private updateProfilePanelTheme(theme: ThemeName): void {
+    const profilePanel = this.el.nativeElement.querySelector('.profile-panel');
+    const profileOverlay = this.el.nativeElement.querySelector('.profile-overlay');
+    
+    if (profilePanel) {
+      // Remove all theme classes
+      this.renderer.removeClass(profilePanel, 'light-theme');
+      this.renderer.removeClass(profilePanel, 'dark-theme');
+      
+      // Add current theme class
+      this.renderer.addClass(profilePanel, `${theme}-theme`);
+      
+      // Set data-theme attribute
+      this.renderer.setAttribute(profilePanel, 'data-theme', theme);
+    }
+    
+    if (profileOverlay) {
+      // Do the same for overlay
+      this.renderer.removeClass(profileOverlay, 'light-theme');
+      this.renderer.removeClass(profileOverlay, 'dark-theme');
+      this.renderer.addClass(profileOverlay, `${theme}-theme`);
+      this.renderer.setAttribute(profileOverlay, 'data-theme', theme);
+    }
   }
 
   closePanel(): void {
@@ -95,8 +127,15 @@ export class UserProfileComponent implements OnInit {
   }
 
   onThemeChange(themeId: ThemeName): void {
+    // Update the selected theme
     this.selectedTheme = themeId;
-    // Theme service integration will be added later as requested
+    
+    // Call the theme service to apply the theme
+    this.themeService.setTheme(themeId);
+    
+    // Apply theme to profile panel immediately
+    this.updateProfilePanelTheme(themeId);
+    
     console.log(`Theme changed to ${themeId}`);
   }
 

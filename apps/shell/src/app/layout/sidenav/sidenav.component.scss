@@ -1,14 +1,80 @@
+/* Light theme variables - matching the structure from user-profile component */
+.sidenav-container[data-theme="light"],
+.sidenav-container.light-theme {
+  --bg-surface: #ffffff;
+  --bg-element: #f5f5f5;
+  --bg-element-hover: #eeeeee;
+  --border-default: #e0e0e0;
+  --text-primary: #212121;
+  --text-secondary: #616161;
+  --text-tertiary: #9e9e9e;
+  --primary-50: #edf7ff;
+  --primary-500: #1971e5;
+  --neutral-100: #f5f5f5;
+  --neutral-300: #e0e0e0;
+  --z-10: 10;
+  --z-30: 30;
+  --font-family-main: 'Roboto', sans-serif;
+  --font-medium: 500;
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.125rem;
+  --inset-sm: 8px;
+  --inset-md: 12px;
+  --inset-xl: 32px;
+  --leading-none: 1;
+  --leading-normal: 1.5;
+}
+
+/* Dark theme variables */
+.sidenav-container[data-theme="dark"],
+.sidenav-container.dark-theme {
+  --bg-surface: #252526;
+  --bg-element: #2c2c2c;
+  --bg-element-hover: #333333;
+  --border-default: #3c3c3c;
+  --text-primary: #e0e0e0;
+  --text-secondary: #b0b0b0;
+  --text-tertiary: #808080;
+  --primary-50: #103155;
+  --primary-500: #4c8ff8;
+  --neutral-100: #333333;
+  --neutral-300: #555555;
+  --z-10: 10;
+  --z-30: 30;
+  --font-family-main: 'Roboto', sans-serif;
+  --font-medium: 500;
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.125rem;
+  --inset-sm: 8px;
+  --inset-md: 12px;
+  --inset-xl: 32px;
+  --leading-none: 1;
+  --leading-normal: 1.5;
+}
+
+// Utility class to show elements only on desktop
+.desktop-only {
+  @media screen and (max-width: 768px) {
+    display: none !important;
+  }
+}
+
 .sidenav-container {
   display: flex;
   flex-direction: column;
   height: 100%;
-  background-color: #f8f9fa;
-  border-right: 1px solid #e0e0e0;
+  background-color: var(--bg-element);
+  border-right: 1px solid var(--border-default);
   width: 240px;
   transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
-  z-index: 1000;
+  z-index: var(--z-30);
   overflow-x: hidden;
+  font-family: var(--font-family-main);
   /* Add hardware acceleration to prevent flickering */
   transform: translateZ(0);
   will-change: width;
@@ -44,10 +110,6 @@
     
     .sidenav-header {
       justify-content: center;
-      
-      .menu-button {
-        margin: 0;
-      }
     }
   }
 }
@@ -58,11 +120,11 @@
   align-items: center;
   justify-content: flex-start;
   padding: 0;
-  border-bottom: 1px solid #e0e0e0;
-  background-color: #ffffff;
+  border-bottom: 1px solid var(--border-default);
+  background-color: var(--bg-surface);
   position: sticky;
   top: 0;
-  z-index: 10;
+  z-index: var(--z-10);
   margin-bottom: 0;
   overflow: hidden;
 
@@ -73,8 +135,15 @@
     height: 56px;
     width: 56px;
     margin: 0;
-    /* Fix icon positioning */
-    line-height: 0;
+    color: var(--text-secondary);
+    
+    &:hover {
+      background-color: var(--bg-element-hover);
+    }
+    
+    mat-icon {
+      color: var(--text-secondary);
+    }
   }
 
   .app-logo {
@@ -82,14 +151,14 @@
     align-items: center;
     
     mat-icon {
-      margin-right: 8px;
-      color: #2196f3;
+      margin-right: var(--inset-sm, 8px);
+      color: var(--primary-500);
     }
     
     .app-name {
-      font-size: 16px;
-      font-weight: 500;
-      color: #333333;
+      font-size: var(--text-base, 1rem);
+      font-weight: var(--font-medium, 500);
+      color: var(--text-primary);
     }
   }
 }
@@ -110,7 +179,7 @@
     .icon-container {
       width: 24px;
       height: 24px;
-      margin-right: 12px;
+      margin-right: var(--inset-md, 12px);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -118,8 +187,8 @@
     }
     
     mat-icon {
-      color: #616161;
-      font-size: 20px;
+      color: var(--text-secondary);
+      font-size: var(--text-lg, 1.125rem);
       /* Fix icon positioning */
       display: flex;
       align-items: center;
@@ -127,14 +196,15 @@
     }
     
     .menu-label {
-      font-size: 14px;
-      color: #333333;
+      font-size: var(--text-sm, 0.875rem);
+      color: var(--text-primary);
+      line-height: var(--leading-normal, 1.5);
     }
     
     .expand-icon {
       margin-left: auto;
-      font-size: 18px;
-      color: #9e9e9e;
+      font-size: var(--text-base, 1rem);
+      color: var(--text-tertiary);
     }
     
     &.centered {
@@ -147,29 +217,29 @@
   }
   
   .submenu {
-    background-color: #f0f0f0;
+    background-color: var(--bg-element-hover);
     
     .child-menu-item {
-      padding-left: 32px;
-      font-size: 13px;
+      padding-left: var(--inset-xl, 32px);
+      font-size: var(--text-xs, 0.75rem);
     }
   }
   
   a.active-link {
-    background-color: rgba(33, 150, 243, 0.08);
+    background-color: var(--primary-50);
     
     .menu-item {
       mat-icon {
-        color: #2196f3;
+        color: var(--primary-500);
       }
       
       .menu-label {
-        color: #2196f3;
-        font-weight: 500;
+        color: var(--primary-500);
+        font-weight: var(--font-medium, 500);
       }
       
       .expand-icon {
-        color: #2196f3;
+        color: var(--primary-500);
       }
     }
   }
@@ -179,7 +249,7 @@
     padding: 0;
     
     &:hover {
-      background-color: rgba(0, 0, 0, 0.04);
+      background-color: var(--bg-element-hover);
     }
   }
 }
@@ -194,13 +264,13 @@ mat-nav-list {
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  padding: 0 16px;
-  border-top: 1px solid #e0e0e0;
+  padding: 0 var(--inset-md, 16px);
+  border-top: 1px solid var(--border-default);
   overflow: hidden;
   
   .version {
-    font-size: 11px;
-    color: #9e9e9e;
+    font-size: var(--text-xs, 0.75rem);
+    color: var(--text-tertiary);
   }
 }
 
@@ -211,7 +281,7 @@ mat-icon {
   display: flex;
   align-items: center;
   justify-content: center;
-  line-height: 1;
+  line-height: var(--leading-none, 1);
   /* Fix subpixel rendering issues */
   transform: translateZ(0);
 }
@@ -231,7 +301,7 @@ mat-icon {
     flex: 1; /* Take up available space */
     
     .menu-item .menu-label {
-      font-size: 13px;
+      font-size: var(--text-xs, 0.75rem);
     }
   }
   
@@ -239,19 +309,17 @@ mat-icon {
     display: flex; /* Show the header on mobile */
     position: sticky;
     top: 0;
-    z-index: 10;
-    background-color: #ffffff;
-    border-bottom: 1px solid #e0e0e0;
-  }
-  
-  .menu-button {
-    background-color: rgba(0, 0, 0, 0.05);
+    z-index: var(--z-10);
+    background-color: var(--bg-surface);
+    border-bottom: 1px solid var(--border-default);
+    justify-content: center; /* Center the logo/content */
+    height: 48px; /* Slightly smaller on mobile */
   }
   
   .sidenav-footer {
     position: sticky;
     bottom: 0;
-    background-color: #ffffff;
-    border-top: 1px solid #e0e0e0;
+    background-color: var(--bg-surface);
+    border-top: 1px solid var(--border-default);
   }
 }

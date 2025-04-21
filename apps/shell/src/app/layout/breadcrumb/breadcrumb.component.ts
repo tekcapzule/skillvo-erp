@@ -1,6 +1,8 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy, ElementRef, Renderer2, ChangeDetectorRef, AfterViewInit } from '@angular/core';
 import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
-import { filter, distinctUntilChanged } from 'rxjs/operators';
+import { filter, distinctUntilChanged, takeUntil } from 'rxjs/operators';
+import { ThemeService, ThemeName } from '../../core/services/theme.service';
+import { Subscription, Subject } from 'rxjs';
 
 interface Breadcrumb {
   label: string;
@@ -13,21 +15,41 @@ interface Breadcrumb {
   styleUrls: ['./breadcrumb.component.scss'],
   standalone: false
 })
-export class BreadcrumbComponent implements OnInit {
+export class BreadcrumbComponent implements OnInit, OnDestroy, AfterViewInit {
   @Input() sidenavCollapsed = false;
   breadcrumbs: Breadcrumb[] = [];
   isHomePage = false;
+  
+  private destroy$ = new Subject<void>();
+  private currentTheme: ThemeName = 'light';
 
   constructor(
     private router: Router,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private themeService: ThemeService,
+    private el: ElementRef,
+    private renderer: Renderer2,
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
+    // Initialize breadcrumbs
+    this.breadcrumbs = this.buildBreadcrumbs(this.activatedRoute.root);
+    this.cleanupBreadcrumbs();
+    
+    // Check if we're on the home page initially
+    this.isHomePage = this.checkIfHomePage(this.router.url);
+    
+    // Initialize theme from service
+    // If isDarkMode() is true, use 'dark', otherwise use 'light'
+    this.currentTheme = this.themeService.isDarkMode() ? 'dark' : 'light';
+    
+    // Subscribe to router events to update breadcrumbs and home page status
     this.router.events.pipe(
       filter(event => event instanceof NavigationEnd),
-      distinctUntilChanged()
-    ).subscribe((event: any) => {
+      distinctUntilChanged(),
+      takeUntil(this.destroy$)
+    ).subscribe(() => {
       // Check if current URL path is home
       const currentUrl = this.router.url;
       this.isHomePage = this.checkIfHomePage(currentUrl);
@@ -37,14 +59,62 @@ export class BreadcrumbComponent implements OnInit {
       
       // Clean up breadcrumbs - remove redundant entries and app context
       this.cleanupBreadcrumbs();
+      
+      // Make sure to apply theme after navigation
+      setTimeout(() => {
+        this.updateBreadcrumbTheme(this.currentTheme);
+        this.cdr.detectChanges();
+      });
     });
-
-    // Initialize breadcrumbs
-    this.breadcrumbs = this.buildBreadcrumbs(this.activatedRoute.root);
-    this.cleanupBreadcrumbs();
     
-    // Check if we're on the home page initially
-    this.isHomePage = this.checkIfHomePage(this.router.url);
+    // Subscribe to theme changes
+    this.themeService.currentTheme$.pipe(
+      takeUntil(this.destroy$)
+    ).subscribe(theme => {
+      this.currentTheme = theme;
+      this.updateBreadcrumbTheme(theme);
+    });
+  }
+  
+  ngAfterViewInit(): void {
+    // Apply theme after view is initialized with a delay
+    // to ensure elements are in the DOM
+    setTimeout(() => {
+      this.updateBreadcrumbTheme(this.currentTheme);
+    }, 10);
+  }
+  
+  ngOnDestroy(): void {
+    // Clean up subscriptions when component is destroyed
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+  
+  /**
+   * Updates the breadcrumb's theme classes and attributes.
+   * Includes handling for both main breadcrumb and theme placeholder elements.
+   */
+  private updateBreadcrumbTheme(theme: ThemeName): void {
+    // Store current theme even if we can't apply it immediately
+    this.currentTheme = theme;
+    
+    // Apply theme to all breadcrumb containers, including the theme placeholder
+    const elements = this.el.nativeElement.querySelectorAll('.breadcrumb-container');
+    
+    if (elements && elements.length > 0) {
+      elements.forEach((element: Element) => {
+        if (element) {
+          // Remove all theme classes
+          element.classList.remove('light-theme', 'dark-theme', 'ocean-theme', 'classic-theme');
+          
+          // Add current theme class
+          element.classList.add(`${theme}-theme`);
+          
+          // Set data-theme attribute
+          element.setAttribute('data-theme', theme);
+        }
+      });
+    }
   }
 
   private checkIfHomePage(url: string): boolean {

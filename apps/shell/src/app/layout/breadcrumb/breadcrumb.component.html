@@ -1,3 +1,10 @@
+<!-- 
+  Theme placeholder that's always present to maintain theme state
+  even when the main breadcrumb is hidden 
+-->
+<div class="breadcrumb-container theme-placeholder" aria-hidden="true"></div>
+
+<!-- Main visible breadcrumb -->
 <nav *ngIf="!isHomePage && breadcrumbs.length > 0" class="breadcrumb-container" [class.collapsed-sidenav]="sidenavCollapsed" aria-label="breadcrumb">
   <ol class="breadcrumb">
     <li *ngFor="let breadcrumb of breadcrumbs; let last = last" 

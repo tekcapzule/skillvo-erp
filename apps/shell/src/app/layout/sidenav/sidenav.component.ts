@@ -1,6 +1,8 @@
-import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input, OnDestroy, ElementRef, Renderer2 } from '@angular/core';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
+import { ThemeService, ThemeName } from '../../core/services/theme.service';
+import { Subscription } from 'rxjs';
 
 interface MenuItem {
   label: string;
@@ -16,9 +18,11 @@ interface MenuItem {
   styleUrls: ['./sidenav.component.scss'],
   standalone: false
 })
-export class SidenavComponent implements OnInit {
+export class SidenavComponent implements OnInit, OnDestroy {
   @Output() toggleSidenav = new EventEmitter<void>();
   @Input() collapsed = false;
+  
+  private themeSubscription: Subscription | null = null;
   
   menuItems: MenuItem[] = [
     { label: 'Home', icon: 'home', route: '/learn/home' },
@@ -41,13 +45,55 @@ export class SidenavComponent implements OnInit {
 
   constructor(
     private matIconRegistry: MatIconRegistry,
-    private domSanitizer: DomSanitizer
+    private domSanitizer: DomSanitizer,
+    private themeService: ThemeService,
+    private el: ElementRef,
+    private renderer: Renderer2
   ) {
     // Register custom SVG icons
     this.registerIcons();
   }
 
   ngOnInit(): void {
+    // Subscribe to theme changes and update immediately
+    this.themeSubscription = this.themeService.currentTheme$.subscribe(theme => {
+      this.updateSidenavTheme(theme);
+    });
+    
+    // Apply current theme on initialization
+    if (this.themeService.isDarkMode()) {
+      this.updateSidenavTheme('dark');
+    } else {
+      this.updateSidenavTheme('light');
+    }
+  }
+  
+  ngOnDestroy(): void {
+    // Clean up subscription when component is destroyed
+    if (this.themeSubscription) {
+      this.themeSubscription.unsubscribe();
+    }
+  }
+
+  /**
+   * Updates the sidenav element with the appropriate theme classes and attributes
+   */
+  private updateSidenavTheme(theme: ThemeName): void {
+    const sidenavContainer = this.el.nativeElement.querySelector('.sidenav-container');
+    
+    if (sidenavContainer) {
+      // Remove all theme classes
+      this.renderer.removeClass(sidenavContainer, 'light-theme');
+      this.renderer.removeClass(sidenavContainer, 'dark-theme');
+      this.renderer.removeClass(sidenavContainer, 'ocean-theme');
+      this.renderer.removeClass(sidenavContainer, 'classic-theme');
+      
+      // Add current theme class
+      this.renderer.addClass(sidenavContainer, `${theme}-theme`);
+      
+      // Set data-theme attribute
+      this.renderer.setAttribute(sidenavContainer, 'data-theme', theme);
+    }
   }
 
   // Convert custom icon names to standard Material icons

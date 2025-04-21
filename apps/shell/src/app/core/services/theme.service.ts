@@ -13,6 +13,7 @@ export class ThemeService {
   constructor() {
     // Initialize with transition class
     document.documentElement.classList.add('theme-transition');
+    document.body.classList.add('theme-transition');
 
     // Check if user has a theme preference saved
     const savedTheme = localStorage.getItem('theme') as ThemeName;
@@ -27,6 +28,7 @@ export class ThemeService {
     // Remove transition class after initialization
     setTimeout(() => {
       document.documentElement.classList.remove('theme-transition');
+      document.body.classList.remove('theme-transition');
     }, 300);
   }
 
@@ -37,6 +39,7 @@ export class ThemeService {
   setTheme(theme: ThemeName): void {
     // Add transition class for smooth theme change
     document.documentElement.classList.add('theme-transition');
+    document.body.classList.add('theme-transition');
     
     // Update theme
     this.currentTheme.next(theme);
@@ -45,10 +48,33 @@ export class ThemeService {
     // Apply theme to document
     document.documentElement.setAttribute('data-theme', theme);
     
+    // Apply theme classes to both HTML and body for better component inheritance
+    this.applyThemeClasses(theme);
+    
     // Remove transition class after animations complete
     setTimeout(() => {
       document.documentElement.classList.remove('theme-transition');
+      document.body.classList.remove('theme-transition');
     }, 300);
+  }
+
+  /**
+   * Apply theme classes to HTML and body elements
+   * This ensures components inherit theme properly
+   * @param theme The theme to apply
+   */
+  private applyThemeClasses(theme: ThemeName): void {
+    // Remove all theme classes first
+    document.documentElement.classList.remove('light-theme', 'dark-theme', 'ocean-theme', 'classic-theme');
+    document.body.classList.remove('light-theme', 'dark-theme', 'ocean-theme', 'classic-theme');
+    
+    // Apply the appropriate theme class
+    const themeClass = `${theme}-theme`;
+    document.documentElement.classList.add(themeClass);
+    document.body.classList.add(themeClass);
+    
+    // Add data attribute to body as well
+    document.body.setAttribute('data-theme', theme);
   }
 
   /**

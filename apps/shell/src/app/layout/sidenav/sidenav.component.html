@@ -1,6 +1,7 @@
 <div class="sidenav-container" [class.collapsed]="collapsed">
   <div class="sidenav-header">
-    <button mat-icon-button class="menu-button" (click)="toggleSidenav.emit()">
+    <!-- Hamburger menu button for web/desktop only -->
+    <button mat-icon-button class="menu-button desktop-only" (click)="toggleSidenav.emit()">
       <mat-icon>menu</mat-icon>
     </button>
   </div>

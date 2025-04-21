@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, HostListener } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, HostListener, Input, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
@@ -20,9 +20,9 @@ interface AppItem {
 })
 export class AppSwitcherComponent implements OnInit {
   @ViewChild('appSwitcherMenu') appSwitcherMenu!: ElementRef;
-  @ViewChild('appSwitcherButton') appSwitcherButton!: ElementRef;
-
-  isMenuOpen = false;
+  
+  @Input() isOpen = false;
+  @Output() closeMenu = new EventEmitter<void>();
   
   apps: AppItem[] = [
     {
@@ -55,23 +55,31 @@ export class AppSwitcherComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  toggleMenu(): void {
-    this.isMenuOpen = !this.isMenuOpen;
-  }
-
   navigateTo(app: AppItem): void {
     this.router.navigate([app.route]);
-    this.isMenuOpen = false;
+    this.close();
+  }
+
+  close(): void {
+    this.closeMenu.emit();
   }
 
   @HostListener('document:click', ['$event'])
   clickOutside(event: Event): void {
-    if (this.isMenuOpen && 
-        this.appSwitcherMenu && 
-        this.appSwitcherButton && 
-        !this.appSwitcherMenu.nativeElement.contains(event.target) && 
-        !this.appSwitcherButton.nativeElement.contains(event.target)) {
-      this.isMenuOpen = false;
+    // Don't process if menu is not open
+    if (!this.isOpen) return;
+    
+    // Check if the click was outside of the menu
+    if (this.appSwitcherMenu && 
+        !this.appSwitcherMenu.nativeElement.contains(event.target)) {
+      // Only close if the click wasn't on the app switcher button in header
+      // The header button has class 'app-switcher-button'
+      const target = event.target as HTMLElement;
+      const isHeaderButton = target.closest('.app-switcher-button') !== null;
+      
+      if (!isHeaderButton) {
+        this.close();
+      }
     }
   }
 } 

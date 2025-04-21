@@ -20,6 +20,9 @@ import { MainLayoutComponent } from './main-layout/main-layout.component';
 import { BreadcrumbComponent } from './breadcrumb/breadcrumb.component';
 import { PlaceholderComponent } from './placeholder/placeholder.component';
 
+// App Switcher Component
+import { AppSwitcherComponent } from './app-switcher/app-switcher.component';
+
 // Notification Component
 import { NotificationModule } from './notification/notification.module';
 
@@ -47,7 +50,8 @@ import { UserProfileModule } from './user-profile/user-profile.module';
     MatSlideToggleModule,
     MatTooltipModule,
     NotificationModule,
-    UserProfileModule
+    UserProfileModule,
+    AppSwitcherComponent
   ],
   exports: [
     MainLayoutComponent,

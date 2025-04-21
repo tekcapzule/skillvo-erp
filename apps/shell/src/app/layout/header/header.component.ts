@@ -1,8 +1,10 @@
-import { Component, OnInit, Output, EventEmitter, HostListener } from '@angular/core';
+import { Component, OnInit, OnDestroy, Output, EventEmitter, HostListener, ElementRef, Renderer2 } from '@angular/core';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
-import { ThemeService } from '../../core/services/theme.service';
+import { ThemeService, ThemeName } from '../../core/services/theme.service';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-header',
@@ -10,18 +12,22 @@ import { ThemeService } from '../../core/services/theme.service';
   styleUrls: ['./header.component.scss'],
   standalone: false
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit, OnDestroy {
   @Output() toggleSidenav = new EventEmitter<void>();
   
   isAppSwitcherOpen = false;
   isNotificationPanelOpen = false;
   isProfilePanelOpen = false;
+  private destroy$ = new Subject<void>();
+  private currentTheme: ThemeName = 'light';
   
   constructor(
     private matIconRegistry: MatIconRegistry,
     private domSanitizer: DomSanitizer,
     private router: Router,
-    private themeService: ThemeService
+    public themeService: ThemeService,
+    private el: ElementRef,
+    private renderer: Renderer2
   ) {
     // Register custom SVG icons
     this.registerIcons();
@@ -29,6 +35,47 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit(): void {
     console.log('Header component initialized');
+    
+    // Initialize theme
+    this.currentTheme = this.themeService.isDarkMode() ? 'dark' : 'light';
+    
+    // Subscribe to theme changes
+    this.themeService.currentTheme$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(theme => {
+        this.currentTheme = theme;
+        this.updateHeaderTheme(theme);
+      });
+      
+    // Initialize theme
+    this.updateHeaderTheme(this.currentTheme);
+  }
+  
+  ngOnDestroy(): void {
+    // Clean up subscriptions
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
+  /**
+   * Updates the header's theme classes and attributes
+   */
+  private updateHeaderTheme(theme: ThemeName): void {
+    const headerToolbar = this.el.nativeElement.querySelector('.header-toolbar');
+    
+    if (headerToolbar) {
+      // Remove existing theme classes
+      this.renderer.removeClass(headerToolbar, 'light-theme');
+      this.renderer.removeClass(headerToolbar, 'dark-theme');
+      this.renderer.removeClass(headerToolbar, 'ocean-theme');
+      this.renderer.removeClass(headerToolbar, 'classic-theme');
+      
+      // Add current theme class
+      this.renderer.addClass(headerToolbar, `${theme}-theme`);
+      
+      // Set data-theme attribute
+      this.renderer.setAttribute(headerToolbar, 'data-theme', theme);
+    }
   }
 
   private registerIcons(): void {
@@ -60,28 +107,6 @@ export class HeaderComponent implements OnInit {
     });
   }
   
-  @HostListener('document:click', ['$event'])
-  onDocumentClick(event: MouseEvent): void {
-    // Get the element that was clicked
-    const targetElement = event.target as HTMLElement;
-    
-    // Check if the click was inside the app switcher or the app switcher button
-    const appSwitcherMenu = document.querySelector('.app-switcher-menu');
-    const appSwitcherButton = document.querySelector('.app-switcher-button');
-    
-    if (this.isAppSwitcherOpen && 
-        appSwitcherMenu && 
-        appSwitcherButton && 
-        !appSwitcherMenu.contains(targetElement) && 
-        !appSwitcherButton.contains(targetElement)) {
-      // Close the app switcher if the click was outside
-      this.isAppSwitcherOpen = false;
-    }
-    
-    // We don't need to handle notification panel here as it's handled by the notification component
-    // We don't need to handle profile panel here as it's handled by the profile component
-  }
-  
   toggleAppSwitcher(event?: MouseEvent): void {
     if (event) {
       event.stopPropagation();
@@ -95,6 +120,10 @@ export class HeaderComponent implements OnInit {
     if (this.isProfilePanelOpen) {
       this.isProfilePanelOpen = false;
     }
+  }
+  
+  closeAppSwitcher(): void {
+    this.isAppSwitcherOpen = false;
   }
   
   toggleNotificationPanel(event?: MouseEvent): void {
@@ -137,30 +166,5 @@ export class HeaderComponent implements OnInit {
   
   toggleDarkMode(): void {
     this.themeService.toggleDarkMode();
-  }
-  
-  navigateToApp(appName: string): void {
-    console.log(`Navigating to ${appName} app`);
-    
-    // Implement the app navigation based on the app name
-    switch (appName) {
-      case 'learn':
-        this.router.navigate(['/learn']);
-        break;
-      case 'hire':
-        this.router.navigate(['/hire']);
-        break;
-      case 'onboard':
-        this.router.navigate(['/onboard']);
-        break;
-      case 'admin':
-        this.router.navigate(['/admin']);
-        break;
-      default:
-        break;
-    }
-    
-    // Close the app switcher after navigation
-    this.isAppSwitcherOpen = false;
   }
 } 
