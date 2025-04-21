@@ -23,6 +23,9 @@ import { PlaceholderComponent } from './placeholder/placeholder.component';
 // Notification Component
 import { NotificationModule } from './notification/notification.module';
 
+// User Profile Component
+import { UserProfileModule } from './user-profile/user-profile.module';
+
 @NgModule({
   declarations: [
     HeaderComponent,
@@ -43,7 +46,8 @@ import { NotificationModule } from './notification/notification.module';
     MatMenuModule,
     MatSlideToggleModule,
     MatTooltipModule,
-    NotificationModule
+    NotificationModule,
+    UserProfileModule
   ],
   exports: [
     MainLayoutComponent,

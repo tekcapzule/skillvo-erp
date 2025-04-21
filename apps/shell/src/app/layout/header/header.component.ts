@@ -15,6 +15,7 @@ export class HeaderComponent implements OnInit {
   
   isAppSwitcherOpen = false;
   isNotificationPanelOpen = false;
+  isProfilePanelOpen = false;
   
   constructor(
     private matIconRegistry: MatIconRegistry,
@@ -78,6 +79,7 @@ export class HeaderComponent implements OnInit {
     }
     
     // We don't need to handle notification panel here as it's handled by the notification component
+    // We don't need to handle profile panel here as it's handled by the profile component
   }
   
   toggleAppSwitcher(event?: MouseEvent): void {
@@ -86,9 +88,12 @@ export class HeaderComponent implements OnInit {
     }
     this.isAppSwitcherOpen = !this.isAppSwitcherOpen;
     
-    // Close notification panel if open
+    // Close other panels if open
     if (this.isNotificationPanelOpen) {
       this.isNotificationPanelOpen = false;
+    }
+    if (this.isProfilePanelOpen) {
+      this.isProfilePanelOpen = false;
     }
   }
   
@@ -98,14 +103,36 @@ export class HeaderComponent implements OnInit {
     }
     this.isNotificationPanelOpen = !this.isNotificationPanelOpen;
     
-    // Close app switcher if open
+    // Close other panels if open
     if (this.isAppSwitcherOpen) {
       this.isAppSwitcherOpen = false;
+    }
+    if (this.isProfilePanelOpen) {
+      this.isProfilePanelOpen = false;
+    }
+  }
+  
+  toggleProfilePanel(event?: MouseEvent): void {
+    if (event) {
+      event.stopPropagation();
+    }
+    this.isProfilePanelOpen = !this.isProfilePanelOpen;
+    
+    // Close other panels if open
+    if (this.isAppSwitcherOpen) {
+      this.isAppSwitcherOpen = false;
+    }
+    if (this.isNotificationPanelOpen) {
+      this.isNotificationPanelOpen = false;
     }
   }
   
   closeNotificationPanel(): void {
     this.isNotificationPanelOpen = false;
+  }
+  
+  closeProfilePanel(): void {
+    this.isProfilePanelOpen = false;
   }
   
   toggleDarkMode(): void {

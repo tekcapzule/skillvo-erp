@@ -59,7 +59,7 @@
     </button>
     
     <!-- User Profile - Avatar only -->
-    <button mat-icon-button class="user-profile">
+    <button mat-icon-button class="user-profile" aria-label="User profile" (click)="toggleProfilePanel($event)">
       <div class="avatar">JD</div>
     </button>
   </div>
@@ -69,4 +69,10 @@
 <app-notification 
   [isOpen]="isNotificationPanelOpen" 
   (closeNotification)="closeNotificationPanel()">
-</app-notification> 
+</app-notification>
+
+<!-- User Profile Panel -->
+<app-user-profile
+  [isOpen]="isProfilePanelOpen"
+  (closeProfile)="closeProfilePanel()">
+</app-user-profile> 
