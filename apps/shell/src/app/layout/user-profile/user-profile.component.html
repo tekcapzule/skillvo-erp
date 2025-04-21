@@ -30,8 +30,11 @@
              (click)="onThemeChange('light')">
           <div class="theme-preview">
             <div class="theme-layout light-layout">
-              <div class="layout-sidebar"></div>
-              <div class="layout-content"></div>
+              <div class="layout-header"></div>
+              <div class="layout-body">
+                <div class="layout-sidebar"></div>
+                <div class="layout-content"></div>
+              </div>
             </div>
             <div *ngIf="selectedTheme === 'light'" class="theme-check">
               <mat-icon>check</mat-icon>
@@ -48,8 +51,11 @@
              (click)="onThemeChange('dark')">
           <div class="theme-preview">
             <div class="theme-layout dark-layout">
-              <div class="layout-sidebar"></div>
-              <div class="layout-content"></div>
+              <div class="layout-header"></div>
+              <div class="layout-body">
+                <div class="layout-sidebar"></div>
+                <div class="layout-content"></div>
+              </div>
             </div>
             <div *ngIf="selectedTheme === 'dark'" class="theme-check">
               <mat-icon>check</mat-icon>
@@ -80,12 +86,12 @@
         </select>
       </div>
     </div>
-  </div>
-  
-  <div class="logout-container">
-    <button class="logout-button" (click)="logout()">
-      <mat-icon>logout</mat-icon>
-      <span>Logout</span>
-    </button>
+    
+    <div class="logout-container">
+      <button class="logout-button" (click)="logout()">
+        <mat-icon>logout</mat-icon>
+        <span>Logout</span>
+      </button>
+    </div>
   </div>
 </div> 
