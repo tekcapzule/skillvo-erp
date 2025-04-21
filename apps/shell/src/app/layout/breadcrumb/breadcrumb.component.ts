@@ -99,12 +99,28 @@ export class BreadcrumbComponent implements OnInit {
     // Skip the app context (like 'learn') and look for duplicates
     const seen = new Set<string>();
     
+    // Track if we're in the My Activity section
+    let hasMyActivities = false;
+    
     // Add the last path segments without duplicates or app context
     for (let i = 1; i < this.breadcrumbs.length; i++) {
       const crumb = this.breadcrumbs[i];
       
       // Skip 'learn' context (or other app contexts)
       if (['learn', 'hire', 'onboard', 'admin', 'home'].includes(crumb.label.toLowerCase())) {
+        continue;
+      }
+      
+      // Special case for My Activity and its children
+      if (crumb.label === 'My Activity') {
+        hasMyActivities = true;
+        cleanedBreadcrumbs.push(crumb);
+        continue;
+      }
+      
+      // Allow Learnings and Tasks as child routes of My Activity
+      if (hasMyActivities && (crumb.label === 'Learnings' || crumb.label === 'Tasks')) {
+        cleanedBreadcrumbs.push(crumb);
         continue;
       }
       
