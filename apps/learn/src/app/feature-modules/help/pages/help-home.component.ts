@@ -87,6 +87,18 @@ import { CommonModule } from '@angular/common';
     </div>
   `,
   styles: [`
+    :host {
+      display: block;
+      color: var(--text-primary, #1a1a1a);
+      transition: all 0.3s ease;
+      background-color: transparent;
+    }
+    
+    /* Dark Theme for the entire component */
+    :host-context([data-theme="dark"]) {
+      color: var(--text-primary, #e0e0e0);
+    }
+    
     .help-container {
       padding: 24px;
       max-width: 1200px;
@@ -95,12 +107,28 @@ import { CommonModule } from '@angular/common';
     
     h1 {
       margin-bottom: 8px;
-      color: #333;
+      color: var(--text-primary, #1a1a1a);
+    }
+    
+    :host-context([data-theme="dark"]) h1 {
+      color: var(--text-primary, #ffffff);
     }
     
     h2 {
       margin: 32px 0 16px;
-      color: #333;
+      color: var(--text-primary, #1a1a1a);
+    }
+    
+    :host-context([data-theme="dark"]) h2 {
+      color: var(--text-primary, #ffffff);
+    }
+    
+    p {
+      color: var(--text-secondary, #666666);
+    }
+    
+    :host-context([data-theme="dark"]) p {
+      color: var(--text-secondary, #b8b8b8);
     }
     
     .help-search {
@@ -112,21 +140,48 @@ import { CommonModule } from '@angular/common';
     .search-input {
       flex: 1;
       padding: 12px 16px;
-      border: 1px solid #ddd;
+      border: 1px solid var(--border-default, #e0e0e0);
       border-radius: 4px;
       font-size: 16px;
+      background-color: var(--bg-surface, #ffffff);
+      color: var(--text-primary, #1a1a1a);
+      transition: all 0.2s ease;
+    }
+    
+    :host-context([data-theme="dark"]) .search-input {
+      background-color: var(--bg-element, #2a2a2a);
+      border-color: var(--border-default, #333333);
+      color: var(--text-primary, #e0e0e0);
+      
+      &::placeholder {
+        color: var(--text-secondary, #a0a0a0);
+      }
     }
     
     .search-btn {
       padding: 0 24px;
-      background-color: #1976d2;
+      background-color: var(--primary-500, #1971e5);
       color: white;
       border: none;
       border-radius: 4px;
       cursor: pointer;
+      transition: background-color 0.2s ease;
       
       &:hover {
-        background-color: #1565c0;
+        background-color: var(--primary-600, #155ab7);
+      }
+      
+      &:focus {
+        outline: none;
+        box-shadow: 0 0 0 2px var(--primary-300, #80c2ff);
+      }
+    }
+    
+    :host-context([data-theme="dark"]) .search-btn {
+      background-color: var(--primary-600, #155ab7);
+      
+      &:hover {
+        background-color: var(--primary-700, #0f4390);
       }
     }
     
@@ -138,11 +193,29 @@ import { CommonModule } from '@angular/common';
     }
     
     .category-card {
-      background-color: white;
+      background-color: var(--bg-surface, #ffffff);
       border-radius: 8px;
       padding: 24px;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      box-shadow: var(--shadow-sm, 0 2px 4px rgba(0,0,0,0.1));
       text-align: center;
+      transition: all 0.3s ease;
+      border: 1px solid transparent;
+      
+      &:hover {
+        transform: translateY(-4px);
+        box-shadow: var(--shadow-default, 0 6px 12px rgba(0,0,0,0.15));
+      }
+    }
+    
+    :host-context([data-theme="dark"]) .category-card {
+      background-color: var(--bg-surface, #252526);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+      border-color: var(--border-default, #333333);
+      
+      &:hover {
+        box-shadow: 0 6px 12px rgba(0,0,0,0.5);
+        border-color: var(--primary-700, #0f4390);
+      }
     }
     
     .category-icon {
@@ -152,21 +225,39 @@ import { CommonModule } from '@angular/common';
     
     .category-card h3 {
       margin-bottom: 8px;
-      color: #333;
+      color: var(--text-primary, #1a1a1a);
+    }
+    
+    :host-context([data-theme="dark"]) .category-card h3 {
+      color: var(--text-primary, #ffffff);
     }
     
     .category-card p {
-      color: #616161;
+      color: var(--text-secondary, #616161);
       margin-bottom: 16px;
     }
     
+    :host-context([data-theme="dark"]) .category-card p {
+      color: var(--text-secondary, #b0b0b0);
+    }
+    
     .category-link {
-      color: #1976d2;
+      color: var(--primary-500, #1971e5);
       text-decoration: none;
       font-weight: 500;
+      transition: color 0.2s ease;
       
       &:hover {
         text-decoration: underline;
+        color: var(--primary-600, #155ab7);
+      }
+    }
+    
+    :host-context([data-theme="dark"]) .category-link {
+      color: var(--primary-400, #4da9ff);
+      
+      &:hover {
+        color: var(--primary-300, #80c2ff);
       }
     }
     
@@ -175,8 +266,13 @@ import { CommonModule } from '@angular/common';
     }
     
     .faq-item {
-      border-bottom: 1px solid #e0e0e0;
+      border-bottom: 1px solid var(--border-default, #e0e0e0);
       margin-bottom: 16px;
+      transition: border-color 0.3s ease;
+    }
+    
+    :host-context([data-theme="dark"]) .faq-item {
+      border-color: var(--border-default, #333333);
     }
     
     .faq-question {
@@ -189,13 +285,21 @@ import { CommonModule } from '@angular/common';
       h3 {
         margin: 0;
         font-size: 18px;
-        color: #333;
+        color: var(--text-primary, #1a1a1a);
       }
+    }
+    
+    :host-context([data-theme="dark"]) .faq-question h3 {
+      color: var(--text-primary, #ffffff);
     }
     
     .toggle-icon {
       font-size: 24px;
-      color: #616161;
+      color: var(--text-secondary, #616161);
+    }
+    
+    :host-context([data-theme="dark"]) .toggle-icon {
+      color: var(--text-secondary, #b0b0b0);
     }
     
     .faq-answer {
@@ -203,30 +307,55 @@ import { CommonModule } from '@angular/common';
       
       p {
         margin: 0;
-        color: #616161;
+        color: var(--text-secondary, #616161);
       }
+    }
+    
+    :host-context([data-theme="dark"]) .faq-answer p {
+      color: var(--text-secondary, #b0b0b0);
     }
     
     .contact-support {
       margin-top: 48px;
       text-align: center;
       padding: 32px;
-      background-color: #f5f5f5;
+      background-color: var(--bg-element, #f5f5f5);
       border-radius: 8px;
+      transition: all 0.3s ease;
+      border: 1px solid transparent;
+    }
+    
+    :host-context([data-theme="dark"]) .contact-support {
+      background-color: var(--bg-element, #2a2a2a);
+      border-color: var(--border-default, #333333);
     }
     
     .contact-btn {
       margin-top: 16px;
       padding: 12px 24px;
-      background-color: #1976d2;
+      background-color: var(--primary-500, #1971e5);
       color: white;
       border: none;
       border-radius: 4px;
       font-size: 16px;
       cursor: pointer;
+      transition: background-color 0.2s ease;
       
       &:hover {
-        background-color: #1565c0;
+        background-color: var(--primary-600, #155ab7);
+      }
+      
+      &:focus {
+        outline: none;
+        box-shadow: 0 0 0 2px var(--primary-300, #80c2ff);
+      }
+    }
+    
+    :host-context([data-theme="dark"]) .contact-btn {
+      background-color: var(--primary-600, #155ab7);
+      
+      &:hover {
+        background-color: var(--primary-700, #0f4390);
       }
     }
   `]
