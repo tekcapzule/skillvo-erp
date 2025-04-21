@@ -4,6 +4,7 @@
   left: 0;
   z-index: 1100;
   animation: fadeIn 0.2s ease-in-out;
+  background-color: var(--bg-app);
 }
 
 .app-switcher-btn {
@@ -11,9 +12,9 @@
 }
 
 .app-menu {
-  background-color: var(--surface-background, #ffffff);
+  background-color: var(--bg-surface);
   border-radius: 4px;
-  box-shadow: 0px 4px 4px rgba(150, 150, 150, 0.25);
+  box-shadow: var(--shadow-default);
   padding: 12px;
   width: 240px;
   box-sizing: border-box;
@@ -33,16 +34,16 @@
   justify-content: center;
   padding: 16px 8px 12px;
   border-radius: 4px;
-  border: 1px solid var(--surface-border, #e3e3e3);
+  border: 1px solid var(--border-default);
   cursor: pointer;
   transition: all 0.2s ease;
-  background-color: #fff;
+  background-color: var(--bg-surface);
   height: 85px;
   
   &:hover {
-    background-color: rgba(0, 0, 0, 0.02);
+    background-color: var(--bg-element-hover);
     transform: translateY(-2px);
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: var(--shadow-default);
   }
 }
 
@@ -54,14 +55,14 @@
   justify-content: center;
   margin-bottom: 8px;
   
-  .icon-placeholder {
+  .icon-container {
     width: 32px;
     height: 32px;
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: #1E78E2;
-    color: white;
+    background-color: var(--primary-500);
+    color: var(--text-inverse);
     font-weight: bold;
     font-size: 16px;
     border-radius: 4px;
@@ -72,7 +73,7 @@
   font-family: 'Work Sans', sans-serif;
   font-weight: 500;
   font-size: 14px;
-  color: var(--text-primary, #000000);
+  color: var(--text-primary);
   text-align: center;
 }
 
