@@ -12,6 +12,7 @@ import { Router } from '@angular/router';
 export interface Theme {
   id: ThemeName;
   name: string;
+  description: string;
 }
 
 export interface Language {
@@ -43,23 +44,16 @@ export class UserProfileComponent implements OnInit {
   email: string = 'john.doe@example.com';
   initials: string = 'JD';
   
-  // Theme options
+  // Theme options - only light and dark as specified
   themes: Theme[] = [
-    { id: 'light', name: 'Light' },
-    { id: 'dark', name: 'Dark' },
-    { id: 'ocean', name: 'Ocean' },
-    { id: 'classic', name: 'Classic' }
+    { id: 'light', name: 'Light', description: 'Clean, bright interface for daytime use' },
+    { id: 'dark', name: 'Dark', description: 'Reduced eye strain in low-light environments' }
   ];
   selectedTheme: ThemeName = 'light';
   
   // Language options
   languages: Language[] = [
-    { code: 'en', name: 'English' },
-    { code: 'es', name: 'Spanish' },
-    { code: 'fr', name: 'French' },
-    { code: 'de', name: 'German' },
-    { code: 'hi', name: 'Hindi' },
-    { code: 'ar', name: 'Arabic' }
+    { code: 'en', name: 'English' }
   ];
   selectedLanguage: string = 'en';
 
@@ -102,19 +96,17 @@ export class UserProfileComponent implements OnInit {
 
   onThemeChange(themeId: ThemeName): void {
     this.selectedTheme = themeId;
-    this.themeService.setTheme(themeId);
+    // Theme service integration will be added later as requested
+    console.log(`Theme changed to ${themeId}`);
   }
 
   onLanguageChange(langCode: string): void {
     this.selectedLanguage = langCode;
-    // Here we would implement language change logic
     console.log(`Language changed to ${langCode}`);
   }
 
   logout(): void {
-    // Implement logout logic here
     console.log('Logging out...');
-    // Typically we would clear authentication tokens and navigate to login
     this.router.navigate(['/login']);
   }
 } 
