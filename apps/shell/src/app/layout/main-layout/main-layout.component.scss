@@ -8,34 +8,50 @@
   position: relative;
   overflow: hidden;
   margin-top: var(--header-height);
+  background-color: var(--bg-primary);
+  
+  [data-theme="dark"] & {
+    background-color: var(--bg-primary, #121212);
+  }
 }
 
 .content-wrapper {
   flex: 1;
   height: 100%;
-  width: 100%;
-  background-color: var(--main-layout-bg);
+  width: calc(100% - var(--sidenav-width));
+  background-color: var(--bg-primary);
   overflow: hidden;
-  transition: margin-left var(--sidenav-transition-duration) var(--sidenav-transition-timing);
-  @include theme-transition(background-color);
+  transition: margin-left var(--sidenav-transition-duration, 0.3s) var(--sidenav-transition-timing, ease-in-out),
+              width var(--sidenav-transition-duration, 0.3s) var(--sidenav-transition-timing, ease-in-out),
+              background-color 0.3s ease;
+  
+  [data-theme="dark"] & {
+    background-color: var(--bg-primary, #121212);
+  }
   
   &.with-sidebar {
     margin-left: var(--sidenav-width);
+    width: calc(100% - var(--sidenav-width));
   }
   
   &.with-collapsed-sidebar {
-    margin-left: var(--sidenav-width-collapsed);
+    margin-left: var(--sidenav-width-collapsed, 64px);
+    width: calc(100% - var(--sidenav-width-collapsed, 64px));
   }
 }
 
 .content-container {
-  padding: var(--main-layout-content-padding);
+  padding: 24px 32px;
   height: calc(100% - var(--breadcrumb-height));
   overflow-y: auto;
   overflow-x: hidden;
-  background-color: var(--main-layout-content-bg);
-  @include theme-transition(background-color);
+  background-color: var(--bg-primary);
+  transition: background-color 0.3s ease, padding 0.3s ease;
   @include scrollbar.styled-scrollbar;
+  
+  [data-theme="dark"] & {
+    background-color: var(--bg-primary, #121212);
+  }
 }
 
 /* Floating mobile hamburger button */
@@ -70,11 +86,15 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: var(--backdrop-color);
-  z-index: var(--backdrop-z-index);
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: var(--backdrop-z-index, 999);
   visibility: hidden;
   opacity: 0;
-  transition: opacity var(--backdrop-transition-duration) var(--backdrop-transition-timing), visibility var(--backdrop-transition-duration) var(--backdrop-transition-timing);
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+  
+  [data-theme="dark"] & {
+    background-color: rgba(0, 0, 0, 0.7);
+  }
   
   &.active {
     visibility: visible;
@@ -86,10 +106,11 @@
 @include breakpoint-down('md') {
   .content-wrapper {
     margin-left: 0 !important;
+    width: 100% !important;
   }
   
   .content-container {
-    padding: var(--main-layout-content-padding-mobile);
+    padding: 16px 20px;
   }
   
   .mobile-fab-menu {
@@ -99,14 +120,6 @@
 
 @include breakpoint-down('sm') {
   .content-container {
-    padding: var(--main-layout-content-padding-mobile-sm, 12px);
+    padding: 12px 16px;
   }
-  
-  /* Remove bottom and right override to keep the FAB in fixed position */
-  /* 
-  .mobile-fab-menu {
-    bottom: var(--main-layout-fab-bottom-sm);
-    right: var(--main-layout-fab-right-sm);
-  }
-  */
 } 

@@ -47,6 +47,8 @@
   transition: transform var(--notification-transition-duration) var(--notification-transition-timing);
   display: flex;
   flex-direction: column;
+  overflow: hidden;
+  will-change: transform;
   @include theme-transition(background-color, box-shadow, border-color);
   
   &.open {
@@ -198,7 +200,7 @@
   border: var(--notification-item-border);
   overflow: hidden;
   cursor: pointer;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
   
   &.unread {
     background-color: var(--notification-unread-bg);
@@ -222,7 +224,8 @@
   }
   
   &:active {
-    transform: translateY(0);
+    transform: scale(0.98);
+    background-color: var(--bg-element-hover);
   }
 }
 
@@ -257,7 +260,6 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 8px;
   
   .notification-category {
     font-size: var(--notification-category-font-size);
@@ -291,38 +293,6 @@
     font-size: var(--notification-item-time-size);
     color: var(--notification-item-time-color);
     @include theme-transition(color);
-  }
-}
-
-/* Notification Actions */
-.notification-actions {
-  margin-top: var(--notification-action-margin);
-  display: flex;
-  gap: 8px;
-  
-  button {
-    font-size: var(--notification-action-font-size);
-    font-weight: var(--notification-action-font-weight);
-    padding: var(--notification-action-padding);
-    border-radius: var(--notification-action-border-radius);
-    border: none;
-    cursor: pointer;
-    background: var(--notification-action-bg);
-    color: var(--notification-action-text);
-    transition: background-color 0.2s ease;
-    
-    &:hover {
-      background-color: rgba(var(--primary-500-rgb), 0.15);
-    }
-    
-    &.certificate {
-      background-color: var(--category-certificate-bg);
-      color: var(--category-certificate-text);
-      
-      &:hover {
-        background-color: rgba(76, 175, 80, 0.15);
-      }
-    }
   }
 }
 

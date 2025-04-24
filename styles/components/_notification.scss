@@ -18,7 +18,7 @@
   --notification-panel-max-width: 90vw;
   --notification-z-index: 1201;
   --notification-transition-duration: 0.3s;
-  --notification-transition-timing: ease;
+  --notification-transition-timing: cubic-bezier(0.4, 0, 0.2, 1);
   
   /* Notification Panel Styling */
   --notification-shadow: var(--elevation-3);

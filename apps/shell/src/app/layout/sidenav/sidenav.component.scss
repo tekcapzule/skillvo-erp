@@ -48,6 +48,7 @@
   border-bottom: 1px solid var(--sidenav-border-color, #e5e7eb);
   background-color: var(--sidenav-bg, #ffffff);
   flex-shrink: 0;
+  @include theme-transition(background-color, border-color);
   
   /* Header toggle buttons */
   .toggle-button, .close-button {

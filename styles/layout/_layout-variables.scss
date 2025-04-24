@@ -12,7 +12,7 @@
   --main-content-min-height: calc(100vh - var(--header-height, 64px));
   --main-content-margin-top: var(--header-height, 64px);
   --main-content-margin-left: var(--sidenav-width, 240px);
-  --main-content-collapsed-margin-left: var(--sidenav-collapsed-width, 70px);
+  --main-content-collapsed-margin-left: var(--sidenav-width-collapsed, 64px);
   
   /* Main Layout Padding */
   --main-content-padding: var(--space-6, 24px);
@@ -29,7 +29,9 @@
   
   // Sidenav integration
   --layout-with-sidenav-margin: var(--sidenav-width, 240px);
-  --layout-with-collapsed-sidenav-margin: var(--sidenav-collapsed-width, 70px);
+  --layout-with-collapsed-sidenav-margin: var(--sidenav-width-collapsed, 64px);
+  --sidenav-width-collapsed: 64px;
+  --sidenav-width: 240px;
   
   // Panels and slide-ins
   --panel-default-width: 360px;

@@ -66,8 +66,11 @@
 
 // Dark theme overrides
 [data-theme="dark"] {
-  --sidenav-bg: var(--bg-surface);
-  --sidenav-border-color: var(--border-default);
+  --sidenav-bg: var(--bg-secondary, #1e1e1e);
+  --sidenav-border-color: var(--border-dark, #383838);
   --sidenav-child-bg: var(--bg-element-hover, rgba(255, 255, 255, 0.05));
-  --sidenav-mobile-bg: var(--bg-surface);
+  --sidenav-divider-color: var(--border-dark, #383838);
+  --sidenav-shadow: var(--shadow-md, 0 2px 8px rgba(0, 0, 0, 0.2));
+  --sidenav-mobile-bg: var(--bg-secondary, #1e1e1e);
+  --sidenav-item-active-bg: rgba(var(--primary-500-rgb, 10, 159, 255), 0.15);
 } 

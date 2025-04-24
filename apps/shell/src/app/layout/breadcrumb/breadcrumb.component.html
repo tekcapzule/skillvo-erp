@@ -6,8 +6,7 @@
 
 <!-- Main breadcrumb - only shown when not on home page and has breadcrumbs -->
 <nav *ngIf="!isHomePage && breadcrumbs.length > 1" 
-     class="breadcrumb-container" 
-     [class.collapsed-sidenav]="sidenavCollapsed" 
+     class="breadcrumb-container"
      aria-label="breadcrumb">
   <ol class="breadcrumb">
     <li *ngFor="let breadcrumb of breadcrumbs; let last = last" 

@@ -166,11 +166,13 @@ $dark-theme-map: (
   'border-light': #383838,
   'border-medium': #454545,
   'border-dark': #505050,
+  'border-default': #383838,
   
   // Accent colors (direct color values, not CSS vars)
   'primary': #30b1ff,
   'primary-light': #56c1ff,
   'primary-dark': #0a9fff,
+  'primary-500-rgb': '48, 177, 255',
   'secondary': #455b70,
   'secondary-light': #58687c,
   'secondary-dark': #364c5e,
@@ -179,7 +181,13 @@ $dark-theme-map: (
   'info': #29b6f6,
   'success': #4caf50,
   'warning': #ffa726,
-  'error': #f44336
+  'error': #f44336,
+  
+  // Shadow variables
+  'shadow-sm': '0 1px 3px rgba(0, 0, 0, 0.25)',
+  'shadow-md': '0 2px 8px rgba(0, 0, 0, 0.25)',
+  'shadow-lg': '0 4px 16px rgba(0, 0, 0, 0.3)',
+  'shadow-default': '0 2px 8px rgba(0, 0, 0, 0.3)'
 );
 
 // Common colors map for utility classes

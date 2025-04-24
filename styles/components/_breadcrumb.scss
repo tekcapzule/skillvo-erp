@@ -9,11 +9,12 @@
 
 :root {
   // Layout & Positioning
-  --breadcrumb-height: var(--header-height, var(--space-14, 56px));
-  --breadcrumb-padding: 0 var(--inset-md, var(--space-3, 12px));
+  --breadcrumb-height: 48px;
+  --breadcrumb-padding: 0 24px;
   --breadcrumb-margin: 0;
   --breadcrumb-position-top: var(--header-height, var(--space-14, 56px));
   --breadcrumb-z-index: var(--z-30, 800);
+  --sidenav-width-collapsed: 64px; /* Ensure this matches exact width in sidenav */
   
   // Colors & Styling
   --breadcrumb-bg: var(--bg-surface);
@@ -42,7 +43,11 @@
 
 // Dark theme overrides
 [data-theme="dark"] {
-  --breadcrumb-bg: var(--bg-surface);
-  --breadcrumb-border-color: var(--border-default);
-  --breadcrumb-shadow: var(--shadow-default);
+  --breadcrumb-bg: var(--bg-secondary, #1e1e1e);
+  --breadcrumb-border-color: var(--border-dark, #383838);
+  --breadcrumb-shadow: var(--shadow-md, 0 2px 8px rgba(0, 0, 0, 0.2));
+  --breadcrumb-separator-color: var(--text-tertiary, #6c757d);
+  --breadcrumb-text: var(--text-primary, #e9ecef);
+  --breadcrumb-item-active-text: var(--text-secondary, #adb5bd);
+  --breadcrumb-item-hover-text: var(--primary-light, #30b1ff);
 } 

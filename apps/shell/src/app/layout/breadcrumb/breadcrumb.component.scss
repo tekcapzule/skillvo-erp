@@ -15,14 +15,17 @@
   background-color: var(--breadcrumb-bg, #ffffff);
   border-bottom: 1px solid var(--breadcrumb-border-color, var(--border-light));
   min-height: var(--breadcrumb-height, 40px);
-  @include theme-transition(color, background-color, border-color);
+  width: 100%;
+  box-sizing: border-box;
+  position: relative;
+  @include theme-transition(color, background-color, border-color, box-shadow);
   
   &.theme-placeholder {
     display: none;
   }
   
   &.collapsed-sidenav {
-    margin-left: var(--sidenav-width-collapsed, 64px);
+    margin-left: 0; /* Remove left margin to let parent container handle spacing */
   }
   
   @media (max-width: 768px) {
@@ -65,6 +68,10 @@
     color: var(--breadcrumb-active-color, var(--text-primary));
     font-weight: var(--breadcrumb-active-weight, var(--font-medium));
     @include theme-transition(color);
+    
+    span {
+      color: var(--breadcrumb-item-active-text, var(--text-secondary));
+    }
   }
   
   /* Add separator between items */

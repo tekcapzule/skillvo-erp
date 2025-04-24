@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnDestroy, ElementRef, Renderer2, ChangeDetectorRef, AfterViewInit } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy, ElementRef, Renderer2, ChangeDetectorRef, AfterViewInit, OnChanges, SimpleChanges } from '@angular/core';
 import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 import { filter, distinctUntilChanged, takeUntil } from 'rxjs/operators';
 import { ThemeService, ThemeName } from '../../core/services/theme.service';
@@ -15,7 +15,7 @@ interface Breadcrumb {
   styleUrls: ['./breadcrumb.component.scss'],
   standalone: false
 })
-export class BreadcrumbComponent implements OnInit, OnDestroy, AfterViewInit {
+export class BreadcrumbComponent implements OnInit, OnDestroy, AfterViewInit, OnChanges {
   @Input() sidenavCollapsed = false;
   breadcrumbs: Breadcrumb[] = [];
   isHomePage = true; // Default to true to initially hide breadcrumbs on home
@@ -99,6 +99,14 @@ export class BreadcrumbComponent implements OnInit, OnDestroy, AfterViewInit {
     // Clean up subscriptions when component is destroyed
     this.destroy$.next();
     this.destroy$.complete();
+  }
+  
+  ngOnChanges(changes: SimpleChanges): void {
+    // When sidenav collapsed state changes, update the UI accordingly
+    if (changes['sidenavCollapsed'] && !changes['sidenavCollapsed'].firstChange) {
+      // Force a detection cycle to ensure the UI updates
+      this.cdr.detectChanges();
+    }
   }
   
   /**

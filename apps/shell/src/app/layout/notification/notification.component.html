@@ -41,10 +41,6 @@
                 {{ getFormattedDate(notification.timestamp) }}
               </span>
             </div>
-            <div class="notification-actions" *ngIf="notification.category === 'Course' || notification.category === 'Certificate'">
-              <button *ngIf="notification.category === 'Course'" class="course">View Course</button>
-              <button *ngIf="notification.category === 'Certificate'" class="certificate">Download</button>
-            </div>
           </div>
         </div>
       </ng-container>
