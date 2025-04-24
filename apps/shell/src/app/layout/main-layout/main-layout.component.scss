@@ -42,15 +42,25 @@
 .mobile-fab-menu {
   display: none;
   position: fixed;
-  bottom: 20px; /* Fixed position at bottom */
-  right: 20px; /* Fixed position at right */
-  z-index: var(--z-floating, 2000);
-  background-color: var(--primary-500);
-  color: var(--text-inverse);
-  box-shadow: var(--shadow-md);
+  bottom: 24px; /* Fixed position at bottom */
+  right: 24px; /* Fixed position at right */
+  z-index: 9999; /* Extremely high z-index to ensure visibility */
+  background-color: var(--primary-500, #0066ff);
+  color: white;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   width: 56px; /* Fixed size */
   height: 56px; /* Fixed size */
-  @include theme-transition(background-color, color, box-shadow);
+  transition: all 0.2s ease-in-out;
+  
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+  }
+  
+  /* Center the icon */
+  mat-icon {
+    margin: auto;
+  }
 }
 
 /* Mobile backdrop */
@@ -92,8 +102,11 @@
     padding: var(--main-layout-content-padding-mobile-sm, 12px);
   }
   
+  /* Remove bottom and right override to keep the FAB in fixed position */
+  /* 
   .mobile-fab-menu {
     bottom: var(--main-layout-fab-bottom-sm);
     right: var(--main-layout-fab-right-sm);
   }
+  */
 } 

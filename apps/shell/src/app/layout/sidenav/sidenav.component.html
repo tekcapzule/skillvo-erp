@@ -3,6 +3,7 @@
     <button mat-icon-button class="toggle-button" (click)="toggleSidenav.emit()" *ngIf="!isMobile">
       <mat-icon>{{ collapsed ? 'menu_open' : 'menu' }}</mat-icon>
     </button>
+    <!-- Mobile close button removed since we're using the floating FAB -->
   </div>
 
   <div class="sidenav-list">
@@ -36,7 +37,8 @@
             *ngFor="let child of item.children"
             [routerLink]="child.route"
             routerLinkActive="active-link"
-            [routerLinkActiveOptions]="{exact: child.exact || false}">
+            [routerLinkActiveOptions]="{exact: child.exact || false}"
+            (click)="closeMobileNav()">
             <div class="menu-item child-menu-item">
               <span class="menu-label">{{ child.label }}</span>
             </div>

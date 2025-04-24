@@ -1,10 +1,5 @@
 <app-header (toggleSidenav)="toggleMobileNav()"></app-header>
 
-<!-- Floating Mobile Menu Button - only visible on mobile -->
-<button mat-fab class="mobile-fab-menu" (click)="toggleMobileNav()" aria-label="Menu">
-  <mat-icon>{{ mobileNavOpen ? 'close' : 'menu' }}</mat-icon>
-</button>
-
 <div class="main-content-container">
   <!-- Sidenav component - always present -->
   <app-sidenav 
@@ -28,4 +23,9 @@
   class="mobile-backdrop" 
   [class.active]="mobileNavOpen" 
   (click)="closeMobileNav()">
-</div> 
+</div>
+
+<!-- Floating Mobile Menu Button - only visible on mobile, moved to appear last in DOM -->
+<button mat-fab class="mobile-fab-menu" [class.active]="mobileNavOpen" (click)="toggleMobileNav()" aria-label="Menu">
+  <mat-icon>{{ mobileNavOpen ? 'close' : 'menu' }}</mat-icon>
+</button> 

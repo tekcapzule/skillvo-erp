@@ -148,6 +148,8 @@ export class SidenavComponent implements OnInit, OnDestroy {
   closeMobileNav(): void {
     if (this.isMobile) {
       this.mobileOpen = false;
+      // Emit an event to notify the parent component to update its state
+      this.toggleSidenav.emit();
     }
   }
 } 

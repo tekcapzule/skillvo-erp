@@ -48,6 +48,39 @@
   border-bottom: 1px solid var(--sidenav-border-color, #e5e7eb);
   background-color: var(--sidenav-bg, #ffffff);
   flex-shrink: 0;
+  
+  /* Header toggle buttons */
+  .toggle-button, .close-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    border-radius: 50%;
+    background-color: transparent;
+    border: none;
+    position: relative;
+    color: var(--text-secondary);
+    
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.05);
+    }
+    
+    mat-icon {
+      font-size: 24px;
+      height: 24px;
+      width: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      line-height: 1;
+    }
+  }
+  
+  .close-button {
+    margin-left: auto; /* Push close button to the right */
+  }
 }
 
 .sidenav-title {
