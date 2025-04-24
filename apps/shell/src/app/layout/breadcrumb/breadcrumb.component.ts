@@ -18,10 +18,22 @@ interface Breadcrumb {
 export class BreadcrumbComponent implements OnInit, OnDestroy, AfterViewInit {
   @Input() sidenavCollapsed = false;
   breadcrumbs: Breadcrumb[] = [];
-  isHomePage = false;
+  isHomePage = true; // Default to true to initially hide breadcrumbs on home
   
   private destroy$ = new Subject<void>();
   private currentTheme: ThemeName = 'light';
+  private readonly HOME_ROUTES = [
+    '/',
+    '/home',
+    '/learn',
+    '/learn/home',
+    '/hire',
+    '/hire/home',
+    '/onboard',
+    '/onboard/home',
+    '/admin',
+    '/admin/home'
+  ];
 
   constructor(
     private router: Router,
@@ -41,7 +53,6 @@ export class BreadcrumbComponent implements OnInit, OnDestroy, AfterViewInit {
     this.isHomePage = this.checkIfHomePage(this.router.url);
     
     // Initialize theme from service
-    // If isDarkMode() is true, use 'dark', otherwise use 'light'
     this.currentTheme = this.themeService.isDarkMode() ? 'dark' : 'light';
     
     // Subscribe to router events to update breadcrumbs and home page status
@@ -118,16 +129,26 @@ export class BreadcrumbComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   private checkIfHomePage(url: string): boolean {
-    // Check for home pages with various patterns
-    return url === '/' || 
-           url === '/home' || 
-           url === '/learn' || 
-           url === '/learn/home' ||
-           url.endsWith('/home') ||
-           // Check if we only have one segment that isn't a specific page
-           (url.split('/').filter(segment => segment).length <= 1 && 
-            !url.includes('courses') && 
-            !url.includes('profile'));
+    // First check against our predefined list of home routes
+    if (this.HOME_ROUTES.includes(url)) {
+      return true;
+    }
+    
+    // Check if URL ends with /home
+    if (url.endsWith('/home')) {
+      return true;
+    }
+    
+    // Check if we only have one segment that isn't a specific page
+    const segments = url.split('/').filter(segment => segment.length > 0);
+    if (segments.length <= 1) {
+      // If only one segment and not a specific feature page
+      return !segments.some(segment => 
+        ['courses', 'profile', 'calendar', 'references', 'reports'].includes(segment)
+      );
+    }
+    
+    return false;
   }
 
   private buildBreadcrumbs(route: ActivatedRoute, url: string = '', breadcrumbs: Breadcrumb[] = []): Breadcrumb[] {
@@ -205,7 +226,7 @@ export class BreadcrumbComponent implements OnInit, OnDestroy, AfterViewInit {
     
     this.breadcrumbs = cleanedBreadcrumbs;
     
-    // If all we have is "Home", consider this a home page and mark it accordingly
+    // If all we have is "Home", consider this a home page and hide breadcrumbs
     if (this.breadcrumbs.length <= 1) {
       this.isHomePage = true;
     }

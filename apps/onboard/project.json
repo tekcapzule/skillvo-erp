@@ -23,7 +23,10 @@
           }
         ],
         "styles": ["apps/onboard/src/styles.scss"],
-        "scripts": []
+        "scripts": [],
+        "stylePreprocessorOptions": {
+          "includePaths": ["styles"]
+        }
       },
       "configurations": {
         "production": {

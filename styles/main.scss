@@ -6,90 +6,84 @@
 // These files contain no actual CSS, but are used for variables, mixins, etc.
 // --------------------------------------------------
 
-// Import variables first as they're used throughout the system
-@import 'variables/colors';
-@import 'variables/typography';
-@import 'variables/spacing';
-@import 'variables/breakpoints';
-@import 'variables/layout';
-@import 'variables/accessibility';
-
-// Import mixins after variables
-@import 'abstracts/mixins';
+// Import abstracts using the consolidated index
+@use 'abstracts' as *;
 
 // 2. Base Styles
 // Common and global styling
 // --------------------------------------------------
 
-@import 'base/reset';
-@import 'base/variables'; // Maps CSS vars to SCSS vars for backward compatibility
-@import 'base/typography';
-@import 'base/accessibility';
+// Reset and base styling for elements
+@use 'base/reset';
+@use 'base/typography' as base-typography;
+@use 'base/accessibility';
+@use 'base/theme-fallbacks';
 
 // 3. Themes
 // Theme management and theme-specific files
-// The application supports four themes:
+// The application supports different themes:
 // - Light (default)
 // - Dark
-// - Ocean
-// - Classic
 // --------------------------------------------------
 
-@import 'themes/theme-manager';
+// Theme variables defined in :root selectors
+@use 'themes/theme-vars';
+
+// Theme management system for switching and applying theme variables
+@use 'themes/theme-manager';
 
 // 4. Layout
 // Styling for macro layout components, not specific features
 // --------------------------------------------------
 
-@import 'layout/grid';
-@import 'layout/container';
-@import 'layout/header';
-@import 'layout/footer';
-@import 'layout/sidebar';
-@import 'layout/section';
+@use 'layout/layout-variables';
+@use 'layout/grid';
+@use 'layout/main-layout';
 
 // 5. Components
 // Individual components that can be reused across many pages
 // --------------------------------------------------
 
-@import 'components/buttons';
-@import 'components/forms';
-@import 'components/cards';
-@import 'components/modals';
-@import 'components/alerts';
-@import 'components/avatars';
-@import 'components/loaders';
-@import 'components/tables';
-@import 'components/pagination';
-@import 'components/breadcrumbs';
-@import 'components/tabs';
-@import 'components/badges';
-@import 'components/tooltips';
+@use 'components/cards';
+@use 'components/header';
+@use 'components/sidenav';
+@use 'components/breadcrumb';
+@use 'components/app-switcher';
+@use 'components/announcements';
+@use 'components/notification';
+@use 'components/user-profile';
+@use 'components/scrollbar';
+@use 'components/placeholder';
 
 // 6. Utilities
 // Utility classes with a single purpose
 // --------------------------------------------------
 
-@import 'utilities/spacing';
-@import 'utilities/visibility';
-@import 'utilities/colors';
-@import 'utilities/text';
-@import 'utilities/flex';
-@import 'utilities/borders';
-@import 'utilities/responsive';
+@use 'utilities/spacing';
+@use 'utilities/typography' as utility-typography;
+@use 'utilities/a11y';
+@use 'utilities/colors';
+@use 'utilities/layout' as utility-layout;
+// NOTE: Additional utilities will be implemented in future phases
+// @use 'utilities/visibility';
+// @use 'utilities/flex';
+// @use 'utilities/borders';
+// @use 'utilities/responsive';
 
 // 7. Pages
 // Page-specific styles
 // --------------------------------------------------
 
-@import 'pages/home';
-@import 'pages/auth';
-@import 'pages/dashboard';
-@import 'pages/profile';
+// NOTE: Page styles will be implemented in future phases
+// @use 'pages/home';
+// @use 'pages/auth';
+// @use 'pages/dashboard';
+// @use 'pages/profile';
 
 // 8. Vendor Overrides
 // Styles that override third-party libraries
 // --------------------------------------------------
 
-@import 'vendor/material';
-@import 'vendor/angular'; 
+// NOTE: Vendor overrides will be implemented in future phases
+// @use 'vendor/material';
+// @use 'vendor/angular'; 

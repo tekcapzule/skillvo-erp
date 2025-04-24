@@ -29,6 +29,9 @@ import { NotificationModule } from './notification/notification.module';
 // User Profile Component
 import { UserProfileModule } from './user-profile/user-profile.module';
 
+// Announcements Bar Component
+import { AnnouncementsBarComponent } from './announcements-bar/announcements-bar.component';
+
 @NgModule({
   declarations: [
     HeaderComponent,
@@ -51,7 +54,9 @@ import { UserProfileModule } from './user-profile/user-profile.module';
     MatTooltipModule,
     NotificationModule,
     UserProfileModule,
-    AppSwitcherComponent
+    // Standalone components
+    AppSwitcherComponent,
+    AnnouncementsBarComponent
   ],
   exports: [
     MainLayoutComponent,

@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter, Input, OnDestroy, ElementRef, Renderer2 } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input, OnDestroy, ElementRef, Renderer2, HostListener } from '@angular/core';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ThemeService, ThemeName } from '../../core/services/theme.service';
@@ -10,6 +10,7 @@ interface MenuItem {
   route: string;
   children?: MenuItem[];
   expanded?: boolean;
+  exact?: boolean;
 }
 
 @Component({
@@ -21,26 +22,34 @@ interface MenuItem {
 export class SidenavComponent implements OnInit, OnDestroy {
   @Output() toggleSidenav = new EventEmitter<void>();
   @Input() collapsed = false;
+  @Input() mobileOpen = false;
   
   private themeSubscription: Subscription | null = null;
+  private readonly MOBILE_BREAKPOINT = 768; // Match the breakpoint-md variable
+  public isMobile = window.innerWidth < this.MOBILE_BREAKPOINT;
+  
+  @HostListener('window:resize', ['$event'])
+  onResize() {
+    this.isMobile = window.innerWidth < this.MOBILE_BREAKPOINT;
+  }
   
   menuItems: MenuItem[] = [
-    { label: 'Home', icon: 'home', route: '/learn/home' },
+    { label: 'Home', icon: 'home', route: '/learn/home', exact: true },
     { 
       label: 'My Activity', 
       icon: 'my-activities', 
       route: '/learn/activity',
       expanded: false,
       children: [
-        { label: 'Learnings', icon: '', route: '/learn/activity/learnings' },
-        { label: 'Tasks', icon: '', route: '/learn/activity/tasks' }
+        { label: 'Learnings', icon: '', route: '/learn/activity/learnings', exact: true },
+        { label: 'Tasks', icon: '', route: '/learn/activity/tasks', exact: true }
       ]
     },
-    { label: 'Courses', icon: 'courses', route: '/learn/courses' },
-    { label: 'References', icon: 'references', route: '/learn/references' },
-    { label: 'Calendar', icon: 'calendar', route: '/learn/calendar' },
-    { label: 'Reports', icon: 'reports', route: '/learn/reports' },
-    { label: 'Help', icon: 'help', route: '/learn/help' },
+    { label: 'Courses', icon: 'courses', route: '/learn/courses', exact: false },
+    { label: 'References', icon: 'references', route: '/learn/references', exact: false },
+    { label: 'Calendar', icon: 'calendar', route: '/learn/calendar', exact: false },
+    { label: 'Reports', icon: 'reports', route: '/learn/reports', exact: false },
+    { label: 'Help', icon: 'help', route: '/learn/help', exact: false },
   ];
 
   constructor(
@@ -130,6 +139,15 @@ export class SidenavComponent implements OnInit, OnDestroy {
       event.preventDefault();
       event.stopPropagation();
       item.expanded = !item.expanded;
+    }
+  }
+  
+  /**
+   * Closes the mobile sidenav when a link is clicked
+   */
+  closeMobileNav(): void {
+    if (this.isMobile) {
+      this.mobileOpen = false;
     }
   }
 } 

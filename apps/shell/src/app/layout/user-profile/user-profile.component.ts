@@ -46,14 +46,22 @@ export class UserProfileComponent implements OnInit {
   
   // Theme options - only light and dark as specified
   themes: Theme[] = [
-    { id: 'light', name: 'Light', description: 'Clean, bright interface for daytime use' },
-    { id: 'dark', name: 'Dark', description: 'Reduced eye strain in low-light environments' }
+    { id: 'light', name: 'Light', description: 'Bright, clear for daytime use' },
+    { id: 'dark', name: 'Dark', description: 'Reduces eye strain in low light' }
   ];
   selectedTheme: ThemeName = 'light';
   
   // Language options
   languages: Language[] = [
-    { code: 'en', name: 'English' }
+    { code: 'en', name: 'English' },
+    { code: 'es', name: 'Español' },
+    { code: 'fr', name: 'Français' },
+    { code: 'de', name: 'Deutsch' },
+    { code: 'pt', name: 'Português' },
+    { code: 'it', name: 'Italiano' },
+    { code: 'zh', name: '中文' },
+    { code: 'ja', name: '日本語' },
+    { code: 'ru', name: 'Русский' }
   ];
   selectedLanguage: string = 'en';
 
@@ -86,11 +94,29 @@ export class UserProfileComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    // Generate initials from full name
+    this.generateInitials();
+    
     // Subscribe to the current theme to update the selected value
     this.themeService.currentTheme$.subscribe(theme => {
       this.selectedTheme = theme;
       this.updateProfilePanelTheme(theme);
     });
+  }
+
+  /**
+   * Generates user initials from full name
+   */
+  private generateInitials(): void {
+    if (this.fullName) {
+      const nameParts = this.fullName.split(' ');
+      if (nameParts.length >= 2) {
+        this.initials = `${nameParts[0].charAt(0)}${nameParts[nameParts.length - 1].charAt(0)}`;
+      } else if (nameParts.length === 1) {
+        this.initials = nameParts[0].charAt(0);
+      }
+      this.initials = this.initials.toUpperCase();
+    }
   }
 
   /**
@@ -122,7 +148,7 @@ export class UserProfileComponent implements OnInit {
     }
   }
 
-  closePanel(): void {
+  closePanel(event?: MouseEvent): void {
     this.closeProfile.emit();
   }
 

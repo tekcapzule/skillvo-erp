@@ -1,93 +1,114 @@
-# Theme Setup for SkillVo Platform
 
-## Overview
-The SkillVo platform uses a highly modular, scalable theme architecture designed for maintainability, accessibility, and responsiveness. The theme files are located in the `/styles` directory at the root of the Nx workspace.
+# 🧩 SkillVo Frontend Style Guide
 
-The platform supports **Light** and **Dark** themes, optimized for mobile-first development and seamless theme switching. Themes are managed via CSS custom properties (variables) structured across multiple SCSS files.
+This document defines the styling architecture, file structure, and SCSS usage guidelines for the SkillVo frontend codebase.
 
 ---
 
-## Folder Structure
+## 📁 Folder Structure (7-1 Architecture)
+
 ```
 styles/
-├── main.scss               # Central entry point
-├── abstracts/              # Shared SCSS mixins
-│   └── _mixins.scss
-├── variables/              # Core design tokens
-│   ├── _colors.scss
-│   ├── _typography.scss
-│   ├── _accessibility.scss
-│   ├── _layout.scss
-│   ├── _breakpoints.scss
-│   └── _spacing.scss
-├── themes/                 # Theme-specific tokens
-│   ├── _light.scss
-│   ├── _dark.scss
-│   └── _theme-manager.scss
-├── base/                   # Base styles and backward compatibility
-│   ├── _variables.scss
-│   ├── _typography.scss
-│   ├── _reset.scss
-│   ├── _accessibility.scss
-│   └── _mixins.scss
+├── abstracts/             # SCSS maps, mixins, variables (no CSS output)
+├── base/                  # Resets, accessibility, base typography
+├── components/            # Design tokens and styles for UI components
+├── layout/                # Styles for grid, layout shell, wrappers
+├── themes/                # Emits CSS variables (light, dark, etc.)
+├── utilities/             # Helpers like scrollbar, flex, spacing
+└── main.scss              # Central entry file (used in styles.scss)
 ```
 
 ---
 
-## Theme Management
+## 📜 Global SCSS Rules
 
-### Light Theme (`_light.scss`)
-- Primary Color: `#1971E5`
-- Secondary Color: `#1A1A1A`
-- Tertiary Color: `#689F38`
-- Optimized for standard (bright) UI usage.
-- Includes semantic tokens like `--bg-app`, `--text-primary`, `--border-default`.
+1. ✅ **All styles must use design tokens**  
+   No hardcoded values like `#fff`, `16px`, `margin: 12px`. Use:
+   ```scss
+   color: var(--text-primary);
+   padding: var(--space-4);
+   ```
 
-### Dark Theme (`_dark.scss`)
-- Primary Color: `#4C8FF8` (adapted for dark contrast)
-- Background Base: `#1E1E1E` (matches Visual Studio Code Dark theme)
-- Lightened secondary colors for text readability.
-- Separate dark-mode tokens loaded under `[data-theme="dark"]`.
+2. ✅ **Component SCSS files**
+   - File: `apps/shell/app/layout/notification/notification.component.scss`
+   - Purpose: structure/layout only (e.g., flexbox, z-index, gaps)
 
-### Theme Switching (`_theme-manager.scss`)
-- Dynamically switches between Light and Dark by toggling `data-theme` attribute on `<html>` or `<body>`.
-- All theme tokens react automatically without recompiling CSS.
+3. ✅ **Component SCSS partials** (`styles/components/_notification.scss`)
+   - Should define design tokens and stylings like colors, sizes, borders, etc.
+   - Can use `@include` mixins, token logic, theme selectors.
+   - Can emit `:root` variables for reusable component tokens.
+   - ✅ Tokens specific to the component are allowed here.
 
----
+4. ❌ **No CSS output in `abstracts/`**  
+   Abstracts should only include maps, mixins, and functions. No `:root` or `body {}` styles.
 
-## Design Tokens
+5. ✅ **Theming must use CSS variables**
+   Tokens are emitted from:
+   ```
+   styles/themes/_theme-vars.scss
+   ```
+   Example:
+   ```scss
+   :root {
+     --primary-500: #1971e5;
+   }
+   [data-theme="dark"] {
+     --primary-500: #0a69c1;
+   }
+   ```
 
-Tokens are divided for better maintainability:
-- **Color Tokens**: `/variables/_colors.scss`
-- **Typography Tokens**: `/variables/_typography.scss`
-- **Spacing Tokens**: `/variables/_spacing.scss`
-- **Breakpoint Tokens**: `/variables/_breakpoints.scss`
-- **Layout Tokens**: `/variables/_layout.scss`
-- **Accessibility Settings**: `/variables/_accessibility.scss`
-
-These are imported into `main.scss` to make them globally available.
-
----
-
-## Base Styles
-
-Located in `/base/`, providing platform-wide normalization:
-- CSS resets (`_reset.scss`)
-- Default typography styles (`_typography.scss`)
-- Accessibility helpers (`_accessibility.scss`)
-- Legacy SCSS variable mappings for backward compatibility (`_variables.scss`)
-
-**Important**: Old SCSS variables are mapped from CSS custom properties in `_variables.scss` for legacy components.
+6. ✅ **Theme switching**
+   Handled by:
+   - `ThemeService` in shell core module
+   - Changes `<html data-theme="dark">`
+   - Styles update automatically via `var(--token)` resolution
 
 ---
 
-## Development Best Practices
-- **Use CSS Variables** whenever possible for new components.
-- **Avoid Hardcoding Colors** inside components.
-- **Mobile First**: All font sizes, spacings, and layouts scale responsively.
-- **No Inline Styles**: Styling should be driven by SCSS classes.
-- **Dark Mode Compatible**: All components must work seamlessly under Light and Dark modes.
+## 🧪 Naming Guidelines
+
+- **Component token** example:
+  ```scss
+  --notification-bg: var(--bg-surface);
+  --notification-text: var(--text-primary);
+  ```
+
+- **Global tokens** are scoped in:
+  ```
+  abstracts/_colors.scss
+  abstracts/_spacing.scss
+  abstracts/_typography.scss
+  ```
 
 ---
 
-> After memory reset, always refer to this Theme Setup document before modifying or creating new components or pages.
+## ✅ Example Component Styling Flow
+
+| Layer | File | Role |
+|-------|------|------|
+| Shell Entry | `styles.scss` | Imports `main.scss` |
+| Main Styles | `main.scss` | Includes abstracts, base, themes, components |
+| Component Tokens | `_notification.scss` | Token definitions and design |
+| Component Structure | `notification.component.scss` | Flexbox layout, visibility, animation |
+| Theme Output | `_theme-vars.scss` | Emits all `--token` for light/dark |
+| Theme Switch | `theme.service.ts` | Switches `data-theme` dynamically |
+
+---
+
+## 🛠️ Developer Checklist
+
+- [ ] Use only `var(--token)` or `$theme-map` references
+- [ ] Declare new component tokens in `styles/components/_component.scss`
+- [ ] Use component `.scss` file only for layout/structure
+- [ ] Do not emit CSS from `abstracts/`
+- [ ] Test theme switching after any style changes
+
+---
+
+## ✅ Cursor AI: Important Notes
+
+- Component styling should be **split** into:
+  - **Design tokens** → `styles/components/_xyz.scss`
+  - **Structure/animation/layout** → `xyz.component.scss`
+- Use `var(--token)` values always.
+- Fallbacks like `var(--space-4, 16px)` allowed only where necessary.

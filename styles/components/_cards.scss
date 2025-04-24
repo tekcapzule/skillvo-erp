@@ -1,0 +1,213 @@
+// ========================================
+// Card Components
+// ========================================
+// Styles for various card components used throughout the application
+
+@use '../abstracts/breakpoints' as breakpoints;
+@use '../abstracts/theme-mixins' as theme;
+
+// Base card styles
+.card {
+  background-color: var(--bg-surface);
+  border-radius: var(--radius-md, 0.5rem);
+  box-shadow: var(--shadow-sm, 0 2px 5px rgba(0, 0, 0, 0.05));
+  overflow: hidden;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md, 0 4px 10px rgba(0, 0, 0, 0.1));
+  }
+  
+  @include theme.prefer-dark-mode {
+    background-color: var(--bg-surface);
+    box-shadow: var(--shadow-sm, 0 2px 5px rgba(0, 0, 0, 0.2));
+    
+    &:hover {
+      box-shadow: var(--shadow-md, 0 4px 10px rgba(0, 0, 0, 0.3));
+    }
+  }
+}
+
+// Card header
+.card-header {
+  padding: var(--inset-md, 1rem);
+  border-bottom: 1px solid var(--border-light);
+  background-color: var(--bg-surface);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  
+  h2, h3, h4 {
+    margin: 0;
+    font-weight: var(--font-medium, 500);
+    color: var(--text-primary);
+  }
+  
+  @include theme.prefer-dark-mode {
+    background-color: var(--bg-surface);
+    border-bottom-color: var(--border-default);
+    
+    h2, h3, h4 {
+      color: var(--text-primary);
+    }
+  }
+}
+
+// Card body
+.card-body {
+  padding: var(--inset-md, 1rem);
+  flex: 1 1 auto;
+}
+
+// Card footer
+.card-footer {
+  padding: var(--inset-md, 1rem);
+  border-top: 1px solid var(--border-light);
+  background-color: var(--bg-surface);
+  
+  @include theme.prefer-dark-mode {
+    background-color: var(--bg-surface);
+    border-top-color: var(--border-default);
+  }
+}
+
+// Stat card
+.stat-card {
+  text-align: center;
+  padding: var(--inset-lg, 1.5rem);
+  
+  .stat-value {
+    font-size: var(--text-4xl, 2.5rem);
+    font-weight: var(--font-bold, 700);
+    color: var(--primary-600);
+    line-height: 1.2;
+    margin-bottom: var(--inset-xs, 0.5rem);
+  }
+  
+  .stat-label {
+    font-size: var(--text-sm, 0.875rem);
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  
+  @include theme.prefer-dark-mode {
+    .stat-value {
+      color: var(--primary-400);
+    }
+    
+    .stat-label {
+      color: var(--text-secondary);
+    }
+  }
+}
+
+// Course card
+.course-card {
+  .course-image {
+    width: 100%;
+    height: 160px;
+    object-fit: cover;
+  }
+  
+  .course-title {
+    font-size: var(--text-lg, 1.125rem);
+    font-weight: var(--font-semibold, 600);
+    margin: var(--inset-sm, 0.75rem) 0 var(--inset-xs, 0.5rem);
+    color: var(--text-primary);
+  }
+  
+  .course-description {
+    font-size: var(--text-sm, 0.875rem);
+    color: var(--text-secondary);
+    margin-bottom: var(--inset-md, 1rem);
+  }
+  
+  .course-meta {
+    display: flex;
+    justify-content: space-between;
+    font-size: var(--text-xs, 0.75rem);
+    color: var(--text-tertiary);
+    border-top: 1px solid var(--border-light);
+    padding-top: var(--inset-sm, 0.75rem);
+    margin-top: auto;
+  }
+  
+  .progress-container {
+    margin-top: var(--inset-sm, 0.75rem);
+    height: 6px;
+    background-color: var(--border-light);
+    border-radius: 3px;
+    overflow: hidden;
+    
+    .progress-bar {
+      height: 100%;
+      background-color: var(--primary-600);
+    }
+  }
+  
+  @include theme.prefer-dark-mode {
+    .course-title {
+      color: var(--text-primary);
+    }
+    
+    .course-description {
+      color: var(--text-secondary);
+    }
+    
+    .course-meta {
+      color: var(--text-tertiary);
+      border-top-color: var(--border-default);
+    }
+    
+    .progress-container {
+      background-color: var(--border-default);
+    }
+  }
+}
+
+// Empty state card
+.empty-state-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: var(--inset-2xl, 3rem) var(--inset-lg, 1.5rem);
+  
+  .empty-state-icon {
+    font-size: var(--text-5xl, 4rem);
+    color: var(--text-tertiary);
+    margin-bottom: var(--inset-lg, 1.5rem);
+  }
+  
+  .empty-state-title {
+    font-size: var(--text-xl, 1.25rem);
+    font-weight: var(--font-semibold, 600);
+    margin-bottom: var(--inset-sm, 0.75rem);
+    color: var(--text-primary);
+  }
+  
+  .empty-state-description {
+    color: var(--text-secondary);
+    margin-bottom: var(--inset-lg, 1.5rem);
+    max-width: 28rem;
+  }
+  
+  @include theme.prefer-dark-mode {
+    .empty-state-icon {
+      color: var(--text-tertiary);
+    }
+    
+    .empty-state-title {
+      color: var(--text-primary);
+    }
+    
+    .empty-state-description {
+      color: var(--text-secondary);
+    }
+  }
+} 

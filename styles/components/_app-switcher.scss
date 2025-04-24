@@ -1,0 +1,44 @@
+/*
+ * App Switcher Component
+ * Contains variables for the app switcher component
+ */
+
+:root {
+  // App Menu Container
+  --app-switcher-bg: var(--bg-surface);
+  --app-switcher-z-index: var(--z-50, 1100);
+  --app-switcher-border: var(--border-default);
+  --app-switcher-shadow: var(--shadow-md);
+  
+  // App Menu
+  --app-menu-width: var(--space-60, 240px);
+  --app-menu-padding: var(--inset-md, var(--space-3, 12px));
+  --app-menu-gap: var(--inset-sm, var(--space-2, 8px));
+  
+  // App Items
+  --app-item-bg: var(--bg-surface);
+  --app-item-hover-bg: var(--bg-element-hover);
+  --app-item-text: var(--text-primary);
+  --app-item-height: var(--space-21-25, 85px);
+  --app-item-height-mobile: var(--space-22-5, 90px);
+  --app-item-padding: var(--inset-md, var(--space-4, 16px));
+  
+  // App Icons
+  --app-icon-size: var(--icon-size-md, var(--space-8, 32px));
+  
+  // Animation
+  --app-menu-transition: 0.2s ease-in-out;
+  
+  // Overlay
+  --overlay-bg: rgba(0, 0, 0, 0.4);
+}
+
+[data-theme="dark"] {
+  --app-switcher-bg: var(--bg-surface);
+  --app-item-bg: var(--bg-surface);
+  --app-item-hover-bg: var(--bg-element-hover);
+  --app-item-text: var(--text-primary);
+  --app-switcher-border: var(--border-default);
+  --app-switcher-shadow: var(--shadow-md);
+  --overlay-bg: rgba(0, 0, 0, 0.5);
+} 

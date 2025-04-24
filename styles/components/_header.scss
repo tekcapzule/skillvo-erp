@@ -1,0 +1,126 @@
+// ========================================
+// Header Component Styles
+// ========================================
+// Global styles for the application header
+// ========================================
+// Header Component Variables
+// ========================================
+
+@use '../abstracts/breakpoints' as breakpoints;
+@use '../abstracts/theme-mixins' as *;
+
+:root {
+  // Layout & Sizing
+  --header-height: 56px;
+  --header-padding: var(--inset-md, 12px);
+  --header-z-index: var(--z-50, 1000);
+  
+  // Colors & Styling
+  @include themed('--header-bg', var(--bg-primary), var(--bg-surface));
+  @include themed('--header-text', var(--text-primary), var(--text-primary));
+  @include themed('--header-border-color', var(--border-light), var(--border-default));
+  --header-shadow: var(--shadow-sm);
+  
+  // Control Styling
+  --header-control-size: 40px;
+  --header-control-padding: var(--inset-xs, 8px);
+  --header-control-gap: var(--inset-sm, 10px);
+  --header-control-radius: var(--radius-full);
+  --header-control-hover-bg: var(--bg-element-hover);
+  --header-icon-color: var(--text-secondary);
+  --header-icon-hover-color: var(--text-primary);
+  --header-icon-size: 24px;
+  
+  // Logo
+  --header-logo-width: 120px;
+  --header-logo-height: 32px;
+  --header-logo-margin: var(--inset-sm, 8px);
+  --header-logo-color: var(--primary-500);
+  --header-logo-size: 24px;
+  
+  // Title
+  --header-title-size: var(--text-md, 16px);
+  --header-title-weight: var(--font-medium, 500);
+  --header-title-spacing: normal;
+  --header-text-size: var(--text-sm, 14px);
+  
+  // Avatar
+  --header-avatar-size: 32px;
+  --header-avatar-radius: var(--radius-full);
+  --header-avatar-border: var(--border-light);
+  
+  // Mobile adjustments
+  --header-mobile-padding: var(--inset-sm, 8px);
+  --header-mobile-control-gap: var(--inset-xs, 4px);
+  --header-mobile-control-gap-sm: var(--inset-xs, 4px);
+  --header-mobile-control-size: 36px;
+  --header-icon-size-mobile: 20px;
+  --header-avatar-size-mobile: 28px;
+  
+  // Spacer
+  --header-spacer-flex: 1;
+  
+  // Left and Right sections
+  --header-section-display: flex;
+  --header-section-align: center;
+  
+  // Transitions
+  --header-transition: all 200ms ease-in-out;
+}
+
+// Material toolbar overrides - using mixins instead of data-theme selectors
+.mat-toolbar {
+  &.header-toolbar {
+    @include themed('background-color', var(--bg-primary), var(--bg-surface));
+    @include themed('color', var(--text-primary), var(--text-primary));
+    @include themed('border-bottom', 1px solid var(--border-light), 1px solid var(--border-default));
+    padding: 0 var(--header-padding);
+    min-height: var(--header-height);
+    height: var(--header-height);
+    
+    @include breakpoints.breakpoint-down('md') {
+      padding: 0 var(--header-mobile-padding);
+    }
+  }
+}
+
+// Animation for panels
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// Header sections
+.header-left, .header-right {
+  display: var(--header-section-display);
+  align-items: var(--header-section-align);
+}
+
+.header-spacer {
+  flex: var(--header-spacer-flex);
+}
+
+// Header dropdown panels
+.header-panel {
+  position: absolute;
+  top: var(--header-height);
+  right: 0;
+  width: 320px;
+  max-width: 100vw;
+  background-color: var(--bg-surface);
+  border-radius: 0 0 var(--radius-sm) var(--radius-sm);
+  box-shadow: var(--shadow-md);
+  animation: fadeInDown 0.2s ease-in-out;
+  z-index: var(--z-40);
+  
+  @include breakpoints.breakpoint-down('sm') {
+    width: 100%;
+    right: 0;
+  }
+} 

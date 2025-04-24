@@ -1,0 +1,23 @@
+/**
+ * Placeholder Component Variables
+ * Contains variables for the placeholder component
+ */
+
+@use '../abstracts/theme-mixins' as *;
+
+:root {
+  /* Placeholder Structure */
+  --placeholder-padding: var(--inset-md);
+  --placeholder-border-radius: var(--radius-md);
+  
+  /* Placeholder Colors */
+  --placeholder-bg: var(--bg-surface);
+  --placeholder-shadow: var(--shadow-sm);
+  --placeholder-title-color: var(--primary-500);
+  --placeholder-text-color: var(--text-primary);
+}
+
+/* Dark Theme Overrides */
+[data-theme="dark"] {
+  --placeholder-shadow: var(--shadow-dark);
+} 

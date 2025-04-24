@@ -1,8 +1,7 @@
-<div class="sidenav-container" [class.collapsed]="collapsed">
+<div class="sidenav-container" [class.collapsed]="collapsed" [class.mobile-open]="mobileOpen">
   <div class="sidenav-header">
-    <!-- Hamburger menu button for web/desktop only -->
-    <button mat-icon-button class="menu-button desktop-only" (click)="toggleSidenav.emit()">
-      <mat-icon>menu</mat-icon>
+    <button mat-icon-button class="toggle-button" (click)="toggleSidenav.emit()" *ngIf="!isMobile">
+      <mat-icon>{{ collapsed ? 'menu_open' : 'menu' }}</mat-icon>
     </button>
   </div>
 
@@ -12,6 +11,7 @@
         <a mat-list-item 
           [routerLink]="item.route" 
           routerLinkActive="active-link"
+          [routerLinkActiveOptions]="{exact: item.exact || false}"
           *ngIf="!item.children">
           <div class="menu-item" [class.centered]="collapsed">
             <div class="icon-container">
@@ -39,7 +39,8 @@
           <a mat-list-item 
             *ngFor="let child of item.children"
             [routerLink]="child.route"
-            routerLinkActive="active-link">
+            routerLinkActive="active-link"
+            [routerLinkActiveOptions]="{exact: child.exact || false}">
             <div class="menu-item child-menu-item">
               <span class="menu-label">{{ child.label }}</span>
             </div>
@@ -49,7 +50,9 @@
     </mat-nav-list>
   </div>
 
-  <div class="sidenav-footer" *ngIf="!collapsed">
-    <span class="version">v1.0.0</span>
+  <!-- Footer with version - always visible regardless of collapsed state -->
+  <div class="sidenav-footer">
+    <span class="version" *ngIf="!collapsed">v1.0.0</span>
+    <span class="version" *ngIf="collapsed">1.0</span>
   </div>
 </div> 

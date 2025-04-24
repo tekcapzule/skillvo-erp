@@ -6,7 +6,10 @@
            class="app-item" 
            (click)="navigateTo(app)">
         <div class="app-icon">
-          <div class="icon-container">{{app.name.charAt(0)}}</div>
+          <div class="icon-container">
+            <img *ngIf="app.icon" [src]="app.icon" [alt]="app.name + ' icon'" />
+            <span *ngIf="!app.icon">{{app.name.charAt(0)}}</span>
+          </div>
         </div>
         <span class="app-label">{{app.name}}</span>
       </div>

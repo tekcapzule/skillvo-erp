@@ -1,140 +1,97 @@
-.sidenav-container {
-  height: calc(100vh - 56px); /* Viewport height minus header height */
-  width: 100%;
-  position: absolute;
-  top: 56px; /* Position below fixed header */
-  left: 0;
-  right: 0;
-  bottom: 0;
-  overflow: hidden; /* Hide scrollbar on container level */
-  background-color: var(--bg-app, #f9fafb);
-  transition: background-color 0.3s ease;
-}
+/* Import theme abstracts for access to mixins and variables */
+@use 'styles/abstracts' as *;
+@use 'styles/components/scrollbar' as scrollbar;
 
-.sidenav {
-  width: 240px;
-  border-right: none; /* Border is already defined in sidenav component */
-  transition: width 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-  overflow-x: hidden !important;
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  background-color: var(--bg-surface, #ffffff);
-}
-
-.collapsed-sidenav {
-  width: 56px !important;
-}
-
-mat-sidenav-content {
-  transition: margin-left 0.3s ease, background-color 0.3s ease; /* Smooth transition when sidenav collapses */
-  overflow: hidden; /* Hide scrollbar at this level */
-  background-color: var(--bg-app, #f9fafb);
-}
-
-:host ::ng-deep .mat-drawer-inner-container {
-  overflow-x: hidden !important;
+.main-content-container {
+  display: flex;
+  height: calc(100vh - var(--header-height));
+  position: relative;
+  overflow: hidden;
+  margin-top: var(--header-height);
 }
 
 .content-wrapper {
-  display: flex;
-  flex-direction: column;
+  flex: 1;
   height: 100%;
-  background-color: var(--bg-app, #f9fafb);
-  overflow: hidden; /* Hide scrollbar at this level */
-  transition: background-color 0.3s ease;
+  width: 100%;
+  background-color: var(--main-layout-bg);
+  overflow: hidden;
+  transition: margin-left var(--sidenav-transition-duration) var(--sidenav-transition-timing);
+  @include theme-transition(background-color);
+  
+  &.with-sidebar {
+    margin-left: var(--sidenav-width);
+  }
+  
+  &.with-collapsed-sidebar {
+    margin-left: var(--sidenav-width-collapsed);
+  }
 }
 
 .content-container {
-  padding: 24px;
-  height: calc(100% - 56px); /* Full height minus breadcrumb height */
-  overflow-y: auto; /* Show scrollbar only when needed */
-  overflow-x: hidden; /* Prevent horizontal scrollbar */
-  background-color: var(--bg-app, #f9fafb);
-  transition: background-color 0.3s ease;
-}
-
-/* Dark theme overrides */
-:host-context([data-theme="dark"]) {
-  .sidenav-container,
-  mat-sidenav-content,
-  .content-wrapper,
-  .content-container {
-    background-color: var(--bg-app, #1e1e1e);
-  }
-  
-  .sidenav {
-    background-color: var(--bg-surface, #1e1e1e);
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
-    border-right: 1px solid var(--border-default, #333333);
-  }
+  padding: var(--main-layout-content-padding);
+  height: calc(100% - var(--breadcrumb-height));
+  overflow-y: auto;
+  overflow-x: hidden;
+  background-color: var(--main-layout-content-bg);
+  @include theme-transition(background-color);
+  @include scrollbar.styled-scrollbar;
 }
 
 /* Floating mobile hamburger button */
 .mobile-fab-menu {
-  display: none; /* Hidden by default */
+  display: none;
   position: fixed;
-  bottom: 24px;
-  right: 24px;
-  z-index: 2000;
-  background-color: var(--primary-500, #1971e5);
-  color: white;
+  bottom: var(--main-layout-fab-bottom);
+  right: var(--main-layout-fab-right);
+  z-index: var(--z-floating);
+  background-color: var(--primary-500);
+  color: var(--text-inverse);
+  box-shadow: var(--shadow-md);
+  @include theme-transition(background-color, color, box-shadow);
 }
 
-/* Ensure hamburger menu is accessible on all screen sizes */
-.mat-drawer-backdrop.mat-drawer-shown {
-  background-color: rgba(0, 0, 0, 0.6);
-}
-
-/* Style the sidenav for mobile */
-:host ::ng-deep .mat-drawer-over {
-  box-shadow: 0 8px 10px -5px rgba(0,0,0,.2), 
-              0 16px 24px 2px rgba(0,0,0,.14), 
-              0 6px 30px 5px rgba(0,0,0,.12);
+/* Mobile backdrop */
+.mobile-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--backdrop-color);
+  z-index: var(--backdrop-z-index);
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity var(--backdrop-transition-duration) var(--backdrop-transition-timing), visibility var(--backdrop-transition-duration) var(--backdrop-transition-timing);
+  
+  &.active {
+    visibility: visible;
+    opacity: 1;
+  }
 }
 
 // Responsive adjustments
-@media screen and (max-width: 768px) {
-  .sidenav {
-    width: 100%;  /* Full width on mobile */
-    position: fixed;
-    top: 0;
-    left: 0;
-    height: 100vh; /* Full viewport height */
-    z-index: 1001; /* Higher z-index to ensure it appears above everything else */
-    
-    /* Make sure inner content takes full height */
-    ::ng-deep .mat-drawer-inner-container {
-      height: 100vh !important;
-      overflow-y: auto !important;
-    }
-  }
-  
-  mat-sidenav-content {
-    margin-left: 0 !important; /* No margin on mobile */
+@include breakpoint-down('md') {
+  .content-wrapper {
+    margin-left: 0 !important;
   }
   
   .content-container {
-    padding: 16px;
-    height: 100%; /* Full height on mobile since breadcrumb is hidden */
+    padding: var(--main-layout-content-padding-mobile);
   }
   
-  /* Show floating hamburger button on mobile */
   .mobile-fab-menu {
     display: flex;
   }
+}
+
+@include breakpoint-down('sm') {
+  .content-container {
+    padding: var(--main-layout-content-padding-mobile-sm);
+  }
   
-  /* Make sure the backdrop covers everything */
-  ::ng-deep .mat-drawer-backdrop.mat-drawer-shown {
-    background-color: rgba(0, 0, 0, 0.6);
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    height: 100vh;
-    width: 100vw;
-    z-index: 1000;
+  .mobile-fab-menu {
+    bottom: var(--main-layout-fab-bottom-sm);
+    right: var(--main-layout-fab-right-sm);
   }
 } 

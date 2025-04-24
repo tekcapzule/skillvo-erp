@@ -1,0 +1,60 @@
+// ========================================
+// Announcements Component Variables
+// ========================================
+
+@use '../abstracts/theme-mixins' as *;
+
+:root {
+  // Announcements bar sizing
+  --announcements-height: var(--space-10, 40px);
+  --announcements-padding: 0 var(--inset-md, 16px);
+  
+  // Announcements typography
+  --announcements-font-size: var(--text-sm, 14px);
+  --announcements-font-weight: var(--font-medium, 500);
+  
+  // Announcements controls
+  --announcements-icon-size: var(--icon-size-sm, var(--space-4, 16px));
+  --announcements-close-btn-size: var(--btn-size-sm, var(--space-7, 28px));
+  --announcements-close-hover-bg: rgba(255, 255, 255, 0.1);
+  
+  // Apply themed values
+  @include themed('--announcements-bg', var(--primary-500), var(--primary-600));
+  @include themed('--announcements-text', var(--text-inverse), var(--text-inverse));
+}
+
+/* ==========================================================================
+   Announcements Bar Component Variables
+   ========================================================================== */
+
+:root {
+  /* Announcements Bar Sizing */
+  --announcements-bar-height: var(--announcements-height);
+  --announcements-bar-min-height: var(--announcements-height);
+  --announcements-bar-padding: 0 var(--inset-lg);
+  
+  /* Announcements Bar Colors - Using themed mixins */
+  @include themed('--announcements-bar-bg', var(--primary-500), var(--primary-600));
+  @include themed('--announcements-bar-text', var(--text-inverse), var(--text-inverse));
+  @include themed('--announcements-bar-link', var(--text-inverse), var(--text-inverse));
+  @include themed('--announcements-bar-link-hover', rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9));
+  
+  /* Announcements Bar Typography */
+  --announcements-bar-font-size: var(--text-sm);
+  --announcements-bar-font-weight: var(--font-normal);
+  --announcements-bar-line-height: 1.5;
+  
+  /* Announcements Bar Close Button */
+  --announcements-close-button-size: var(--space-6, 24px);
+  @include themed('--announcements-close-button-color', var(--text-inverse), var(--text-inverse));
+  @include themed('--announcements-close-button-hover', rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9));
+  
+  /* Announcements Bar Z-index and Animation */
+  --announcements-bar-z-index: var(--z-40);
+  --announcements-bar-transition-duration: 0.3s;
+  --announcements-bar-transition-timing: ease-in-out;
+  
+  /* Announcements Bar Responsive Adjustments */
+  --announcements-bar-mobile-padding: 0 var(--inset-md);
+  --announcements-bar-mobile-font-size: var(--text-xs);
+} 

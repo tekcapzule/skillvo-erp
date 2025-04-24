@@ -1,0 +1,48 @@
+/*
+ * Breadcrumb Component
+ * Contains variables for the breadcrumb component
+ */
+
+// ========================================
+// Breadcrumb Component Variables
+// ========================================
+
+:root {
+  // Layout & Positioning
+  --breadcrumb-height: var(--header-height, var(--space-14, 56px));
+  --breadcrumb-padding: 0 var(--inset-md, var(--space-3, 12px));
+  --breadcrumb-margin: 0;
+  --breadcrumb-position-top: var(--header-height, var(--space-14, 56px));
+  --breadcrumb-z-index: var(--z-30, 800);
+  
+  // Colors & Styling
+  --breadcrumb-bg: var(--bg-surface);
+  --breadcrumb-text: var(--text-primary);
+  --breadcrumb-border-color: var(--border-light);
+  --breadcrumb-shadow: var(--shadow-sm, 0 var(--space-0-25, 1px) var(--space-0-5, 2px) rgba(0, 0, 0, 0.05));
+  
+  // Item Styling
+  --breadcrumb-item-padding: var(--inset-xs, var(--space-1, 4px));
+  --breadcrumb-item-gap: var(--inset-xs, var(--space-1, 4px));
+  --breadcrumb-item-font-size: var(--font-size-sm, var(--text-sm, 14px));
+  --breadcrumb-item-font-weight: var(--font-weight-medium, 500);
+  --breadcrumb-item-icon-size: var(--space-4, 16px);
+  
+  // Item States
+  --breadcrumb-item-hover-text: var(--primary-500);
+  --breadcrumb-item-active-text: var(--text-secondary);
+  
+  // Separator
+  --breadcrumb-separator-color: var(--text-tertiary);
+  --breadcrumb-separator-margin: 0 var(--inset-xs, var(--space-1, 4px));
+  
+  // Transitions
+  --breadcrumb-transition: all 150ms ease;
+}
+
+// Dark theme overrides
+[data-theme="dark"] {
+  --breadcrumb-bg: var(--bg-surface);
+  --breadcrumb-border-color: var(--border-default);
+  --breadcrumb-shadow: var(--shadow-default);
+} 

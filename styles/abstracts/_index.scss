@@ -1,0 +1,50 @@
+// ========================================
+// Abstracts Index
+// ========================================
+// This file forwards all abstracts to allow importing everything with a single import
+// @use 'abstracts'; instead of multiple imports
+
+// Core variables
+@forward 'colors';
+@forward 'typography';
+@forward 'spacing';
+@forward 'breakpoints';
+@forward 'icons';
+
+// Accessibility variables first - ensures they're available for mixins
+@forward 'accessibility';
+
+// Mixins - General purpose mixins
+@forward 'mixins';
+
+// Accessibility mixins after variables are defined
+@forward 'a11y-mixins';
+
+// Theme mixins - all theme-related mixins are now here
+@forward 'theme-mixins';
+
+// Component variables
+@forward '../components/header';
+@forward '../components/sidenav';
+@forward '../components/breadcrumb';
+@forward '../components/notification';
+@forward '../components/user-profile';
+@forward '../components/app-switcher';
+@forward '../components/announcements';
+@forward '../components/scrollbar';
+
+// Variables that can be customized by importing modules
+// ----------------------------------------
+$enable-dark-mode: true !default;
+$enable-transitions: true !default;
+$enable-reduced-motion: true !default;
+$enable-rtl-support: false !default;
+
+// Export shared configuration
+// ----------------------------------------
+:export {
+  darkModeEnabled: $enable-dark-mode;
+  transitionsEnabled: $enable-transitions;
+  reducedMotionEnabled: $enable-reduced-motion;
+  rtlSupportEnabled: $enable-rtl-support;
+} 

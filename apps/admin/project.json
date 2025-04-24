@@ -23,7 +23,10 @@
           }
         ],
         "styles": ["apps/admin/src/styles.scss"],
-        "scripts": []
+        "scripts": [],
+        "stylePreprocessorOptions": {
+          "includePaths": ["styles"]
+        }
       },
       "configurations": {
         "production": {

@@ -91,6 +91,9 @@ export class NotificationComponent implements OnInit, OnDestroy {
     } else {
       this.updateNotificationTheme('light');
     }
+
+    // Prevent body scrolling when notification panel is open
+    this.updateBodyScrolling();
   }
   
   ngOnDestroy(): void {
@@ -98,6 +101,9 @@ export class NotificationComponent implements OnInit, OnDestroy {
     if (this.themeSubscription) {
       this.themeSubscription.unsubscribe();
     }
+    
+    // Ensure body scrolling is enabled when component is destroyed
+    document.body.style.overflow = '';
   }
   
   /**
@@ -132,6 +138,17 @@ export class NotificationComponent implements OnInit, OnDestroy {
     }
   }
 
+  /**
+   * Prevents body scrolling when notification panel is open
+   */
+  private updateBodyScrolling(): void {
+    if (this.isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+  }
+
   loadNotifications(): void {
     this.loading = true;
     
@@ -142,7 +159,7 @@ export class NotificationComponent implements OnInit, OnDestroy {
         {
           id: '1',
           title: 'Two New Courses Assigned',
-          message: 'There are two new courses assigned to you, which mandatory and should be completed before the deadline given.',
+          message: 'You have been assigned "Introduction to Angular" and "UI/UX Design Principles". These are mandatory courses that need to be completed by the specified deadline.',
           category: 'Course',
           timestamp: new Date(),
           read: false
@@ -150,7 +167,7 @@ export class NotificationComponent implements OnInit, OnDestroy {
         {
           id: '2',
           title: 'Your course certificate is ready',
-          message: 'There are two new courses assigned to you, which mandatory and should be completed before the deadline given.',
+          message: 'Congratulations! Your certificate for "Advanced JavaScript" is now available. You can download it from your profile page.',
           category: 'Certificate',
           timestamp: new Date(Date.now() - 518400000), // 6 days ago
           read: true
@@ -158,15 +175,15 @@ export class NotificationComponent implements OnInit, OnDestroy {
         {
           id: '3',
           title: 'Time to redeem your reward',
-          message: 'There are two new courses assigned to you, which mandatory and should be completed before the deadline given.',
+          message: 'You have earned 500 points for completing the "React Fundamentals" course. Redeem your points for special offers in the rewards center.',
           category: 'Certificate',
-          timestamp: new Date('2004-11-29'),
+          timestamp: new Date('2024-11-29'),
           read: false
         },
         {
           id: '4',
           title: 'Please complete the course assigned',
-          message: 'There are two new courses assigned to you, which mandatory and should be completed before the deadline given.',
+          message: 'Reminder: The "Data Analytics Basics" course assigned to you is due in 5 days. Please complete it to maintain your learning progress.',
           category: 'Course',
           timestamp: new Date('2024-11-24'),
           read: false
@@ -176,7 +193,7 @@ export class NotificationComponent implements OnInit, OnDestroy {
       this.filteredNotifications = [...this.notifications];
       this.calculateUnreadCount();
       this.loading = false;
-    }, 1000);
+    }, 500); // Reduced loading time for better UX
   }
 
   filterNotifications(): void {
@@ -268,31 +285,40 @@ export class NotificationComponent implements OnInit, OnDestroy {
   }
 
   closePanel(): void {
+    this.isOpen = false;
     this.closeNotification.emit();
+    this.updateBodyScrolling();
   }
 
   getFormattedDate(timestamp: Date): string {
     const now = new Date();
-    const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-    const notificationDate = new Date(timestamp);
+    const date = new Date(timestamp);
     
     // Check if it's today
-    if (notificationDate >= today) {
+    if (date.toDateString() === now.toDateString()) {
       return 'Just Now';
     }
     
-    // Check if it's within the last week
-    const sixDaysAgo = new Date(today);
-    sixDaysAgo.setDate(today.getDate() - 6);
-    if (notificationDate >= sixDaysAgo) {
-      return `${Math.ceil((today.getTime() - notificationDate.getTime()) / (1000 * 60 * 60 * 24))} days ago`;
+    // Check if it's yesterday
+    const yesterday = new Date(now);
+    yesterday.setDate(now.getDate() - 1);
+    if (date.toDateString() === yesterday.toDateString()) {
+      return 'Yesterday';
     }
     
-    // Otherwise return the date in DD/MM/YYYY format
-    return notificationDate.toLocaleDateString('en-GB', {
-      day: '2-digit',
-      month: '2-digit',
-      year: 'numeric'
-    }).replace(/\//g, '/');
+    // Check if it's within the last 7 days
+    const sevenDaysAgo = new Date(now);
+    sevenDaysAgo.setDate(now.getDate() - 7);
+    if (date > sevenDaysAgo) {
+      return `${date.getDate()} days ago`;
+    }
+    
+    // For future dates, show full date
+    if (date > now) {
+      return date.toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' });
+    }
+    
+    // For dates older than 7 days, format as DD/MM/YYYY
+    return date.toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' });
   }
 } 

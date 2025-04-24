@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
-export type ThemeName = 'light' | 'dark' | 'ocean' | 'classic';
+export type ThemeName = 'light' | 'dark';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +17,7 @@ export class ThemeService {
 
     // Check if user has a theme preference saved
     const savedTheme = localStorage.getItem('theme') as ThemeName;
-    if (savedTheme && ['light', 'dark', 'ocean', 'classic'].includes(savedTheme)) {
+    if (savedTheme && ['light', 'dark'].includes(savedTheme)) {
       this.setTheme(savedTheme);
     } else {
       // Check for system preference
@@ -65,8 +65,8 @@ export class ThemeService {
    */
   private applyThemeClasses(theme: ThemeName): void {
     // Remove all theme classes first
-    document.documentElement.classList.remove('light-theme', 'dark-theme', 'ocean-theme', 'classic-theme');
-    document.body.classList.remove('light-theme', 'dark-theme', 'ocean-theme', 'classic-theme');
+    document.documentElement.classList.remove('light-theme', 'dark-theme');
+    document.body.classList.remove('light-theme', 'dark-theme');
     
     // Apply the appropriate theme class
     const themeClass = `${theme}-theme`;

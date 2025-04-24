@@ -1,0 +1,73 @@
+/* ==========================================================================
+   SIDENAV COMPONENT VARIABLES
+   ========================================================================== */
+
+:root {
+  /* Sidenav Structure */
+  --sidenav-width: 240px;
+  --sidenav-width-collapsed: 64px;
+  --sidenav-height: calc(100vh - var(--header-height));
+  --sidenav-z-index: var(--z-40, 900);
+  --sidenav-padding: var(--inset-md, 12px);
+  
+  /* Sidenav Header */
+  --sidenav-header-height: 56px;
+  --sidenav-header-padding: var(--inset-md, 16px);
+  
+  /* Sidenav Items */
+  --sidenav-item-height: 40px;
+  --sidenav-item-padding: var(--inset-sm, 10px);
+  --sidenav-item-margin: var(--inset-xs, 4px) 0;
+  --sidenav-item-radius: var(--radius-sm, 4px);
+  --sidenav-item-gap: var(--inset-sm, 10px);
+  --sidenav-item-icon-size: 24px;
+  --sidenav-item-icon-margin: var(--inset-md, 16px);
+  --sidenav-item-hover-bg: var(--bg-element-hover);
+  --sidenav-item-hover-text: var(--text-primary);
+  --sidenav-item-active-bg: var(--primary-50);
+  --sidenav-item-active-text: var(--primary-500);
+  
+  /* Sidenav Child Items */
+  --sidenav-child-item-height: 40px;
+  --sidenav-child-item-padding-left: calc(var(--sidenav-item-padding) + var(--sidenav-item-icon-size) + var(--sidenav-item-icon-margin));
+  --sidenav-child-bg: var(--bg-surface-subtle, rgba(0, 0, 0, 0.02));
+  --sidenav-active-indicator: var(--primary-500);
+  
+  /* Sidenav Typography */
+  --sidenav-font-size: var(--text-sm, 14px);
+  --sidenav-child-font-size: var(--text-xs, 12px);
+  --sidenav-font-weight: var(--font-medium, 500);
+  --sidenav-active-font-weight: var(--font-semibold, 600);
+  --sidenav-font-family: var(--font-family-base, 'Inter', sans-serif);
+  
+  /* Sidenav Footer */
+  --sidenav-footer-height: 48px;
+  --sidenav-footer-padding: var(--inset-md, 16px);
+  
+  /* Sidenav Colors */
+  --sidenav-bg: var(--bg-primary);
+  --sidenav-text: var(--text-primary);
+  --sidenav-border-color: var(--border-light);
+  --sidenav-shadow: var(--shadow-sm, 0 0 10px rgba(0, 0, 0, 0.05));
+  
+  /* Sidenav Icon Styling */
+  --sidenav-icon-size: 20px;
+  --sidenav-icon-color: var(--text-secondary);
+  --sidenav-icon-active-color: var(--primary-500);
+  
+  /* Sidenav Divider */
+  --sidenav-divider-color: var(--border-light);
+  --sidenav-divider-margin: var(--inset-md, 12px) 0;
+  
+  /* Sidenav Transitions */
+  --sidenav-transition: all 200ms ease-in-out;
+  --sidenav-item-transition: background-color 150ms ease, color 150ms ease;
+}
+
+// Dark theme overrides
+[data-theme="dark"] {
+  --sidenav-bg: var(--bg-surface);
+  --sidenav-border-color: var(--border-default);
+  --sidenav-child-bg: var(--bg-element-hover, rgba(255, 255, 255, 0.05));
+  --sidenav-mobile-bg: var(--bg-surface);
+} 

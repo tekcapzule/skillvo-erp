@@ -3,44 +3,51 @@
 <div class="notification-panel" [class.open]="isOpen">
   <div class="notification-header">
     <div class="header-content">
-      <h2>Notification <span class="notification-count">({{ notifications.length || 0 }})</span></h2>
+      <h2>Notification<span class="notification-count">({{ notifications.length || 0 }})</span></h2>
       <button class="close-button" (click)="closePanel()" aria-label="Close notifications">
         <mat-icon>close</mat-icon>
       </button>
     </div>
-    <div class="search-container">
-      <div class="search-field-container">
-        <mat-icon class="search-icon">search</mat-icon>
-        <input type="text" class="search-input" placeholder="Search notification" [(ngModel)]="searchQuery" (input)="filterNotifications()">
-        <button *ngIf="searchQuery" class="clear-search-button" (click)="clearSearch()">
-          <mat-icon>close</mat-icon>
-        </button>
-        <button class="filter-button" (click)="toggleFilterMenu()">
-          <mat-icon>filter_list</mat-icon>
-        </button>
-      </div>
+  </div>
+
+  <div class="search-container">
+    <div class="search-field-container">
+      <mat-icon class="search-icon">search</mat-icon>
+      <input type="text" class="search-input" placeholder="Search notification" [(ngModel)]="searchQuery" (input)="filterNotifications()">
+      <button *ngIf="searchQuery" class="clear-search-button" (click)="clearSearch()">
+        <mat-icon>close</mat-icon>
+      </button>
+      <button class="filter-button" (click)="toggleFilterMenu()">
+        <mat-icon>filter_list</mat-icon>
+      </button>
     </div>
   </div>
 
   <div class="notification-scroll-container">
     <div class="notification-list">
-      <div *ngFor="let notification of filteredNotifications" 
-           class="notification-item" 
-           [class.unread]="!notification.read"
-           (click)="markAsRead(notification)">
-        <div class="notification-content">
-          <h3 class="notification-title">{{ notification.title }}</h3>
-          <p class="notification-message">{{ notification.message }}</p>
-          <div class="notification-footer-row">
-            <div class="notification-category" [attr.data-category]="notification.category.toLowerCase()">
-              {{ notification.category }}
+      <ng-container *ngIf="!loading && filteredNotifications.length > 0">
+        <div *ngFor="let notification of filteredNotifications" 
+             class="notification-item" 
+             [class.unread]="!notification.read"
+             (click)="markAsRead(notification)">
+          <div class="notification-content">
+            <h3 class="notification-title">{{ notification.title }}</h3>
+            <p class="notification-message">{{ notification.message }}</p>
+            <div class="notification-footer-row">
+              <div class="notification-category" [attr.data-category]="notification.category.toLowerCase()">
+                {{ notification.category }}
+              </div>
+              <span class="notification-time">
+                {{ getFormattedDate(notification.timestamp) }}
+              </span>
             </div>
-            <span class="notification-time">
-              {{ getFormattedDate(notification.timestamp) }}
-            </span>
+            <div class="notification-actions" *ngIf="notification.category === 'Course' || notification.category === 'Certificate'">
+              <button *ngIf="notification.category === 'Course'" class="course">View Course</button>
+              <button *ngIf="notification.category === 'Certificate'" class="certificate">Download</button>
+            </div>
           </div>
         </div>
-      </div>
+      </ng-container>
     </div>
 
     <div class="empty-state" *ngIf="!loading && filteredNotifications.length === 0">

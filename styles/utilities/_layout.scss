@@ -1,0 +1,230 @@
+// ==========================================================================
+// Layout Utilities
+// ==========================================================================
+// Common layout patterns and flex utilities for consistent component layouts
+
+@use '../abstracts' as *;
+
+// Forward all mixins from layout-mixins to make them available when importing this file
+@forward 'layout-mixins';
+
+// ========================================================
+// Flex Layout Utilities
+// ========================================================
+
+// Basic flex container
+@mixin flex-container($direction: row, $wrap: nowrap) {
+  display: flex;
+  flex-direction: $direction;
+  flex-wrap: $wrap;
+}
+
+// Common flex alignment patterns
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+@mixin flex-start {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+@mixin flex-end {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+@mixin flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+@mixin flex-column-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+// ========================================================
+// Common Layout Utilities
+// ========================================================
+
+@mixin full-width {
+  width: 100%;
+}
+
+@mixin full-height {
+  height: 100%;
+}
+
+@mixin circle($size) {
+  width: $size;
+  height: $size;
+  border-radius: 50%;
+}
+
+// ========================================================
+// Overlay & Panel Patterns
+// ========================================================
+
+// Common full-screen overlay
+@mixin fullscreen-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  z-index: var(--z-overlay, var(--z-40));
+  background-color: var(--overlay-bg, rgba(0, 0, 0, 0.4));
+}
+
+// Common slide-in panel (right side)
+@mixin slide-panel-right($width: var(--panel-default-width, 360px), $z-index: var(--z-50)) {
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 100vh;
+  width: $width;
+  max-width: var(--panel-max-width, 90vw);
+  z-index: $z-index;
+  background-color: var(--bg-surface);
+  box-shadow: var(--shadow-lg);
+  transform: translateX(100%);
+  transition: transform var(--transition-duration, 0.3s) var(--transition-timing, ease-in-out);
+  display: flex;
+  flex-direction: column;
+  border-left: 1px solid var(--border-default);
+  overflow: hidden;
+  
+  &.open {
+    transform: translateX(0);
+  }
+}
+
+// Common panel header
+@mixin panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--inset-md);
+  border-bottom: 1px solid var(--border-default);
+  background-color: var(--bg-surface);
+  position: sticky;
+  top: 0;
+  z-index: var(--z-10, 10);
+  @include theme-transition(background-color, border-color);
+}
+
+// ========================================================
+// Button & Control Patterns 
+// ========================================================
+
+// Icon button with consistent size/styling
+@mixin icon-button($size: var(--control-size, 40px)) {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: $size;
+  height: $size;
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-full);
+  padding: 0;
+  cursor: pointer;
+  color: var(--text-secondary);
+  transition: background-color var(--transition-duration, 0.2s) var(--transition-timing, ease), 
+              color var(--transition-duration, 0.2s) var(--transition-timing, ease);
+  
+  &:hover {
+    background-color: var(--bg-element-hover);
+    color: var(--text-primary);
+  }
+  
+  &:focus {
+    outline: none;
+  }
+}
+
+// Common close button
+@mixin close-button {
+  @include icon-button;
+  color: var(--text-tertiary);
+  
+  &:hover {
+    color: var(--text-primary);
+  }
+}
+
+// ========================================================
+// Scrollable Container
+// ========================================================
+
+// Common scrollable container with styled scrollbar
+@mixin scrollable-container {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  
+  &::-webkit-scrollbar {
+    width: var(--scrollbar-width, var(--space-2));
+    height: var(--scrollbar-height, var(--space-2));
+  }
+  
+  &::-webkit-scrollbar-track {
+    background: var(--scrollbar-track, var(--neutral-100));
+  }
+  
+  &::-webkit-scrollbar-thumb {
+    background: var(--scrollbar-thumb, var(--neutral-300));
+    border-radius: var(--scrollbar-border-radius, var(--radius-sm));
+  }
+  
+  &::-webkit-scrollbar-thumb:hover {
+    background: var(--scrollbar-thumb-hover, var(--neutral-400));
+  }
+}
+
+// ========================================================
+// Animation Patterns
+// ========================================================
+
+// Fade animation
+@mixin fade-animation($property: opacity, $duration: 0.3s) {
+  transition: $property $duration var(--transition-timing, ease-in-out);
+}
+
+// Slide animation
+@mixin slide-animation($direction: right, $duration: 0.3s) {
+  $transform-property: if($direction == right or $direction == left, translateX, translateY);
+  $value: 0;
+  
+  @if $direction == right {
+    $value: 100%;
+  } @else if $direction == left {
+    $value: -100%;
+  } @else if $direction == up {
+    $value: -100%;
+  } @else if $direction == down {
+    $value: 100%;
+  }
+  
+  transform: #{$transform-property}($value);
+  transition: transform $duration var(--transition-timing, ease-in-out);
+  
+  &.open {
+    transform: #{$transform-property}(0);
+  }
+} 

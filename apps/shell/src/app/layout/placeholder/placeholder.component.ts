@@ -11,14 +11,17 @@ import { ActivatedRoute } from '@angular/router';
   `,
   styles: [`
     .placeholder-container {
-      padding: 24px;
-      background-color: #fff;
-      border-radius: 4px;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      padding: var(--placeholder-padding);
+      background-color: var(--placeholder-bg);
+      border-radius: var(--placeholder-border-radius);
+      box-shadow: var(--placeholder-shadow);
     }
     h1 {
       margin-top: 0;
-      color: #1976d2;
+      color: var(--placeholder-title-color);
+    }
+    p {
+      color: var(--placeholder-text-color);
     }
   `],
   standalone: false

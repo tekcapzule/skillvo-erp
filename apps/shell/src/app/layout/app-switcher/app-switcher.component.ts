@@ -1,53 +1,46 @@
-import { Component, OnInit, ViewChild, ElementRef, HostListener, Input, Output, EventEmitter } from '@angular/core';
+import { Component, ElementRef, EventEmitter, HostListener, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { MatIconModule } from '@angular/material/icon';
-import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
 
 interface AppItem {
   name: string;
+  path: string;
   icon: string;
-  route: string;
-  description?: string;
 }
 
 @Component({
-  selector: 'app-app-switcher',
+  selector: 'app-switcher',
   templateUrl: './app-switcher.component.html',
   styleUrls: ['./app-switcher.component.scss'],
   standalone: true,
-  imports: [CommonModule, MatIconModule, MatButtonModule]
+  imports: [CommonModule]
 })
 export class AppSwitcherComponent implements OnInit {
-  @ViewChild('appSwitcherMenu') appSwitcherMenu!: ElementRef;
+  @ViewChild('appSwitcherMenu') appSwitcherMenu: ElementRef | undefined;
   
   @Input() isOpen = false;
   @Output() closeMenu = new EventEmitter<void>();
   
   apps: AppItem[] = [
-    {
-      name: 'Hire',
-      icon: 'person_search',
-      route: '/hire',
-      description: 'Find and hire talent'
+    { 
+      name: 'Hire', 
+      path: '/hire', 
+      icon: 'assets/icons/app-switcher/hire.svg'
     },
-    {
-      name: 'Onboard',
-      icon: 'how_to_reg',
-      route: '/onboard',
-      description: 'Onboard new employees'
+    { 
+      name: 'Onboard', 
+      path: '/onboard', 
+      icon: 'assets/icons/app-switcher/onboard.svg'
     },
-    {
-      name: 'Learn',
-      icon: 'school',
-      route: '/learn',
-      description: 'Training and courses'
+    { 
+      name: 'Learn', 
+      path: '/learn', 
+      icon: 'assets/icons/app-switcher/learn.svg'
     },
-    {
-      name: 'Admin',
-      icon: 'admin_panel_settings',
-      route: '/admin',
-      description: 'Administration'
+    { 
+      name: 'Admin', 
+      path: '/admin', 
+      icon: 'assets/icons/app-switcher/admin.svg'
     }
   ];
 
@@ -55,31 +48,21 @@ export class AppSwitcherComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  navigateTo(app: AppItem): void {
-    this.router.navigate([app.route]);
-    this.close();
+  toggleAppSwitcher(): void {
+    this.isOpen = !this.isOpen;
   }
 
-  close(): void {
+  navigateTo(app: AppItem): void {
+    this.router.navigate([app.path]);
+    this.isOpen = false;
     this.closeMenu.emit();
   }
 
   @HostListener('document:click', ['$event'])
-  clickOutside(event: Event): void {
-    // Don't process if menu is not open
-    if (!this.isOpen) return;
-    
-    // Check if the click was outside of the menu
-    if (this.appSwitcherMenu && 
-        !this.appSwitcherMenu.nativeElement.contains(event.target)) {
-      // Only close if the click wasn't on the app switcher button in header
-      // The header button has class 'app-switcher-button'
-      const target = event.target as HTMLElement;
-      const isHeaderButton = target.closest('.app-switcher-button') !== null;
-      
-      if (!isHeaderButton) {
-        this.close();
-      }
+  onDocumentClick(event: MouseEvent): void {
+    if (this.isOpen && this.appSwitcherMenu && !this.appSwitcherMenu.nativeElement.contains(event.target)) {
+      this.isOpen = false;
+      this.closeMenu.emit();
     }
   }
 } 

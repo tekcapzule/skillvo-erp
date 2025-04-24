@@ -1,0 +1,38 @@
+// ========================================
+// Icon Variables
+// ========================================
+// Single source of truth for all icon-related variables
+// Icon sizes are based on the spacing scale for consistency
+
+// Icon Sizes (matches spacing scale)
+// ----------------------------------------
+$icon-size-xs: 0.75rem;      // 12px (space-3)
+$icon-size-sm: 1rem;         // 16px (space-4)
+$icon-size-md: 1.5rem;       // 24px (space-6)
+$icon-size-lg: 2rem;         // 32px (space-8)
+$icon-size-xl: 2.5rem;       // 40px (space-10)
+$icon-size-2xl: 3rem;        // 48px (space-12)
+
+// Button Sizes
+// ----------------------------------------
+// Standard button sizes that can be used across the application
+$btn-size-sm: 1.75rem;       // 28px (space-7)
+$btn-size-md: 2.25rem;       // 36px (space-9)
+$btn-size-lg: 2.75rem;       // 44px (space-11)
+
+// Define CSS Custom Properties
+// ----------------------------------------
+:root {
+  // Icon Sizes
+  --icon-size-xs: #{$icon-size-xs};
+  --icon-size-sm: #{$icon-size-sm};
+  --icon-size-md: #{$icon-size-md};
+  --icon-size-lg: #{$icon-size-lg};
+  --icon-size-xl: #{$icon-size-xl};
+  --icon-size-2xl: #{$icon-size-2xl};
+  
+  // Button Sizes
+  --btn-size-sm: #{$btn-size-sm};
+  --btn-size-md: #{$btn-size-md};
+  --btn-size-lg: #{$btn-size-lg};
+} 

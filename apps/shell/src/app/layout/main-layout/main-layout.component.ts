@@ -1,8 +1,7 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
-import { map, shareReplay } from 'rxjs/operators';
-import { MatSidenav } from '@angular/material/sidenav';
+import { map, shareReplay, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-main-layout',
@@ -11,32 +10,60 @@ import { MatSidenav } from '@angular/material/sidenav';
   standalone: false
 })
 export class MainLayoutComponent implements OnInit {
-  @ViewChild('drawer') drawer!: MatSidenav;
   isHandset$: Observable<boolean>;
   sidenavCollapsed = false;
+  mobileNavOpen = false;
+  isMobile = false;
     
   constructor(private breakpointObserver: BreakpointObserver) {
     this.isHandset$ = this.breakpointObserver.observe(Breakpoints.Handset)
       .pipe(
         map(result => result.matches),
+        tap(isHandset => {
+          this.isMobile = isHandset;
+          // Reset mobile nav open state when switching between desktop and mobile
+          if (!isHandset) {
+            this.mobileNavOpen = false;
+          }
+        }),
         shareReplay()
       );
   }
 
   ngOnInit(): void {
     console.log('Main layout component initialized');
+    // Check initial screen size
+    this.checkScreenSize();
   }
 
-  toggleSidenav(drawerRef?: MatSidenav): void {
-    // Use passed drawer reference or the ViewChild reference
-    const sidenavRef = drawerRef || this.drawer;
-    
-    // If on mobile, toggle opened/closed
-    if (this.breakpointObserver.isMatched(Breakpoints.Handset)) {
-      sidenavRef.toggle();
+  @HostListener('window:resize')
+  checkScreenSize(): void {
+    this.isMobile = window.innerWidth < 768;
+  }
+
+  /**
+   * Toggle sidenav collapsed state on desktop
+   */
+  toggleSidenav(): void {
+    this.sidenavCollapsed = !this.sidenavCollapsed;
+  }
+  
+  /**
+   * Toggle mobile navigation visibility
+   */
+  toggleMobileNav(): void {
+    if (this.isMobile) {
+      this.mobileNavOpen = !this.mobileNavOpen;
     } else {
       // On desktop, toggle between collapsed and expanded
       this.sidenavCollapsed = !this.sidenavCollapsed;
     }
+  }
+  
+  /**
+   * Close mobile navigation
+   */
+  closeMobileNav(): void {
+    this.mobileNavOpen = false;
   }
 } 

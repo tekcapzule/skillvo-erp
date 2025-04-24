@@ -23,7 +23,10 @@
           }
         ],
         "styles": ["apps/shell/src/styles.scss"],
-        "scripts": []
+        "scripts": [],
+        "stylePreprocessorOptions": {
+          "includePaths": [".", "styles", "/Users/linjithkunnon/Desktop/_Workspace/SkillVo/skillvo-web"]
+        }
       },
       "configurations": {
         "production": {

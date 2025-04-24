@@ -1,0 +1,87 @@
+// ========================================
+// Accessibility Variables
+// ========================================
+// This file contains variables related to accessibility concerns
+// All accessibility mixins have been moved to _a11y-mixins.scss
+
+// Focus Styles
+// ----------------------------------------
+$focus-outline-width: 2px !default;
+$focus-outline-style: solid !default;
+$focus-outline-offset: 2px !default;
+$focus-outline-color: var(--skillvo-focus-ring-color) !default;
+
+// Motion & Animation
+// ----------------------------------------
+$reduced-motion-duration-short: 0.1s !default;
+$reduced-motion-duration-medium: 0.2s !default;
+$reduced-motion-duration-long: 0.3s !default;
+
+$standard-motion-duration-short: 0.15s !default;
+$standard-motion-duration-medium: 0.3s !default;
+$standard-motion-duration-long: 0.5s !default;
+
+$standard-ease-timing: cubic-bezier(0.4, 0, 0.2, 1) !default;
+$deceleration-timing: cubic-bezier(0, 0, 0.2, 1) !default;
+$acceleration-timing: cubic-bezier(0.4, 0, 1, 1) !default;
+
+// Keyboard Navigation
+// ----------------------------------------
+$keyboard-focus-visible: true !default;
+$keyboard-focus-ring-width: 2px !default;
+$keyboard-focus-ring-offset: 2px !default;
+
+// Color Contrast
+// ----------------------------------------
+$min-contrast-ratio: 4.5 !default;
+$enhanced-contrast-ratio: 7 !default;
+
+// Z-index Layers
+// ----------------------------------------
+$z-index-skip-link: 9999 !default;
+$z-index-modal: 1050 !default;
+$z-index-popover: 1040 !default;
+$z-index-tooltip: 1030 !default;
+$z-index-header: 1020 !default;
+$z-index-dropdown: 1010 !default;
+$z-index-overlay: 1000 !default;
+$z-index-default: 1 !default;
+$z-index-negative: -1 !default;
+
+// Interaction Sizing
+// ----------------------------------------
+$min-touch-target-size: 44px !default;
+$min-interactive-element-spacing: 8px !default;
+
+// Skip Navigation
+// ----------------------------------------
+$skip-link-bg: var(--skillvo-surface-background) !default;
+$skip-link-color: var(--skillvo-primary-text) !default;
+$skip-link-padding: 8px 16px !default;
+$skip-link-position-top: 8px !default;
+$skip-link-position-left: 8px !default;
+
+// CSS Custom Properties (for runtime access)
+// ----------------------------------------
+:root {
+  // Focus indicators
+  --skillvo-focus-ring-color: rgba(var(--primary-rgb, 37, 99, 235), 0.8);
+  --skillvo-focus-ring-width: #{$focus-outline-width};
+  --skillvo-focus-ring-offset: #{$focus-outline-offset};
+  
+  // Motion preferences
+  --skillvo-motion-duration-short: #{$standard-motion-duration-short};
+  --skillvo-motion-duration-medium: #{$standard-motion-duration-medium};
+  --skillvo-motion-duration-long: #{$standard-motion-duration-long};
+  --skillvo-motion-easing-standard: #{$standard-ease-timing};
+  --skillvo-motion-easing-decelerate: #{$deceleration-timing};
+  --skillvo-motion-easing-accelerate: #{$acceleration-timing};
+  
+  // Touch targets
+  --skillvo-min-touch-target: #{$min-touch-target-size};
+  --skillvo-interactive-spacing: #{$min-interactive-element-spacing};
+  
+  // Text colors for contrast
+  --skillvo-text-primary: var(--text-primary);
+  --skillvo-text-on-dark: var(--text-on-dark);
+} 

@@ -1,112 +1,54 @@
-/* Light theme variables */
-.breadcrumb-container[data-theme="light"],
-.light-theme .breadcrumb-container {
-  --bg-surface: #ffffff;
-  --border-default: #e0e0e0;
-  --text-primary: #212121;
-  --text-secondary: #616161;
-  --text-tertiary: #9e9e9e;
-  --text-link: #1971e5;
-  --text-link-hover: #155ab7;
-  --shadow-default: 0 4px 6px rgba(0, 0, 0, 0.1);
-  --inset-sm: 8px;
-  --inset-xl: 24px;
-  --text-sm: 14px;
-  --z-30: 100;
-}
+/* Import theme abstracts for access to mixins and variables */
+@use 'styles/abstracts' as *;
+@use 'styles/utilities/layout' as utility-layout;
 
-/* Dark theme variables */
-.breadcrumb-container[data-theme="dark"],
-.dark-theme .breadcrumb-container {
-  --bg-surface: #252526;
-  --border-default: #3c3c3c;
-  --text-primary: #e0e0e0;
-  --text-secondary: #b0b0b0;
-  --text-tertiary: #808080;
-  --text-link: #4c8ff8;
-  --text-link-hover: #78bcff;
-  --shadow-default: 0 4px 6px rgba(0, 0, 0, 0.3);
-  --inset-sm: 8px;
-  --inset-xl: 24px;
-  --text-sm: 14px;
-  --z-30: 100;
-}
+/* Remove local theme variable definitions and use global theme variables */
 
 .breadcrumb-container {
-  padding: 0;
-  padding-left: var(--inset-xl, 24px); /* Consistent padding */
-  background-color: var(--bg-surface);
-  border-bottom: 1px solid var(--border-default);
-  height: 56px; /* Match header height */
-  display: flex;
-  align-items: center;
-  box-sizing: border-box;
-  position: sticky; /* Make it stick to the top when scrolling */
-  top: 56px; /* Position directly below the header which is 56px */
-  z-index: var(--z-30, 100); /* Below header z-index */
-  justify-content: flex-start;
-  transition: padding-left 0.3s ease, 
-              background-color 0.3s ease,
-              border-color 0.3s ease;
-  width: 100%;
-  box-shadow: var(--shadow-default); /* Subtle shadow to match header */
+  @include utility-layout.flex-start;
+  flex-wrap: wrap;
+  gap: var(--breadcrumb-gap, 8px);
+  padding: var(--breadcrumb-padding, var(--inset-md) var(--inset-md));
+  font-size: var(--breadcrumb-font-size, var(--text-sm));
+  color: var(--breadcrumb-color, var(--text-secondary));
+  @include theme-transition(color);
   
-  &.collapsed-sidenav {
-    padding-left: var(--inset-xl, 24px);
-  }
-  
-  /* Theme placeholder styling */
-  &.theme-placeholder {
-    height: 0;
-    overflow: hidden;
-    padding: 0;
-    border: none;
-    box-shadow: none;
-    position: static;
-    z-index: -1;
+  @media (max-width: 768px) {
+    padding: var(--breadcrumb-padding-mobile, var(--inset-sm) var(--inset-md));
   }
 }
 
-.breadcrumb {
-  display: flex;
-  flex-wrap: wrap;
-  padding: 0;
-  margin: 0;
-  list-style: none;
+.breadcrumb-item {
+  @include utility-layout.flex-center;
   
-  .breadcrumb-item {
-    display: flex;
-    align-items: center;
-    font-size: var(--text-sm, 14px);
+  a {
+    color: var(--breadcrumb-link-color, var(--text-secondary));
+    text-decoration: none;
+    transition: color 0.2s ease;
+    @include theme-transition(color);
     
-    &:not(:first-child)::before {
-      content: '/';
-      padding: 0 var(--inset-sm, 8px);
-      color: var(--text-secondary);
-      transition: color 0.3s ease;
-    }
-    
-    a {
-      color: var(--text-link);
-      text-decoration: none;
-      transition: color 0.3s ease;
-      
-      &:hover {
-        text-decoration: underline;
-        color: var(--text-link-hover);
-      }
-    }
-    
-    &.active {
-      color: var(--text-secondary);
-      transition: color 0.3s ease;
+    &:hover {
+      color: var(--breadcrumb-link-hover-color, var(--primary-500));
+      text-decoration: underline;
     }
   }
+  
+  &.active {
+    color: var(--breadcrumb-active-color, var(--text-primary));
+    font-weight: var(--breadcrumb-active-weight, var(--font-medium));
+    @include theme-transition(color);
+  }
+}
+
+.breadcrumb-separator {
+  color: var(--breadcrumb-separator-color, var(--text-tertiary));
+  margin: 0 var(--breadcrumb-separator-margin, 4px);
+  @include theme-transition(color);
 }
 
 // Responsive adjustments - hide completely on mobile
-@media screen and (max-width: 768px) {
+@media (max-width: var(--main-layout-tablet-breakpoint)) {
   .breadcrumb-container:not(.theme-placeholder) {
-    display: none !important; /* Ensure breadcrumb is hidden on mobile screens */
+    display: none !important;
   }
 }

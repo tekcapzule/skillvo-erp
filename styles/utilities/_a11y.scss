@@ -1,0 +1,178 @@
+// ========================================
+// Accessibility Utilities
+// ========================================
+// Utility classes for making content accessible
+// Uses variables from abstracts/_accessibility.scss
+
+@use '../abstracts/accessibility' as a11y;
+@use '../abstracts/theme-mixins' as theme;
+
+// ========================================
+// Skip Links
+// ========================================
+
+.skip-link {
+  position: absolute;
+  top: -100px;
+  left: 0;
+  z-index: var(--z-index-tooltip);
+  padding: var(--space-3);
+  background-color: var(--bg-surface);
+  color: var(--text-primary);
+  text-decoration: none;
+  border-radius: 0 0 var(--radius-md) var(--radius-md);
+  box-shadow: var(--shadow-md);
+  transition: top 0.2s ease;
+  
+  &:focus {
+    top: 0;
+    outline: none;
+  }
+}
+
+// ========================================
+// Screen Reader Utilities
+// ========================================
+
+.sr-only {
+  position: absolute;
+  width: var(--space-0-25, 1px);
+  height: var(--space-0-25, 1px);
+  padding: 0;
+  margin: calc(-1 * var(--space-0-25, 1px));
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.sr-only-focusable,
+.visually-hidden-focusable {
+  &:not(:focus):not(:focus-within) {
+    position: absolute;
+    width: var(--space-0-25, 1px);
+    height: var(--space-0-25, 1px);
+    padding: 0;
+    margin: calc(-1 * var(--space-0-25, 1px));
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+}
+
+// ========================================
+// ARIA Utilities
+// ========================================
+
+// When content is visually hidden but available to screen readers
+[aria-hidden="false"].visually-hidden {
+  @extend .sr-only;
+}
+
+// When content should be hidden from all users, including screen readers
+[aria-hidden="true"] {
+  display: none !important;
+}
+
+// Styles for aria-live regions
+.aria-live-region {
+  position: relative;
+  
+  
+  &[aria-busy="true"] {
+    // Styling for when content is being updated
+    cursor: progress;
+  }
+}
+
+// For elements that can be expanded/collapsed
+[aria-expanded="true"] .expand-icon {
+  transform: rotate(180deg);
+}
+
+// Styling for elements that have nested controls
+[aria-controls] {
+  cursor: pointer;
+}
+
+// ========================================
+// Motion Safety
+// ========================================
+
+.motion-safe {
+  @media (prefers-reduced-motion: no-preference) {
+    transition-property: inherit;
+    animation-duration: inherit;
+  }
+}
+
+.motion-reduce {
+  transition-duration: 0.01ms !important;
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+}
+
+// ========================================
+// Contrast and Color Accessibility
+// ========================================
+
+// High contrast text
+.high-contrast {
+  color: var(--text-primary);
+  background-color: var(--bg-surface);
+  border: var(--space-0-25, 1px) solid var(--border-default);
+}
+
+// Text that maintains contrast in dark mode
+.text-adaptive {
+  @include theme.themed(color, var(--text-primary), var(--text-primary-dark));
+}
+
+// ========================================
+// Interaction Accessibility
+// ========================================
+
+// Interactive elements that show their state clearly
+.interactive {
+  &:hover {
+    cursor: pointer;
+  }
+
+  &:focus {
+    outline: var(--focus-ring-width) solid var(--focus-ring-color);
+    outline-offset: var(--focus-ring-offset);
+  }
+  
+  &:active {
+    transform: scale(0.98);
+  }
+  
+  &:disabled, &.disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+}
+
+// ========================================
+// Visibility
+// ========================================
+
+.invisible {
+  visibility: hidden;
+}
+
+.visible {
+  visibility: visible;
+}
+
+// Hide content but make it accessible to assistive technology
+.visually-hidden {
+  @extend .sr-only;
+}
+
+// Hide content completely (including from assistive technology)
+.hidden {
+  display: none !important;
+} 

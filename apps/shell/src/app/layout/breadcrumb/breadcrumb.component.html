@@ -4,8 +4,8 @@
 -->
 <div class="breadcrumb-container theme-placeholder" aria-hidden="true"></div>
 
-<!-- Main visible breadcrumb -->
-<nav *ngIf="!isHomePage && breadcrumbs.length > 0" class="breadcrumb-container" [class.collapsed-sidenav]="sidenavCollapsed" aria-label="breadcrumb">
+<!-- Main visible breadcrumb - only shown when not on home page and has meaningful breadcrumbs -->
+<nav *ngIf="!isHomePage && breadcrumbs.length > 1" class="breadcrumb-container" [class.collapsed-sidenav]="sidenavCollapsed" aria-label="breadcrumb">
   <ol class="breadcrumb">
     <li *ngFor="let breadcrumb of breadcrumbs; let last = last" 
         class="breadcrumb-item" 

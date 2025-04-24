@@ -10,12 +10,6 @@
       <mat-icon>school</mat-icon>
       <span class="app-name">Learn</span>
     </div>
-    
-    <!-- App Switcher Component -->
-    <app-app-switcher 
-      [isOpen]="isAppSwitcherOpen"
-      (closeMenu)="closeAppSwitcher()">
-    </app-app-switcher>
   </div>
   
   <div class="header-spacer"></div>
@@ -37,6 +31,12 @@
     </button>
   </div>
 </mat-toolbar>
+
+<!-- App Switcher Component -->
+<app-switcher 
+  [isOpen]="isAppSwitcherOpen"
+  (closeMenu)="closeAppSwitcher()">
+</app-switcher>
 
 <!-- Notification Panel -->
 <app-notification 

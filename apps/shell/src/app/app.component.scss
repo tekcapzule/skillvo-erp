@@ -1,0 +1,12 @@
+/* Import theme abstracts for access to mixins and variables */
+@use 'styles/abstracts' as *;
+
+:host {
+  display: block;
+  height: 100%;
+  width: 100%;
+  font-family: var(--font-family-main);
+  color: var(--text-primary);
+  background-color: var(--bg-body);
+  @include theme-transition(color, background-color);
+}

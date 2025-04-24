@@ -1,0 +1,32 @@
+<div *ngIf="hasAnnouncements && !allDismissed" class="announcements-container" [attr.data-theme]="currentTheme">
+  <div 
+    class="announcement-item"
+    [class.info]="currentAnnouncement.type === 'info'"
+    [class.success]="currentAnnouncement.type === 'success'"
+    [class.warning]="currentAnnouncement.type === 'warning'"
+    [class.error]="currentAnnouncement.type === 'error'">
+    
+    <div class="announcement-icon">
+      <mat-icon *ngIf="currentAnnouncement.type === 'info'">info</mat-icon>
+      <mat-icon *ngIf="currentAnnouncement.type === 'success'">check_circle</mat-icon>
+      <mat-icon *ngIf="currentAnnouncement.type === 'warning'">warning</mat-icon>
+      <mat-icon *ngIf="currentAnnouncement.type === 'error'">error</mat-icon>
+    </div>
+    
+    <div class="announcement-content">
+      <span class="announcement-message">{{ currentAnnouncement.message }}</span>
+      <a *ngIf="currentAnnouncement.link" [href]="currentAnnouncement.link.url" class="announcement-link">{{ currentAnnouncement.link.text }}</a>
+    </div>
+    
+    <div class="announcement-actions">
+      <button 
+        *ngIf="currentAnnouncement.dismissible" 
+        mat-icon-button 
+        class="dismiss-button" 
+        (click)="dismissAnnouncement(currentAnnouncement.id)"
+        aria-label="Dismiss announcement">
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+  </div>
+</div> 

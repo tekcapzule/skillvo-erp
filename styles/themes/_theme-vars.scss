@@ -1,0 +1,20 @@
+// ========================================
+// Theme Variables
+// ========================================
+// This file defines global CSS variables directly on the :root element.
+// These provide the base styling for the application themes.
+
+@use '../abstracts/colors' as *;
+@use '../abstracts/theme-mixins' as *;
+
+// Default light theme variables
+:root {
+  // Apply core theme variables (colors, backgrounds, etc)
+  @include generate-theme-vars($light-theme-map);
+}
+
+// Dark theme variables applied via attribute selector
+[data-theme="dark"] {
+  // Override with dark theme variables
+  @include generate-theme-vars($dark-theme-map);
+} 

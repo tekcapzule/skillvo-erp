@@ -4,6 +4,10 @@
 // This file manages the application's theming system and provides utilities
 // for theme switching, theme-specific styles, and theme detection.
 
+@use 'sass:map';
+@use '../abstracts/colors' as *;
+@use '../abstracts/theme-mixins' as *;
+
 // ========================================
 // Theme System Architecture
 // ========================================
@@ -30,41 +34,79 @@
 //    - User can toggle themes via UI in user-profile.component.ts
 //    - HTML data attributes and CSS classes control actual style application
 
-// Import themes
-@import 'light';
-@import 'dark';
-
 // ========================================
-// Theme System
+// Theme Variable Application
 // ========================================
 
-// Theme transition applied to the body
-// This ensures smooth transitions between themes
-html.theme-transition * {
-  transition: background-color 0.3s ease, 
-              color 0.3s ease, 
-              border-color 0.3s ease,
-              box-shadow 0.3s ease;
+// Root theme (light theme by default)
+:root {
+  // Apply theme variables
+  @include generate-theme-vars($light-theme-map);
+  
+  // Apply component-specific variables 
+  @each $key, $value in $component-light-map {
+    --#{$key}: #{$value};
+  }
+  
+  // Apply transition for smooth theme switching
+  @include theme-transition();
+  
+  // Default color scheme
+  color-scheme: light;
 }
 
-// OS preference detection
-// Apply dark theme if user prefers dark color scheme
+// Dark mode preference via OS
 @media (prefers-color-scheme: dark) {
-  html:not([data-theme]) {
-    @extend .dark-theme;
+  :root:not([data-theme="light"]) {
+    // Apply dark theme variables
+    @include generate-theme-vars($dark-theme-map);
+    
+    // Apply component-specific dark theme variables
+    @each $key, $value in $component-dark-map {
+      --#{$key}: #{$value};
+    }
+    
+    color-scheme: dark;
   }
 }
 
-// Theme class applications
-// Apply the appropriate theme class based on the data-theme attribute
-html[data-theme="light"] {
-  // Light theme is the default (CSS variables are set on :root)
+// Explicit light theme override
+[data-theme="light"] {
+  // Apply light theme variables
+  @include generate-theme-vars($light-theme-map);
+  
+  // Apply component-specific variables
+  @each $key, $value in $component-light-map {
+    --#{$key}: #{$value};
+  }
+  
+  color-scheme: light;
 }
 
-html[data-theme="dark"] {
-  @extend .dark-theme;
+// Explicit dark theme override
+[data-theme="dark"] {
+  // Apply dark theme variables
+  @include generate-theme-vars($dark-theme-map);
+  
+  // Apply component-specific variables
+  @each $key, $value in $component-dark-map {
+    --#{$key}: #{$value};
+  }
+  
+  color-scheme: dark;
 }
 
+// Generate theme utility classes
+@include generate-theme-utility-classes($theme-colors);
+
+// Theme toggle transition
+html.color-scheme-transition,
+html.color-scheme-transition *,
+html.color-scheme-transition *::before,
+html.color-scheme-transition *::after {
+  transition: all 0.3s ease !important;
+  transition-delay: 0 !important;
+}
 
 // ========================================
 // Theme Utility Classes
@@ -74,38 +116,16 @@ html[data-theme="dark"] {
 .text-theme-primary {
   color: var(--primary-600);
   
-  .dark-theme &, 
-  html[data-theme="dark"] & {
+  [data-theme="dark"] & {
     color: var(--primary-400);
-  }
-  
-  .ocean-theme &, 
-  html[data-theme="ocean"] & {
-    color: var(--primary-600);
-  }
-  
-  .classic-theme &, 
-  html[data-theme="classic"] & {
-    color: var(--primary-700);
   }
 }
 
 .text-theme-secondary {
   color: var(--secondary-600);
   
-  .dark-theme &, 
-  html[data-theme="dark"] & {
+  [data-theme="dark"] & {
     color: var(--secondary-400);
-  }
-  
-  .ocean-theme &, 
-  html[data-theme="ocean"] & {
-    color: var(--secondary-600);
-  }
-  
-  .classic-theme &, 
-  html[data-theme="classic"] & {
-    color: var(--secondary-600);
   }
 }
 
@@ -127,68 +147,5 @@ html[data-theme="dark"] {
 }
 
 // ========================================
-// JavaScript/TypeScript Theme Switching Implementation
+// Note: Theme mixins have been moved to _theme-mixins.scss
 // ========================================
-// The below code is for reference and documents the theme switching logic
-// that should be implemented in the application's TypeScript code.
-// This is NOT active code in the SCSS file.
-
-/*
-  // ==== ANGULAR IMPLEMENTATION ====
-  // Theme switching in Angular is managed by the ThemeService class
-  // located at: /src/app/core/services/theme.service.ts
-  
-  @Injectable({
-    providedIn: 'root'
-  })
-  export class ThemeService {
-    // Observable stream of the current theme
-    private currentTheme = new BehaviorSubject<ThemeName>('light');
-    currentTheme$ = this.currentTheme.asObservable();
-    
-    constructor() {
-      // Initialize theme based on saved preference or OS setting
-      this.initTheme();
-    }
-    
-    // Set a specific theme
-    setTheme(themeName: 'light' | 'dark' | 'ocean' | 'classic'): void {
-      // Add transition class for smooth theme change
-      document.documentElement.classList.add('theme-transition');
-      
-      // Update theme attribute
-      document.documentElement.setAttribute('data-theme', themeName);
-      
-      // Store preference for future visits
-      localStorage.setItem('theme', themeName);
-      
-      // Update observable state
-      this.currentTheme.next(themeName);
-      
-      // Remove transition class after animation completes
-      setTimeout(() => {
-        document.documentElement.classList.remove('theme-transition');
-      }, 300);
-    }
-    
-    // Initialize theme based on preferences
-    private initTheme(): void {
-      // Check for stored preference
-      const savedTheme = localStorage.getItem('theme');
-      
-      if (savedTheme && ['light', 'dark', 'ocean', 'classic'].includes(savedTheme)) {
-        // Use saved preference
-        this.setTheme(savedTheme as any);
-      } else {
-        // Check system preference
-        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-        this.setTheme(prefersDark ? 'dark' : 'light');
-      }
-    }
-  }
-  
-  // Usage in components:
-  // 1. Inject the service: constructor(private themeService: ThemeService) {}
-  // 2. Set theme: this.themeService.setTheme('dark');
-  // 3. React to theme changes: this.themeService.currentTheme$.subscribe(theme => {...})
-*/
