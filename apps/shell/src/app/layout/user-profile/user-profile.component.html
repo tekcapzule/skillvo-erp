@@ -17,65 +17,45 @@
       <p class="user-email">{{ email }}</p>
     </div>
 
-    <div class="section-wrapper">
+    <div class="section">
       <div class="section-header">
         <mat-icon class="section-icon">palette</mat-icon>
         <h4 class="section-title">Theme</h4>
       </div>
+      <p class="section-description">Choose your preferred color scheme for the application</p>
       
       <div class="theme-grid">
         <div class="theme-card" 
              [class.selected]="selectedTheme === 'light'"
              (click)="onThemeChange('light')">
-          <div class="theme-preview">
-            <div class="theme-layout light-layout">
-              <div class="layout-header"></div>
-              <div class="layout-body">
-                <div class="layout-sidebar"></div>
-                <div class="layout-content"></div>
-              </div>
-            </div>
-            <div *ngIf="selectedTheme === 'light'" class="theme-check">
-              <mat-icon>check</mat-icon>
-            </div>
-          </div>
+          <div class="theme-preview light"></div>
           <div class="theme-info">
             <div class="theme-name">Light</div>
-            <div class="theme-description">Bright, clear for daytime use</div>
+            <div class="theme-description">Clean, bright interface for daytime use</div>
           </div>
         </div>
         
         <div class="theme-card" 
              [class.selected]="selectedTheme === 'dark'"
              (click)="onThemeChange('dark')">
-          <div class="theme-preview">
-            <div class="theme-layout dark-layout">
-              <div class="layout-header"></div>
-              <div class="layout-body">
-                <div class="layout-sidebar"></div>
-                <div class="layout-content"></div>
-              </div>
-            </div>
-            <div *ngIf="selectedTheme === 'dark'" class="theme-check">
-              <mat-icon>check</mat-icon>
-            </div>
-          </div>
+          <div class="theme-preview dark"></div>
           <div class="theme-info">
             <div class="theme-name">Dark</div>
-            <div class="theme-description">Reduces eye strain in low light</div>
+            <div class="theme-description">Reduced eye strain in low-light environments</div>
           </div>
         </div>
       </div>
     </div>
 
-    <div class="section-wrapper">
+    <div class="section">
       <div class="section-header">
         <mat-icon class="section-icon">language</mat-icon>
         <h4 class="section-title">Language</h4>
       </div>
+      <p class="section-description">Select your preferred language for the application</p>
       
-      <div class="language-dropdown">
-        <select class="language-select" 
+      <div class="language-selection">
+        <select class="language-dropdown" 
                 [(ngModel)]="selectedLanguage" 
                 (change)="onLanguageChange(selectedLanguage)">
           <option *ngFor="let lang of languages" [value]="lang.code">
@@ -85,9 +65,9 @@
       </div>
     </div>
     
-    <div class="logout-container">
+    <div class="profile-footer">
       <button class="logout-button" (click)="logout()">
-        <mat-icon>logout</mat-icon>
+        <mat-icon class="logout-icon">logout</mat-icon>
         <span>Logout</span>
       </button>
     </div>
