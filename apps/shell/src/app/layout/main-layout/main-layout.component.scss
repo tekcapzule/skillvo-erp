@@ -42,12 +42,14 @@
 .mobile-fab-menu {
   display: none;
   position: fixed;
-  bottom: var(--main-layout-fab-bottom);
-  right: var(--main-layout-fab-right);
-  z-index: var(--z-floating);
+  bottom: 20px; /* Fixed position at bottom */
+  right: 20px; /* Fixed position at right */
+  z-index: var(--z-floating, 2000);
   background-color: var(--primary-500);
   color: var(--text-inverse);
   box-shadow: var(--shadow-md);
+  width: 56px; /* Fixed size */
+  height: 56px; /* Fixed size */
   @include theme-transition(background-color, color, box-shadow);
 }
 
@@ -87,7 +89,7 @@
 
 @include breakpoint-down('sm') {
   .content-container {
-    padding: var(--main-layout-content-padding-mobile-sm);
+    padding: var(--main-layout-content-padding-mobile-sm, 12px);
   }
   
   .mobile-fab-menu {

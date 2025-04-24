@@ -2,7 +2,7 @@
 
 <!-- Floating Mobile Menu Button - only visible on mobile -->
 <button mat-fab class="mobile-fab-menu" (click)="toggleMobileNav()" aria-label="Menu">
-  <mat-icon>menu</mat-icon>
+  <mat-icon>{{ mobileNavOpen ? 'close' : 'menu' }}</mat-icon>
 </button>
 
 <div class="main-content-container">

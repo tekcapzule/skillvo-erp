@@ -13,10 +13,8 @@
           routerLinkActive="active-link"
           [routerLinkActiveOptions]="{exact: item.exact || false}"
           *ngIf="!item.children">
-          <div class="menu-item" [class.centered]="collapsed">
-            <div class="icon-container">
-              <mat-icon>{{ getStandardIcon(item.icon) }}</mat-icon>
-            </div>
+          <div class="menu-item">
+            <mat-icon class="menu-icon">{{ getStandardIcon(item.icon) }}</mat-icon>
             <span class="menu-label" *ngIf="!collapsed">{{ item.label }}</span>
           </div>
         </a>
@@ -24,10 +22,8 @@
         <a mat-list-item 
           (click)="toggleExpanded(item, $event)"
           *ngIf="item.children && item.children.length > 0">
-          <div class="menu-item" [class.centered]="collapsed">
-            <div class="icon-container">
-              <mat-icon>{{ getStandardIcon(item.icon) }}</mat-icon>
-            </div>
+          <div class="menu-item">
+            <mat-icon class="menu-icon">{{ getStandardIcon(item.icon) }}</mat-icon>
             <span class="menu-label" *ngIf="!collapsed">{{ item.label }}</span>
             <mat-icon class="expand-icon" *ngIf="!collapsed">
               {{ item.expanded ? 'expand_less' : 'expand_more' }}
@@ -50,9 +46,8 @@
     </mat-nav-list>
   </div>
 
-  <!-- Footer with version - always visible regardless of collapsed state -->
+  <!-- Footer with version - always at the bottom of sidenav -->
   <div class="sidenav-footer">
-    <span class="version" *ngIf="!collapsed">v1.0.0</span>
-    <span class="version" *ngIf="collapsed">1.0</span>
+    <span class="version">{{ collapsed ? 'v1.0' : 'v1.0.0' }}</span>
   </div>
 </div> 

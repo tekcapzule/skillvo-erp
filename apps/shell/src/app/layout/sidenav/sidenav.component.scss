@@ -19,11 +19,13 @@
   background-color: var(--sidenav-bg, #ffffff);
   border-right: 1px solid var(--sidenav-border-color, #e5e7eb);
   box-shadow: var(--sidenav-shadow, 0 2px 4px rgba(0, 0, 0, 0.1));
-  overflow-y: auto;
   z-index: var(--sidenav-z-index);
   transform: translateX(0);
   transition: var(--sidenav-transition);
   @include theme-transition(background-color, border-color, box-shadow);
+  /* Add flex column to position footer at bottom */
+  display: flex;
+  flex-direction: column;
   
   &.collapsed {
     width: var(--sidenav-width-collapsed, 64px);
@@ -45,6 +47,7 @@
   padding: 0 var(--sidenav-padding);
   border-bottom: 1px solid var(--sidenav-border-color, #e5e7eb);
   background-color: var(--sidenav-bg, #ffffff);
+  flex-shrink: 0;
 }
 
 .sidenav-title {
@@ -53,51 +56,97 @@
   color: var(--sidenav-title-color, var(--text-primary));
 }
 
-.sidenav-items {
+.sidenav-list {
+  flex-grow: 1;
+  overflow-y: auto;
   padding: var(--sidenav-padding) 0;
-  background-color: var(--sidenav-bg, #ffffff);
+  
+  /* Apply scrollbar styling */
+  @include scrollbar.styled-scrollbar;
+
+  /* Reset Material list padding */
+  .mat-nav-list {
+    padding: 0;
+  }
+  
+  /* Style the list items */
+  .mat-list-item {
+    height: var(--sidenav-item-height) !important;
+    
+    &:hover {
+      background-color: var(--sidenav-item-hover-bg, rgba(0, 0, 0, 0.05));
+    }
+    
+    &.active-link {
+      background-color: var(--sidenav-item-active-bg, var(--primary-50));
+      color: var(--sidenav-item-active-color, var(--primary-500));
+      border-left: 3px solid var(--sidenav-item-active-border, var(--primary-500));
+    }
+  }
 }
 
-.sidenav-item {
-  @include utility-layout.flex-start;
-  height: var(--sidenav-item-height);
-  padding: 0 var(--sidenav-padding);
+/* Style the menu items */
+.menu-item {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+
+/* Style the menu icons */
+.menu-icon {
+  font-size: 20px !important;
+  width: 20px !important;
+  height: 20px !important;
+  margin-right: 16px;
+  flex-shrink: 0;
   color: var(--sidenav-item-color, var(--text-secondary));
-  border-left: 3px solid transparent;
-  cursor: pointer;
-  transition: background-color 0.2s, color 0.2s, border-color 0.2s;
+}
+
+/* Style the menu labels */
+.menu-label {
+  flex-grow: 1;
+  font-size: var(--text-sm);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: var(--font-medium);
+  color: var(--sidenav-item-color, var(--text-secondary));
+}
+
+/* Expand icon */
+.expand-icon {
+  font-size: 18px !important;
+  width: 18px !important;
+  height: 18px !important;
+  margin-left: auto;
+  color: var(--sidenav-item-color, var(--text-secondary));
+}
+
+/* Style submenu items */
+.submenu {
+  background-color: var(--sidenav-child-bg, rgba(0, 0, 0, 0.02));
   
-  &:hover {
-    background-color: var(--sidenav-item-hover-bg, rgba(0, 0, 0, 0.05));
-    color: var(--sidenav-item-hover-color, var(--text-primary));
-  }
-  
-  &.active {
-    color: var(--sidenav-item-active-color, var(--primary-500));
-    background-color: var(--sidenav-item-active-bg, var(--primary-50));
-    border-left-color: var(--sidenav-item-active-border, var(--primary-500));
-  }
-  
-  .sidenav-item-icon {
-    @include utility-layout.flex-center;
-    font-size: var(--sidenav-icon-size);
-    margin-right: var(--sidenav-icon-margin);
-  }
-  
-  .sidenav-item-text {
-    font-size: var(--sidenav-item-font-size, var(--text-sm));
-    font-weight: var(--sidenav-item-font-weight, var(--font-medium));
+  .child-menu-item {
+    padding-left: 48px;
   }
 }
 
+/* Style the footer */
 .sidenav-footer {
-  @include utility-layout.flex-center;
-  height: var(--sidenav-footer-height);
+  height: var(--sidenav-footer-height, 40px);
   padding: 0 var(--sidenav-padding);
   border-top: 1px solid var(--sidenav-border-color, #e5e7eb);
-  font-size: var(--text-xs);
-  color: var(--text-tertiary);
   background-color: var(--sidenav-bg, #ffffff);
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-shrink: 0;
+  
+  .version {
+    font-size: var(--text-xs);
+    color: var(--text-tertiary);
+  }
 }
 
 // Material icon sizing - ensure consistent size and position
