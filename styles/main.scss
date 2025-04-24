@@ -84,6 +84,6 @@
 // Styles that override third-party libraries
 // --------------------------------------------------
 
-// NOTE: Vendor overrides will be implemented in future phases
-// @use 'vendor/material';
+// Material Design overrides - including icon fixes
+@use 'vendor/material';
 // @use 'vendor/angular'; 

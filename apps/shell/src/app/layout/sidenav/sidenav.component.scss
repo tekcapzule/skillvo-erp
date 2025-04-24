@@ -16,9 +16,9 @@
   left: 0;
   bottom: 0;
   width: var(--sidenav-width);
-  background-color: var(--sidenav-bg);
-  border-right: 1px solid var(--sidenav-border-color);
-  box-shadow: var(--sidenav-shadow);
+  background-color: var(--sidenav-bg, #ffffff);
+  border-right: 1px solid var(--sidenav-border-color, #e5e7eb);
+  box-shadow: var(--sidenav-shadow, 0 2px 4px rgba(0, 0, 0, 0.1));
   overflow-y: auto;
   z-index: var(--sidenav-z-index);
   transform: translateX(0);
@@ -26,14 +26,15 @@
   @include theme-transition(background-color, border-color, box-shadow);
   
   &.collapsed {
-    transform: translateX(calc(-1 * var(--sidenav-width)));
+    width: var(--sidenav-width-collapsed, 64px);
+    transform: translateX(0);
   }
   
   @media (max-width: var(--breakpoint-md)) {
-    width: var(--sidenav-width-mobile);
+    width: var(--sidenav-width-mobile, 100%);
     
     &.collapsed {
-      transform: translateX(calc(-1 * var(--sidenav-width-mobile)));
+      transform: translateX(calc(-1 * var(--sidenav-width-mobile, 100%)));
     }
   }
 }
@@ -42,37 +43,39 @@
   @include utility-layout.flex-between;
   height: var(--sidenav-header-height);
   padding: 0 var(--sidenav-padding);
-  border-bottom: 1px solid var(--sidenav-border-color);
+  border-bottom: 1px solid var(--sidenav-border-color, #e5e7eb);
+  background-color: var(--sidenav-bg, #ffffff);
 }
 
 .sidenav-title {
   font-size: var(--sidenav-title-size);
   font-weight: var(--sidenav-title-weight);
-  color: var(--sidenav-title-color);
+  color: var(--sidenav-title-color, var(--text-primary));
 }
 
 .sidenav-items {
   padding: var(--sidenav-padding) 0;
+  background-color: var(--sidenav-bg, #ffffff);
 }
 
 .sidenav-item {
   @include utility-layout.flex-start;
   height: var(--sidenav-item-height);
   padding: 0 var(--sidenav-padding);
-  color: var(--sidenav-item-color);
+  color: var(--sidenav-item-color, var(--text-secondary));
   border-left: 3px solid transparent;
   cursor: pointer;
   transition: background-color 0.2s, color 0.2s, border-color 0.2s;
   
   &:hover {
-    background-color: var(--sidenav-item-hover-bg);
-    color: var(--sidenav-item-hover-color);
+    background-color: var(--sidenav-item-hover-bg, rgba(0, 0, 0, 0.05));
+    color: var(--sidenav-item-hover-color, var(--text-primary));
   }
   
   &.active {
-    color: var(--sidenav-item-active-color);
-    background-color: var(--sidenav-item-active-bg);
-    border-left-color: var(--sidenav-item-active-border);
+    color: var(--sidenav-item-active-color, var(--primary-500));
+    background-color: var(--sidenav-item-active-bg, var(--primary-50));
+    border-left-color: var(--sidenav-item-active-border, var(--primary-500));
   }
   
   .sidenav-item-icon {
@@ -82,8 +85,8 @@
   }
   
   .sidenav-item-text {
-    font-size: var(--sidenav-item-font-size);
-    font-weight: var(--sidenav-item-font-weight);
+    font-size: var(--sidenav-item-font-size, var(--text-sm));
+    font-weight: var(--sidenav-item-font-weight, var(--font-medium));
   }
 }
 
@@ -91,9 +94,10 @@
   @include utility-layout.flex-center;
   height: var(--sidenav-footer-height);
   padding: 0 var(--sidenav-padding);
-  border-top: 1px solid var(--sidenav-border-color);
+  border-top: 1px solid var(--sidenav-border-color, #e5e7eb);
   font-size: var(--text-xs);
   color: var(--text-tertiary);
+  background-color: var(--sidenav-bg, #ffffff);
 }
 
 // Material icon sizing - ensure consistent size and position
@@ -112,21 +116,21 @@ mat-icon {
 @include breakpoint-down('md') {
   .sidenav-container {
     position: fixed;
-    top: var(--sidenav-mobile-top);
+    top: var(--sidenav-mobile-top, var(--header-height));
     bottom: 0;
     left: 0;
     width: 100%;
     transform: translateX(-100%);
-    transition: transform var(--sidenav-transition-duration) cubic-bezier(0.4, 0, 0.2, 1);
-    z-index: var(--sidenav-mobile-z-index);
-    background-color: var(--sidenav-mobile-bg);
+    transition: transform var(--sidenav-transition-duration, 0.3s) cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: var(--sidenav-mobile-z-index, 1000);
+    background-color: var(--sidenav-mobile-bg, var(--sidenav-bg, #ffffff));
     
     &.mobile-open {
       transform: translateX(0);
     }
     
     &.collapsed {
-      width: var(--sidenav-collapsed-width);
+      width: var(--sidenav-collapsed-width, 64px);
       transform: translateX(-100%);
       
       &.mobile-open {
@@ -139,6 +143,7 @@ mat-icon {
     .submenu {
       .child-menu-item {
         padding-left: var(--sidenav-child-item-padding-left);
+        background-color: var(--sidenav-child-bg, rgba(0, 0, 0, 0.02));
       }
     }
   }
@@ -147,12 +152,12 @@ mat-icon {
 // Ensure sidenav is visible on desktop
 @include breakpoint-up('md') {
   .sidenav-container {
-    position: relative;
+    position: fixed;
     transform: translateX(0) !important; 
-    width: var(--sidenav-width);
+    width: var(--sidenav-width, 240px);
     
     &.collapsed {
-      width: var(--sidenav-collapsed-width);
+      width: var(--sidenav-width-collapsed, 64px);
       transform: translateX(0) !important;
     }
   }
