@@ -1,9 +1,13 @@
 /* Import theme abstracts for access to mixins and variables */
 @use 'styles/abstracts' as *;
 @use 'styles/utilities/layout-mixins' as utility-layout;
-/* Remove local theme variable definitions and use global theme variables */
+@use 'styles/components/scrollbar' as scrollbar;
 
-/* Notification Overlay - Full screen darkened backdrop - ONLY VISIBLE FOR MOBILE */
+:host {
+  display: block;
+}
+
+/* Notification Overlay - Full screen darkened backdrop */
 .notification-overlay {
   position: fixed;
   top: 0;
@@ -14,14 +18,17 @@
   z-index: var(--notification-overlay-z-index);
   opacity: 0;
   visibility: hidden;
-  transition: opacity var(--notification-transition-duration) var(--notification-transition-timing);
+  transition: opacity 0.3s ease, visibility 0.3s ease;
   pointer-events: none;
-  display: none; /* Hide by default on desktop */
 
   &.open {
     opacity: 1;
     visibility: visible;
     pointer-events: auto;
+    
+    @media (min-width: 768px) {
+      background-color: rgba(0, 0, 0, 0.2); /* Semi-transparent overlay on desktop */
+    }
   }
 }
 
@@ -29,22 +36,25 @@
 .notification-panel {
   position: fixed;
   top: 0;
-  right: -100%;
-  height: 100vh;
+  right: 0;
+  height: 100%;
   width: var(--notification-panel-width);
   max-width: var(--notification-panel-max-width);
   background-color: var(--bg-surface);
   box-shadow: var(--notification-shadow);
-  border-left: var(--notification-border);
   z-index: var(--notification-z-index);
-  transition: right var(--notification-transition-duration) var(--notification-transition-timing);
+  transform: translateX(100%);
+  transition: transform var(--notification-transition-duration) var(--notification-transition-timing);
   display: flex;
   flex-direction: column;
   @include theme-transition(background-color, box-shadow, border-color);
-  overflow: hidden;
   
   &.open {
-    right: 0;
+    transform: translateX(0);
+  }
+  
+  @media (max-width: 576px) {
+    max-width: 100%;
   }
 }
 
@@ -149,12 +159,14 @@
       border: none;
       cursor: pointer;
       color: var(--notification-search-icon-color);
+      padding: 0;
+      width: 32px;
+      height: 32px;
       
       mat-icon {
         font-size: var(--notification-search-icon-size);
         height: var(--notification-search-icon-size);
         width: var(--notification-search-icon-size);
-        line-height: var(--notification-search-icon-size);
       }
     }
   }
@@ -164,26 +176,18 @@
 .notification-scroll-container {
   flex: 1;
   overflow-y: auto;
-  
-  &::-webkit-scrollbar {
-    width: 6px;
-  }
-  
-  &::-webkit-scrollbar-track {
-    background: transparent;
-  }
-  
-  &::-webkit-scrollbar-thumb {
-    background-color: var(--border-light);
-    border-radius: 3px;
-  }
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  @include scrollbar.styled-scrollbar;
 }
 
 /* Notification List */
 .notification-list {
   display: flex;
   flex-direction: column;
-  padding: 16px var(--notification-header-padding);
+  padding: var(--notification-list-padding);
+  gap: var(--notification-item-gap);
 }
 
 /* Notification Item */
@@ -194,7 +198,6 @@
   border: var(--notification-item-border);
   overflow: hidden;
   cursor: pointer;
-  margin-bottom: var(--notification-item-gap);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
   
   &.unread {
@@ -232,6 +235,7 @@
     font-size: var(--notification-item-title-size);
     font-weight: var(--notification-item-title-weight);
     color: var(--text-primary);
+    @include theme-transition(color);
   }
   
   .notification-message {
@@ -244,6 +248,7 @@
     -webkit-line-clamp: 2; /* number of lines to show */
     -webkit-box-orient: vertical;
     line-height: 1.4;
+    @include theme-transition(color);
   }
 }
 
@@ -252,20 +257,14 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 12px;
-  
-  .notification-time {
-    font-size: var(--notification-item-time-size);
-    color: var(--notification-item-time-color);
-  }
+  margin-bottom: 8px;
   
   .notification-category {
-    padding: var(--notification-category-padding);
-    border-radius: var(--notification-category-radius);
     font-size: var(--notification-category-font-size);
     font-weight: var(--notification-category-font-weight);
-    text-transform: capitalize;
-    margin: var(--notification-category-margin);
+    padding: var(--notification-category-padding);
+    border-radius: var(--notification-category-radius);
+    display: inline-block;
     
     &[data-category="course"] {
       background-color: var(--category-course-bg);
@@ -287,85 +286,101 @@
       color: var(--category-alert-text);
     }
   }
-}
-
-.notification-actions {
-  display: flex;
-  justify-content: flex-start;
-  margin-top: 4px;
-}
-
-button.course, button.certificate {
-  display: inline-block;
-  background-color: var(--notification-action-bg);
-  color: var(--notification-action-text);
-  border: none;
-  border-radius: var(--notification-action-border-radius);
-  padding: var(--notification-action-padding);
-  font-size: var(--notification-action-font-size);
-  font-weight: var(--notification-action-font-weight);
-  margin: var(--notification-action-margin);
-  cursor: pointer;
-  transition: background-color 0.2s ease;
   
-  &:hover {
-    background-color: rgba(var(--primary-500-rgb), 0.15);
+  .notification-time {
+    font-size: var(--notification-item-time-size);
+    color: var(--notification-item-time-color);
+    @include theme-transition(color);
   }
 }
 
-/* Empty State */
-.empty-state {
+/* Notification Actions */
+.notification-actions {
+  margin-top: var(--notification-action-margin);
+  display: flex;
+  gap: 8px;
+  
+  button {
+    font-size: var(--notification-action-font-size);
+    font-weight: var(--notification-action-font-weight);
+    padding: var(--notification-action-padding);
+    border-radius: var(--notification-action-border-radius);
+    border: none;
+    cursor: pointer;
+    background: var(--notification-action-bg);
+    color: var(--notification-action-text);
+    transition: background-color 0.2s ease;
+    
+    &:hover {
+      background-color: rgba(var(--primary-500-rgb), 0.15);
+    }
+    
+    &.certificate {
+      background-color: var(--category-certificate-bg);
+      color: var(--category-certificate-text);
+      
+      &:hover {
+        background-color: rgba(76, 175, 80, 0.15);
+      }
+    }
+  }
+}
+
+/* Empty and Loading states */
+.empty-state, .loading-state {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   padding: 48px 24px;
   text-align: center;
-  color: var(--text-secondary);
+  height: 100%;
+  min-height: 300px;
   
-  .empty-icon {
-    font-size: 48px;
-    height: 48px;
-    width: 48px;
+  .empty-icon, mat-spinner {
+    font-size: var(--notification-empty-icon-size);
+    height: var(--notification-empty-icon-size);
+    width: var(--notification-empty-icon-size);
+    color: var(--notification-empty-icon-color);
     margin-bottom: 16px;
-    opacity: 0.5;
+    @include theme-transition(color);
   }
   
   h3 {
     margin: 0 0 8px;
-    font-size: var(--text-lg);
+    font-size: var(--text-md);
     font-weight: var(--font-medium);
+    color: var(--text-primary);
+    @include theme-transition(color);
   }
   
   p {
     margin: 0 0 16px;
-    font-size: var(--text-md);
+    font-size: var(--text-sm);
+    color: var(--notification-empty-text-color);
+    @include theme-transition(color);
   }
-}
-
-/* Loading State */
-.loading-state {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 200px;
   
-  p {
-    margin-top: 16px;
-    color: var(--text-secondary);
+  button {
+    font-size: var(--text-sm);
+    color: var(--primary-500);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 8px 16px;
+    border-radius: 8px;
+    
+    &:hover {
+      background-color: var(--primary-50);
+    }
   }
 }
 
-/* Responsive styles for mobile screens */
+/* Responsive styles */
 @media (max-width: 768px) {
   .notification-panel {
     width: 100%;
-  }
-  
-  /* Only show overlay on mobile */
-  .notification-overlay {
-    display: block;
+    max-width: 100%;
   }
 }
 
