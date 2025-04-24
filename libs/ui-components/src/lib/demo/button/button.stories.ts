@@ -1,7 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/angular';
-import { ButtonComponent } from './button.component';
+import { ButtonComponent } from '../../components/button/button.component';
 import { moduleMetadata } from '@storybook/angular';
 import { CommonModule } from '@angular/common';
+
+// Instead of using an Angular component, we'll use direct templates
+// We'll use a simpler approach with direct templates in the stories
 
 const meta: Meta<ButtonComponent> = {
   component: ButtonComponent,
@@ -148,40 +151,42 @@ export const WithBothIcons: Story = {
 export const AllVariants: Story = {
   render: () => ({
     template: `
-      <h3>Button Variants</h3>
-      <div style="display: flex; gap: 12px; margin-bottom: 24px; align-items: center;">
-        <sv-button variant="primary">Primary</sv-button>
-        <sv-button variant="secondary">Secondary</sv-button>
-        <sv-button variant="tertiary">Tertiary</sv-button>
-        <sv-button variant="ghost">Ghost</sv-button>
-        <sv-button variant="danger">Danger</sv-button>
-      </div>
-      
-      <h3>Button Sizes</h3>
-      <div style="display: flex; gap: 12px; margin-bottom: 24px; align-items: center;">
-        <sv-button size="sm">Small</sv-button>
-        <sv-button size="md">Medium</sv-button>
-        <sv-button size="lg">Large</sv-button>
-      </div>
-      
-      <h3>Disabled Buttons</h3>
-      <div style="display: flex; gap: 12px; margin-bottom: 24px; align-items: center;">
-        <sv-button [disabled]="true">Disabled</sv-button>
-        <sv-button variant="secondary" [disabled]="true">Disabled</sv-button>
-        <sv-button variant="tertiary" [disabled]="true">Disabled</sv-button>
-      </div>
-      
-      <h3>Full Width Buttons</h3>
-      <div style="display: flex; flex-direction: column; gap: 12px; margin-bottom: 24px;">
-        <sv-button [fullWidth]="true">Full Width Button</sv-button>
-        <sv-button variant="secondary" [fullWidth]="true">Full Width Secondary</sv-button>
-      </div>
-      
-      <h3>Buttons with Icons</h3>
-      <div style="display: flex; gap: 12px; margin-bottom: 24px; align-items: center;">
-        <sv-button iconLeft="fas fa-plus">Add New</sv-button>
-        <sv-button variant="secondary" iconRight="fas fa-arrow-right">Continue</sv-button>
-        <sv-button variant="ghost" iconLeft="fas fa-cog">Settings</sv-button>
+      <div>
+        <h3>Button Variants</h3>
+        <div style="display: flex; gap: 12px; margin-bottom: 24px; align-items: center;">
+          <sv-button variant="primary">Primary</sv-button>
+          <sv-button variant="secondary">Secondary</sv-button>
+          <sv-button variant="tertiary">Tertiary</sv-button>
+          <sv-button variant="ghost">Ghost</sv-button>
+          <sv-button variant="danger">Danger</sv-button>
+        </div>
+        
+        <h3>Button Sizes</h3>
+        <div style="display: flex; gap: 12px; margin-bottom: 24px; align-items: center;">
+          <sv-button size="sm">Small</sv-button>
+          <sv-button size="md">Medium</sv-button>
+          <sv-button size="lg">Large</sv-button>
+        </div>
+        
+        <h3>Disabled Buttons</h3>
+        <div style="display: flex; gap: 12px; margin-bottom: 24px; align-items: center;">
+          <sv-button [disabled]="true">Disabled</sv-button>
+          <sv-button variant="secondary" [disabled]="true">Disabled</sv-button>
+          <sv-button variant="tertiary" [disabled]="true">Disabled</sv-button>
+        </div>
+        
+        <h3>Full Width Buttons</h3>
+        <div style="display: flex; flex-direction: column; gap: 12px; margin-bottom: 24px;">
+          <sv-button [fullWidth]="true">Full Width Button</sv-button>
+          <sv-button variant="secondary" [fullWidth]="true">Full Width Secondary</sv-button>
+        </div>
+        
+        <h3>Buttons with Icons</h3>
+        <div style="display: flex; gap: 12px; margin-bottom: 24px; align-items: center;">
+          <sv-button iconLeft="fas fa-plus">Add New</sv-button>
+          <sv-button variant="secondary" iconRight="fas fa-arrow-right">Continue</sv-button>
+          <sv-button variant="ghost" iconLeft="fas fa-cog">Settings</sv-button>
+        </div>
       </div>
     `,
   }),
@@ -192,4 +197,4 @@ export const AllVariants: Story = {
       },
     },
   },
-};
+}; 
