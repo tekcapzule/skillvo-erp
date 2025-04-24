@@ -8,13 +8,13 @@
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  gap: var(--breadcrumb-gap, 8px);
-  padding: var(--breadcrumb-padding, 12px 16px);
+  gap: var(--breadcrumb-gap, 4px);
+  padding: var(--breadcrumb-padding, 8px 16px);
   font-size: var(--breadcrumb-font-size, var(--text-sm));
   color: var(--breadcrumb-color, var(--text-secondary));
   background-color: var(--breadcrumb-bg, #ffffff);
   border-bottom: 1px solid var(--breadcrumb-border-color, var(--border-light));
-  min-height: var(--breadcrumb-height, 48px);
+  min-height: var(--breadcrumb-height, 40px);
   @include theme-transition(color, background-color, border-color);
   
   &.theme-placeholder {
@@ -26,7 +26,7 @@
   }
   
   @media (max-width: 768px) {
-    padding: var(--breadcrumb-padding-mobile, 8px 16px);
+    padding: var(--breadcrumb-padding-mobile, 6px 16px);
   }
 }
 
@@ -36,21 +36,27 @@
   margin: 0;
   padding: 0;
   flex-wrap: wrap;
-  gap: 4px;
+  align-items: baseline;
 }
 
 .breadcrumb-item {
-  display: flex;
+  display: inline-flex;
   align-items: center;
+  line-height: 1;
+  height: 24px;
   
-  a {
-    color: var(--breadcrumb-link-color, var(--text-secondary));
+  a, span {
+    display: inline-block;
+    color: var(--breadcrumb-link-color, var(--primary-500));
     text-decoration: none;
     transition: color 0.2s ease;
     @include theme-transition(color);
+    font-weight: var(--font-normal, 400);
+    line-height: 1;
+    padding: 4px 0;
     
     &:hover {
-      color: var(--breadcrumb-link-hover-color, var(--primary-500));
+      color: var(--breadcrumb-link-hover-color, var(--primary-600));
       text-decoration: underline;
     }
   }
@@ -65,8 +71,11 @@
   &:not(:last-child)::after {
     content: "/";
     color: var(--breadcrumb-separator-color, var(--text-tertiary));
-    margin: 0 var(--breadcrumb-separator-margin, 8px);
+    margin: 0 6px;
     @include theme-transition(color);
+    font-weight: var(--font-normal, 400);
+    display: inline-block;
+    line-height: 1;
   }
 }
 

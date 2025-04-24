@@ -92,7 +92,7 @@
 .sidenav-list {
   flex-grow: 1;
   overflow-y: auto;
-  padding: var(--sidenav-padding) 0;
+  padding: 0; /* Removed top padding completely to eliminate space above Home */
   
   /* Apply scrollbar styling */
   @include scrollbar.styled-scrollbar;
@@ -105,6 +105,7 @@
   /* Style the list items */
   .mat-list-item {
     height: var(--sidenav-item-height) !important;
+    padding-left: var(--sidenav-padding); /* Add left padding to align with hamburger */
     
     &:hover {
       background-color: var(--sidenav-item-hover-bg, rgba(0, 0, 0, 0.05));
@@ -114,6 +115,7 @@
       background-color: var(--sidenav-item-active-bg, var(--primary-50));
       color: var(--sidenav-item-active-color, var(--primary-500));
       border-left: 3px solid var(--sidenav-item-active-border, var(--primary-500));
+      padding-left: calc(var(--sidenav-padding) - 3px); /* Adjust for border */
     }
   }
 }
