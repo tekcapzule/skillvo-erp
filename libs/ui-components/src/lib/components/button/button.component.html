@@ -1,0 +1,15 @@
+<button
+  class="sv-button"
+  [attr.aria-label]="ariaLabel"
+  (click)="onClick($event)"
+>
+  <span class="sv-button__icon sv-button__icon--left" *ngIf="iconLeft">
+    <i class="{{iconLeft}}"></i>
+  </span>
+  <span class="sv-button__content">
+    <ng-content></ng-content>
+  </span>
+  <span class="sv-button__icon sv-button__icon--right" *ngIf="iconRight">
+    <i class="{{iconRight}}"></i>
+  </span>
+</button>

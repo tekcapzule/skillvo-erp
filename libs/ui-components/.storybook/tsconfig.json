@@ -1,0 +1,24 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "emitDecoratorMetadata": true,
+    "outDir": "",
+    "skipLibCheck": true,
+    "types": ["node"],
+    "allowJs": true,
+    "resolveJsonModule": true
+  },
+  "files": [
+    "main.ts",
+    "preview.ts"
+  ],
+  "include": [
+    "../src/**/*.stories.ts",
+    "../src/**/*.stories.js",
+    "../src/**/*.stories.jsx",
+    "../src/**/*.stories.tsx",
+    "../src/**/*.stories.mdx",
+    "*.js",
+    "*.ts"
+  ]
+}

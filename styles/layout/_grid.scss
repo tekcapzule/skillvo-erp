@@ -4,6 +4,9 @@
 // A responsive grid system for layout construction
 // Based on CSS Grid with fallbacks to flexbox
 
+// Import SASS math module
+@use "sass:math";
+
 // ========================================
 // Grid Variables
 // ========================================
@@ -101,8 +104,8 @@
   
   @for $i from 1 through 12 {
     .col#{$infix}-#{$i} {
-      flex: 0 0 percentage($i / 12);
-      max-width: percentage($i / 12);
+      flex: 0 0 percentage(math.div($i, 12));
+      max-width: percentage(math.div($i, 12));
     }
   }
   
@@ -118,7 +121,7 @@
   
   @for $i from 1 through 11 {
     .offset#{$infix}-#{$i} {
-      margin-left: percentage($i / 12);
+      margin-left: percentage(math.div($i, 12));
     }
   }
 }

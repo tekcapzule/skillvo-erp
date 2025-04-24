@@ -1,0 +1,79 @@
+<div class="sv-pagination">
+  <!-- Range display -->
+  <div class="sv-pagination__range-info" *ngIf="length > 0">
+    {{ range.start }}-{{ range.end }} of {{ length }} items
+  </div>
+  <div class="sv-pagination__range-info" *ngIf="length === 0">
+    No items
+  </div>
+
+  <!-- Page size selector -->
+  <div class="sv-pagination__page-size" *ngIf="!hidePageSize">
+    <span>Items per page:</span>
+    <div class="sv-pagination__select">
+      <select 
+        [disabled]="disabled" 
+        [value]="pageSize"
+        (change)="changePageSize(+$event.target.value)"
+        aria-label="Items per page">
+        <option *ngFor="let option of pageSizeOptions" [value]="option">
+          {{ option }}
+        </option>
+      </select>
+    </div>
+  </div>
+
+  <!-- Pagination controls -->
+  <div class="sv-pagination__controls">
+    <!-- First page button -->
+    <button 
+      *ngIf="showFirstLastButtons"
+      class="sv-pagination__button sv-pagination__button--first" 
+      [disabled]="disabled || isFirstPage"
+      (click)="firstPage()"
+      aria-label="First page">
+      <span aria-hidden="true">«</span>
+    </button>
+
+    <!-- Previous page button -->
+    <button 
+      class="sv-pagination__button sv-pagination__button--prev" 
+      [disabled]="disabled || isFirstPage"
+      (click)="previousPage()"
+      aria-label="Previous page">
+      <span aria-hidden="true">‹</span>
+    </button>
+    
+    <!-- Page numbers -->
+    <div class="sv-pagination__pages">
+      <button 
+        *ngFor="let pageNumber of pageNumbers"
+        class="sv-pagination__button sv-pagination__button--page" 
+        [class.sv-pagination__button--active]="pageNumber === page"
+        [disabled]="disabled || pageNumber < 0"
+        (click)="pageNumber >= 0 ? changePage(pageNumber) : null">
+        <span *ngIf="pageNumber >= 0">{{ pageNumber + 1 }}</span>
+        <span *ngIf="pageNumber < 0">...</span>
+      </button>
+    </div>
+
+    <!-- Next page button -->
+    <button 
+      class="sv-pagination__button sv-pagination__button--next" 
+      [disabled]="disabled || isLastPage"
+      (click)="nextPage()"
+      aria-label="Next page">
+      <span aria-hidden="true">›</span>
+    </button>
+
+    <!-- Last page button -->
+    <button 
+      *ngIf="showFirstLastButtons"
+      class="sv-pagination__button sv-pagination__button--last" 
+      [disabled]="disabled || isLastPage"
+      (click)="lastPage()"
+      aria-label="Last page">
+      <span aria-hidden="true">»</span>
+    </button>
+  </div>
+</div> 

@@ -1,0 +1,115 @@
+<div class="sv-table-container">
+  <table class="sv-table" [attr.id]="tableId">
+    <thead>
+      <tr>
+        <!-- Checkbox column if selectable -->
+        <th *ngIf="selectable" class="sv-table__checkbox-cell">
+          <div class="sv-table__checkbox-container">
+            <input 
+              type="checkbox" 
+              [checked]="isAllSelected()" 
+              (change)="toggleSelectAll($event)" 
+              [attr.aria-label]="'Select all rows'"
+            />
+          </div>
+        </th>
+        
+        <!-- Regular columns -->
+        <th 
+          *ngFor="let column of columns" 
+          [class.sv-table__sortable-header]="column.sortable && sortable"
+          [style.width]="column.width || 'auto'"
+        >
+          <div 
+            class="sv-table__header-content"
+            [class.sv-table__sortable]="column.sortable && sortable"
+            (click)="column.sortable && sortable ? onSortClick(column) : null"
+          >
+            <span>{{ column.header }}</span>
+            
+            <span *ngIf="column.sortable && sortable" class="sv-table__sort-icon">
+              <i *ngIf="currentSortColumn === column.key" 
+                 [class]="currentSortDirection === 'asc' ? 'fas fa-sort-up' : 'fas fa-sort-down'"
+                 aria-hidden="true"></i>
+              <i *ngIf="currentSortColumn !== column.key" class="fas fa-sort" aria-hidden="true"></i>
+            </span>
+          </div>
+        </th>
+        
+        <!-- Actions column if actions template provided -->
+        <th *ngIf="rowActionsTemplate" class="sv-table__actions-header">
+          <span>Actions</span>
+        </th>
+      </tr>
+    </thead>
+    
+    <tbody>
+      <!-- Loading state -->
+      <ng-container *ngIf="loading">
+        <tr class="sv-table__loading-row">
+          <td [attr.colspan]="selectable ? columns.length + (rowActionsTemplate ? 2 : 1) : columns.length + (rowActionsTemplate ? 1 : 0)">
+            <div class="sv-table__loading" *ngIf="!loadingStateTemplate">
+              <div class="sv-table__spinner"></div>
+              <span>Loading data...</span>
+            </div>
+            <ng-container *ngIf="loadingStateTemplate">
+              <ng-container *ngTemplateOutlet="loadingStateTemplate"></ng-container>
+            </ng-container>
+          </td>
+        </tr>
+      </ng-container>
+      
+      <!-- Empty state -->
+      <ng-container *ngIf="!loading && (!data || data.length === 0)">
+        <tr class="sv-table__empty-row">
+          <td [attr.colspan]="selectable ? columns.length + (rowActionsTemplate ? 2 : 1) : columns.length + (rowActionsTemplate ? 1 : 0)">
+            <div class="sv-table__empty-state" *ngIf="!emptyStateTemplate">
+              <span>{{ emptyStateMessage }}</span>
+            </div>
+            <ng-container *ngIf="emptyStateTemplate">
+              <ng-container *ngTemplateOutlet="emptyStateTemplate"></ng-container>
+            </ng-container>
+          </td>
+        </tr>
+      </ng-container>
+      
+      <!-- Data rows -->
+      <ng-container *ngIf="!loading && data && data.length > 0">
+        <tr 
+          *ngFor="let row of data; trackBy: trackByFn" 
+          class="sv-table__data-row"
+          [class.sv-table__selected-row]="isRowSelected(row)"
+          (click)="onRowClick(row)"
+        >
+          <!-- Checkbox cell -->
+          <td *ngIf="selectable" class="sv-table__checkbox-cell">
+            <div class="sv-table__checkbox-container">
+              <input 
+                type="checkbox" 
+                [checked]="isRowSelected(row)" 
+                (change)="toggleRowSelection(row, $event)" 
+                [attr.aria-label]="'Select row'"
+              />
+            </div>
+          </td>
+          
+          <!-- Data cells -->
+          <td *ngFor="let column of columns">
+            <ng-container *ngIf="column.cellTemplate; else defaultCell">
+              <ng-container *ngTemplateOutlet="column.cellTemplate; context: { $implicit: row, column: column }"></ng-container>
+            </ng-container>
+            
+            <ng-template #defaultCell>
+              {{ row[column.key] }}
+            </ng-template>
+          </td>
+          
+          <!-- Actions cell -->
+          <td *ngIf="rowActionsTemplate" class="sv-table__actions-cell">
+            <ng-container *ngTemplateOutlet="rowActionsTemplate; context: { $implicit: row }"></ng-container>
+          </td>
+        </tr>
+      </ng-container>
+    </tbody>
+  </table>
+</div> 
