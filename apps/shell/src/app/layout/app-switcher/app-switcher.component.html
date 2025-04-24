@@ -1,4 +1,4 @@
-<div class="app-switcher-container" *ngIf="isOpen">
+<div class="app-switcher-container" [class.open]="isOpen">
   <!-- App Switcher Menu -->
   <div class="app-menu" #appSwitcherMenu>
     <div class="app-switcher-grid">
@@ -7,8 +7,7 @@
            (click)="navigateTo(app)">
         <div class="app-icon">
           <div class="icon-container">
-            <img *ngIf="app.icon" [src]="app.icon" [alt]="app.name + ' icon'" />
-            <span *ngIf="!app.icon">{{app.name.charAt(0)}}</span>
+            <span [ngStyle]="getIconStyle(app)">{{app.letter}}</span>
           </div>
         </div>
         <span class="app-label">{{app.name}}</span>

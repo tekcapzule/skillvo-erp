@@ -42,8 +42,8 @@
   background-color: transparent;
   border: none;
   cursor: pointer;
-  position: relative; /* Add position relative for consistent alignment */
-  top: 0; /* Ensure all icons are at the top edge */
+  position: relative;
+  top: 0;
   
   &:hover {
     background-color: var(--header-control-hover-bg, rgba(0, 0, 0, 0.05));
@@ -57,11 +57,13 @@
     font-size: 24px;
     height: 24px;
     width: 24px;
-    color: var(--header-text, var(--text-primary));
+    color: var(--icon-color, var(--text-primary));
     display: flex;
     align-items: center;
     justify-content: center;
-    line-height: 1; /* Ensure consistent vertical alignment */
+    line-height: 0;
+    margin: 0;
+    padding: 0;
     @include theme-transition(color);
   }
 }
@@ -70,6 +72,18 @@
 .app-switcher-button {
   margin-left: 0; /* Remove left margin for the first item */
   margin-right: 4px; /* Reduced right margin */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  mat-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    padding: 0;
+    line-height: 0;
+  }
 }
 
 /* App Logo */
@@ -89,14 +103,16 @@
   }
 
   mat-icon {
-    color: var(--header-logo-color, var(--primary-500));
+    color: var(--icon-color, var(--primary-500));
     font-size: 24px;
     height: 24px;
     width: 24px;
     display: flex;
     align-items: center;
     justify-content: center;
-    line-height: 1; /* Ensure consistent vertical alignment */
+    line-height: 0;
+    margin: 0;
+    padding: 0;
     @include theme-transition(color);
   }
 }
@@ -142,16 +158,14 @@
 /* Theme toggle button */
 .theme-toggle {
   mat-icon {
-    color: var(--header-text);
-    @include theme-transition(color);
+    color: var(--icon-color, var(--text-primary));
   }
 }
 
 /* Notification button */
 .notification-button {
   mat-icon {
-    color: var(--header-text);
-    @include theme-transition(color);
+    color: var(--icon-color, var(--text-primary));
   }
 }
 

@@ -113,6 +113,13 @@ export class HeaderComponent implements OnInit, OnDestroy {
     }
     this.isAppSwitcherOpen = !this.isAppSwitcherOpen;
     
+    // Add or remove body class for overlay styling
+    if (this.isAppSwitcherOpen) {
+      this.renderer.addClass(document.body, 'app-switcher-open');
+    } else {
+      this.renderer.removeClass(document.body, 'app-switcher-open');
+    }
+    
     // Close other panels if open
     if (this.isNotificationPanelOpen) {
       this.isNotificationPanelOpen = false;
@@ -124,6 +131,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   
   closeAppSwitcher(): void {
     this.isAppSwitcherOpen = false;
+    this.renderer.removeClass(document.body, 'app-switcher-open');
   }
   
   toggleNotificationPanel(event?: MouseEvent): void {

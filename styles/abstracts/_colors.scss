@@ -139,7 +139,10 @@ $light-theme-map: (
   'info': #29b6f6,
   'success': #4caf50,
   'warning': #ffa726,
-  'error': #f44336
+  'error': #f44336,
+  
+  // Standardized icon color for light theme
+  --icon-color: var(--text-primary)
 );
 
 // ========================================
@@ -187,7 +190,10 @@ $dark-theme-map: (
   'shadow-sm': '0 1px 3px rgba(0, 0, 0, 0.25)',
   'shadow-md': '0 2px 8px rgba(0, 0, 0, 0.25)',
   'shadow-lg': '0 4px 16px rgba(0, 0, 0, 0.3)',
-  'shadow-default': '0 2px 8px rgba(0, 0, 0, 0.3)'
+  'shadow-default': '0 2px 8px rgba(0, 0, 0, 0.3)',
+  
+  // Standardized icon color for dark theme
+  --icon-color: var(--text-inverse)
 );
 
 // Common colors map for utility classes

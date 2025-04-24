@@ -11,12 +11,12 @@
   --sidenav-padding: var(--inset-md, 12px);
   
   /* Sidenav Header */
-  --sidenav-header-height: 56px;
+  --sidenav-header-height: 48px;
   --sidenav-header-padding: var(--inset-md, 16px);
   
   /* Sidenav Items */
-  --sidenav-item-height: 40px;
-  --sidenav-item-padding: var(--inset-sm, 10px);
+  --sidenav-item-height: 48px;
+  --sidenav-item-padding: var(--inset-md, 12px);
   --sidenav-item-margin: var(--inset-xs, 4px) 0;
   --sidenav-item-radius: var(--radius-sm, 4px);
   --sidenav-item-gap: var(--inset-sm, 10px);
@@ -66,11 +66,8 @@
 
 // Dark theme overrides
 [data-theme="dark"] {
-  --sidenav-bg: var(--bg-secondary, #1e1e1e);
-  --sidenav-border-color: var(--border-dark, #383838);
+  --sidenav-bg: var(--bg-surface);
+  --sidenav-border-color: var(--border-default);
   --sidenav-child-bg: var(--bg-element-hover, rgba(255, 255, 255, 0.05));
-  --sidenav-divider-color: var(--border-dark, #383838);
-  --sidenav-shadow: var(--shadow-md, 0 2px 8px rgba(0, 0, 0, 0.2));
-  --sidenav-mobile-bg: var(--bg-secondary, #1e1e1e);
-  --sidenav-item-active-bg: rgba(var(--primary-500-rgb, 10, 159, 255), 0.15);
+  --sidenav-mobile-bg: var(--bg-surface);
 } 

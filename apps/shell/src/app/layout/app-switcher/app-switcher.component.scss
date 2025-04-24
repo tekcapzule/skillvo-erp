@@ -3,24 +3,20 @@
 @use 'styles/utilities/layout-mixins' as utility-layout;
 
 .app-switcher-container {
-  position: absolute;
+  position: fixed;
   top: var(--header-height);
   left: 0;
   width: 100%;
-  height: 100vh;
+  height: calc(100vh - var(--header-height));
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: flex-start;
-  z-index: var(--app-switcher-z-index);
+  z-index: var(--app-switcher-z-index, 1000);
   visibility: hidden;
   opacity: 0;
-  transition: opacity var(--app-menu-transition) ease, visibility var(--app-menu-transition) ease;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
   overflow: auto;
-  
-  &.open {
-    visibility: visible;
-    opacity: 1;
-  }
+  pointer-events: none;
   
   &::before {
     content: "";
@@ -31,6 +27,22 @@
     bottom: 0;
     background-color: var(--overlay-bg, rgba(0, 0, 0, 0.4));
     z-index: -1;
+  }
+}
+
+/* Make the menu visible when isOpen is true */
+:host.app-switcher-open .app-switcher-container,
+.app-switcher-container.open {
+  visibility: visible !important;
+  opacity: 1 !important;
+  pointer-events: auto !important;
+}
+
+:host {
+  &.app-switcher-visible .app-switcher-container {
+    visibility: visible !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
   }
 }
 
@@ -58,63 +70,86 @@
 }
 
 .app-menu {
-  background-color: var(--app-switcher-bg);
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-xl);
-  width: var(--app-menu-width);
-  margin-top: var(--inset-md);
-  padding: var(--app-menu-padding);
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: var(--app-menu-gap);
-  max-height: calc(100vh - var(--header-height) - var(--inset-xl) * 2);
-  overflow-y: auto;
-  @include theme-transition(background-color, box-shadow);
+  background-color: var(--app-switcher-bg, white);
+  border-radius: var(--radius-lg, 8px);
+  box-shadow: var(--shadow-xl, 0 8px 30px rgba(0, 0, 0, 0.12));
+  width: var(--app-menu-width, 320px);
+  margin-top: 8px;
+  margin-left: 16px;
+  padding: var(--app-menu-padding, 16px);
+  animation: fadeIn 0.3s ease-out;
+  z-index: 1001;
   
   @media (max-width: 768px) {
-    grid-template-columns: 1fr;
-    width: 100vw;
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    padding: var(--app-menu-padding, 16px);
     border-radius: 0;
     box-shadow: none;
-    padding: var(--inset-md);
-    margin-top: 0;
+    background-color: var(--app-switcher-bg, white);
   }
 }
 
+.app-switcher-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: var(--app-menu-gap, 12px);
+  width: 100%;
+}
+
 .app-item {
-  height: var(--app-item-height);
-  background-color: var(--app-item-bg);
-  border-radius: var(--radius-md);
-  padding: var(--app-item-padding);
+  height: var(--app-item-height, 90px);
+  background-color: var(--app-item-bg, #f5f5f5);
+  border-radius: 8px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  text-decoration: none;
-  color: var(--app-item-text);
-  text-align: center;
-  transition: transform var(--app-menu-transition), 
-              box-shadow var(--app-menu-transition), 
-              background-color var(--app-menu-transition);
+  cursor: pointer;
+  padding: var(--app-item-padding, 12px);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+  user-select: none;
   
   &:hover {
-    background-color: var(--app-item-hover-bg);
-    transform: translateY(var(--space-0-5, -2px));
-    box-shadow: var(--shadow-md);
+    background-color: var(--app-item-hover-bg, #eaeaea);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+  
+  &:active {
+    transform: translateY(-1px);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
   }
   
   .app-icon {
-    width: var(--app-icon-size);
-    height: var(--app-icon-size);
-    margin-bottom: var(--inset-sm);
+    width: var(--app-icon-size, 36px);
+    height: var(--app-icon-size, 36px);
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     
-    mat-icon {
+    .icon-container {
       width: 100%;
       height: 100%;
-      font-size: var(--app-icon-size);
       display: flex;
       align-items: center;
       justify-content: center;
+      font-size: 18px;
+      
+      span {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: var(--app-icon-size, 36px);
+        height: var(--app-icon-size, 36px);
+        background-color: var(--primary-600, #0066cc);
+        color: white;
+        border-radius: 6px;
+        font-weight: 600;
+        line-height: 0;
+      }
     }
     
     img {
@@ -124,55 +159,38 @@
     }
   }
   
-  .app-title {
-    font-weight: var(--font-medium);
-    font-size: var(--text-md);
-  }
-  
-  .app-description {
-    font-size: var(--text-sm);
-    color: var(--text-secondary);
-    margin-top: var(--inset-xs);
+  .app-label {
+    font-family: var(--font-family-main, 'Inter', sans-serif);
+    font-weight: 500;
+    font-size: 14px;
+    color: var(--app-item-text, #333);
+    text-align: center;
+    margin-top: 4px;
   }
   
   @media (max-width: 768px) {
-    height: var(--app-item-height-mobile);
-    flex-direction: row;
-    justify-content: flex-start;
-    text-align: left;
+    height: auto;
+    flex-direction: column;
+    padding: 16px;
+    border-radius: 8px;
+    align-items: center;
+    justify-content: center;
     
     .app-icon {
-      margin-bottom: 0;
-      margin-right: var(--inset-md);
+      margin-right: 0;
+      margin-bottom: 8px;
     }
     
-    .app-text {
-      display: flex;
-      flex-direction: column;
+    .app-label {
+      font-size: 14px;
     }
   }
-}
-
-.app-switcher-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  grid-gap: var(--app-menu-gap);
-  width: 100%;
-}
-
-.app-label {
-  font-family: var(--font-family-main);
-  font-weight: var(--font-medium);
-  font-size: var(--text-sm);
-  color: var(--app-item-text);
-  text-align: center;
-  @include theme-transition(color);
 }
 
 @keyframes fadeIn {
   from {
     opacity: 0;
-    transform: translateY(calc(var(--inset-md) * -1));
+    transform: translateY(-20px);
   }
   to {
     opacity: 1;
@@ -183,15 +201,8 @@
 // Responsive styles
 @include breakpoint-down('md') {
   .app-menu {
-    width: 100vw;
+    width: 100%;
     left: 0;
     border-radius: 0;
-  }
-  
-  .app-item {
-    width: 100%;
-    box-sizing: border-box;
-    padding: var(--inset-md) var(--inset-sm) var(--inset-sm);
-    height: var(--app-item-height-mobile);
   }
 } 

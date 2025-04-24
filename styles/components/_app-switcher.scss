@@ -11,20 +11,22 @@
   --app-switcher-shadow: var(--shadow-md);
   
   // App Menu
-  --app-menu-width: var(--space-60, 240px);
+  --app-menu-width: 320px;
   --app-menu-padding: var(--inset-md, var(--space-3, 12px));
-  --app-menu-gap: var(--inset-sm, var(--space-2, 8px));
+  --app-menu-gap: 12px;
   
   // App Items
-  --app-item-bg: var(--bg-surface);
-  --app-item-hover-bg: var(--bg-element-hover);
-  --app-item-text: var(--text-primary);
-  --app-item-height: var(--space-21-25, 85px);
-  --app-item-height-mobile: var(--space-22-5, 90px);
-  --app-item-padding: var(--inset-md, var(--space-4, 16px));
+  --app-item-bg: var(--bg-surface-subtle, #f5f5f5);
+  --app-item-hover-bg: var(--bg-element-hover, #eaeaea);
+  --app-item-text: var(--text-primary, #333333);
+  --app-item-height: 80px;
+  --app-item-height-mobile: 80px;
+  --app-item-padding: 10px;
   
   // App Icons
-  --app-icon-size: var(--icon-size-md, var(--space-8, 32px));
+  --app-icon-size: 36px;
+  --app-icon-color: #ffffff;
+  --app-icon-bg: var(--primary-600, #0066cc);
   
   // Animation
   --app-menu-transition: 0.2s ease-in-out;
@@ -34,10 +36,10 @@
 }
 
 [data-theme="dark"] {
-  --app-switcher-bg: var(--bg-surface);
-  --app-item-bg: var(--bg-surface);
-  --app-item-hover-bg: var(--bg-element-hover);
-  --app-item-text: var(--text-primary);
+  --app-switcher-bg: var(--bg-surface, #222222);
+  --app-item-bg: var(--bg-element, #333333);
+  --app-item-hover-bg: var(--bg-element-hover, #444444);
+  --app-item-text: var(--text-primary, #ffffff);
   --app-switcher-border: var(--border-default);
   --app-switcher-shadow: var(--shadow-md);
   --overlay-bg: rgba(0, 0, 0, 0.5);

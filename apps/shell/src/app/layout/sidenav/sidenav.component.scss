@@ -26,6 +26,7 @@
   /* Add flex column to position footer at bottom */
   display: flex;
   flex-direction: column;
+  overflow: hidden;
   
   &.collapsed {
     width: var(--sidenav-width-collapsed, 64px);
@@ -49,6 +50,8 @@
   background-color: var(--sidenav-bg, #ffffff);
   flex-shrink: 0;
   @include theme-transition(background-color, border-color);
+  margin: 0 !important;
+  padding-bottom: 0 !important;
   
   /* Header toggle buttons */
   .toggle-button, .close-button {
@@ -58,11 +61,12 @@
     width: 40px;
     height: 40px;
     padding: 0;
+    margin: 0;
     border-radius: 50%;
     background-color: transparent;
     border: none;
     position: relative;
-    color: var(--text-secondary);
+    color: var(--icon-color, var(--text-secondary));
     
     &:hover {
       background-color: rgba(0, 0, 0, 0.05);
@@ -75,7 +79,10 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      line-height: 1;
+      line-height: 0;
+      margin: 0;
+      padding: 0;
+      color: var(--icon-color, var(--text-secondary));
     }
   }
   
@@ -93,31 +100,59 @@
 .sidenav-list {
   flex-grow: 1;
   overflow-y: auto;
-  padding: 0; /* Removed top padding completely to eliminate space above Home */
+  padding: 0;
+  margin: 0;
+  border-top: none;
+  margin-top: -1px !important; /* Negative margin to close gap with header */
   
   /* Apply scrollbar styling */
   @include scrollbar.styled-scrollbar;
 
   /* Reset Material list padding */
   .mat-nav-list {
-    padding: 0;
+    padding: 0 !important;
+    margin: 0 !important;
   }
   
-  /* Style the list items */
-  .mat-list-item {
-    height: var(--sidenav-item-height) !important;
-    padding-left: var(--sidenav-padding); /* Add left padding to align with hamburger */
-    
-    &:hover {
-      background-color: var(--sidenav-item-hover-bg, rgba(0, 0, 0, 0.05));
-    }
-    
-    &.active-link {
-      background-color: var(--sidenav-item-active-bg, var(--primary-50));
-      color: var(--sidenav-item-active-color, var(--primary-500));
-      border-left: 3px solid var(--sidenav-item-active-border, var(--primary-500));
-      padding-left: calc(var(--sidenav-padding) - 3px); /* Adjust for border */
-    }
+  /* Override Angular Material's default spacing */
+  ::ng-deep .mat-list-base {
+    padding-top: 0 !important;
+    margin-top: 0 !important;
+  }
+  
+  ::ng-deep .mat-nav-list .mat-list-item:first-child {
+    margin-top: -8px !important; /* Target the first item directly with a negative margin */
+  }
+  
+  ::ng-deep mat-nav-list {
+    margin-top: -8px !important;
+  }
+  
+  ::ng-deep .mat-list-item-content {
+    padding: 0 !important;
+  }
+}
+
+/* Style the list items */
+.mat-list-item {
+  height: var(--sidenav-item-height) !important;
+  padding: 0 !important;
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  margin: 0 !important;
+  
+  &:first-child {
+    margin-top: 0;
+  }
+  
+  &:hover {
+    background-color: var(--sidenav-item-hover-bg, rgba(0, 0, 0, 0.05));
+  }
+  
+  &.active-link {
+    background-color: var(--sidenav-item-active-bg, var(--primary-50));
+    color: var(--sidenav-item-active-color, var(--primary-500));
   }
 }
 
@@ -127,16 +162,44 @@
   align-items: center;
   width: 100%;
   height: 100%;
+  padding-left: 4px;
+  box-sizing: border-box;
+}
+
+/* Keep icons in the same position even when active */
+.active-link .menu-item {
+  padding-left: 4px; /* Same as non-active state */
+}
+
+/* Additional border for active item without affecting positioning */
+.mat-list-item.active-link {
+  position: relative;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 3px;
+    height: 100%;
+    background-color: var(--sidenav-item-active-border, var(--primary-500));
+  }
 }
 
 /* Style the menu icons */
 .menu-icon {
-  font-size: 20px !important;
-  width: 20px !important;
-  height: 20px !important;
+  font-size: 24px !important;
+  width: 24px !important;
+  height: 24px !important;
   margin-right: 16px;
   flex-shrink: 0;
-  color: var(--sidenav-item-color, var(--text-secondary));
+  color: var(--icon-color, var(--text-secondary));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 0;
+  margin-left: 0;
+  padding: 0;
 }
 
 /* Style the menu labels */
@@ -152,11 +215,15 @@
 
 /* Expand icon */
 .expand-icon {
-  font-size: 18px !important;
-  width: 18px !important;
-  height: 18px !important;
+  font-size: 24px !important;
+  width: 24px !important;
+  height: 24px !important;
   margin-left: auto;
-  color: var(--sidenav-item-color, var(--text-secondary));
+  color: var(--icon-color, var(--text-secondary));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 0;
 }
 
 /* Style submenu items */
@@ -187,15 +254,18 @@
 
 // Material icon sizing - ensure consistent size and position
 mat-icon {
-  height: var(--sidenav-item-icon-size);
-  width: var(--sidenav-item-icon-size);
+  height: 24px;
+  width: 24px;
+  font-size: 24px;
   display: flex;
   align-items: center;
   justify-content: center;
-  line-height: 1;
+  line-height: 0;
   /* Fix subpixel rendering issues */
   transform: translateZ(0);
 }
+
+
 
 // Responsive adjustments
 @include breakpoint-down('md') {
