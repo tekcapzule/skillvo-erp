@@ -1,0 +1,62 @@
+<div class="sv-filter-dropdown" [class.disabled]="disabled" [class.open]="isOpen" [class]="customClass">
+  <!-- Filter button -->
+  <button 
+    type="button" 
+    class="sv-filter-dropdown__button" 
+    [class.active]="selectedFiltersCount > 0"
+    (click)="toggleFilterOpen()">
+    
+    <!-- Filter icon -->
+    <span class="sv-filter-dropdown__icon" [innerHTML]="filterIcon"></span>
+    
+    <!-- Label text -->
+    <span class="sv-filter-dropdown__label">
+      {{ label }}
+      <span *ngIf="showSelectedCount && selectedFiltersCount > 0" class="sv-filter-dropdown__count">
+        ({{ selectedFiltersCount }})
+      </span>
+    </span>
+    
+    <!-- Arrow icon -->
+    <span class="sv-filter-dropdown__arrow" [class.open]="isOpen" [innerHTML]="arrowIcon"></span>
+  </button>
+
+  <!-- Dropdown panel -->
+  <div class="sv-filter-dropdown__dropdown" [class.open]="isOpen" (click)="stopPropagation($event)">
+    <div class="sv-filter-dropdown__header">
+      <span class="sv-filter-dropdown__title">{{ label }}</span>
+      <button 
+        *ngIf="selectedFiltersCount > 0"
+        type="button" 
+        class="sv-filter-dropdown__clear" 
+        (click)="clearAllFilters()">
+        <span class="sv-filter-dropdown__clear-icon" [innerHTML]="clearIcon"></span>
+        <span class="sv-filter-dropdown__clear-text">Clear all</span>
+      </button>
+    </div>
+    
+    <div class="sv-filter-dropdown__content">
+      <div *ngFor="let group of filterGroups" class="sv-filter-dropdown__group">
+        <div class="sv-filter-dropdown__group-header">
+          <span class="sv-filter-dropdown__group-title">{{ group.label }}</span>
+          <span *ngIf="getGroupSelectionText(group)" class="sv-filter-dropdown__group-selection">
+            {{ getGroupSelectionText(group) }}
+          </span>
+        </div>
+        
+        <div class="sv-filter-dropdown__options">
+          <div *ngFor="let option of group.options" class="sv-filter-dropdown__option">
+            <label class="sv-filter-dropdown__checkbox">
+              <input 
+                type="checkbox" 
+                [checked]="option.selected" 
+                (change)="toggleOption(group, option)">
+              <span class="sv-filter-dropdown__checkbox-custom"></span>
+              <span class="sv-filter-dropdown__option-label">{{ option.label }}</span>
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> 

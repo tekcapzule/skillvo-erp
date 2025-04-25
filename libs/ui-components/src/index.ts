@@ -5,3 +5,6 @@ export * from './lib/components/calendar/calendar.component';
 export * from './lib/components/search/search.component';
 export * from './lib/components/multi-select/multi-select.component';
 export * from './lib/components/dropdown/dropdown.component';
+export * from './lib/components/text-box/text-box.component';
+export * from './lib/components/view-toggle/view-toggle.component';
+export * from './lib/components/filter-dropdown/filter-dropdown.component';
