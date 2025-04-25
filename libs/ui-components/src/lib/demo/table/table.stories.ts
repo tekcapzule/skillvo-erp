@@ -1,6 +1,5 @@
 import { Meta, StoryObj, moduleMetadata } from '@storybook/angular';
-import { TableComponent } from '../../components/table/table.component';
-import { CommonModule } from '@angular/common';
+import { TableComponent } from '../../../lib/components/table/table.component';
 
 const meta: Meta<TableComponent<any>> = {
   title: 'Components/Table',
@@ -8,7 +7,7 @@ const meta: Meta<TableComponent<any>> = {
   tags: ['autodocs'],
   decorators: [
     moduleMetadata({
-      imports: [CommonModule],
+      imports: [TableComponent],
     }),
   ],
   argTypes: {
@@ -20,245 +19,129 @@ const meta: Meta<TableComponent<any>> = {
     emptyStateMessage: { control: 'text' },
     selectedRows: { control: 'object' },
     rowIdentifierKey: { control: 'text' },
-    rowClick: { action: 'rowClicked' },
-    sort: { action: 'sorted' },
-    selectionChange: { action: 'selectionChanged' },
+    rowClick: { action: 'rowClick' },
+    sort: { action: 'sort' },
+    selectionChange: { action: 'selectionChange' },
   },
 };
 
 export default meta;
-
 type Story = StoryObj<TableComponent<any>>;
 
+// Demo data
 const mockData = [
-  { id: 1, name: 'John Doe', age: 30, location: 'New York', status: 'Active' },
-  { id: 2, name: 'Jane Smith', age: 25, location: 'Los Angeles', status: 'Inactive' },
-  { id: 3, name: 'Bob Johnson', age: 40, location: 'Chicago', status: 'Active' },
-  { id: 4, name: 'Alice Brown', age: 35, location: 'Houston', status: 'Pending' },
-  { id: 5, name: 'Charlie Wilson', age: 28, location: 'Phoenix', status: 'Active' },
+  { id: 1, name: 'John Doe', email: 'john@example.com', role: 'Admin', status: 'Active' },
+  { id: 2, name: 'Jane Smith', email: 'jane@example.com', role: 'User', status: 'Inactive' },
+  { id: 3, name: 'Michael Brown', email: 'michael@example.com', role: 'Editor', status: 'Active' },
+  { id: 4, name: 'Sarah Wilson', email: 'sarah@example.com', role: 'Viewer', status: 'Active' },
+  { id: 5, name: 'Robert Johnson', email: 'robert@example.com', role: 'Admin', status: 'Inactive' },
 ];
 
-const mockColumns = [
-  { key: 'id', header: 'ID', sortable: true, width: '10%' },
-  { key: 'name', header: 'Name', sortable: true, width: '25%' },
-  { key: 'age', header: 'Age', sortable: true, width: '15%' },
-  { key: 'location', header: 'Location', sortable: true, width: '25%' },
-  { key: 'status', header: 'Status', sortable: true, width: '25%' },
+// Default columns
+const defaultColumns = [
+  { key: 'id', header: 'ID', sortable: true, width: '80px' },
+  { key: 'name', header: 'Name', sortable: true },
+  { key: 'email', header: 'Email', sortable: true },
+  { key: 'role', header: 'Role', sortable: true },
+  { key: 'status', header: 'Status', sortable: true },
 ];
 
+// Basic table
 export const Basic: Story = {
+  args: {
+    data: mockData,
+    columns: defaultColumns,
+  },
   render: (args) => ({
     props: args,
     template: `
       <sv-table
         [data]="data"
         [columns]="columns"
-        [loading]="loading"
         [selectable]="selectable"
+        [loading]="loading"
         [sortable]="sortable"
         [emptyStateMessage]="emptyStateMessage"
         [selectedRows]="selectedRows"
         [rowIdentifierKey]="rowIdentifierKey"
         (rowClick)="rowClick($event)"
         (sort)="sort($event)"
-        (selectionChange)="selectionChange($event)"
-      ></sv-table>
+        (selectionChange)="selectionChange($event)">
+      </sv-table>
     `,
   }),
-  args: {
-    data: mockData,
-    columns: mockColumns,
-    loading: false,
-    selectable: false,
-    sortable: true,
-    emptyStateMessage: 'No data available',
-    selectedRows: [],
-    rowIdentifierKey: 'id',
-  },
 };
 
+// Selectable table
 export const Selectable: Story = {
-  render: (args) => ({
-    props: args,
-    template: `
-      <sv-table
-        [data]="data"
-        [columns]="columns"
-        [loading]="loading"
-        [selectable]="selectable"
-        [sortable]="sortable"
-        [emptyStateMessage]="emptyStateMessage"
-        [selectedRows]="selectedRows"
-        [rowIdentifierKey]="rowIdentifierKey"
-        (rowClick)="rowClick($event)"
-        (sort)="sort($event)"
-        (selectionChange)="selectionChange($event)"
-      ></sv-table>
-    `,
-  }),
   args: {
-    data: mockData,
-    columns: mockColumns,
-    loading: false,
+    ...Basic.args,
     selectable: true,
-    sortable: true,
-    emptyStateMessage: 'No data available',
-    selectedRows: [],
-    rowIdentifierKey: 'id',
   },
+  render: Basic.render,
 };
 
+// Loading state
 export const Loading: Story = {
-  render: (args) => ({
-    props: args,
-    template: `
-      <sv-table
-        [data]="data"
-        [columns]="columns"
-        [loading]="loading"
-        [selectable]="selectable"
-        [sortable]="sortable"
-        [emptyStateMessage]="emptyStateMessage"
-        [selectedRows]="selectedRows"
-        [rowIdentifierKey]="rowIdentifierKey"
-        (rowClick)="rowClick($event)"
-        (sort)="sort($event)"
-        (selectionChange)="selectionChange($event)"
-      ></sv-table>
-    `,
-  }),
   args: {
-    data: mockData,
-    columns: mockColumns,
+    ...Basic.args,
     loading: true,
-    selectable: false,
-    sortable: true,
-    emptyStateMessage: 'No data available',
-    selectedRows: [],
-    rowIdentifierKey: 'id',
   },
+  render: Basic.render,
 };
 
+// Empty state
 export const Empty: Story = {
-  render: (args) => ({
-    props: args,
-    template: `
-      <sv-table
-        [data]="data"
-        [columns]="columns"
-        [loading]="loading"
-        [selectable]="selectable"
-        [sortable]="sortable"
-        [emptyStateMessage]="emptyStateMessage"
-        [selectedRows]="selectedRows"
-        [rowIdentifierKey]="rowIdentifierKey"
-        (rowClick)="rowClick($event)"
-        (sort)="sort($event)"
-        (selectionChange)="selectionChange($event)"
-      ></sv-table>
-    `,
-  }),
   args: {
+    ...Basic.args,
     data: [],
-    columns: mockColumns,
-    loading: false,
-    selectable: false,
-    sortable: true,
-    emptyStateMessage: 'No data available',
-    selectedRows: [],
-    rowIdentifierKey: 'id',
+    emptyStateMessage: 'No data available at the moment',
   },
+  render: Basic.render,
 };
 
+// Pre-selected rows
 export const PreSelected: Story = {
-  render: (args) => ({
-    props: args,
-    template: `
-      <sv-table
-        [data]="data"
-        [columns]="columns"
-        [loading]="loading"
-        [selectable]="selectable"
-        [sortable]="sortable"
-        [emptyStateMessage]="emptyStateMessage"
-        [selectedRows]="selectedRows"
-        [rowIdentifierKey]="rowIdentifierKey"
-        (rowClick)="rowClick($event)"
-        (sort)="sort($event)"
-        (selectionChange)="selectionChange($event)"
-      ></sv-table>
-    `,
-  }),
   args: {
-    data: mockData,
-    columns: mockColumns,
-    loading: false,
-    selectable: true,
-    sortable: true,
-    emptyStateMessage: 'No data available',
+    ...Selectable.args,
     selectedRows: [mockData[0], mockData[2]],
-    rowIdentifierKey: 'id',
   },
+  render: Basic.render,
 };
 
+// Non-sortable table
 export const NonSortable: Story = {
-  render: (args) => ({
-    props: args,
-    template: `
-      <sv-table
-        [data]="data"
-        [columns]="columns"
-        [loading]="loading"
-        [selectable]="selectable"
-        [sortable]="sortable"
-        [emptyStateMessage]="emptyStateMessage"
-        [selectedRows]="selectedRows"
-        [rowIdentifierKey]="rowIdentifierKey"
-        (rowClick)="rowClick($event)"
-        (sort)="sort($event)"
-        (selectionChange)="selectionChange($event)"
-      ></sv-table>
-    `,
-  }),
   args: {
-    data: mockData,
-    columns: mockColumns,
-    loading: false,
-    selectable: false,
+    ...Basic.args,
     sortable: false,
-    emptyStateMessage: 'No data available',
-    selectedRows: [],
-    rowIdentifierKey: 'id',
   },
+  render: Basic.render,
 };
 
+// All features combined
 export const AllFeatures: Story = {
-  render: (args) => ({
-    props: args,
-    template: `
-      <sv-table
-        [data]="data"
-        [columns]="columns"
-        [loading]="loading"
-        [selectable]="selectable"
-        [sortable]="sortable"
-        [emptyStateMessage]="emptyStateMessage"
-        [selectedRows]="selectedRows"
-        [rowIdentifierKey]="rowIdentifierKey"
-        (rowClick)="rowClick($event)"
-        (sort)="sort($event)"
-        (selectionChange)="selectionChange($event)"
-      ></sv-table>
-    `,
-  }),
   args: {
     data: mockData,
-    columns: mockColumns,
-    loading: false,
+    columns: defaultColumns,
     selectable: true,
     sortable: true,
-    emptyStateMessage: 'No data available',
-    selectedRows: [mockData[1]],
-    rowIdentifierKey: 'id',
   },
+  render: (args) => ({
+    props: args,
+    template: `
+      <sv-table
+        [data]="data"
+        [columns]="columns"
+        [selectable]="selectable"
+        [loading]="loading"
+        [sortable]="sortable"
+        [emptyStateMessage]="emptyStateMessage"
+        [selectedRows]="selectedRows"
+        [rowIdentifierKey]="rowIdentifierKey"
+        (rowClick)="rowClick($event)"
+        (sort)="sort($event)"
+        (selectionChange)="selectionChange($event)">
+      </sv-table>
+    `,
+  }),
 }; 
