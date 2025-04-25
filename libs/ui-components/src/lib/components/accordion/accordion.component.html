@@ -1,0 +1,17 @@
+<div class="sv-accordion" [class.sv-accordion--expanded]="expanded" [class.sv-accordion--disabled]="disabled" [class.sv-accordion--dark]="theme === 'dark'">
+  <div class="sv-accordion__header" (click)="toggle()" [attr.aria-expanded]="expanded" [attr.aria-disabled]="disabled">
+    <div class="sv-accordion__title">{{ title }}</div>
+    <div class="sv-accordion__icon" [@iconRotation]="expanded ? 'expanded' : 'collapsed'">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M7 10L12 15L17 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+  </div>
+  
+  <div class="sv-accordion__content" 
+       [@contentExpansion]="expanded ? 'expanded' : 'collapsed'">
+    <div class="sv-accordion__content-inner">
+      <ng-content></ng-content>
+    </div>
+  </div>
+</div> 
