@@ -141,6 +141,8 @@ export class MenuService {
       },
       { label: 'Courses', icon: 'courses', route: '/learn/courses', exact: false },
       { label: 'References', icon: 'references', route: '/learn/references', exact: false },
+      { label: 'Tests', icon: 'quiz', route: '/learn/tests', exact: false },
+      { label: 'Batches', icon: 'groups', route: '/learn/batches', exact: false },
       { label: 'Calendar', icon: 'calendar', route: '/learn/calendar', exact: false },
       { label: 'Reports', icon: 'reports', route: '/learn/reports', exact: false },
       { label: 'Help', icon: 'help', route: '/learn/help', exact: false },
@@ -152,21 +154,24 @@ export class MenuService {
    */
   private getHireMenu(): MenuItem[] {
     return [
-      { label: 'Dashboard', icon: 'home', route: '/hire/dashboard', exact: true },
-      { label: 'Candidates', icon: 'people', route: '/hire/candidates', exact: false },
-      { label: 'Jobs', icon: 'work', route: '/hire/jobs', exact: false },
+      { label: 'Home', icon: 'home', route: '/hire/home', exact: true },
       { 
-        label: 'Assessments', 
-        icon: 'assessment', 
-        route: '/hire/assessments',
+        label: 'My Activity', 
+        icon: 'my-activities', 
+        route: '/hire/activity',
         expanded: false,
         children: [
-          { label: 'Technical', icon: '', route: '/hire/assessments/technical', exact: true },
-          { label: 'Behavioral', icon: '', route: '/hire/assessments/behavioral', exact: true }
+          { label: 'Jobs', icon: '', route: '/hire/activity/jobs', exact: true },
+          { label: 'Tasks', icon: '', route: '/hire/activity/tasks', exact: true }
         ]
       },
-      { label: 'Analytics', icon: 'bar_chart', route: '/hire/analytics', exact: false },
-      { label: 'Settings', icon: 'settings', route: '/hire/settings', exact: false },
+      { label: 'Interviews', icon: 'people', route: '/hire/interviews', exact: false },
+      { label: 'Jobs', icon: 'work', route: '/hire/jobs', exact: false },
+      { label: 'Screen CVs', icon: 'assignment', route: '/hire/cvs', exact: false },
+      { label: 'Tests', icon: 'quiz', route: '/hire/tests', exact: false },
+      { label: 'Calendar', icon: 'calendar', route: '/hire/calendar', exact: false },
+      { label: 'Reports', icon: 'reports', route: '/hire/reports', exact: false },
+      { label: 'Help', icon: 'help', route: '/hire/help', exact: false },
     ];
   }
 
@@ -175,21 +180,20 @@ export class MenuService {
    */
   private getOnboardMenu(): MenuItem[] {
     return [
-      { label: 'Dashboard', icon: 'home', route: '/onboard/dashboard', exact: true },
-      { label: 'Employees', icon: 'people', route: '/onboard/employees', exact: false },
+      { label: 'Home', icon: 'home', route: '/onboard/home', exact: true },
       { 
-        label: 'Tasks', 
-        icon: 'task', 
-        route: '/onboard/tasks',
+        label: 'My Activity', 
+        icon: 'my-activities', 
+        route: '/onboard/activity',
         expanded: false,
         children: [
-          { label: 'Pending', icon: '', route: '/onboard/tasks/pending', exact: true },
-          { label: 'Completed', icon: '', route: '/onboard/tasks/completed', exact: true }
+          { label: 'Learnings', icon: '', route: '/onboard/activity/learnings', exact: true },
+          { label: 'Tasks', icon: '', route: '/onboard/activity/tasks', exact: true }
         ]
       },
-      { label: 'Documents', icon: 'description', route: '/onboard/documents', exact: false },
-      { label: 'Templates', icon: 'content_copy', route: '/onboard/templates', exact: false },
-      { label: 'Settings', icon: 'settings', route: '/onboard/settings', exact: false },
+      { label: 'Calendar', icon: 'calendar', route: '/onboard/calendar', exact: false },
+      { label: 'Reports', icon: 'reports', route: '/onboard/reports', exact: false },
+      { label: 'Help', icon: 'help', route: '/onboard/help', exact: false },
     ];
   }
 
@@ -198,10 +202,9 @@ export class MenuService {
    */
   private getAdminMenu(): MenuItem[] {
     return [
-      { label: 'Dashboard', icon: 'home', route: '/admin/dashboard', exact: true },
+      { label: 'Home', icon: 'home', route: '/admin/home', exact: true },
+      { label: 'Companies', icon: 'business', route: '/admin/companies', exact: false },
       { label: 'Users', icon: 'people', route: '/admin/users', exact: false },
-      { label: 'Roles', icon: 'security', route: '/admin/roles', exact: false },
-      { label: 'Organizations', icon: 'business', route: '/admin/organizations', exact: false },
       { 
         label: 'Content', 
         icon: 'article', 
@@ -209,10 +212,15 @@ export class MenuService {
         expanded: false,
         children: [
           { label: 'Courses', icon: '', route: '/admin/content/courses', exact: true },
-          { label: 'Resources', icon: '', route: '/admin/content/resources', exact: true }
+          { label: 'References', icon: '', route: '/admin/content/references', exact: true }
         ]
       },
+      { label: 'Group', icon: 'groups', route: '/admin/group', exact: false },
+      { label: 'Roles', icon: 'security', route: '/admin/roles', exact: false },
+      { label: 'Audits', icon: 'fact_check', route: '/admin/audits', exact: false },
       { label: 'Settings', icon: 'settings', route: '/admin/settings', exact: false },
+      { label: 'Reports', icon: 'reports', route: '/admin/reports', exact: false },
+      { label: 'Help', icon: 'help', route: '/admin/help', exact: false },
     ];
   }
 } 

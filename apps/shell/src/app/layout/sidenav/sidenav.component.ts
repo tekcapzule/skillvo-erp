@@ -120,7 +120,11 @@ export class SidenavComponent implements OnInit, OnDestroy {
       'content_copy': 'content_copy',
       'security': 'security',
       'business': 'business',
-      'article': 'article'
+      'article': 'article',
+      'quiz': 'quiz',
+      'groups': 'groups',
+      'assignment': 'assignment',
+      'fact_check': 'fact_check'
     };
     
     return iconMap[iconName] || 'circle';
