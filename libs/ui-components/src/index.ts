@@ -25,3 +25,5 @@ export * from './lib/components/card/base-card/base-card.component';
 export * from './lib/components/card/course-card/course-card.component';
 export * from './lib/components/card/course-progress-card/course-progress-card.component';
 export * from './lib/components/card/reference-card/reference-card.component';
+
+export * from './lib/components/tag-input/tag-input.component';

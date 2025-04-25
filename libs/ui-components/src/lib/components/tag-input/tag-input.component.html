@@ -1,0 +1,40 @@
+<div class="sv-tag-input" [class.sv-tag-input--disabled]="disabled" [class.sv-tag-input--dark]="theme === 'dark'" [class.sv-tag-input--focused]="isInputFocused" [class]="customClass" (click)="onContainerClick()">
+  <div class="sv-tag-input__label" *ngIf="label">{{ label }}</div>
+  
+  <div class="sv-tag-input__content">
+    <!-- Tag list -->
+    <div class="sv-tag-input__tags-container">
+      <div 
+        *ngFor="let tag of tags; let i = index" 
+        class="sv-tag-input__tag"
+      >
+        <span class="sv-tag-input__tag-text">{{ tag }}</span>
+        <button 
+          class="sv-tag-input__tag-remove" 
+          type="button" 
+          [disabled]="disabled" 
+          (click)="removeTag(i); $event.stopPropagation();"
+        >
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      
+      <!-- Input field -->
+      <input 
+        #tagInput
+        type="text" 
+        class="sv-tag-input__input"
+        [placeholder]="tags.length ? '' : placeholder" 
+        [(ngModel)]="inputValue" 
+        [disabled]="disabled || tags.length >= maxTags"
+        (keydown)="onKeyDown($event)"
+        (focus)="onInputFocus()"
+        (blur)="onInputBlur()"
+      />
+    </div>
+  </div>
+  
+  <div class="sv-tag-input__hint" *ngIf="maxTags !== Infinity">
+    {{ tags.length }} / {{ maxTags }}
+  </div>
+</div> 
