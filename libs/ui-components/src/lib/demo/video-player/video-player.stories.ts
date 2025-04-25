@@ -1,16 +1,18 @@
 import { Meta, StoryObj, moduleMetadata } from '@storybook/angular';
 import { VideoPlayerComponent } from '../../components/video-player/video-player.component';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 const meta: Meta<VideoPlayerComponent> = {
   title: 'Components/Video Player',
   component: VideoPlayerComponent,
   decorators: [
     moduleMetadata({
-      imports: [],
+      imports: [CommonModule, FormsModule],
     }),
   ],
   parameters: {
-    layout: 'centered',
+    layout: 'padded',
   },
   tags: ['autodocs'],
   argTypes: {
@@ -36,6 +38,46 @@ const meta: Meta<VideoPlayerComponent> = {
     fullscreenChange: { action: 'fullscreenChange' },
     speedChange: { action: 'speedChange' },
   },
+  render: (args) => ({
+    props: {
+      ...args,
+    },
+    styles: [`
+      .video-wrapper {
+        width: 100%;
+        max-width: 800px;
+        margin: 0 auto;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
+    `],
+    template: `
+      <div class="video-wrapper">
+        <skillvo-video-player
+          [src]="src"
+          [poster]="poster"
+          [title]="title"
+          [autoplay]="autoplay"
+          [muted]="muted"
+          [loop]="loop"
+          [captions]="captions"
+          [qualities]="qualities"
+          [showPlaybackSpeed]="showPlaybackSpeed"
+          [showCaptions]="showCaptions"
+          [showFullscreen]="showFullscreen"
+          [showVolumeControl]="showVolumeControl"
+          [showControls]="showControls"
+          [startTime]="startTime"
+          (play)="play($event)"
+          (pause)="pause($event)"
+          (ended)="ended($event)"
+          (timeUpdate)="timeUpdate($event)"
+          (volumeChange)="volumeChange($event)"
+          (fullscreenChange)="fullscreenChange($event)"
+          (speedChange)="speedChange($event)"
+        ></skillvo-video-player>
+      </div>
+    `,
+  }),
 };
 
 export default meta;
