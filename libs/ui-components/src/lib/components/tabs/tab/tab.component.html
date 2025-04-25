@@ -1,0 +1,10 @@
+<div 
+  class="tab-panel" 
+  role="tabpanel"
+  [attr.aria-hidden]="!active"
+  [class.active]="active"
+  [attr.id]="getPanelId()"
+  #tabContent
+>
+  <ng-content></ng-content>
+</div> 

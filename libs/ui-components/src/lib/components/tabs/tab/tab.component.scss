@@ -1,0 +1,23 @@
+:host {
+  display: none;
+  width: 100%;
+  
+  &.active {
+    display: block;
+    animation: fadeIn 0.3s ease;
+  }
+}
+
+.tab-panel {
+  padding: 8px;
+  width: 100%;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+} 
