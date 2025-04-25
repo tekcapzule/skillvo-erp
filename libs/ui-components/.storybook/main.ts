@@ -10,7 +10,7 @@ const config: StorybookConfig = {
   docs: {
     autodocs: 'tag',
   },
-  staticDirs: ['../../../styles'],
+  staticDirs: ['../../../styles', '../../../node_modules/quill/dist'],
 };
 
 export default config;
