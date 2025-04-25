@@ -4,3 +4,4 @@ export * from './lib/components/pagination/pagination.component';
 export * from './lib/components/calendar/calendar.component';
 export * from './lib/components/search/search.component';
 export * from './lib/components/multi-select/multi-select.component';
+export * from './lib/components/dropdown/dropdown.component';
