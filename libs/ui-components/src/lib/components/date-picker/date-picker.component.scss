@@ -1,6 +1,7 @@
 .sv-date-picker {
   width: 100%;
   font-family: var(--font-family, 'Arial', sans-serif);
+  position: relative;
   
   &__label {
     font-size: 1rem;
@@ -12,26 +13,24 @@
   &__input-container {
     position: relative;
     display: flex;
-    border: 1px solid var(--border-color, #e0e0e0);
-    border-radius: 4px;
-    background-color: var(--surface-color, #ffffff);
-    transition: border-color 0.2s ease, box-shadow 0.2s ease;
-    
-    &:focus-within {
-      border-color: var(--primary-color, #007bff);
-      box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
-    }
+    width: 100%;
   }
   
   &__input {
     flex: 1;
-    padding: 0.75rem;
-    border: none;
+    padding: 0.5rem 0.5rem;
+    border: 1px solid var(--border-color, #e0e0e0);
+    border-radius: 4px;
     outline: none;
-    font-size: 1rem;
-    background-color: transparent;
+    font-size: 0.9rem;
     color: var(--text-color, #333333);
-    width: 100%;
+    background-color: var(--input-bg-color, #ffffff);
+    transition: border-color 0.2s ease;
+    
+    &:focus {
+      border-color: var(--primary-color, #007bff);
+      box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.15);
+    }
     
     &::placeholder {
       color: var(--text-placeholder-color, #aaaaaa);
@@ -44,7 +43,11 @@
     }
   }
   
-  &__calendar-button {
+  &__calendar-btn {
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -53,7 +56,7 @@
     border: none;
     color: var(--text-secondary-color, #666666);
     cursor: pointer;
-    border-left: 1px solid var(--border-color, #e0e0e0);
+    z-index: 1;
     
     &:hover {
       color: var(--primary-color, #007bff);
@@ -67,27 +70,51 @@
   
   &__calendar-popup {
     position: absolute;
-    top: calc(100% + 4px);
-    right: 0;
+    top: calc(100% + 8px);
+    left: 50%;
+    transform: translateX(-50%);
     z-index: 1000;
     background-color: var(--surface-color, #ffffff);
     border: 1px solid var(--border-color, #e0e0e0);
     border-radius: 4px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    max-width: 320px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    min-width: 300px;
     
-    // Ensure it appears above other elements
+    // Arrow pointer
     &::before {
       content: '';
       position: absolute;
-      top: -4px;
-      right: 16px;
-      width: 8px;
-      height: 8px;
+      top: -8px;
+      left: 50%;
+      transform: translateX(-50%) rotate(45deg);
+      width: 16px;
+      height: 16px;
       background-color: var(--surface-color, #ffffff);
       border-left: 1px solid var(--border-color, #e0e0e0);
       border-top: 1px solid var(--border-color, #e0e0e0);
-      transform: rotate(45deg);
+    }
+  }
+  
+  &__calendar-header {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 0.5rem;
+    border-bottom: 1px solid var(--border-color, #e0e0e0);
+  }
+  
+  &__today-btn {
+    padding: 0.25rem 0.75rem;
+    background-color: var(--secondary-button-bg, #f0f0f0);
+    border: 1px solid var(--border-color, #e0e0e0);
+    border-radius: 4px;
+    color: var(--text-color, #333333);
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    
+    &:hover {
+      background-color: var(--secondary-button-hover-bg, #e0e0e0);
     }
   }
   
@@ -95,12 +122,12 @@
   &--disabled {
     opacity: 0.7;
     
-    .sv-date-picker__input-container {
+    .sv-date-picker__input {
       background-color: var(--disabled-bg-color, #f5f5f5);
       border-color: var(--disabled-border-color, #d0d0d0);
     }
     
-    .sv-date-picker__calendar-button {
+    .sv-date-picker__calendar-btn {
       cursor: not-allowed;
       
       &:hover {
@@ -113,6 +140,7 @@
   &--dark {
     --border-color: #555555;
     --surface-color: #333333;
+    --input-bg-color: #444444;
     --text-color: #ffffff;
     --text-secondary-color: #cccccc;
     --text-placeholder-color: #888888;
@@ -120,5 +148,7 @@
     --disabled-text-color: #888888;
     --disabled-border-color: #444444;
     --primary-color: #4dabf7;
+    --secondary-button-bg: #444444;
+    --secondary-button-hover-bg: #555555;
   }
 } 

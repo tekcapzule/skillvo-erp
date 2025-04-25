@@ -4,8 +4,8 @@
   <div class="sv-date-range__content">
     <!-- From Date Input -->
     <div class="sv-date-range__field">
-      <label class="sv-date-range__field-label">From:</label>
-      <div class="sv-date-range__input-wrapper">
+      <div class="sv-date-range__field-label">From:</div>
+      <div class="sv-date-range__input-container">
         <input
           type="text"
           class="sv-date-range__input"
@@ -14,26 +14,16 @@
           (blur)="onFromInputChange()"
           [disabled]="disabled"
         />
-        <div class="sv-date-range__icon" (click)="toggleFromCalendar($event)">
+        <button class="sv-date-range__calendar-btn" (click)="toggleFromCalendar($event)" [disabled]="disabled">
           <i class="fas fa-calendar-alt"></i>
-        </div>
-      </div>
-      
-      <!-- From Calendar Popup -->
-      <div class="sv-date-range__calendar-popup" *ngIf="isFromCalendarOpen" (click)="$event.stopPropagation()">
-        <sv-calendar
-          [currentDate]="getFromCalendarDate()"
-          view="month"
-          [readonly]="true"
-          (slotSelected)="onFromDateSelect($event.start)"
-        ></sv-calendar>
+        </button>
       </div>
     </div>
     
     <!-- To Date Input -->
     <div class="sv-date-range__field">
-      <label class="sv-date-range__field-label">To:</label>
-      <div class="sv-date-range__input-wrapper">
+      <div class="sv-date-range__field-label">To:</div>
+      <div class="sv-date-range__input-container">
         <input
           type="text"
           class="sv-date-range__input"
@@ -42,20 +32,36 @@
           (blur)="onToInputChange()"
           [disabled]="disabled"
         />
-        <div class="sv-date-range__icon" (click)="toggleToCalendar($event)">
+        <button class="sv-date-range__calendar-btn" (click)="toggleToCalendar($event)" [disabled]="disabled">
           <i class="fas fa-calendar-alt"></i>
-        </div>
-      </div>
-      
-      <!-- To Calendar Popup -->
-      <div class="sv-date-range__calendar-popup" *ngIf="isToCalendarOpen" (click)="$event.stopPropagation()">
-        <sv-calendar
-          [currentDate]="getToCalendarDate()"
-          view="month"
-          [readonly]="true"
-          (slotSelected)="onToDateSelect($event.start)"
-        ></sv-calendar>
+        </button>
       </div>
     </div>
+  </div>
+  
+  <!-- From Calendar Popup -->
+  <div class="sv-date-range__calendar-popup" *ngIf="isFromCalendarOpen" (click)="$event.stopPropagation()">
+    <div class="sv-date-range__calendar-header">
+      <button class="sv-date-range__today-btn" (click)="setFromToToday($event)">Today</button>
+    </div>
+    <sv-calendar
+      [currentDate]="getFromCalendarDate()"
+      view="month"
+      [readonly]="true"
+      (slotSelected)="onFromDateSelect($event.start)"
+    ></sv-calendar>
+  </div>
+  
+  <!-- To Calendar Popup -->
+  <div class="sv-date-range__calendar-popup" *ngIf="isToCalendarOpen" (click)="$event.stopPropagation()">
+    <div class="sv-date-range__calendar-header">
+      <button class="sv-date-range__today-btn" (click)="setToToToday($event)">Today</button>
+    </div>
+    <sv-calendar
+      [currentDate]="getToCalendarDate()"
+      view="month"
+      [readonly]="true"
+      (slotSelected)="onToDateSelect($event.start)"
+    ></sv-calendar>
   </div>
 </div> 

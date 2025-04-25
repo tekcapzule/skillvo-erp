@@ -10,18 +10,20 @@
       (blur)="onInputChange()"
       [disabled]="disabled"
     />
-    
-    <button class="sv-date-picker__calendar-button" (click)="toggleCalendar($event)" [disabled]="disabled">
+    <button class="sv-date-picker__calendar-btn" (click)="toggleCalendar($event)" [disabled]="disabled">
       <i class="fas fa-calendar-alt"></i>
     </button>
-    
-    <div class="sv-date-picker__calendar-popup" *ngIf="isCalendarOpen" (click)="$event.stopPropagation()">
-      <sv-calendar
-        [currentDate]="getCalendarDate()"
-        view="month"
-        [readonly]="true"
-        (slotSelected)="onDateSelect($event.start)"
-      ></sv-calendar>
+  </div>
+  
+  <div class="sv-date-picker__calendar-popup" *ngIf="isCalendarOpen" (click)="$event.stopPropagation()">
+    <div class="sv-date-picker__calendar-header">
+      <button class="sv-date-picker__today-btn" (click)="setToToday($event)">Today</button>
     </div>
+    <sv-calendar
+      [currentDate]="getCalendarDate()"
+      view="month"
+      [readonly]="true"
+      (slotSelected)="onDateSelect($event.start)"
+    ></sv-calendar>
   </div>
 </div> 

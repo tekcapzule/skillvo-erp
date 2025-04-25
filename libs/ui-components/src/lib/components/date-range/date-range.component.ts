@@ -248,4 +248,22 @@ export class DateRangeComponent implements OnInit {
   getToCalendarDate(): Date {
     return this.value.to || this.value.from || this.today;
   }
+  
+  /**
+   * Set the date to today for From field
+   */
+  setFromToToday(event: Event): void {
+    event.stopPropagation();
+    const today = new Date();
+    this.onFromDateSelect(today);
+  }
+  
+  /**
+   * Set the date to today for To field
+   */
+  setToToToday(event: Event): void {
+    event.stopPropagation();
+    const today = new Date();
+    this.onToDateSelect(today);
+  }
 } 

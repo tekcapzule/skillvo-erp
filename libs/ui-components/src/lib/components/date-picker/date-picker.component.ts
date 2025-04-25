@@ -180,4 +180,13 @@ export class DatePickerComponent implements OnInit {
   getCalendarDate(): Date {
     return this.value || this.today;
   }
+  
+  /**
+   * Set the date to today
+   */
+  setToToday(event: Event): void {
+    event.stopPropagation();
+    const today = new Date();
+    this.onDateSelect(today);
+  }
 } 
