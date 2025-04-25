@@ -29,7 +29,7 @@
     <div class="title-bar" *ngIf="title">{{ title }}</div>
 
     <!-- Center Controls - Only Play/Pause -->
-    <div class="center-controls">
+    <div class="center-controls" [ngClass]="{'hidden': isPlaying}">
       <!-- Play/Pause -->
       <button 
         type="button"
@@ -37,13 +37,13 @@
         (click)="togglePlayPause(); $event.stopPropagation();" 
       >
         <svg *ngIf="!isPlaying" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
-          <circle cx="12" cy="12" r="10"></circle>
-          <polygon points="10 8 16 12 10 16 10 8" fill="white"></polygon>
+          <!-- Play triangle -->
+          <polygon points="9 6 19 12 9 18 9 6" fill="white"></polygon>
         </svg>
         <svg *ngIf="isPlaying" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
-          <circle cx="12" cy="12" r="10"></circle>
-          <line x1="10" y1="8" x2="10" y2="16" stroke="white"></line>
-          <line x1="14" y1="8" x2="14" y2="16" stroke="white"></line>
+          <!-- Pause lines -->
+          <line x1="9" y1="6" x2="9" y2="18" stroke="white" stroke-width="3"></line>
+          <line x1="15" y1="6" x2="15" y2="18" stroke="white" stroke-width="3"></line>
         </svg>
       </button>
     </div>
