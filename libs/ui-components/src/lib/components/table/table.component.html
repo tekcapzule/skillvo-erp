@@ -100,7 +100,7 @@
             </ng-container>
             
             <ng-template #defaultCell>
-              {{ row[column.key] }}
+              {{ $any(row)[column.key] }}
             </ng-template>
           </td>
           
