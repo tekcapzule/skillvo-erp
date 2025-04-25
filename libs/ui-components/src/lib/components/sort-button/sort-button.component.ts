@@ -1,7 +1,8 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
-export type SortDirection = 'asc' | 'desc' | null;
+export type SortDirection = 'asc' | 'desc';
 
 @Component({
   selector: 'sv-sort-button',
@@ -11,13 +12,29 @@ export type SortDirection = 'asc' | 'desc' | null;
   styleUrl: './sort-button.component.scss'
 })
 export class SortButtonComponent {
-  @Input() sortDirection: SortDirection = null;
+  @Input() sortDirection: SortDirection = 'asc';
   @Input() disabled: boolean = false;
   
   @Output() sortChange = new EventEmitter<SortDirection>();
   
-  get isSorted(): boolean {
-    return this.sortDirection !== null;
+  // SVG templates for the different sort states
+  ascIcon: SafeHtml;
+  descIcon: SafeHtml;
+  
+  constructor(private sanitizer: DomSanitizer) {
+    this.ascIcon = this.sanitizer.bypassSecurityTrustHtml(`
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M8 12.5V3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M3.5 8L8 3.5L12.5 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    `);
+    
+    this.descIcon = this.sanitizer.bypassSecurityTrustHtml(`
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M8 3.5V12.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M12.5 8L8 12.5L3.5 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    `);
   }
   
   get isSortedAsc(): boolean {
@@ -35,17 +52,8 @@ export class SortButtonComponent {
     
     event.stopPropagation();
     
-    // Cycle through sort directions: null -> asc -> desc -> null
-    let newDirection: SortDirection;
-    
-    if (this.sortDirection === null) {
-      newDirection = 'asc';
-    } else if (this.sortDirection === 'asc') {
-      newDirection = 'desc';
-    } else {
-      newDirection = null;
-    }
-    
-    this.sortChange.emit(newDirection);
+    // Toggle between asc and desc
+    this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
+    this.sortChange.emit(this.sortDirection);
   }
 } 

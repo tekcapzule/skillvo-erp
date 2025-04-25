@@ -9,3 +9,9 @@ export * from './lib/components/text-box/text-box.component';
 export * from './lib/components/view-toggle/view-toggle.component';
 export * from './lib/components/filter-dropdown/filter-dropdown.component';
 export * from './lib/components/sort-button/sort-button.component';
+
+// Card Components
+export * from './lib/components/card/base-card/base-card.component';
+export * from './lib/components/card/course-card/course-card.component';
+export * from './lib/components/card/course-progress-card/course-progress-card.component';
+export * from './lib/components/card/reference-card/reference-card.component';

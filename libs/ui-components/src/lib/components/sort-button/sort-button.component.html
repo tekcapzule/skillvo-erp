@@ -1,13 +1,11 @@
 <button
   class="sort-button"
   [class.disabled]="disabled"
-  [class.sorted]="isSorted"
   (click)="onSortClick($event)"
   type="button"
 >
   <div class="sort-button-content">
-    <i class="fa fa-sort" *ngIf="!isSorted"></i>
-    <i class="fa fa-sort-up" *ngIf="isSortedAsc"></i>
-    <i class="fa fa-sort-down" *ngIf="isSortedDesc"></i>
+    <span class="sort-icon" *ngIf="isSortedAsc" [innerHTML]="ascIcon"></span>
+    <span class="sort-icon" *ngIf="isSortedDesc" [innerHTML]="descIcon"></span>
   </div>
 </button> 

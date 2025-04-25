@@ -1,5 +1,6 @@
 import { Meta, StoryObj, moduleMetadata } from '@storybook/angular';
 import { SortButtonComponent, SortDirection } from '../../components/sort-button/sort-button.component';
+import { SortButtonDemoComponent } from './sort-button-demo.component';
 import { CommonModule } from '@angular/common';
 
 const meta: Meta<SortButtonComponent> = {
@@ -8,13 +9,13 @@ const meta: Meta<SortButtonComponent> = {
   tags: ['autodocs'],
   decorators: [
     moduleMetadata({
-      imports: [CommonModule, SortButtonComponent],
+      imports: [CommonModule, SortButtonComponent, SortButtonDemoComponent],
     }),
   ],
   argTypes: {
     sortDirection: { 
       control: 'select',
-      options: [null, 'asc', 'desc'],
+      options: ['asc', 'desc'],
       description: 'Current sort direction'
     },
     disabled: { control: 'boolean' },
@@ -25,9 +26,9 @@ const meta: Meta<SortButtonComponent> = {
       description: {
         component: `
 Sort Button component for table column headers and sortable lists.
-- Icon-only button with Font Awesome icons
-- Click to cycle through sort directions: null -> asc -> desc -> null
-- Visual indicators show current sort state
+- Icon-only button that toggles between ascending and descending sort states
+- Simple click interaction to change sort direction
+- Uses SVG icons with directional arrows
         `,
       },
     },
@@ -36,13 +37,6 @@ Sort Button component for table column headers and sortable lists.
 
 export default meta;
 type Story = StoryObj<SortButtonComponent>;
-
-export const Basic: Story = {
-  args: {
-    sortDirection: null,
-    disabled: false
-  },
-};
 
 export const Ascending: Story = {
   args: {
@@ -60,7 +54,15 @@ export const Descending: Story = {
 
 export const Disabled: Story = {
   args: {
-    sortDirection: null,
+    sortDirection: 'asc',
     disabled: true
   },
+};
+
+// Demo with functional toggling
+export const InteractiveDemo: StoryObj = {
+  render: () => ({
+    props: {},
+    template: `<sv-sort-button-demo></sv-sort-button-demo>`
+  })
 }; 
