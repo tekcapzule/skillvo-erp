@@ -80,3 +80,4 @@ pids
 # Local env files
 .env
 .env.* 
+.angular
