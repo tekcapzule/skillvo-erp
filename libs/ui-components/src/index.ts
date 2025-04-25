@@ -16,6 +16,7 @@ export * from './lib/components/tabs/tabs.component';
 export * from './lib/components/tabs/tab/tab.component';
 export * from './lib/components/kanban-board/kanban-board.component';
 export * from './lib/components/date-range/date-range.component';
+export * from './lib/components/date-picker/date-picker.component';
 
 // Card Components
 export * from './lib/components/card/base-card/base-card.component';
