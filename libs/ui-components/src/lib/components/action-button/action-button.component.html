@@ -1,0 +1,43 @@
+<div class="sv-action-button" 
+     [class.sv-action-button--open]="isOpen"
+     [class.sv-action-button--disabled]="disabled"
+     [class]="'sv-action-button--' + variant + ' ' + customClass">
+  
+  <!-- Button trigger -->
+  <button type="button" 
+          class="sv-action-button__trigger" 
+          (click)="toggleDropdown()"
+          [disabled]="disabled">
+    <span class="sv-action-button__label">{{ label }}</span>
+    <div class="sv-action-button__icon">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="6 9 12 15 18 9"></polyline>
+      </svg>
+    </div>
+  </button>
+  
+  <!-- Dropdown panel with options -->
+  <div class="sv-action-button__panel" *ngIf="isOpen" [style.max-height]="maxHeight">    
+    <div class="sv-action-button__options">
+      <button 
+        *ngFor="let option of options" 
+        type="button"
+        class="sv-action-button__option"
+        [class.sv-action-button__option--disabled]="option.disabled"
+        [class.sv-action-button__option--danger]="option.danger"
+        (click)="selectAction(option, $event)"
+        [disabled]="option.disabled"
+      >
+        <div class="sv-action-button__option-icon" *ngIf="option.icon">
+          <i [class]="option.icon"></i>
+        </div>
+        <span class="sv-action-button__option-label">{{ option.label }}</span>
+      </button>
+      
+      <!-- Empty state -->
+      <div *ngIf="options.length === 0" class="sv-action-button__empty">
+        No actions available
+      </div>
+    </div>
+  </div>
+</div> 

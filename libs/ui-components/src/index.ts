@@ -11,6 +11,7 @@ export * from './lib/components/filter-dropdown/filter-dropdown.component';
 export * from './lib/components/sort-button/sort-button.component';
 export * from './lib/components/html-editor/html-editor.component';
 export * from './lib/components/file-upload/file-upload.component';
+export * from './lib/components/action-button/action-button.component';
 
 // Card Components
 export * from './lib/components/card/base-card/base-card.component';
