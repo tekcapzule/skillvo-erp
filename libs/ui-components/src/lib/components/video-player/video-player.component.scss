@@ -54,7 +54,9 @@ $progress-bg: rgba(255, 255, 255, 0.3);
     rgba(0, 0, 0, 0.4) 100%
   );
   transition: opacity 0.3s ease;
-  opacity: 0;
+  opacity: 1;
+  pointer-events: auto;
+  padding-bottom: 4px;
 
   &.hide-controls {
     opacity: 0;
@@ -86,17 +88,20 @@ $progress-bg: rgba(255, 255, 255, 0.3);
   z-index: 3;
 
   .control-button {
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(0, 0, 0, 0.6);
     border-radius: 50%;
-    border: 2px solid rgba(255, 255, 255, 0.8);
+    border: 2px solid rgba(255, 255, 255, 0.9);
     padding: 10px;
     cursor: pointer;
     transition: all 0.2s ease;
     position: relative;
 
     &.play-pause {
-      width: 60px;
-      height: 60px;
+      width: 70px;
+      height: 70px;
+      background-color: rgba(0, 0, 0, 0.7);
+      border: 3px solid white;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
     }
 
     &.skip-back,
@@ -125,7 +130,7 @@ $progress-bg: rgba(255, 255, 255, 0.3);
     }
 
     &:hover {
-      background-color: rgba(0, 0, 0, 0.7);
+      background-color: rgba(0, 0, 0, 0.8);
       transform: scale(1.1);
     }
 
@@ -141,6 +146,7 @@ $progress-bg: rgba(255, 255, 255, 0.3);
   width: 100%;
   padding: 0 16px 16px;
   z-index: 3;
+  min-height: 70px;
 }
 
 .progress-container {
@@ -207,6 +213,8 @@ $progress-bg: rgba(255, 255, 255, 0.3);
   display: flex;
   justify-content: space-between;
   align-items: center;
+  width: 100%;
+  padding: 0 4px;
 }
 
 .left-controls,
@@ -216,17 +224,23 @@ $progress-bg: rgba(255, 255, 255, 0.3);
   gap: 16px;
 }
 
+.right-controls {
+  margin-right: 8px;
+}
+
 .control-button {
   background: transparent;
   border: none;
   color: white;
   cursor: pointer;
-  padding: 6px;
+  padding: 8px;
   border-radius: 4px;
   display: flex;
   align-items: center;
   justify-content: center;
   transition: all 0.2s ease;
+  min-width: 32px;
+  min-height: 32px;
 
   &:hover {
     background-color: rgba(255, 255, 255, 0.1);
@@ -237,6 +251,11 @@ $progress-bg: rgba(255, 255, 255, 0.3);
     height: 24px;
     stroke: white;
     fill: none;
+  }
+
+  &.fullscreen {
+    padding-right: 10px;
+    margin-right: 4px;
   }
 
   span {
@@ -332,6 +351,25 @@ $progress-bg: rgba(255, 255, 255, 0.3);
   }
 }
 
+// Loading spinner
+.loading-spinner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 64px;
+  height: 64px;
+  z-index: 4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  svg {
+    width: 100%;
+    height: 100%;
+  }
+}
+
 /* Fullscreen styles */
 :host-context(.fullscreen) .video-container {
   position: fixed;
@@ -375,6 +413,14 @@ $progress-bg: rgba(255, 255, 255, 0.3);
     width: 20px;
     height: 20px;
   }
+
+  .right-controls {
+    margin-right: 10px;
+  }
+
+  .control-button.fullscreen {
+    padding-right: 12px;
+  }
 }
 
 @media (max-width: 480px) {
@@ -405,5 +451,83 @@ $progress-bg: rgba(255, 255, 255, 0.3);
 
   .right-controls {
     gap: 8px;
+  }
+}
+
+.fullscreen-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-right: 4px;
+  overflow: visible;
+  position: relative;
+}
+
+.playback-speed {
+  position: relative;
+  display: inline-block;
+  z-index: 100;
+  
+  .speed-button {
+    position: relative;
+    margin: 0 5px;
+    cursor: pointer;
+    
+    .speed-label {
+      font-size: 14px;
+      cursor: pointer;
+      padding: 4px 8px;
+      border-radius: 4px;
+      color: #fff;
+      
+      &:hover {
+        background-color: rgba(255, 255, 255, 0.1);
+      }
+    }
+  }
+  
+  .speed-menu {
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    background-color: rgba(0, 0, 0, 0.9);
+    border-radius: 4px;
+    padding: 8px 0;
+    margin-bottom: 10px;
+    z-index: 200;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.7);
+    max-height: 200px;
+    overflow-y: auto;
+    
+    &::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border-left: 8px solid transparent;
+      border-right: 8px solid transparent;
+      border-top: 8px solid rgba(0, 0, 0, 0.9);
+    }
+    
+    .speed-option {
+      padding: 8px 12px;
+      color: #fff;
+      cursor: pointer;
+      text-align: center;
+      transition: background-color 0.2s;
+      
+      &:hover {
+        background-color: rgba(255, 255, 255, 0.2);
+      }
+      
+      &.active {
+        background-color: var(--primary-color, #007bff);
+        color: #fff;
+        font-weight: 500;
+      }
+    }
   }
 } 
