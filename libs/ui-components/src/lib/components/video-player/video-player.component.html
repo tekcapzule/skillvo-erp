@@ -68,8 +68,9 @@
         </div>
       </div>
 
-      <!-- Volume and Fullscreen -->
+      <!-- Controls Row -->
       <div class="controls-row">
+        <!-- Left Controls -->
         <div class="left-controls">
           <!-- Play/Pause -->
           <button 
@@ -87,43 +88,46 @@
             </svg>
           </button>
           
-          <!-- Skip Backward -->
-          <button 
-            type="button"
-            class="control-button" 
-            (click)="skipBackward(); $event.stopPropagation();" 
-            title="Skip backward 10s"
-          >
-            <span class="icon-text">&lt;&lt;</span>
-          </button>
-          
-          <!-- Speed control -->
-          <div class="playback-speed">
-            <div class="speed-button">
-              <div class="speed-label" (click)="toggleSpeedMenu($event)">
-                {{ playbackRate }}x
-              </div>
-              <div class="speed-menu" *ngIf="showSpeedMenu">
-                <div 
-                  *ngFor="let speed of playbackSpeeds" 
-                  class="speed-option"
-                  [class.active]="playbackRate === speed"
-                  (click)="setPlaybackSpeed(speed); $event.stopPropagation()">
-                  {{ speed }}x
+          <!-- Speed Group (Rewind, Speed, Forward) -->
+          <div class="speed-control-group">
+            <!-- Skip Backward -->
+            <button 
+              type="button"
+              class="control-button group-button" 
+              (click)="skipBackward(); $event.stopPropagation();" 
+              title="Skip backward 10s"
+            >
+              <span class="icon-text">&laquo;</span>
+            </button>
+            
+            <!-- Speed control -->
+            <div class="playback-speed">
+              <div class="speed-button">
+                <div class="speed-label fixed-width" (click)="toggleSpeedMenu($event)">
+                  {{ playbackRate }}x
+                </div>
+                <div class="speed-menu" *ngIf="showSpeedMenu">
+                  <div 
+                    *ngFor="let speed of playbackSpeeds" 
+                    class="speed-option"
+                    [class.active]="playbackRate === speed"
+                    (click)="setPlaybackSpeed(speed); $event.stopPropagation()">
+                    {{ speed }}x
+                  </div>
                 </div>
               </div>
             </div>
+            
+            <!-- Skip Forward -->
+            <button 
+              type="button"
+              class="control-button group-button" 
+              (click)="skipForward(); $event.stopPropagation();" 
+              title="Skip forward 10s"
+            >
+              <span class="icon-text">&raquo;</span>
+            </button>
           </div>
-          
-          <!-- Skip Forward -->
-          <button 
-            type="button"
-            class="control-button" 
-            (click)="skipForward(); $event.stopPropagation();" 
-            title="Skip forward 10s"
-          >
-            <span class="icon-text">&gt;&gt;</span>
-          </button>
           
           <!-- Volume -->
           <button 
@@ -156,7 +160,6 @@
               (click)="$event.stopPropagation()"
             />
           </div>
-
         </div>
 
         <div class="right-controls">
