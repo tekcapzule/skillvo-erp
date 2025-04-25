@@ -1,0 +1,68 @@
+:host {
+  display: inline-block;
+}
+
+.sort-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border-radius: 4px;
+  background-color: var(--neutral-0, #ffffff);
+  border: 1px solid var(--neutral-300, #d0d5dd);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  user-select: none;
+  
+  &:hover {
+    background-color: var(--neutral-50, #f9fafb);
+  }
+  
+  &:active {
+    background-color: var(--neutral-100, #f2f4f7);
+  }
+  
+  &.disabled {
+    opacity: 0.5;
+    pointer-events: none;
+    cursor: not-allowed;
+  }
+  
+  &.sorted {
+    background-color: var(--primary-50, #f0f9ff);
+    border-color: var(--primary-300, #7cd4fd);
+  }
+}
+
+.sort-button-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  
+  i {
+    font-size: 16px;
+    color: var(--neutral-700, #344054);
+    
+    &.fa-sort-up,
+    &.fa-sort-down {
+      color: var(--primary-600, #0086c9);
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .sort-button {
+    width: 32px;
+    height: 32px;
+  }
+  
+  .sort-button-content {
+    i {
+      font-size: 14px;
+    }
+  }
+} 
