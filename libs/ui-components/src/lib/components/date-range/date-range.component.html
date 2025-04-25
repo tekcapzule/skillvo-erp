@@ -4,7 +4,7 @@
   <div class="sv-date-range__content">
     <!-- From Date Input -->
     <div class="sv-date-range__field">
-      <div class="sv-date-range__field-label">From:</div>
+      <div class="sv-date-range__field-label">From</div>
       <div class="sv-date-range__input-container">
         <input
           type="text"
@@ -22,7 +22,7 @@
     
     <!-- To Date Input -->
     <div class="sv-date-range__field">
-      <div class="sv-date-range__field-label">To:</div>
+      <div class="sv-date-range__field-label">To</div>
       <div class="sv-date-range__input-container">
         <input
           type="text"
@@ -40,9 +40,17 @@
   </div>
   
   <!-- From Calendar Popup -->
-  <div class="sv-date-range__calendar-popup" *ngIf="isFromCalendarOpen" (click)="$event.stopPropagation()">
+  <div class="sv-date-range__calendar-popup sv-date-range__calendar-popup--from" *ngIf="isFromCalendarOpen" (click)="$event.stopPropagation()">
     <div class="sv-date-range__calendar-header">
-      <button class="sv-date-range__today-btn" (click)="setFromToToday($event)">Today</button>
+      <div class="sv-date-range__calendar-title">Select start date</div>
+      <div class="sv-date-range__calendar-actions">
+        <button class="sv-date-range__today-btn" (click)="setFromToToday($event)">
+          <i class="fas fa-calendar-day"></i> Today
+        </button>
+        <button class="sv-date-range__close-btn" (click)="closeFromCalendar($event)">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
     </div>
     <sv-calendar
       [currentDate]="getFromCalendarDate()"
@@ -53,9 +61,17 @@
   </div>
   
   <!-- To Calendar Popup -->
-  <div class="sv-date-range__calendar-popup" *ngIf="isToCalendarOpen" (click)="$event.stopPropagation()">
+  <div class="sv-date-range__calendar-popup sv-date-range__calendar-popup--to" *ngIf="isToCalendarOpen" (click)="$event.stopPropagation()">
     <div class="sv-date-range__calendar-header">
-      <button class="sv-date-range__today-btn" (click)="setToToToday($event)">Today</button>
+      <div class="sv-date-range__calendar-title">Select end date</div>
+      <div class="sv-date-range__calendar-actions">
+        <button class="sv-date-range__today-btn" (click)="setToToToday($event)">
+          <i class="fas fa-calendar-day"></i> Today
+        </button>
+        <button class="sv-date-range__close-btn" (click)="closeToCalendar($event)">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
     </div>
     <sv-calendar
       [currentDate]="getToCalendarDate()"

@@ -138,6 +138,28 @@ export class DateRangeComponent implements OnInit {
   }
   
   /**
+   * Close the from date calendar
+   */
+  closeFromCalendar(event?: Event): void {
+    if (event) {
+      event.stopPropagation();
+    }
+    
+    this.isFromCalendarOpen = false;
+  }
+  
+  /**
+   * Close the to date calendar
+   */
+  closeToCalendar(event?: Event): void {
+    if (event) {
+      event.stopPropagation();
+    }
+    
+    this.isToCalendarOpen = false;
+  }
+  
+  /**
    * Update display strings based on date values
    */
   updateDisplayStrings(): void {
@@ -250,20 +272,30 @@ export class DateRangeComponent implements OnInit {
   }
   
   /**
-   * Set the date to today for From field
+   * Set the from date to today
    */
   setFromToToday(event: Event): void {
-    event.stopPropagation();
+    if (event) {
+      event.stopPropagation();
+    }
+    
     const today = new Date();
-    this.onFromDateSelect(today);
+    this.value = { ...this.value, from: today };
+    this.fromDateStr = this.formatDate(today);
+    this.valueChange.emit(this.value);
   }
   
   /**
-   * Set the date to today for To field
+   * Set the to date to today
    */
   setToToToday(event: Event): void {
-    event.stopPropagation();
+    if (event) {
+      event.stopPropagation();
+    }
+    
     const today = new Date();
-    this.onToDateSelect(today);
+    this.value = { ...this.value, to: today };
+    this.toDateStr = this.formatDate(today);
+    this.valueChange.emit(this.value);
   }
 } 

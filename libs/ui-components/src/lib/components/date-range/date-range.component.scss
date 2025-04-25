@@ -98,21 +98,30 @@
   &__calendar-popup {
     position: absolute;
     top: calc(100% + 8px);
-    left: 50%;
-    transform: translateX(-50%);
+    left: 0;
     z-index: 1000;
     background-color: var(--surface-color, #ffffff);
     border: 1px solid var(--border-color, #e0e0e0);
     border-radius: 4px;
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
-    min-width: 300px;
+    min-width: 320px;
+    
+    // Different positioning for from and to calendars
+    &--from {
+      left: 0;
+    }
+    
+    &--to {
+      right: 0;
+      left: auto;
+    }
     
     // Arrow pointer
     &::before {
       content: '';
       position: absolute;
       top: -8px;
-      left: 50%;
+      left: 2rem;
       transform: translateX(-50%) rotate(45deg);
       width: 16px;
       height: 16px;
@@ -120,18 +129,35 @@
       border-left: 1px solid var(--border-color, #e0e0e0);
       border-top: 1px solid var(--border-color, #e0e0e0);
     }
+    
+    &--to::before {
+      left: auto;
+      right: 2rem;
+    }
   }
   
   &__calendar-header {
     display: flex;
     align-items: center;
-    justify-content: flex-end;
-    padding: 0.5rem;
+    justify-content: space-between;
+    padding: 0.75rem 1rem;
     border-bottom: 1px solid var(--border-color, #e0e0e0);
   }
   
-  &__today-btn {
-    padding: 0.25rem 0.75rem;
+  &__calendar-title {
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--text-color, #333333);
+  }
+  
+  &__calendar-actions {
+    display: flex;
+    gap: 0.5rem;
+  }
+  
+  &__today-btn,
+  &__close-btn {
+    padding: 0.25rem 0.6rem;
     background-color: var(--secondary-button-bg, #f0f0f0);
     border: 1px solid var(--border-color, #e0e0e0);
     border-radius: 4px;
@@ -139,9 +165,25 @@
     font-size: 0.85rem;
     cursor: pointer;
     transition: background-color 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
     
     &:hover {
       background-color: var(--secondary-button-hover-bg, #e0e0e0);
+    }
+    
+    i {
+      font-size: 0.85rem;
+    }
+  }
+  
+  &__close-btn {
+    background-color: transparent;
+    
+    &:hover {
+      background-color: var(--danger-light, #ffeeee);
+      color: var(--danger, #dc3545);
     }
   }
   
@@ -172,5 +214,12 @@
     --primary-color: #4dabf7;
     --secondary-button-bg: #444444;
     --secondary-button-hover-bg: #555555;
+    --danger: #ff6b6b;
+    --danger-light: #554444;
+    
+    .sv-date-range__close-btn:hover {
+      background-color: var(--danger-light, #554444);
+      color: var(--danger, #ff6b6b);
+    }
   }
 } 
