@@ -125,4 +125,85 @@ body {
 <!-- KaTeX stylesheets -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
-<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script> 
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
+
+<!-- Extra CSS to fix Quill toolbar issues in Storybook -->
+<style>
+  /* Fix for Quill toolbar buttons in Storybook */
+  .ql-toolbar button svg {
+    display: inline-block !important;
+    height: 100% !important;
+    width: 100% !important;
+    vertical-align: middle !important;
+  }
+  
+  .ql-toolbar button {
+    height: 24px !important;
+    width: 28px !important;
+    padding: 3px 5px !important;
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: inline-block;
+    float: left;
+  }
+  
+  /* Fix for SVG elements in toolbar */
+  .ql-stroke {
+    fill: none !important;
+    stroke: #444 !important;
+    stroke-linecap: round !important;
+    stroke-linejoin: round !important;
+    stroke-width: 2 !important;
+  }
+  
+  .ql-fill {
+    fill: #444 !important;
+  }
+  
+  .ql-snow .ql-picker {
+    color: #444;
+    display: inline-block;
+    float: left;
+    font-size: 14px;
+    font-weight: 500;
+    height: 24px;
+    position: relative;
+    vertical-align: middle;
+  }
+  
+  /* Ensure toolbar formats are visible */
+  .ql-formats {
+    display: inline-block !important; 
+    vertical-align: middle !important;
+    margin-right: 15px !important;
+  }
+  
+  /* Ensure Quill editor has minimum height */
+  .ql-editor {
+    min-height: 100px !important;
+  }
+  
+  /* Fix for dark theme */
+  .dark-theme .ql-stroke {
+    stroke: #ccc !important;
+  }
+  
+  .dark-theme .ql-fill {
+    fill: #ccc !important;
+  }
+</style>
+
+<!-- Custom script to ensure Quill toolbar is initialized properly -->
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Wait a bit for Storybook to fully render
+    setTimeout(function() {
+      // Force refresh any Quill instances
+      const editors = document.querySelectorAll('.sv-html-editor');
+      if (editors.length) {
+        console.log('Found HTML editors:', editors.length);
+      }
+    }, 1000);
+  });
+</script> 

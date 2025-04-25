@@ -1,5 +1,6 @@
-@import 'quill/dist/quill.snow.css';
-@import 'quill/dist/quill.bubble.css';
+// Remove direct imports to fix CSS loading issues
+// @import 'quill/dist/quill.snow.css';
+// @import 'quill/dist/quill.bubble.css';
 
 .sv-html-editor-wrapper {
   display: flex;
@@ -50,6 +51,44 @@
     border-radius: 4px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
   }
+  
+  // Add explicit styling for toolbar buttons to ensure they're visible
+  .ql-toolbar button svg {
+    display: inline-block !important;
+    height: 100% !important;
+    width: 100% !important;
+    vertical-align: middle !important;
+  }
+  
+  // Ensure toolbar buttons have proper dimensions
+  .ql-toolbar button {
+    height: 24px !important;
+    width: 28px !important;
+    padding: 3px 5px !important;
+  }
+  
+  // Fix stroke and fill colors for svg elements
+  .ql-stroke {
+    stroke: #444 !important;
+    stroke-linecap: round !important;
+    stroke-linejoin: round !important;
+    stroke-width: 2 !important;
+    fill: none !important;
+  }
+  
+  .ql-fill {
+    fill: #444 !important;
+  }
+  
+  // Make sure toolbar is visible
+  .ql-toolbar.ql-snow {
+    border: 1px solid #ccc !important;
+    box-sizing: border-box !important;
+    font-family: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif !important;
+    padding: 8px !important;
+    display: flex !important;
+    flex-wrap: wrap !important;
+  }
 }
 
 // Theme-specific tweaks
@@ -67,6 +106,15 @@
     
     .ql-picker-options {
       background-color: var(--sv-surface-dark, #333);
+    }
+    
+    // Adjust stroke and fill colors for dark theme
+    .ql-stroke {
+      stroke: #ccc !important;
+    }
+    
+    .ql-fill {
+      fill: #ccc !important;
     }
   }
 } 

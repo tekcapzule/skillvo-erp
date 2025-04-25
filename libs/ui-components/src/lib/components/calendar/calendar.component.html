@@ -1,36 +1,341 @@
 <div class="sv-calendar">
-  <!-- Simple Calendar Header -->
+  <!-- Calendar Header -->
   <div class="sv-calendar-header">
     <div class="sv-calendar-nav">
-      <button class="sv-calendar-nav-btn" (click)="navigate('prev')">
-        <i class="fas fa-chevron-left"></i>
-      </button>
-      <div class="sv-calendar-title">
-        {{ currentMonthYear }}
-      </div>
-      <button class="sv-calendar-nav-btn" (click)="navigate('next')">
-        <i class="fas fa-chevron-right"></i>
-      </button>
+      <sv-button variant="ghost" size="sm" iconLeft="fas fa-chevron-left" (click)="navigate('prev')"></sv-button>
+      <sv-button variant="ghost" size="sm" iconRight="fas fa-chevron-right" (click)="navigate('next')"></sv-button>
+      <sv-button variant="ghost" size="sm" (click)="navigate('today')">Today</sv-button>
+      <div class="sv-calendar-title">{{ dateRangeText }}</div>
+    </div>
+    <div class="sv-calendar-views">
+      <sv-button 
+        variant="ghost" 
+        size="sm" 
+        [class.active]="view === 'day'" 
+        (click)="changeView('day')">Day</sv-button>
+      <sv-button 
+        variant="ghost" 
+        size="sm" 
+        [class.active]="view === 'week'" 
+        (click)="changeView('week')">Week</sv-button>
+      <sv-button 
+        variant="ghost" 
+        size="sm" 
+        [class.active]="view === 'work-week'" 
+        (click)="changeView('work-week')">Work Week</sv-button>
+      <sv-button 
+        variant="ghost" 
+        size="sm" 
+        [class.active]="view === 'month'" 
+        (click)="changeView('month')">Month</sv-button>
+      <sv-button 
+        variant="ghost" 
+        size="sm" 
+        [class.active]="view === 'agenda'" 
+        (click)="changeView('agenda')">Agenda</sv-button>
     </div>
   </div>
 
-  <!-- Simple Month View -->
-  <div class="sv-calendar-month-view">
+  <!-- Day View -->
+  <div class="sv-calendar-day-view" *ngIf="view === 'day'">
+    <div class="sv-calendar-day-header">
+      <div class="sv-calendar-header-cell" [class.today]="isToday(displayedDates[0])">
+        <ng-container *ngIf="!dayHeaderTemplate; else customDayHeader">
+          {{ dateFormat.format(displayedDates[0]) }}
+        </ng-container>
+        <ng-template #customDayHeader>
+          <ng-container *ngTemplateOutlet="dayHeaderTemplate || null; context: { $implicit: displayedDates[0] }"></ng-container>
+        </ng-template>
+      </div>
+    </div>
+    <div class="sv-calendar-all-day-events">
+      <div class="sv-calendar-all-day-label">All Day</div>
+      <div class="sv-calendar-all-day-content">
+        <div class="sv-calendar-event sv-calendar-all-day-event" 
+          *ngFor="let event of getAllDayEvents(displayedDates[0])"
+          [style.backgroundColor]="event.color || 'var(--primary)'"
+          (click)="onEventClick(event)">
+          {{ event.title }}
+        </div>
+      </div>
+    </div>
+    <div class="sv-calendar-time-grid">
+      <div class="sv-calendar-time-col">
+        <div class="sv-calendar-time-slot" *ngFor="let slot of timeSlots">
+          {{ getTimeSlotLabel(slot) }}
+        </div>
+      </div>
+      <div class="sv-calendar-day-col">
+        <div class="sv-calendar-time-slot-content" 
+          *ngFor="let slot of timeSlots; let i = index"
+          (click)="onTimeSlotClick(displayedDates[0], slot)"></div>
+
+        <!-- Event Blocks -->
+        <ng-container *ngFor="let event of visibleEvents">
+          <ng-container *ngIf="!event.allDay">
+            <div class="sv-calendar-event"
+              *ngIf="getEventPosition(event, displayedDates[0])"
+              [ngStyle]="getEventPosition(event, displayedDates[0])"
+              [style.backgroundColor]="event.color || 'var(--primary)'"
+              (click)="onEventClick(event)">
+              <ng-container *ngIf="!eventTemplate; else customEvent">
+                <div class="sv-calendar-event-title">{{ event.title }}</div>
+                <div class="sv-calendar-event-time">
+                  {{ timeFormat.format(event.start) }} - {{ timeFormat.format(event.end) }}
+                </div>
+              </ng-container>
+              <ng-template #customEvent>
+                <ng-container *ngTemplateOutlet="eventTemplate || null; context: { $implicit: event }"></ng-container>
+              </ng-template>
+            </div>
+          </ng-container>
+        </ng-container>
+
+        <!-- Current Time Indicator -->
+        <div class="sv-calendar-current-time" 
+          *ngIf="showCurrentTimeIndicator && isToday(displayedDates[0])"
+          [style.top]="getCurrentTimePosition()">
+          <div class="sv-calendar-current-time-circle"></div>
+          <div class="sv-calendar-current-time-line"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Week View -->
+  <div class="sv-calendar-week-view" *ngIf="view === 'week' || view === 'work-week'">
+    <div class="sv-calendar-week-header">
+      <div class="sv-calendar-gutter"></div>
+      <div class="sv-calendar-header-cell" 
+        *ngFor="let date of displayedDates"
+        [class.today]="isToday(date)"
+        [class.weekend]="isWeekend(date) && view === 'week'">
+        <ng-container *ngIf="!dayHeaderTemplate; else customDayHeader">
+          <div class="sv-calendar-day-name">{{ date.toLocaleDateString('en-US', { weekday: 'short' }) }}</div>
+          <div class="sv-calendar-day-number">{{ date.getDate() }}</div>
+        </ng-container>
+        <ng-template #customDayHeader>
+          <ng-container *ngTemplateOutlet="dayHeaderTemplate || null; context: { $implicit: date }"></ng-container>
+        </ng-template>
+      </div>
+    </div>
+    <div class="sv-calendar-all-day-events">
+      <div class="sv-calendar-all-day-label">All Day</div>
+      <div class="sv-calendar-all-day-grid">
+        <div class="sv-calendar-all-day-cell" 
+          *ngFor="let date of displayedDates"
+          [class.today]="isToday(date)"
+          [class.weekend]="isWeekend(date) && view === 'week'">
+          <div class="sv-calendar-event sv-calendar-all-day-event" 
+            *ngFor="let event of getAllDayEvents(date)"
+            [style.backgroundColor]="event.color || 'var(--primary)'"
+            (click)="onEventClick(event)">
+            {{ event.title }}
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="sv-calendar-time-grid">
+      <div class="sv-calendar-time-col">
+        <div class="sv-calendar-time-slot" *ngFor="let slot of timeSlots">
+          {{ getTimeSlotLabel(slot) }}
+        </div>
+      </div>
+      <div class="sv-calendar-week-grid">
+        <div class="sv-calendar-day-col" 
+          *ngFor="let date of displayedDates"
+          [class.today]="isToday(date)"
+          [class.weekend]="isWeekend(date) && view === 'week'">
+          <div class="sv-calendar-time-slot-content" 
+            *ngFor="let slot of timeSlots; let i = index"
+            (click)="onTimeSlotClick(date, slot)"></div>
+
+          <!-- Current Time Indicator -->
+          <div class="sv-calendar-current-time" 
+            *ngIf="showCurrentTimeIndicator && isToday(date)"
+            [style.top]="getCurrentTimePosition()">
+            <div class="sv-calendar-current-time-circle"></div>
+            <div class="sv-calendar-current-time-line"></div>
+          </div>
+        </div>
+
+        <!-- Event Blocks -->
+        <ng-container *ngFor="let event of visibleEvents">
+          <ng-container *ngIf="!event.allDay">
+            <ng-container *ngFor="let date of displayedDates">
+              <div class="sv-calendar-event"
+                *ngIf="getEventPosition(event, date)"
+                [ngStyle]="getEventPosition(event, date)"
+                [style.backgroundColor]="event.color || 'var(--primary)'"
+                (click)="onEventClick(event)">
+                <ng-container *ngIf="!eventTemplate; else customEvent">
+                  <div class="sv-calendar-event-title">{{ event.title }}</div>
+                  <div class="sv-calendar-event-time">
+                    {{ timeFormat.format(event.start) }} - {{ timeFormat.format(event.end) }}
+                  </div>
+                </ng-container>
+                <ng-template #customEvent>
+                  <ng-container *ngTemplateOutlet="eventTemplate || null; context: { $implicit: event }"></ng-container>
+                </ng-template>
+              </div>
+            </ng-container>
+          </ng-container>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+
+  <!-- Month View -->
+  <div class="sv-calendar-month-view" *ngIf="view === 'month'">
     <div class="sv-calendar-month-header">
-      <div class="sv-calendar-weekday" *ngFor="let day of weekDays">
-        {{ day }}
+      <div class="sv-calendar-header-cell" *ngFor="let i of [0, 1, 2, 3, 4, 5, 6]">
+        {{ ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'][(i + firstDayOfWeek) % 7] }}
       </div>
     </div>
     <div class="sv-calendar-month-grid">
-      <div 
-        *ngFor="let date of displayedDates" 
-        class="sv-calendar-month-cell"
-        [class.outside-month]="!isInCurrentMonth(date)"
-        [class.today]="isToday(date)"
-        [class.weekend]="isWeekend(date)"
-        (click)="selectDate(date)">
-        <div class="sv-calendar-month-day-number">
-          {{ date.getDate() }}
+      <div class="sv-calendar-month-row" *ngFor="let week of [0, 1, 2, 3, 4, 5]">
+        <div class="sv-calendar-month-cell" 
+          *ngFor="let day of [0, 1, 2, 3, 4, 5, 6]"
+          [class.outside-month]="!isInCurrentMonth(displayedDates[week * 7 + day])"
+          [class.today]="isToday(displayedDates[week * 7 + day])"
+          [class.weekend]="isWeekend(displayedDates[week * 7 + day])"
+          (click)="onTimeSlotClick(displayedDates[week * 7 + day], '00:00')">
+          <div class="sv-calendar-month-day-number">
+            {{ displayedDates[week * 7 + day].getDate() }}
+          </div>
+          <div class="sv-calendar-month-events">
+            <div class="sv-calendar-month-event" 
+              *ngFor="let event of getEventsForDay(displayedDates[week * 7 + day]); let i = index"
+              [style.backgroundColor]="event.color || 'var(--primary)'"
+              (click)="onEventClick(event); $event.stopPropagation()"
+              [class.more-indicator]="i >= 3">
+              <ng-container *ngIf="i < 3">{{ event.title }}</ng-container>
+              <ng-container *ngIf="i === 3">+{{ getEventsForDay(displayedDates[week * 7 + day]).length - 3 }} more</ng-container>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Agenda View -->
+  <div class="sv-calendar-agenda-view" *ngIf="view === 'agenda'">
+    <div class="sv-calendar-agenda-header">
+      <div class="sv-calendar-agenda-header-date">Date</div>
+      <div class="sv-calendar-agenda-header-time">Time</div>
+      <div class="sv-calendar-agenda-header-title">Event</div>
+    </div>
+    <div class="sv-calendar-agenda-list">
+      <ng-container *ngFor="let date of displayedDates">
+        <ng-container *ngIf="getEventsForDay(date).length > 0">
+          <div class="sv-calendar-agenda-day" [class.today]="isToday(date)">
+            {{ dateFormat.format(date) }}
+          </div>
+          <div class="sv-calendar-agenda-event" 
+            *ngFor="let event of getEventsForDay(date)"
+            (click)="onEventClick(event)">
+            <div class="sv-calendar-agenda-event-time">
+              <ng-container *ngIf="event.allDay">All day</ng-container>
+              <ng-container *ngIf="!event.allDay">
+                {{ timeFormat.format(event.start) }} - {{ timeFormat.format(event.end) }}
+              </ng-container>
+            </div>
+            <div class="sv-calendar-agenda-event-content">
+              <div class="sv-calendar-agenda-event-color" [style.backgroundColor]="event.color || 'var(--primary)'"></div>
+              <div class="sv-calendar-agenda-event-details">
+                <div class="sv-calendar-agenda-event-title">{{ event.title }}</div>
+                <div class="sv-calendar-agenda-event-location" *ngIf="event.location">
+                  <i class="fas fa-map-marker-alt"></i> {{ event.location }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+      </ng-container>
+      <div class="sv-calendar-agenda-empty" *ngIf="visibleEvents.length === 0">
+        No events in this time range
+      </div>
+    </div>
+  </div>
+
+  <!-- Event Modal -->
+  <div class="sv-calendar-modal" *ngIf="showEventModal">
+    <div class="sv-calendar-modal-backdrop" (click)="closeEventModal()"></div>
+    <div class="sv-calendar-modal-content">
+      <div class="sv-calendar-modal-header">
+        <h3>{{ selectedEvent ? 'Edit Event' : 'Add Event' }}</h3>
+        <button class="sv-calendar-modal-close" (click)="closeEventModal()">×</button>
+      </div>
+      <div class="sv-calendar-modal-body">
+        <div class="sv-calendar-form-group">
+          <label for="event-title">Title</label>
+          <input type="text" id="event-title" class="sv-calendar-form-control" 
+            placeholder="Add title" #eventTitle
+            [value]="selectedEvent?.title || ''">
+        </div>
+        <div class="sv-calendar-form-group">
+          <label>Start</label>
+          <div class="sv-calendar-datetime">
+            <input type="date" class="sv-calendar-form-control" #eventStartDate
+              [value]="(selectedEvent?.start || newEventStart)?.toISOString()?.substring(0, 10) || ''">
+            <input type="time" class="sv-calendar-form-control" #eventStartTime
+              [value]="(selectedEvent?.start || newEventStart)?.toTimeString()?.substring(0, 5) || ''">
+          </div>
+        </div>
+        <div class="sv-calendar-form-group">
+          <label>End</label>
+          <div class="sv-calendar-datetime">
+            <input type="date" class="sv-calendar-form-control" #eventEndDate
+              [value]="(selectedEvent?.end || newEventEnd)?.toISOString()?.substring(0, 10) || ''">
+            <input type="time" class="sv-calendar-form-control" #eventEndTime
+              [value]="(selectedEvent?.end || newEventEnd)?.toTimeString()?.substring(0, 5) || ''">
+          </div>
+        </div>
+        <div class="sv-calendar-form-group">
+          <div class="sv-calendar-checkbox">
+            <input type="checkbox" id="all-day" #allDay
+              [checked]="selectedEvent?.allDay || false">
+            <label for="all-day">All day</label>
+          </div>
+        </div>
+        <div class="sv-calendar-form-group">
+          <label for="event-location">Location</label>
+          <input type="text" id="event-location" class="sv-calendar-form-control" 
+            placeholder="Add location" #eventLocation
+            [value]="selectedEvent?.location || ''">
+        </div>
+        <div class="sv-calendar-form-group">
+          <label for="event-description">Description</label>
+          <textarea id="event-description" class="sv-calendar-form-control" 
+            placeholder="Add description" #eventDescription
+            [value]="selectedEvent?.description || ''"></textarea>
+        </div>
+        <div class="sv-calendar-form-group">
+          <label>Color</label>
+          <div class="sv-calendar-color-options">
+            <div class="sv-calendar-color-option" 
+              *ngFor="let color of ['#3788d8', '#8CD867', '#FF3B30', '#9C27B0', '#FF9500', '#C7C7CC']"
+              [style.backgroundColor]="color"
+              [class.selected]="selectedEvent?.color === color || (!selectedEvent?.color && color === '#3788d8')"
+              (click)="selectedColor = color"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sv-calendar-modal-footer">
+        <sv-button variant="ghost" *ngIf="selectedEvent" (click)="deleteEvent()">Delete</sv-button>
+        <div class="sv-calendar-modal-actions">
+          <sv-button variant="secondary" (click)="closeEventModal()">Cancel</sv-button>
+          <sv-button 
+            variant="primary" 
+            (click)="saveEvent({
+              title: eventTitle.value,
+              start: getDateFromInputs(eventStartDate.value, eventStartTime.value),
+              end: getDateFromInputs(eventEndDate.value, eventEndTime.value),
+              allDay: allDay.checked,
+              location: eventLocation.value,
+              description: eventDescription.value,
+              color: selectedColor
+            })">Save</sv-button>
         </div>
       </div>
     </div>

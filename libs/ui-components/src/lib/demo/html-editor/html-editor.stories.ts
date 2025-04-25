@@ -112,11 +112,13 @@ export const MinimalToolbar: Story = {
         theme: 'snow',
         placeholder: 'Write something...',
         modules: {
-          toolbar: [
-            ['bold', 'italic', 'underline'],
-            [{ 'header': 1 }, { 'header': 2 }],
-            ['link']
-          ]
+          toolbar: {
+            container: [
+              ['bold', 'italic', 'underline'],
+              [{ 'header': 1 }, { 'header': 2 }],
+              ['link']
+            ]
+          }
         }
       }
     },
