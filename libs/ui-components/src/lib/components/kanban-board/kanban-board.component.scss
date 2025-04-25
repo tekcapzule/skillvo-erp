@@ -1,0 +1,529 @@
+// Define local variables
+$primary-color: var(--primary-color, #007bff);
+$primary-color-dark: var(--primary-color-dark, #0069d9);
+$secondary-color: var(--secondary-color, #6c757d);
+$success-color: var(--success-color, #28a745);
+$warning-color: var(--warning-color, #ffc107);
+$danger-color: var(--danger-color, #dc3545);
+$info-color: var(--info-color, #17a2b8);
+$background-light: var(--background-light, #fff);
+$background-dark: var(--background-dark, #f1f3f5);
+$text-color: var(--text-color, #212529);
+$border-color: var(--border-color, #dee2e6);
+$disabled-color: var(--disabled-color, #6c757d);
+$transition-speed: 0.3s;
+$border-radius: 4px;
+$box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+:host {
+  display: block;
+  width: 100%;
+  font-family: var(--font-family, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif);
+}
+
+// Container
+.kanban-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  min-height: 400px;
+  overflow: hidden;
+}
+
+// Header
+.kanban-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  border-bottom: 1px solid $border-color;
+  background-color: $background-light;
+  z-index: 10;
+  
+  .kanban-title {
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: $text-color;
+  }
+  
+  .add-column-form {
+    display: flex;
+    gap: 0.5rem;
+    
+    input {
+      padding: 0.5rem;
+      border: 1px solid $border-color;
+      border-radius: $border-radius;
+      background-color: $background-light;
+      
+      &:focus {
+        outline: none;
+        border-color: $primary-color;
+        box-shadow: 0 0 0 0.2rem rgba($primary-color, 0.25);
+      }
+    }
+    
+    .add-column-btn {
+      padding: 0.5rem 1rem;
+      background-color: $primary-color;
+      color: $background-light;
+      border: none;
+      border-radius: $border-radius;
+      cursor: pointer;
+      transition: background-color $transition-speed ease;
+      
+      &:hover {
+        background-color: $primary-color-dark;
+      }
+      
+      &:focus {
+        outline: none;
+        box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+      }
+    }
+  }
+}
+
+// Board
+.kanban-board {
+  display: flex;
+  flex-grow: 1;
+  overflow-x: auto;
+  padding: 1rem;
+  background-color: $background-dark;
+  height: calc(100% - 70px);
+  min-height: 400px;
+  
+  &::-webkit-scrollbar {
+    height: 8px;
+  }
+  
+  &::-webkit-scrollbar-track {
+    background: $background-dark;
+  }
+  
+  &::-webkit-scrollbar-thumb {
+    background-color: $secondary-color;
+    border-radius: 8px;
+  }
+}
+
+// Columns
+.kanban-column {
+  display: flex;
+  flex-direction: column;
+  flex: 0 0 300px;
+  margin-right: 1rem;
+  height: fit-content;
+  max-height: 100%;
+  border-radius: $border-radius;
+  background-color: $background-light;
+  box-shadow: $box-shadow;
+  border: 1px solid $border-color;
+  transition: box-shadow $transition-speed ease;
+  
+  // Hover effect
+  &:hover {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  // WIP status indicators
+  &.warning {
+    .column-count {
+      color: $warning-color;
+      font-weight: 600;
+    }
+  }
+  
+  &.exceeded {
+    .column-count {
+      color: $danger-color;
+      font-weight: 600;
+    }
+    
+    &::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 10px;
+      height: 10px;
+      background-color: $danger-color;
+      border-radius: 50%;
+    }
+  }
+  
+  &:last-child {
+    margin-right: 0;
+  }
+}
+
+// Column Header
+.column-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  background-color: $background-dark;
+  border-top-left-radius: $border-radius;
+  border-top-right-radius: $border-radius;
+  border-bottom: 1px solid $border-color;
+  font-weight: 500;
+  
+  .column-title-container {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    
+    .column-title {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      
+      span {
+        cursor: default;
+        
+        &:first-child {
+          font-weight: 600;
+          margin-right: 0.5rem;
+        }
+      }
+      
+      .column-count {
+        font-size: 0.875rem;
+        color: $secondary-color;
+        font-weight: normal;
+      }
+    }
+    
+    input {
+      width: 100%;
+      padding: 0.25rem 0.5rem;
+      border: 1px solid $border-color;
+      border-radius: $border-radius;
+      
+      &:focus {
+        outline: none;
+        border-color: $primary-color;
+      }
+    }
+  }
+  
+  .column-actions {
+    display: flex;
+    gap: 0.5rem;
+  }
+}
+
+// Button styles
+.btn-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border: none;
+  background-color: transparent;
+  color: $secondary-color;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all $transition-speed ease;
+  
+  &:hover {
+    color: $text-color;
+    background-color: rgba(0, 0, 0, 0.05);
+  }
+  
+  &:focus {
+    outline: none;
+  }
+  
+  &.btn-remove-card {
+    opacity: 0;
+    font-size: 0.875rem;
+    
+    &:hover {
+      color: $danger-color;
+    }
+  }
+}
+
+// Add Card Form
+.add-card-form {
+  padding: 0.75rem;
+  border-bottom: 1px solid $border-color;
+  
+  textarea {
+    width: 100%;
+    min-height: 80px;
+    padding: 0.5rem;
+    border: 1px solid $border-color;
+    border-radius: $border-radius;
+    resize: vertical;
+    
+    &:focus {
+      outline: none;
+      border-color: $primary-color;
+    }
+  }
+  
+  .add-card-actions {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+    
+    button {
+      padding: 0.5rem 1rem;
+      border: none;
+      border-radius: $border-radius;
+      cursor: pointer;
+      transition: background-color $transition-speed ease;
+      
+      &.add-card-btn {
+        background-color: $primary-color;
+        color: white;
+        
+        &:hover {
+          background-color: $primary-color-dark;
+        }
+      }
+      
+      &.cancel-btn {
+        background-color: transparent;
+        color: $secondary-color;
+        
+        &:hover {
+          background-color: $background-dark;
+          color: $text-color;
+        }
+      }
+      
+      &:focus {
+        outline: none;
+      }
+    }
+  }
+}
+
+// Cards Container
+.cards-container {
+  flex-grow: 1;
+  padding: 0.75rem;
+  overflow-y: auto;
+  min-height: 100px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+  
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  
+  &::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.1);
+    border-radius: 6px;
+  }
+  
+  .no-cards {
+    padding: 1rem;
+    text-align: center;
+    color: $secondary-color;
+    font-style: italic;
+    border: 1px dashed $border-color;
+    border-radius: $border-radius;
+    margin-bottom: 0.5rem;
+  }
+}
+
+// Kanban Card
+.kanban-card {
+  position: relative;
+  background-color: white;
+  padding: 0.75rem;
+  border-radius: $border-radius;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  border: 1px solid $border-color;
+  cursor: pointer;
+  transition: all $transition-speed ease;
+  user-select: none;
+  
+  &:hover {
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+    
+    .btn-remove-card {
+      opacity: 1;
+    }
+  }
+  
+  &.cdk-drag-placeholder {
+    opacity: 0;
+  }
+  
+  &.cdk-drag-preview {
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  }
+  
+  .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 0.5rem;
+    
+    .card-title {
+      margin: 0;
+      font-size: 0.9375rem;
+      font-weight: 500;
+      color: $text-color;
+      word-break: break-word;
+      padding-right: 1.5rem;
+    }
+  }
+  
+  .card-content {
+    margin-bottom: 0.75rem;
+    
+    .card-description {
+      margin: 0;
+      font-size: 0.875rem;
+      color: $secondary-color;
+      word-break: break-word;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+  }
+  
+  .card-labels {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 0.75rem;
+    
+    .card-label {
+      font-size: 0.75rem;
+      padding: 0.25rem 0.5rem;
+      border-radius: 3px;
+      background-color: $background-dark;
+      color: $text-color;
+      white-space: nowrap;
+    }
+  }
+  
+  .card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 0.5rem;
+    font-size: 0.75rem;
+    
+    .card-assignee {
+      .avatar {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        background-color: $primary-color;
+        color: white;
+        font-weight: 500;
+        text-transform: uppercase;
+      }
+    }
+    
+    .card-metadata {
+      display: flex;
+      gap: 0.75rem;
+      color: $secondary-color;
+      
+      span {
+        display: flex;
+        align-items: center;
+        gap: 0.25rem;
+        
+        i {
+          font-size: 0.875rem;
+        }
+      }
+      
+      .due-date {
+        &.overdue {
+          color: $danger-color;
+          font-weight: 500;
+        }
+      }
+    }
+  }
+}
+
+.cdk-drag-preview {
+  box-sizing: border-box;
+  border-radius: $border-radius;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  background-color: white;
+  padding: 0.75rem;
+  
+  .card-title {
+    margin: 0;
+    font-size: 0.9375rem;
+    font-weight: 500;
+    color: $text-color;
+    word-break: break-word;
+  }
+}
+
+.cdk-drag-placeholder {
+  opacity: 0;
+}
+
+.cdk-drag-animating {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.cards-container.cdk-drop-list-dragging .kanban-card:not(.cdk-drag-placeholder) {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.card-placeholder {
+  background: $background-dark;
+  border: 1px dashed $border-color;
+  border-radius: $border-radius;
+  min-height: 80px;
+}
+
+// Loading State
+.kanban-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 400px;
+  
+  .spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid rgba($primary-color, 0.1);
+    border-radius: 50%;
+    border-top-color: $primary-color;
+    animation: spin 1s linear infinite;
+    margin-bottom: 1rem;
+  }
+  
+  p {
+    color: $secondary-color;
+    font-size: 1rem;
+  }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+} 

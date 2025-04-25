@@ -12,6 +12,9 @@ export * from './lib/components/sort-button/sort-button.component';
 export * from './lib/components/html-editor/html-editor.component';
 export * from './lib/components/file-upload/file-upload.component';
 export * from './lib/components/action-button/action-button.component';
+export * from './lib/components/tabs/tabs.component';
+export * from './lib/components/tabs/tab/tab.component';
+export * from './lib/components/kanban-board/kanban-board.component';
 
 // Card Components
 export * from './lib/components/card/base-card/base-card.component';

@@ -1,0 +1,176 @@
+<div class="kanban-container">
+  <div class="kanban-header">
+    <h2 class="kanban-title">{{ boardTitle }}</h2>
+    
+    <!-- Add Column Form -->
+    <div class="add-column-form" *ngIf="editable">
+      <input 
+        type="text" 
+        placeholder="Add new column..." 
+        [(ngModel)]="newColumnTitle" 
+        (keyup.enter)="onAddColumn()"
+      >
+      <button class="add-column-btn" (click)="onAddColumn()">Add</button>
+    </div>
+  </div>
+  
+  <div class="kanban-board" *ngIf="!loading; else loadingTemplate">
+    <div 
+      class="kanban-column" 
+      *ngFor="let column of columns; trackBy: trackByColumnId" 
+      [ngClass]="getColumnWipStatus(column)"
+    >
+      <!-- Column Header -->
+      <div class="column-header" [style.background-color]="column.color || headerColor">
+        <ng-container *ngIf="columnHeaderTemplate; else defaultColumnHeader">
+          <ng-container 
+            *ngTemplateOutlet="columnHeaderTemplate; context: { $implicit: column }"
+          ></ng-container>
+        </ng-container>
+        
+        <ng-template #defaultColumnHeader>
+          <div class="column-title-container">
+            <div class="column-title" *ngIf="editingColumnId !== column.id; else editColumnTitle">
+              <span (dblclick)="onColumnTitleEdit(column)">{{ column.title }}</span>
+              <span class="column-count" *ngIf="showColumnTotal">
+                {{ column.cards.length }}
+                <span *ngIf="column.limit"> / {{ column.limit }}</span>
+              </span>
+            </div>
+            
+            <ng-template #editColumnTitle>
+              <input 
+                #titleInput
+                type="text" 
+                [value]="column.title"
+                (blur)="onColumnTitleSave(column, titleInput.value)"
+                (keyup.enter)="onColumnTitleSave(column, titleInput.value)"
+                (keyup.escape)="editingColumnId = null"
+                autofocus
+              >
+            </ng-template>
+          </div>
+          
+          <div class="column-actions" *ngIf="editable">
+            <button class="btn-icon" (click)="toggleAddCard(column.id)" title="Add card">
+              <i class="fas fa-plus"></i>
+            </button>
+            <button class="btn-icon" (click)="onRemoveColumn(column)" title="Remove column">
+              <i class="fas fa-trash"></i>
+            </button>
+          </div>
+        </ng-template>
+      </div>
+      
+      <!-- Add Card Form -->
+      <div class="add-card-form" *ngIf="showAddCard[column.id]">
+        <textarea 
+          [(ngModel)]="newCardTitles[column.id]" 
+          placeholder="Enter card title..."
+          (keyup.enter)="onAddCard(column)"
+          autofocus
+        ></textarea>
+        <div class="add-card-actions">
+          <button class="add-card-btn" (click)="onAddCard(column)">Add</button>
+          <button class="cancel-btn" (click)="toggleAddCard(column.id)">Cancel</button>
+        </div>
+      </div>
+      
+      <!-- Cards Container -->
+      <div 
+        class="cards-container"
+        cdkDropList
+        [id]="'column-' + column.id"
+        [cdkDropListData]="column.cards"
+        [cdkDropListConnectedTo]="getConnectedLists()"
+        (cdkDropListDropped)="onCardDrop($event, column)"
+      >
+        <!-- No cards placeholder -->
+        <div class="no-cards" *ngIf="column.cards.length === 0">
+          No cards in this column
+        </div>
+        
+        <!-- Cards -->
+        <div 
+          class="kanban-card" 
+          *ngFor="let card of column.cards; trackBy: trackByCardId"
+          cdkDrag
+          [cdkDragDisabled]="!editable"
+          (click)="onCardClicked(card)"
+        >
+          <!-- Custom template if provided -->
+          <ng-container *ngIf="cardTemplate; else defaultCardTemplate">
+            <ng-container 
+              *ngTemplateOutlet="cardTemplate; context: { $implicit: card, column: column }"
+            ></ng-container>
+          </ng-container>
+          
+          <!-- Default card template -->
+          <ng-template #defaultCardTemplate>
+            <div class="card-header">
+              <h4 class="card-title">{{ card.title }}</h4>
+              <button 
+                *ngIf="editable" 
+                class="btn-icon btn-remove-card" 
+                (click)="onRemoveCard(column, card); $event.stopPropagation()"
+                title="Remove card"
+              >
+                <i class="fas fa-times"></i>
+              </button>
+            </div>
+            
+            <div class="card-content" *ngIf="card.description">
+              <p class="card-description">{{ card.description }}</p>
+            </div>
+            
+            <div class="card-labels" *ngIf="card.labels && card.labels.length > 0">
+              <span 
+                class="card-label" 
+                *ngFor="let label of card.labels"
+                [style.background-color]="card.color || '#e0e0e0'"
+              >
+                {{ label }}
+              </span>
+            </div>
+            
+            <div class="card-footer" *ngIf="card.assignee || card.dueDate || card.attachment || card.comments">
+              <div class="card-assignee" *ngIf="card.assignee">
+                <span class="avatar">{{ card.assignee.charAt(0) }}</span>
+              </div>
+              
+              <div class="card-metadata">
+                <span class="due-date" *ngIf="card.dueDate" [ngClass]="{'overdue': isOverdue(card.dueDate)}">
+                  <i class="fas fa-calendar"></i> {{ card.dueDate | date:'MMM d' }}
+                </span>
+                
+                <span class="attachment-count" *ngIf="card.attachment">
+                  <i class="fas fa-paperclip"></i> {{ card.attachment }}
+                </span>
+                
+                <span class="comment-count" *ngIf="card.comments">
+                  <i class="fas fa-comment"></i> {{ card.comments }}
+                </span>
+              </div>
+            </div>
+          </ng-template>
+          
+          <!-- Drag preview -->
+          <div *cdkDragPreview class="kanban-card-preview">
+            <h4 class="card-title">{{ card.title }}</h4>
+          </div>
+          
+          <!-- Drag placeholder -->
+          <div *cdkDragPlaceholder class="card-placeholder"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Loading Template -->
+  <ng-template #loadingTemplate>
+    <div class="kanban-loading">
+      <div class="spinner"></div>
+      <p>Loading Kanban board...</p>
+    </div>
+  </ng-template>
+</div> 
