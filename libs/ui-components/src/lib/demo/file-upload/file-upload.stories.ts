@@ -124,6 +124,8 @@ export const DocumentUploader: Story = {
 
 @Component({
   selector: 'sv-demo-file-upload',
+  standalone: true,
+  imports: [CommonModule, FormsModule, FileUploadComponent],
   template: `
     <div style="width: 500px;">
       <h3>File Upload Demo</h3>
@@ -232,8 +234,7 @@ class DemoFileUploadComponent {
 export const Interactive: Story = {
   decorators: [
     moduleMetadata({
-      imports: [FormsModule, CommonModule],
-      declarations: [DemoFileUploadComponent]
+      imports: [DemoFileUploadComponent]
     })
   ],
   render: () => ({
