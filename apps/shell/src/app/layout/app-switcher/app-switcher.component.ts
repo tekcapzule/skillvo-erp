@@ -2,14 +2,7 @@ import { Component, ElementRef, EventEmitter, HostBinding, HostListener, Input, 
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
-
-interface AppItem {
-  name: string;
-  path: string;
-  letter?: string;
-  color?: string;
-  textColor?: string;
-}
+import { MenuService, AppType, AppDetails } from '../../core/services/menu.service';
 
 @Component({
   selector: 'app-switcher',
@@ -38,41 +31,16 @@ export class AppSwitcherComponent implements OnInit {
   
   private _isOpen = false;
   
-  apps: AppItem[] = [
-    { 
-      name: 'Hire', 
-      path: '/hire',
-      letter: 'H',
-      color: 'var(--primary-500)',
-      textColor: '#ffffff'
-    },
-    { 
-      name: 'Onboard', 
-      path: '/onboard',
-      letter: 'O',
-      color: 'var(--primary-500)',
-      textColor: '#ffffff'
-    },
-    { 
-      name: 'Learn', 
-      path: '/learn',
-      letter: 'L',
-      color: 'var(--primary-500)',
-      textColor: '#ffffff'
-    },
-    { 
-      name: 'Admin', 
-      path: '/admin',
-      letter: 'A',
-      color: 'var(--primary-500)',
-      textColor: '#ffffff'
-    }
-  ];
+  apps: AppDetails[] = [];
 
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private menuService: MenuService
+  ) {}
 
   ngOnInit(): void {
     this.updateHostClasses();
+    this.apps = this.menuService.getAllApps();
   }
   
   private updateHostClasses(): void {
@@ -84,16 +52,22 @@ export class AppSwitcherComponent implements OnInit {
     this.isOpen = !this._isOpen;
   }
 
-  navigateTo(app: AppItem): void {
+  navigateTo(app: AppDetails): void {
+    // Update the current app in the menu service
+    this.menuService.setCurrentApp(app.appType);
+    
+    // Navigate to the app's path
     this.router.navigate([app.path]);
+    
+    // Close the app switcher
     this.isOpen = false;
     this.closeMenu.emit();
   }
 
-  getIconStyle(app: AppItem): { [key: string]: string } {
+  getIconStyle(app: AppDetails): { [key: string]: string } {
     return {
-      'background-color': app.color || 'var(--primary-500)',
-      'color': app.textColor || 'white'
+      'background-color': 'var(--primary-500)',
+      'color': '#ffffff'
     };
   }
 

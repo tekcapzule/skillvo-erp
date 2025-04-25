@@ -7,7 +7,7 @@
            (click)="navigateTo(app)">
         <div class="app-icon">
           <div class="icon-container">
-            <span [ngStyle]="getIconStyle(app)">{{app.letter}}</span>
+            <span [ngStyle]="getIconStyle(app)">{{app.name.charAt(0)}}</span>
           </div>
         </div>
         <span class="app-label">{{app.name}}</span>

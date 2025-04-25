@@ -2,16 +2,8 @@ import { Component, OnInit, Output, EventEmitter, Input, OnDestroy, ElementRef, 
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ThemeService, ThemeName } from '../../core/services/theme.service';
+import { MenuService, MenuItem, AppType } from '../../core/services/menu.service';
 import { Subscription } from 'rxjs';
-
-interface MenuItem {
-  label: string;
-  icon: string;
-  route: string;
-  children?: MenuItem[];
-  expanded?: boolean;
-  exact?: boolean;
-}
 
 @Component({
   selector: 'app-sidenav',
@@ -25,37 +17,22 @@ export class SidenavComponent implements OnInit, OnDestroy {
   @Input() mobileOpen = false;
   
   private themeSubscription: Subscription | null = null;
+  private menuSubscription: Subscription | null = null;
   private readonly MOBILE_BREAKPOINT = 768; // Match the breakpoint-md variable
   public isMobile = window.innerWidth < this.MOBILE_BREAKPOINT;
+  public currentApp: AppType = 'learn';
+  public menuItems: MenuItem[] = [];
   
   @HostListener('window:resize', ['$event'])
   onResize() {
     this.isMobile = window.innerWidth < this.MOBILE_BREAKPOINT;
   }
-  
-  menuItems: MenuItem[] = [
-    { label: 'Home', icon: 'home', route: '/learn/home', exact: true },
-    { 
-      label: 'My Activity', 
-      icon: 'my-activities', 
-      route: '/learn/activity',
-      expanded: false,
-      children: [
-        { label: 'Learnings', icon: '', route: '/learn/activity/learnings', exact: true },
-        { label: 'Tasks', icon: '', route: '/learn/activity/tasks', exact: true }
-      ]
-    },
-    { label: 'Courses', icon: 'courses', route: '/learn/courses', exact: false },
-    { label: 'References', icon: 'references', route: '/learn/references', exact: false },
-    { label: 'Calendar', icon: 'calendar', route: '/learn/calendar', exact: false },
-    { label: 'Reports', icon: 'reports', route: '/learn/reports', exact: false },
-    { label: 'Help', icon: 'help', route: '/learn/help', exact: false },
-  ];
 
   constructor(
     private matIconRegistry: MatIconRegistry,
     private domSanitizer: DomSanitizer,
     private themeService: ThemeService,
+    private menuService: MenuService,
     private el: ElementRef,
     private renderer: Renderer2
   ) {
@@ -75,12 +52,31 @@ export class SidenavComponent implements OnInit, OnDestroy {
     } else {
       this.updateSidenavTheme('light');
     }
+    
+    // Subscribe to app changes and update menu
+    this.menuSubscription = this.menuService.currentApp$.subscribe(app => {
+      this.currentApp = app;
+      this.updateMenu();
+    });
+    
+    // Initialize menu with current app
+    this.updateMenu();
+  }
+  
+  /**
+   * Update menu items based on current app
+   */
+  private updateMenu(): void {
+    this.menuItems = this.menuService.getCurrentAppMenu();
   }
   
   ngOnDestroy(): void {
-    // Clean up subscription when component is destroyed
+    // Clean up subscriptions when component is destroyed
     if (this.themeSubscription) {
       this.themeSubscription.unsubscribe();
+    }
+    if (this.menuSubscription) {
+      this.menuSubscription.unsubscribe();
     }
   }
 
@@ -114,7 +110,17 @@ export class SidenavComponent implements OnInit, OnDestroy {
       'references': 'library_books',
       'calendar': 'calendar_today',
       'reports': 'bar_chart',
-      'help': 'help'
+      'help': 'help',
+      'people': 'people',
+      'work': 'work',
+      'assessment': 'assessment',
+      'settings': 'settings',
+      'task': 'task_alt',
+      'description': 'description',
+      'content_copy': 'content_copy',
+      'security': 'security',
+      'business': 'business',
+      'article': 'article'
     };
     
     return iconMap[iconName] || 'circle';

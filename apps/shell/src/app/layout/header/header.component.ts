@@ -3,6 +3,7 @@ import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { ThemeService, ThemeName } from '../../core/services/theme.service';
+import { MenuService, AppType, AppDetails } from '../../core/services/menu.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
@@ -21,16 +22,23 @@ export class HeaderComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();
   private currentTheme: ThemeName = 'light';
   
+  // Current app details
+  currentApp: AppDetails;
+  
   constructor(
     private matIconRegistry: MatIconRegistry,
     private domSanitizer: DomSanitizer,
     private router: Router,
     public themeService: ThemeService,
+    private menuService: MenuService,
     private el: ElementRef,
     private renderer: Renderer2
   ) {
     // Register custom SVG icons
     this.registerIcons();
+    
+    // Initialize current app
+    this.currentApp = this.menuService.getCurrentAppDetails();
   }
 
   ngOnInit(): void {
@@ -49,6 +57,13 @@ export class HeaderComponent implements OnInit, OnDestroy {
       
     // Initialize theme
     this.updateHeaderTheme(this.currentTheme);
+    
+    // Subscribe to app changes
+    this.menuService.currentApp$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(appType => {
+        this.currentApp = this.menuService.getAppDetails(appType);
+      });
   }
   
   ngOnDestroy(): void {
