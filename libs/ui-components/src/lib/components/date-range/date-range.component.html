@@ -1,0 +1,61 @@
+<div class="sv-date-range" [class.sv-date-range--disabled]="disabled" [class.sv-date-range--dark]="theme === 'dark'" [class]="customClass">
+  <div class="sv-date-range__label" *ngIf="label">{{ label }}</div>
+  
+  <div class="sv-date-range__content">
+    <!-- From Date Input -->
+    <div class="sv-date-range__field">
+      <label class="sv-date-range__field-label">From:</label>
+      <div class="sv-date-range__input-wrapper">
+        <input
+          type="text"
+          class="sv-date-range__input"
+          [placeholder]="fromPlaceholder"
+          [(ngModel)]="fromDateStr"
+          (blur)="onFromInputChange()"
+          [disabled]="disabled"
+        />
+        <div class="sv-date-range__icon" (click)="toggleFromCalendar($event)">
+          <i class="fas fa-calendar-alt"></i>
+        </div>
+      </div>
+      
+      <!-- From Calendar Popup -->
+      <div class="sv-date-range__calendar-popup" *ngIf="isFromCalendarOpen" (click)="$event.stopPropagation()">
+        <sv-calendar
+          [currentDate]="getFromCalendarDate()"
+          view="month"
+          [readonly]="true"
+          (slotSelected)="onFromDateSelect($event.start)"
+        ></sv-calendar>
+      </div>
+    </div>
+    
+    <!-- To Date Input -->
+    <div class="sv-date-range__field">
+      <label class="sv-date-range__field-label">To:</label>
+      <div class="sv-date-range__input-wrapper">
+        <input
+          type="text"
+          class="sv-date-range__input"
+          [placeholder]="toPlaceholder"
+          [(ngModel)]="toDateStr"
+          (blur)="onToInputChange()"
+          [disabled]="disabled"
+        />
+        <div class="sv-date-range__icon" (click)="toggleToCalendar($event)">
+          <i class="fas fa-calendar-alt"></i>
+        </div>
+      </div>
+      
+      <!-- To Calendar Popup -->
+      <div class="sv-date-range__calendar-popup" *ngIf="isToCalendarOpen" (click)="$event.stopPropagation()">
+        <sv-calendar
+          [currentDate]="getToCalendarDate()"
+          view="month"
+          [readonly]="true"
+          (slotSelected)="onToDateSelect($event.start)"
+        ></sv-calendar>
+      </div>
+    </div>
+  </div>
+</div> 
