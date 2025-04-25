@@ -1,0 +1,19 @@
+<div class="sv-radio-button" 
+     [class.sv-radio-button--checked]="checked" 
+     [class.sv-radio-button--disabled]="disabled"
+     [class.sv-radio-button--dark]="theme === 'dark'"
+     [class]="customClass">
+  <label class="sv-radio-button__label">
+    <input
+      type="radio"
+      class="sv-radio-button__input"
+      [name]="name"
+      [value]="value"
+      [checked]="checked"
+      [disabled]="disabled"
+      (change)="onRadioChange()"
+    />
+    <span class="sv-radio-button__custom-input"></span>
+    <span class="sv-radio-button__text" *ngIf="label">{{ label }}</span>
+  </label>
+</div> 

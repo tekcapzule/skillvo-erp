@@ -1,0 +1,27 @@
+<div class="sv-checkbox"
+     [class.sv-checkbox--checked]="checked"
+     [class.sv-checkbox--disabled]="disabled"
+     [class.sv-checkbox--indeterminate]="indeterminate"
+     [class.sv-checkbox--dark]="theme === 'dark'"
+     [class]="customClass">
+  <label class="sv-checkbox__label">
+    <input
+      type="checkbox"
+      class="sv-checkbox__input"
+      [name]="name"
+      [checked]="checked"
+      [indeterminate]="indeterminate"
+      [disabled]="disabled"
+      [value]="value"
+      [required]="required"
+      (change)="onCheckboxChange($event)"
+    />
+    <span class="sv-checkbox__custom-input">
+      <svg *ngIf="checked && !indeterminate" class="sv-checkbox__check-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="20 6 9 17 4 12"></polyline>
+      </svg>
+      <span *ngIf="indeterminate" class="sv-checkbox__indeterminate-icon"></span>
+    </span>
+    <span class="sv-checkbox__text" *ngIf="label">{{ label }}</span>
+  </label>
+</div> 
