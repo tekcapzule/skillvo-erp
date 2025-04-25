@@ -1,0 +1,42 @@
+<div class="sv-multi-select" [class.disabled]="disabled" [class.open]="isOpen" [class]="customClass">
+  <!-- Dropdown trigger -->
+  <div class="sv-multi-select__trigger" (click)="toggleDropdown()">
+    <span class="sv-multi-select__label">{{ getDisplayText() }}</span>
+    <div class="sv-multi-select__icon">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="6 9 12 15 18 9"></polyline>
+      </svg>
+    </div>
+  </div>
+  
+  <!-- Dropdown panel with options -->
+  <div class="sv-multi-select__panel" *ngIf="isOpen" [style.max-height]="maxHeight">
+    <div *ngIf="label" class="sv-multi-select__panel-header">
+      {{ label }}
+    </div>
+    
+    <div class="sv-multi-select__options">
+      <div 
+        *ngFor="let option of options" 
+        class="sv-multi-select__option"
+        [class.disabled]="option.disabled"
+        [class.selected]="option.selected"
+        (click)="toggleOption(option, $event)"
+      >
+        <div class="sv-multi-select__checkbox">
+          <div class="sv-multi-select__checkbox-inner" [class.checked]="option.selected">
+            <svg *ngIf="option.selected" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+          </div>
+        </div>
+        <span class="sv-multi-select__option-label">{{ option.label }}</span>
+      </div>
+      
+      <!-- Empty state -->
+      <div *ngIf="options.length === 0" class="sv-multi-select__empty">
+        No options available
+      </div>
+    </div>
+  </div>
+</div> 
