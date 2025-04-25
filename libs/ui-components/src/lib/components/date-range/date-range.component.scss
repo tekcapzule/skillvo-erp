@@ -31,7 +31,7 @@
   }
   
   &__field-label {
-    font-size: 1rem;
+    font-size: 0.875rem;
     font-weight: 500;
     color: var(--text-secondary-color, #666666);
     margin-bottom: 0.25rem;
@@ -104,7 +104,8 @@
     border: 1px solid var(--border-color, #e0e0e0);
     border-radius: 4px;
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
-    min-width: 320px;
+    width: 280px;
+    max-width: 100%;
     
     // Different positioning for from and to calendars
     &--from {
@@ -134,18 +135,47 @@
       left: auto;
       right: 2rem;
     }
+    
+    // Reduce the size of the calendar inside
+    :host ::ng-deep {
+      .sv-calendar {
+        font-size: 0.85rem;
+        
+        &-header {
+          padding: 0.5rem;
+        }
+        
+        &-month-cell {
+          padding: 2px;
+          height: 32px;
+        }
+        
+        &-month-day-number {
+          font-size: 0.85rem;
+        }
+        
+        &-title {
+          font-size: 0.9rem;
+        }
+        
+        button {
+          padding: 0.2rem 0.4rem;
+          font-size: 0.8rem;
+        }
+      }
+    }
   }
   
   &__calendar-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0.75rem 1rem;
+    padding: 0.5rem;
     border-bottom: 1px solid var(--border-color, #e0e0e0);
   }
   
   &__calendar-title {
-    font-size: 1rem;
+    font-size: 0.9rem;
     font-weight: 500;
     color: var(--text-color, #333333);
   }
@@ -157,12 +187,12 @@
   
   &__today-btn,
   &__close-btn {
-    padding: 0.25rem 0.6rem;
+    padding: 0.2rem 0.4rem;
     background-color: var(--secondary-button-bg, #f0f0f0);
     border: 1px solid var(--border-color, #e0e0e0);
     border-radius: 4px;
     color: var(--text-color, #333333);
-    font-size: 0.85rem;
+    font-size: 0.8rem;
     cursor: pointer;
     transition: background-color 0.2s ease;
     display: flex;
@@ -174,7 +204,7 @@
     }
     
     i {
-      font-size: 0.85rem;
+      font-size: 0.8rem;
     }
   }
   

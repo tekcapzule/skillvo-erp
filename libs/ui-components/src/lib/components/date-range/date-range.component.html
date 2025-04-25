@@ -39,13 +39,13 @@
     </div>
   </div>
   
-  <!-- From Calendar Popup -->
+  <!-- From Calendar Popup - Simplified -->
   <div class="sv-date-range__calendar-popup sv-date-range__calendar-popup--from" *ngIf="isFromCalendarOpen" (click)="$event.stopPropagation()">
     <div class="sv-date-range__calendar-header">
-      <div class="sv-date-range__calendar-title">Select start date</div>
+      <div class="sv-date-range__calendar-title">Select date</div>
       <div class="sv-date-range__calendar-actions">
         <button class="sv-date-range__today-btn" (click)="setFromToToday($event)">
-          <i class="fas fa-calendar-day"></i> Today
+          Today
         </button>
         <button class="sv-date-range__close-btn" (click)="closeFromCalendar($event)">
           <i class="fas fa-times"></i>
@@ -60,13 +60,13 @@
     ></sv-calendar>
   </div>
   
-  <!-- To Calendar Popup -->
+  <!-- To Calendar Popup - Simplified -->
   <div class="sv-date-range__calendar-popup sv-date-range__calendar-popup--to" *ngIf="isToCalendarOpen" (click)="$event.stopPropagation()">
     <div class="sv-date-range__calendar-header">
-      <div class="sv-date-range__calendar-title">Select end date</div>
+      <div class="sv-date-range__calendar-title">Select date</div>
       <div class="sv-date-range__calendar-actions">
         <button class="sv-date-range__today-btn" (click)="setToToToday($event)">
-          <i class="fas fa-calendar-day"></i> Today
+          Today
         </button>
         <button class="sv-date-range__close-btn" (click)="closeToCalendar($event)">
           <i class="fas fa-times"></i>
