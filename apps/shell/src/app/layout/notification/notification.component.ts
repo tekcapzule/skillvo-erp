@@ -248,35 +248,25 @@ export class NotificationComponent implements OnInit, OnDestroy {
     if (!notification.read) {
       notification.read = true;
       this.calculateUnreadCount();
-      
-      // In a real app, you would call a service to update on the server
-      console.log(`Marked notification ${notification.id} as read`);
     }
   }
 
   markAllAsRead(): void {
-    let changesMade = false;
-    
+    let hasUnread = false;
     this.notifications.forEach(notification => {
       if (!notification.read) {
         notification.read = true;
-        changesMade = true;
+        hasUnread = true;
       }
     });
     
-    if (changesMade) {
-      // In a real app, you would call a service to update on the server
-      console.log('Marked all notifications as read');
+    if (hasUnread) {
       this.calculateUnreadCount();
     }
   }
 
   calculateUnreadCount(): void {
-    if (this.notifications) {
-      this.unreadCount = this.notifications.filter(notification => !notification.read).length;
-    } else {
-      this.unreadCount = 0;
-    }
+    this.unreadCount = this.notifications.filter(n => !n.read).length;
   }
 
   toggleFilterMenu(): void {
@@ -286,39 +276,24 @@ export class NotificationComponent implements OnInit, OnDestroy {
 
   closePanel(): void {
     this.isOpen = false;
-    this.closeNotification.emit();
     this.updateBodyScrolling();
+    this.closeNotification.emit();
   }
 
   getFormattedDate(timestamp: Date): string {
+    // Simple date formatting based on how recent the notification is
     const now = new Date();
-    const date = new Date(timestamp);
+    const timeDiff = now.getTime() - new Date(timestamp).getTime();
+    const dayDiff = Math.floor(timeDiff / (1000 * 3600 * 24));
     
-    // Check if it's today
-    if (date.toDateString() === now.toDateString()) {
+    if (dayDiff === 0) {
       return 'Just Now';
-    }
-    
-    // Check if it's yesterday
-    const yesterday = new Date(now);
-    yesterday.setDate(now.getDate() - 1);
-    if (date.toDateString() === yesterday.toDateString()) {
+    } else if (dayDiff === 1) {
       return 'Yesterday';
+    } else if (dayDiff < 7) {
+      return `${dayDiff} days ago`;
+    } else {
+      return new Date(timestamp).toLocaleDateString();
     }
-    
-    // Check if it's within the last 7 days
-    const sevenDaysAgo = new Date(now);
-    sevenDaysAgo.setDate(now.getDate() - 7);
-    if (date > sevenDaysAgo) {
-      return `${date.getDate()} days ago`;
-    }
-    
-    // For future dates, show full date
-    if (date > now) {
-      return date.toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' });
-    }
-    
-    // For dates older than 7 days, format as DD/MM/YYYY
-    return date.toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' });
   }
 } 

@@ -99,6 +99,10 @@ $dialog-width-xl: 1000px;
 $dialog-max-height: 90vh;
 $dialog-border-radius: $size-2; // 8px
 
+// Panel Sizes
+// ----------------------------------------
+$notification-panel-width: 380px;
+
 // Z-index Scale moved to _accessibility.scss
 // ----------------------------------------
 
@@ -188,6 +192,9 @@ $dialog-border-radius: $size-2; // 8px
   --dialog-width-xl: #{$dialog-width-xl};
   --dialog-max-height: #{$dialog-max-height};
   --dialog-border-radius: #{$dialog-border-radius};
+  
+  // Panel Sizes
+  --size-notification-panel: #{$notification-panel-width};
   
   // Z-index Scale moved to _accessibility.scss
 } 
