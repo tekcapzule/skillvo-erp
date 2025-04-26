@@ -1,0 +1,7 @@
+// ========================================
+// Theme Mixins Forwarding Module
+// ========================================
+// This file forwards theme mixins from mixins/_theme-mixins.scss
+// to fix imports like @use '../abstracts/theme-mixins' as *;
+
+@forward 'mixins/theme-mixins'; 

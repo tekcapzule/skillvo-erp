@@ -1,0 +1,7 @@
+// ========================================
+// Accessibility Forwarding Module
+// ========================================
+// This file forwards accessibility variables from variables/_accessibility.scss
+// to fix imports like @use '../abstracts/accessibility' as a11y;
+
+@forward 'variables/accessibility'; 

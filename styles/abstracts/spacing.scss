@@ -1,0 +1,7 @@
+// ========================================
+// Spacing Forwarding Module
+// ========================================
+// This file forwards spacing variables from variables/_spacing.scss
+// to fix imports like @use '../abstracts/spacing' as space;
+
+@forward 'variables/spacing'; 

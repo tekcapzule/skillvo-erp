@@ -1,0 +1,7 @@
+// ========================================
+// Colors Forwarding Module
+// ========================================
+// This file forwards color variables from variables/_colors.scss
+// to fix imports like @use '../abstracts/colors' as colors;
+
+@forward 'variables/colors'; 

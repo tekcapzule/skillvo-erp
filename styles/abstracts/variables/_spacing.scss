@@ -46,8 +46,7 @@ $space-3xl: $space-24;   // 96px - 3x extra large spacing
 // Component Specific Spacing
 // ----------------------------------------
 // Default spacing for common UI patterns
-$input-padding-y: $space-2;   // 8px vertical padding for form inputs
-// $input-padding-x should be defined only in padding.scss
+// $input-padding-y is now defined only in padding.scss
 $btn-padding-y: $space-2;     // 8px vertical padding for buttons
 $btn-padding-x: $space-4;     // 16px horizontal padding for buttons
 $card-padding: $space-6;      // 24px padding for cards
@@ -104,8 +103,7 @@ $grid-gap-sm: $space-4;          // 16px small grid gap
   --space-3xl: #{$space-3xl};
   
   // Component Spacing
-  --input-padding-y: #{$input-padding-y};
-  // Use --input-padding-x from padding.scss
+  // --input-padding-y is defined in padding.scss
   --btn-padding-y: #{$btn-padding-y};
   --btn-padding-x: #{$btn-padding-x};
   --card-padding: #{$card-padding};

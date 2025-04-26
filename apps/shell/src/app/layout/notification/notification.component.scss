@@ -1,127 +1,130 @@
-/* Import theme abstracts for access to mixins and variables */
+// ========================================
+// Notification Component Styles
+// ========================================
+
 @use 'styles/abstracts' as *;
 @use 'styles/utilities/scrollbar' as scrollbar;
 
 :host {
   display: block;
-}
-
-// Notification panel variables
-:root {
-  --notification-panel-width: 380px;
-  --z-overlay: 1000;
-  --z-drawer: 1001;
-}
-
-:host {
-  display: block;
-  color: var(--text-primary);
-  @include theme-transition(color, background-color);
-}
-
-/* Notification Overlay - Full screen darkened backdrop */
-.notification-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5);
-  z-index: var(--z-overlay);
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity var(--transition-duration-medium) ease, 
-              visibility var(--transition-duration-medium) ease;
-  pointer-events: none;
-
-  &.open {
-    opacity: 1;
-    visibility: visible;
-    pointer-events: auto;
-  }
-
-  @include breakpoint-up(md) {
-    &.open {
-      background-color: rgba(0, 0, 0, 0.3);
-    }
-  }
-}
-
-/* Notification Panel - Right side panel that contains notifications */
-.notification-panel {
-  position: fixed;
-  top: 0;
-  right: 0;
+  width: 100%;
   height: 100%;
-  width: var(--notification-panel-width);
-  max-width: 90vw;
-  background-color: var(--bg-surface);
-  box-shadow: var(--shadow-elevation-3);
-  z-index: var(--z-drawer);
-  transform: translateX(100%);
-  transition: transform var(--transition-duration-medium) var(--transition-timing-standard);
+  overflow: hidden;
+}
+
+/* Notification Panel */
+.notification-panel {
+  width: 100%;
+  height: 100%;
   display: flex;
   flex-direction: column;
-  @include theme-transition(background-color, box-shadow);
+  background-color: var(--bg-surface);
+  color: var(--text-primary);
+  overflow: hidden;
+  @include theme-transition(background-color, color);
   
-  &.open {
-    transform: translateX(0);
-  }
-  
-  @include breakpoint-down(xs) {
-    max-width: 100%;
-  }
-}
-
-/* Notification Header - Title and close button */
-.notification-header {
-  height: var(--header-height);
-  border-bottom: 1px solid var(--border-light);
-  padding: 0 var(--spacing-lg);
-  display: flex;
-  align-items: center;
-  @include theme-transition(border-color);
-
-  .header-content {
+  /* Notification Header */
+  .notification-header {
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    width: 100%;
-
+    justify-content: space-between;
+    padding: var(--spacing-md) var(--spacing-md);
+    border-bottom: 1px solid var(--border-light);
+    @include theme-transition(border-color);
+    
     h2 {
-      font-size: var(--font-size-xl);
-      font-weight: var(--font-weight-medium);
-      color: var(--text-primary);
       margin: 0;
+      font-size: var(--font-size-lg);
+      font-weight: var(--font-weight-medium);
       @include theme-transition(color);
-
-      .notification-count {
-        color: var(--text-secondary);
-        font-weight: var(--font-weight-regular);
-        margin-left: var(--spacing-xs);
-        @include theme-transition(color);
-      }
     }
-
-    .close-button {
+    
+    .header-actions {
       display: flex;
       align-items: center;
-      justify-content: center;
-      width: var(--size-10);
-      height: var(--size-10);
-      background: transparent;
-      border: none;
-      border-radius: var(--radius-circle);
-      cursor: pointer;
+      gap: var(--spacing-sm);
       
-      &:hover {
-        background-color: var(--bg-hover);
+      button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: transparent;
+        border: none;
+        color: var(--text-secondary);
+        cursor: pointer;
+        padding: var(--spacing-xs);
+        border-radius: var(--radius-sm);
+        @include theme-transition(color, background-color);
+        
+        &:hover {
+          background-color: var(--bg-element-hover);
+          color: var(--text-primary);
+        }
+        
+        mat-icon {
+          font-size: var(--icon-size-md);
+        }
       }
       
-      mat-icon {
+      .mark-all-read {
+        font-size: var(--font-size-sm);
+        color: var(--primary-color);
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        padding: var(--spacing-xs) var(--spacing-sm);
+        border-radius: var(--radius-sm);
+        @include theme-transition(color, background-color);
+        
+        &:hover {
+          background-color: var(--primary-color-light-bg);
+        }
+        
+        &:disabled {
+          color: var(--text-tertiary);
+          cursor: not-allowed;
+          
+          &:hover {
+            background-color: transparent;
+          }
+        }
+      }
+    }
+  }
+  
+  /* Filter Tabs */
+  .notification-tabs {
+    border-bottom: 1px solid var(--border-light);
+    @include theme-transition(border-color);
+    
+    .mat-tab-labels {
+      display: flex;
+      
+      .mat-tab-label {
+        flex: 1;
+        height: 48px;
+        opacity: 1;
         color: var(--text-secondary);
-        font-size: var(--icon-size-md);
-        @include theme-transition(color);
+        @include theme-transition(color, background-color);
+        
+        &.mat-tab-label-active {
+          color: var(--primary-color);
+          
+          &::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: var(--primary-color);
+          }
+        }
+        
+        &:hover:not(.mat-tab-label-active) {
+          background-color: var(--bg-element-hover);
+          color: var(--text-primary);
+        }
       }
     }
   }
@@ -197,102 +200,154 @@
   overflow-y: auto;
   padding: var(--spacing-lg);
   @include scrollbar.styled-scrollbar;
-}
 
-/* Notification List */
-.notification-list-container {
-  flex: 1;
-  overflow-y: auto;
-  padding: var(--spacing-md);
-  @include scrollbar.styled-scrollbar;
+  /* Notification List */
+  .notification-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
 
-  /* Notification Item */
-  .notification-item {
-    &:not(:last-child) {
-      margin-bottom: var(--spacing-md);
-    }
+    /* Notification Item */
+    .notification-item {
+      &.unread .notification-card {
+        background-color: rgba(var(--primary-rgb), 0.05);
+      }
 
-    &.unread .notification-card {
-      background-color: var(--bg-highlight);
-      position: relative;
+      .notification-card {
+        padding: var(--spacing-md);
+        border-radius: var(--radius-md);
+        background-color: var(--bg-surface);
+        border: 1px solid var(--border-light);
+        transition: background-color 0.2s ease, box-shadow 0.2s ease;
+        @include theme-transition(background-color, border-color);
 
-      &::before {
-        content: '';
-        position: absolute;
-        left: 0;
-        top: 0;
-        height: 100%;
-        width: 4px;
-        background-color: var(--primary-color);
-        border-top-left-radius: var(--radius-md);
-        border-bottom-left-radius: var(--radius-md);
+        &:hover {
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .notification-header {
+          display: flex;
+          align-items: center;
+          margin-bottom: var(--spacing-sm);
+          padding: 0;
+          border: none;
+
+          .notification-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: var(--spacing-sm);
+            background-color: var(--primary-color-light-bg);
+            color: var(--primary-color);
+
+            &.info {
+              background-color: var(--info-color-light-bg);
+              color: var(--info-color);
+            }
+
+            &.success {
+              background-color: var(--success-color-light-bg);
+              color: var(--success-color);
+            }
+
+            &.warning {
+              background-color: var(--warning-color-light-bg);
+              color: var(--warning-color);
+            }
+
+            &.error {
+              background-color: var(--error-color-light-bg);
+              color: var(--error-color);
+            }
+          }
+
+          .notification-info {
+            flex: 1;
+
+            .notification-title {
+              font-size: var(--font-size-md);
+              font-weight: var(--font-weight-medium);
+              color: var(--text-primary);
+              margin: 0;
+              @include theme-transition(color);
+            }
+
+            .notification-meta {
+              display: flex;
+              align-items: center;
+              gap: var(--spacing-xs);
+              margin-top: var(--spacing-xs);
+
+              .notification-source {
+                font-size: var(--font-size-xs);
+                color: var(--text-secondary);
+                @include theme-transition(color);
+              }
+
+              .notification-time {
+                font-size: var(--font-size-xs);
+                color: var(--text-tertiary);
+                @include theme-transition(color);
+              }
+            }
+          }
+
+          .notification-actions {
+            button {
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              background: transparent;
+              border: none;
+              color: var(--text-tertiary);
+              cursor: pointer;
+              padding: var(--spacing-xs);
+              border-radius: 50%;
+              @include theme-transition(color, background-color);
+
+              &:hover {
+                background-color: var(--bg-element-hover);
+                color: var(--text-secondary);
+              }
+
+              mat-icon {
+                font-size: var(--icon-size-sm);
+              }
+            }
+          }
+        }
+
+        .notification-content {
+          padding: 0;
+          overflow: visible;
+
+          .notification-message {
+            font-size: var(--font-size-sm);
+            color: var(--text-secondary);
+            margin: 0;
+            line-height: 1.5;
+            @include theme-transition(color);
+          }
+        }
       }
     }
   }
 
-  .notification-card {
-    background-color: var(--bg-surface);
-    border: 1px solid var(--border-light);
-    border-radius: var(--radius-md);
-    padding: var(--spacing-md);
-    cursor: pointer;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-    @include theme-transition(background-color, border-color);
+  /* Date Group */
+  .date-group {
+    margin: var(--spacing-lg) 0 var(--spacing-sm) 0;
 
-    &:hover {
-      box-shadow: var(--shadow-elevation-1);
-      transform: translateY(-2px);
-    }
-
-    .notification-title {
-      font-size: var(--font-size-md);
-      font-weight: var(--font-weight-medium);
-      color: var(--text-primary);
-      margin: 0 0 var(--spacing-xs) 0;
-      @include theme-transition(color);
-    }
-
-    .notification-message {
+    .date-label {
       font-size: var(--font-size-sm);
+      font-weight: var(--font-weight-medium);
       color: var(--text-secondary);
-      margin: 0 0 var(--spacing-md) 0;
-      line-height: 1.5;
-      display: -webkit-box;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      @include theme-transition(color);
-    }
-
-    .notification-footer {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-
-      .notification-badge {
-        display: inline-block;
-        padding: var(--spacing-2xs) var(--spacing-sm);
-        font-size: var(--font-size-xs);
-        font-weight: var(--font-weight-medium);
-        border-radius: var(--radius-pill);
-
-        &[data-category="course"] {
-          background-color: rgba(var(--primary-rgb), 0.08);
-          color: var(--primary-color);
-        }
-
-        &[data-category="certificate"] {
-          background-color: rgba(var(--success-rgb), 0.08);
-          color: var(--success-color);
-        }
-      }
-
-      .notification-time {
-        font-size: var(--font-size-xs);
-        color: var(--text-tertiary);
-        @include theme-transition(color);
-      }
+      margin: 0;
+      padding-bottom: var(--spacing-xs);
+      border-bottom: 1px solid var(--border-light);
+      @include theme-transition(color, border-color);
     }
   }
 
@@ -358,5 +413,4 @@
       background-color: rgba(var(--primary-rgb), 0.08);
     }
   }
-}
 } 

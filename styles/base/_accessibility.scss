@@ -4,8 +4,8 @@
 // Base accessibility styles that apply to HTML elements
 // Uses variables from abstracts/_accessibility.scss
 
-@use '../abstracts/accessibility' as a11y;
-@use '../abstracts/a11y-mixins' as a11y-mix;
+@use '../abstracts/variables/accessibility' as a11y;
+@use '../abstracts/mixins/a11y-mixins' as a11y-mix;
 
 // ========================================
 // Focus Styles

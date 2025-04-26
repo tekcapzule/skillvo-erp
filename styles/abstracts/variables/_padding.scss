@@ -1,0 +1,150 @@
+// ========================================
+// Padding Variables
+// ========================================
+// Geometric progression based on base padding unit (4px)
+// ----------------------------------------
+$padding-unit: 0.25rem; // 4px with 16px base font size
+
+// Padding Scale
+// ----------------------------------------
+$padding-0: 0;
+$padding-1: $padding-unit;        // 4px
+$padding-2: $padding-unit * 2;    // 8px
+$padding-3: $padding-unit * 3;    // 12px
+$padding-4: $padding-unit * 4;    // 16px
+$padding-5: $padding-unit * 5;    // 20px
+$padding-6: $padding-unit * 6;    // 24px
+$padding-7: $padding-unit * 7;    // 28px
+$padding-8: $padding-unit * 8;    // 32px
+$padding-10: $padding-unit * 10;  // 40px
+$padding-12: $padding-unit * 12;  // 48px
+$padding-16: $padding-unit * 16;  // 64px
+$padding-20: $padding-unit * 20;  // 80px
+$padding-24: $padding-unit * 24;  // 96px
+$padding-32: $padding-unit * 32;  // 128px
+
+// Semantic Aliases
+// ----------------------------------------
+$padding-none: $padding-0;
+$padding-xs: $padding-2;     // 8px - extra small
+$padding-sm: $padding-4;     // 16px - small
+$padding-md: $padding-6;     // 24px - medium
+$padding-lg: $padding-8;     // 32px - large
+$padding-xl: $padding-10;    // 40px - extra large
+$padding-2xl: $padding-16;   // 64px
+$padding-3xl: $padding-24;   // 96px
+
+// Directional Padding Presets
+// ----------------------------------------
+// Horizontal (left/right)
+$padding-x-none: $padding-0;
+$padding-x-xs: $padding-2;
+$padding-x-sm: $padding-4;
+$padding-x-md: $padding-6;
+$padding-x-lg: $padding-8;
+$padding-x-xl: $padding-10;
+
+// Vertical (top/bottom)
+$padding-y-none: $padding-0;
+$padding-y-xs: $padding-2;
+$padding-y-sm: $padding-4;
+$padding-y-md: $padding-6;
+$padding-y-lg: $padding-8;
+$padding-y-xl: $padding-10;
+
+// Individual Directions
+// ----------------------------------------
+$padding-top-none: $padding-0;
+$padding-top-xs: $padding-2;
+$padding-top-sm: $padding-4;
+$padding-top-md: $padding-6;
+$padding-top-lg: $padding-8;
+$padding-top-xl: $padding-10;
+
+$padding-right-none: $padding-0;
+$padding-right-xs: $padding-2;
+$padding-right-sm: $padding-4;
+$padding-right-md: $padding-6;
+$padding-right-lg: $padding-8;
+$padding-right-xl: $padding-10;
+
+$padding-bottom-none: $padding-0;
+$padding-bottom-xs: $padding-2;
+$padding-bottom-sm: $padding-4;
+$padding-bottom-md: $padding-6;
+$padding-bottom-lg: $padding-8;
+$padding-bottom-xl: $padding-10;
+
+$padding-left-none: $padding-0;
+$padding-left-xs: $padding-2;
+$padding-left-sm: $padding-4;
+$padding-left-md: $padding-6;
+$padding-left-lg: $padding-8;
+$padding-left-xl: $padding-10;
+
+// Component-Specific Padding
+// ----------------------------------------
+$header-padding-x: $padding-x-sm;
+$header-padding-y: $padding-y-xs;
+
+$sidenav-padding: $padding-md;
+$sidenav-item-padding-x: $padding-x-sm;
+$sidenav-item-padding-y: $padding-y-xs;
+
+$button-padding-x: $padding-x-sm;
+$button-padding-y: $padding-y-xs;
+$input-padding-x: $padding-x-sm;
+$input-padding-y: $padding-y-xs;
+
+$dialog-padding: $padding-lg;
+$tooltip-padding: $padding-xs;
+$popover-padding: $padding-sm;
+
+// Mobile-specific padding adjustments
+$mobile-padding-base: $padding-sm;
+$mobile-card-padding: $padding-sm;
+$mobile-header-padding-x: $padding-x-xs;
+
+// CSS Custom Properties
+// ----------------------------------------
+:root {
+  --padding-none: #{$padding-none};
+  --padding-xs: #{$padding-xs};
+  --padding-sm: #{$padding-sm};
+  --padding-md: #{$padding-md};
+  --padding-lg: #{$padding-lg};
+  --padding-xl: #{$padding-xl};
+  --padding-2xl: #{$padding-2xl};
+  --padding-3xl: #{$padding-3xl};
+
+  --padding-x-none: #{$padding-x-none};
+  --padding-x-xs: #{$padding-x-xs};
+  --padding-x-sm: #{$padding-x-sm};
+  --padding-x-md: #{$padding-x-md};
+  --padding-x-lg: #{$padding-x-lg};
+  --padding-x-xl: #{$padding-x-xl};
+
+  --padding-y-none: #{$padding-y-none};
+  --padding-y-xs: #{$padding-y-xs};
+  --padding-y-sm: #{$padding-y-sm};
+  --padding-y-md: #{$padding-y-md};
+  --padding-y-lg: #{$padding-y-lg};
+  --padding-y-xl: #{$padding-y-xl};
+
+  --header-padding-x: #{$header-padding-x};
+  --header-padding-y: #{$header-padding-y};
+  --sidenav-padding: #{$sidenav-padding};
+  --sidenav-item-padding-x: #{$sidenav-item-padding-x};
+  --sidenav-item-padding-y: #{$sidenav-item-padding-y};
+  --button-padding-x: #{$button-padding-x};
+  --button-padding-y: #{$button-padding-y};
+  --input-padding-x: #{$input-padding-x};
+  --input-padding-y: #{$input-padding-y};
+  --dialog-padding: #{$dialog-padding};
+  --tooltip-padding: #{$tooltip-padding};
+  --popover-padding: #{$popover-padding};
+
+  --mobile-padding-base: #{$mobile-padding-base};
+  --mobile-card-padding: #{$mobile-card-padding};
+  --mobile-header-padding-x: #{$mobile-header-padding-x};
+}
