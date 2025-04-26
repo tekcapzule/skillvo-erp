@@ -1,7 +1,132 @@
 /* Import theme abstracts for access to mixins and variables */
 @use 'styles/abstracts' as *;
 @use 'styles/utilities/layout-mixins' as utility-layout;
-@use 'styles/components/scrollbar' as scrollbar;
+@use 'styles/utilities/scrollbar' as scrollbar;
+
+/**
+ * Notification Component Variables
+ * Contains variables for the notification panel component
+ */
+
+:root {
+  /* Primary Color RGB for hover effects */
+  --primary-500-rgb: 10, 159, 255;
+
+  /* Notification Overlay */
+  --notification-overlay-bg: rgba(0, 0, 0, 0.5);
+  --notification-overlay-z-index: 1200;
+  
+  /* Notification Panel Structure */
+  --notification-panel-width: 380px; /* Match user profile panel width */
+  --notification-panel-max-width: 90vw;
+  --notification-z-index: 1201;
+  --notification-transition-duration: 0.3s;
+  --notification-transition-timing: cubic-bezier(0.4, 0, 0.2, 1);
+  
+  /* Notification Panel Styling */
+  --notification-shadow: var(--elevation-3);
+  --notification-border: 1px solid var(--border-light);
+  
+  /* Notification Header */
+  --notification-header-height: 64px;
+  --notification-header-padding: 24px;
+  --notification-title-size: var(--text-xl);
+  --notification-title-weight: var(--font-medium);
+  --notification-count-color: var(--text-secondary);
+  
+  /* Notification Close Button */
+  --notification-close-size: 40px;
+  --notification-close-icon-size: 24px;
+  --notification-close-hover-bg: var(--bg-element-hover);
+  --notification-close-radius: 50%;
+  
+  /* Notification Search */
+  --notification-search-height: 40px;
+  --notification-search-margin: 0 0 16px 0;
+  --notification-search-padding: 0 12px;
+  --notification-search-bg: var(--bg-element);
+  --notification-search-border: var(--border-light);
+  --notification-search-radius: 8px;
+  --notification-search-text: var(--text-primary);
+  --notification-search-placeholder: var(--text-tertiary);
+  --notification-search-icon-size: 20px;
+  --notification-search-icon-color: var(--text-secondary);
+  
+  /* Notification Items */
+  --notification-item-gap: 16px;
+  --notification-item-radius: 8px;
+  --notification-item-padding: 16px;
+  --notification-item-border: 1px solid var(--border-light);
+  --notification-item-title-size: var(--text-md);
+  --notification-item-title-weight: var(--font-medium);
+  --notification-item-message-size: var(--text-sm);
+  --notification-item-message-margin: 8px 0 12px;
+  --notification-item-time-size: var(--text-xs);
+  --notification-item-time-color: var(--text-tertiary);
+  
+  /* Notification List */
+  --notification-list-padding: 24px;
+  --notification-list-max-height: calc(100vh - 160px);
+  
+  /* Notification Sidebar Indicator */
+  --notification-sidebar-indicator-width: 4px;
+  --notification-sidebar-indicator-color: var(--primary-500);
+  --notification-unread-bg: rgba(var(--primary-500-rgb), 0.05);
+  
+  /* Action Buttons */
+  --notification-action-bg: var(--primary-50);
+  --notification-action-text: var(--primary-500);
+  --notification-action-border-radius: 8px;
+  --notification-action-padding: 8px 16px;
+  --notification-action-font-size: var(--text-sm);
+  --notification-action-font-weight: var(--font-medium);
+  --notification-action-margin: 12px 0 0 0;
+  
+  /* Category Labels */
+  --notification-category-padding: 4px 10px;
+  --notification-category-radius: 16px;
+  --notification-category-font-size: var(--text-xs);
+  --notification-category-font-weight: var(--font-medium);
+  --notification-category-margin: 0;
+  
+  /* Category Colors - Light Theme */
+  --category-course-bg: rgba(25, 118, 210, 0.08);
+  --category-course-text: #1976d2;
+  --category-certificate-bg: rgba(76, 175, 80, 0.08);
+  --category-certificate-text: #4caf50;
+  --category-update-bg: rgba(156, 39, 176, 0.08);
+  --category-update-text: #9c27b0;
+  --category-alert-bg: rgba(244, 67, 54, 0.08);
+  --category-alert-text: #f44336;
+  
+  /* Empty State */
+  --notification-empty-icon-size: 48px;
+  --notification-empty-icon-color: var(--text-tertiary);
+  --notification-empty-text-color: var(--text-secondary);
+}
+
+/* Dark Theme Overrides */
+[data-theme="dark"] {
+  /* Primary Color RGB for hover effects */
+  --primary-500-rgb: 33, 150, 243;
+  
+  --notification-overlay-bg: rgba(0, 0, 0, 0.6);
+  --notification-shadow: var(--elevation-3);
+  --notification-border: 1px solid var(--border-default);
+  --notification-search-border: var(--border-default);
+  --notification-item-border: 1px solid var(--border-default);
+  --notification-unread-bg: rgba(var(--primary-500-rgb), 0.08);
+  
+  /* Category Colors - Dark Theme */
+  --category-course-bg: rgba(33, 150, 243, 0.12);
+  --category-course-text: #42a5f5;
+  --category-certificate-bg: rgba(76, 175, 80, 0.12);
+  --category-certificate-text: #81c784;
+  --category-update-bg: rgba(156, 39, 176, 0.12);
+  --category-update-text: #ba68c8;
+  --category-alert-bg: rgba(244, 67, 54, 0.12);
+  --category-alert-text: #e57373;
+}
 
 :host {
   display: block;

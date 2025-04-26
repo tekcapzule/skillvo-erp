@@ -27,15 +27,7 @@
 // Theme mixins - all theme-related mixins are now here
 @forward 'theme-mixins';
 
-// Component variables
-@forward '../components/header';
-@forward '../components/sidenav';
-@forward '../components/breadcrumb';
-@forward '../components/notification';
-@forward '../components/user-profile';
-@forward '../components/app-switcher';
-@forward '../components/announcements';
-@forward '../components/scrollbar';
+
 
 // Variables that can be customized by importing modules
 // ----------------------------------------

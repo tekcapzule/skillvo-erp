@@ -2,14 +2,14 @@
 // SkillVo Main Stylesheet
 // ==========================================================================
 
-// 1. Configuration & Helpers
+// Configuration & Helpers
 // These files contain no actual CSS, but are used for variables, mixins, etc.
 // --------------------------------------------------
 
 // Import abstracts using the consolidated index
 @use 'abstracts' as *;
 
-// 2. Base Styles
+// Base Styles
 // Common and global styling
 // --------------------------------------------------
 
@@ -19,7 +19,7 @@
 @use 'base/accessibility';
 @use 'base/theme-fallbacks';
 
-// 3. Themes
+// Themes
 // Theme management and theme-specific files
 // The application supports different themes:
 // - Light (default)
@@ -36,26 +36,19 @@
 // Styling for macro layout components, not specific features
 // --------------------------------------------------
 
-@use 'layout/layout-variables';
-@use 'layout/main-layout';
+// Layout files have been merged into their respective component files
+//@use 'layout/layout-variables';
+//@use 'layout/grid';
+//@use 'layout/main-layout';
 
 // 5. Components
 // Individual components that can be reused across many pages
 // --------------------------------------------------
 
-@use 'components/cards';
-@use 'components/header';
-@use 'components/sidenav';
-@use 'components/breadcrumb';
-@use 'components/app-switcher';
-@use 'components/announcements';
-@use 'components/notification';
-@use 'components/user-profile';
-@use 'components/scrollbar';
-@use 'components/placeholder';
-@use 'components/button';
+// Note: The following component styles have been merged into their respective components
+// header, sidenav, breadcrumb, app-switcher, announcements, notification, user-profile, placeholder, cards, button, scrollbar
 
-// 6. Utilities
+// Utilities
 // Utility classes with a single purpose
 // --------------------------------------------------
 
@@ -64,23 +57,9 @@
 @use 'utilities/a11y';
 @use 'utilities/colors';
 @use 'utilities/layout' as utility-layout;
-// NOTE: Additional utilities will be implemented in future phases
-// @use 'utilities/visibility';
-// @use 'utilities/flex';
-// @use 'utilities/borders';
-// @use 'utilities/responsive';
+@use 'utilities/scrollbar';
 
-// 7. Pages
-// Page-specific styles
-// --------------------------------------------------
-
-// NOTE: Page styles will be implemented in future phases
-// @use 'pages/home';
-// @use 'pages/auth';
-// @use 'pages/dashboard';
-// @use 'pages/profile';
-
-// 8. Vendor Overrides
+// Vendor Overrides
 // Styles that override third-party libraries
 // --------------------------------------------------
 

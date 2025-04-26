@@ -1,7 +1,102 @@
 /* Import theme abstracts for access to mixins and variables */
 @use 'styles/abstracts' as *;
 @use 'styles/utilities/layout-mixins' as utility-layout;
-@use 'styles/components/scrollbar' as scrollbar;
+@use 'styles/utilities/scrollbar' as scrollbar;
+
+// ========================================
+// User Profile Component Variables
+// ========================================
+
+:root {
+  // Profile panel sizing
+  --profile-width: 400px;
+  --profile-max-width: 90vw;
+  --profile-padding: var(--inset-md, var(--space-4));
+  
+  // Profile colors
+  --profile-bg: var(--bg-surface);
+  --profile-text: var(--text-primary);
+  --profile-border: var(--border-default);
+  --profile-shadow: var(--shadow-lg);
+  
+  // Profile header
+  --profile-header-height: var(--space-14, 56px);
+  --profile-header-border: var(--border-default);
+  
+  // User avatar
+  --profile-avatar-size: var(--space-20, 80px);
+  --profile-avatar-color: var(--primary-500);
+  --profile-avatar-text: var(--text-inverse);
+  --profile-avatar-font-size: var(--text-xl, 2rem);
+  
+  // Profile typography
+  --profile-name-font-size: var(--text-lg, 1.2rem);
+  --profile-name-font-weight: var(--font-medium, 500);
+  --profile-email-font-size: var(--text-sm, 0.9rem);
+  --profile-email-color: var(--text-secondary);
+  
+  // Section card
+  --profile-section-spacing: var(--inset-lg, var(--space-8));
+  --profile-section-padding: var(--inset-md, var(--space-4));
+  --profile-section-radius: var(--radius-md, var(--space-2));
+  --profile-section-bg: var(--bg-element);
+  --profile-section-shadow: var(--shadow-sm);
+  
+  // Theme cards
+  --profile-theme-card-border-radius: var(--radius-md, var(--space-2));
+  --profile-theme-card-border: var(--space-0-5, 2px) solid var(--border-default);
+  --profile-theme-card-selected-border: var(--space-0-5, 2px) solid var(--primary-500);
+  --profile-theme-preview-height: var(--space-30, 120px);
+  
+  // Logout button
+  --profile-logout-padding: var(--space-3, 12px) var(--space-4, 16px);
+  --profile-logout-radius: var(--radius-sm, var(--space-1));
+  --profile-logout-border: var(--space-0-25, 1px) solid var(--border-default);
+
+  /* User Profile Menu Sizing */
+  --user-profile-menu-width: var(--space-70, 280px);
+  --user-profile-item-height: var(--space-12, 48px);
+  
+  /* User Profile Colors */
+  --user-profile-bg: var(--bg-surface);
+  --user-profile-border: var(--border-default);
+  --user-profile-shadow: var(--shadow-lg);
+  --user-profile-item-hover-bg: var(--bg-element-hover);
+  
+  /* User Profile Avatar */
+  --user-avatar-size: var(--space-8, 32px);
+  --user-avatar-bg: var(--primary-500);
+  --user-avatar-text: var(--text-inverse);
+  --user-avatar-font-size: var(--text-sm);
+  --user-avatar-font-weight: var(--font-medium);
+  
+  /* User Profile Typography */
+  --user-profile-name-size: var(--text-md);
+  --user-profile-name-weight: var(--font-medium);
+  --user-profile-email-size: var(--text-sm);
+  --user-profile-email-color: var(--text-secondary);
+  --user-profile-item-size: var(--text-sm);
+  
+  /* User Profile Z-index and Animation */
+  --user-profile-z-index: var(--z-50);
+  --user-profile-transition-duration: 0.2s;
+  --user-profile-transition-timing: ease-in-out;
+  
+  /* User Profile Header */
+  --user-profile-header-padding: var(--inset-md, var(--space-4));
+  --user-profile-header-border: var(--border-default);
+  
+  /* User Profile Divider */
+  --user-profile-divider-color: var(--border-default);
+  --user-profile-divider-margin: var(--inset-xs, var(--space-2)) 0;
+}
+
+[data-theme="dark"] {
+  --profile-bg: var(--bg-surface);
+  --profile-text: var(--text-primary);
+  --profile-border: var(--border-default);
+  --profile-section-bg: var(--bg-element);
+}
 
 :host {
   display: block;

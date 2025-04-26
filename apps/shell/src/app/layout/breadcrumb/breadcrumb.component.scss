@@ -2,7 +2,59 @@
 @use 'styles/abstracts' as *;
 @use 'styles/utilities/layout-mixins' as utility-layout;
 
-/* Remove local theme variable definitions and use global theme variables */
+/*
+ * Breadcrumb Component
+ * Contains variables for the breadcrumb component
+ */
+
+// ========================================
+// Breadcrumb Component Variables
+// ========================================
+
+:root {
+  // Layout & Positioning
+  --breadcrumb-height: 48px;
+  --breadcrumb-padding: 0 24px;
+  --breadcrumb-margin: 0;
+  --breadcrumb-position-top: var(--header-height, var(--space-14, 56px));
+  --breadcrumb-z-index: var(--z-30, 800);
+  --sidenav-width-collapsed: 64px; /* Ensure this matches exact width in sidenav */
+  
+  // Colors & Styling
+  --breadcrumb-bg: var(--bg-surface);
+  --breadcrumb-text: var(--text-primary);
+  --breadcrumb-border-color: var(--border-light);
+  --breadcrumb-shadow: var(--shadow-sm, 0 var(--space-0-25, 1px) var(--space-0-5, 2px) rgba(0, 0, 0, 0.05));
+  
+  // Item Styling
+  --breadcrumb-item-padding: var(--inset-xs, var(--space-1, 4px));
+  --breadcrumb-item-gap: var(--inset-xs, var(--space-1, 4px));
+  --breadcrumb-item-font-size: var(--font-size-sm, var(--text-sm, 14px));
+  --breadcrumb-item-font-weight: var(--font-weight-medium, 500);
+  --breadcrumb-item-icon-size: var(--space-4, 16px);
+  
+  // Item States
+  --breadcrumb-item-hover-text: var(--primary-500);
+  --breadcrumb-item-active-text: var(--text-secondary);
+  
+  // Separator
+  --breadcrumb-separator-color: var(--text-tertiary);
+  --breadcrumb-separator-margin: 0 var(--inset-xs, var(--space-1, 4px));
+  
+  // Transitions
+  --breadcrumb-transition: all 150ms ease;
+}
+
+// Dark theme overrides
+[data-theme="dark"] {
+  --breadcrumb-bg: var(--bg-secondary, #1e1e1e);
+  --breadcrumb-border-color: var(--border-dark, #383838);
+  --breadcrumb-shadow: var(--shadow-md, 0 2px 8px rgba(0, 0, 0, 0.2));
+  --breadcrumb-separator-color: var(--text-tertiary, #6c757d);
+  --breadcrumb-text: var(--text-primary, #e9ecef);
+  --breadcrumb-item-active-text: var(--text-secondary, #adb5bd);
+  --breadcrumb-item-hover-text: var(--primary-light, #30b1ff);
+}
 
 .breadcrumb-container {
   display: flex;

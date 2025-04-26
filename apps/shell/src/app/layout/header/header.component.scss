@@ -2,6 +2,99 @@
 @use 'styles/abstracts' as *;
 @use 'styles/utilities/layout-mixins' as utility-layout;
 
+// ========================================
+// Header Component Variables
+// ========================================
+
+:root {
+  // Layout & Sizing
+  --header-height: 56px;
+  --header-padding: var(--inset-md, 12px);
+  --header-z-index: var(--z-50, 1000);
+  
+  // Colors & Styling
+  @include themed('--header-bg', var(--bg-primary), var(--bg-secondary, #1e1e1e));
+  @include themed('--header-text', var(--text-primary), var(--text-primary, #e9ecef));
+  @include themed('--header-border-color', var(--border-light), var(--border-dark, #383838));
+  @include themed('--header-shadow', var(--shadow-sm), var(--shadow-md, 0 2px 8px rgba(0, 0, 0, 0.2)));
+  
+  // Control Styling
+  --header-control-size: 40px;
+  --header-control-padding: var(--inset-xs, 8px);
+  --header-control-gap: var(--inset-sm, 10px);
+  --header-control-radius: var(--radius-full);
+  @include themed('--header-control-hover-bg', var(--bg-element-hover), var(--bg-element-hover, #383838));
+  @include themed('--header-icon-color', var(--text-secondary), var(--text-secondary, #adb5bd));
+  @include themed('--header-icon-hover-color', var(--text-primary), var(--text-primary, #e9ecef));
+  --header-icon-size: 24px;
+  
+  // Logo
+  --header-logo-width: 120px;
+  --header-logo-height: 32px;
+  --header-logo-margin: var(--inset-sm, 8px);
+  --header-logo-color: var(--primary-500);
+  --header-logo-size: 24px;
+  
+  // Title
+  --header-title-size: var(--text-md, 16px);
+  --header-title-weight: var(--font-medium, 500);
+  --header-title-spacing: normal;
+  --header-text-size: var(--text-sm, 14px);
+  
+  // Avatar
+  --header-avatar-size: 32px;
+  --header-avatar-radius: var(--radius-full);
+  @include themed('--header-avatar-border', var(--border-light), var(--border-dark, #383838));
+  
+  // Mobile adjustments
+  --header-mobile-padding: var(--inset-sm, 8px);
+  --header-mobile-control-gap: var(--inset-xs, 4px);
+  --header-mobile-control-gap-sm: var(--inset-xs, 4px);
+  --header-mobile-control-size: 36px;
+  --header-icon-size-mobile: 20px;
+  --header-avatar-size-mobile: 28px;
+  
+  // Spacer
+  --header-spacer-flex: 1;
+  
+  // Left and Right sections
+  --header-section-display: flex;
+  --header-section-align: center;
+  
+  // Transitions
+  --header-transition: all 200ms ease-in-out;
+}
+
+// Material toolbar overrides - using mixins instead of data-theme selectors
+.mat-toolbar {
+  &.header-toolbar {
+    background-color: var(--header-bg);
+    color: var(--header-text);
+    border-bottom: 1px solid var(--header-border-color);
+    box-shadow: var(--header-shadow);
+    padding: 0 var(--header-padding);
+    min-height: var(--header-height);
+    height: var(--header-height);
+    transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+    
+    @include breakpoint-down('md') {
+      padding: 0 var(--header-mobile-padding);
+    }
+  }
+}
+
+// Animation for panels
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 /* Header toolbar styles */
 .header-toolbar {
   position: fixed;
