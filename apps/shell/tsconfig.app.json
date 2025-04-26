@@ -9,7 +9,11 @@
     "src/**/*.d.ts", 
     "src/**/*.ts",
     "src/**/*.component.ts",
-    "src/**/*.module.ts"
+    "src/**/*.module.ts",
+    "../admin/src/app/feature-modules/**/*.ts",
+    "../hire/src/app/feature-modules/**/*.ts",
+    "../onboard/src/app/feature-modules/**/*.ts",
+    "../learn/src/app/feature-modules/**/*.ts"
   ],
   "exclude": ["jest.config.ts", "src/**/*.test.ts", "src/**/*.spec.ts"]
 }

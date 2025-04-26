@@ -165,8 +165,8 @@ export class MenuService {
           { label: 'Tasks', icon: '', route: '/hire/activity/tasks', exact: true }
         ]
       },
-      { label: 'Interviews', icon: 'people', route: '/hire/interviews', exact: false },
       { label: 'Jobs', icon: 'work', route: '/hire/jobs', exact: false },
+      { label: 'Interviews', icon: 'people', route: '/hire/interviews', exact: false },
       { label: 'Screen CVs', icon: 'assignment', route: '/hire/cvs', exact: false },
       { label: 'Tests', icon: 'quiz', route: '/hire/tests', exact: false },
       { label: 'Calendar', icon: 'calendar', route: '/hire/calendar', exact: false },
@@ -215,7 +215,7 @@ export class MenuService {
           { label: 'References', icon: '', route: '/admin/content/references', exact: true }
         ]
       },
-      { label: 'Group', icon: 'groups', route: '/admin/group', exact: false },
+      { label: 'Groups', icon: 'groups', route: '/admin/groups', exact: false },
       { label: 'Roles', icon: 'security', route: '/admin/roles', exact: false },
       { label: 'Audits', icon: 'fact_check', route: '/admin/audits', exact: false },
       { label: 'Settings', icon: 'settings', route: '/admin/settings', exact: false },
