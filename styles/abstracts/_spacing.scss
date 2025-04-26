@@ -47,7 +47,7 @@ $space-3xl: $space-24;   // 96px - 3x extra large spacing
 // ----------------------------------------
 // Default spacing for common UI patterns
 $input-padding-y: $space-2;   // 8px vertical padding for form inputs
-$input-padding-x: $space-3;   // 12px horizontal padding for form inputs
+// $input-padding-x should be defined only in padding.scss
 $btn-padding-y: $space-2;     // 8px vertical padding for buttons
 $btn-padding-x: $space-4;     // 16px horizontal padding for buttons
 $card-padding: $space-6;      // 24px padding for cards
@@ -60,26 +60,11 @@ $container-padding: $space-4;    // 16px default container padding
 $grid-gap: $space-6;             // 24px default grid gap
 $grid-gap-sm: $space-4;          // 16px small grid gap
 
-// Border Radius Scale
+// Border Radius Scale moved to _border-radius.scss
 // ----------------------------------------
-// Consistent rounding for UI elements
-$radius-none: 0;
-$radius-sm: 0.125rem;  // 2px
-$radius-md: 0.25rem;   // 4px
-$radius-lg: 0.5rem;    // 8px
-$radius-xl: 0.75rem;   // 12px
-$radius-2xl: 1rem;     // 16px
-$radius-3xl: 1.5rem;   // 24px
-$radius-full: 9999px;  // Fully rounded (circles, pills)
 
-// Box Shadows
+// Box Shadows moved to _shadows.scss
 // ----------------------------------------
-$shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-$shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-$shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-$shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-$shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-$shadow-inner: inset 0 2px 4px 0 rgba(0, 0, 0, 0.06);
 
 // Define CSS Custom Properties
 // ----------------------------------------
@@ -120,28 +105,10 @@ $shadow-inner: inset 0 2px 4px 0 rgba(0, 0, 0, 0.06);
   
   // Component Spacing
   --input-padding-y: #{$input-padding-y};
-  --input-padding-x: #{$input-padding-x};
+  // Use --input-padding-x from padding.scss
   --btn-padding-y: #{$btn-padding-y};
   --btn-padding-x: #{$btn-padding-x};
   --card-padding: #{$card-padding};
   --section-spacing: #{$section-spacing};
   --component-spacing: #{$component-spacing};
-  
-  // Border Radius
-  --radius-none: #{$radius-none};
-  --radius-sm: #{$radius-sm};
-  --radius-md: #{$radius-md};
-  --radius-lg: #{$radius-lg};
-  --radius-xl: #{$radius-xl};
-  --radius-2xl: #{$radius-2xl};
-  --radius-3xl: #{$radius-3xl};
-  --radius-full: #{$radius-full};
-  
-  // Shadows
-  --shadow-sm: #{$shadow-sm};
-  --shadow-md: #{$shadow-md};
-  --shadow-lg: #{$shadow-lg};
-  --shadow-xl: #{$shadow-xl};
-  --shadow-2xl: #{$shadow-2xl};
-  --shadow-inner: #{$shadow-inner};
 } 

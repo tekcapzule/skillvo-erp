@@ -87,13 +87,8 @@ $card-header-height: $size-16;    // 64px
 $card-footer-height: $size-12;    // 48px
 $card-border-radius: $size-2;     // 8px
 
-// Icon Sizes
+// Icon Sizes moved to _icons.scss
 // ----------------------------------------
-$icon-size-xs: $size-4;  // 16px
-$icon-size-sm: $size-5;  // 20px
-$icon-size-md: $size-6;  // 24px
-$icon-size-lg: $size-8;  // 32px
-$icon-size-xl: $size-12; // 48px
 
 // Modal & Dialog Sizes
 // ----------------------------------------
@@ -104,15 +99,8 @@ $dialog-width-xl: 1000px;
 $dialog-max-height: 90vh;
 $dialog-border-radius: $size-2; // 8px
 
-// Z-index Scale
+// Z-index Scale moved to _accessibility.scss
 // ----------------------------------------
-$z-index-dropdown: 1000;
-$z-index-sticky: 1020;
-$z-index-fixed: 1030;
-$z-index-modal-backdrop: 1040;
-$z-index-modal: 1050;
-$z-index-popover: 1060;
-$z-index-tooltip: 1070;
 
 // Define CSS Custom Properties
 // ----------------------------------------
@@ -191,12 +179,7 @@ $z-index-tooltip: 1070;
   --card-footer-height: #{$card-footer-height};
   --card-border-radius: #{$card-border-radius};
   
-  // Icon Sizes
-  --icon-size-xs: #{$icon-size-xs};
-  --icon-size-sm: #{$icon-size-sm};
-  --icon-size-md: #{$icon-size-md};
-  --icon-size-lg: #{$icon-size-lg};
-  --icon-size-xl: #{$icon-size-xl};
+  // Icon Sizes moved to _icons.scss
   
   // Modal & Dialog Sizes
   --dialog-width-sm: #{$dialog-width-sm};
@@ -206,12 +189,5 @@ $z-index-tooltip: 1070;
   --dialog-max-height: #{$dialog-max-height};
   --dialog-border-radius: #{$dialog-border-radius};
   
-  // Z-index Scale
-  --z-index-dropdown: #{$z-index-dropdown};
-  --z-index-sticky: #{$z-index-sticky};
-  --z-index-fixed: #{$z-index-fixed};
-  --z-index-modal-backdrop: #{$z-index-modal-backdrop};
-  --z-index-modal: #{$z-index-modal};
-  --z-index-popover: #{$z-index-popover};
-  --z-index-tooltip: #{$z-index-tooltip};
+  // Z-index Scale moved to _accessibility.scss
 } 

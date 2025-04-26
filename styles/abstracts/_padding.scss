@@ -78,11 +78,10 @@ $sidenav-padding: $padding-md;
 $sidenav-item-padding-x: $padding-x-sm;
 $sidenav-item-padding-y: $padding-y-xs;
 
-$card-padding: $padding-md;
+// Use card-padding from spacing.scss
 $button-padding-x: $padding-x-sm;
 $button-padding-y: $padding-y-xs;
 $input-padding-x: $padding-x-sm;
-$input-padding-y: $padding-y-xs;
 
 $dialog-padding: $padding-lg;
 $tooltip-padding: $padding-xs;
@@ -127,11 +126,11 @@ $mobile-header-padding-x: $padding-x-xs;
   --sidenav-padding: #{$sidenav-padding};
   --sidenav-item-padding-x: #{$sidenav-item-padding-x};
   --sidenav-item-padding-y: #{$sidenav-item-padding-y};
-  --card-padding: #{$card-padding};
+  --card-padding: #{spacing.$card-padding};
   --button-padding-x: #{$button-padding-x};
   --button-padding-y: #{$button-padding-y};
   --input-padding-x: #{$input-padding-x};
-  --input-padding-y: #{$input-padding-y};
+  --input-padding-y: #{spacing.$input-padding-y};
   --dialog-padding: #{$dialog-padding};
   --tooltip-padding: #{$tooltip-padding};
   --popover-padding: #{$popover-padding};
