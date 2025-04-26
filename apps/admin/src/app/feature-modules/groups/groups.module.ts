@@ -2,13 +2,13 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { GroupsRoutingModule } from './groups-routing.module';
-
+import { GroupsHomeComponent } from './pages/groups-home.component';
 
 @NgModule({
-  declarations: [],
   imports: [
     CommonModule,
-    GroupsRoutingModule
+    GroupsRoutingModule,
+    GroupsHomeComponent
   ]
 })
 export class GroupsModule { }

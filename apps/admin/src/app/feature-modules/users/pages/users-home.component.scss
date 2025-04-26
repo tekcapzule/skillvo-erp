@@ -1,0 +1,28 @@
+:host {
+  display: block;
+  color: var(--text-color-primary);
+  transition: all 0.3s ease;
+}
+
+:host-context(.dark-theme) {
+  color: var(--text-color-primary-dark);
+}
+
+.users-container {
+  padding: 24px;
+  
+  h1 {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 16px;
+  }
+  
+  p {
+    font-size: 16px;
+    color: var(--text-color-secondary);
+    
+    :host-context(.dark-theme) & {
+      color: var(--text-color-secondary-dark);
+    }
+  }
+} 

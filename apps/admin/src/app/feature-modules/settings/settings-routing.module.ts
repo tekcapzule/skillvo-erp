@@ -1,7 +1,13 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { SettingsHomeComponent } from './pages/settings-home.component';
 
-const routes: Routes = [];
+const routes: Routes = [
+  {
+    path: '',
+    component: SettingsHomeComponent
+  }
+];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],

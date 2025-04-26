@@ -1,7 +1,13 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { RolesHomeComponent } from './pages/roles-home.component';
 
-const routes: Routes = [];
+const routes: Routes = [
+  {
+    path: '',
+    component: RolesHomeComponent
+  }
+];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],

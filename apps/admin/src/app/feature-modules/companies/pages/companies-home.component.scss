@@ -1,0 +1,32 @@
+:host {
+  display: block;
+  color: var(--text-color, #333);
+  transition: color 0.3s ease;
+
+  &:host-context(.dark-theme) {
+    color: var(--text-color-dark, #f5f5f5);
+  }
+}
+
+.companies-container {
+  padding: 24px;
+
+  h1 {
+    font-size: 28px;
+    font-weight: 600;
+    margin-bottom: 16px;
+
+    &:host-context(.dark-theme) {
+      color: var(--heading-color-dark, #fff);
+    }
+  }
+
+  p {
+    font-size: 16px;
+    line-height: 1.5;
+    
+    &:host-context(.dark-theme) {
+      color: var(--text-color-dark, #e0e0e0);
+    }
+  }
+} 
