@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ActivityHomeComponent } from './pages/activity-home.component';
 // Import the components for learnings and tasks
 import { LearningsComponent } from './pages/learnings.component';
 import { TasksComponent } from './pages/tasks.component';
@@ -8,8 +7,8 @@ import { TasksComponent } from './pages/tasks.component';
 const routes: Routes = [
   {
     path: '',
-    component: ActivityHomeComponent,
-    data: { breadcrumb: 'My Activity' }
+    redirectTo: 'learnings',
+    pathMatch: 'full'
   },
   {
     path: 'learnings',

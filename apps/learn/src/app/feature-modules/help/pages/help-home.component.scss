@@ -1,0 +1,35 @@
+.help-container {
+  padding: 24px;
+  
+  h1 {
+    font-size: 28px;
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+  
+  p {
+    color: var(--text-secondary);
+    margin-bottom: 24px;
+  }
+  
+  .content-wrapper {
+    background-color: white;
+    border-radius: 8px;
+    padding: 24px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    
+    .welcome-message {
+      h2 {
+        font-size: 20px;
+        font-weight: 500;
+        margin-bottom: 16px;
+        color: var(--primary-color);
+      }
+      
+      p {
+        line-height: 1.5;
+        font-size: 16px;
+      }
+    }
+  }
+} 

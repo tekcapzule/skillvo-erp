@@ -27,6 +27,16 @@ export const appRoutes: Route[] = [
     data: { breadcrumb: 'References' }
   },
   {
+    path: 'tests',
+    loadChildren: () => import('./feature-modules/tests/tests.module').then(m => m.TestsModule),
+    data: { breadcrumb: 'Tests' }
+  },
+  {
+    path: 'batches',
+    loadChildren: () => import('./feature-modules/batches/batches.module').then(m => m.BatchesModule),
+    data: { breadcrumb: 'Batches' }
+  },
+  {
     path: 'calendar',
     loadChildren: () => import('./feature-modules/calendar/calendar.module').then(m => m.CalendarModule),
     data: { breadcrumb: 'Calendar' }
