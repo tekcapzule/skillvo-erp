@@ -24,22 +24,6 @@
   }
 }
 
-// Apply styles only in ocean theme
-@mixin ocean-theme {
-  html[data-theme="ocean"] &,
-  .ocean-theme & {
-    @content;
-  }
-}
-
-// Apply styles only in classic theme
-@mixin classic-theme {
-  html[data-theme="classic"] &,
-  .classic-theme & {
-    @content;
-  }
-}
-
 // Apply theme-specific styles to a property
 @mixin themed($property, $light-value, $dark-value) {
   #{$property}: $light-value;
@@ -50,23 +34,11 @@
 }
 
 // Apply theme-specific styles with four possible themes
-@mixin themed-complete($property, $light-value, $dark-value, $ocean-value: null, $classic-value: null) {
+@mixin themed-complete($property, $light-value, $dark-value) {
   #{$property}: $light-value;
   
   @include dark-mode {
     #{$property}: $dark-value;
-  }
-  
-  @if $ocean-value {
-    @include ocean-theme {
-      #{$property}: $ocean-value;
-    }
-  }
-  
-  @if $classic-value {
-    @include classic-theme {
-      #{$property}: $classic-value;
-    }
   }
 }
 

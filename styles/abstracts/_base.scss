@@ -7,5 +7,5 @@ body.profile-open {
 
 /* Adjust z-index layers for overlays */
 .app-switcher-open app-switcher .app-switcher-container {
-  z-index: var(--z-overlay, 1000);
+  z-index: var(--z-overlay, var(--z-index-overlay));
 } 

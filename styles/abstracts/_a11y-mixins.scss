@@ -18,7 +18,7 @@
 }
 
 // Focus ring styles for keyboard navigation
-@mixin focus-ring($color: var(--skillvo-focus-ring-color), $width: var(--skillvo-focus-ring-width), $offset: var(--skillvo-focus-ring-offset)) {
+@mixin focus-ring($color: var(--focus-ring-color), $width: var(--focus-ring-width), $offset: var(--focus-ring-offset)) {
   outline: $width solid $color;
   outline-offset: $offset;
 }
@@ -44,7 +44,7 @@
 // The WCAG Target Size (2.5.5) criterion requires interactive elements to be at least 44x44px
 
 // Basic accessible touch target
-@mixin accessible-touch-target($size: var(--skillvo-min-touch-target)) {
+@mixin accessible-touch-target($size: var(--min-touch-target)) {
   min-width: $size;
   min-height: $size;
   
@@ -56,8 +56,8 @@
 
 // Base touch target that ensures minimum tap area size
 @mixin touch-target-base {
-  min-width: var(--skillvo-min-touch-target, 44px);
-  min-height: var(--skillvo-min-touch-target, 44px);
+  min-width: var(--min-touch-target, 44px);
+  min-height: var(--min-touch-target, 44px);
   // Display as inline-flex to ensure proper sizing when used on inline elements
   display: inline-flex;
   align-items: center;
@@ -77,8 +77,8 @@
     transform: translate(-50%, -50%);
     width: 100%;
     height: 100%;
-    min-width: var(--skillvo-min-touch-target, 44px);
-    min-height: var(--skillvo-min-touch-target, 44px);
+    min-width: var(--min-touch-target, 44px);
+    min-height: var(--min-touch-target, 44px);
     z-index: -1;
   }
 }
@@ -150,12 +150,12 @@
 // Safely apply animations with reduced motion alternatives
 @mixin safe-animation($properties...) {
   @each $prop in $properties {
-    transition: $prop var(--skillvo-motion-duration-medium) var(--skillvo-motion-easing-standard);
+    transition: $prop var(--motion-duration-medium) var(--motion-easing-standard);
   }
   
   @include reduced-motion {
     @each $prop in $properties {
-      transition: $prop var(--skillvo-motion-duration-short) linear;
+      transition: $prop var(--reduced-motion-duration-short) linear;
     }
   }
 }
@@ -172,7 +172,7 @@
 }
 
 // Ensure text has sufficient contrast with its background
-@mixin readable-text($bg-color, $dark-text: var(--skillvo-text-primary), $light-text: var(--skillvo-text-on-dark)) {
+@mixin readable-text($bg-color, $dark-text: var(--text-primary), $light-text: var(--text-on-dark)) {
   $brightness: (red($bg-color) * 299 + green($bg-color) * 587 + blue($bg-color) * 114) / 1000;
   @if $brightness > 155 {
     color: $dark-text;

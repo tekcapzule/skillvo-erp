@@ -9,7 +9,7 @@
 $focus-outline-width: 2px !default;
 $focus-outline-style: solid !default;
 $focus-outline-offset: 2px !default;
-$focus-outline-color: var(--skillvo-focus-ring-color) !default;
+$focus-outline-color: var(--focus-ring-color) !default;
 
 // Motion & Animation
 // ----------------------------------------
@@ -55,8 +55,8 @@ $min-interactive-element-spacing: 8px !default;
 
 // Skip Navigation
 // ----------------------------------------
-$skip-link-bg: var(--skillvo-surface-background) !default;
-$skip-link-color: var(--skillvo-primary-text) !default;
+$skip-link-bg: var(--surface-background) !default;
+$skip-link-color: var(--text-primary) !default;
 $skip-link-padding: 8px 16px !default;
 $skip-link-position-top: 8px !default;
 $skip-link-position-left: 8px !default;
@@ -65,23 +65,52 @@ $skip-link-position-left: 8px !default;
 // ----------------------------------------
 :root {
   // Focus indicators
-  --skillvo-focus-ring-color: rgba(var(--primary-rgb, 37, 99, 235), 0.8);
-  --skillvo-focus-ring-width: #{$focus-outline-width};
-  --skillvo-focus-ring-offset: #{$focus-outline-offset};
+  --focus-ring-color: rgba(var(--primary-rgb, 37, 99, 235), 0.8);
+  --focus-ring-width: #{$focus-outline-width};
+  --focus-ring-offset: #{$focus-outline-offset};
+  --focus-ring-style: #{$focus-outline-style};
   
   // Motion preferences
-  --skillvo-motion-duration-short: #{$standard-motion-duration-short};
-  --skillvo-motion-duration-medium: #{$standard-motion-duration-medium};
-  --skillvo-motion-duration-long: #{$standard-motion-duration-long};
-  --skillvo-motion-easing-standard: #{$standard-ease-timing};
-  --skillvo-motion-easing-decelerate: #{$deceleration-timing};
-  --skillvo-motion-easing-accelerate: #{$acceleration-timing};
+  --motion-duration-short: #{$standard-motion-duration-short};
+  --motion-duration-medium: #{$standard-motion-duration-medium};
+  --motion-duration-long: #{$standard-motion-duration-long};
+  --motion-easing-standard: #{$standard-ease-timing};
+  --motion-easing-decelerate: #{$deceleration-timing};
+  --motion-easing-accelerate: #{$acceleration-timing};
+  
+  // Reduced motion preferences
+  --reduced-motion-duration-short: #{$reduced-motion-duration-short};
+  --reduced-motion-duration-medium: #{$reduced-motion-duration-medium};
+  --reduced-motion-duration-long: #{$reduced-motion-duration-long};
+  
+  // Keyboard navigation
+  --keyboard-focus-visible: #{$keyboard-focus-visible};
+  --keyboard-focus-ring-width: #{$keyboard-focus-ring-width};
+  --keyboard-focus-ring-offset: #{$keyboard-focus-ring-offset};
+  
+  // Color contrast
+  --min-contrast-ratio: #{$min-contrast-ratio};
+  --enhanced-contrast-ratio: #{$enhanced-contrast-ratio};
+  
+  // Z-index layers
+  --z-index-skip-link: #{$z-index-skip-link};
+  --z-index-modal: #{$z-index-modal};
+  --z-index-popover: #{$z-index-popover};
+  --z-index-tooltip: #{$z-index-tooltip};
+  --z-index-header: #{$z-index-header};
+  --z-index-dropdown: #{$z-index-dropdown};
+  --z-index-overlay: #{$z-index-overlay};
+  --z-index-default: #{$z-index-default};
+  --z-index-negative: #{$z-index-negative};
   
   // Touch targets
-  --skillvo-min-touch-target: #{$min-touch-target-size};
-  --skillvo-interactive-spacing: #{$min-interactive-element-spacing};
+  --min-touch-target: #{$min-touch-target-size};
+  --interactive-spacing: #{$min-interactive-element-spacing};
   
-  // Text colors for contrast
-  --skillvo-text-primary: var(--text-primary);
-  --skillvo-text-on-dark: var(--text-on-dark);
+  // Skip navigation
+  --skip-link-bg: #{$skip-link-bg};
+  --skip-link-color: #{$skip-link-color};
+  --skip-link-padding: #{$skip-link-padding};
+  --skip-link-position-top: #{$skip-link-position-top};
+  --skip-link-position-left: #{$skip-link-position-left};
 } 
