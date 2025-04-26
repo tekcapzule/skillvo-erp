@@ -1,0 +1,143 @@
+// ========================================
+// Padding Variables
+// ========================================
+// Consistent padding values for various UI elements
+// Uses the same base unit as spacing (4px)
+
+// Import base spacing unit for consistency
+@use 'spacing' as spacing;
+
+// Base Padding Definitions
+// ----------------------------------------
+$padding-none: 0;
+$padding-xs: spacing.$space-2;    // 8px
+$padding-sm: spacing.$space-4;    // 16px
+$padding-md: spacing.$space-6;    // 24px
+$padding-lg: spacing.$space-8;    // 32px
+$padding-xl: spacing.$space-10;   // 40px
+$padding-2xl: spacing.$space-16;  // 64px
+
+// Directional Padding Presets
+// ----------------------------------------
+// Horizontal (left/right)
+$padding-x-none: 0;
+$padding-x-xs: spacing.$space-2;  // 8px
+$padding-x-sm: spacing.$space-4;  // 16px
+$padding-x-md: spacing.$space-6;  // 24px
+$padding-x-lg: spacing.$space-8;  // 32px
+$padding-x-xl: spacing.$space-10; // 40px
+
+// Vertical (top/bottom)
+$padding-y-none: 0;
+$padding-y-xs: spacing.$space-2;  // 8px
+$padding-y-sm: spacing.$space-4;  // 16px
+$padding-y-md: spacing.$space-6;  // 24px
+$padding-y-lg: spacing.$space-8;  // 32px
+$padding-y-xl: spacing.$space-10; // 40px
+
+// Individual Directions
+// ----------------------------------------
+// Top
+$padding-top-none: 0;
+$padding-top-xs: spacing.$space-2;  // 8px
+$padding-top-sm: spacing.$space-4;  // 16px
+$padding-top-md: spacing.$space-6;  // 24px
+$padding-top-lg: spacing.$space-8;  // 32px
+$padding-top-xl: spacing.$space-10; // 40px
+
+// Right
+$padding-right-none: 0;
+$padding-right-xs: spacing.$space-2;  // 8px
+$padding-right-sm: spacing.$space-4;  // 16px
+$padding-right-md: spacing.$space-6;  // 24px
+$padding-right-lg: spacing.$space-8;  // 32px
+$padding-right-xl: spacing.$space-10; // 40px
+
+// Bottom
+$padding-bottom-none: 0;
+$padding-bottom-xs: spacing.$space-2;  // 8px
+$padding-bottom-sm: spacing.$space-4;  // 16px
+$padding-bottom-md: spacing.$space-6;  // 24px
+$padding-bottom-lg: spacing.$space-8;  // 32px
+$padding-bottom-xl: spacing.$space-10; // 40px
+
+// Left
+$padding-left-none: 0;
+$padding-left-xs: spacing.$space-2;  // 8px
+$padding-left-sm: spacing.$space-4;  // 16px
+$padding-left-md: spacing.$space-6;  // 24px
+$padding-left-lg: spacing.$space-8;  // 32px
+$padding-left-xl: spacing.$space-10; // 40px
+
+// Component-Specific Padding
+// ----------------------------------------
+$header-padding-x: $padding-x-sm;
+$header-padding-y: $padding-y-xs;
+
+$sidenav-padding: $padding-md;
+$sidenav-item-padding-x: $padding-x-sm;
+$sidenav-item-padding-y: $padding-y-xs;
+
+$card-padding: $padding-md;
+$button-padding-x: $padding-x-sm;
+$button-padding-y: $padding-y-xs;
+$input-padding-x: $padding-x-sm;
+$input-padding-y: $padding-y-xs;
+
+$dialog-padding: $padding-lg;
+$tooltip-padding: $padding-xs;
+$popover-padding: $padding-sm;
+
+// Mobile-specific padding adjustments
+$mobile-padding-base: $padding-sm;
+$mobile-card-padding: $padding-sm;
+$mobile-header-padding-x: $padding-x-xs;
+
+// Define CSS Custom Properties
+// ----------------------------------------
+:root {
+  // Base Padding
+  --padding-none: #{$padding-none};
+  --padding-xs: #{$padding-xs};
+  --padding-sm: #{$padding-sm};
+  --padding-md: #{$padding-md};
+  --padding-lg: #{$padding-lg};
+  --padding-xl: #{$padding-xl};
+  --padding-2xl: #{$padding-2xl};
+  
+  // Directional Padding - Horizontal
+  --padding-x-none: #{$padding-x-none};
+  --padding-x-xs: #{$padding-x-xs};
+  --padding-x-sm: #{$padding-x-sm};
+  --padding-x-md: #{$padding-x-md};
+  --padding-x-lg: #{$padding-x-lg};
+  --padding-x-xl: #{$padding-x-xl};
+  
+  // Directional Padding - Vertical
+  --padding-y-none: #{$padding-y-none};
+  --padding-y-xs: #{$padding-y-xs};
+  --padding-y-sm: #{$padding-y-sm};
+  --padding-y-md: #{$padding-y-md};
+  --padding-y-lg: #{$padding-y-lg};
+  --padding-y-xl: #{$padding-y-xl};
+  
+  // Component-Specific Padding
+  --header-padding-x: #{$header-padding-x};
+  --header-padding-y: #{$header-padding-y};
+  --sidenav-padding: #{$sidenav-padding};
+  --sidenav-item-padding-x: #{$sidenav-item-padding-x};
+  --sidenav-item-padding-y: #{$sidenav-item-padding-y};
+  --card-padding: #{$card-padding};
+  --button-padding-x: #{$button-padding-x};
+  --button-padding-y: #{$button-padding-y};
+  --input-padding-x: #{$input-padding-x};
+  --input-padding-y: #{$input-padding-y};
+  --dialog-padding: #{$dialog-padding};
+  --tooltip-padding: #{$tooltip-padding};
+  --popover-padding: #{$popover-padding};
+  
+  // Mobile-specific padding
+  --mobile-padding-base: #{$mobile-padding-base};
+  --mobile-card-padding: #{$mobile-card-padding};
+  --mobile-header-padding-x: #{$mobile-header-padding-x};
+} 

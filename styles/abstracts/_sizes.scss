@@ -1,0 +1,217 @@
+// ========================================
+// Size Variables
+// ========================================
+// Control dimensions for UI elements and components
+// Uses the base unit of 4px for consistency with spacing and padding
+
+// Base Size Unit
+// ----------------------------------------
+$size-unit: 0.25rem; // 4px with 16px base font size
+
+// Base Size Scale
+// ----------------------------------------
+$size-0: 0;
+$size-1: $size-unit;        // 4px
+$size-2: $size-unit * 2;    // 8px
+$size-3: $size-unit * 3;    // 12px
+$size-4: $size-unit * 4;    // 16px
+$size-5: $size-unit * 5;    // 20px
+$size-6: $size-unit * 6;    // 24px
+$size-7: $size-unit * 7;    // 28px
+$size-8: $size-unit * 8;    // 32px
+$size-10: $size-unit * 10;  // 40px
+$size-12: $size-unit * 12;  // 48px
+$size-16: $size-unit * 16;  // 64px
+$size-20: $size-unit * 20;  // 80px
+$size-24: $size-unit * 24;  // 96px
+$size-32: $size-unit * 32;  // 128px
+$size-40: $size-unit * 40;  // 160px
+$size-48: $size-unit * 48;  // 192px
+$size-64: $size-unit * 64;  // 256px
+
+// Header Component Sizes
+// ----------------------------------------
+$header-height: $size-16;              // 64px
+$header-height-mobile: $size-12;       // 48px
+$header-icon-size: $size-6;            // 24px
+$header-icon-container-size: $size-10; // 40px
+$header-icon-container-size-mobile: $size-8; // 32px
+
+// Sidenav Component Sizes
+// ----------------------------------------
+$sidenav-width: 15rem;                  // 240px
+$sidenav-width-collapsed: $size-16;     // 64px
+$sidenav-item-height: $size-12;         // 48px
+$sidenav-icon-container-width: $size-16; // 64px
+$sidenav-icon-size: $size-6;            // 24px
+$sidenav-header-height: $header-height; // 64px
+$sidenav-footer-height: $size-10;       // 40px
+
+// Button Sizes
+// ----------------------------------------
+$button-height-sm: $size-8;   // 32px
+$button-height-md: $size-10;  // 40px
+$button-height-lg: $size-12;  // 48px
+$button-icon-size-sm: $size-4; // 16px
+$button-icon-size-md: $size-5; // 20px
+$button-icon-size-lg: $size-6; // 24px
+
+// Form Control Sizes
+// ----------------------------------------
+$input-height-sm: $size-8;   // 32px
+$input-height-md: $size-10;  // 40px
+$input-height-lg: $size-12;  // 48px
+$input-icon-size: $size-5;   // 20px
+$input-border-width: 1px;
+$input-border-radius: 4px;
+
+// Avatar Sizes
+// ----------------------------------------
+$avatar-size-xs: $size-8;   // 32px
+$avatar-size-sm: $size-10;  // 40px
+$avatar-size-md: $size-12;  // 48px
+$avatar-size-lg: $size-16;  // 64px
+$avatar-size-xl: $size-24;  // 96px
+
+// Badge Sizes
+// ----------------------------------------
+$badge-size-sm: $size-4;   // 16px
+$badge-size-md: $size-5;   // 20px
+$badge-size-lg: $size-6;   // 24px
+
+// Card Component Sizes
+// ----------------------------------------
+$card-min-width: $size-64;        // 256px
+$card-max-width: $size-64 * 2;    // 512px
+$card-header-height: $size-16;    // 64px
+$card-footer-height: $size-12;    // 48px
+$card-border-radius: $size-2;     // 8px
+
+// Icon Sizes
+// ----------------------------------------
+$icon-size-xs: $size-4;  // 16px
+$icon-size-sm: $size-5;  // 20px
+$icon-size-md: $size-6;  // 24px
+$icon-size-lg: $size-8;  // 32px
+$icon-size-xl: $size-12; // 48px
+
+// Modal & Dialog Sizes
+// ----------------------------------------
+$dialog-width-sm: 400px;
+$dialog-width-md: 600px;
+$dialog-width-lg: 800px;
+$dialog-width-xl: 1000px;
+$dialog-max-height: 90vh;
+$dialog-border-radius: $size-2; // 8px
+
+// Z-index Scale
+// ----------------------------------------
+$z-index-dropdown: 1000;
+$z-index-sticky: 1020;
+$z-index-fixed: 1030;
+$z-index-modal-backdrop: 1040;
+$z-index-modal: 1050;
+$z-index-popover: 1060;
+$z-index-tooltip: 1070;
+
+// Define CSS Custom Properties
+// ----------------------------------------
+:root {
+  // Base Sizes
+  --size-unit: #{$size-unit};
+  
+  // Size Scale
+  --size-0: #{$size-0};
+  --size-1: #{$size-1};
+  --size-2: #{$size-2};
+  --size-3: #{$size-3};
+  --size-4: #{$size-4};
+  --size-5: #{$size-5};
+  --size-6: #{$size-6};
+  --size-7: #{$size-7};
+  --size-8: #{$size-8};
+  --size-10: #{$size-10};
+  --size-12: #{$size-12};
+  --size-16: #{$size-16};
+  --size-20: #{$size-20};
+  --size-24: #{$size-24};
+  --size-32: #{$size-32};
+  --size-40: #{$size-40};
+  --size-48: #{$size-48};
+  --size-64: #{$size-64};
+  
+  // Header Sizes
+  --header-height: #{$header-height};
+  --header-height-mobile: #{$header-height-mobile};
+  --header-icon-size: #{$header-icon-size};
+  --header-icon-container-size: #{$header-icon-container-size};
+  --header-icon-container-size-mobile: #{$header-icon-container-size-mobile};
+  
+  // Sidenav Sizes
+  --sidenav-width: #{$sidenav-width};
+  --sidenav-width-collapsed: #{$sidenav-width-collapsed};
+  --sidenav-item-height: #{$sidenav-item-height};
+  --sidenav-icon-container-width: #{$sidenav-icon-container-width};
+  --sidenav-icon-size: #{$sidenav-icon-size};
+  --sidenav-header-height: #{$sidenav-header-height};
+  --sidenav-footer-height: #{$sidenav-footer-height};
+  
+  // Button Sizes
+  --button-height-sm: #{$button-height-sm};
+  --button-height-md: #{$button-height-md};
+  --button-height-lg: #{$button-height-lg};
+  --button-icon-size-sm: #{$button-icon-size-sm};
+  --button-icon-size-md: #{$button-icon-size-md};
+  --button-icon-size-lg: #{$button-icon-size-lg};
+  
+  // Form Control Sizes
+  --input-height-sm: #{$input-height-sm};
+  --input-height-md: #{$input-height-md};
+  --input-height-lg: #{$input-height-lg};
+  --input-icon-size: #{$input-icon-size};
+  --input-border-width: #{$input-border-width};
+  --input-border-radius: #{$input-border-radius};
+  
+  // Avatar Sizes
+  --avatar-size-xs: #{$avatar-size-xs};
+  --avatar-size-sm: #{$avatar-size-sm};
+  --avatar-size-md: #{$avatar-size-md};
+  --avatar-size-lg: #{$avatar-size-lg};
+  --avatar-size-xl: #{$avatar-size-xl};
+  
+  // Badge Sizes
+  --badge-size-sm: #{$badge-size-sm};
+  --badge-size-md: #{$badge-size-md};
+  --badge-size-lg: #{$badge-size-lg};
+  
+  // Card Sizes
+  --card-min-width: #{$card-min-width};
+  --card-max-width: #{$card-max-width};
+  --card-header-height: #{$card-header-height};
+  --card-footer-height: #{$card-footer-height};
+  --card-border-radius: #{$card-border-radius};
+  
+  // Icon Sizes
+  --icon-size-xs: #{$icon-size-xs};
+  --icon-size-sm: #{$icon-size-sm};
+  --icon-size-md: #{$icon-size-md};
+  --icon-size-lg: #{$icon-size-lg};
+  --icon-size-xl: #{$icon-size-xl};
+  
+  // Modal & Dialog Sizes
+  --dialog-width-sm: #{$dialog-width-sm};
+  --dialog-width-md: #{$dialog-width-md};
+  --dialog-width-lg: #{$dialog-width-lg};
+  --dialog-width-xl: #{$dialog-width-xl};
+  --dialog-max-height: #{$dialog-max-height};
+  --dialog-border-radius: #{$dialog-border-radius};
+  
+  // Z-index Scale
+  --z-index-dropdown: #{$z-index-dropdown};
+  --z-index-sticky: #{$z-index-sticky};
+  --z-index-fixed: #{$z-index-fixed};
+  --z-index-modal-backdrop: #{$z-index-modal-backdrop};
+  --z-index-modal: #{$z-index-modal};
+  --z-index-popover: #{$z-index-popover};
+  --z-index-tooltip: #{$z-index-tooltip};
+} 

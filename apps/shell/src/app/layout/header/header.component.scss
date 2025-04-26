@@ -8,12 +8,12 @@
   top: 0;
   left: 0;
   right: 0;
-  z-index: var(--header-z-index);
+  z-index: var(--z-index-fixed);
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 16px; /* Consistent padding */
-  height: var(--header-height, 56px);
+  padding: 0 var(--padding-x-sm);
+  height: var(--header-height);
   @include theme-transition(background-color, border-color, box-shadow);
 }
 
@@ -33,9 +33,9 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 40px;
-  height: 40px;
-  margin: 0 8px;
+  width: var(--header-icon-container-size);
+  height: var(--header-icon-container-size);
+  margin: 0 var(--space-2);
   padding: 0;
   border-radius: 50%;
   overflow: hidden;
@@ -54,9 +54,9 @@
   }
   
   mat-icon {
-    font-size: 24px;
-    height: 24px;
-    width: 24px;
+    font-size: var(--icon-size-md);
+    height: var(--icon-size-md);
+    width: var(--icon-size-md);
     color: var(--icon-color, var(--text-primary));
     display: flex;
     align-items: center;
@@ -71,7 +71,7 @@
 /* App Switcher specific adjustments */
 .app-switcher-button {
   margin-left: 0; /* Remove left margin for the first item */
-  margin-right: 4px; /* Reduced right margin */
+  margin-right: var(--space-1); /* Reduced right margin */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -90,11 +90,11 @@
 .app-logo {
   display: flex;
   align-items: center;
-  margin-left: 12px; /* Increased spacing after app switcher */
+  margin-left: var(--space-3); /* Increased spacing after app switcher */
   height: 100%;
 
   .app-name {
-    margin-left: 8px; /* REDUCED spacing between icon and text */
+    margin-left: var(--space-2); /* REDUCED spacing between icon and text */
     font-weight: 500;
     font-size: 18px;
     letter-spacing: normal;
@@ -104,9 +104,9 @@
 
   mat-icon {
     color: var(--icon-color, var(--primary-500));
-    font-size: 24px;
-    height: 24px;
-    width: 24px;
+    font-size: var(--icon-size-md);
+    height: var(--icon-size-md);
+    width: var(--icon-size-md);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -120,11 +120,11 @@
 /* Right section icons - proper spacing */
 .header-right {
   .theme-toggle, .notification-button {
-    margin: 0 8px; /* REDUCED spacing between icons */
+    margin: 0 var(--space-2); /* REDUCED spacing between icons */
   }
   
   .user-profile {
-    margin-left: 8px; /* REDUCED spacing */
+    margin-left: var(--space-2); /* REDUCED spacing */
     margin-right: 0; /* Remove right margin for the last item */
   }
 }
@@ -132,8 +132,8 @@
 /* User Profile */
 .user-profile {
   .avatar {
-    width: 32px;
-    height: 32px;
+    width: var(--avatar-size-xs);
+    height: var(--avatar-size-xs);
     border-radius: 50%;
     background-color: var(--primary-500);
     display: flex;
@@ -178,29 +178,30 @@
   }
 
   .header-toolbar {
-    padding: 0 12px;
+    padding: 0 var(--padding-x-xs);
+    height: var(--header-height-mobile);
   }
   
   .app-switcher-button, .notification-button, .theme-toggle, .user-profile {
-    width: 36px;
-    height: 36px;
-    margin: 0 4px;
+    width: var(--header-icon-container-size-mobile);
+    height: var(--header-icon-container-size-mobile);
+    margin: 0 var(--space-1);
   }
   
   .header-right {
     .theme-toggle, .notification-button {
-      margin: 0 6px;
+      margin: 0 var(--space-1);
     }
     
     .user-profile {
-      margin-left: 6px;
+      margin-left: var(--space-1);
     }
   }
   
   mat-icon {
-    font-size: 20px;
-    height: 20px;
-    width: 20px;
+    font-size: var(--icon-size-sm);
+    height: var(--icon-size-sm);
+    width: var(--icon-size-sm);
   }
   
   .user-profile .avatar {
@@ -212,6 +213,6 @@
 
 @media (max-width: var(--breakpoint-sm)) {
   .app-switcher-button, .notification-button, .theme-toggle, .user-profile {
-    margin: 0 var(--header-mobile-control-gap-sm);
+    margin: 0 var(--space-1);
   }
 }

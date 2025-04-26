@@ -29,7 +29,7 @@
   overflow: hidden;
   
   &.collapsed {
-    width: var(--sidenav-width-collapsed, 64px);
+    width: var(--sidenav-width-collapsed);
     transform: translateX(0);
   }
   
@@ -58,8 +58,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 40px;
-    height: 40px;
+    width: var(--header-icon-container-size);
+    height: var(--header-icon-container-size);
     padding: 0;
     margin: 0;
     border-radius: 50%;
@@ -73,9 +73,9 @@
     }
     
     mat-icon {
-      font-size: 24px;
-      height: 24px;
-      width: 24px;
+      font-size: var(--icon-size-md);
+      height: var(--icon-size-md);
+      width: var(--icon-size-md);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -162,13 +162,13 @@
   align-items: center;
   width: 100%;
   height: 100%;
-  padding-left: 4px;
+  padding-left: var(--padding-x-xs);
   box-sizing: border-box;
 }
 
 /* Keep icons in the same position even when active */
 .active-link .menu-item {
-  padding-left: 4px; /* Same as non-active state */
+  padding-left: var(--padding-x-xs); /* Same as non-active state */
 }
 
 /* Additional border for active item without affecting positioning */
@@ -188,10 +188,10 @@
 
 /* Style the menu icons */
 .menu-icon {
-  font-size: 24px !important;
-  width: 24px !important;
-  height: 24px !important;
-  margin-right: 16px;
+  font-size: var(--icon-size-md) !important;
+  width: var(--icon-size-md) !important;
+  height: var(--icon-size-md) !important;
+  margin-right: var(--padding-md);
   flex-shrink: 0;
   color: var(--icon-color, var(--text-secondary));
   display: flex;
@@ -215,9 +215,9 @@
 
 /* Expand icon */
 .expand-icon {
-  font-size: 24px !important;
-  width: 24px !important;
-  height: 24px !important;
+  font-size: var(--icon-size-md) !important;
+  width: var(--icon-size-md) !important;
+  height: var(--icon-size-md) !important;
   margin-left: auto;
   color: var(--icon-color, var(--text-secondary));
   display: flex;
@@ -231,13 +231,13 @@
   background-color: var(--sidenav-child-bg, rgba(0, 0, 0, 0.02));
   
   .child-menu-item {
-    padding-left: 48px;
+    padding-left: var(--padding-lg);
   }
 }
 
 /* Style the footer */
 .sidenav-footer {
-  height: var(--sidenav-footer-height, 40px);
+  height: var(--sidenav-footer-height);
   padding: 0 var(--sidenav-padding);
   border-top: 1px solid var(--sidenav-border-color, #e5e7eb);
   background-color: var(--sidenav-bg, #ffffff);
@@ -254,9 +254,9 @@
 
 // Material icon sizing - ensure consistent size and position
 mat-icon {
-  height: 24px;
-  width: 24px;
-  font-size: 24px;
+  height: var(--icon-size-md);
+  width: var(--icon-size-md);
+  font-size: var(--icon-size-md);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -285,7 +285,7 @@ mat-icon {
     }
     
     &.collapsed {
-      width: var(--sidenav-collapsed-width, 64px);
+      width: var(--sidenav-width-collapsed);
       transform: translateX(-100%);
       
       &.mobile-open {
@@ -309,10 +309,10 @@ mat-icon {
   .sidenav-container {
     position: fixed;
     transform: translateX(0) !important; 
-    width: var(--sidenav-width, 240px);
+    width: var(--sidenav-width);
     
     &.collapsed {
-      width: var(--sidenav-width-collapsed, 64px);
+      width: var(--sidenav-width-collapsed);
       transform: translateX(0) !important;
     }
   }

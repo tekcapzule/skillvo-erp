@@ -1,0 +1,114 @@
+// ========================================
+// Border Radius
+// ========================================
+// Consistent border radius tokens for UI elements
+// Uses the same base unit approach for consistent scaling
+
+// Base radius unit
+$radius-unit: 0.0625rem; // 1px with 16px base font size
+
+// Border Radius Scale
+// ----------------------------------------
+$radius-none: 0;
+$radius-xs: $radius-unit * 2;     // 2px
+$radius-sm: $radius-unit * 4;     // 4px
+$radius-md: $radius-unit * 8;     // 8px
+$radius-lg: $radius-unit * 12;    // 12px
+$radius-xl: $radius-unit * 16;    // 16px
+$radius-2xl: $radius-unit * 24;   // 24px
+$radius-3xl: $radius-unit * 32;   // 32px
+$radius-full: 9999px;             // Fully rounded (circles, pills)
+
+// Component-Specific Border Radius
+// ----------------------------------------
+$button-radius: $radius-md;
+$button-radius-sm: $radius-sm;
+$button-radius-lg: $radius-lg;
+$button-radius-pill: $radius-full;
+
+$input-radius: $radius-sm;
+$input-radius-lg: $radius-md;
+
+$card-radius: $radius-lg;
+$card-radius-sm: $radius-md;
+$card-radius-lg: $radius-xl;
+
+$avatar-radius: $radius-full;
+$avatar-radius-square: $radius-sm;
+
+$badge-radius: $radius-full;
+$badge-radius-square: $radius-xs;
+
+$tooltip-radius: $radius-sm;
+$popover-radius: $radius-md;
+$dialog-radius: $radius-lg;
+$panel-radius: $radius-md;
+
+// Nested Components Radius
+// ----------------------------------------
+$tab-radius: $radius-sm;
+$dropdown-radius: $radius-md;
+$chip-radius: $radius-full;
+$snackbar-radius: $radius-md;
+$alert-radius: $radius-md;
+$menu-radius: $radius-md;
+$toast-radius: $radius-md;
+
+// Section & Container Radius
+// ----------------------------------------
+$section-radius: $radius-lg;
+$container-radius: $radius-xl;
+$sidebar-radius: $radius-lg;
+
+// Define CSS Custom Properties
+// ----------------------------------------
+:root {
+  // Base Radius Scale
+  --radius-none: #{$radius-none};
+  --radius-xs: #{$radius-xs};
+  --radius-sm: #{$radius-sm};
+  --radius-md: #{$radius-md};
+  --radius-lg: #{$radius-lg};
+  --radius-xl: #{$radius-xl};
+  --radius-2xl: #{$radius-2xl};
+  --radius-3xl: #{$radius-3xl};
+  --radius-full: #{$radius-full};
+  
+  // Component-Specific Border Radius
+  --button-radius: #{$button-radius};
+  --button-radius-sm: #{$button-radius-sm};
+  --button-radius-lg: #{$button-radius-lg};
+  --button-radius-pill: #{$button-radius-pill};
+  
+  --input-radius: #{$input-radius};
+  --input-radius-lg: #{$input-radius-lg};
+  
+  --card-radius: #{$card-radius};
+  --card-radius-sm: #{$card-radius-sm};
+  --card-radius-lg: #{$card-radius-lg};
+  
+  --avatar-radius: #{$avatar-radius};
+  --avatar-radius-square: #{$avatar-radius-square};
+  
+  --badge-radius: #{$badge-radius};
+  --badge-radius-square: #{$badge-radius-square};
+  
+  --tooltip-radius: #{$tooltip-radius};
+  --popover-radius: #{$popover-radius};
+  --dialog-radius: #{$dialog-radius};
+  --panel-radius: #{$panel-radius};
+  
+  // Nested Components Radius
+  --tab-radius: #{$tab-radius};
+  --dropdown-radius: #{$dropdown-radius};
+  --chip-radius: #{$chip-radius};
+  --snackbar-radius: #{$snackbar-radius};
+  --alert-radius: #{$alert-radius};
+  --menu-radius: #{$menu-radius};
+  --toast-radius: #{$toast-radius};
+  
+  // Section & Container Radius
+  --section-radius: #{$section-radius};
+  --container-radius: #{$container-radius};
+  --sidebar-radius: #{$sidebar-radius};
+} 
