@@ -59,10 +59,3 @@
 @use 'utilities/layout' as utility-layout;
 @use 'utilities/scrollbar';
 
-// Vendor Overrides
-// Styles that override third-party libraries
-// --------------------------------------------------
-
-// Material Design overrides - including icon fixes
-@use 'vendor/material';
-// @use 'vendor/angular'; 

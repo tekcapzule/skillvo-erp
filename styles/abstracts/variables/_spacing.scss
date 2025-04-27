@@ -1,99 +1,105 @@
 // ========================================
 // Spacing Variables
 // ========================================
-// Single source of truth for all spacing values
-// Use CSS custom properties for consistent spacing
-
-// Base Spacing Unit
+// Geometric progression based on base spacing unit (4px)
 // ----------------------------------------
-// 4px is used as the base unit for the spacing scale
 $spacing-unit: 0.25rem; // 4px with 16px base font size
 
 // Spacing Scale
 // ----------------------------------------
-// Uses a consistent geometric progression
-$space-0: 0;                   // 0
-$space-1: $spacing-unit;       // 4px
-$space-2: $spacing-unit * 2;   // 8px
-$space-3: $spacing-unit * 3;   // 12px
-$space-4: $spacing-unit * 4;   // 16px
-$space-5: $spacing-unit * 5;   // 20px
-$space-6: $spacing-unit * 6;   // 24px
-$space-7: $spacing-unit * 7;   // 28px
-$space-8: $spacing-unit * 8;   // 32px
-$space-10: $spacing-unit * 10; // 40px
-$space-12: $spacing-unit * 12; // 48px
-$space-16: $spacing-unit * 16; // 64px
-$space-20: $spacing-unit * 20; // 80px
-$space-24: $spacing-unit * 24; // 96px
-$space-32: $spacing-unit * 32; // 128px
-$space-40: $spacing-unit * 40; // 160px
-$space-48: $spacing-unit * 48; // 192px
-$space-56: $spacing-unit * 56; // 224px
-$space-64: $spacing-unit * 64; // 256px
+$space-0: 0;
+$space-1: $spacing-unit;        // 4px
+$space-2: $spacing-unit * 2;    // 8px
+$space-3: $spacing-unit * 3;    // 12px
+$space-4: $spacing-unit * 4;    // 16px
+$space-5: $spacing-unit * 5;    // 20px
+$space-6: $spacing-unit * 6;    // 24px
+$space-7: $spacing-unit * 7;    // 28px
+$space-8: $spacing-unit * 8;    // 32px
+$space-10: $spacing-unit * 10;  // 40px
+$space-12: $spacing-unit * 12;  // 48px
+$space-16: $spacing-unit * 16;  // 64px
+$space-20: $spacing-unit * 20;  // 80px
+$space-24: $spacing-unit * 24;  // 96px
+$space-32: $spacing-unit * 32;  // 128px
 
-// Semantic Spacing Aliases
+// Semantic Aliases
 // ----------------------------------------
-// Named spacing variables for specific use cases
-$space-xs: $space-2;     // 8px - Extra small spacing
-$space-sm: $space-4;     // 16px - Small spacing
-$space-md: $space-6;     // 24px - Medium spacing
-$space-lg: $space-8;     // 32px - Large spacing
-$space-xl: $space-10;    // 40px - Extra large spacing
-$space-2xl: $space-16;   // 64px - 2x extra large spacing
-$space-3xl: $space-24;   // 96px - 3x extra large spacing
+$space-none: $space-0;
+$space-xs: $space-2;     // 8px - extra small
+$space-sm: $space-4;     // 16px - small
+$space-md: $space-6;     // 24px - medium
+$space-lg: $space-8;     // 32px - large
+$space-xl: $space-10;    // 40px - extra large
+$space-2xl: $space-16;   // 64px
+$space-3xl: $space-24;   // 96px
 
-// Component Specific Spacing
+// Directional Spacing Presets
 // ----------------------------------------
-// Default spacing for common UI patterns
-// $input-padding-y is now defined only in padding.scss
-$btn-padding-y: $space-2;     // 8px vertical padding for buttons
-$btn-padding-x: $space-4;     // 16px horizontal padding for buttons
-$card-padding: $space-6;      // 24px padding for cards
-$section-spacing: $space-12;  // 48px spacing between major sections
-$component-spacing: $space-6; // 24px spacing between components
+// Horizontal (left/right)
+$space-x-none: $space-0;
+$space-x-xs: $space-2;
+$space-x-sm: $space-4;
+$space-x-md: $space-6;
+$space-x-lg: $space-8;
+$space-x-xl: $space-10;
 
-// Container and Grid Settings
-// ----------------------------------------
-$container-padding: $space-4;    // 16px default container padding
-$grid-gap: $space-6;             // 24px default grid gap
-$grid-gap-sm: $space-4;          // 16px small grid gap
+// Vertical (top/bottom)
+$space-y-none: $space-0;
+$space-y-xs: $space-2;
+$space-y-sm: $space-4;
+$space-y-md: $space-6;
+$space-y-lg: $space-8;
+$space-y-xl: $space-10;
 
-// Border Radius Scale moved to _border-radius.scss
+// Individual Directions
 // ----------------------------------------
+$space-top-none: $space-0;
+$space-top-xs: $space-2;
+$space-top-sm: $space-4;
+$space-top-md: $space-6;
+$space-top-lg: $space-8;
+$space-top-xl: $space-10;
 
-// Box Shadows moved to _shadows.scss
-// ----------------------------------------
+$space-right-none: $space-0;
+$space-right-xs: $space-2;
+$space-right-sm: $space-4;
+$space-right-md: $space-6;
+$space-right-lg: $space-8;
+$space-right-xl: $space-10;
 
-// Define CSS Custom Properties
+$space-bottom-none: $space-0;
+$space-bottom-xs: $space-2;
+$space-bottom-sm: $space-4;
+$space-bottom-md: $space-6;
+$space-bottom-lg: $space-8;
+$space-bottom-xl: $space-10;
+
+$space-left-none: $space-0;
+$space-left-xs: $space-2;
+$space-left-sm: $space-4;
+$space-left-md: $space-6;
+$space-left-lg: $space-8;
+$space-left-xl: $space-10;
+
+// Component-Specific Spacing
 // ----------------------------------------
-// These will be applied to :root in the base/spacing file
+$card-spacing: $space-md;
+$section-spacing: $space-xl;
+$dashboard-spacing: $space-2xl;
+$widget-spacing: $space-md;
+$grid-gap: $space-md;
+$form-group-spacing: $space-md;
+
+// Mobile-specific spacing adjustments
+$mobile-spacing-base: $space-sm;
+$mobile-section-spacing: $space-md;
+$mobile-card-spacing: $space-sm;
+
+// CSS Custom Properties
+// ----------------------------------------
 :root {
-  // Base Spacing
-  --spacing-unit: #{$spacing-unit};
-  
-  // Spacing Scale
-  --space-0: #{$space-0};
-  --space-1: #{$space-1};
-  --space-2: #{$space-2};
-  --space-3: #{$space-3};
-  --space-4: #{$space-4};
-  --space-5: #{$space-5};
-  --space-6: #{$space-6};
-  --space-7: #{$space-7};
-  --space-8: #{$space-8};
-  --space-10: #{$space-10};
-  --space-12: #{$space-12};
-  --space-16: #{$space-16};
-  --space-20: #{$space-20};
-  --space-24: #{$space-24};
-  --space-32: #{$space-32};
-  --space-40: #{$space-40};
-  --space-48: #{$space-48};
-  --space-56: #{$space-56};
-  --space-64: #{$space-64};
-  
-  // Semantic Spacing
+  --space-none: #{$space-none};
   --space-xs: #{$space-xs};
   --space-sm: #{$space-sm};
   --space-md: #{$space-md};
@@ -101,12 +107,29 @@ $grid-gap-sm: $space-4;          // 16px small grid gap
   --space-xl: #{$space-xl};
   --space-2xl: #{$space-2xl};
   --space-3xl: #{$space-3xl};
-  
-  // Component Spacing
-  // --input-padding-y is defined in padding.scss
-  --btn-padding-y: #{$btn-padding-y};
-  --btn-padding-x: #{$btn-padding-x};
-  --card-padding: #{$card-padding};
+
+  --space-x-none: #{$space-x-none};
+  --space-x-xs: #{$space-x-xs};
+  --space-x-sm: #{$space-x-sm};
+  --space-x-md: #{$space-x-md};
+  --space-x-lg: #{$space-x-lg};
+  --space-x-xl: #{$space-x-xl};
+
+  --space-y-none: #{$space-y-none};
+  --space-y-xs: #{$space-y-xs};
+  --space-y-sm: #{$space-y-sm};
+  --space-y-md: #{$space-y-md};
+  --space-y-lg: #{$space-y-lg};
+  --space-y-xl: #{$space-y-xl};
+
+  --card-spacing: #{$card-spacing};
   --section-spacing: #{$section-spacing};
-  --component-spacing: #{$component-spacing};
-} 
+  --dashboard-spacing: #{$dashboard-spacing};
+  --widget-spacing: #{$widget-spacing};
+  --grid-gap: #{$grid-gap};
+  --form-group-spacing: #{$form-group-spacing};
+
+  --mobile-spacing-base: #{$mobile-spacing-base};
+  --mobile-section-spacing: #{$mobile-section-spacing};
+  --mobile-card-spacing: #{$mobile-card-spacing};
+}
