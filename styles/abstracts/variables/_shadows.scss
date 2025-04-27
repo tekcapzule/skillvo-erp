@@ -28,54 +28,6 @@ $shadow-right: 6px 0 16px -8px $shadow-color-light !default;
 $shadow-bottom: 0 6px 16px -8px $shadow-color-light !default;
 $shadow-left: -6px 0 16px -8px $shadow-color-light !default;
 
-// ========================================
-// Component-Specific Shadows
-// ========================================
-
-// Cards
-$shadow-card: $shadow-md !default;
-$shadow-card-hover: $shadow-lg !default;
-$shadow-card-active: $shadow-lg !default;
-
-// Buttons
-$shadow-button: $shadow-sm !default;
-$shadow-button-hover: $shadow-md !default;
-$shadow-button-active: $shadow-inner !default;
-
-// Dropdown, Popover, Tooltip
-$shadow-dropdown: $shadow-lg !default;
-$shadow-popover: $shadow-lg !default;
-$shadow-tooltip: $shadow-md !default;
-
-// Modal, Drawer, Dialog
-$shadow-modal: $shadow-xl !default;
-$shadow-drawer: $shadow-xl !default;
-$shadow-dialog: $shadow-xl !default;
-
-// Navbar, Header, Sidebar
-$shadow-header: 0 2px 8px 0 $shadow-color-light !default;
-$shadow-navbar: 0 2px 8px 0 $shadow-color-light !default;
-$shadow-sidebar: 2px 0 8px 0 $shadow-color-light !default;
-
-// Panel
-$shadow-panel: $shadow-md !default;
-
-// Badge, Chip, Tab
-$shadow-badge: $shadow-xs !default;
-$shadow-chip: $shadow-xs !default;
-$shadow-tab: $shadow-sm !default;
-
-// Snackbar, Toast, Menu, Alert
-$shadow-snackbar: $shadow-md !default;
-$shadow-toast: $shadow-md !default;
-$shadow-menu: $shadow-md !default;
-$shadow-alert: $shadow-md !default;
-
-// Breadcrumb
-$shadow-breadcrumb: $shadow-sm !default;
-
-// Inputs
-$shadow-input-focus: $shadow-outline !default;
 
 // ========================================
 // Interactive State Shadows
@@ -109,39 +61,6 @@ $shadow-focus-success: 0 0 0 3px rgba(0, 0, 0, 0.08) !default;
   --shadow-right: #{$shadow-right};
   --shadow-bottom: #{$shadow-bottom};
   --shadow-left: #{$shadow-left};
-
-  // Components
-  --shadow-card: #{$shadow-card};
-  --shadow-card-hover: #{$shadow-card-hover};
-  --shadow-card-active: #{$shadow-card-active};
-
-  --shadow-button: #{$shadow-button};
-  --shadow-button-hover: #{$shadow-button-hover};
-  --shadow-button-active: #{$shadow-button-active};
-
-  --shadow-dropdown: #{$shadow-dropdown};
-  --shadow-popover: #{$shadow-popover};
-  --shadow-tooltip: #{$shadow-tooltip};
-  --shadow-modal: #{$shadow-modal};
-  --shadow-drawer: #{$shadow-drawer};
-  --shadow-dialog: #{$shadow-dialog};
-
-  --shadow-header: #{$shadow-header};
-  --shadow-navbar: #{$shadow-navbar};
-  --shadow-sidebar: #{$shadow-sidebar};
-  --shadow-panel: #{$shadow-panel};
-
-  --shadow-badge: #{$shadow-badge};
-  --shadow-chip: #{$shadow-chip};
-  --shadow-tab: #{$shadow-tab};
-
-  --shadow-snackbar: #{$shadow-snackbar};
-  --shadow-toast: #{$shadow-toast};
-  --shadow-menu: #{$shadow-menu};
-  --shadow-alert: #{$shadow-alert};
-  --shadow-breadcrumb: #{$shadow-breadcrumb};
-
-  --shadow-input-focus: #{$shadow-input-focus};
 
   // Interaction
   --shadow-focus: #{$shadow-focus};

@@ -19,39 +19,6 @@
 .shadow-bottom { box-shadow: var(--shadow-bottom); }
 .shadow-left { box-shadow: var(--shadow-left); }
 
-// Component-Specific Shadows
-.shadow-card { box-shadow: var(--shadow-card); }
-.shadow-card-hover { box-shadow: var(--shadow-card-hover); }
-.shadow-card-active { box-shadow: var(--shadow-card-active); }
-
-.shadow-button { box-shadow: var(--shadow-button); }
-.shadow-button-hover { box-shadow: var(--shadow-button-hover); }
-.shadow-button-active { box-shadow: var(--shadow-button-active); }
-
-.shadow-dropdown { box-shadow: var(--shadow-dropdown); }
-.shadow-popover { box-shadow: var(--shadow-popover); }
-.shadow-tooltip { box-shadow: var(--shadow-tooltip); }
-
-.shadow-modal { box-shadow: var(--shadow-modal); }
-.shadow-drawer { box-shadow: var(--shadow-drawer); }
-.shadow-dialog { box-shadow: var(--shadow-dialog); }
-
-.shadow-header { box-shadow: var(--shadow-header); }
-.shadow-navbar { box-shadow: var(--shadow-navbar); }
-.shadow-sidebar { box-shadow: var(--shadow-sidebar); }
-
-.shadow-panel { box-shadow: var(--shadow-panel); }
-.shadow-badge { box-shadow: var(--shadow-badge); }
-.shadow-chip { box-shadow: var(--shadow-chip); }
-.shadow-tab { box-shadow: var(--shadow-tab); }
-
-.shadow-snackbar { box-shadow: var(--shadow-snackbar); }
-.shadow-toast { box-shadow: var(--shadow-toast); }
-.shadow-menu { box-shadow: var(--shadow-menu); }
-.shadow-alert { box-shadow: var(--shadow-alert); }
-.shadow-breadcrumb { box-shadow: var(--shadow-breadcrumb); }
-.shadow-input-focus { box-shadow: var(--shadow-input-focus); }
-
 // Interactive States
 .shadow-focus { box-shadow: var(--shadow-focus); }
 .shadow-focus-error { box-shadow: var(--shadow-focus-error); }

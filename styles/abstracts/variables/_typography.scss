@@ -74,13 +74,6 @@ $tracking-wider: 0.05em !default;
 $tracking-widest: 0.1em !default;
 
 // ========================================
-// Component-Specific Typography
-// ========================================
-$button-text-size: $text-sm !default;
-$input-text-size: $text-base !default;
-$breadcrumb-text-size: $text-sm !default;
-
-// ========================================
 // Typography Scale (Map)
 // ========================================
 $type-scale: (
@@ -197,8 +190,4 @@ $heading-styles: (
   --tracking-wider: #{$tracking-wider};
   --tracking-widest: #{$tracking-widest};
 
-  // Component Typography
-  --button-text-size: #{$button-text-size};
-  --input-text-size: #{$input-text-size};
-  --breadcrumb-text-size: #{$breadcrumb-text-size};
 }

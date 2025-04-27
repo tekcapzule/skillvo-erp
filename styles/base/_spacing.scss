@@ -96,15 +96,3 @@
 .gap-space-xl { gap: var(--space-xl); }
 .gap-space-2xl { gap: var(--space-2xl); }
 .gap-space-3xl { gap: var(--space-3xl); }
-
-// Section and Dashboard Specific
-.section-spacing-x { padding-left: var(--section-spacing-x); padding-right: var(--section-spacing-x); }
-.section-spacing-y { padding-top: var(--section-spacing-y); padding-bottom: var(--section-spacing-y); }
-.dashboard-spacing-x { padding-left: var(--dashboard-spacing-x); padding-right: var(--dashboard-spacing-x); }
-.dashboard-spacing-y { padding-top: var(--dashboard-spacing-y); padding-bottom: var(--dashboard-spacing-y); }
-
-// Mobile Specific (optional, can be grouped under a `.mobile` class)
-.mobile-section-spacing-x { padding-left: var(--mobile-section-spacing-x); padding-right: var(--mobile-section-spacing-x); }
-.mobile-section-spacing-y { padding-top: var(--mobile-section-spacing-y); padding-bottom: var(--mobile-section-spacing-y); }
-.mobile-dashboard-spacing-x { padding-left: var(--mobile-dashboard-spacing-x); padding-right: var(--mobile-dashboard-spacing-x); }
-.mobile-dashboard-spacing-y { padding-top: var(--mobile-dashboard-spacing-y); padding-bottom: var(--mobile-dashboard-spacing-y); }

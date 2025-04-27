@@ -43,11 +43,6 @@
   // Apply theme variables
   @include generate-theme-vars($light-theme-map);
   
-  // Apply component-specific variables 
-  @each $key, $value in $component-light-map {
-    --#{$key}: #{$value};
-  }
-  
   // Apply transition for smooth theme switching
   @include theme-transition();
   
@@ -61,11 +56,6 @@
     // Apply dark theme variables
     @include generate-theme-vars($dark-theme-map);
     
-    // Apply component-specific dark theme variables
-    @each $key, $value in $component-dark-map {
-      --#{$key}: #{$value};
-    }
-    
     color-scheme: dark;
   }
 }
@@ -75,10 +65,6 @@
   // Apply light theme variables
   @include generate-theme-vars($light-theme-map);
   
-  // Apply component-specific variables
-  @each $key, $value in $component-light-map {
-    --#{$key}: #{$value};
-  }
   
   color-scheme: light;
 }
@@ -87,11 +73,6 @@
 [data-theme="dark"] {
   // Apply dark theme variables
   @include generate-theme-vars($dark-theme-map);
-  
-  // Apply component-specific variables
-  @each $key, $value in $component-dark-map {
-    --#{$key}: #{$value};
-  }
   
   color-scheme: dark;
 }

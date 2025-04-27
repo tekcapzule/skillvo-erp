@@ -74,53 +74,6 @@
 .border-dark { border-color: var(--border-dark); }
 .border-default { border-color: var(--border-default); }
 
-// Component-Specific Backgrounds
-.bg-header { background-color: var(--header-bg); }
-.bg-sidenav { background-color: var(--sidenav-bg); }
-.bg-card { background-color: var(--card-bg); }
-.bg-panel { background-color: var(--panel-bg); }
-.bg-toast { background-color: var(--toast-bg); }
-.bg-chip { background-color: var(--chip-bg); }
-.bg-snackbar { background-color: var(--snackbar-bg); }
-.bg-alert { background-color: var(--alert-bg); }
-.bg-dialog { background-color: var(--dialog-bg); }
-.bg-menu { background-color: var(--menu-bg); }
-.bg-tab-active { background-color: var(--tab-active-bg); }
-.bg-tab-inactive { background-color: var(--tab-inactive-bg); }
-.bg-input { background-color: var(--input-bg); }
-.bg-breadcrumb { background-color: var(--breadcrumb-bg); }
-
-// Component-Specific Text Colors
-.text-header { color: var(--header-text); }
-.text-sidenav { color: var(--sidenav-text); }
-.text-card { color: var(--card-text); }
-.text-panel { color: var(--panel-text); }
-.text-toast { color: var(--toast-text); }
-.text-chip { color: var(--chip-text); }
-.text-snackbar { color: var(--snackbar-text); }
-.text-alert { color: var(--alert-text); }
-.text-dialog { color: var(--dialog-text); }
-.text-menu { color: var(--menu-text); }
-.text-tab { color: var(--tab-text); }
-.text-input-placeholder { color: var(--input-placeholder-color); }
-.text-breadcrumb { color: var(--breadcrumb-text); }
-
-// Component-Specific Borders
-.border-header { border-color: var(--header-border); }
-.border-sidenav { border-color: var(--sidenav-border); }
-.border-card { border-color: var(--card-border); }
-.border-panel { border-color: var(--panel-border); }
-.border-toast { border-color: var(--toast-border); }
-.border-chip { border-color: var(--chip-border); }
-.border-snackbar { border-color: var(--snackbar-border); }
-.border-alert { border-color: var(--alert-border); }
-.border-dialog { border-color: var(--dialog-border); }
-.border-menu { border-color: var(--menu-border); }
-.border-tab { border-color: var(--tab-border); }
-.border-input { border-color: var(--input-border); }
-.border-input-focus { border-color: var(--input-focus-border); }
-.border-breadcrumb { border-color: var(--breadcrumb-border); }
-
 // Status Background Utilities
 .bg-success-color { background-color: var(--success); }
 .bg-info-color { background-color: var(--info); }

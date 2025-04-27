@@ -115,17 +115,3 @@ label {
 .motion-ease-standard { transition-timing-function: var(--motion-ease-standard, cubic-bezier(0.4, 0, 0.2, 1)); }
 .motion-ease-decelerate { transition-timing-function: var(--motion-ease-decelerate, cubic-bezier(0, 0, 0.2, 1)); }
 .motion-ease-accelerate { transition-timing-function: var(--motion-ease-accelerate, cubic-bezier(0.4, 0, 1, 1)); }
-
-// ----------------------------------------
-// Tables
-table {
-  caption {
-    caption-side: top;
-    padding: var(--space-2, 0.5rem) 0;
-    font-weight: var(--font-semibold, 600);
-  }
-  th {
-    text-align: left;
-    font-weight: var(--font-semibold, 600);
-  }
-}
