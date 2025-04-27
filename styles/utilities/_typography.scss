@@ -4,8 +4,8 @@
 // Typography utility classes for text styling and formatting
 // Imports variables from abstracts/_typography.scss
 
-@use '../abstracts/typography' as type;
-@use '../abstracts/breakpoints' as break;
+@use '../abstracts/variables/typography' as type;
+@use '../abstracts/variables/breakpoints' as break;
 
 // ========================================
 // Text Alignment

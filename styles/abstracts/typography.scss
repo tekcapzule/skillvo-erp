@@ -1,7 +1,0 @@
-// ========================================
-// Typography Forwarding Module
-// ========================================
-// This file forwards typography variables from variables/_typography.scss
-// to fix imports like @use '../abstracts/typography' as type;
-
-@forward 'variables/typography'; 

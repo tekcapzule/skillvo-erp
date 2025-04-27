@@ -4,8 +4,8 @@
 // Utility classes for making content accessible
 // Uses variables from abstracts/_accessibility.scss
 
-@use '../abstracts/accessibility' as a11y;
-@use '../abstracts/theme-mixins' as theme;
+@use '../abstracts/variables/accessibility' as a11y;
+@use '../abstracts/mixins/theme-mixins' as theme;
 
 // ========================================
 // Skip Links

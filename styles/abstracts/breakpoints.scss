@@ -1,7 +1,0 @@
-// ========================================
-// Breakpoints Forwarding Module
-// ========================================
-// This file forwards breakpoint variables from variables/_breakpoints.scss
-// to fix imports like @use '../abstracts/breakpoints' as break;
-
-@forward 'variables/breakpoints'; 

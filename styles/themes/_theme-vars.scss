@@ -4,8 +4,8 @@
 // This file defines global CSS variables directly on the :root element.
 // These provide the base styling for the application themes.
 
-@use '../abstracts/colors' as *;
-@use '../abstracts/theme-mixins' as *;
+@use '../abstracts/variables/colors' as *;
+@use '../abstracts/mixins/theme-mixins' as *;
 
 // Default light theme variables
 :root {

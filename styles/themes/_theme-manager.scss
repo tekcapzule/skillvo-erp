@@ -5,8 +5,8 @@
 // for theme switching, theme-specific styles, and theme detection.
 
 @use 'sass:map';
-@use '../abstracts/colors' as *;
-@use '../abstracts/theme-mixins' as *;
+@use '../abstracts/variables/colors' as *;
+@use '../abstracts/mixins/theme-mixins' as *;
 
 // ========================================
 // Theme System Architecture

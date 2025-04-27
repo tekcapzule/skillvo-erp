@@ -4,8 +4,7 @@
 // Color utility classes for text and backgrounds
 
 @use 'sass:map';
-@use '../abstracts/colors' as colors;
-@use '../abstracts' as abstracts;
+@use '../abstracts/variables/colors' as colors;
 
 // Define local variables from imported ones
 $color-scales: colors.$color-scales;
