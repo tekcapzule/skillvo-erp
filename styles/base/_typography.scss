@@ -1,208 +1,108 @@
 // ========================================
-// Base Typography
-// ========================================
-// This file defines the base typography styles for HTML elements
-// Uses variables from abstracts/_typography.scss
-
-@use '../abstracts/variables/typography' as type;
-@use '../abstracts/variables/breakpoints' as break;
-
-// ========================================
-// Body Text
+// Typography Utilities
 // ========================================
 
-body {
-  font-family: var(--font-family-main);
-  font-size: var(--text-base);
-  font-weight: var(--font-normal);
-  line-height: var(--leading-normal);
-  color: var(--text-primary);
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
 // ========================================
-// Headings
+// Text Alignment
 // ========================================
 
-// Base heading styles
-h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-family-heading);
-  font-weight: var(--font-bold);
-  line-height: var(--leading-tight);
-  color: var(--text-primary);
-  margin-top: 0;
-  margin-bottom: var(--space-4);
-}
-
-h1 {
-  font-size: var(--text-4xl);
-  letter-spacing: var(--tracking-tight);
-  
-  @include break.breakpoint-up(md) {
-    font-size: var(--text-5xl);
+.text-left {
+    text-align: left;
   }
-}
-
-h2 {
-  font-size: var(--text-3xl);
   
-  @include break.breakpoint-up(md) {
-    font-size: var(--text-4xl);
+  .text-center {
+    text-align: center;
   }
-}
-
-h3 {
-  font-size: var(--text-2xl);
   
-  @include break.breakpoint-up(md) {
-    font-size: var(--text-3xl);
+  .text-right {
+    text-align: right;
   }
-}
-
-h4 {
-  font-size: var(--text-xl);
   
-  @include break.breakpoint-up(md) {
-    font-size: var(--text-2xl);
+  .text-justify {
+    text-align: justify;
   }
-}
-
-h5 {
-  font-size: var(--text-lg);
   
-  @include break.breakpoint-up(md) {
-    font-size: var(--text-xl);
-  }
-}
-
-h6 {
-  font-size: var(--text-base);
+  // ========================================
+  // Text Decoration
+  // ========================================
   
-  @include break.breakpoint-up(md) {
-    font-size: var(--text-lg);
-  }
-}
-
-// ========================================
-// Paragraphs
-// ========================================
-
-p {
-  margin-top: 0;
-  margin-bottom: var(--space-4);
-  
-  &:last-child {
-    margin-bottom: 0;
-  }
-}
-
-// ========================================
-// Lists
-// ========================================
-
-ul, ol {
-  margin-top: 0;
-  margin-bottom: var(--space-4);
-  padding-left: var(--space-6);
-}
-
-li {
-  margin-bottom: var(--space-2);
-  
-  &:last-child {
-    margin-bottom: 0;
-  }
-}
-
-// ========================================
-// Links
-// ========================================
-
-a {
-  color: var(--text-link);
-  text-decoration: none;
-  transition: color 0.15s ease;
-  
-  &:hover, &:focus {
-    color: var(--text-link-hover);
+  .text-underline {
     text-decoration: underline;
   }
   
-  &:focus-visible {
-    outline: 2px solid var(--border-focus);
-    outline-offset: 2px;
+  .text-line-through {
+    text-decoration: line-through;
   }
-}
-
-// ========================================
-// Inline Elements
-// ========================================
-
-strong, b {
-  font-weight: var(--font-bold);
-}
-
-em, i {
-  font-style: italic;
-}
-
-small {
-  font-size: var(--text-sm);
-}
-
-// ========================================
-// Code and Pre elements
-// ========================================
-
-code, pre {
-  font-family: var(--font-family-mono);
-  font-size: 0.9em;
-}
-
-code {
-  padding: 0.2em 0.4em;
-  background-color: var(--bg-secondary);
-  border-radius: var(--radius-sm);
-}
-
-pre {
-  margin-top: 0;
-  margin-bottom: var(--space-4);
-  padding: var(--space-4);
-  background-color: var(--bg-secondary);
-  border-radius: var(--radius-md);
-  overflow: auto;
   
-  code {
-    padding: 0;
-    background-color: transparent;
-    border-radius: 0;
+  .text-no-underline {
+    text-decoration: none;
   }
-}
-
-// ========================================
-// Blockquote
-// ========================================
-
-blockquote {
-  margin: 0 0 var(--space-4) 0;
-  padding: var(--space-4);
-  border-left: 4px solid var(--border-default);
-  background-color: var(--bg-secondary);
-  font-style: italic;
   
-  p:last-child {
-    margin-bottom: 0;
+  // ========================================
+  // Text Overflow
+  // ========================================
+  
+  .text-truncate {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
-}
+  
+  .text-break {
+    word-break: break-word;
+    overflow-wrap: break-word;
+  }
 
-// ========================================
-// Horizontal Rule
-// ========================================
+// Font Family Utilities
+.font-main { font-family: var(--font-family-main); }
+.font-heading { font-family: var(--font-family-heading); }
+.font-mono { font-family: var(--font-family-mono); }
 
-hr {
-  border: 0;
-  border-top: 1px solid var(--border-default);
-  margin: var(--space-6) 0;
-} 
+// Font Size Utilities
+.text-xs { font-size: var(--text-xs); }
+.text-sm { font-size: var(--text-sm); }
+.text-base { font-size: var(--text-base); }
+.text-lg { font-size: var(--text-lg); }
+.text-xl { font-size: var(--text-xl); }
+.text-2xl { font-size: var(--text-2xl); }
+.text-3xl { font-size: var(--text-3xl); }
+.text-4xl { font-size: var(--text-4xl); }
+.text-5xl { font-size: var(--text-5xl); }
+.text-6xl { font-size: var(--text-6xl); }
+
+// Semantic Text Sizes
+.text-body-sm { font-size: var(--text-body-sm); }
+.text-body-md { font-size: var(--text-body-md); }
+.text-body-lg { font-size: var(--text-body-lg); }
+.text-heading-sm { font-size: var(--text-heading-sm); }
+.text-heading-md { font-size: var(--text-heading-md); }
+.text-heading-lg { font-size: var(--text-heading-lg); }
+
+// Font Weight Utilities
+.font-light { font-weight: var(--font-light); }
+.font-normal { font-weight: var(--font-normal); }
+.font-medium { font-weight: var(--font-medium); }
+.font-semibold { font-weight: var(--font-semibold); }
+.font-bold { font-weight: var(--font-bold); }
+.font-extrabold { font-weight: var(--font-extrabold); }
+
+// Line Height Utilities
+.leading-none { line-height: var(--leading-none); }
+.leading-tight { line-height: var(--leading-tight); }
+.leading-snug { line-height: var(--leading-snug); }
+.leading-normal { line-height: var(--leading-normal); }
+.leading-relaxed { line-height: var(--leading-relaxed); }
+.leading-loose { line-height: var(--leading-loose); }
+
+// Letter Spacing Utilities
+.tracking-tighter { letter-spacing: var(--tracking-tighter); }
+.tracking-tight { letter-spacing: var(--tracking-tight); }
+.tracking-normal { letter-spacing: var(--tracking-normal); }
+.tracking-wide { letter-spacing: var(--tracking-wide); }
+.tracking-wider { letter-spacing: var(--tracking-wider); }
+.tracking-widest { letter-spacing: var(--tracking-widest); }
+
+// Component Specific Typography
+.button-text { font-size: var(--button-text-size); }
+.input-text { font-size: var(--input-text-size); }
+.breadcrumb-text { font-size: var(--breadcrumb-text-size); }

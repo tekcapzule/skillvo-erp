@@ -1,41 +1,22 @@
 // ========================================
 // Accessibility Variables
 // ========================================
-// Specialized variables for focus, motion, z-index, touch targets, etc.
 
 // Focus Styles
 // ----------------------------------------
 $focus-outline-width: 2px !default;
 $focus-outline-style: solid !default;
 $focus-outline-offset: 2px !default;
-
-// Use a direct fallback color for focus ring (no var(--primary-rgb))
-$focus-outline-color: rgba(37, 99, 235, 0.8) !default; // Blue-ish accessible color
+$focus-outline-color: rgba(37, 99, 235, 0.8) !default; // Accessible static color
 
 // Motion & Animation
 // ----------------------------------------
-$reduced-motion-duration-short: 0.1s !default;
-$reduced-motion-duration-medium: 0.2s !default;
-$reduced-motion-duration-long: 0.3s !default;
-
-$standard-motion-duration-short: 0.15s !default;
-$standard-motion-duration-medium: 0.3s !default;
-$standard-motion-duration-long: 0.5s !default;
-
-$standard-ease-timing: cubic-bezier(0.4, 0, 0.2, 1) !default;
-$deceleration-timing: cubic-bezier(0, 0, 0.2, 1) !default;
-$acceleration-timing: cubic-bezier(0.4, 0, 1, 1) !default;
-
-// Keyboard Navigation
-// ----------------------------------------
-$keyboard-focus-visible: true !default;
-$keyboard-focus-ring-width: 2px !default;
-$keyboard-focus-ring-offset: 2px !default;
-
-// Color Contrast
-// ----------------------------------------
-$min-contrast-ratio: 4.5 !default;
-$enhanced-contrast-ratio: 7 !default;
+$motion-duration-short: 0.15s !default;
+$motion-duration-medium: 0.3s !default;
+$motion-duration-long: 0.5s !default;
+$motion-ease-standard: cubic-bezier(0.4, 0, 0.2, 1) !default;
+$motion-ease-decelerate: cubic-bezier(0, 0, 0.2, 1) !default;
+$motion-ease-accelerate: cubic-bezier(0.4, 0, 1, 1) !default;
 
 // Z-index Layers
 // ----------------------------------------
@@ -49,49 +30,35 @@ $z-index-overlay: 1000 !default;
 $z-index-default: 1 !default;
 $z-index-negative: -1 !default;
 
-// Interaction Sizing
+// Touch Target Sizing
 // ----------------------------------------
 $min-touch-target-size: 44px !default;
-$min-interactive-element-spacing: 8px !default;
 
-// Skip Navigation (Hard fallback colors)
-$skip-link-bg: #ffffff !default;   // White fallback
-$skip-link-color: #111111 !default; // Almost black fallback
+// Skip Link Styling
+// ----------------------------------------
+$skip-link-bg: #ffffff !default;   
+$skip-link-color: #111111 !default;
 $skip-link-padding: 8px 16px !default;
 $skip-link-position-top: 8px !default;
 $skip-link-position-left: 8px !default;
 
 // ========================================
-// CSS Custom Properties Mapping
+// CSS Custom Properties
 // ========================================
 :root {
   // Focus indicators
-  --focus-ring-color: rgba(37, 99, 235, 0.8); // Now static and not dependent on --primary-rgb
+  --focus-ring-color: rgba(37, 99, 235, 0.8);
   --focus-ring-width: #{$focus-outline-width};
   --focus-ring-offset: #{$focus-outline-offset};
   --focus-ring-style: #{$focus-outline-style};
   
   // Motion preferences
-  --motion-duration-short: #{$standard-motion-duration-short};
-  --motion-duration-medium: #{$standard-motion-duration-medium};
-  --motion-duration-long: #{$standard-motion-duration-long};
-  --motion-easing-standard: #{$standard-ease-timing};
-  --motion-easing-decelerate: #{$deceleration-timing};
-  --motion-easing-accelerate: #{$acceleration-timing};
-  
-  // Reduced motion
-  --reduced-motion-duration-short: #{$reduced-motion-duration-short};
-  --reduced-motion-duration-medium: #{$reduced-motion-duration-medium};
-  --reduced-motion-duration-long: #{$reduced-motion-duration-long};
-
-  // Keyboard navigation
-  --keyboard-focus-visible: #{$keyboard-focus-visible};
-  --keyboard-focus-ring-width: #{$keyboard-focus-ring-width};
-  --keyboard-focus-ring-offset: #{$keyboard-focus-ring-offset};
-  
-  // Color contrast
-  --min-contrast-ratio: #{$min-contrast-ratio};
-  --enhanced-contrast-ratio: #{$enhanced-contrast-ratio};
+  --motion-duration-short: #{$motion-duration-short};
+  --motion-duration-medium: #{$motion-duration-medium};
+  --motion-duration-long: #{$motion-duration-long};
+  --motion-ease-standard: #{$motion-ease-standard};
+  --motion-ease-decelerate: #{$motion-ease-decelerate};
+  --motion-ease-accelerate: #{$motion-ease-accelerate};
   
   // Z-index layers
   --z-index-skip-link: #{$z-index-skip-link};
@@ -104,11 +71,10 @@ $skip-link-position-left: 8px !default;
   --z-index-default: #{$z-index-default};
   --z-index-negative: #{$z-index-negative};
   
-  // Touch targets
+  // Touch target
   --min-touch-target: #{$min-touch-target-size};
-  --interactive-spacing: #{$min-interactive-element-spacing};
   
-  // Skip navigation
+  // Skip links
   --skip-link-bg: #{$skip-link-bg};
   --skip-link-color: #{$skip-link-color};
   --skip-link-padding: #{$skip-link-padding};

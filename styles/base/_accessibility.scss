@@ -1,37 +1,21 @@
 // ========================================
-// Base Accessibility Styles
-// ========================================
-// Base accessibility styles that apply to HTML elements
-// Uses variables from abstracts/_accessibility.scss
-
-@use '../abstracts/variables/accessibility' as a11y;
-@use '../abstracts/mixins/a11y-mixins' as a11y-mix;
-
-// ========================================
-// Focus Styles
+// Base Accessibility & Utility Classes
 // ========================================
 
-// Default focus styles for all elements
-:focus {
-  outline: var(--focus-ring-width) solid var(--focus-ring-color);
-  outline-offset: var(--focus-ring-offset);
+// ----------------------------------------
+// Focus Styles (Global)
+:focus,
+:focus-visible {
+  outline: var(--focus-ring-width, 2px) solid var(--focus-ring-color, rgba(37, 99, 235, 0.8));
+  outline-offset: var(--focus-ring-offset, 2px);
 }
 
-// Focus-visible support (keyboard only focus indicators)
 :focus:not(:focus-visible) {
   outline: none;
 }
 
-:focus-visible {
-  outline: var(--focus-ring-width) solid var(--focus-ring-color);
-  outline-offset: var(--focus-ring-offset);
-}
-
-// ========================================
-// Interactive Elements
-// ========================================
-
-// Make sure all interactive elements have proper focus indication
+// ----------------------------------------
+// Interactive Element Defaults
 button,
 [role="button"],
 input,
@@ -39,140 +23,109 @@ select,
 textarea,
 a {
   &:focus-visible {
-    outline: var(--focus-ring-width) solid var(--focus-ring-color);
-    outline-offset: var(--focus-ring-offset);
+    outline: var(--focus-ring-width, 2px) solid var(--focus-ring-color, rgba(37, 99, 235, 0.8));
+    outline-offset: var(--focus-ring-offset, 2px);
   }
 }
 
-// Ensure buttons have reasonable defaults
 button {
   cursor: pointer;
 }
 
-// Disabled state for interactive elements
 [disabled],
 .disabled {
   cursor: not-allowed;
   opacity: 0.6;
 }
 
-// ========================================
-// Form Elements
-// ========================================
-
-// Ensure form fields have a minimum height for touchability
+// ----------------------------------------
+// Form Field Minimum Sizing
 input,
 select,
 textarea,
 button {
-  min-height: var(--form-control-min-height);
+  min-height: var(--input-height-md, 2.5rem); // 40px fallback
 }
 
-// Ensure form labels are associated properly with form controls
 label {
   display: block;
-  margin-bottom: var(--space-2);
+  margin-bottom: var(--space-2, 0.5rem); // 8px fallback
 }
 
-// ========================================
-// Skip Link
-// ========================================
-
-// Skip link for keyboard navigation
+// ----------------------------------------
+// Skip Link (for screen readers)
 .skip-to-content {
-  @include a11y-mix.skip-link;
-}
+  position: absolute;
+  top: var(--skip-link-position-top, 0.5rem);
+  left: var(--skip-link-position-left, 0.5rem);
+  background-color: var(--skip-link-bg, #ffffff);
+  color: var(--skip-link-color, #111111);
+  padding: var(--skip-link-padding, 0.5rem 1rem);
+  z-index: var(--z-index-skip-link, 9999);
+  transform: translateY(-200%);
+  transition: transform 0.3s ease;
 
-// ========================================
-// Reduced Motion
-// ========================================
-
-// Apply reduced motion settings globally when user prefers it
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
-  }
-}
-
-// ========================================
-// Touch Targets
-// ========================================
-
-// Ensure minimum touch target sizes for mobile devices
-@media (pointer: coarse) {
-  button,
-  [role="button"],
-  a.btn,
-  .btn,
-  input[type="button"],
-  input[type="submit"],
-  input[type="reset"],
-  summary,
-  select {
-    min-width: var(--min-touch-target-size);
-    min-height: var(--min-touch-target-size);
-    padding: 8px 16px; // Reasonable padding for touch targets
-  }
-  
-  // Add space between interactive elements
-  button + button,
-  .btn + .btn,
-  input[type="button"] + input[type="button"],
-  input[type="submit"] + input[type="submit"],
-  input[type="reset"] + input[type="reset"] {
-    margin-left: var(--min-interactive-spacing);
-  }
-}
-
-// ========================================
-// Image & Media Accessibility
-// ========================================
-
-// Ensure images have proper accessibility fallbacks
-img {
-  // Add a subtle border for images without src or with broken links
-  &:not([src]),
-  &[src=""],
-  &[src="#"] {
-    display: inline-block;
-    border: 1px dashed var(--border-default);
-    background-color: var(--bg-secondary);
-    min-width: 20px;
-    min-height: 20px;
-  }
-}
-
-// Audio and video player styling (provide clearer controls)
-audio,
-video {
-  width: 100%;
-  
   &:focus {
-    outline: var(--focus-ring-width) solid var(--focus-ring-color);
+    transform: translateY(0);
   }
 }
 
-// ========================================
-// Tables
-// ========================================
+// ----------------------------------------
+// Reduced Motion Utilities
+.reduced-motion {
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
 
-// Make tables more semantically appropriate
+// ----------------------------------------
+// Touch Target Utilities
+.touch-target {
+  min-width: var(--min-touch-target, 2.75rem); // 44px fallback
+  min-height: var(--min-touch-target, 2.75rem);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+// ----------------------------------------
+// Z-Index Utilities
+.z-default { z-index: var(--z-index-default, 1); }
+.z-dropdown { z-index: var(--z-index-dropdown, 1010); }
+.z-header { z-index: var(--z-index-header, 1020); }
+.z-tooltip { z-index: var(--z-index-tooltip, 1030); }
+.z-popover { z-index: var(--z-index-popover, 1040); }
+.z-modal { z-index: var(--z-index-modal, 1050); }
+.z-overlay { z-index: var(--z-index-overlay, 1000); }
+.z-skip-link { z-index: var(--z-index-skip-link, 9999); }
+.z-negative { z-index: var(--z-index-negative, -1); }
+
+// ----------------------------------------
+// Motion Utilities
+.motion-short { transition-duration: var(--motion-duration-short, 0.15s); }
+.motion-medium { transition-duration: var(--motion-duration-medium, 0.3s); }
+.motion-long { transition-duration: var(--motion-duration-long, 0.5s); }
+.motion-ease-standard { transition-timing-function: var(--motion-ease-standard, cubic-bezier(0.4, 0, 0.2, 1)); }
+.motion-ease-decelerate { transition-timing-function: var(--motion-ease-decelerate, cubic-bezier(0, 0, 0.2, 1)); }
+.motion-ease-accelerate { transition-timing-function: var(--motion-ease-accelerate, cubic-bezier(0.4, 0, 1, 1)); }
+
+// ----------------------------------------
+// Tables
 table {
-  // Ensure all tables have captions for screen readers
   caption {
     caption-side: top;
-    padding: var(--space-2) 0;
-    font-weight: var(--font-semibold);
+    padding: var(--space-2, 0.5rem) 0;
+    font-weight: var(--font-semibold, 600);
   }
-  
-  // Style table headers for clarity
   th {
     text-align: left;
-    font-weight: var(--font-semibold);
+    font-weight: var(--font-semibold, 600);
   }
-} 
+}

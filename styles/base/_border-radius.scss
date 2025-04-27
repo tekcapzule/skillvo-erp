@@ -1,0 +1,52 @@
+// ========================================
+// Border Radius Utilities
+// ========================================
+
+// Base Radius Scale
+.radius-none { border-radius: var(--radius-none); }
+.radius-xs { border-radius: var(--radius-xs); }
+.radius-sm { border-radius: var(--radius-sm); }
+.radius-md { border-radius: var(--radius-md); }
+.radius-lg { border-radius: var(--radius-lg); }
+.radius-xl { border-radius: var(--radius-xl); }
+.radius-2xl { border-radius: var(--radius-2xl); }
+.radius-3xl { border-radius: var(--radius-3xl); }
+.radius-full { border-radius: var(--radius-full); }
+
+// Component-Specific Radius Utilities
+.button-radius { border-radius: var(--button-radius); }
+.button-radius-sm { border-radius: var(--button-radius-sm); }
+.button-radius-lg { border-radius: var(--button-radius-lg); }
+.button-radius-pill { border-radius: var(--button-radius-pill); }
+
+.input-radius { border-radius: var(--input-radius); }
+.input-radius-lg { border-radius: var(--input-radius-lg); }
+
+.card-radius { border-radius: var(--card-radius); }
+.card-radius-sm { border-radius: var(--card-radius-sm); }
+.card-radius-lg { border-radius: var(--card-radius-lg); }
+
+.avatar-radius { border-radius: var(--avatar-radius); }
+.avatar-radius-square { border-radius: var(--avatar-radius-square); }
+
+.badge-radius { border-radius: var(--badge-radius); }
+.badge-radius-square { border-radius: var(--badge-radius-square); }
+
+.tooltip-radius { border-radius: var(--tooltip-radius); }
+.popover-radius { border-radius: var(--popover-radius); }
+.dialog-radius { border-radius: var(--dialog-radius); }
+.panel-radius { border-radius: var(--panel-radius); }
+
+// Nested Components Radius Utilities
+.tab-radius { border-radius: var(--tab-radius); }
+.dropdown-radius { border-radius: var(--dropdown-radius); }
+.chip-radius { border-radius: var(--chip-radius); }
+.snackbar-radius { border-radius: var(--snackbar-radius); }
+.alert-radius { border-radius: var(--alert-radius); }
+.menu-radius { border-radius: var(--menu-radius); }
+.toast-radius { border-radius: var(--toast-radius); }
+
+// Section & Container Radius Utilities
+.section-radius { border-radius: var(--section-radius); }
+.container-radius { border-radius: var(--container-radius); }
+.sidebar-radius { border-radius: var(--sidebar-radius); }

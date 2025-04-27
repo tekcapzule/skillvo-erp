@@ -1,0 +1,99 @@
+// ========================================
+// Padding Utilities
+// ========================================
+
+// Base Scale Padding Utilities
+.p-0 { padding: var(--padding-0); }
+.p-1 { padding: var(--padding-1); }
+.p-2 { padding: var(--padding-2); }
+.p-3 { padding: var(--padding-3); }
+.p-4 { padding: var(--padding-4); }
+.p-5 { padding: var(--padding-5); }
+.p-6 { padding: var(--padding-6); }
+.p-7 { padding: var(--padding-7); }
+.p-8 { padding: var(--padding-8); }
+.p-10 { padding: var(--padding-10); }
+.p-12 { padding: var(--padding-12); }
+.p-16 { padding: var(--padding-16); }
+.p-20 { padding: var(--padding-20); }
+.p-24 { padding: var(--padding-24); }
+.p-32 { padding: var(--padding-32); }
+
+// Semantic Padding Utilities
+.p-xs { padding: var(--padding-xs); }
+.p-sm { padding: var(--padding-sm); }
+.p-md { padding: var(--padding-md); }
+.p-lg { padding: var(--padding-lg); }
+.p-xl { padding: var(--padding-xl); }
+.p-2xl { padding: var(--padding-2xl); }
+.p-3xl { padding: var(--padding-3xl); }
+
+// Component-Specific Padding Utilities
+.card-padding-x { padding-left: var(--card-padding-x); padding-right: var(--card-padding-x); }
+.card-padding-y { padding-top: var(--card-padding-y); padding-bottom: var(--card-padding-y); }
+
+.section-padding-x { padding-left: var(--section-padding-x); padding-right: var(--section-padding-x); }
+.section-padding-y { padding-top: var(--section-padding-y); padding-bottom: var(--section-padding-y); }
+
+.header-padding-x { padding-left: var(--header-padding-x); padding-right: var(--header-padding-x); }
+.header-padding-y { padding-top: var(--header-padding-y); padding-bottom: var(--header-padding-y); }
+
+.sidenav-padding-x { padding-left: var(--sidenav-padding-x); padding-right: var(--sidenav-padding-x); }
+.sidenav-padding-y { padding-top: var(--sidenav-padding-y); padding-bottom: var(--sidenav-padding-y); }
+.sidenav-item-padding-x { padding-left: var(--sidenav-item-padding-x); padding-right: var(--sidenav-item-padding-x); }
+.sidenav-item-padding-y { padding-top: var(--sidenav-item-padding-y); padding-bottom: var(--sidenav-item-padding-y); }
+
+.button-padding-x { padding-left: var(--button-padding-x); padding-right: var(--button-padding-x); }
+.button-padding-y { padding-top: var(--button-padding-y); padding-bottom: var(--button-padding-y); }
+
+.input-padding-x { padding-left: var(--input-padding-x); padding-right: var(--input-padding-x); }
+.input-padding-y { padding-top: var(--input-padding-y); padding-bottom: var(--input-padding-y); }
+
+.dialog-padding-x { padding-left: var(--dialog-padding-x); padding-right: var(--dialog-padding-x); }
+.dialog-padding-y { padding-top: var(--dialog-padding-y); padding-bottom: var(--dialog-padding-y); }
+
+.tooltip-padding-x { padding-left: var(--tooltip-padding-x); padding-right: var(--tooltip-padding-x); }
+.tooltip-padding-y { padding-top: var(--tooltip-padding-y); padding-bottom: var(--tooltip-padding-y); }
+
+.popover-padding-x { padding-left: var(--popover-padding-x); padding-right: var(--popover-padding-x); }
+.popover-padding-y { padding-top: var(--popover-padding-y); padding-bottom: var(--popover-padding-y); }
+
+.breadcrumb-padding-x { padding-left: var(--breadcrumb-padding-x); padding-right: var(--breadcrumb-padding-x); }
+.breadcrumb-padding-y { padding-top: var(--breadcrumb-padding-y); padding-bottom: var(--breadcrumb-padding-y); }
+
+.snackbar-padding-x { padding-left: var(--snackbar-padding-x); padding-right: var(--snackbar-padding-x); }
+.snackbar-padding-y { padding-top: var(--snackbar-padding-y); padding-bottom: var(--snackbar-padding-y); }
+
+.toast-padding-x { padding-left: var(--toast-padding-x); padding-right: var(--toast-padding-x); }
+.toast-padding-y { padding-top: var(--toast-padding-y); padding-bottom: var(--toast-padding-y); }
+
+.tab-padding-x { padding-left: var(--tab-padding-x); padding-right: var(--tab-padding-x); }
+.tab-padding-y { padding-top: var(--tab-padding-y); padding-bottom: var(--tab-padding-y); }
+
+.chip-padding-x { padding-left: var(--chip-padding-x); padding-right: var(--chip-padding-x); }
+.chip-padding-y { padding-top: var(--chip-padding-y); padding-bottom: var(--chip-padding-y); }
+
+.menu-item-padding-x { padding-left: var(--menu-item-padding-x); padding-right: var(--menu-item-padding-x); }
+.menu-item-padding-y { padding-top: var(--menu-item-padding-y); padding-bottom: var(--menu-item-padding-y); }
+
+.badge-padding-x { padding-left: var(--badge-padding-x); padding-right: var(--badge-padding-x); }
+.badge-padding-y { padding-top: var(--badge-padding-y); padding-bottom: var(--badge-padding-y); }
+
+.alert-padding-x { padding-left: var(--alert-padding-x); padding-right: var(--alert-padding-x); }
+.alert-padding-y { padding-top: var(--alert-padding-y); padding-bottom: var(--alert-padding-y); }
+
+.panel-padding-x { padding-left: var(--panel-padding-x); padding-right: var(--panel-padding-x); }
+.panel-padding-y { padding-top: var(--panel-padding-y); padding-bottom: var(--panel-padding-y); }
+
+// Mobile-Specific Padding Utilities
+.mobile-section-padding-x { padding-left: var(--mobile-section-padding-x); padding-right: var(--mobile-section-padding-x); }
+.mobile-section-padding-y { padding-top: var(--mobile-section-padding-y); padding-bottom: var(--mobile-section-padding-y); }
+
+.mobile-card-padding-x { padding-left: var(--mobile-card-padding-x); padding-right: var(--mobile-card-padding-x); }
+.mobile-card-padding-y { padding-top: var(--mobile-card-padding-y); padding-bottom: var(--mobile-card-padding-y); }
+
+.mobile-dashboard-padding-x { padding-left: var(--mobile-dashboard-padding-x); padding-right: var(--mobile-dashboard-padding-x); }
+.mobile-dashboard-padding-y { padding-top: var(--mobile-dashboard-padding-y); padding-bottom: var(--mobile-dashboard-padding-y); }
+
+.mobile-widget-padding-x { padding-left: var(--mobile-widget-padding-x); padding-right: var(--mobile-widget-padding-x); }
+.mobile-widget-padding-y { padding-top: var(--mobile-widget-padding-y); padding-bottom: var(--mobile-widget-padding-y); }

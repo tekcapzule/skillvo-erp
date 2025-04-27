@@ -1,0 +1,108 @@
+// ========================================
+// Size Utilities
+// ========================================
+
+// Base Scale
+.size-0 { width: var(--size-0); height: var(--size-0); }
+.size-1 { width: var(--size-1); height: var(--size-1); }
+.size-2 { width: var(--size-2); height: var(--size-2); }
+.size-3 { width: var(--size-3); height: var(--size-3); }
+.size-4 { width: var(--size-4); height: var(--size-4); }
+.size-5 { width: var(--size-5); height: var(--size-5); }
+.size-6 { width: var(--size-6); height: var(--size-6); }
+.size-7 { width: var(--size-7); height: var(--size-7); }
+.size-8 { width: var(--size-8); height: var(--size-8); }
+.size-10 { width: var(--size-10); height: var(--size-10); }
+.size-12 { width: var(--size-12); height: var(--size-12); }
+.size-16 { width: var(--size-16); height: var(--size-16); }
+.size-20 { width: var(--size-20); height: var(--size-20); }
+.size-24 { width: var(--size-24); height: var(--size-24); }
+.size-32 { width: var(--size-32); height: var(--size-32); }
+.size-40 { width: var(--size-40); height: var(--size-40); }
+.size-48 { width: var(--size-48); height: var(--size-48); }
+.size-64 { width: var(--size-64); height: var(--size-64); }
+
+// Semantic Sizes
+.size-xs { width: var(--size-xs); height: var(--size-xs); }
+.size-sm { width: var(--size-sm); height: var(--size-sm); }
+.size-md { width: var(--size-md); height: var(--size-md); }
+.size-lg { width: var(--size-lg); height: var(--size-lg); }
+.size-xl { width: var(--size-xl); height: var(--size-xl); }
+.size-2xl { width: var(--size-2xl); height: var(--size-2xl); }
+.size-3xl { width: var(--size-3xl); height: var(--size-3xl); }
+
+// Header
+.header-height { height: var(--header-height); }
+.header-height-mobile { height: var(--header-height-mobile); }
+.header-icon-size { width: var(--header-icon-size); height: var(--header-icon-size); }
+.header-icon-container-size { width: var(--header-icon-container-size); height: var(--header-icon-container-size); }
+.header-icon-container-size-mobile { width: var(--header-icon-container-size-mobile); height: var(--header-icon-container-size-mobile); }
+
+// Sidenav
+.sidenav-width { width: var(--sidenav-width); }
+.sidenav-width-collapsed { width: var(--sidenav-width-collapsed); }
+.sidenav-item-height { height: var(--sidenav-item-height); }
+.sidenav-icon-size { width: var(--sidenav-icon-size); height: var(--sidenav-icon-size); }
+.sidenav-icon-container-width { width: var(--sidenav-icon-container-width); }
+
+// Buttons
+.button-height-sm { height: var(--button-height-sm); }
+.button-height-md { height: var(--button-height-md); }
+.button-height-lg { height: var(--button-height-lg); }
+.button-icon-size-sm { width: var(--button-icon-size-sm); height: var(--button-icon-size-sm); }
+.button-icon-size-md { width: var(--button-icon-size-md); height: var(--button-icon-size-md); }
+.button-icon-size-lg { width: var(--button-icon-size-lg); height: var(--button-icon-size-lg); }
+
+// Inputs
+.input-height-sm { height: var(--input-height-sm); }
+.input-height-md { height: var(--input-height-md); }
+.input-height-lg { height: var(--input-height-lg); }
+.input-icon-size { width: var(--input-icon-size); height: var(--input-icon-size); }
+
+// Avatar
+.avatar-size-xs { width: var(--avatar-size-xs); height: var(--avatar-size-xs); }
+.avatar-size-sm { width: var(--avatar-size-sm); height: var(--avatar-size-sm); }
+.avatar-size-md { width: var(--avatar-size-md); height: var(--avatar-size-md); }
+.avatar-size-lg { width: var(--avatar-size-lg); height: var(--avatar-size-lg); }
+.avatar-size-xl { width: var(--avatar-size-xl); height: var(--avatar-size-xl); }
+
+// Badge
+.badge-size-sm { width: var(--badge-size-sm); height: var(--badge-size-sm); }
+.badge-size-md { width: var(--badge-size-md); height: var(--badge-size-md); }
+.badge-size-lg { width: var(--badge-size-lg); height: var(--badge-size-lg); }
+
+// Chip
+.chip-height { height: var(--chip-height); }
+.chip-icon-size { width: var(--chip-icon-size); height: var(--chip-icon-size); }
+
+// Tab
+.tab-height { height: var(--tab-height); }
+
+// Card
+.card-min-width { min-width: var(--card-min-width); }
+.card-max-width { max-width: var(--card-max-width); }
+.card-header-height { height: var(--card-header-height); }
+.card-footer-height { height: var(--card-footer-height); }
+
+// Dialog / Modal
+.dialog-width-sm { width: var(--dialog-width-sm); }
+.dialog-width-md { width: var(--dialog-width-md); }
+.dialog-width-lg { width: var(--dialog-width-lg); }
+.dialog-width-xl { width: var(--dialog-width-xl); }
+.dialog-max-height { max-height: var(--dialog-max-height); }
+
+// Panels
+.notification-panel-width { width: var(--size-notification-panel); }
+
+// Snackbar / Toast
+.snackbar-min-width { min-width: var(--snackbar-min-width); }
+.toast-min-width { min-width: var(--toast-min-width); }
+
+// Menu
+.menu-min-width { min-width: var(--menu-min-width); }
+
+// Alert
+.alert-min-width { min-width: var(--alert-min-width); }
+
+// Breadcrumb
+.breadcrumb-height { height: var(--breadcrumb-height); }

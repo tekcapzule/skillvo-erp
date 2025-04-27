@@ -19,14 +19,7 @@
 @forward 'variables/accessibility';
 
 // Mixins - General purpose mixins
-@forward 'mixins/mixins';
-
-// Accessibility mixins after variables are defined
-@forward 'mixins/a11y-mixins';
-
-// Theme mixins - all theme-related mixins are now here
-@forward 'mixins/theme-mixins';
-
+@forward 'mixins';
 
 
 // Variables that can be customized by importing modules
