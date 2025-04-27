@@ -1,15 +1,16 @@
 // ========================================
 // Accessibility Variables
 // ========================================
-// This file contains variables related to accessibility concerns
-// All accessibility mixins have been moved to _a11y-mixins.scss
+// Specialized variables for focus, motion, z-index, touch targets, etc.
 
 // Focus Styles
 // ----------------------------------------
 $focus-outline-width: 2px !default;
 $focus-outline-style: solid !default;
 $focus-outline-offset: 2px !default;
-$focus-outline-color: var(--focus-ring-color) !default;
+
+// Use a direct fallback color for focus ring (no var(--primary-rgb))
+$focus-outline-color: rgba(37, 99, 235, 0.8) !default; // Blue-ish accessible color
 
 // Motion & Animation
 // ----------------------------------------
@@ -53,19 +54,19 @@ $z-index-negative: -1 !default;
 $min-touch-target-size: 44px !default;
 $min-interactive-element-spacing: 8px !default;
 
-// Skip Navigation
-// ----------------------------------------
-$skip-link-bg: var(--surface-background) !default;
-$skip-link-color: var(--text-primary) !default;
+// Skip Navigation (Hard fallback colors)
+$skip-link-bg: #ffffff !default;   // White fallback
+$skip-link-color: #111111 !default; // Almost black fallback
 $skip-link-padding: 8px 16px !default;
 $skip-link-position-top: 8px !default;
 $skip-link-position-left: 8px !default;
 
-// CSS Custom Properties (for runtime access)
-// ----------------------------------------
+// ========================================
+// CSS Custom Properties Mapping
+// ========================================
 :root {
   // Focus indicators
-  --focus-ring-color: rgba(var(--primary-rgb, 37, 99, 235), 0.8);
+  --focus-ring-color: rgba(37, 99, 235, 0.8); // Now static and not dependent on --primary-rgb
   --focus-ring-width: #{$focus-outline-width};
   --focus-ring-offset: #{$focus-outline-offset};
   --focus-ring-style: #{$focus-outline-style};
@@ -78,11 +79,11 @@ $skip-link-position-left: 8px !default;
   --motion-easing-decelerate: #{$deceleration-timing};
   --motion-easing-accelerate: #{$acceleration-timing};
   
-  // Reduced motion preferences
+  // Reduced motion
   --reduced-motion-duration-short: #{$reduced-motion-duration-short};
   --reduced-motion-duration-medium: #{$reduced-motion-duration-medium};
   --reduced-motion-duration-long: #{$reduced-motion-duration-long};
-  
+
   // Keyboard navigation
   --keyboard-focus-visible: #{$keyboard-focus-visible};
   --keyboard-focus-ring-width: #{$keyboard-focus-ring-width};
@@ -113,4 +114,4 @@ $skip-link-position-left: 8px !default;
   --skip-link-padding: #{$skip-link-padding};
   --skip-link-position-top: #{$skip-link-position-top};
   --skip-link-position-left: #{$skip-link-position-left};
-} 
+}

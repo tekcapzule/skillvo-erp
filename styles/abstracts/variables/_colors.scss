@@ -227,53 +227,154 @@ $theme-colors: (
 );
 
 // ========================================
-// Component-Specific Theme Maps
+// Component Specific Theme Variables
+// Expanded to cover all common UI components
 // ========================================
 
-// Light theme component variables
+// Light Theme Component Map
 $component-light-map: (
   // Header
   'header-bg': #ffffff,
   'header-text': #212529,
   'header-border': #e9ecef,
-  
+
   // Sidebar
   'sidenav-bg': #ffffff,
   'sidenav-text': #212529,
   'sidenav-item-hover': #e9ecef,
-  
+
   // Cards
   'card-bg': #ffffff,
   'card-border': #e9ecef,
   'card-shadow': 0 2px 4px rgba(0, 0, 0, 0.05),
-  
+
   // Buttons
   'btn-primary-bg': #0a9fff,
   'btn-primary-text': #ffffff,
   'btn-secondary-bg': #364c5e,
-  'btn-secondary-text': #ffffff
-);
+  'btn-secondary-text': #ffffff,
 
-// Dark theme component variables
+  // Badge
+  'badge-bg': #f3f4f6,
+  'badge-text': #212529,
+
+  // Chip (Tags)
+  'chip-bg': #f3f4f6,
+  'chip-text': #212529,
+
+  // Tabs
+  'tab-active-bg': #30b1ff,
+  'tab-inactive-bg': #f3f4f6,
+  'tab-text': #212529,
+
+  // Snackbar
+  'snackbar-bg': #4caf50,
+  'snackbar-text': #ffffff,
+
+  // Toast
+  'toast-bg': #29b6f6,
+  'toast-text': #ffffff,
+
+  // Menu
+  'menu-bg': #ffffff,
+  'menu-hover-bg': #e9ecef,
+  'menu-text': #212529,
+
+  // Alert
+  'alert-bg': #fce8e8,
+  'alert-text': #f44336,
+
+  // Panel
+  'panel-bg': #f5f5f5,
+  'panel-border': #e9ecef,
+
+  // Dialog
+  'dialog-bg': #ffffff,
+  'dialog-border': #dee2e6,
+  'dialog-header-bg': #f8f9fa,
+
+  // Inputs
+  'input-bg': #f5f5f5,
+  'input-border': #dee2e6,
+  'input-focus-border': #0a9fff,
+  'input-placeholder-color': #6c757d,
+
+  // Breadcrumb
+  'breadcrumb-bg': #ffffff,
+  'breadcrumb-text': #212529,
+  'breadcrumb-border': #e9ecef
+) !default;
+
+// Dark Theme Component Map
 $component-dark-map: (
   // Header
   'header-bg': #242424,
   'header-text': #e9ecef,
   'header-border': #383838,
-  
+
   // Sidebar
   'sidenav-bg': #242424,
   'sidenav-text': #e9ecef,
   'sidenav-item-hover': #383838,
-  
+
   // Cards
   'card-bg': #242424,
   'card-border': #383838,
   'card-shadow': 0 2px 4px rgba(0, 0, 0, 0.15),
-  
+
   // Buttons
   'btn-primary-bg': #30b1ff,
   'btn-primary-text': #ffffff,
   'btn-secondary-bg': #455b70,
-  'btn-secondary-text': #ffffff
-); 
+  'btn-secondary-text': #ffffff,
+
+  // Badge
+  'badge-bg': #1f2937,
+  'badge-text': #e9ecef,
+
+  // Chip (Tags)
+  'chip-bg': #374151,
+  'chip-text': #e9ecef,
+
+  // Tabs
+  'tab-active-bg': #0a9fff,
+  'tab-inactive-bg': #374151,
+  'tab-text': #e9ecef,
+
+  // Snackbar
+  'snackbar-bg': #4caf50,
+  'snackbar-text': #ffffff,
+
+  // Toast
+  'toast-bg': #29b6f6,
+  'toast-text': #ffffff,
+
+  // Menu
+  'menu-bg': #242424,
+  'menu-hover-bg': #383838,
+  'menu-text': #e9ecef,
+
+  // Alert
+  'alert-bg': #fce8e8,
+  'alert-text': #f44336,
+
+  // Panel
+  'panel-bg': #2d2d2d,
+  'panel-border': #454545,
+
+  // Dialog
+  'dialog-bg': #242424,
+  'dialog-border': #454545,
+  'dialog-header-bg': #383838,
+
+  // Inputs
+  'input-bg': #2d2d2d,
+  'input-border': #454545,
+  'input-focus-border': #30b1ff,
+  'input-placeholder-color': #adb5bd,
+
+  // Breadcrumb
+  'breadcrumb-bg': #2d2d2d,
+  'breadcrumb-text': #e9ecef,
+  'breadcrumb-border': #454545
+) !default;

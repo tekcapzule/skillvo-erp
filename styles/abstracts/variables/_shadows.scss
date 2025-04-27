@@ -2,71 +2,98 @@
 // Shadows
 // ========================================
 // Consistent shadow tokens for UI elements
-// Creates elevation and depth in the UI using neutral tones only
 
 // Base Shadow Colors
 // ----------------------------------------
-// Use rgba for better browser support and compatibility
-$shadow-color-light: rgba(0, 0, 0, 0.1);
-$shadow-color-medium: rgba(0, 0, 0, 0.14);
-$shadow-color-dark: rgba(0, 0, 0, 0.2);
+$shadow-color-light: rgba(0, 0, 0, 0.1) !default;
+$shadow-color-medium: rgba(0, 0, 0, 0.14) !default;
+$shadow-color-dark: rgba(0, 0, 0, 0.2) !default;
 
 // Base Shadow Scale
 // ----------------------------------------
-// Consistent progression of elevations
-$shadow-none: none;
-$shadow-xs: 0 1px 2px 0 $shadow-color-light;
-$shadow-sm: 0 2px 4px -1px $shadow-color-light, 0 1px 2px -1px $shadow-color-medium;
-$shadow-md: 0 4px 6px -1px $shadow-color-light, 0 2px 4px -2px $shadow-color-medium;
-$shadow-lg: 0 10px 15px -3px $shadow-color-light, 0 4px 6px -4px $shadow-color-medium;
-$shadow-xl: 0 20px 25px -5px $shadow-color-light, 0 8px 10px -6px $shadow-color-medium;
-$shadow-2xl: 0 25px 50px -12px $shadow-color-medium;
-$shadow-inner: inset 0 2px 4px 0 $shadow-color-light;
-$shadow-outline: 0 0 0 3px rgba(0, 0, 0, 0.05);
+$shadow-none: none !default;
+$shadow-xs: 0 1px 2px 0 $shadow-color-light !default;
+$shadow-sm: 0 2px 4px -1px $shadow-color-light, 0 1px 2px -1px $shadow-color-medium !default;
+$shadow-md: 0 4px 6px -1px $shadow-color-light, 0 2px 4px -2px $shadow-color-medium !default;
+$shadow-lg: 0 10px 15px -3px $shadow-color-light, 0 4px 6px -4px $shadow-color-medium !default;
+$shadow-xl: 0 20px 25px -5px $shadow-color-light, 0 8px 10px -6px $shadow-color-medium !default;
+$shadow-2xl: 0 25px 50px -12px $shadow-color-medium !default;
+$shadow-inner: inset 0 2px 4px 0 $shadow-color-light !default;
+$shadow-outline: 0 0 0 3px rgba(0, 0, 0, 0.05) !default;
 
 // Directional Shadows
 // ----------------------------------------
-$shadow-top: 0 -6px 16px -8px $shadow-color-light;
-$shadow-right: 6px 0 16px -8px $shadow-color-light;
-$shadow-bottom: 0 6px 16px -8px $shadow-color-light;
-$shadow-left: -6px 0 16px -8px $shadow-color-light;
+$shadow-top: 0 -6px 16px -8px $shadow-color-light !default;
+$shadow-right: 6px 0 16px -8px $shadow-color-light !default;
+$shadow-bottom: 0 6px 16px -8px $shadow-color-light !default;
+$shadow-left: -6px 0 16px -8px $shadow-color-light !default;
 
+// ========================================
 // Component-Specific Shadows
-// ----------------------------------------
-$shadow-card: $shadow-md;
-$shadow-card-hover: $shadow-lg;
-$shadow-card-active: $shadow-lg;
+// ========================================
 
-$shadow-button: $shadow-sm;
-$shadow-button-hover: $shadow-md;
-$shadow-button-active: $shadow-inner;
+// Cards
+$shadow-card: $shadow-md !default;
+$shadow-card-hover: $shadow-lg !default;
+$shadow-card-active: $shadow-lg !default;
 
-$shadow-dropdown: $shadow-lg;
-$shadow-popover: $shadow-lg;
-$shadow-tooltip: $shadow-md;
-$shadow-modal: $shadow-xl;
-$shadow-drawer: $shadow-xl;
+// Buttons
+$shadow-button: $shadow-sm !default;
+$shadow-button-hover: $shadow-md !default;
+$shadow-button-active: $shadow-inner !default;
 
-$shadow-header: 0 2px 8px 0 $shadow-color-light;
-$shadow-navbar: 0 2px 8px 0 $shadow-color-light;
-$shadow-sidebar: 2px 0 8px 0 $shadow-color-light;
+// Dropdown, Popover, Tooltip
+$shadow-dropdown: $shadow-lg !default;
+$shadow-popover: $shadow-lg !default;
+$shadow-tooltip: $shadow-md !default;
 
+// Modal, Drawer, Dialog
+$shadow-modal: $shadow-xl !default;
+$shadow-drawer: $shadow-xl !default;
+$shadow-dialog: $shadow-xl !default;
+
+// Navbar, Header, Sidebar
+$shadow-header: 0 2px 8px 0 $shadow-color-light !default;
+$shadow-navbar: 0 2px 8px 0 $shadow-color-light !default;
+$shadow-sidebar: 2px 0 8px 0 $shadow-color-light !default;
+
+// Panel
+$shadow-panel: $shadow-md !default;
+
+// Badge, Chip, Tab
+$shadow-badge: $shadow-xs !default;
+$shadow-chip: $shadow-xs !default;
+$shadow-tab: $shadow-sm !default;
+
+// Snackbar, Toast, Menu, Alert
+$shadow-snackbar: $shadow-md !default;
+$shadow-toast: $shadow-md !default;
+$shadow-menu: $shadow-md !default;
+$shadow-alert: $shadow-md !default;
+
+// Breadcrumb
+$shadow-breadcrumb: $shadow-sm !default;
+
+// Inputs
+$shadow-input-focus: $shadow-outline !default;
+
+// ========================================
 // Interactive State Shadows
-// ----------------------------------------
-// All focus shadows use neutral colors (no color tinting)
-$shadow-focus: 0 0 0 3px rgba(0, 0, 0, 0.08);
-$shadow-focus-error: 0 0 0 3px rgba(0, 0, 0, 0.12);
-$shadow-focus-success: 0 0 0 3px rgba(0, 0, 0, 0.08);
+// ========================================
+$shadow-focus: 0 0 0 3px rgba(0, 0, 0, 0.08) !default;
+$shadow-focus-error: 0 0 0 3px rgba(0, 0, 0, 0.12) !default;
+$shadow-focus-success: 0 0 0 3px rgba(0, 0, 0, 0.08) !default;
 
-// Define CSS Custom Properties
-// ----------------------------------------
+// ========================================
+// CSS Custom Properties
+// ========================================
 :root {
-  // Base Shadow Colors
+  // Base Colors
   --shadow-color-light: #{$shadow-color-light};
   --shadow-color-medium: #{$shadow-color-medium};
   --shadow-color-dark: #{$shadow-color-dark};
-  
-  // Base Shadow Scale
+
+  // Base Scale
   --shadow-none: #{$shadow-none};
   --shadow-xs: #{$shadow-xs};
   --shadow-sm: #{$shadow-sm};
@@ -76,48 +103,61 @@ $shadow-focus-success: 0 0 0 3px rgba(0, 0, 0, 0.08);
   --shadow-2xl: #{$shadow-2xl};
   --shadow-inner: #{$shadow-inner};
   --shadow-outline: #{$shadow-outline};
-  
-  // Directional Shadows
+
+  // Directional
   --shadow-top: #{$shadow-top};
   --shadow-right: #{$shadow-right};
   --shadow-bottom: #{$shadow-bottom};
   --shadow-left: #{$shadow-left};
-  
-  // Component-Specific Shadows
+
+  // Components
   --shadow-card: #{$shadow-card};
   --shadow-card-hover: #{$shadow-card-hover};
   --shadow-card-active: #{$shadow-card-active};
-  
+
   --shadow-button: #{$shadow-button};
   --shadow-button-hover: #{$shadow-button-hover};
   --shadow-button-active: #{$shadow-button-active};
-  
+
   --shadow-dropdown: #{$shadow-dropdown};
   --shadow-popover: #{$shadow-popover};
   --shadow-tooltip: #{$shadow-tooltip};
   --shadow-modal: #{$shadow-modal};
   --shadow-drawer: #{$shadow-drawer};
-  
+  --shadow-dialog: #{$shadow-dialog};
+
   --shadow-header: #{$shadow-header};
   --shadow-navbar: #{$shadow-navbar};
   --shadow-sidebar: #{$shadow-sidebar};
-  
-  // Interactive State Shadows
+  --shadow-panel: #{$shadow-panel};
+
+  --shadow-badge: #{$shadow-badge};
+  --shadow-chip: #{$shadow-chip};
+  --shadow-tab: #{$shadow-tab};
+
+  --shadow-snackbar: #{$shadow-snackbar};
+  --shadow-toast: #{$shadow-toast};
+  --shadow-menu: #{$shadow-menu};
+  --shadow-alert: #{$shadow-alert};
+  --shadow-breadcrumb: #{$shadow-breadcrumb};
+
+  --shadow-input-focus: #{$shadow-input-focus};
+
+  // Interaction
   --shadow-focus: #{$shadow-focus};
   --shadow-focus-error: #{$shadow-focus-error};
   --shadow-focus-success: #{$shadow-focus-success};
 }
 
+// ========================================
 // Dark Theme Shadow Overrides
-// Applied when the .dark-theme class is present
+// ========================================
 .dark-theme {
-  // Adjust shadow colors for dark theme
   --shadow-color-light: rgba(0, 0, 0, 0.25);
   --shadow-color-medium: rgba(0, 0, 0, 0.35);
   --shadow-color-dark: rgba(0, 0, 0, 0.5);
-  
-  // Soften focus rings for better visibility on dark backgrounds
+
   --shadow-focus: 0 0 0 3px rgba(255, 255, 255, 0.1);
   --shadow-focus-error: 0 0 0 3px rgba(0, 0, 0, 0.25);
   --shadow-focus-success: 0 0 0 3px rgba(255, 255, 255, 0.1);
-} 
+}

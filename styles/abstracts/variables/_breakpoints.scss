@@ -9,16 +9,16 @@
 // Breakpoint Scale (in pixels)
 // ----------------------------------------
 // Standard bootstrap-style breakpoints with additional xxl point
-$breakpoint-xs: 0;       // Extra small screens, mobile portrait
-$breakpoint-sm: 576px;   // Small screens, mobile landscape
-$breakpoint-md: 768px;   // Medium screens, tablets
-$breakpoint-lg: 992px;   // Large screens, desktops
-$breakpoint-xl: 1200px;  // Extra large screens, large desktops
-$breakpoint-xxl: 1400px; // Extra extra large screens
+$breakpoint-xs: 0 !default;       // Extra small screens, mobile portrait
+$breakpoint-sm: 576px !default;   // Small screens, mobile landscape
+$breakpoint-md: 768px !default;   // Medium screens, tablets
+$breakpoint-lg: 992px !default;   // Large screens, desktops
+$breakpoint-xl: 1200px !default;  // Extra large screens, large desktops
+$breakpoint-xxl: 1400px !default; // Extra extra large screens
 
 // Breakpoints Map
 // ----------------------------------------
-// For use with the breakpoint mixin
+// For use with the breakpoint mixins
 $breakpoints: (
   'xs': $breakpoint-xs,
   'sm': $breakpoint-sm,
@@ -26,30 +26,30 @@ $breakpoints: (
   'lg': $breakpoint-lg,
   'xl': $breakpoint-xl,
   'xxl': $breakpoint-xxl
-);
+) !default;
 
-// Container Max Widths
+// Container Max Widths (for layout containers)
 // ----------------------------------------
-// Maximum width for container at each breakpoint
 $container-max-widths: (
   'sm': 540px,
   'md': 720px,
   'lg': 960px,
   'xl': 1140px,
   'xxl': 1320px
-);
+) !default;
 
 // Define CSS Custom Properties
 // ----------------------------------------
-// These will be available for use in the app
+// These will be available for use across the app
 :root {
+  // Breakpoints
   --breakpoint-xs: #{$breakpoint-xs};
   --breakpoint-sm: #{$breakpoint-sm};
   --breakpoint-md: #{$breakpoint-md};
   --breakpoint-lg: #{$breakpoint-lg};
   --breakpoint-xl: #{$breakpoint-xl};
   --breakpoint-xxl: #{$breakpoint-xxl};
-  
+
   // Container max widths
   --container-sm: #{map.get($container-max-widths, 'sm')};
   --container-md: #{map.get($container-max-widths, 'md')};
@@ -58,9 +58,9 @@ $container-max-widths: (
   --container-xxl: #{map.get($container-max-widths, 'xxl')};
 }
 
+// ========================================
 // Breakpoint Mixins
-// ----------------------------------------
-// These provide a consistent API for responsive design
+// ========================================
 
 // Min-width breakpoint (from this size and up)
 @mixin breakpoint-up($breakpoint) {
@@ -123,10 +123,10 @@ $container-max-widths: (
 @function breakpoint-next($breakpoint) {
   $breakpoint-list: map.keys($breakpoints);
   $index: index($breakpoint-list, $breakpoint);
-  
+
   @if $index and $index < length($breakpoint-list) {
     @return nth($breakpoint-list, $index + 1);
   } @else {
     @return null;
   }
-} 
+}
