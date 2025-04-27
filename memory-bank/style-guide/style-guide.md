@@ -12,44 +12,38 @@ This document outlines the styling architecture for the SkillVo platform, descri
 ## Directory Structure
 
 ```
-/styles
-  ├── abstracts/        # Design tokens (variables, mixins, functions)
-  │    ├── variables/
-  │    │    ├── _colors.scss
-  │    │    ├── _typography.scss
-  │    │    ├── _spacing.scss
-  │    │    ├── _padding.scss
-  │    │    ├── _sizes.scss
-  │    │    ├── _border-radius.scss
-  │    │    ├── _shadows.scss
-  │    │    ├── _breakpoints.scss
-  │    │    ├── _icons.scss
-  │    │    ├── _accessibility.scss
-  │    ├── mixins/
-  │    │    ├── _mixins.scss
-  │    │    ├── _theme-mixins.scss
-  │    │    ├── _layout-mixins.scss
-  │    ├── _index.scss      # Forward all variables and mixins
-  ├── base/            # Base styles, resets, utilities
-  │    ├── _reset.scss
-  │    ├── _base.scss
-  │    ├── _typography.scss
-  │    ├── _layout.scss
-  │    ├── _scrollbar.scss
-  │    ├── _utilities/
-  │         ├── _colors-utilities.scss
-  │         ├── _spacing-utilities.scss
-  │         ├── _padding-utilities.scss
-  │         ├── _border-radius-utilities.scss
-  │         ├── _shadow-utilities.scss
-  │         ├── _breakpoint-utilities.scss
-  │         ├── _size-utilities.scss
-  │         ├── _icon-utilities.scss
-  │         ├── _typography-utilities.scss
-  ├── themes/
-  │    ├── _theme-vars.scss     # Light and Dark themes setup
-  │    ├── _theme-manager.scss  # Theme switching logic
-  ├── main.scss             # Master importer
+├── abstracts
+│   ├── _index.scss
+│   ├── _mixins.scss
+│   └── variables
+│       ├── _accessibility.scss
+│       ├── _border-radius.scss
+│       ├── _breakpoints.scss
+│       ├── _colors.scss
+│       ├── _icons.scss
+│       ├── _padding.scss
+│       ├── _shadows.scss
+│       ├── _sizes.scss
+│       ├── _spacing.scss
+│       └── _typography.scss
+├── base
+│   ├── _accessibility.scss
+│   ├── _border-radius.scss
+│   ├── _breakpoints.scss
+│   ├── _colors.scss
+│   ├── _icons.scss
+│   ├── _layout.scss
+│   ├── _padding.scss
+│   ├── _reset.scss
+│   ├── _shadows.scss
+│   ├── _sizes.scss
+│   ├── _spacing.scss
+│   └── _typography.scss
+├── main.scss
+└── themes
+    ├── _theme-manager.scss
+    └── _theme-vars.scss
+
 ```
 
 ## Import Strategy
