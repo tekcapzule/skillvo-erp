@@ -20,20 +20,3 @@
 
 // Mixins - General purpose mixins
 @forward 'mixins';
-
-
-// Variables that can be customized by importing modules
-// ----------------------------------------
-$enable-dark-mode: true !default;
-$enable-transitions: true !default;
-$enable-reduced-motion: true !default;
-$enable-rtl-support: false !default;
-
-// Export shared configuration
-// ----------------------------------------
-:export {
-  darkModeEnabled: $enable-dark-mode;
-  transitionsEnabled: $enable-transitions;
-  reducedMotionEnabled: $enable-reduced-motion;
-  rtlSupportEnabled: $enable-rtl-support;
-} 

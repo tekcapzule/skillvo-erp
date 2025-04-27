@@ -6,16 +6,6 @@ import { CommonModule } from '@angular/common';
 import { HttpClientModule, provideHttpClient, withFetch } from '@angular/common/http';
 
 // Material Modules
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatIconModule } from '@angular/material/icon';
-import { MatButtonModule } from '@angular/material/button';
-import { MatSidenavModule } from '@angular/material/sidenav';
-import { MatListModule } from '@angular/material/list';
-import { MatMenuModule } from '@angular/material/menu';
-import { MatTooltipModule } from '@angular/material/tooltip';
-import { MatIconRegistry } from '@angular/material/icon';
-import { DomSanitizer } from '@angular/platform-browser';
-
 import { AppComponent } from './app.component';
 import { LayoutModule } from './layout/layout.module';
 import { appRoutes } from './app.routes';
@@ -31,13 +21,6 @@ import { appRoutes } from './app.routes';
     HttpClientModule,
     RouterModule.forRoot(appRoutes),
     LayoutModule,
-    MatToolbarModule,
-    MatIconModule,
-    MatButtonModule,
-    MatSidenavModule,
-    MatListModule,
-    MatMenuModule,
-    MatTooltipModule
   ],
   providers: [
     provideHttpClient(withFetch())
@@ -45,11 +28,5 @@ import { appRoutes } from './app.routes';
   bootstrap: [AppComponent]
 })
 export class AppModule {
-  constructor(
-    private matIconRegistry: MatIconRegistry,
-    private domSanitizer: DomSanitizer
-  ) {
-    // Register paths for the icon sets
-    this.matIconRegistry.setDefaultFontSetClass('material-icons');
-  }
+  constructor(){}
 } 

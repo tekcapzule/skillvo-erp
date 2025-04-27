@@ -2,6 +2,18 @@
 // SkillVo Essential Mixins
 // ========================================
 
+// === Theme Mixins === 
+
+@use "sass:map";
+
+// Mixin to generate CSS custom properties for a given theme map
+@mixin generate-theme-vars($theme-map) {
+  @each $name, $value in $theme-map {
+    --#{$name}: #{$value};
+  }
+}
+
+
 // === Theme Transition Mixin ===
 @mixin theme-transition($properties...) {
     transition: $properties 0.3s ease-in-out;

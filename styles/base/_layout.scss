@@ -1,0 +1,148 @@
+// ========================================
+// Layout Utilities (Base)
+// ========================================
+// Combines core layout helpers + layout mixins
+
+// ----------------------------------------
+// Layout Containers
+.container {
+  width: 100%;
+  margin-right: auto;
+  margin-left: auto;
+  padding-right: var(--space-4);
+  padding-left: var(--space-4);
+
+  @media (min-width: var(--breakpoint-sm)) {
+    max-width: var(--container-sm);
+  }
+  @media (min-width: var(--breakpoint-md)) {
+    max-width: var(--container-md);
+  }
+  @media (min-width: var(--breakpoint-lg)) {
+    max-width: var(--container-lg);
+  }
+  @media (min-width: var(--breakpoint-xl)) {
+    max-width: var(--container-xl);
+  }
+  @media (min-width: var(--breakpoint-xxl)) {
+    max-width: var(--container-xxl);
+  }
+}
+
+// ----------------------------------------
+// Layout Helpers
+.full-width {
+  width: 100%;
+}
+
+.full-height {
+  height: 100%;
+}
+
+.full-screen {
+  width: 100vw;
+  height: 100vh;
+}
+
+.centered {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+// ----------------------------------------
+// Flex Utilities
+.flex {
+  display: flex;
+}
+
+.flex-column {
+  flex-direction: column;
+}
+
+.flex-wrap {
+  flex-wrap: wrap;
+}
+
+.flex-nowrap {
+  flex-wrap: nowrap;
+}
+
+.items-center {
+  align-items: center;
+}
+
+.items-start {
+  align-items: flex-start;
+}
+
+.items-end {
+  align-items: flex-end;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.justify-start {
+  justify-content: flex-start;
+}
+
+.justify-end {
+  justify-content: flex-end;
+}
+
+.justify-between {
+  justify-content: space-between;
+}
+
+.justify-around {
+  justify-content: space-around;
+}
+
+// ----------------------------------------
+// Overflow Helpers
+.overflow-auto {
+  overflow: auto;
+}
+
+.overflow-hidden {
+  overflow: hidden;
+}
+
+.overflow-scroll {
+  overflow: scroll;
+}
+
+.overflow-x-auto {
+  overflow-x: auto;
+}
+
+.overflow-y-auto {
+  overflow-y: auto;
+}
+
+// ========================================
+// Layout Mixins
+// ========================================
+
+@mixin full-screen() {
+  width: 100vw;
+  height: 100vh;
+}
+
+@mixin center-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin container-spacing {
+  padding-right: var(--space-4);
+  padding-left: var(--space-4);
+}
+
+// Usage:
+// @include full-screen;
+// @include center-content;
+// @include container-spacing;

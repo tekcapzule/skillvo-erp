@@ -1,61 +1,37 @@
-// ==========================================================================
-// SkillVo Main Stylesheet
-// ==========================================================================
+// ========================================
+// Main Stylesheet
+// ========================================
 
-// Configuration & Helpers
-// These files contain no actual CSS, but are used for variables, mixins, etc.
-// --------------------------------------------------
+// ----------------------------------------
+// Abstracts
+@use './abstracts/variables/colors';
+@use './abstracts/variables/typography';
+@use './abstracts/variables/shadows';
+@use './abstracts/variables/accessibility';
+@use './abstracts/variables/sizes';
+@use './abstracts/variables/breakpoints';
+@use './abstracts/variables/border-radius';
+@use './abstracts/variables/icons';
+@use './abstracts/variables/padding';
+@use './abstracts/variables/spacing';
+@use './abstracts/mixins';
 
-// Import abstracts using the consolidated index
-@use 'abstracts' as *;
-
-// Base Styles
-// Common and global styling
-// --------------------------------------------------
-
-// Reset and base styling for elements
-@use 'base/reset';
-@use 'base/typography' as base-typography;
-@use 'base/accessibility';
-@use 'base/theme-fallbacks';
-
+// ----------------------------------------
 // Themes
-// Theme management and theme-specific files
-// The application supports different themes:
-// - Light (default)
-// - Dark
-// --------------------------------------------------
+@use './themes/theme-vars';
+@use './themes/theme-manager';
 
-// Theme variables defined in :root selectors
-@use 'themes/theme-vars';
-
-// Theme management system for switching and applying theme variables
-@use 'themes/theme-manager';
-
-// 4. Layout
-// Styling for macro layout components, not specific features
-// --------------------------------------------------
-
-// Layout files have been merged into their respective component files
-//@use 'layout/layout-variables';
-//@use 'layout/grid';
-//@use 'layout/main-layout';
-
-// 5. Components
-// Individual components that can be reused across many pages
-// --------------------------------------------------
-
-// Note: The following component styles have been merged into their respective components
-// header, sidenav, breadcrumb, app-switcher, announcements, notification, user-profile, placeholder, cards, button, scrollbar
-
-// Utilities
-// Utility classes with a single purpose
-// --------------------------------------------------
-
-@use 'utilities/spacing';
-@use 'utilities/typography' as utility-typography;
-@use 'utilities/a11y';
-@use 'utilities/colors';
-@use 'utilities/layout' as utility-layout;
-@use 'utilities/scrollbar';
-
+// ----------------------------------------
+// Base
+@use './base/reset';
+@use './base/colors';
+@use './base/typography';
+@use './base/shadows';
+@use './base/accessibility';
+@use './base/layout';
+@use './base/sizes';
+@use './base/breakpoints';
+@use './base/border-radius';
+@use './base/icons';
+@use './base/padding';
+@use './base/spacing';
