@@ -5,7 +5,7 @@
 // These provide the base styling for the application themes.
 
 @use '../abstracts/variables/colors' as *;
-@use '../abstracts/mixins/theme-mixins' as *;
+@use '../abstracts/mixins' as *;
 
 // Default light theme variables
 :root {

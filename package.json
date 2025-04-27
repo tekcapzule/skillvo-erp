@@ -2,7 +2,7 @@
   "name": "@skillvo-web/source",
   "version": "0.0.0",
   "license": "MIT",
-  "scripts": {},
+  "scripts": {"sass-build": "sass styles/main.scss styles/main.css"},
   "private": true,
   "dependencies": {
     "@angular/animations": "~19.2.0",

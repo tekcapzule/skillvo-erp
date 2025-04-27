@@ -4,17 +4,10 @@
 
 // ----------------------------------------
 // Abstracts
-@use './abstracts/variables/colors';
-@use './abstracts/variables/typography';
-@use './abstracts/variables/shadows';
-@use './abstracts/variables/accessibility';
-@use './abstracts/variables/sizes';
-@use './abstracts/variables/breakpoints';
-@use './abstracts/variables/border-radius';
-@use './abstracts/variables/icons';
-@use './abstracts/variables/padding';
-@use './abstracts/variables/spacing';
-@use './abstracts/mixins';
+@use './abstracts' as *;
+
+//Reset
+@use './base/reset' as *;
 
 // ----------------------------------------
 // Themes
@@ -23,15 +16,14 @@
 
 // ----------------------------------------
 // Base
-@use './base/reset';
-@use './base/colors';
-@use './base/typography';
-@use './base/shadows';
-@use './base/accessibility';
-@use './base/layout';
-@use './base/sizes';
-@use './base/breakpoints';
-@use './base/border-radius';
-@use './base/icons';
-@use './base/padding';
-@use './base/spacing';
+@use './base/colors' as *;
+@use './base/typography' as *;
+@use './base/shadows' as *;
+@use './base/accessibility' as *;
+@use './base/layout' as *;
+@use './base/sizes' as *;
+@use './base/breakpoints' as *;
+@use './base/border-radius' as *;
+@use './base/icons' as * ;
+@use './base/padding' as *;
+@use './base/spacing' as *;
