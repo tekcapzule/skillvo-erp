@@ -10,10 +10,7 @@
       "executor": "@nx/angular:ng-packagr-lite",
       "outputs": ["{workspaceRoot}/dist/{projectRoot}"],
       "options": {
-        "project": "libs/ui-components/ng-package.json",
-        "stylePreprocessorOptions": {
-          "includePaths": ["../../../../styles"]
-        }
+        "project": "libs/ui-components/ng-package.json"
       },
       "configurations": {
         "production": {

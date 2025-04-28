@@ -9,15 +9,6 @@ $focus-outline-style: solid !default;
 $focus-outline-offset: 2px !default;
 $focus-outline-color: rgba(37, 99, 235, 0.8) !default; // Accessible static color
 
-// Motion & Animation
-// ----------------------------------------
-$motion-duration-short: 0.15s !default;
-$motion-duration-medium: 0.3s !default;
-$motion-duration-long: 0.5s !default;
-$motion-ease-standard: cubic-bezier(0.4, 0, 0.2, 1) !default;
-$motion-ease-decelerate: cubic-bezier(0, 0, 0.2, 1) !default;
-$motion-ease-accelerate: cubic-bezier(0.4, 0, 1, 1) !default;
-
 // Z-index Layers
 // ----------------------------------------
 $z-index-skip-link: 9999 !default;
@@ -51,14 +42,6 @@ $skip-link-position-left: 8px !default;
   --focus-ring-width: #{$focus-outline-width};
   --focus-ring-offset: #{$focus-outline-offset};
   --focus-ring-style: #{$focus-outline-style};
-  
-  // Motion preferences
-  --motion-duration-short: #{$motion-duration-short};
-  --motion-duration-medium: #{$motion-duration-medium};
-  --motion-duration-long: #{$motion-duration-long};
-  --motion-ease-standard: #{$motion-ease-standard};
-  --motion-ease-decelerate: #{$motion-ease-decelerate};
-  --motion-ease-accelerate: #{$motion-ease-accelerate};
   
   // Z-index layers
   --z-index-skip-link: #{$z-index-skip-link};

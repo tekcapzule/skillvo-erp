@@ -1,0 +1,44 @@
+// ========================================
+// Animation Variables
+// ========================================
+// Consistent animation timing, easing, and keyframes
+// Based on SkillVo Design System
+
+// Animation Durations
+// ----------------------------------------
+$motion-duration-short: 0.15s !default;
+$motion-duration-medium: 0.3s !default;
+$motion-duration-long: 0.5s !default;
+
+// Easing Functions
+// ----------------------------------------
+$motion-ease-standard: cubic-bezier(0.4, 0, 0.2, 1) !default;
+$motion-ease-decelerate: cubic-bezier(0, 0, 0.2, 1) !default;
+$motion-ease-accelerate: cubic-bezier(0.4, 0, 1, 1) !default;
+
+// Reusable Keyframe Animation Names
+// (Just references - actual keyframes can be separately defined)
+// ----------------------------------------
+$motion-keyfade: fade-in-out !default;
+$motion-keybounce: bounce-in !default;
+$motion-keyspring: spring-in !default;
+
+// ========================================
+// CSS Custom Properties Mapping
+// ========================================
+:root {
+  // Durations
+  --motion-duration-short: #{$motion-duration-short};
+  --motion-duration-medium: #{$motion-duration-medium};
+  --motion-duration-long: #{$motion-duration-long};
+
+  // Easings
+  --motion-ease-standard: #{$motion-ease-standard};
+  --motion-ease-decelerate: #{$motion-ease-decelerate};
+  --motion-ease-accelerate: #{$motion-ease-accelerate};
+
+  // Keyframes (names only, no actual @keyframes defined here)
+  --motion-keyfade: #{$motion-keyfade};
+  --motion-keybounce: #{$motion-keybounce};
+  --motion-keyspring: #{$motion-keyspring};
+}

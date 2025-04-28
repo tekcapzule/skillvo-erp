@@ -1,0 +1,49 @@
+// ========================================
+// Motion and Animation Utility Classes
+// ========================================
+
+// Duration Utilities
+.motion-duration-short {
+    transition-duration: var(--motion-duration-short) !important;
+  }
+  
+  .motion-duration-medium {
+    transition-duration: var(--motion-duration-medium) !important;
+  }
+  
+  .motion-duration-long {
+    transition-duration: var(--motion-duration-long) !important;
+  }
+  
+  // Easing Utilities
+  .motion-ease-standard {
+    transition-timing-function: var(--motion-ease-standard) !important;
+  }
+  
+  .motion-ease-decelerate {
+    transition-timing-function: var(--motion-ease-decelerate) !important;
+  }
+  
+  .motion-ease-accelerate {
+    transition-timing-function: var(--motion-ease-accelerate) !important;
+  }
+  
+  // Keyframe Animation Utilities
+  .motion-fade {
+    animation-name: var(--motion-keyfade);
+    animation-duration: var(--motion-duration-medium);
+    animation-timing-function: var(--motion-ease-standard);
+  }
+  
+  .motion-bounce {
+    animation-name: var(--motion-keybounce);
+    animation-duration: var(--motion-duration-medium);
+    animation-timing-function: var(--motion-ease-decelerate);
+  }
+  
+  .motion-spring {
+    animation-name: var(--motion-keyspring);
+    animation-duration: var(--motion-duration-medium);
+    animation-timing-function: var(--motion-ease-accelerate);
+  }
+  

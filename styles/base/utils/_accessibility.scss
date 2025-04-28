@@ -106,12 +106,3 @@ label {
 .z-overlay { z-index: var(--z-index-overlay, 1000); }
 .z-skip-link { z-index: var(--z-index-skip-link, 9999); }
 .z-negative { z-index: var(--z-index-negative, -1); }
-
-// ----------------------------------------
-// Motion Utilities
-.motion-short { transition-duration: var(--motion-duration-short, 0.15s); }
-.motion-medium { transition-duration: var(--motion-duration-medium, 0.3s); }
-.motion-long { transition-duration: var(--motion-duration-long, 0.5s); }
-.motion-ease-standard { transition-timing-function: var(--motion-ease-standard, cubic-bezier(0.4, 0, 0.2, 1)); }
-.motion-ease-decelerate { transition-timing-function: var(--motion-ease-decelerate, cubic-bezier(0, 0, 0.2, 1)); }
-.motion-ease-accelerate { transition-timing-function: var(--motion-ease-accelerate, cubic-bezier(0.4, 0, 1, 1)); }

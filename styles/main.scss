@@ -6,9 +6,6 @@
 // Abstracts
 @use './abstracts' as *;
 
-//Reset
-@use './base/reset' as *;
-
 // ----------------------------------------
 // Themes
 @use './themes/theme-vars';
@@ -16,14 +13,4 @@
 
 // ----------------------------------------
 // Base
-@use './base/colors' as *;
-@use './base/typography' as *;
-@use './base/shadows' as *;
-@use './base/accessibility' as *;
-@use './base/layout' as *;
-@use './base/sizes' as *;
-@use './base/breakpoints' as *;
-@use './base/border-radius' as *;
-@use './base/icons' as * ;
-@use './base/padding' as *;
-@use './base/spacing' as *;
+@use './base' as *;
