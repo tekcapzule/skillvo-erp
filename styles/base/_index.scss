@@ -15,3 +15,13 @@
 @forward './utils/breakpoints';
 @forward './utils/accessibility';
 @forward './utils/animations';
+
+@forward './core/_base-controls';
+@forward './core/_action-controls';
+@forward './core/_containers';
+@forward './core/_data-display';
+@forward './core/_feedback-controls';
+@forward './core/_information-display';
+@forward './core/_input-controls';
+@forward './core/_navigation-controls';
+@forward './core/_selection-controls';
