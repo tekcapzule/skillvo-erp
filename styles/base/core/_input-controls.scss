@@ -1,0 +1,98 @@
+// =================================================
+// _input-controls.scss - Styles for input controls
+// =================================================
+@use './base-control' as *;
+
+.input-control {
+  @extend .ui-control-base;
+  display: block;
+  width: 100%;
+  padding: var(--spacing-2) var(--spacing-3);
+  background-color: var(--background-base);
+  border: var(--border-width-sm, 1px) solid var(--border-default);
+  border-radius: var(--radius-md);
+
+  &::placeholder {
+    color: var(--text-tertiary);
+    opacity: 1;
+  }
+
+  &:hover:not(:disabled):not(.disabled) {
+    border-color: var(--border-hover);
+  }
+
+  &:focus:not(:disabled):not(.disabled) {
+    border-color: var(--border-focus);
+    background-color: var(--background-base);
+  }
+
+  &.filled {
+    background-color: var(--background-alt);
+  }
+
+  &.error, &.has-error {
+    border-color: var(--border-error);
+
+    & + .helper-text {
+      color: var(--error);
+    }
+  }
+
+  &.with-icon {
+    padding-left: var(--spacing-8);
+  }
+
+  // Specific input types
+  &[type="date"],
+  &[type="datetime-local"],
+  &[type="month"],
+  &[type="time"] {
+    &::-webkit-calendar-picker-indicator {
+      cursor: pointer;
+      opacity: 0.6;
+
+      &:hover {
+        opacity: 1;
+      }
+    }
+  }
+
+  &[type="file"] {
+    padding: 0;
+
+    &::file-selector-button {
+      padding: var(--spacing-2) var(--spacing-3);
+      background-color: var(--secondary);
+      color: var(--text-on-secondary);
+      border: none;
+      border-radius: var(--radius-sm);
+      margin-right: var(--spacing-3);
+      cursor: pointer;
+      transition: var(--transition-base);
+
+      &:hover {
+        background-color: var(--secondary-dark, var(--secondary));
+      }
+    }
+  }
+}
+
+.input-label {
+  display: block;
+  margin-bottom: var(--spacing-1);
+  font-weight: var(--font-weight-medium);
+  color: var(--text-secondary);
+}
+
+.helper-text {
+  display: block;
+  margin-top: var(--spacing-1);
+  font-size: var(--font-size-sm);
+  color: var(--text-tertiary);
+}
+
+.textarea-control {
+  @extend .input-control;
+  min-height: 100px;
+  resize: vertical;
+}

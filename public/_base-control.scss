@@ -1,0 +1,47 @@
+// =================================================
+// _base-control.scss - Base styles for all controls
+// =================================================
+
+@use '../styles/abstracts/variables' as *;
+
+@mixin focus-ring {
+  outline: none;
+  box-shadow: $shadow-focus;
+}
+
+@mixin disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+  background-color: $color-background-disabled;
+  border-color: $color-border;
+  color: $color-text-disabled;
+  pointer-events: none;
+}
+
+.ui-control-base {
+  font-family: $font-family-base;
+  font-size: $font-size-base;
+  font-weight: $font-weight-regular;
+  line-height: $line-height-base;
+  color: $color-text-primary;
+  box-sizing: border-box;
+  transition: $transition-base;
+  margin: 0;
+
+  &:focus {
+    @include focus-ring;
+  }
+
+  &:disabled, &.disabled {
+    @include disabled;
+  }
+
+  &.error, &.has-error {
+    border-color: $color-border-error;
+    color: $color-danger;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+}

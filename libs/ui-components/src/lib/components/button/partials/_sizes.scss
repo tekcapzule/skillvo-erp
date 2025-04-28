@@ -1,0 +1,37 @@
+
+// ===================================
+// Button Sizes (sm, md, lg)
+// ===================================
+
+:host {
+    &.sv-button--sm .sv-button {
+      font-size: var(--button-sm-font-size, 12px);
+      padding: var(--button-sm-padding, 6px 12px);
+      height: var(--button-sm-height, 30px);
+  
+      .sv-button__icon {
+        font-size: var(--button-sm-icon-size, 14px);
+      }
+    }
+  
+    &.sv-button--md .sv-button {
+      font-size: var(--button-md-font-size, 14px);
+      padding: var(--button-md-padding, 8px 16px);
+      height: var(--button-md-height, 36px);
+  
+      .sv-button__icon {
+        font-size: var(--button-md-icon-size, 16px);
+      }
+    }
+  
+    &.sv-button--lg .sv-button {
+      font-size: var(--button-lg-font-size, 16px);
+      padding: var(--button-lg-padding, 10px 20px);
+      height: var(--button-lg-height, 44px);
+  
+      .sv-button__icon {
+        font-size: var(--button-lg-icon-size, 18px);
+      }
+    }
+  }
+  

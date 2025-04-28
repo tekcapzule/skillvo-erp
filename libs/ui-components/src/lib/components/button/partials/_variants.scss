@@ -1,0 +1,75 @@
+
+
+// ===================================
+// Button Variants (Primary, Secondary, etc.)
+// ===================================
+
+:host {
+    &.sv-button--primary .sv-button {
+      background-color: var(--primary, #0a9fff);
+      color: black;
+  
+      &:hover {
+        background-color: var(--primary-light, #30b1ff);
+      }
+  
+      &:active {
+        background-color: var(--primary-dark, #007ef3);
+      }
+    }
+  
+    &.sv-button--secondary .sv-button {
+      background-color: var(--secondary, #364c5e);
+      color: white;
+  
+      &:hover {
+        background-color: var(--secondary-light, #455b70);
+      }
+  
+      &:active {
+        background-color: var(--secondary-dark, #2d4052);
+      }
+    }
+  
+    &.sv-button--tertiary .sv-button {
+      background-color: transparent;
+      color: var(--primary, #0a9fff);
+      border: 1px solid var(--primary, #0a9fff);
+  
+      &:hover {
+        background-color: rgba(var(--primary-500-rgb, '10, 159, 255'), 0.1);
+      }
+  
+      &:active {
+        background-color: rgba(var(--primary-500-rgb, '10, 159, 255'), 0.2);
+      }
+    }
+  
+    &.sv-button--ghost .sv-button {
+      background-color: transparent;
+      color: var(--text-primary, #212529);
+  
+      &:hover {
+        background-color: var(--bg-element-hover, #e9ecef);
+      }
+  
+      &:active {
+        background-color: var(--bg-element-active, #dce1e6);
+      }
+    }
+  
+    &.sv-button--danger .sv-button {
+      background-color: var(--error, #f44336);
+      color: white;
+  
+      &:hover {
+        background-color: var(--error-600, #d73128);
+      }
+  
+      &:active {
+        background-color: var(--error-600, #d73128);
+        opacity: 0.9;
+      }
+    }
+  }
+  
