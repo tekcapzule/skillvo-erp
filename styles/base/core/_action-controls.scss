@@ -1,155 +1,28 @@
 // =================================================
-// _action-controls.scss - Styles for action controls
+// _action-controls.scss - Mixin-based Action Controls
 // =================================================
 @use './base-control' as *;
 
-.button {
-  @extend .ui-control-base;
+// Base Mixin for Button
+.button-base {
+  @extend .ui-control-base; 
   display: inline-flex;
   align-items: center;
   justify-content: center;
   padding: var(--spacing-2) var(--spacing-4);
   font-weight: var(--font-weight-medium);
-  text-align: center;
+  text-align: left;
   vertical-align: middle;
   cursor: pointer;
   user-select: none;
   border: var(--border-width-sm, 1px) solid transparent;
   border-radius: var(--radius-md);
   white-space: nowrap;
-
-  // Button sizes
-  &.button-sm {
-    padding: var(--spacing-1) var(--spacing-2);
-    font-size: var(--font-size-sm);
-  }
-
-  &.button-lg {
-    padding: var(--spacing-3) var(--spacing-5);
-    font-size: var(--font-size-lg);
-  }
-
-  // Button variations
-  &.button-primary {
-    background-color: var(--primary);
-    color: var(--text-on-primary);
-
-    &:hover:not(:disabled):not(.disabled) {
-      background-color: var(--primary-dark, var(--primary));
-    }
-
-    &:active:not(:disabled):not(.disabled) {
-      background-color: var(--primary-dark, var(--primary));
-    }
-  }
-
-  &.button-secondary {
-    background-color: var(--secondary);
-    color: var(--text-on-secondary);
-
-    &:hover:not(:disabled):not(.disabled) {
-      background-color: var(--secondary-dark, var(--secondary));
-    }
-
-    &:active:not(:disabled):not(.disabled) {
-      background-color: var(--secondary-dark, var(--secondary));
-    }
-  }
-
-  &.button-outline {
-    background-color: transparent;
-    border-color: var(--primary);
-    color: var(--primary);
-
-    &:hover:not(:disabled):not(.disabled) {
-      background-color: var(--primary-light-bg, rgba(0, 0, 0, 0.05));
-    }
-
-    &:active:not(:disabled):not(.disabled) {
-      background-color: var(--primary-lighter-bg, rgba(0, 0, 0, 0.1));
-    }
-  }
-
-  &.button-text {
-    background-color: transparent;
-    color: var(--primary);
-    padding-left: var(--spacing-2);
-    padding-right: var(--spacing-2);
-
-    &:hover:not(:disabled):not(.disabled) {
-      background-color: var(--primary-light-bg, rgba(0, 0, 0, 0.05));
-      text-decoration: none;
-    }
-
-    &:active:not(:disabled):not(.disabled) {
-      background-color: var(--primary-lighter-bg, rgba(0, 0, 0, 0.1));
-    }
-  }
-
-  // Button states
-  &.loading {
-    position: relative;
-    color: transparent;
-    pointer-events: none;
-
-    &::after {
-      content: "";
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      width: 16px;
-      height: 16px;
-      margin: -8px 0 0 -8px;
-      border-radius: 50%;
-      border: 2px solid rgba(255, 255, 255, 0.5);
-      border-top-color: white;
-      animation: spin 0.8s linear infinite;
-    }
-
-    &.button-outline::after,
-    &.button-text::after {
-      border: 2px solid var(--primary, rgba(0, 0, 0, 0.3));
-      border-top-color: var(--primary);
-    }
-  }
-
-  // With icon
-  .button-icon {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-
-    &-start {
-      margin-right: var(--spacing-2);
-    }
-
-    &-end {
-      margin-left: var(--spacing-2);
-    }
-  }
 }
 
-.button-group {
-  display: inline-flex;
-
-  .button {
-    position: relative;
-
-    &:not(:first-child) {
-      border-top-left-radius: 0;
-      border-bottom-left-radius: 0;
-    }
-
-    &:not(:last-child) {
-      border-top-right-radius: 0;
-      border-bottom-right-radius: 0;
-      border-right-width: 0;
-    }
-  }
-}
-
-.fab {
-  @extend .button;
+// Mixin for Floating Action Button (FAB)
+.fab-base {
+  @extend .button-base;
   height: 56px;
   width: 56px;
   border-radius: var(--radius-full);
@@ -165,9 +38,4 @@
     height: 64px;
     width: 64px;
   }
-}
-
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
 }

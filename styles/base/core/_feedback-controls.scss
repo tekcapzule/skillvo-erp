@@ -4,7 +4,7 @@
 @use './base-control' as *;
 
 .alert {
-  @extend .ui-control-base;
+  @extend .ui-control-base; 
   position: relative;
   padding: var(--spacing-3) var(--spacing-4);
   margin-bottom: var(--spacing-3);

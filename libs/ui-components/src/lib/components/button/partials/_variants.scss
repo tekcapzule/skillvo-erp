@@ -7,7 +7,7 @@
 :host {
     &.sv-button--primary .sv-button {
       background-color: var(--primary, #0a9fff);
-      color: black;
+      color: white;
   
       &:hover {
         background-color: var(--primary-light, #30b1ff);
@@ -59,6 +59,7 @@
     }
   
     &.sv-button--danger .sv-button {
+      
       background-color: var(--error, #f44336);
       color: white;
   

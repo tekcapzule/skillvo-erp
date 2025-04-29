@@ -4,7 +4,7 @@
 @use './base-control' as *;
 
 .input-control {
-  @extend .ui-control-base;
+  @extend .ui-control-base; 
   display: block;
   width: 100%;
   padding: var(--spacing-2) var(--spacing-3);
@@ -92,7 +92,7 @@
 }
 
 .textarea-control {
-  @extend .input-control;
+  @extend .ui-control-base; 
   min-height: 100px;
   resize: vertical;
 }

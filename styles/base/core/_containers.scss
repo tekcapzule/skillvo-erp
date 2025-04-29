@@ -4,7 +4,7 @@
 @use './base-control' as *;
 
 .card {
-  @extend .ui-control-base;
+  @extend .ui-control-base; 
   position: relative;
   display: flex;
   flex-direction: column;
@@ -65,8 +65,7 @@
 }
 
 .accordion {
-  @extend .ui-control-base;
-
+  @extend .ui-control-base; 
   .accordion-item {
     border: var(--border-width-sm, 1px) solid var(--border-default);
 

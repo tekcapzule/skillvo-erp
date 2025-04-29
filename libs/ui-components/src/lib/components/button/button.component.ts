@@ -46,6 +46,7 @@ export class ButtonComponent {
   }
 
   onClick(event: Event): void {
+    const rootStyles = getComputedStyle(document.documentElement);
     if (!this.disabled) {
       this.buttonClick.emit(event);
     } else {

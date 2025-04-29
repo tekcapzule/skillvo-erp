@@ -4,7 +4,7 @@
 @use './base-control' as *;
 
 .nav {
-  @extend .ui-control-base;
+  @extend .ui-control-base; 
   display: flex;
   flex-wrap: wrap;
   padding-left: 0;
@@ -97,7 +97,7 @@
 }
 
 .breadcrumb {
-  @extend .ui-control-base;
+  @extend .ui-control-base; 
   display: flex;
   flex-wrap: wrap;
   padding: var(--spacing-2) 0;
@@ -135,7 +135,7 @@
 }
 
 .pagination {
-  @extend .ui-control-base;
+  @extend .ui-control-base; 
   display: flex;
   padding-left: 0;
   list-style: none;
@@ -190,7 +190,7 @@
 }
 
 .stepper {
-  @extend .ui-control-base;
+  @extend .ui-control-base; 
   display: flex;
   margin: var(--spacing-5) 0;
 

@@ -1,209 +1,359 @@
 <style>
-/* Base styles for Storybook */
-body {
-  font-family: Inter, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-  margin: 0;
-  padding: 0;
-}
-
-/* Light/dark theme support */
-.light-theme {
-  --background-color: #ffffff;
-  --text-color: #333333;
-  --primary-color: #ff5722;
-}
-
-.dark-theme {
-  --background-color: #222222;
-  --text-color: #f5f5f5;
-  --primary-color: #ff7043;
-}
-
-/* Basic font-family definitions to match your application */
-:root {
-  --font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-  
-  /* Define your CSS variables here to match main application */
-  --primary: #0a9fff;
-  --primary-hover: #0084df;
-  --primary-rgb: 10, 159, 255;
-  --primary-500-rgb: 10, 159, 255;
-  
-  --border-color: #dee2e6;
-  --border-color-hover: #adb5bd;
-  --border-light: #e9ecef;
-  --border-medium: #dee2e6;
-  
-  --text-primary: #212529;
-  --text-secondary: #6c757d;
-  --text-tertiary: #adb5bd;
-  --text-on-primary: #ffffff;
-  
-  --bg-surface: #ffffff;
-  --bg-secondary: #f8f9fa;
-  --bg-element: #f8f9fa;
-  --bg-element-hover: #e9ecef;
-  --bg-element-active: #dee2e6;
-  
-  --surface-background: #ffffff;
-  --surface-background-alt: #f8f9fa;
-  --surface-hover: #f8f9fa;
-  
-  --border-radius-md: 8px;
-  --shadow-sm: 0px 1px 3px rgba(0, 0, 0, 0.1);
-  
-  --font-size-xs: 12px;
-  --font-size-sm: 14px;
-  
-  /* Spacing variables */
-  --space-1: 4px;
-  --space-2: 8px;
-  --space-3: 12px;
-  --space-4: 16px;
-  --space-5: 20px;
-  --space-6: 24px;
-  --space-8: 32px;
-  --space-10: 40px;
-}
-
-/* Dark theme variables */
-.dark-theme {
-  --primary: #30b1ff;
-  --primary-hover: #50c1ff;
-  --primary-rgb: 48, 177, 255;
-  --primary-500-rgb: 48, 177, 255;
-  
-  --border-color: #454545;
-  --border-color-hover: #666666;
-  --border-light: #383838;
-  --border-medium: #454545;
-  
-  --text-primary: #e9ecef;
-  --text-secondary: #adb5bd;
-  --text-tertiary: #868e96;
-  --text-on-primary: #ffffff;
-  
-  --bg-surface: #1a1a1a;
-  --bg-secondary: #2d2d2d;
-  --bg-element: #2d2d2d;
-  --bg-element-hover: #383838;
-  --bg-element-active: #454545;
-  
-  --surface-background: #1a1a1a;
-  --surface-background-alt: #2d2d2d;
-  --surface-hover: #2d2d2d;
-  
-  background-color: #1a1a1a;
-  color: #e9ecef;
-}
-
-/* Basic styling for Storybook environment */
-body {
-  font-family: var(--font-family);
-  color: var(--text-primary);
-  background-color: var(--bg-surface);
-  margin: 0;
-  padding: 0;
-  transition: background-color 0.3s ease;
-}
-
-/* Add padding to the Storybook preview area */
-.sb-show-main {
-  padding: 1rem;
-}
-</style>
-
-<!-- Add other global styling or scripts for Storybook here -->
-
-<!-- Quill stylesheets - Using local references -->
-<link rel="stylesheet" href="quill.snow.css">
-<link rel="stylesheet" href="quill.bubble.css">
-
-<!-- Quill script - Using a CDN since it's not directly used by Storybook -->
-<script src="https://cdn.jsdelivr.net/npm/quill@1.3.7/dist/quill.min.js" integrity="sha256-xnX1c4jTWYY3xOD5/hVL1h37HCCGJx+USguyubBZsHQ=" crossorigin="anonymous"></script>
-
-<!-- KaTeX stylesheets -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
-<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
-<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
-
-<!-- Extra CSS to fix Quill toolbar issues in Storybook -->
-<style>
-  /* Fix for Quill toolbar buttons in Storybook */
-  .ql-toolbar button svg {
-    display: inline-block !important;
-    height: 100% !important;
-    width: 100% !important;
-    vertical-align: middle !important;
+  /* Base styles for Storybook */
+  body {
+    font-family: Inter, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    margin: 0;
+    padding: 0;
   }
   
-  .ql-toolbar button {
-    height: 24px !important;
-    width: 28px !important;
-    padding: 3px 5px !important;
-    background: none;
-    border: none;
-    cursor: pointer;
-    display: inline-block;
-    float: left;
+  /* Light/dark theme support */
+  .light-theme {
+    --background-color: #ffffff;
+    --text-color: #333333;
+    --primary-color: #ff5722;
   }
   
-  /* Fix for SVG elements in toolbar */
-  .ql-stroke {
-    fill: none !important;
-    stroke: #444 !important;
-    stroke-linecap: round !important;
-    stroke-linejoin: round !important;
-    stroke-width: 2 !important;
+  .dark-theme {
+    --background-color: #222222;
+    --text-color: #f5f5f5;
+    --primary-color: #ff7043;
   }
   
-  .ql-fill {
-    fill: #444 !important;
-  }
-  
-  .ql-snow .ql-picker {
-    color: #444;
-    display: inline-block;
-    float: left;
-    font-size: 14px;
-    font-weight: 500;
-    height: 24px;
-    position: relative;
-    vertical-align: middle;
-  }
-  
-  /* Ensure toolbar formats are visible */
-  .ql-formats {
-    display: inline-block !important; 
-    vertical-align: middle !important;
-    margin-right: 15px !important;
-  }
-  
-  /* Ensure Quill editor has minimum height */
-  .ql-editor {
-    min-height: 100px !important;
-  }
-  
-  /* Fix for dark theme */
-  .dark-theme .ql-stroke {
-    stroke: #ccc !important;
-  }
-  
-  .dark-theme .ql-fill {
-    fill: #ccc !important;
-  }
-</style>
+  /* Basic font-family definitions to match your application */
+  :root {
+    --font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    
+    /* Define your CSS variables here to match main application */
+    --primary: #0a9fff;
+    --primary-hover: #0084df;
+    --primary-rgb: 10, 159, 255;
+    --primary-500-rgb: 10, 159, 255;
+    
+    --border-color: #dee2e6;
+    --border-color-hover: #adb5bd;
+    --border-light: #e9ecef;
+    --border-medium: #dee2e6;
+    
+    --text-primary: #212529;
+    --text-secondary: #6c757d;
+    --text-tertiary: #adb5bd;
+    --text-on-primary: #ffffff;
+    
+    --bg-surface: #ffffff;
+    --bg-secondary: #f8f9fa;
+    --bg-element: #f8f9fa;
+    --bg-element-hover: #e9ecef;
+    --bg-element-active: #dee2e6;
+    
+    --surface-background: #ffffff;
+    --surface-background-alt: #f8f9fa;
+    --surface-hover: #f8f9fa;
+    
+    --border-radius-md: 8px;
+    --shadow-sm: 0px 1px 3px rgba(0, 0, 0, 0.1);
+    
+    --font-size-xs: 12px;
+    --font-size-sm: 14px;
+    
+    /* Spacing variables */
+    --spacing-unit: 0.25rem;
+    --space-0: 0;
+    --space-1: 0.25rem;
+    --space-2: 0.5rem;
+    --space-3: 0.75rem;
+    --space-4: 1rem;
+    --space-5: 1.25rem;
+    --space-6: 1.5rem;
+    --space-7: 1.75rem;
+    --space-8: 2rem;
+    --space-10: 2.5rem;
+    --space-12: 3rem;
+    --space-16: 4rem;
+    --space-20: 5rem;
+    --space-24: 6rem;
+    --space-32: 8rem;
+    --space-xs: 0.5rem;
+    --space-sm: 1rem;
+    --space-md: 1.5rem;
+    --space-lg: 2rem;
+    --space-xl: 2.5rem;
+    --space-2xl: 4rem;
+    --space-3xl: 6rem;
 
-<!-- Custom script to ensure Quill toolbar is initialized properly -->
-<script>
-  document.addEventListener('DOMContentLoaded', function() {
-    // Wait a bit for Storybook to fully render
-    setTimeout(function() {
-      // Force refresh any Quill instances
-      const editors = document.querySelectorAll('.sv-html-editor');
-      if (editors.length) {
-        console.log('Found HTML editors:', editors.length);
-      }
-    }, 1000);
-  });
-</script> 
+    --padding-unit: 0.25rem;
+    --padding-0: 0;
+    --padding-1: 0.25rem;
+    --padding-2: 0.5rem;
+    --padding-3: 0.75rem;
+    --padding-4: 1rem;
+    --padding-5: 1.25rem;
+    --padding-6: 1.5rem;
+    --padding-7: 1.75rem;
+    --padding-8: 2rem;
+    --padding-10: 2.5rem;
+    --padding-12: 3rem;
+    --padding-16: 4rem;
+    --padding-20: 5rem;
+    --padding-24: 6rem;
+    --padding-32: 8rem;
+    --padding-xs: 0.5rem;
+    --padding-sm: 1rem;
+    --padding-md: 1.5rem;
+    --padding-lg: 2rem;
+    --padding-xl: 2.5rem;
+    --padding-2xl: 4rem;
+    --padding-3xl: 6rem;
+
+    --size-unit: 0.25rem;
+    --size-0: 0;
+    --size-1: 0.25rem;
+    --size-2: 0.5rem;
+    --size-3: 0.75rem;
+    --size-4: 1rem;
+    --size-5: 1.25rem;
+    --size-6: 1.5rem;
+    --size-7: 1.75rem;
+    --size-8: 2rem;
+    --size-10: 2.5rem;
+    --size-12: 3rem;
+    --size-16: 4rem;
+    --size-20: 5rem;
+    --size-24: 6rem;
+    --size-32: 8rem;
+    --size-40: 10rem;
+    --size-48: 12rem;
+    --size-64: 16rem;
+    --size-xs: 0.5rem;
+    --size-sm: 1rem;
+    --size-md: 1.5rem;
+    --size-lg: 2rem;
+    --size-xl: 2.5rem;
+    --size-2xl: 4rem;
+    --size-3xl: 6rem;
+
+    --radius-none: 0;
+    --radius-xs: 0.125rem;
+    --radius-sm: 0.25rem;
+    --radius-md: 0.5rem;
+    --radius-lg: 0.75rem;
+    --radius-xl: 1rem;
+    --radius-2xl: 1.5rem;
+    --radius-3xl: 2rem;
+    --radius-full: 9999px;
+
+    --shadow-color-light: rgba(0, 0, 0, 0.1);
+    --shadow-color-medium: rgba(0, 0, 0, 0.14);
+    --shadow-color-dark: rgba(0, 0, 0, 0.2);
+    --shadow-none: none;
+    --shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.1);
+    --shadow-sm: 0 2px 4px -1px rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.14);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.14);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.14);
+    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.14);
+    --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.14);
+    --shadow-inner: inset 0 2px 4px 0 rgba(0, 0, 0, 0.1);
+    --shadow-outline: 0 0 0 3px rgba(0, 0, 0, 0.05);
+    --shadow-top: 0 -6px 16px -8px rgba(0, 0, 0, 0.1);
+    --shadow-right: 6px 0 16px -8px rgba(0, 0, 0, 0.1);
+    --shadow-bottom: 0 6px 16px -8px rgba(0, 0, 0, 0.1);
+    --shadow-left: -6px 0 16px -8px rgba(0, 0, 0, 0.1);
+    --shadow-focus: 0 0 0 3px rgba(0, 0, 0, 0.08);
+    --shadow-focus-error: 0 0 0 3px rgba(0, 0, 0, 0.12);
+    --shadow-focus-success: 0 0 0 3px rgba(0, 0, 0, 0.08);
+
+    --breakpoint-xs: 0;
+    --breakpoint-sm: 576px;
+    --breakpoint-md: 768px;
+    --breakpoint-lg: 992px;
+    --breakpoint-xl: 1200px;
+    --breakpoint-xxl: 1400px;
+    --container-sm: 540px;
+    --container-md: 720px;
+    --container-lg: 960px;
+    --container-xl: 1140px;
+    --container-xxl: 1320px;
+
+    --icon-size-xs: 0.75rem;
+    --icon-size-sm: 1rem;
+    --icon-size-md: 1.5rem;
+    --icon-size-lg: 2rem;
+    --icon-size-xl: 2.5rem;
+    --icon-size-2xl: 3rem;
+    --btn-size-sm: 1.75rem;
+    --btn-size-md: 2rem;
+    --btn-size-lg: 2.75rem;
+
+    --motion-duration-short: 0.15s;
+    --motion-duration-medium: 0.3s;
+    --motion-duration-long: 0.5s;
+    --motion-ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
+    --motion-ease-decelerate: cubic-bezier(0, 0, 0.2, 1);
+    --motion-ease-accelerate: cubic-bezier(0.4, 0, 1, 1);
+    --motion-keyfade: fade-in-out;
+    --motion-keybounce: bounce-in;
+    --motion-keyspring: spring-in;
+
+    --focus-ring-color: rgba(37, 99, 235, 0.8);
+    --focus-ring-width: 2px;
+    --focus-ring-offset: 2px;
+    --focus-ring-style: solid;
+    --z-index-skip-link: 9999;
+    --z-index-modal: 1050;
+    --z-index-popover: 1040;
+    --z-index-tooltip: 1030;
+    --z-index-header: 1020;
+    --z-index-dropdown: 1010;
+    --z-index-overlay: 1000;
+    --z-index-default: 1;
+    --z-index-negative: -1;
+    --min-touch-target: 44px;
+    --skip-link-bg: #ffffff;
+    --skip-link-color: #111111;
+    --skip-link-padding: 8px 16px;
+    --skip-link-position-top: 8px;
+    --skip-link-position-left: 8px;
+
+
+  }
+  
+  /* Dark theme variables */
+  .dark-theme {
+    --primary: #30b1ff;
+    --primary-hover: #50c1ff;
+    --primary-rgb: 48, 177, 255;
+    --primary-500-rgb: 48, 177, 255;
+    
+    --border-color: #454545;
+    --border-color-hover: #666666;
+    --border-light: #383838;
+    --border-medium: #454545;
+    
+    --text-primary: #e9ecef;
+    --text-secondary: #adb5bd;
+    --text-tertiary: #868e96;
+    --text-on-primary: #ffffff;
+    
+    --bg-surface: #1a1a1a;
+    --bg-secondary: #2d2d2d;
+    --bg-element: #2d2d2d;
+    --bg-element-hover: #383838;
+    --bg-element-active: #454545;
+    
+    --surface-background: #1a1a1a;
+    --surface-background-alt: #2d2d2d;
+    --surface-hover: #2d2d2d;
+    
+    background-color: #1a1a1a;
+    color: #e9ecef;
+  }
+  
+  /* Basic styling for Storybook environment */
+  body {
+    font-family: var(--font-family);
+    color: var(--text-primary);
+    background-color: var(--bg-surface);
+    margin: 0;
+    padding: 0;
+    transition: background-color 0.3s ease;
+  }
+  
+  /* Add padding to the Storybook preview area */
+  .sb-show-main {
+    padding: 1rem;
+  }
+  </style>
+  
+  <!-- Add other global styling or scripts for Storybook here -->
+  
+  <!-- Quill stylesheets - Using local references -->
+  <link rel="stylesheet" href="quill.snow.css">
+  <link rel="stylesheet" href="quill.bubble.css">
+  
+  <!-- Quill script - Using a CDN since it's not directly used by Storybook -->
+  <script src="https://cdn.jsdelivr.net/npm/quill@1.3.7/dist/quill.min.js" integrity="sha256-xnX1c4jTWYY3xOD5/hVL1h37HCCGJx+USguyubBZsHQ=" crossorigin="anonymous"></script>
+  
+  <!-- KaTeX stylesheets -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
+  
+  <!-- Extra CSS to fix Quill toolbar issues in Storybook -->
+  <style>
+    /* Fix for Quill toolbar buttons in Storybook */
+    .ql-toolbar button svg {
+      display: inline-block !important;
+      height: 100% !important;
+      width: 100% !important;
+      vertical-align: middle !important;
+    }
+    
+    .ql-toolbar button {
+      height: 24px !important;
+      width: 28px !important;
+      padding: 3px 5px !important;
+      background: none;
+      border: none;
+      cursor: pointer;
+      display: inline-block;
+      float: left;
+    }
+    
+    /* Fix for SVG elements in toolbar */
+    .ql-stroke {
+      fill: none !important;
+      stroke: #444 !important;
+      stroke-linecap: round !important;
+      stroke-linejoin: round !important;
+      stroke-width: 2 !important;
+    }
+    
+    .ql-fill {
+      fill: #444 !important;
+    }
+    
+    .ql-snow .ql-picker {
+      color: #444;
+      display: inline-block;
+      float: left;
+      font-size: 14px;
+      font-weight: 500;
+      height: 24px;
+      position: relative;
+      vertical-align: middle;
+    }
+    
+    /* Ensure toolbar formats are visible */
+    .ql-formats {
+      display: inline-block !important; 
+      vertical-align: middle !important;
+      margin-right: 15px !important;
+    }
+    
+    /* Ensure Quill editor has minimum height */
+    .ql-editor {
+      min-height: 100px !important;
+    }
+    
+    /* Fix for dark theme */
+    .dark-theme .ql-stroke {
+      stroke: #ccc !important;
+    }
+    
+    .dark-theme .ql-fill {
+      fill: #ccc !important;
+    }
+  </style>
+  
+  <!-- Custom script to ensure Quill toolbar is initialized properly -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Wait a bit for Storybook to fully render
+      setTimeout(function() {
+        // Force refresh any Quill instances
+        const editors = document.querySelectorAll('.sv-html-editor');
+        if (editors.length) {
+          console.log('Found HTML editors:', editors.length);
+        }
+      }, 1000);
+    });
+  </script> 

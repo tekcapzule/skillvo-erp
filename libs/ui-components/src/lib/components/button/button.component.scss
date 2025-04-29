@@ -23,10 +23,8 @@
 }
 
 .sv-button {
-  @extend .button; // Reuse base action-control button styles ✅
-
+  @extend .button-base;
   font-weight: var(--button-font-weight);
-  //border-radius: 10px;
   transition: var(--button-transition, all 0.2s ease-in-out);
 
   &__content {

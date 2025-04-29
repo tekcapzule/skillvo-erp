@@ -4,7 +4,7 @@
 @use './base-control' as *;
 
 .label {
-  @extend .ui-control-base;
+  @extend .ui-control-base; 
   display: inline-block;
   padding: var(--spacing-1) var(--spacing-2);
   font-size: var(--font-size-sm);
@@ -83,7 +83,7 @@
 }
 
 .tag, .chip {
-  @extend .ui-control-base;
+  @extend .ui-control-base; 
   display: inline-flex;
   align-items: center;
   padding: var(--spacing-1) var(--spacing-2);
@@ -130,7 +130,7 @@
 }
 
 .progress {
-  @extend .ui-control-base;
+  @extend .ui-control-base; 
   display: flex;
   height: 8px;
   background-color: var(--background-alt);

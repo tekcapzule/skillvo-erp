@@ -4,7 +4,7 @@
 @use './base-control' as *;
 
 .table {
-  @extend .ui-control-base;
+  @extend .ui-control-base; 
   width: 100%;
   margin-bottom: var(--spacing-3);
   background-color: transparent;
@@ -76,7 +76,7 @@
 }
 
 .list-group {
-  @extend .ui-control-base;
+  @extend .ui-control-base; 
   display: flex;
   flex-direction: column;
   padding-left: 0;
@@ -131,7 +131,7 @@
 }
 
 .grid {
-  @extend .ui-control-base;
+  @extend .ui-control-base; 
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   grid-gap: var(--spacing-4);
