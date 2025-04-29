@@ -354,6 +354,21 @@ $touch-target-size: var(--sv-min-touch-target);
   border: 0;
 }
 
+  // Content only visible to screen readers but becomes visible on focus
+  @mixin sr-only-focusable {
+    @include visually-hidden;
+    
+    &:focus,
+    &:active {
+      position: static;
+      width: auto;
+      height: auto;
+      overflow: visible;
+      clip: auto;
+      white-space: normal;
+    }
+  }
+
 // Ensure touch targets are large enough for mobile use
 @mixin touch-target {
   & {

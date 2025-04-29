@@ -32,6 +32,8 @@
 // Import necessary mixins
 @use './../../abstracts/' as *;
 @use './../../base/' as *;
+@use 'sass:math';
+
 // Card-specific variables
 $card-default-radius: var(--sv-radius-md);
 $card-default-shadow: var(--sv-shadow-md);
@@ -47,7 +49,7 @@ $card-title-font-weight: var(--sv-font-semibold);
 $card-subtitle-font-size: var(--sv-text-body-md);
 $card-subtitle-font-weight: var(--sv-font-normal);
 $card-subtitle-color: var(--sv-text-secondary);
-$card-media-aspect-ratio: 16/9;
+$card-media-aspect-ratio: math.div(16, 9);
 
 /* ==========================================================================
    2. CARD BASE CLASS

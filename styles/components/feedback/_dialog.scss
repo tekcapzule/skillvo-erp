@@ -202,8 +202,9 @@
        justify-content: center;
        color: var(--sv-text-secondary);
        @include transition(color);
-       border-radius: var(--sv-radius-sm);
-       
+       &{
+        border-radius: var(--sv-radius-sm);
+       }
        &:hover {
          color: var(--sv-text-primary);
          background-color: var(--sv-bg-element-hover);

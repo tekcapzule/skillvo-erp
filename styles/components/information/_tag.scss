@@ -58,6 +58,8 @@
    $tag-text-error: var(--sv-error);
    $tag-bg-info: rgba(41, 182, 246, 0.2);
    $tag-text-info: var(--sv-info);
+   $tag-font-size: var(--sv-text-sm);
+  $tag-small-font-size: var(--sv-text-xs);
    
    /* ==========================================================================
       2. BASE TAG STYLES
@@ -474,7 +476,7 @@
    
    @include breakpoint-down('md') {
      .sv-tag {
-       font-size: $tag-font-size * 0.9;
+       font-size: calc($tag-font-size * 0.9);
      }
      
      .sv-tag-group {

@@ -112,7 +112,7 @@
    .sv-tooltip-top {
      bottom: 100%;
      left: 50%;
-     transform: translateX(-50%) translateY(-$tooltip-offset);
+     transform: translateX(-50%) translateY(calc(-1 * #{$tooltip-offset}));
      margin-bottom: $tooltip-arrow-size;
      
      &::before {
@@ -126,7 +126,7 @@
      .sv-tooltip-container:hover &,
      .sv-tooltip-container:focus &,
      &.sv-tooltip-visible {
-       transform: translateX(-50%) translateY(calc(-$tooltip-offset - 5px));
+       transform: translateX(-50%) translateY(calc(-1 * #{$tooltip-offset}));
      }
    }
    
@@ -134,7 +134,7 @@
    .sv-tooltip-right {
      top: 50%;
      left: 100%;
-     transform: translateY(-50%) translateX($tooltip-offset);
+     transform: translateY(-50%) translateX(#{$tooltip-offset});
      margin-left: $tooltip-arrow-size;
      
      &::before {
@@ -148,7 +148,7 @@
      .sv-tooltip-container:hover &,
      .sv-tooltip-container:focus &,
      &.sv-tooltip-visible {
-       transform: translateY(-50%) translateX(calc($tooltip-offset + 5px));
+       transform: translateY(-50%) translateX(calc(#{$tooltip-offset} + 5px));
      }
    }
    
@@ -156,7 +156,7 @@
    .sv-tooltip-bottom {
      top: 100%;
      left: 50%;
-     transform: translateX(-50%) translateY($tooltip-offset);
+     transform: translateX(-50%) translateY(#{$tooltip-offset});
      margin-top: $tooltip-arrow-size;
      
      &::before {
@@ -170,7 +170,7 @@
      .sv-tooltip-container:hover &,
      .sv-tooltip-container:focus &,
      &.sv-tooltip-visible {
-       transform: translateX(-50%) translateY(calc($tooltip-offset + 5px));
+       transform: translateX(-50%) translateY(calc(#{$tooltip-offset} + 5px));
      }
    }
    
@@ -178,7 +178,7 @@
    .sv-tooltip-left {
      top: 50%;
      right: 100%;
-     transform: translateY(-50%) translateX(-$tooltip-offset);
+     transform: translateY(-50%) translateX(calc(-1 * #{$tooltip-offset}));
      margin-right: $tooltip-arrow-size;
      
      &::before {
@@ -192,7 +192,7 @@
      .sv-tooltip-container:hover &,
      .sv-tooltip-container:focus &,
      &.sv-tooltip-visible {
-       transform: translateY(-50%) translateX(calc(-$tooltip-offset - 5px));
+       transform: translateY(-50%) translateX(calc(-1 * #{$tooltip-offset}));
      }
    }
    
@@ -274,22 +274,22 @@
    @keyframes sv-tooltip-slide-in-top {
      from {
        opacity: 0;
-       transform: translateX(-50%) translateY(calc(-$tooltip-offset + 5px));
+       transform: translateX(-50%) translateY(calc(-1 * #{$tooltip-offset} + 5px));
      }
      to {
        opacity: 1;
-       transform: translateX(-50%) translateY(calc(-$tooltip-offset - 5px));
+       transform: translateX(-50%) translateY(calc(-1 * #{$tooltip-offset} - 5px));
      }
    }
    
    @keyframes sv-tooltip-slide-in-bottom {
      from {
        opacity: 0;
-       transform: translateX(-50%) translateY(calc($tooltip-offset - 5px));
+       transform: translateX(-50%) translateY(calc(#{$tooltip-offset} - 5px));
      }
      to {
        opacity: 1;
-       transform: translateX(-50%) translateY(calc($tooltip-offset + 5px));
+       transform: translateX(-50%) translateY(calc(#{$tooltip-offset} + 5px));
      }
    }
    
@@ -389,7 +389,7 @@
        bottom: auto;
        left: 50%;
        right: auto;
-       transform: translateX(-50%) translateY($tooltip-offset);
+       transform: translateX(-50%) translateY(#{$tooltip-offset});
        margin: $tooltip-arrow-size 0 0;
        
        &::before {
@@ -405,7 +405,7 @@
        .sv-tooltip-container:hover &,
        .sv-tooltip-container:focus &,
        &.sv-tooltip-visible {
-         transform: translateX(-50%) translateY(calc($tooltip-offset + 5px));
+         transform: translateX(-50%) translateY(calc(#{$tooltip-offset} + 5px));
        }
        
        &.sv-tooltip-dark::before {
