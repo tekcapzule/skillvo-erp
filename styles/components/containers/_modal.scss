@@ -1,0 +1,664 @@
+/**
+ * Modal Component - Component-level Styles
+ * Version: 1.0.0
+ * Last Updated: April 29, 2025
+ * 
+ * This file defines styles for the Modal component in the SkillVo design system.
+ * It extends the container base class and provides modal-specific styling.
+ * Modals present content in a layer that appears on top of the main page content.
+ */
+
+/* ==========================================================================
+   TABLE OF CONTENTS:
+   
+   1. VARIABLES & CONFIGURATION
+   2. MODAL OVERLAY
+   3. MODAL BASE CLASS
+   4. MODAL VARIATIONS
+      4.1 Modal Sizes
+      4.2 Modal Types
+      4.3 Modal Positions
+   5. MODAL ELEMENTS
+      5.1 Modal Header
+      5.2 Modal Body
+      5.3 Modal Footer
+   6. MODAL ANIMATIONS
+   7. ACCESSIBILITY CONSIDERATIONS
+   8. RESPONSIVE BEHAVIORS
+   ========================================================================== */
+
+/* ==========================================================================
+   1. VARIABLES & CONFIGURATION
+   ========================================================================== */
+
+// Import necessary mixins
+@use '../mixins' as *;
+
+// Modal-specific variables
+$modal-overlay-bg: rgba(0, 0, 0, 0.5);
+$modal-default-radius: var(--sv-radius-md);
+$modal-default-shadow: var(--sv-shadow-xl);
+$modal-header-padding: var(--sv-padding-md);
+$modal-body-padding: var(--sv-padding-md);
+$modal-footer-padding: var(--sv-padding-md);
+$modal-border-color: var(--sv-border-light);
+$modal-header-border-color: var(--sv-border-light);
+$modal-footer-border-color: var(--sv-border-light);
+$modal-title-font-size: var(--sv-text-heading-md);
+$modal-title-font-weight: var(--sv-font-semibold);
+$modal-z-index: var(--sv-z-index-modal);
+$modal-width-xs: 300px;
+$modal-width-sm: 400px;
+$modal-width-md: 600px;
+$modal-width-lg: 800px;
+$modal-width-xl: 1000px;
+$modal-width-full: 100%;
+$modal-min-height: 150px;
+$modal-animation-duration: var(--sv-motion-duration-medium);
+$modal-animation-timing: var(--sv-motion-ease-standard);
+
+/* ==========================================================================
+   2. MODAL OVERLAY
+   ========================================================================== */
+
+.sv-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: $modal-overlay-bg;
+  z-index: $modal-z-index;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--sv-padding-md);
+  overflow-y: auto;
+  overflow-x: hidden;
+  
+  // Variations
+  &.sv-modal-overlay-dark {
+    background-color: rgba(0, 0, 0, 0.75);
+  }
+  
+  &.sv-modal-overlay-light {
+    background-color: rgba(255, 255, 255, 0.75);
+  }
+  
+  &.sv-modal-overlay-blur {
+    backdrop-filter: blur(4px);
+  }
+  
+  // Animation classes
+  &.sv-modal-overlay-fade-in {
+    animation: modalOverlayFadeIn $modal-animation-duration $modal-animation-timing forwards;
+  }
+  
+  &.sv-modal-overlay-fade-out {
+    animation: modalOverlayFadeOut $modal-animation-duration $modal-animation-timing forwards;
+  }
+  
+  // Accessibility behavior for screen readers
+  &[aria-hidden="true"] {
+    display: none;
+  }
+  
+  // Styling for when modal is alert dialog
+  &.sv-modal-alert {
+    z-index: calc($modal-z-index + 10);
+  }
+}
+
+/* ==========================================================================
+   3. MODAL BASE CLASS
+   ========================================================================== */
+
+.sv-modal {
+  // Extend the container base class
+  @extend .sv-container-base;
+  
+  // Modal-specific overrides
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--sv-bg-surface);
+  border-radius: $modal-default-radius;
+  box-shadow: $modal-default-shadow;
+  padding: 0; // Override default container padding
+  max-height: calc(100vh - (var(--sv-padding-md) * 2));
+  width: $modal-width-md;
+  max-width: 100%;
+  min-height: $modal-min-height;
+  margin: auto;
+  outline: none; // Prevent default focus outline, we'll handle this with our own styles
+  pointer-events: auto;
+  
+  // Animation classes
+  &.sv-modal-fade-in {
+    animation: modalFadeIn $modal-animation-duration $modal-animation-timing forwards;
+  }
+  
+  &.sv-modal-fade-out {
+    animation: modalFadeOut $modal-animation-duration $modal-animation-timing forwards;
+  }
+  
+  &.sv-modal-slide-down {
+    animation: modalSlideDown $modal-animation-duration $modal-animation-timing forwards;
+  }
+  
+  &.sv-modal-slide-up {
+    animation: modalSlideUp $modal-animation-duration $modal-animation-timing forwards;
+  }
+  
+  &.sv-modal-zoom-in {
+    animation: modalZoomIn $modal-animation-duration $modal-animation-timing forwards;
+  }
+  
+  &.sv-modal-zoom-out {
+    animation: modalZoomOut $modal-animation-duration $modal-animation-timing forwards;
+  }
+  
+  // Accessibility focus styles
+  &:focus {
+    box-shadow: $modal-default-shadow, 0 0 0 3px var(--sv-focus-ring-color);
+  }
+}
+
+/* ==========================================================================
+   4. MODAL VARIATIONS
+   ========================================================================== */
+
+/* 4.1 Modal Sizes
+   ========================================================================== */
+
+.sv-modal-xs {
+  width: $modal-width-xs;
+}
+
+.sv-modal-sm {
+  width: $modal-width-sm;
+}
+
+.sv-modal-md {
+  width: $modal-width-md;
+}
+
+.sv-modal-lg {
+  width: $modal-width-lg;
+}
+
+.sv-modal-xl {
+  width: $modal-width-xl;
+}
+
+.sv-modal-full {
+  width: $modal-width-full;
+  max-width: calc(100vw - (var(--sv-padding-md) * 2));
+  height: calc(100vh - (var(--sv-padding-md) * 2));
+}
+
+/* 4.2 Modal Types
+   ========================================================================== */
+
+// Basic modal with minimal styling
+.sv-modal-basic {
+  box-shadow: $modal-default-shadow;
+}
+
+// Modal for alerts or confirmations
+.sv-modal-alert {
+  width: $modal-width-sm;
+  
+  .sv-modal-header {
+    background-color: var(--sv-bg-secondary);
+  }
+}
+
+// Modal with no borders between sections
+.sv-modal-borderless {
+  .sv-modal-header {
+    border-bottom: none;
+  }
+  
+  .sv-modal-footer {
+    border-top: none;
+  }
+}
+
+// Fullscreen modal
+.sv-modal-fullscreen {
+  width: 100vw;
+  height: 100vh;
+  max-width: 100vw;
+  max-height: 100vh;
+  border-radius: 0;
+  margin: 0;
+  
+  .sv-modal-body {
+    flex: 1 1 auto;
+    overflow-y: auto;
+  }
+}
+
+// Sidebar modal (appears from side)
+.sv-modal-sidebar {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  width: $modal-width-md;
+  max-width: 90vw;
+  height: 100vh;
+  margin: 0;
+  border-radius: 0;
+  
+  &.sv-modal-sidebar-right {
+    right: 0;
+    animation: modalSlideInRight $modal-animation-duration $modal-animation-timing forwards;
+    
+    &.sv-modal-sidebar-out {
+      animation: modalSlideOutRight $modal-animation-duration $modal-animation-timing forwards;
+    }
+  }
+  
+  &.sv-modal-sidebar-left {
+    left: 0;
+    animation: modalSlideInLeft $modal-animation-duration $modal-animation-timing forwards;
+    
+    &.sv-modal-sidebar-out {
+      animation: modalSlideOutLeft $modal-animation-duration $modal-animation-timing forwards;
+    }
+  }
+  
+  .sv-modal-body {
+    flex: 1;
+    overflow-y: auto;
+  }
+}
+
+/* 4.3 Modal Positions
+   ========================================================================== */
+
+// Different positioning for the modal overlay
+.sv-modal-overlay {
+  &.sv-modal-position-top {
+    align-items: flex-start;
+    padding-top: var(--sv-padding-lg);
+  }
+  
+  &.sv-modal-position-center {
+    align-items: center;
+  }
+  
+  &.sv-modal-position-bottom {
+    align-items: flex-end;
+    padding-bottom: var(--sv-padding-lg);
+  }
+}
+
+/* ==========================================================================
+   5. MODAL ELEMENTS
+   ========================================================================== */
+
+/* 5.1 Modal Header
+   ========================================================================== */
+
+.sv-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: $modal-header-padding;
+  border-bottom: 1px solid $modal-header-border-color;
+  position: relative;
+  
+  // Title container
+  .sv-modal-title-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  // Modal close button
+  .sv-modal-close {
+    background: none;
+    border: none;
+    padding: var(--sv-padding-xs);
+    cursor: pointer;
+    color: var(--sv-text-secondary);
+    transition: color 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    &:hover {
+      color: var(--sv-text-primary);
+    }
+    
+    &:focus {
+      outline: none;
+      box-shadow: 0 0 0 2px var(--sv-focus-ring-color);
+      border-radius: var(--sv-radius-sm);
+    }
+  }
+  
+  // No border header
+  &.sv-modal-header-no-border {
+    border-bottom: none;
+  }
+  
+  // Colored headers
+  &.sv-modal-header-primary {
+    background-color: var(--sv-primary);
+    color: var(--sv-text-on-dark);
+    
+    .sv-modal-close {
+      color: var(--sv-text-on-dark);
+      
+      &:hover {
+        color: rgba(255, 255, 255, 0.9);
+      }
+    }
+  }
+  
+  &.sv-modal-header-secondary {
+    background-color: var(--sv-secondary);
+    color: var(--sv-text-on-dark);
+    
+    .sv-modal-close {
+      color: var(--sv-text-on-dark);
+      
+      &:hover {
+        color: rgba(255, 255, 255, 0.9);
+      }
+    }
+  }
+}
+
+// Modal title
+.sv-modal-title {
+  margin: 0;
+  font-size: $modal-title-font-size;
+  font-weight: $modal-title-font-weight;
+  line-height: var(--sv-leading-tight);
+}
+
+// Modal subtitle
+.sv-modal-subtitle {
+  margin: var(--sv-space-xs) 0 0;
+  font-size: var(--sv-text-body-md);
+  color: var(--sv-text-secondary);
+}
+
+/* 5.2 Modal Body
+   ========================================================================== */
+
+.sv-modal-body {
+  padding: $modal-body-padding;
+  overflow-y: auto;
+  flex: 1 1 auto;
+  
+  // Body variations
+  &.sv-modal-body-no-padding {
+    padding: 0;
+  }
+  
+  &.sv-modal-body-compact {
+    padding: var(--sv-padding-sm);
+  }
+  
+  &.sv-modal-body-comfortable {
+    padding: var(--sv-padding-lg);
+  }
+}
+
+/* 5.3 Modal Footer
+   ========================================================================== */
+
+.sv-modal-footer {
+  padding: $modal-footer-padding;
+  border-top: 1px solid $modal-footer-border-color;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--sv-space-sm);
+  
+  // Footer variations
+  &.sv-modal-footer-no-border {
+    border-top: none;
+  }
+  
+  &.sv-modal-footer-center {
+    justify-content: center;
+  }
+  
+  &.sv-modal-footer-between {
+    justify-content: space-between;
+  }
+  
+  &.sv-modal-footer-start {
+    justify-content: flex-start;
+  }
+  
+  &.sv-modal-footer-block {
+    flex-direction: column;
+    gap: var(--sv-space-sm);
+    
+    button, a {
+      width: 100%;
+    }
+  }
+  
+  // Footer with subtle background
+  &.sv-modal-footer-subtle {
+    background-color: var(--sv-bg-secondary);
+  }
+}
+
+/* ==========================================================================
+   6. MODAL ANIMATIONS
+   ========================================================================== */
+
+// Overlay animations
+@keyframes modalOverlayFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes modalOverlayFadeOut {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+// Modal animations
+@keyframes modalFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes modalFadeOut {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+@keyframes modalSlideDown {
+  from { 
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to { 
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes modalSlideUp {
+  from { 
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to { 
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+}
+
+@keyframes modalZoomIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes modalZoomOut {
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+}
+
+@keyframes modalSlideInRight {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes modalSlideOutRight {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes modalSlideInLeft {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes modalSlideOutLeft {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}
+
+/* ==========================================================================
+   7. ACCESSIBILITY CONSIDERATIONS
+   ========================================================================== */
+
+// Ensure modal is properly accessible
+.sv-modal {
+  // Use these attributes on the modal element itself
+  &[role="dialog"],
+  &[role="alertdialog"] {
+    // Proper focus handling for dialogs
+    
+    // When modal is hidden to screen readers, also hide visually
+    &[aria-hidden="true"] {
+      display: none;
+    }
+  }
+  
+  // Ensure good keyboard focus states
+  &:focus-visible {
+    box-shadow: $modal-default-shadow, 0 0 0 3px var(--sv-focus-ring-color);
+    outline: none;
+  }
+}
+
+// Trap focus within the modal
+// Note: This is a visual support for focus trapping - 
+// actual focus trapping requires JavaScript
+.sv-modal-focus-trap {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* ==========================================================================
+   8. RESPONSIVE BEHAVIORS
+   ========================================================================== */
+
+// Small screens
+@include breakpoint-down(sm) {
+  .sv-modal {
+    width: 100%;
+    margin: var(--sv-margin-xs);
+    max-width: calc(100% - (var(--sv-margin-xs) * 2));
+    
+    .sv-modal-header {
+      padding: var(--sv-padding-sm);
+      
+      .sv-modal-title {
+        font-size: var(--sv-text-heading-sm);
+      }
+    }
+    
+    .sv-modal-body {
+      padding: var(--sv-padding-sm);
+    }
+    
+    .sv-modal-footer {
+      padding: var(--sv-padding-sm);
+      flex-direction: column;
+      
+      button, a {
+        width: 100%;
+        margin-bottom: var(--sv-space-xs);
+      }
+      
+      button:last-child, a:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+  
+  // Always make footer stack buttons vertically on mobile
+  .sv-modal-footer {
+    flex-direction: column;
+    
+    button, a {
+      width: 100%;
+      margin-bottom: var(--sv-space-xs);
+      
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+  
+  // Full-width sidebar on mobile
+  .sv-modal-sidebar {
+    width: 100%;
+    max-width: 100%;
+  }
+}
+
+// Medium screens
+@include breakpoint-between(md, lg) {
+  .sv-modal-lg, .sv-modal-xl {
+    width: 90%;
+    max-width: 90%;
+  }
+}

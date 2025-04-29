@@ -1,0 +1,770 @@
+/**
+ * Sidebar Component - Component-level Styles
+ * Version: 1.0.0
+ * Last Updated: April 29, 2025
+ * 
+ * This file defines styles for the Sidebar component in the SkillVo design system.
+ * It extends the container base class and provides sidebar-specific styling.
+ * Sidebars provide persistent vertical navigation or auxiliary content alongside the main content.
+ */
+
+/* ==========================================================================
+   TABLE OF CONTENTS:
+   
+   1. VARIABLES & CONFIGURATION
+   2. SIDEBAR BASE CLASS
+   3. SIDEBAR VARIATIONS
+      3.1 Sidebar Sizes
+      3.2 Sidebar Visual Styles
+      3.3 Sidebar Behavior Variations
+   4. SIDEBAR ELEMENTS
+      4.1 Sidebar Header
+      4.2 Sidebar Body
+      4.3 Sidebar Footer
+      4.4 Sidebar Navigation
+      4.5 Sidebar Toggle
+   5. SIDEBAR ANIMATIONS
+   6. SIDEBAR STATES
+   7. RESPONSIVE BEHAVIORS
+   ========================================================================== */
+
+/* ==========================================================================
+   1. VARIABLES & CONFIGURATION
+   ========================================================================== */
+
+// Import necessary mixins
+@use '../mixins' as *;
+
+// Sidebar-specific variables
+$sidebar-width-sm: 220px;
+$sidebar-width-md: 280px;
+$sidebar-width-lg: 320px;
+$sidebar-width-xl: 380px;
+$sidebar-width-collapsed: 64px;
+$sidebar-border-color: var(--sv-border-light);
+$sidebar-bg: var(--sv-bg-surface);
+$sidebar-shadow: var(--sv-shadow-md);
+$sidebar-header-padding: var(--sv-padding-md);
+$sidebar-body-padding: var(--sv-padding-md);
+$sidebar-footer-padding: var(--sv-padding-md);
+$sidebar-header-border-color: var(--sv-border-light);
+$sidebar-footer-border-color: var(--sv-border-light);
+$sidebar-z-index: var(--sv-z-index-sidebar, 1020);
+$sidebar-animation-duration: var(--sv-motion-duration-medium);
+$sidebar-animation-timing: var(--sv-motion-ease-standard);
+
+/* ==========================================================================
+   2. SIDEBAR BASE CLASS
+   ========================================================================== */
+
+.sv-sidebar {
+  // Extend the container base class
+  @extend .sv-container-base;
+  
+  // Sidebar-specific overrides
+  display: flex;
+  flex-direction: column;
+  background-color: $sidebar-bg;
+  padding: 0; // Override default container padding
+  border-right: 1px solid $sidebar-border-color;
+  width: $sidebar-width-md;
+  height: 100%;
+  overflow: hidden;
+  position: relative;
+  transition: width $sidebar-animation-duration $sidebar-animation-timing,
+              transform $sidebar-animation-duration $sidebar-animation-timing;
+  
+  // Default state
+  &.sv-sidebar-fixed {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    z-index: $sidebar-z-index;
+  }
+  
+  // For use when embedded in layout (not fixed)
+  &.sv-sidebar-flexible {
+    position: relative;
+    z-index: 1;
+  }
+  
+  // Right sidebar
+  &.sv-sidebar-right {
+    left: auto;
+    right: 0;
+    border-right: none;
+    border-left: 1px solid $sidebar-border-color;
+  }
+  
+  // Collapsed state
+  &.sv-sidebar-collapsed {
+    width: $sidebar-width-collapsed;
+    
+    .sv-sidebar-header-title,
+    .sv-sidebar-header-subtitle,
+    .sv-sidebar-item-text,
+    .sv-sidebar-submenu {
+      display: none;
+    }
+    
+    .sv-sidebar-header {
+      justify-content: center;
+    }
+    
+    .sv-sidebar-footer {
+      justify-content: center;
+    }
+    
+    .sv-sidebar-item {
+      justify-content: center;
+      padding-left: 0;
+      padding-right: 0;
+    }
+    
+    .sv-sidebar-item-icon {
+      margin-right: 0;
+    }
+    
+    // Show tooltips on hover when collapsed
+    .sv-sidebar-item:hover {
+      &::after {
+        content: attr(data-title);
+        position: absolute;
+        left: 100%;
+        top: 50%;
+        transform: translateY(-50%);
+        background-color: var(--sv-bg-secondary);
+        color: var(--sv-text-primary);
+        padding: var(--sv-padding-xs) var(--sv-padding-sm);
+        border-radius: var(--sv-radius-sm);
+        font-size: var(--sv-text-sm);
+        white-space: nowrap;
+        box-shadow: var(--sv-shadow-sm);
+        z-index: 1;
+      }
+    }
+  }
+  
+  // Hidden state
+  &.sv-sidebar-hidden {
+    transform: translateX(-100%);
+    
+    &.sv-sidebar-right {
+      transform: translateX(100%);
+    }
+  }
+  
+  // Mobile behavior
+  &.sv-sidebar-mobile {
+    position: fixed;
+    z-index: $sidebar-z-index;
+    
+    &.sv-sidebar-hidden {
+      transform: translateX(-100%);
+      
+      &.sv-sidebar-right {
+        transform: translateX(100%);
+      }
+    }
+  }
+}
+
+/* ==========================================================================
+   3. SIDEBAR VARIATIONS
+   ========================================================================== */
+
+/* 3.1 Sidebar Sizes
+   ========================================================================== */
+
+.sv-sidebar-sm {
+  width: $sidebar-width-sm;
+}
+
+.sv-sidebar-md {
+  width: $sidebar-width-md;
+}
+
+.sv-sidebar-lg {
+  width: $sidebar-width-lg;
+}
+
+.sv-sidebar-xl {
+  width: $sidebar-width-xl;
+}
+
+/* 3.2 Sidebar Visual Styles
+   ========================================================================== */
+
+// Sidebar with shadow instead of border
+.sv-sidebar-elevated {
+  border-right: none;
+  box-shadow: $sidebar-shadow;
+  
+  &.sv-sidebar-right {
+    border-left: none;
+  }
+}
+
+// Sidebar with subtle background
+.sv-sidebar-subtle {
+  background-color: var(--sv-bg-secondary);
+}
+
+// Sidebar with darker background
+.sv-sidebar-dark {
+  background-color: var(--sv-secondary);
+  color: var(--sv-text-on-dark);
+  border-color: var(--sv-secondary-dark);
+  
+  .sv-sidebar-header,
+  .sv-sidebar-footer {
+    border-color: var(--sv-secondary-dark);
+  }
+  
+  .sv-sidebar-item {
+    color: var(--sv-text-on-dark);
+    
+    &:hover {
+      background-color: var(--sv-secondary-dark);
+    }
+    
+    &.sv-sidebar-item-active {
+      background-color: var(--sv-secondary-light);
+    }
+  }
+  
+  .sv-sidebar-divider {
+    background-color: var(--sv-secondary-dark);
+  }
+}
+
+// Primary colored sidebar
+.sv-sidebar-primary {
+  background-color: var(--sv-primary);
+  color: var(--sv-text-on-dark);
+  border-color: var(--sv-primary-dark);
+  
+  .sv-sidebar-header,
+  .sv-sidebar-footer {
+    border-color: var(--sv-primary-dark);
+  }
+  
+  .sv-sidebar-item {
+    color: var(--sv-text-on-dark);
+    
+    &:hover {
+      background-color: var(--sv-primary-dark);
+    }
+    
+    &.sv-sidebar-item-active {
+      background-color: var(--sv-primary-light);
+    }
+  }
+  
+  .sv-sidebar-divider {
+    background-color: var(--sv-primary-dark);
+  }
+}
+
+// Transparent sidebar
+.sv-sidebar-transparent {
+  background-color: transparent;
+  border: none;
+  box-shadow: none;
+}
+
+/* 3.3 Sidebar Behavior Variations
+   ========================================================================== */
+
+// Mini sidebar by default (icons only), expands on hover
+.sv-sidebar-mini {
+  width: $sidebar-width-collapsed;
+  
+  &:hover {
+    width: $sidebar-width-md;
+    
+    .sv-sidebar-header-title,
+    .sv-sidebar-header-subtitle,
+    .sv-sidebar-item-text,
+    .sv-sidebar-submenu {
+      display: flex;
+    }
+    
+    .sv-sidebar-header {
+      justify-content: space-between;
+    }
+    
+    .sv-sidebar-footer {
+      justify-content: space-between;
+    }
+    
+    .sv-sidebar-item {
+      justify-content: flex-start;
+      padding-left: var(--sv-padding-md);
+      padding-right: var(--sv-padding-md);
+    }
+    
+    .sv-sidebar-item-icon {
+      margin-right: var(--sv-space-sm);
+    }
+  }
+  
+  .sv-sidebar-header-title,
+  .sv-sidebar-header-subtitle,
+  .sv-sidebar-item-text,
+  .sv-sidebar-submenu {
+    display: none;
+  }
+  
+  .sv-sidebar-header {
+    justify-content: center;
+  }
+  
+  .sv-sidebar-footer {
+    justify-content: center;
+  }
+  
+  .sv-sidebar-item {
+    justify-content: center;
+    padding-left: 0;
+    padding-right: 0;
+  }
+  
+  .sv-sidebar-item-icon {
+    margin-right: 0;
+  }
+}
+
+// Sidebar that overlays content rather than pushing it
+.sv-sidebar-overlay {
+  position: fixed;
+  z-index: $sidebar-z-index;
+  
+  // Overlay background when sidebar is open
+  &:not(.sv-sidebar-hidden)::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: -1;
+    animation: sidebarOverlayFadeIn $sidebar-animation-duration $sidebar-animation-timing forwards;
+  }
+  
+  // Needs to be applied to the main content
+  + .sv-main-content {
+    margin-left: 0 !important;
+  }
+}
+
+// Sidebar with push behavior
+.sv-sidebar-push {
+  // Needs JavaScript to apply proper margin to main content
+  // This is a visual placeholder for that behavior
+}
+
+/* ==========================================================================
+   4. SIDEBAR ELEMENTS
+   ========================================================================== */
+
+/* 4.1 Sidebar Header
+   ========================================================================== */
+
+.sv-sidebar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: $sidebar-header-padding;
+  border-bottom: 1px solid $sidebar-header-border-color;
+  min-height: 64px;
+  
+  // Optional logo/brand container
+  .sv-sidebar-brand {
+    display: flex;
+    align-items: center;
+    
+    img, svg {
+      max-height: 32px;
+      width: auto;
+    }
+  }
+  
+  // Header content container
+  .sv-sidebar-header-content {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+  
+  // No border variation
+  &.sv-sidebar-header-no-border {
+    border-bottom: none;
+  }
+  
+  // Centered header
+  &.sv-sidebar-header-center {
+    justify-content: center;
+    text-align: center;
+  }
+}
+
+// Sidebar title
+.sv-sidebar-header-title {
+  margin: 0;
+  font-size: var(--sv-text-heading-sm);
+  font-weight: var(--sv-font-semibold);
+  line-height: var(--sv-leading-tight);
+}
+
+// Sidebar subtitle
+.sv-sidebar-header-subtitle {
+  margin: var(--sv-space-xs) 0 0;
+  font-size: var(--sv-text-sm);
+  color: var(--sv-text-secondary);
+}
+
+/* 4.2 Sidebar Body
+   ========================================================================== */
+
+.sv-sidebar-body {
+  flex: 1 1 auto;
+  overflow-y: auto;
+  padding: $sidebar-body-padding;
+  
+  // Remove padding variation
+  &.sv-sidebar-body-no-padding {
+    padding: 0;
+  }
+  
+  // Scroll shadow effect
+  &.sv-sidebar-body-scroll-shadow {
+    background: 
+      linear-gradient($sidebar-bg 30%, rgba(255, 255, 255, 0)),
+      linear-gradient(rgba(255, 255, 255, 0), $sidebar-bg 70%) 0 100%,
+      radial-gradient(farthest-side at 50% 0, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0)),
+      radial-gradient(farthest-side at 50% 100%, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0)) 0 100%;
+    background-repeat: no-repeat;
+    background-size: 100% 40px, 100% 40px, 100% 14px, 100% 14px;
+    background-attachment: local, local, scroll, scroll;
+  }
+}
+
+/* 4.3 Sidebar Footer
+   ========================================================================== */
+
+.sv-sidebar-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: $sidebar-footer-padding;
+  border-top: 1px solid $sidebar-footer-border-color;
+  min-height: 48px;
+  
+  // No border variation
+  &.sv-sidebar-footer-no-border {
+    border-top: none;
+  }
+  
+  // Centered footer
+  &.sv-sidebar-footer-center {
+    justify-content: center;
+    text-align: center;
+  }
+  
+  // Footer with subtle background
+  &.sv-sidebar-footer-subtle {
+    background-color: var(--sv-bg-secondary);
+  }
+}
+
+/* 4.4 Sidebar Navigation
+   ========================================================================== */
+
+// Sidebar navigation container
+.sv-sidebar-nav {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+}
+
+// Sidebar navigation item
+.sv-sidebar-item {
+  display: flex;
+  align-items: center;
+  padding: var(--sv-padding-sm) var(--sv-padding-md);
+  margin-bottom: 2px;
+  border-radius: var(--sv-radius-sm);
+  cursor: pointer;
+  color: var(--sv-text-primary);
+  position: relative;
+  transition: background-color 0.2s ease, color 0.2s ease;
+  
+  // Icon in navigation item
+  .sv-sidebar-item-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: var(--sv-space-sm);
+    width: 24px;
+    height: 24px;
+    font-size: 20px;
+  }
+  
+  // Text in navigation item
+  .sv-sidebar-item-text {
+    flex: 1;
+  }
+  
+  // Badge for notifications or status
+  .sv-sidebar-item-badge {
+    margin-left: auto;
+    padding: 2px 6px;
+    border-radius: var(--sv-radius-full);
+    font-size: var(--sv-text-xs);
+    font-weight: var(--sv-font-medium);
+    background-color: var(--sv-primary);
+    color: var(--sv-text-on-dark);
+  }
+  
+  // Hover state
+  &:hover {
+    background-color: var(--sv-bg-element-hover);
+  }
+  
+  // Active state
+  &.sv-sidebar-item-active {
+    background-color: var(--sv-bg-element-active);
+    color: var(--sv-primary);
+    font-weight: var(--sv-font-medium);
+  }
+  
+  // Disabled state
+  &.sv-sidebar-item-disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+  
+  // With submenu indicator
+  &.sv-sidebar-item-parent {
+    &::after {
+      content: '';
+      width: 6px;
+      height: 6px;
+      border-right: 2px solid currentColor;
+      border-bottom: 2px solid currentColor;
+      transform: rotate(45deg);
+      margin-left: auto;
+      transition: transform 0.2s ease;
+    }
+    
+    &.sv-sidebar-item-expanded::after {
+      transform: rotate(-135deg);
+    }
+  }
+}
+
+// Submenu styles
+.sv-sidebar-submenu {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  padding-left: 32px;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+  
+  // When expanded
+  &.sv-sidebar-submenu-expanded {
+    max-height: 1000px;
+  }
+  
+  // Submenu items
+  .sv-sidebar-item {
+    padding: var(--sv-padding-xs) var(--sv-padding-md);
+    font-size: 0.9em;
+  }
+}
+
+// Divider for navigation sections
+.sv-sidebar-divider {
+  height: 1px;
+  background-color: var(--sv-border-light);
+  margin: var(--sv-space-md) 0;
+}
+
+// Section label for navigation groups
+.sv-sidebar-section {
+  padding: var(--sv-padding-sm) var(--sv-padding-md);
+  color: var(--sv-text-secondary);
+  font-size: var(--sv-text-xs);
+  font-weight: var(--sv-font-semibold);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* 4.5 Sidebar Toggle
+   ========================================================================== */
+
+.sv-sidebar-toggle {
+  background: none;
+  border: none;
+  padding: var(--sv-padding-xs);
+  cursor: pointer;
+  color: var(--sv-text-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s ease;
+  
+  &:hover {
+    color: var(--sv-text-primary);
+  }
+  
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px var(--sv-focus-ring-color);
+    border-radius: var(--sv-radius-sm);
+  }
+}
+
+/* ==========================================================================
+   5. SIDEBAR ANIMATIONS
+   ========================================================================== */
+
+// Overlay fade in animation
+@keyframes sidebarOverlayFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+// Overlay fade out animation
+@keyframes sidebarOverlayFadeOut {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+/* ==========================================================================
+   6. SIDEBAR STATES
+   ========================================================================== */
+
+// Floating sidebar state (absolute positioned with specific offset)
+.sv-sidebar-floating {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  height: calc(100% - 40px);
+  border-radius: var(--sv-radius-md);
+  box-shadow: var(--sv-shadow-lg);
+}
+
+// For screen reader accessibility
+.sv-sidebar[aria-hidden="true"] {
+  display: none;
+}
+
+/* ==========================================================================
+   7. RESPONSIVE BEHAVIORS
+   ========================================================================== */
+
+// Mobile sidebar behavior
+@include breakpoint-down(md) {
+  .sv-sidebar {
+    // Default to fixed positioning on mobile
+    position: fixed;
+    z-index: $sidebar-z-index;
+    width: 85%;
+    max-width: 320px;
+    transform: translateX(-100%);
+    
+    &.sv-sidebar-right {
+      transform: translateX(100%);
+    }
+    
+    &.sv-sidebar-open {
+      transform: translateX(0);
+    }
+    
+    // Overlay background when sidebar is open
+    &.sv-sidebar-open::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: -1;
+      animation: sidebarOverlayFadeIn $sidebar-animation-duration $sidebar-animation-timing forwards;
+    }
+  }
+  
+  // Adjust padding for sidebar components
+  .sv-sidebar-header,
+  .sv-sidebar-footer {
+    padding: var(--sv-padding-sm);
+  }
+  
+  .sv-sidebar-body {
+    padding: var(--sv-padding-xs);
+  }
+  
+  // Make items easier to tap on mobile
+  .sv-sidebar-item {
+    padding: var(--sv-padding-md);
+    margin-bottom: 4px;
+  }
+}
+
+// Medium screens - collapsed sidebar
+@include breakpoint-between(md, lg) {
+  .sv-sidebar-auto-collapse {
+    width: $sidebar-width-collapsed;
+    
+    .sv-sidebar-header-title,
+    .sv-sidebar-header-subtitle,
+    .sv-sidebar-item-text,
+    .sv-sidebar-submenu,
+    .sv-sidebar-section {
+      display: none;
+    }
+    
+    .sv-sidebar-header,
+    .sv-sidebar-footer {
+      justify-content: center;
+    }
+    
+    .sv-sidebar-item {
+      justify-content: center;
+      padding-left: 0;
+      padding-right: 0;
+    }
+    
+    .sv-sidebar-item-icon {
+      margin-right: 0;
+    }
+    
+    // Show tooltips on hover when collapsed
+    .sv-sidebar-item:hover {
+      &::after {
+        content: attr(data-title);
+        position: absolute;
+        left: 100%;
+        top: 50%;
+        transform: translateY(-50%);
+        background-color: var(--sv-bg-secondary);
+        color: var(--sv-text-primary);
+        padding: var(--sv-padding-xs) var(--sv-padding-sm);
+        border-radius: var(--sv-radius-sm);
+        font-size: var(--sv-text-sm);
+        white-space: nowrap;
+        box-shadow: var(--sv-shadow-sm);
+        z-index: 1;
+      }
+    }
+  }
+}

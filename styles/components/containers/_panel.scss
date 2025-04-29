@@ -1,0 +1,579 @@
+/**
+ * Panel Component - Component-level Styles
+ * Version: 1.0.0
+ * Last Updated: April 29, 2025
+ * 
+ * This file defines styles for the Panel component in the SkillVo design system.
+ * It extends the container base class and provides panel-specific styling.
+ * Panels are similar to cards but typically provide more structural elements
+ * and are often used for grouping related content within a page.
+ */
+
+/* ==========================================================================
+   TABLE OF CONTENTS:
+   
+   1. VARIABLES & CONFIGURATION
+   2. PANEL BASE CLASS
+   3. PANEL VARIATIONS
+      3.1 Panel Types
+      3.2 Panel Sizes
+      3.3 Panel Visual Styles
+   4. PANEL ELEMENTS
+      4.1 Panel Header
+      4.2 Panel Body
+      4.3 Panel Footer
+      4.4 Panel Actions
+   5. PANEL MODIFIERS
+   6. RESPONSIVE BEHAVIORS
+   ========================================================================== */
+
+/* ==========================================================================
+   1. VARIABLES & CONFIGURATION
+   ========================================================================== */
+
+// Import necessary mixins
+@use '../mixins' as *;
+
+// Panel-specific variables
+$panel-default-radius: var(--sv-radius-md);
+$panel-default-shadow: var(--sv-shadow-sm);
+$panel-default-padding: var(--sv-padding-md);
+$panel-header-padding: var(--sv-padding-md);
+$panel-body-padding: var(--sv-padding-md);
+$panel-footer-padding: var(--sv-padding-md);
+$panel-border-color: var(--sv-border-light);
+$panel-header-border-color: var(--sv-border-light);
+$panel-footer-border-color: var(--sv-border-light);
+$panel-title-font-size: var(--sv-text-heading-md);
+$panel-title-font-weight: var(--sv-font-semibold);
+$panel-subtitle-font-size: var(--sv-text-body-md);
+$panel-subtitle-font-weight: var(--sv-font-normal);
+$panel-subtitle-color: var(--sv-text-secondary);
+
+/* ==========================================================================
+   2. PANEL BASE CLASS
+   ========================================================================== */
+
+.sv-panel {
+  // Extend the container base class
+  @extend .sv-container-base;
+  
+  // Panel-specific overrides
+  border-radius: $panel-default-radius;
+  box-shadow: $panel-default-shadow;
+  padding: 0; // Override default container padding
+  background-color: var(--sv-bg-surface);
+  display: flex;
+  flex-direction: column;
+  border: 1px solid $panel-border-color;
+  
+  // Default panel sizing
+  width: 100%;
+  height: auto;
+  
+  // Ensure proper nesting of panel content
+  > * {
+    width: 100%;
+  }
+}
+
+/* ==========================================================================
+   3. PANEL VARIATIONS
+   ========================================================================== */
+
+/* 3.1 Panel Types
+   ========================================================================== */
+
+// Basic panel with minimal styling
+.sv-panel-basic {
+  box-shadow: none;
+}
+
+// Elevated panel with more prominent shadow
+.sv-panel-elevated {
+  box-shadow: var(--sv-shadow-md);
+}
+
+// Panel with no border or shadow
+.sv-panel-flat {
+  box-shadow: none;
+  border: none;
+  background-color: var(--sv-bg-element);
+}
+
+// Panel with a more subtle background
+.sv-panel-subtle {
+  background-color: var(--sv-bg-secondary);
+}
+
+// Panel specifically for forms
+.sv-panel-form {
+  .sv-panel-body {
+    padding: var(--sv-padding-lg);
+  }
+  
+  .sv-panel-footer {
+    background-color: var(--sv-bg-secondary);
+    padding: var(--sv-padding-md);
+    display: flex;
+    justify-content: flex-end;
+    gap: var(--sv-space-sm);
+  }
+}
+
+// Panel for displaying section of information
+.sv-panel-info {
+  border-left: 4px solid var(--sv-info);
+  
+  .sv-panel-header {
+    background-color: rgba(var(--sv-info), 0.05);
+  }
+}
+
+// Success panel
+.sv-panel-success {
+  border-left: 4px solid var(--sv-success);
+  
+  .sv-panel-header {
+    background-color: rgba(var(--sv-success), 0.05);
+  }
+}
+
+// Warning panel
+.sv-panel-warning {
+  border-left: 4px solid var(--sv-warning);
+  
+  .sv-panel-header {
+    background-color: rgba(var(--sv-warning), 0.05);
+  }
+}
+
+// Error panel
+.sv-panel-error {
+  border-left: 4px solid var(--sv-error);
+  
+  .sv-panel-header {
+    background-color: rgba(var(--sv-error), 0.05);
+  }
+}
+
+/* 3.2 Panel Sizes
+   ========================================================================== */
+
+// Compact panel with smaller padding
+.sv-panel-compact {
+  .sv-panel-header,
+  .sv-panel-body,
+  .sv-panel-footer {
+    padding: var(--sv-padding-sm);
+  }
+}
+
+// Comfortable panel with larger padding
+.sv-panel-comfortable {
+  .sv-panel-header,
+  .sv-panel-body,
+  .sv-panel-footer {
+    padding: var(--sv-padding-lg);
+  }
+}
+
+// Full-height panel
+.sv-panel-full-height {
+  height: 100%;
+  
+  .sv-panel-body {
+    flex: 1 1 auto;
+    overflow-y: auto;
+  }
+}
+
+/* 3.3 Panel Visual Styles
+   ========================================================================== */
+
+// Panel with rounded corners
+.sv-panel-rounded {
+  border-radius: var(--sv-radius-lg);
+}
+
+// Panel with more square corners
+.sv-panel-square {
+  border-radius: var(--sv-radius-sm);
+}
+
+// Panel with highlighted border
+.sv-panel-highlighted {
+  border-color: var(--sv-primary);
+  border-width: 2px;
+}
+
+// Panel with a colored background
+.sv-panel-colored {
+  background-color: var(--sv-bg-secondary);
+  
+  &.sv-panel-primary {
+    background-color: rgba(var(--sv-primary-500-rgb), 0.05);
+  }
+  
+  &.sv-panel-info {
+    background-color: rgba(var(--sv-info), 0.05);
+  }
+  
+  &.sv-panel-success {
+    background-color: rgba(var(--sv-success), 0.05);
+  }
+  
+  &.sv-panel-warning {
+    background-color: rgba(var(--sv-warning), 0.05);
+  }
+  
+  &.sv-panel-error {
+    background-color: rgba(var(--sv-error), 0.05);
+  }
+}
+
+/* ==========================================================================
+   4. PANEL ELEMENTS
+   ========================================================================== */
+
+/* 4.1 Panel Header
+   ========================================================================== */
+
+.sv-panel-header {
+  padding: $panel-header-padding;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid $panel-header-border-color;
+  min-height: 48px;
+  
+  // Header without border
+  &.sv-panel-header-no-border {
+    border-bottom: none;
+  }
+  
+  // Colored headers
+  &.sv-panel-header-primary {
+    background-color: var(--sv-primary);
+    color: var(--sv-text-on-dark);
+  }
+  
+  &.sv-panel-header-secondary {
+    background-color: var(--sv-secondary);
+    color: var(--sv-text-on-dark);
+  }
+  
+  // Left section of the header (typically contains title)
+  .sv-panel-header-left {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex: 1;
+  }
+  
+  // Right section of the header (typically contains actions)
+  .sv-panel-header-right {
+    display: flex;
+    align-items: center;
+    gap: var(--sv-space-sm);
+  }
+}
+
+// Panel title styling
+.sv-panel-title {
+  margin: 0;
+  font-size: $panel-title-font-size;
+  font-weight: $panel-title-font-weight;
+  color: inherit;
+  line-height: var(--sv-leading-tight);
+}
+
+// Panel subtitle styling
+.sv-panel-subtitle {
+  margin: var(--sv-space-xs) 0 0;
+  font-size: $panel-subtitle-font-size;
+  font-weight: $panel-subtitle-font-weight;
+  color: $panel-subtitle-color;
+  line-height: var(--sv-leading-normal);
+}
+
+// Panel with collapsible header
+.sv-panel-collapsible {
+  .sv-panel-header {
+    cursor: pointer;
+    user-select: none;
+    
+    &::after {
+      content: "";
+      width: 10px;
+      height: 10px;
+      border-right: 2px solid currentColor;
+      border-bottom: 2px solid currentColor;
+      transform: rotate(45deg);
+      transition: transform 0.2s ease;
+      margin-left: var(--sv-space-xs);
+    }
+    
+    &[aria-expanded="true"]::after {
+      transform: rotate(-135deg);
+    }
+  }
+  
+  .sv-panel-body {
+    transition: max-height 0.3s ease, padding 0.3s ease;
+    overflow: hidden;
+    
+    &[aria-hidden="true"] {
+      max-height: 0;
+      padding-top: 0;
+      padding-bottom: 0;
+      border-top: none;
+    }
+  }
+}
+
+/* 4.2 Panel Body
+   ========================================================================== */
+
+.sv-panel-body {
+  padding: $panel-body-padding;
+  flex: 1 1 auto;
+  
+  // Body variations
+  &.sv-panel-body-no-padding {
+    padding: 0;
+  }
+  
+  &.sv-panel-body-compact {
+    padding: var(--sv-padding-sm);
+  }
+  
+  &.sv-panel-body-comfortable {
+    padding: var(--sv-padding-lg);
+  }
+  
+  // Scrollable body
+  &.sv-panel-body-scrollable {
+    overflow-y: auto;
+    max-height: 400px;
+  }
+}
+
+/* 4.3 Panel Footer
+   ========================================================================== */
+
+.sv-panel-footer {
+  padding: $panel-footer-padding;
+  border-top: 1px solid $panel-footer-border-color;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  
+  // Footer variations
+  &.sv-panel-footer-no-border {
+    border-top: none;
+  }
+  
+  &.sv-panel-footer-end {
+    justify-content: flex-end;
+  }
+  
+  &.sv-panel-footer-between {
+    justify-content: space-between;
+  }
+  
+  &.sv-panel-footer-center {
+    justify-content: center;
+  }
+  
+  &.sv-panel-footer-column {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  // Subtle footer background
+  &.sv-panel-footer-subtle {
+    background-color: var(--sv-bg-secondary);
+  }
+}
+
+/* 4.4 Panel Actions
+   ========================================================================== */
+
+.sv-panel-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--sv-space-sm);
+  
+  // Aligned to the right
+  &.sv-panel-actions-end {
+    justify-content: flex-end;
+  }
+  
+  // Compact spacing
+  &.sv-panel-actions-compact {
+    gap: var(--sv-space-xs);
+  }
+  
+  // Vertical orientation
+  &.sv-panel-actions-vertical {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+/* ==========================================================================
+   5. PANEL MODIFIERS
+   ========================================================================== */
+
+// Panel with dividers between all sections
+.sv-panel-dividers {
+  .sv-panel-header {
+    border-bottom: 1px solid $panel-header-border-color;
+  }
+  
+  .sv-panel-footer {
+    border-top: 1px solid $panel-footer-border-color;
+  }
+}
+
+// Panel with no dividers
+.sv-panel-no-dividers {
+  .sv-panel-header {
+    border-bottom: none;
+  }
+  
+  .sv-panel-footer {
+    border-top: none;
+  }
+}
+
+// Panel with a loading state
+.sv-panel-loading {
+  position: relative;
+  pointer-events: none;
+  
+  &::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(255, 255, 255, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+  }
+  
+  &::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 2;
+    width: 24px;
+    height: 24px;
+    margin: -12px 0 0 -12px;
+    border-radius: 50%;
+    border: 2px solid rgba(var(--sv-primary-500-rgb), 0.3);
+    border-top-color: var(--sv-primary);
+    animation: spin 0.8s linear infinite;
+  }
+  
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+}
+
+// Floating panel (common in dashboards)
+.sv-panel-floating {
+  box-shadow: var(--sv-shadow-lg);
+  border: none;
+  position: relative;
+  z-index: 1;
+}
+
+// Panel with a gradient background
+.sv-panel-gradient {
+  background: linear-gradient(to right, 
+    var(--sv-bg-primary), 
+    var(--sv-bg-secondary));
+  border: none;
+}
+
+// Panel with a transparent background
+.sv-panel-transparent {
+  background-color: transparent;
+  border: none;
+  box-shadow: none;
+}
+
+/* ==========================================================================
+   6. RESPONSIVE BEHAVIORS
+   ========================================================================== */
+
+// Responsive adjustments for small screens
+@include breakpoint-down(sm) {
+  .sv-panel {
+    .sv-panel-header,
+    .sv-panel-body,
+    .sv-panel-footer {
+      padding: var(--sv-padding-sm);
+    }
+    
+    .sv-panel-title {
+      font-size: var(--sv-text-heading-sm);
+    }
+    
+    .sv-panel-subtitle {
+      font-size: var(--sv-text-body-sm);
+    }
+  }
+  
+  // Stack header elements on small screens
+  .sv-panel-header {
+    flex-direction: column;
+    align-items: flex-start;
+    
+    .sv-panel-header-right {
+      margin-top: var(--sv-space-sm);
+      width: 100%;
+      justify-content: flex-end;
+    }
+  }
+  
+  // Adjust footer layout on small screens
+  .sv-panel-footer {
+    flex-wrap: wrap;
+    gap: var(--sv-space-sm);
+    
+    &.sv-panel-footer-between {
+      justify-content: center;
+    }
+  }
+  
+  // Make actions full-width on small screens
+  .sv-panel-actions {
+    width: 100%;
+    flex-wrap: wrap;
+    justify-content: center;
+    
+    button, a {
+      flex: 1 1 auto;
+    }
+  }
+}
+
+// Medium screens adjustments
+@include breakpoint-between(md, lg) {
+  .sv-panel {
+    .sv-panel-header {
+      .sv-panel-header-right {
+        flex-wrap: wrap;
+      }
+    }
+  }
+}

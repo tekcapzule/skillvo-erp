@@ -1,0 +1,606 @@
+/**
+ * Drawer Component - Component-level Styles
+ * Version: 1.0.0
+ * Last Updated: April 29, 2025
+ * 
+ * This file defines styles for the Drawer component in the SkillVo design system.
+ * It extends the container base class and provides drawer-specific styling.
+ * Drawers are a sliding panel that comes in from the edge of the screen.
+ */
+
+/* ==========================================================================
+   TABLE OF CONTENTS:
+   
+   1. VARIABLES & CONFIGURATION
+   2. DRAWER OVERLAY
+   3. DRAWER BASE CLASS
+   4. DRAWER VARIATIONS
+      4.1 Drawer Positions
+      4.2 Drawer Sizes
+      4.3 Drawer Visual Styles
+   5. DRAWER ELEMENTS
+      5.1 Drawer Header
+      5.2 Drawer Body
+      5.3 Drawer Footer
+   6. DRAWER ANIMATIONS
+   7. ACCESSIBILITY CONSIDERATIONS
+   8. RESPONSIVE BEHAVIORS
+   ========================================================================== */
+
+/* ==========================================================================
+   1. VARIABLES & CONFIGURATION
+   ========================================================================== */
+
+// Import necessary mixins
+@use '../mixins' as *;
+
+// Drawer-specific variables
+$drawer-overlay-bg: rgba(0, 0, 0, 0.5);
+$drawer-bg: var(--sv-bg-surface);
+$drawer-border-color: var(--sv-border-medium);
+$drawer-header-padding: var(--sv-padding-md);
+$drawer-body-padding: var(--sv-padding-md);
+$drawer-footer-padding: var(--sv-padding-md);
+$drawer-header-border-color: var(--sv-border-light);
+$drawer-footer-border-color: var(--sv-border-light);
+$drawer-shadow: var(--sv-shadow-lg);
+$drawer-header-bg: var(--sv-bg-surface);
+$drawer-footer-bg: var(--sv-bg-surface);
+$drawer-z-index: var(--sv-z-index-drawer, 1030);
+$drawer-width-sm: 280px;
+$drawer-width-md: 320px;
+$drawer-width-lg: 400px;
+$drawer-width-xl: 520px;
+$drawer-animation-duration: var(--sv-motion-duration-medium);
+$drawer-animation-timing: var(--sv-motion-ease-standard);
+
+/* ==========================================================================
+   2. DRAWER OVERLAY
+   ========================================================================== */
+
+.sv-drawer-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: $drawer-overlay-bg;
+  z-index: $drawer-z-index;
+  pointer-events: auto;
+  
+  // Variations
+  &.sv-drawer-overlay-dark {
+    background-color: rgba(0, 0, 0, 0.75);
+  }
+  
+  &.sv-drawer-overlay-light {
+    background-color: rgba(255, 255, 255, 0.75);
+  }
+  
+  &.sv-drawer-overlay-blur {
+    backdrop-filter: blur(4px);
+  }
+  
+  // Animation classes
+  &.sv-drawer-overlay-fade-in {
+    animation: drawerOverlayFadeIn $drawer-animation-duration $drawer-animation-timing forwards;
+  }
+  
+  &.sv-drawer-overlay-fade-out {
+    animation: drawerOverlayFadeOut $drawer-animation-duration $drawer-animation-timing forwards;
+  }
+  
+  // Accessibility behavior for screen readers
+  &[aria-hidden="true"] {
+    display: none;
+  }
+}
+
+/* ==========================================================================
+   3. DRAWER BASE CLASS
+   ========================================================================== */
+
+.sv-drawer {
+  // Extend the container base class
+  @extend .sv-container-base;
+  
+  // Drawer-specific overrides
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  padding: 0; // Override default container padding
+  background-color: $drawer-bg;
+  box-shadow: $drawer-shadow;
+  z-index: $drawer-z-index;
+  overflow: hidden;
+  
+  // Default drawer (right side)
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: $drawer-width-md;
+  max-width: 100%;
+  height: 100%;
+  border-radius: 0;
+  
+  // Animation
+  &.sv-drawer-animate {
+    transition: transform $drawer-animation-duration $drawer-animation-timing;
+  }
+  
+  // Default hidden state
+  &.sv-drawer-closed {
+    transform: translateX(100%);
+  }
+  
+  // Open state
+  &.sv-drawer-open {
+    transform: translateX(0);
+  }
+}
+
+/* ==========================================================================
+   4. DRAWER VARIATIONS
+   ========================================================================== */
+
+/* 4.1 Drawer Positions
+   ========================================================================== */
+
+// Left drawer
+.sv-drawer-left {
+  right: auto;
+  left: 0;
+  
+  &.sv-drawer-closed {
+    transform: translateX(-100%);
+  }
+}
+
+// Right drawer (default)
+.sv-drawer-right {
+  left: auto;
+  right: 0;
+  
+  &.sv-drawer-closed {
+    transform: translateX(100%);
+  }
+}
+
+// Top drawer
+.sv-drawer-top {
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: auto;
+  width: 100%;
+  height: auto;
+  
+  &.sv-drawer-closed {
+    transform: translateY(-100%);
+  }
+  
+  &.sv-drawer-open {
+    transform: translateY(0);
+  }
+}
+
+// Bottom drawer
+.sv-drawer-bottom {
+  top: auto;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: auto;
+  
+  &.sv-drawer-closed {
+    transform: translateY(100%);
+  }
+  
+  &.sv-drawer-open {
+    transform: translateY(0);
+  }
+}
+
+/* 4.2 Drawer Sizes
+   ========================================================================== */
+
+// Width variations
+.sv-drawer-sm {
+  width: $drawer-width-sm;
+}
+
+.sv-drawer-md {
+  width: $drawer-width-md;
+}
+
+.sv-drawer-lg {
+  width: $drawer-width-lg;
+}
+
+.sv-drawer-xl {
+  width: $drawer-width-xl;
+}
+
+.sv-drawer-full {
+  width: 100%;
+}
+
+// Height variations for top/bottom drawers
+.sv-drawer-top, .sv-drawer-bottom {
+  &.sv-drawer-size-sm {
+    height: 25vh;
+    max-height: 300px;
+  }
+  
+  &.sv-drawer-size-md {
+    height: 50vh;
+    max-height: 400px;
+  }
+  
+  &.sv-drawer-size-lg {
+    height: 75vh;
+    max-height: 600px;
+  }
+  
+  &.sv-drawer-size-xl {
+    height: 90vh;
+  }
+  
+  &.sv-drawer-size-full {
+    height: 100vh;
+  }
+}
+
+/* 4.3 Drawer Visual Styles
+   ========================================================================== */
+
+// Drawer with subtle background
+.sv-drawer-subtle {
+  background-color: var(--sv-bg-secondary);
+}
+
+// Bordered drawer
+.sv-drawer-bordered {
+  &.sv-drawer-left {
+    border-right: 1px solid $drawer-border-color;
+  }
+  
+  &.sv-drawer-right {
+    border-left: 1px solid $drawer-border-color;
+  }
+  
+  &.sv-drawer-top {
+    border-bottom: 1px solid $drawer-border-color;
+  }
+  
+  &.sv-drawer-bottom {
+    border-top: 1px solid $drawer-border-color;
+  }
+}
+
+// Borderless drawer elements
+.sv-drawer-borderless {
+  .sv-drawer-header {
+    border-bottom: none;
+  }
+  
+  .sv-drawer-footer {
+    border-top: none;
+  }
+}
+
+// Drawer with rounded corners (for non-full height/width drawers)
+.sv-drawer-rounded {
+  &.sv-drawer-left {
+    border-top-right-radius: var(--sv-radius-lg);
+    border-bottom-right-radius: var(--sv-radius-lg);
+  }
+  
+  &.sv-drawer-right {
+    border-top-left-radius: var(--sv-radius-lg);
+    border-bottom-left-radius: var(--sv-radius-lg);
+  }
+  
+  &.sv-drawer-top {
+    border-bottom-left-radius: var(--sv-radius-lg);
+    border-bottom-right-radius: var(--sv-radius-lg);
+  }
+  
+  &.sv-drawer-bottom {
+    border-top-left-radius: var(--sv-radius-lg);
+    border-top-right-radius: var(--sv-radius-lg);
+  }
+}
+
+// Inner drawer (appears inside another container rather than fullscreen)
+.sv-drawer-inner {
+  position: absolute;
+  height: 100%;
+  
+  + .sv-drawer-overlay {
+    position: absolute;
+  }
+}
+
+/* ==========================================================================
+   5. DRAWER ELEMENTS
+   ========================================================================== */
+
+/* 5.1 Drawer Header
+   ========================================================================== */
+
+.sv-drawer-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: $drawer-header-padding;
+  border-bottom: 1px solid $drawer-header-border-color;
+  background-color: $drawer-header-bg;
+  min-height: 60px;
+  
+  // Header content
+  .sv-drawer-header-content {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+  
+  // Close button
+  .sv-drawer-close {
+    background: none;
+    border: none;
+    padding: var(--sv-padding-xs);
+    cursor: pointer;
+    color: var(--sv-text-secondary);
+    transition: color 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    &:hover {
+      color: var(--sv-text-primary);
+    }
+    
+    &:focus {
+      outline: none;
+      box-shadow: 0 0 0 2px var(--sv-focus-ring-color);
+      border-radius: var(--sv-radius-sm);
+    }
+  }
+  
+  // Colored header variations
+  &.sv-drawer-header-primary {
+    background-color: var(--sv-primary);
+    color: var(--sv-text-on-dark);
+    
+    .sv-drawer-close {
+      color: var(--sv-text-on-dark);
+      
+      &:hover {
+        color: rgba(255, 255, 255, 0.9);
+      }
+    }
+  }
+  
+  &.sv-drawer-header-secondary {
+    background-color: var(--sv-secondary);
+    color: var(--sv-text-on-dark);
+    
+    .sv-drawer-close {
+      color: var(--sv-text-on-dark);
+      
+      &:hover {
+        color: rgba(255, 255, 255, 0.9);
+      }
+    }
+  }
+}
+
+// Drawer title
+.sv-drawer-title {
+  margin: 0;
+  font-size: var(--sv-text-heading-md);
+  font-weight: var(--sv-font-semibold);
+  line-height: var(--sv-leading-tight);
+}
+
+// Drawer subtitle
+.sv-drawer-subtitle {
+  margin: var(--sv-space-xs) 0 0;
+  font-size: var(--sv-text-body-md);
+  color: var(--sv-text-secondary);
+}
+
+/* 5.2 Drawer Body
+   ========================================================================== */
+
+.sv-drawer-body {
+  padding: $drawer-body-padding;
+  overflow-y: auto;
+  flex: 1 1 auto;
+  
+  // Body variations
+  &.sv-drawer-body-no-padding {
+    padding: 0;
+  }
+  
+  &.sv-drawer-body-compact {
+    padding: var(--sv-padding-sm);
+  }
+  
+  &.sv-drawer-body-comfortable {
+    padding: var(--sv-padding-lg);
+  }
+}
+
+/* 5.3 Drawer Footer
+   ========================================================================== */
+
+.sv-drawer-footer {
+  padding: $drawer-footer-padding;
+  border-top: 1px solid $drawer-footer-border-color;
+  background-color: $drawer-footer-bg;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--sv-space-sm);
+  
+  // Footer variations
+  &.sv-drawer-footer-center {
+    justify-content: center;
+  }
+  
+  &.sv-drawer-footer-between {
+    justify-content: space-between;
+  }
+  
+  &.sv-drawer-footer-block {
+    flex-direction: column;
+    gap: var(--sv-space-sm);
+    
+    button, a {
+      width: 100%;
+    }
+  }
+  
+  &.sv-drawer-footer-subtle {
+    background-color: var(--sv-bg-secondary);
+  }
+}
+
+/* ==========================================================================
+   6. DRAWER ANIMATIONS
+   ========================================================================== */
+
+// Overlay animations
+@keyframes drawerOverlayFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes drawerOverlayFadeOut {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+// For custom animation variations
+.sv-drawer-fade {
+  &.sv-drawer-closed {
+    opacity: 0;
+    transform: translateX(0);
+  }
+  
+  &.sv-drawer-open {
+    opacity: 1;
+  }
+}
+
+// Additional animation variations
+.sv-drawer-push {
+  // Requires JavaScript to also move the page content
+  // This is a visual placeholder for that behavior
+}
+
+.sv-drawer-reveal {
+  // Requires JavaScript to also reveal from under page content
+  // This is a visual placeholder for that behavior
+}
+
+/* ==========================================================================
+   7. ACCESSIBILITY CONSIDERATIONS
+   ========================================================================== */
+
+// Focus trap styles
+.sv-drawer-focus-trap {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  z-index: -1;
+}
+
+// ARIA support
+.sv-drawer {
+  // When drawer has proper ARIA attributes
+  &[aria-hidden="true"] {
+    display: none;
+  }
+  
+  &:focus {
+    outline: none;
+  }
+  
+  &:focus-visible {
+    outline: none;
+    box-shadow: inset 0 0 0 2px var(--sv-focus-ring-color);
+  }
+}
+
+/* ==========================================================================
+   8. RESPONSIVE BEHAVIORS
+   ========================================================================== */
+
+// Small screens
+@include breakpoint-down(sm) {
+  // Make side drawers wider on mobile
+  .sv-drawer-left,
+  .sv-drawer-right {
+    width: 85%;
+    max-width: 300px;
+  }
+  
+  // Adjust padding for drawer elements
+  .sv-drawer-header,
+  .sv-drawer-body,
+  .sv-drawer-footer {
+    padding: var(--sv-padding-sm);
+  }
+  
+  // Stack footer buttons on mobile
+  .sv-drawer-footer {
+    flex-direction: column;
+    
+    button, a {
+      width: 100%;
+      margin-bottom: var(--sv-space-xs);
+      
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+  
+  // Adjust header layout on tiny screens
+  @media (max-width: 375px) {
+    .sv-drawer-header {
+      flex-direction: column;
+      align-items: flex-start;
+      
+      .sv-drawer-close {
+        position: absolute;
+        top: 12px;
+        right: 12px;
+      }
+      
+      .sv-drawer-header-content {
+        width: 100%;
+        padding-right: 32px;  // Make room for the close button
+      }
+    }
+  }
+}
+
+// Medium screens
+@include breakpoint-between(md, lg) {
+  // Adjust drawer sizes for medium screens
+  .sv-drawer-lg {
+    width: 360px;
+  }
+  
+  .sv-drawer-xl {
+    width: 480px;
+  }
+}

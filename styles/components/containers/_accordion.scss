@@ -1,0 +1,587 @@
+/**
+ * Accordion Component - Component-level Styles
+ * Version: 1.0.0
+ * Last Updated: April 29, 2025
+ * 
+ * This file defines styles for the Accordion component in the SkillVo design system.
+ * It extends the container base class and provides accordion-specific styling.
+ * Accordions display a list of items that can be expanded to reveal more content.
+ */
+
+/* ==========================================================================
+   TABLE OF CONTENTS:
+   
+   1. VARIABLES & CONFIGURATION
+   2. ACCORDION BASE CLASS
+   3. ACCORDION ITEM
+   4. ACCORDION VARIATIONS
+      4.1 Visual Styles
+      4.2 Spacing Variations
+      4.3 Behavior Variations
+   5. ACCORDION ELEMENTS
+      5.1 Accordion Header
+      5.2 Accordion Panel
+   6. ACCORDION ANIMATIONS
+   7. ACCESSIBILITY CONSIDERATIONS
+   8. RESPONSIVE BEHAVIORS
+   ========================================================================== */
+
+/* ==========================================================================
+   1. VARIABLES & CONFIGURATION
+   ========================================================================== */
+
+// Import necessary mixins
+@use '../mixins' as *;
+
+// Accordion-specific variables
+$accordion-border-color: var(--sv-border-light);
+$accordion-border-radius: var(--sv-radius-md);
+$accordion-header-padding: var(--sv-padding-md);
+$accordion-panel-padding: var(--sv-padding-md);
+$accordion-header-bg: var(--sv-bg-element);
+$accordion-header-bg-hover: var(--sv-bg-element-hover);
+$accordion-header-bg-active: var(--sv-bg-element-active);
+$accordion-panel-bg: var(--sv-bg-surface);
+$accordion-icon-size: 16px;
+$accordion-header-font-size: var(--sv-text-body-md);
+$accordion-header-font-weight: var(--sv-font-medium);
+$accordion-animation-duration: var(--sv-motion-duration-medium);
+$accordion-animation-timing: var(--sv-motion-ease-standard);
+
+/* ==========================================================================
+   2. ACCORDION BASE CLASS
+   ========================================================================== */
+
+.sv-accordion {
+  // Extend the container base class
+  @extend .sv-container-base;
+  
+  // Accordion container specific overrides
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 0; // Override default container padding
+  background-color: transparent;
+  border: none;
+  box-shadow: none;
+  
+  // Spacing between items
+  > .sv-accordion-item:not(:last-child) {
+    margin-bottom: var(--sv-space-sm);
+  }
+  
+  // For flush (no space) accordions
+  &.sv-accordion-flush {
+    > .sv-accordion-item {
+      margin-bottom: 0;
+      border-radius: 0;
+      border-left: none;
+      border-right: none;
+      
+      &:first-child {
+        border-top: none;
+      }
+      
+      &:last-child {
+        border-bottom: none;
+      }
+    }
+  }
+  
+  // For bordered accordion
+  &.sv-accordion-bordered {
+    border: 1px solid $accordion-border-color;
+    border-radius: $accordion-border-radius;
+    overflow: hidden;
+    
+    > .sv-accordion-item {
+      border-radius: 0;
+      border-left: none;
+      border-right: none;
+      margin-bottom: 0;
+      
+      &:not(:last-child) {
+        border-bottom: 1px solid $accordion-border-color;
+      }
+      
+      &:first-child {
+        border-top: none;
+      }
+      
+      &:last-child {
+        border-bottom: none;
+      }
+    }
+  }
+}
+
+/* ==========================================================================
+   3. ACCORDION ITEM
+   ========================================================================== */
+
+.sv-accordion-item {
+  // Basic styling
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  background-color: var(--sv-bg-surface);
+  border: 1px solid $accordion-border-color;
+  border-radius: $accordion-border-radius;
+  overflow: hidden;
+  transition: all $accordion-animation-duration $accordion-animation-timing;
+  
+  // Active state for the entire item
+  &.sv-accordion-item-active {
+    .sv-accordion-header {
+      background-color: $accordion-header-bg-active;
+      
+      .sv-accordion-icon {
+        transform: rotate(180deg);
+      }
+    }
+  }
+  
+  // Disabled state
+  &.sv-accordion-item-disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    
+    .sv-accordion-header {
+      cursor: not-allowed;
+      
+      &:hover {
+        background-color: $accordion-header-bg;
+      }
+    }
+  }
+}
+
+/* ==========================================================================
+   4. ACCORDION VARIATIONS
+   ========================================================================== */
+
+/* 4.1 Visual Styles
+   ========================================================================== */
+
+// Simple accordion with minimal styling
+.sv-accordion-simple {
+  .sv-accordion-item {
+    border: none;
+    border-radius: 0;
+    border-bottom: 1px solid $accordion-border-color;
+    
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+  
+  .sv-accordion-header {
+    background-color: transparent;
+    padding-left: 0;
+    padding-right: 0;
+    
+    &:hover {
+      background-color: transparent;
+    }
+  }
+  
+  .sv-accordion-panel {
+    padding-left: 0;
+    padding-right: 0;
+  }
+}
+
+// Elevated accordion with shadows
+.sv-accordion-elevated {
+  .sv-accordion-item {
+    border: none;
+    box-shadow: var(--sv-shadow-sm);
+    
+    &.sv-accordion-item-active {
+      box-shadow: var(--sv-shadow-md);
+    }
+  }
+}
+
+// Filled accordion with colored headers
+.sv-accordion-filled {
+  .sv-accordion-header {
+    background-color: var(--sv-bg-secondary);
+    
+    &:hover {
+      background-color: var(--sv-bg-element-hover);
+    }
+  }
+  
+  .sv-accordion-item-active {
+    .sv-accordion-header {
+      background-color: var(--sv-primary);
+      color: var(--sv-text-on-dark);
+      
+      &:hover {
+        background-color: var(--sv-primary-dark);
+      }
+    }
+  }
+}
+
+// Accordion with different icon styles
+.sv-accordion-icon-plus {
+  .sv-accordion-icon {
+    &::before,
+    &::after {
+      content: '';
+      position: absolute;
+      background-color: currentColor;
+    }
+    
+    &::before {
+      width: 2px;
+      height: 12px;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      transition: transform $accordion-animation-duration $accordion-animation-timing;
+    }
+    
+    &::after {
+      width: 12px;
+      height: 2px;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+  }
+  
+  .sv-accordion-item-active {
+    .sv-accordion-icon {
+      &::before {
+        transform: translate(-50%, -50%) rotate(90deg);
+      }
+    }
+  }
+}
+
+/* 4.2 Spacing Variations
+   ========================================================================== */
+
+// Compact spacing
+.sv-accordion-compact {
+  .sv-accordion-header {
+    padding: var(--sv-padding-sm);
+  }
+  
+  .sv-accordion-panel {
+    padding: var(--sv-padding-sm);
+  }
+  
+  > .sv-accordion-item:not(:last-child) {
+    margin-bottom: var(--sv-space-xs);
+  }
+}
+
+// Comfortable spacing
+.sv-accordion-comfortable {
+  .sv-accordion-header {
+    padding: var(--sv-padding-lg);
+  }
+  
+  .sv-accordion-panel {
+    padding: var(--sv-padding-lg);
+  }
+  
+  > .sv-accordion-item:not(:last-child) {
+    margin-bottom: var(--sv-space-md);
+  }
+}
+
+/* 4.3 Behavior Variations
+   ========================================================================== */
+
+// Allow multiple panels to be open at once
+.sv-accordion-multiple {
+  // No specific style changes, behavior is controlled by JavaScript
+}
+
+// Always expand all panels initially
+.sv-accordion-expanded {
+  .sv-accordion-panel {
+    max-height: none;
+    visibility: visible;
+    opacity: 1;
+  }
+  
+  .sv-accordion-icon {
+    transform: rotate(180deg);
+  }
+}
+
+// Hover to expand, no clicking required
+.sv-accordion-hover {
+  .sv-accordion-item {
+    &:hover {
+      .sv-accordion-header {
+        background-color: $accordion-header-bg-hover;
+      }
+      
+      .sv-accordion-panel {
+        max-height: 500px;
+        opacity: 1;
+        visibility: visible;
+      }
+      
+      .sv-accordion-icon {
+        transform: rotate(180deg);
+      }
+    }
+  }
+}
+
+/* ==========================================================================
+   5. ACCORDION ELEMENTS
+   ========================================================================== */
+
+/* 5.1 Accordion Header
+   ========================================================================== */
+
+.sv-accordion-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: $accordion-header-padding;
+  background-color: $accordion-header-bg;
+  cursor: pointer;
+  user-select: none;
+  transition: background-color $accordion-animation-duration $accordion-animation-timing;
+  font-size: $accordion-header-font-size;
+  font-weight: $accordion-header-font-weight;
+  color: var(--sv-text-primary);
+  position: relative;
+  z-index: 1;
+  
+  &:hover {
+    background-color: $accordion-header-bg-hover;
+  }
+  
+  // Header with focus visible styles
+  &:focus-visible {
+    outline: none;
+    box-shadow: inset 0 0 0 2px var(--sv-focus-ring-color);
+  }
+  
+  // Left side of header (typically contains title)
+  .sv-accordion-header-content {
+    display: flex;
+    align-items: center;
+    flex: 1;
+  }
+  
+  // Optional icon for header
+  .sv-accordion-header-icon {
+    margin-right: var(--sv-space-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+// Accordion header title
+.sv-accordion-title {
+  margin: 0;
+  flex: 1;
+}
+
+// Accordion header subtitle
+.sv-accordion-subtitle {
+  color: var(--sv-text-secondary);
+  font-size: var(--sv-text-sm);
+  margin-top: var(--sv-space-xs);
+}
+
+// Expand/collapse indicator icon
+.sv-accordion-icon {
+  width: $accordion-icon-size;
+  height: $accordion-icon-size;
+  position: relative;
+  transition: transform $accordion-animation-duration $accordion-animation-timing;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--sv-text-secondary);
+  
+  // Default chevron icon
+  &::before {
+    content: '';
+    display: block;
+    width: 8px;
+    height: 8px;
+    border-right: 2px solid currentColor;
+    border-bottom: 2px solid currentColor;
+    transform: rotate(45deg);
+  }
+}
+
+/* 5.2 Accordion Panel
+   ========================================================================== */
+
+.sv-accordion-panel {
+  overflow: hidden;
+  background-color: $accordion-panel-bg;
+  transition: max-height $accordion-animation-duration $accordion-animation-timing,
+              opacity $accordion-animation-duration $accordion-animation-timing,
+              visibility $accordion-animation-duration $accordion-animation-timing,
+              padding $accordion-animation-duration $accordion-animation-timing;
+  padding: $accordion-panel-padding;
+  
+  // Collapsed state
+  &[aria-hidden="true"] {
+    max-height: 0;
+    opacity: 0;
+    visibility: hidden;
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+  
+  // Expanded state
+  &[aria-hidden="false"] {
+    max-height: 1000px; // Large max-height to accommodate content
+    opacity: 1;
+    visibility: visible;
+  }
+  
+  // No padding variation
+  &.sv-accordion-panel-no-padding {
+    padding: 0;
+    
+    &[aria-hidden="false"] {
+      padding: 0;
+    }
+  }
+}
+
+/* ==========================================================================
+   6. ACCORDION ANIMATIONS
+   ========================================================================== */
+
+// Slide down effect for accordion panel
+@keyframes accordionSlideDown {
+  from {
+    max-height: 0;
+    opacity: 0;
+  }
+  to {
+    max-height: 1000px;
+    opacity: 1;
+  }
+}
+
+// Slide up effect for accordion panel
+@keyframes accordionSlideUp {
+  from {
+    max-height: 1000px;
+    opacity: 1;
+  }
+  to {
+    max-height: 0;
+    opacity: 0;
+  }
+}
+
+// Apply animations
+.sv-accordion-animate {
+  .sv-accordion-panel[aria-hidden="false"] {
+    animation: accordionSlideDown $accordion-animation-duration $accordion-animation-timing forwards;
+  }
+  
+  .sv-accordion-panel[aria-hidden="true"] {
+    animation: accordionSlideUp $accordion-animation-duration $accordion-animation-timing forwards;
+  }
+}
+
+/* ==========================================================================
+   7. ACCESSIBILITY CONSIDERATIONS
+   ========================================================================== */
+
+// Accessibility attributes - this section provides visual support for attributes
+// that should be applied via JavaScript
+.sv-accordion-header {
+  // When using the correct aria attributes, this will help style correctly
+  &[aria-expanded="true"] {
+    .sv-accordion-icon {
+      transform: rotate(180deg);
+    }
+  }
+  
+  &[aria-disabled="true"] {
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+}
+
+.sv-accordion-panel {
+  // When using the correct aria attributes, this will help style correctly
+  &[aria-hidden="true"] {
+    max-height: 0;
+    opacity: 0;
+    visibility: hidden;
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+}
+
+/* ==========================================================================
+   8. RESPONSIVE BEHAVIORS
+   ========================================================================== */
+
+// Small screens
+@include breakpoint-down(sm) {
+  .sv-accordion-header {
+    padding: var(--sv-padding-sm);
+    font-size: var(--sv-text-sm);
+    
+    .sv-accordion-header-icon {
+      margin-right: var(--sv-space-xs);
+    }
+  }
+  
+  .sv-accordion-panel {
+    padding: var(--sv-padding-sm);
+  }
+  
+  // Simplify the accordion structure on mobile
+  .sv-accordion {
+    > .sv-accordion-item:not(:last-child) {
+      margin-bottom: var(--sv-space-xs);
+    }
+  }
+  
+  // Stack elements in the header on very small screens
+  @media (max-width: 375px) {
+    .sv-accordion-header {
+      flex-direction: column;
+      align-items: flex-start;
+      
+      .sv-accordion-icon {
+        position: absolute;
+        top: 50%;
+        right: var(--sv-space-sm);
+        transform: translateY(-50%);
+      }
+      
+      .sv-accordion-subtitle {
+        margin-top: var(--sv-space-xs);
+        width: calc(100% - #{$accordion-icon-size} - var(--sv-space-sm));
+      }
+    }
+  }
+}
+
+// Medium screens
+@include breakpoint-between(md, lg) {
+  // Adjust spacing between items
+  .sv-accordion-comfortable {
+    > .sv-accordion-item:not(:last-child) {
+      margin-bottom: var(--sv-space-sm);
+    }
+  }
+}

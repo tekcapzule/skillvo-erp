@@ -1,0 +1,680 @@
+/**
+ * Tabs Panel Component - Component-level Styles
+ * Version: 1.0.0
+ * Last Updated: April 29, 2025
+ * 
+ * This file defines styles for the Tabs Panel component in the SkillVo design system.
+ * It extends the container base class and provides tabs-specific styling.
+ * Tabs organize content into separate views that can be displayed one at a time.
+ */
+
+/* ==========================================================================
+   TABLE OF CONTENTS:
+   
+   1. VARIABLES & CONFIGURATION
+   2. TABS CONTAINER BASE
+   3. TAB NAVIGATION
+      3.1 Tab List
+      3.2 Tab Items
+      3.3 Tab Navigation Variations
+   4. TAB PANELS
+   5. TABS VARIATIONS
+      5.1 Visual Styles
+      5.2 Orientation Variations
+      5.3 Behavior Variations
+   6. TABS ANIMATIONS
+   7. ACCESSIBILITY CONSIDERATIONS
+   8. RESPONSIVE BEHAVIORS
+   ========================================================================== */
+
+/* ==========================================================================
+   1. VARIABLES & CONFIGURATION
+   ========================================================================== */
+
+// Import necessary mixins
+@use '../mixins' as *;
+
+// Tabs-specific variables
+$tabs-border-color: var(--sv-border-light);
+$tabs-border-radius: var(--sv-radius-md);
+$tabs-active-color: var(--sv-primary);
+$tabs-inactive-color: var(--sv-text-secondary);
+$tabs-hover-color: var(--sv-text-primary);
+$tabs-item-padding: var(--sv-padding-md);
+$tabs-panel-padding: var(--sv-padding-md);
+$tabs-background: var(--sv-bg-surface);
+$tabs-panel-background: var(--sv-bg-surface);
+$tabs-animation-duration: var(--sv-motion-duration-medium);
+$tabs-animation-timing: var(--sv-motion-ease-standard);
+$tabs-font-size: var(--sv-text-body-md);
+$tabs-font-weight: var(--sv-font-medium);
+$tabs-active-font-weight: var(--sv-font-semibold);
+$tabs-indicator-size: 2px;
+
+/* ==========================================================================
+   2. TABS CONTAINER BASE
+   ========================================================================== */
+
+.sv-tabs {
+  // Extend the container base class
+  @extend .sv-container-base;
+  
+  // Tabs-specific overrides
+  display: flex;
+  flex-direction: column;
+  background-color: transparent;
+  padding: 0; // Override default container padding
+  border: none;
+  box-shadow: none;
+  width: 100%;
+  overflow: hidden;
+  
+  // Horizontal tabs (default)
+  &:not(.sv-tabs-vertical) {
+    .sv-tab-list {
+      flex-direction: row;
+    }
+    
+    .sv-tab-panels {
+      border-top: 1px solid $tabs-border-color;
+    }
+  }
+  
+  // Vertical tabs
+  &.sv-tabs-vertical {
+    flex-direction: row;
+    
+    .sv-tab-list {
+      flex-direction: column;
+      border-right: 1px solid $tabs-border-color;
+      min-width: 150px;
+      
+      .sv-tab-item {
+        text-align: left;
+        
+        &::after {
+          bottom: 0;
+          left: auto;
+          right: 0;
+          width: $tabs-indicator-size;
+          height: 100%;
+        }
+      }
+    }
+    
+    .sv-tab-panels {
+      flex: 1;
+    }
+  }
+}
+
+/* ==========================================================================
+   3. TAB NAVIGATION
+   ========================================================================== */
+
+/* 3.1 Tab List
+   ========================================================================== */
+
+.sv-tab-list {
+  display: flex;
+  background-color: $tabs-background;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  position: relative;
+  width: 100%;
+  
+  // Scrollable tab list for overflow
+  &.sv-tab-list-scrollable {
+    overflow-x: auto;
+    scrollbar-width: thin;
+    -webkit-overflow-scrolling: touch;
+    
+    &::-webkit-scrollbar {
+      height: 4px;
+    }
+    
+    &::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    
+    &::-webkit-scrollbar-thumb {
+      background: var(--sv-border-light);
+      border-radius: var(--sv-radius-full);
+    }
+  }
+  
+  // Center aligned tabs
+  &.sv-tab-list-center {
+    justify-content: center;
+  }
+  
+  // Right aligned tabs
+  &.sv-tab-list-end {
+    justify-content: flex-end;
+  }
+  
+  // Evenly spaced tabs
+  &.sv-tab-list-justified {
+    .sv-tab-item {
+      flex: 1 1 0;
+    }
+  }
+  
+  // Tab list with a border
+  &.sv-tab-list-bordered {
+    border: 1px solid $tabs-border-color;
+    border-bottom: none;
+    border-top-left-radius: $tabs-border-radius;
+    border-top-right-radius: $tabs-border-radius;
+  }
+}
+
+/* 3.2 Tab Items
+   ========================================================================== */
+
+.sv-tab-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: $tabs-item-padding;
+  color: $tabs-inactive-color;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  white-space: nowrap;
+  position: relative;
+  font-size: $tabs-font-size;
+  font-weight: $tabs-font-weight;
+  transition: color $tabs-animation-duration $tabs-animation-timing,
+              background-color $tabs-animation-duration $tabs-animation-timing;
+  
+  // Indicator for active tab
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: $tabs-indicator-size;
+    background-color: transparent;
+    transition: background-color $tabs-animation-duration $tabs-animation-timing;
+  }
+  
+  // Hover state
+  &:hover {
+    color: $tabs-hover-color;
+  }
+  
+  // Active state
+  &.sv-tab-item-active {
+    color: $tabs-active-color;
+    font-weight: $tabs-active-font-weight;
+    
+    &::after {
+      background-color: $tabs-active-color;
+    }
+  }
+  
+  // Disabled state
+  &.sv-tab-item-disabled {
+    color: var(--sv-text-tertiary);
+    cursor: not-allowed;
+    pointer-events: none;
+    opacity: 0.5;
+  }
+  
+  // Focus state
+  &:focus {
+    outline: none;
+  }
+  
+  &:focus-visible {
+    outline: 2px solid var(--sv-focus-ring-color);
+    outline-offset: -2px;
+  }
+  
+  // Tab with icon
+  &.sv-tab-item-with-icon {
+    .sv-tab-item-icon {
+      margin-right: var(--sv-space-xs);
+    }
+  }
+  
+  // Tab with badge
+  &.sv-tab-item-with-badge {
+    .sv-tab-item-badge {
+      margin-left: var(--sv-space-xs);
+      padding: 2px 6px;
+      font-size: 80%;
+      background-color: var(--sv-primary);
+      color: var(--sv-text-on-dark);
+      border-radius: var(--sv-radius-full);
+    }
+  }
+}
+
+.sv-tab-item-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sv-tab-item-content {
+  display: flex;
+  align-items: center;
+}
+
+.sv-tab-item-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--sv-text-xs);
+  font-weight: var(--sv-font-medium);
+}
+
+/* 3.3 Tab Navigation Variations
+   ========================================================================== */
+
+// Pills style tabs
+.sv-tabs-pills {
+  .sv-tab-list {
+    gap: var(--sv-space-xs);
+  }
+  
+  .sv-tab-item {
+    border-radius: var(--sv-radius-full);
+    
+    &::after {
+      display: none;
+    }
+    
+    &.sv-tab-item-active {
+      background-color: $tabs-active-color;
+      color: var(--sv-text-on-dark);
+    }
+  }
+}
+
+// Buttons style tabs
+.sv-tabs-buttons {
+  .sv-tab-list {
+    gap: 1px;
+    background-color: $tabs-border-color;
+    padding: 1px;
+    border-radius: var(--sv-radius-md);
+  }
+  
+  .sv-tab-item {
+    background-color: $tabs-background;
+    transition: background-color $tabs-animation-duration $tabs-animation-timing;
+    
+    &:first-child {
+      border-top-left-radius: var(--sv-radius-sm);
+      border-bottom-left-radius: var(--sv-radius-sm);
+    }
+    
+    &:last-child {
+      border-top-right-radius: var(--sv-radius-sm);
+      border-bottom-right-radius: var(--sv-radius-sm);
+    }
+    
+    &::after {
+      display: none;
+    }
+    
+    &.sv-tab-item-active {
+      background-color: $tabs-active-color;
+      color: var(--sv-text-on-dark);
+    }
+  }
+}
+
+// Underlined tabs
+.sv-tabs-underlined {
+  .sv-tab-list {
+    border-bottom: 1px solid $tabs-border-color;
+  }
+  
+  .sv-tab-item {
+    margin-bottom: -1px;
+    
+    &.sv-tab-item-active {
+      border-bottom: $tabs-indicator-size solid $tabs-active-color;
+    }
+    
+    &::after {
+      display: none;
+    }
+  }
+}
+
+// Boxed tabs
+.sv-tabs-boxed {
+  .sv-tab-item {
+    border: 1px solid transparent;
+    border-bottom: none;
+    border-top-left-radius: var(--sv-radius-sm);
+    border-top-right-radius: var(--sv-radius-sm);
+    margin-bottom: -1px;
+    
+    &.sv-tab-item-active {
+      border-color: $tabs-border-color;
+      background-color: $tabs-panel-background;
+    }
+    
+    &::after {
+      display: none;
+    }
+  }
+}
+
+// Card style tabs
+.sv-tabs-card {
+  .sv-tab-list {
+    gap: var(--sv-space-xs);
+    background-color: transparent;
+  }
+  
+  .sv-tab-item {
+    background-color: var(--sv-bg-element);
+    border-radius: var(--sv-radius-sm);
+    box-shadow: var(--sv-shadow-xs);
+    
+    &.sv-tab-item-active {
+      background-color: $tabs-panel-background;
+      box-shadow: var(--sv-shadow-sm);
+    }
+    
+    &::after {
+      display: none;
+    }
+  }
+}
+
+/* ==========================================================================
+   4. TAB PANELS
+   ========================================================================== */
+
+.sv-tab-panels {
+  position: relative;
+  background-color: $tabs-panel-background;
+  flex: 1;
+}
+
+.sv-tab-panel {
+  padding: $tabs-panel-padding;
+  display: none;
+  
+  // Active state - controlled through JavaScript and aria-attributes
+  &.sv-tab-panel-active {
+    display: block;
+  }
+  
+  // Animation for panels
+  &.sv-tab-panel-animate {
+    animation: tabFadeIn $tabs-animation-duration $tabs-animation-timing forwards;
+  }
+  
+  // Variations
+  &.sv-tab-panel-no-padding {
+    padding: 0;
+  }
+  
+  &.sv-tab-panel-bordered {
+    border: 1px solid $tabs-border-color;
+    border-top: none;
+    border-bottom-left-radius: $tabs-border-radius;
+    border-bottom-right-radius: $tabs-border-radius;
+  }
+}
+
+/* ==========================================================================
+   5. TABS VARIATIONS
+   ========================================================================== */
+
+/* 5.1 Visual Styles
+   ========================================================================== */
+
+// Elevated tabs with shadow
+.sv-tabs-elevated {
+  .sv-tab-list {
+    box-shadow: var(--sv-shadow-sm);
+  }
+  
+  .sv-tab-panels {
+    box-shadow: var(--sv-shadow-sm);
+  }
+}
+
+// Subtle tabs
+.sv-tabs-subtle {
+  .sv-tab-list {
+    background-color: var(--sv-bg-secondary);
+  }
+}
+
+// Bordered tabs
+.sv-tabs-bordered {
+  border: 1px solid $tabs-border-color;
+  border-radius: $tabs-border-radius;
+  overflow: hidden;
+}
+
+/* 5.2 Orientation Variations
+   ========================================================================== */
+
+// Vertical tabs with custom widths
+.sv-tabs-vertical {
+  &.sv-tabs-vertical-sm {
+    .sv-tab-list {
+      min-width: 100px;
+    }
+  }
+  
+  &.sv-tabs-vertical-lg {
+    .sv-tab-list {
+      min-width: 200px;
+    }
+  }
+  
+  &.sv-tabs-vertical-right {
+    flex-direction: row-reverse;
+    
+    .sv-tab-list {
+      border-right: none;
+      border-left: 1px solid $tabs-border-color;
+    }
+  }
+}
+
+/* 5.3 Behavior Variations
+   ========================================================================== */
+
+// Equal height tabs (good for content that may be different heights)
+.sv-tabs-equal-height {
+  height: 100%;
+  
+  .sv-tab-panels {
+    height: 100%;
+  }
+  
+  .sv-tab-panel {
+    height: 100%;
+  }
+}
+
+// Sticky tab navigation
+.sv-tabs-sticky-nav {
+  .sv-tab-list {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+  }
+}
+
+/* ==========================================================================
+   6. TABS ANIMATIONS
+   ========================================================================== */
+
+// Tab panel fade in animation
+@keyframes tabFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// Tab panel fade out animation
+@keyframes tabFadeOut {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+}
+
+// Tab indicator slide animation
+@keyframes tabIndicatorSlide {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+/* ==========================================================================
+   7. ACCESSIBILITY CONSIDERATIONS
+   ========================================================================== */
+
+// Styles that support ARIA attributes managed via JavaScript
+.sv-tab-item {
+  // When using the correct aria attributes, this will help style correctly
+  &[aria-selected="true"] {
+    color: $tabs-active-color;
+    font-weight: $tabs-active-font-weight;
+    
+    &::after {
+      background-color: $tabs-active-color;
+    }
+  }
+  
+  &[aria-disabled="true"] {
+    color: var(--sv-text-tertiary);
+    cursor: not-allowed;
+    pointer-events: none;
+    opacity: 0.5;
+  }
+}
+
+.sv-tab-panel {
+  // When using the correct aria attributes, this will help style correctly
+  &[aria-hidden="false"] {
+    display: block;
+  }
+  
+  &[aria-hidden="true"] {
+    display: none;
+  }
+}
+
+/* ==========================================================================
+   8. RESPONSIVE BEHAVIORS
+   ========================================================================== */
+
+// Small screens - convert tabs to more mobile-friendly layouts
+@include breakpoint-down(sm) {
+  // Vertical tabs become horizontal on small screens
+  .sv-tabs-vertical {
+    flex-direction: column;
+    
+    .sv-tab-list {
+      flex-direction: row;
+      overflow-x: auto;
+      border-right: none;
+      border-bottom: 1px solid $tabs-border-color;
+      min-width: initial;
+      
+      .sv-tab-item {
+        text-align: center;
+        
+        &::after {
+          left: 0;
+          bottom: 0;
+          width: 100%;
+          height: $tabs-indicator-size;
+        }
+      }
+    }
+  }
+  
+  // Adjust padding for tabs on small screens
+  .sv-tab-item {
+    padding: var(--sv-padding-sm);
+    font-size: var(--sv-text-sm);
+  }
+  
+  .sv-tab-panel {
+    padding: var(--sv-padding-sm);
+  }
+  
+  // For all tabs, potentially convert to dropdown on very small screens
+  @media (max-width: 375px) {
+    .sv-tabs:not(.sv-tabs-scrollable) {
+      .sv-tab-list {
+        flex-wrap: wrap;
+        
+        .sv-tab-item {
+          flex: 1 0 50%;
+        }
+      }
+    }
+  }
+  
+  // Responsive adjustments for pill tabs
+  .sv-tabs-pills {
+    .sv-tab-list {
+      flex-wrap: wrap;
+      
+      .sv-tab-item {
+        flex-grow: 1;
+      }
+    }
+  }
+  
+  // Responsive adjustments for button tabs
+  .sv-tabs-buttons {
+    .sv-tab-list {
+      flex-wrap: wrap;
+    }
+  }
+}
+
+// Medium screens
+@include breakpoint-between(md, lg) {
+  // Ensure tabs don't get too crowded on medium screens
+  .sv-tab-item {
+    padding: var(--sv-padding-sm) var(--sv-padding-md);
+    
+    // Keep icons, remove text for many tabs on mid-sized screens
+    &.sv-tab-item-with-icon.sv-tab-item-responsive {
+      .sv-tab-item-text {
+        @media (max-width: 768px) {
+          @include visually-hidden;
+        }
+      }
+      
+      .sv-tab-item-icon {
+        margin-right: 0;
+      }
+    }
+  }
+}

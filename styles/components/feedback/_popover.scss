@@ -1,0 +1,605 @@
+/**
+ * Popover Component - SkillVo Design System
+ * Version: 1.0.0
+ * Last Updated: April 29, 2025
+ * 
+ * This file defines the specific styles for the Popover component,
+ * extending the sv-feedback-base class. Popovers are contextual overlays
+ * that display additional information or controls when triggered by
+ * user interaction with an element.
+ */
+
+/* ==========================================================================
+   TABLE OF CONTENTS:
+   
+   1. VARIABLES & CONFIGURATION
+   2. COMPONENT-SPECIFIC MIXINS
+   3. POPOVER BASE CLASS
+   4. POPOVER PARTS (HEADER, BODY, FOOTER)
+   5. POPOVER POSITIONS & ARROW PLACEMENT
+   6. POPOVER ANIMATIONS
+   7. POPOVER VARIANTS
+   8. RESPONSIVE ADAPTATIONS
+   ========================================================================== */
+
+   @use '../mixins' as *;
+   @use '../feedback-controls' as *;
+   
+   /* ==========================================================================
+      1. VARIABLES & CONFIGURATION
+      ========================================================================== */
+   
+   // Popover-specific dimensions
+   $popover-min-width: 200px;
+   $popover-max-width: 350px;
+   $popover-border-width: 1px;
+   $popover-border-radius: var(--sv-radius-md);
+   $popover-arrow-size: 8px;
+   
+   // Popover-specific spacing
+   $popover-padding-x: var(--sv-padding-4);
+   $popover-padding-y: var(--sv-padding-3);
+   $popover-header-padding-y: var(--sv-padding-2);
+   $popover-footer-padding-y: var(--sv-padding-2);
+   $popover-offset: 10px;
+   
+   // Popover-specific animation
+   $popover-animation-duration: var(--sv-motion-duration-medium);
+   $popover-transition-timing: var(--sv-motion-ease-standard);
+   
+   // Popover z-index
+   $popover-z-index: var(--sv-z-index-popover);
+   
+   /* ==========================================================================
+      2. COMPONENT-SPECIFIC MIXINS
+      ========================================================================== */
+   
+   // Popover arrow position and styling
+   @mixin popover-arrow($position, $color: var(--sv-bg-surface), $border-color: var(--sv-border-medium)) {
+     &::before,
+     &::after {
+       content: "";
+       position: absolute;
+       display: block;
+       width: 0;
+       height: 0;
+       border-style: solid;
+     }
+     
+     // Outer arrow (border color)
+     &::before {
+       border-width: $popover-arrow-size + $popover-border-width;
+     }
+     
+     // Inner arrow (background color)
+     &::after {
+       border-width: $popover-arrow-size;
+     }
+     
+     @if $position == 'top' {
+       &::before {
+         bottom: -($popover-arrow-size * 2 + $popover-border-width);
+         left: 50%;
+         transform: translateX(-50%);
+         border-color: $border-color transparent transparent transparent;
+       }
+       
+       &::after {
+         bottom: -($popover-arrow-size * 2);
+         left: 50%;
+         transform: translateX(-50%);
+         border-color: $color transparent transparent transparent;
+       }
+     } @else if $position == 'right' {
+       &::before {
+         left: -($popover-arrow-size * 2 + $popover-border-width);
+         top: 50%;
+         transform: translateY(-50%);
+         border-color: transparent $border-color transparent transparent;
+       }
+       
+       &::after {
+         left: -($popover-arrow-size * 2);
+         top: 50%;
+         transform: translateY(-50%);
+         border-color: transparent $color transparent transparent;
+       }
+     } @else if $position == 'bottom' {
+       &::before {
+         top: -($popover-arrow-size * 2 + $popover-border-width);
+         left: 50%;
+         transform: translateX(-50%);
+         border-color: transparent transparent $border-color transparent;
+       }
+       
+       &::after {
+         top: -($popover-arrow-size * 2);
+         left: 50%;
+         transform: translateX(-50%);
+         border-color: transparent transparent $color transparent;
+       }
+     } @else if $position == 'left' {
+       &::before {
+         right: -($popover-arrow-size * 2 + $popover-border-width);
+         top: 50%;
+         transform: translateY(-50%);
+         border-color: transparent transparent transparent $border-color;
+       }
+       
+       &::after {
+         right: -($popover-arrow-size * 2);
+         top: 50%;
+         transform: translateY(-50%);
+         border-color: transparent transparent transparent $color;
+       }
+     }
+   }
+   
+   // Popover arrow position modifiers
+   @mixin popover-arrow-position($position, $offset: 15%) {
+     @if $position == 'top' or $position == 'bottom' {
+       &.sv-popover-arrow-start {
+         &::before,
+         &::after {
+           left: $offset;
+           transform: translateX(-50%);
+         }
+       }
+       
+       &.sv-popover-arrow-end {
+         &::before,
+         &::after {
+           left: auto;
+           right: $offset;
+           transform: translateX(50%);
+         }
+       }
+     } @else if $position == 'left' or $position == 'right' {
+       &.sv-popover-arrow-start {
+         &::before,
+         &::after {
+           top: $offset;
+           transform: translateY(-50%);
+         }
+       }
+       
+       &.sv-popover-arrow-end {
+         &::before,
+         &::after {
+           top: auto;
+           bottom: $offset;
+           transform: translateY(50%);
+         }
+       }
+     }
+   }
+   
+   /* ==========================================================================
+      3. POPOVER BASE CLASS
+      ========================================================================== */
+   
+   .sv-popover {
+     // Extend the feedback base class
+     @extend .sv-feedback-base;
+     
+     // Popover-specific layout and spacing
+     min-width: $popover-min-width;
+     max-width: $popover-max-width;
+     padding: 0; // Padding managed by child elements
+     
+     // Structural styles
+     position: absolute;
+     z-index: $popover-z-index;
+     display: none;
+     border-width: $popover-border-width;
+     border-style: solid;
+     border-radius: $popover-border-radius;
+     box-sizing: border-box;
+     
+     // Visual styling
+     background-color: var(--sv-bg-surface);
+     border-color: var(--sv-border-medium);
+     @include shadow('md');
+     
+     // Focus handling
+     &:focus {
+       outline: none;
+     }
+     
+     &:focus-visible {
+       @include focus-visible-state;
+     }
+     
+     // Visibility
+     &.sv-popover-visible {
+       display: block;
+     }
+   }
+   
+   /* ==========================================================================
+      4. POPOVER PARTS (HEADER, BODY, FOOTER)
+      ========================================================================== */
+   
+   // Popover header
+   .sv-popover-header {
+     padding: $popover-header-padding-y $popover-padding-x;
+     border-bottom: $popover-border-width solid var(--sv-border-light);
+     @include typography('base', 'semibold', 'normal');
+     
+     // Close button
+     .sv-popover-close {
+       float: right;
+       background: transparent;
+       border: none;
+       padding: 0;
+       margin: -4px -4px 0 0;
+       cursor: pointer;
+       width: var(--sv-icon-size-sm);
+       height: var(--sv-icon-size-sm);
+       display: inline-flex;
+       align-items: center;
+       justify-content: center;
+       color: var(--sv-text-secondary);
+       @include transition(color);
+       
+       &:hover {
+         color: var(--sv-text-primary);
+       }
+       
+       &:focus {
+         @include focus-state;
+       }
+       
+       &:focus-visible {
+         @include focus-visible-state;
+       }
+     }
+   }
+   
+   // Popover body
+   .sv-popover-body {
+     padding: $popover-padding-y $popover-padding-x;
+     @include typography('sm', 'normal', 'normal');
+   }
+   
+   // Popover footer
+   .sv-popover-footer {
+     padding: $popover-footer-padding-y $popover-padding-x;
+     border-top: $popover-border-width solid var(--sv-border-light);
+     
+     // Actions container
+     .sv-popover-actions {
+       display: flex;
+       justify-content: flex-end;
+       gap: var(--sv-space-2);
+     }
+   }
+   
+   /* ==========================================================================
+      5. POPOVER POSITIONS & ARROW PLACEMENT
+      ========================================================================== */
+   
+   // Top position
+   .sv-popover-position-top {
+     margin-bottom: $popover-offset;
+     @include popover-arrow('bottom');
+     @include popover-arrow-position('bottom');
+   }
+   
+   // Right position
+   .sv-popover-position-right {
+     margin-left: $popover-offset;
+     @include popover-arrow('left');
+     @include popover-arrow-position('left');
+   }
+   
+   // Bottom position
+   .sv-popover-position-bottom {
+     margin-top: $popover-offset;
+     @include popover-arrow('top');
+     @include popover-arrow-position('top');
+   }
+   
+   // Left position
+   .sv-popover-position-left {
+     margin-right: $popover-offset;
+     @include popover-arrow('right');
+     @include popover-arrow-position('right');
+   }
+   
+   // No arrow variant
+   .sv-popover-no-arrow {
+     &::before,
+     &::after {
+       display: none;
+     }
+   }
+   
+   /* ==========================================================================
+      6. POPOVER ANIMATIONS
+      ========================================================================== */
+   
+   // Entry and exit animations
+   .sv-popover {
+     &.sv-popover-entering {
+       animation: popover-fade-in $popover-animation-duration $popover-transition-timing both;
+       
+       &.sv-popover-position-top {
+         animation-name: popover-slide-in-top;
+       }
+       
+       &.sv-popover-position-right {
+         animation-name: popover-slide-in-right;
+       }
+       
+       &.sv-popover-position-bottom {
+         animation-name: popover-slide-in-bottom;
+       }
+       
+       &.sv-popover-position-left {
+         animation-name: popover-slide-in-left;
+       }
+     }
+     
+     &.sv-popover-exiting {
+       animation: popover-fade-out $popover-animation-duration $popover-transition-timing both;
+       
+       &.sv-popover-position-top {
+         animation-name: popover-slide-out-top;
+       }
+       
+       &.sv-popover-position-right {
+         animation-name: popover-slide-out-right;
+       }
+       
+       &.sv-popover-position-bottom {
+         animation-name: popover-slide-out-bottom;
+       }
+       
+       &.sv-popover-position-left {
+         animation-name: popover-slide-out-left;
+       }
+     }
+   }
+   
+   // Popover animations keyframes
+   @keyframes popover-fade-in {
+     from { opacity: 0; }
+     to { opacity: 1; }
+   }
+   
+   @keyframes popover-fade-out {
+     from { opacity: 1; }
+     to { opacity: 0; }
+   }
+   
+   @keyframes popover-slide-in-top {
+     from { 
+       opacity: 0; 
+       transform: translateY(-10px);
+     }
+     to { 
+       opacity: 1;
+       transform: translateY(0);
+     }
+   }
+   
+   @keyframes popover-slide-out-top {
+     from { 
+       opacity: 1;
+       transform: translateY(0);
+     }
+     to { 
+       opacity: 0; 
+       transform: translateY(-10px);
+     }
+   }
+   
+   @keyframes popover-slide-in-right {
+     from { 
+       opacity: 0; 
+       transform: translateX(10px);
+     }
+     to { 
+       opacity: 1;
+       transform: translateX(0);
+     }
+   }
+   
+   @keyframes popover-slide-out-right {
+     from { 
+       opacity: 1;
+       transform: translateX(0);
+     }
+     to { 
+       opacity: 0; 
+       transform: translateX(10px);
+     }
+   }
+   
+   @keyframes popover-slide-in-bottom {
+     from { 
+       opacity: 0; 
+       transform: translateY(10px);
+     }
+     to { 
+       opacity: 1;
+       transform: translateY(0);
+     }
+   }
+   
+   @keyframes popover-slide-out-bottom {
+     from { 
+       opacity: 1;
+       transform: translateY(0);
+     }
+     to { 
+       opacity: 0; 
+       transform: translateY(10px);
+     }
+   }
+   
+   @keyframes popover-slide-in-left {
+     from { 
+       opacity: 0; 
+       transform: translateX(-10px);
+     }
+     to { 
+       opacity: 1;
+       transform: translateX(0);
+     }
+   }
+   
+   @keyframes popover-slide-out-left {
+     from { 
+       opacity: 1;
+       transform: translateX(0);
+     }
+     to { 
+       opacity: 0; 
+       transform: translateX(-10px);
+     }
+   }
+   
+   // Disable animations for users who prefer reduced motion
+   @media (prefers-reduced-motion: reduce) {
+     .sv-popover {
+       &.sv-popover-entering,
+       &.sv-popover-exiting {
+         animation: none;
+       }
+     }
+   }
+   
+   /* ==========================================================================
+      7. POPOVER VARIANTS
+      ========================================================================== */
+   
+   // Simple popover (tooltip-like, no header or footer)
+   .sv-popover-simple {
+     padding: var(--sv-padding-2) var(--sv-padding-3);
+     
+     .sv-popover-header,
+     .sv-popover-footer {
+       display: none;
+     }
+     
+     .sv-popover-body {
+       padding: 0;
+     }
+   }
+   
+   // Info variant
+   .sv-popover-info {
+     .sv-popover-header {
+       background-color: rgba(41, 182, 246, 0.1);
+       color: var(--sv-info);
+       border-bottom-color: var(--sv-info);
+     }
+   }
+   
+   // Success variant
+   .sv-popover-success {
+     .sv-popover-header {
+       background-color: rgba(76, 175, 80, 0.1);
+       color: var(--sv-success);
+       border-bottom-color: var(--sv-success);
+     }
+   }
+   
+   // Warning variant
+   .sv-popover-warning {
+     .sv-popover-header {
+       background-color: rgba(255, 167, 38, 0.1);
+       color: var(--sv-warning);
+       border-bottom-color: var(--sv-warning);
+     }
+   }
+   
+   // Error variant
+   .sv-popover-error {
+     .sv-popover-header {
+       background-color: rgba(244, 67, 54, 0.1);
+       color: var(--sv-error);
+       border-bottom-color: var(--sv-error);
+     }
+   }
+   
+   // Rich popover (extra styling for interactive content)
+   .sv-popover-rich {
+     max-width: 450px;
+     
+     .sv-popover-header {
+       padding: var(--sv-padding-3) $popover-padding-x;
+       @include typography('lg', 'semibold', 'normal');
+     }
+     
+     .sv-popover-body {
+       padding: var(--sv-padding-4);
+     }
+     
+     .sv-popover-footer {
+       padding: var(--sv-padding-3) $popover-padding-x;
+     }
+   }
+   
+   /* ==========================================================================
+      8. RESPONSIVE ADAPTATIONS
+      ========================================================================== */
+   
+   // Small screens
+   @include breakpoint-down('sm') {
+     .sv-popover {
+       // Make popover wider on small screens to be more touch-friendly
+       min-width: 240px;
+       
+       // Fixed positioning for touch devices to avoid layout issues
+       &.sv-popover-touch {
+         position: fixed;
+         max-width: calc(100vw - var(--sv-space-4) * 2);
+         width: calc(100vw - var(--sv-space-4) * 2);
+         
+         // Center horizontally and position at bottom
+         left: 50% !important; // Override any computed position
+         right: auto !important;
+         bottom: var(--sv-space-4) !important;
+         top: auto !important;
+         transform: translateX(-50%) !important;
+         
+         // Always position arrow at top
+         @include popover-arrow('top');
+         margin-top: $popover-offset;
+         margin-left: 0;
+         margin-right: 0;
+         margin-bottom: 0;
+         
+         &::before,
+         &::after {
+           left: 50% !important;
+           transform: translateX(-50%) !important;
+         }
+       }
+     }
+     
+     // Make touch targets larger for mobile
+     .sv-popover-header .sv-popover-close {
+       width: 24px;
+       height: 24px;
+     }
+   }
+   
+   // Fix for RTL support
+   [dir="rtl"] {
+     .sv-popover-header {
+       .sv-popover-close {
+         float: left;
+         margin: -4px 0 0 -4px;
+       }
+     }
+     
+     .sv-popover-footer {
+       .sv-popover-actions {
+         justify-content: flex-start;
+       }
+     }
+   }

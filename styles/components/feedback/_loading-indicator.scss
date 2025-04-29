@@ -1,0 +1,644 @@
+/**
+ * Loading Indicator Component - SkillVo Design System
+ * Version: 1.0.0
+ * Last Updated: April 29, 2025
+ * 
+ * This file defines the specific styles for the Loading Indicator component,
+ * extending the sv-feedback-base class. Loading indicators inform users
+ * about the status of ongoing processes.
+ */
+
+/* ==========================================================================
+   TABLE OF CONTENTS:
+   
+   1. VARIABLES & CONFIGURATION
+   2. COMPONENT-SPECIFIC MIXINS
+   3. LOADING INDICATOR BASE CLASS
+   4. LOADING INDICATOR TYPES
+      4.1 Spinner
+      4.2 Linear Progress
+      4.3 Skeleton Loader
+      4.4 Pulse Loader
+   5. LOADING INDICATOR SIZES
+   6. LOADING INDICATOR VARIANTS
+   7. LOADING OVERLAY
+   8. RESPONSIVE ADAPTATIONS
+   9. ACCESSIBILITY CONSIDERATIONS
+   ========================================================================== */
+
+   @use '../mixins' as *;
+   @use '../feedback-controls' as *;
+   
+   /* ==========================================================================
+      1. VARIABLES & CONFIGURATION
+      ========================================================================== */
+   
+   // Loading indicator specific dimensions
+   $spinner-size-xs: 16px;
+   $spinner-size-sm: 24px;
+   $spinner-size-md: 36px;
+   $spinner-size-lg: 48px;
+   $spinner-size-xl: 64px;
+   
+   $spinner-border-width-xs: 2px;
+   $spinner-border-width-sm: 2px;
+   $spinner-border-width-md: 3px;
+   $spinner-border-width-lg: 4px;
+   $spinner-border-width-xl: 5px;
+   
+   $progress-height-xs: 2px;
+   $progress-height-sm: 4px;
+   $progress-height-md: 6px;
+   $progress-height-lg: 8px;
+   $progress-height-xl: 10px;
+   
+   // Loading indicator specific animations
+   $spinner-animation-duration: 0.8s;
+   $progress-animation-duration: 2s;
+   $pulse-animation-duration: 1.5s;
+   $skeleton-animation-duration: 1.8s;
+   
+   // Loading indicator z-index
+   $loader-overlay-z-index: var(--sv-z-index-overlay);
+   
+   /* ==========================================================================
+      2. COMPONENT-SPECIFIC MIXINS
+      ========================================================================== */
+   
+   // Spinner size mixin
+   @mixin spinner-size($size) {
+     @if $size == 'xs' {
+       width: $spinner-size-xs;
+       height: $spinner-size-xs;
+       border-width: $spinner-border-width-xs;
+     } @else if $size == 'sm' {
+       width: $spinner-size-sm;
+       height: $spinner-size-sm;
+       border-width: $spinner-border-width-sm;
+     } @else if $size == 'md' {
+       width: $spinner-size-md;
+       height: $spinner-size-md;
+       border-width: $spinner-border-width-md;
+     } @else if $size == 'lg' {
+       width: $spinner-size-lg;
+       height: $spinner-size-lg;
+       border-width: $spinner-border-width-lg;
+     } @else if $size == 'xl' {
+       width: $spinner-size-xl;
+       height: $spinner-size-xl;
+       border-width: $spinner-border-width-xl;
+     }
+   }
+   
+   // Progress bar size mixin
+   @mixin progress-size($size) {
+     @if $size == 'xs' {
+       height: $progress-height-xs;
+     } @else if $size == 'sm' {
+       height: $progress-height-sm;
+     } @else if $size == 'md' {
+       height: $progress-height-md;
+     } @else if $size == 'lg' {
+       height: $progress-height-lg;
+     } @else if $size == 'xl' {
+       height: $progress-height-xl;
+     }
+   }
+   
+   /* ==========================================================================
+      3. LOADING INDICATOR BASE CLASS
+      ========================================================================== */
+   
+   .sv-loading-indicator {
+     // Extend the feedback base class
+     @extend .sv-feedback-base;
+     
+     // Reset padding and borders from feedback-base
+     padding: 0;
+     border: none;
+     background: transparent;
+     box-shadow: none;
+     
+     // Default positioning
+     display: inline-flex;
+     align-items: center;
+     justify-content: center;
+     position: relative;
+     
+     // Default accessibility attributes
+     &[aria-busy="true"] {
+       pointer-events: none;
+     }
+     
+     // Optional label for the loading indicator
+     .sv-loading-label {
+       @include typography('sm', 'normal', 'normal');
+       color: var(--sv-text-secondary);
+       margin-left: var(--sv-space-3);
+       
+       // Ensure users can't select the text while waiting
+       user-select: none;
+     }
+   }
+   
+   /* ==========================================================================
+      4. LOADING INDICATOR TYPES
+      ========================================================================== */
+   
+   /* 4.1 Spinner
+      ========================================================================== */
+   
+   .sv-loading-spinner {
+     border-radius: 50%;
+     border-style: solid;
+     border-color: var(--sv-border-medium);
+     border-top-color: var(--sv-primary);
+     animation: spinner-rotate $spinner-animation-duration linear infinite;
+     
+     // Default size
+     @include spinner-size('md');
+   }
+   
+   // Spinner keyframes
+   @keyframes spinner-rotate {
+     0% { transform: rotate(0deg); }
+     100% { transform: rotate(360deg); }
+   }
+   
+   /* 4.2 Linear Progress
+      ========================================================================== */
+   
+   .sv-loading-progress {
+     width: 100%;
+     background-color: var(--sv-bg-element);
+     overflow: hidden;
+     position: relative;
+     border-radius: var(--sv-radius-full);
+     
+     // Default size
+     @include progress-size('md');
+     
+     // Progress bar
+     .sv-loading-progress-bar {
+       position: absolute;
+       top: 0;
+       left: 0;
+       height: 100%;
+       width: 100%;
+       background-color: var(--sv-primary);
+       transform-origin: left center;
+     }
+     
+     // Indeterminate animation
+     &.sv-loading-indeterminate {
+       .sv-loading-progress-bar {
+         width: 30%;
+         animation: progress-indeterminate $progress-animation-duration ease-in-out infinite;
+       }
+     }
+     
+     // With percentage or value
+     &.sv-loading-with-value {
+       .sv-loading-progress-value {
+         position: absolute;
+         right: var(--sv-space-2);
+         top: 50%;
+         transform: translateY(-50%);
+         @include typography('xs', 'medium', 'normal');
+         color: var(--sv-text-secondary);
+         user-select: none;
+       }
+     }
+   }
+   
+   // Progress keyframes
+   @keyframes progress-indeterminate {
+     0% { 
+       left: -30%;
+       transform: scaleX(0.5);
+     }
+     50% { 
+       left: 100%;
+       transform: scaleX(1);
+     }
+     100% { 
+       left: 100%;
+       transform: scaleX(0.5);
+     }
+   }
+   
+   /* 4.3 Skeleton Loader
+      ========================================================================== */
+   
+   .sv-loading-skeleton {
+     display: block;
+     background: linear-gradient(
+       90deg,
+       var(--sv-bg-element) 0%,
+       var(--sv-bg-element-hover) 50%,
+       var(--sv-bg-element) 100%
+     );
+     background-size: 200% 100%;
+     border-radius: var(--sv-radius-md);
+     animation: skeleton-wave $skeleton-animation-duration ease-in-out infinite;
+     height: 16px;
+     width: 100%;
+     
+     // Variants
+     &.sv-loading-skeleton-text {
+       height: 16px;
+       margin-bottom: var(--sv-space-2);
+       width: 100%;
+       
+       &:last-child {
+         width: 70%;
+       }
+     }
+     
+     &.sv-loading-skeleton-circle {
+       border-radius: 50%;
+       height: $spinner-size-md;
+       width: $spinner-size-md;
+     }
+     
+     &.sv-loading-skeleton-button {
+       height: 36px;
+       width: 120px;
+     }
+     
+     &.sv-loading-skeleton-avatar {
+       height: 40px;
+       width: 40px;
+       border-radius: 50%;
+     }
+     
+     &.sv-loading-skeleton-card {
+       height: 200px;
+       border-radius: var(--sv-radius-lg);
+     }
+   }
+   
+   // Skeleton keyframes
+   @keyframes skeleton-wave {
+     0% { background-position: 200% 0; }
+     100% { background-position: -200% 0; }
+   }
+   
+   /* 4.4 Pulse Loader
+      ========================================================================== */
+   
+   .sv-loading-pulse {
+     display: inline-flex;
+     align-items: center;
+     gap: var(--sv-space-1);
+     
+     .sv-loading-pulse-dot {
+       width: 8px;
+       height: 8px;
+       border-radius: 50%;
+       background-color: var(--sv-primary);
+       animation: pulse-fade $pulse-animation-duration ease-in-out infinite;
+       
+       &:nth-child(2) {
+         animation-delay: 0.2s;
+       }
+       
+       &:nth-child(3) {
+         animation-delay: 0.4s;
+       }
+     }
+   }
+   
+   // Pulse keyframes
+   @keyframes pulse-fade {
+     0%, 100% { 
+       opacity: 0.3;
+       transform: scale(0.8);
+     }
+     50% { 
+       opacity: 1;
+       transform: scale(1);
+     }
+   }
+   
+   /* ==========================================================================
+      5. LOADING INDICATOR SIZES
+      ========================================================================== */
+   
+   // Spinner sizes
+   .sv-loading-spinner-xs {
+     @include spinner-size('xs');
+   }
+   
+   .sv-loading-spinner-sm {
+     @include spinner-size('sm');
+   }
+   
+   .sv-loading-spinner-md {
+     @include spinner-size('md');
+   }
+   
+   .sv-loading-spinner-lg {
+     @include spinner-size('lg');
+   }
+   
+   .sv-loading-spinner-xl {
+     @include spinner-size('xl');
+   }
+   
+   // Progress bar sizes
+   .sv-loading-progress-xs {
+     @include progress-size('xs');
+   }
+   
+   .sv-loading-progress-sm {
+     @include progress-size('sm');
+   }
+   
+   .sv-loading-progress-md {
+     @include progress-size('md');
+   }
+   
+   .sv-loading-progress-lg {
+     @include progress-size('lg');
+   }
+   
+   .sv-loading-progress-xl {
+     @include progress-size('xl');
+   }
+   
+   /* ==========================================================================
+      6. LOADING INDICATOR VARIANTS
+      ========================================================================== */
+   
+   // Color variants for spinners
+   .sv-loading-primary {
+     &.sv-loading-spinner {
+       border-top-color: var(--sv-primary);
+     }
+     
+     &.sv-loading-progress {
+       .sv-loading-progress-bar {
+         background-color: var(--sv-primary);
+       }
+     }
+     
+     &.sv-loading-pulse {
+       .sv-loading-pulse-dot {
+         background-color: var(--sv-primary);
+       }
+     }
+   }
+   
+   .sv-loading-secondary {
+     &.sv-loading-spinner {
+       border-top-color: var(--sv-secondary);
+     }
+     
+     &.sv-loading-progress {
+       .sv-loading-progress-bar {
+         background-color: var(--sv-secondary);
+       }
+     }
+     
+     &.sv-loading-pulse {
+       .sv-loading-pulse-dot {
+         background-color: var(--sv-secondary);
+       }
+     }
+   }
+   
+   .sv-loading-success {
+     &.sv-loading-spinner {
+       border-top-color: var(--sv-success);
+     }
+     
+     &.sv-loading-progress {
+       .sv-loading-progress-bar {
+         background-color: var(--sv-success);
+       }
+     }
+     
+     &.sv-loading-pulse {
+       .sv-loading-pulse-dot {
+         background-color: var(--sv-success);
+       }
+     }
+   }
+   
+   .sv-loading-error {
+     &.sv-loading-spinner {
+       border-top-color: var(--sv-error);
+     }
+     
+     &.sv-loading-progress {
+       .sv-loading-progress-bar {
+         background-color: var(--sv-error);
+       }
+     }
+     
+     &.sv-loading-pulse {
+       .sv-loading-pulse-dot {
+         background-color: var(--sv-error);
+       }
+     }
+   }
+   
+   .sv-loading-warning {
+     &.sv-loading-spinner {
+       border-top-color: var(--sv-warning);
+     }
+     
+     &.sv-loading-progress {
+       .sv-loading-progress-bar {
+         background-color: var(--sv-warning);
+       }
+     }
+     
+     &.sv-loading-pulse {
+       .sv-loading-pulse-dot {
+         background-color: var(--sv-warning);
+       }
+     }
+   }
+   
+   .sv-loading-info {
+     &.sv-loading-spinner {
+       border-top-color: var(--sv-info);
+     }
+     
+     &.sv-loading-progress {
+       .sv-loading-progress-bar {
+         background-color: var(--sv-info);
+       }
+     }
+     
+     &.sv-loading-pulse {
+       .sv-loading-pulse-dot {
+         background-color: var(--sv-info);
+       }
+     }
+   }
+   
+   // Light variant for dark backgrounds
+   .sv-loading-light {
+     &.sv-loading-spinner {
+       border-color: rgba(255, 255, 255, 0.2);
+       border-top-color: #ffffff;
+     }
+     
+     &.sv-loading-progress {
+       background-color: rgba(255, 255, 255, 0.2);
+       
+       .sv-loading-progress-bar {
+         background-color: #ffffff;
+       }
+       
+       .sv-loading-progress-value {
+         color: #ffffff;
+       }
+     }
+     
+     &.sv-loading-pulse {
+       .sv-loading-pulse-dot {
+         background-color: #ffffff;
+       }
+     }
+     
+     .sv-loading-label {
+       color: #ffffff;
+     }
+   }
+   
+   /* ==========================================================================
+      7. LOADING OVERLAY
+      ========================================================================== */
+   
+   .sv-loading-overlay {
+     position: absolute;
+     top: 0;
+     left: 0;
+     right: 0;
+     bottom: 0;
+     display: flex;
+     align-items: center;
+     justify-content: center;
+     background-color: rgba(255, 255, 255, 0.7);
+     z-index: $loader-overlay-z-index;
+     
+     // For dark theme
+     [data-theme="dark"] & {
+       background-color: rgba(0, 0, 0, 0.7);
+     }
+     
+     // Variant for fixed positioning
+     &.sv-loading-overlay-fixed {
+       position: fixed;
+     }
+     
+     // Content wrapper
+     .sv-loading-content {
+       display: flex;
+       flex-direction: column;
+       align-items: center;
+       justify-content: center;
+       text-align: center;
+       
+       .sv-loading-title {
+         @include typography('lg', 'medium', 'normal');
+         margin: var(--sv-space-4) 0 var(--sv-space-2) 0;
+         color: var(--sv-text-primary);
+       }
+       
+       .sv-loading-message {
+         @include typography('base', 'normal', 'normal');
+         margin: 0;
+         color: var(--sv-text-secondary);
+         max-width: 300px;
+       }
+     }
+   }
+   
+   /* ==========================================================================
+      8. RESPONSIVE ADAPTATIONS
+      ========================================================================== */
+   
+   // Small screens
+   @include breakpoint-down('sm') {
+     // Reduce size of large loaders on mobile
+     .sv-loading-spinner-xl {
+       @include spinner-size('lg');
+     }
+     
+     .sv-loading-progress-xl {
+       @include progress-size('lg');
+     }
+     
+     // Adjust overlay content
+     .sv-loading-overlay {
+       .sv-loading-content {
+         padding: var(--sv-space-4);
+         
+         .sv-loading-message {
+           max-width: 250px;
+         }
+       }
+     }
+   }
+   
+   /* ==========================================================================
+      9. ACCESSIBILITY CONSIDERATIONS
+      ========================================================================== */
+   
+   // Ensure loading indicators have appropriate ARIA attributes
+   [role="progressbar"] {
+     &.sv-loading-progress:not(.sv-loading-indeterminate) {
+       &[aria-valuenow] {
+         // Styled appropriately based on ARIA values
+       }
+     }
+   }
+   
+   // Skip animations for users who prefer reduced motion
+   @media (prefers-reduced-motion: reduce) {
+     .sv-loading-spinner {
+       animation: spinner-rotate 2s linear infinite;
+     }
+     
+     .sv-loading-progress.sv-loading-indeterminate .sv-loading-progress-bar {
+       animation: progress-indeterminate 3s ease-in-out infinite;
+     }
+     
+     .sv-loading-skeleton {
+       animation: skeleton-wave 3s ease-in-out infinite;
+     }
+     
+     .sv-loading-pulse .sv-loading-pulse-dot {
+       animation: pulse-fade 2.5s ease-in-out infinite;
+     }
+   }
+   
+   // RTL support
+   [dir="rtl"] {
+     .sv-loading-indicator {
+       .sv-loading-label {
+         margin-left: 0;
+         margin-right: var(--sv-space-3);
+       }
+     }
+     
+     .sv-loading-progress {
+       &.sv-loading-with-value {
+         .sv-loading-progress-value {
+           right: auto;
+           left: var(--sv-space-2);
+         }
+       }
+       
+       &.sv-loading-indeterminate {
+         .sv-loading-progress-bar {
+           animation-direction: reverse;
+         }
+       }
+     }
+   }
