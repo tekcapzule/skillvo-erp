@@ -31,8 +31,8 @@
    ========================================================================== */
 
 // Import necessary mixins
-@use './abstracts' as *;
-@use './base' as *;
+@use './../../abstracts/' as *;
+@use './../../base/' as *;
 // Accordion-specific variables
 $accordion-border-color: var(--sv-border-light);
 $accordion-border-radius: var(--sv-radius-md);

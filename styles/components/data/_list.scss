@@ -24,8 +24,8 @@
 /* ==========================================================================
    1. VARIABLES & CONFIGURATION
    ========================================================================== */
-@use './abstracts' as *;
-@use './base' as *;
+   @use './../../abstracts/' as *;
+   @use './../../base/' as *;
 // List-specific variables
 $list-border-width: 1px;
 $list-border-color: var(--sv-border-light);

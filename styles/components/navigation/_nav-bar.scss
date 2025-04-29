@@ -7,8 +7,8 @@
  * It's the component-specific layer that extends the base sv-nav-control-base class.
  */
 
- @use './abstracts' as *;
-   @use './base' as *;
+ @use './../../abstracts/' as *;
+ @use './../../base/' as *;
  /* ==========================================================================
     TABLE OF CONTENTS:
     

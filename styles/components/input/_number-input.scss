@@ -20,8 +20,8 @@
 /* ==========================================================================
    1. IMPORTS & VARIABLES
    ========================================================================== */
-   @use './abstracts' as *;
-   @use './base' as *;
+   @use './../../abstracts/' as *;
+   @use './../../base/' as *;
    
    // Component-specific variables
    $number-button-width: var(--sv-size-8);

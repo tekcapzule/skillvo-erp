@@ -25,8 +25,8 @@
 /* ==========================================================================
    1. VARIABLES & CONFIGURATION
    ========================================================================== */
-@use './abstracts' as *;
-@use './base' as *;
+   @use './../../abstracts/' as *;
+   @use './../../base/' as *;
 // Grid-specific variables
 $grid-gap: var(--sv-space-4);
 $grid-item-border-width: 1px;

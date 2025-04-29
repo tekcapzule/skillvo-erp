@@ -24,8 +24,8 @@
 /* ==========================================================================
    1. VARIABLES & CONFIGURATION
    ========================================================================== */
-@use './abstracts' as *;
-@use './base' as *;
+   @use './../../abstracts/' as *;
+   @use './../../base/' as *;
 // Table-specific variables
 $table-border-width: 1px;
 $table-border-color: var(--sv-border-light);

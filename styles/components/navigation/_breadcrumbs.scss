@@ -6,9 +6,8 @@
  * This file contains styles for the breadcrumbs navigation component in the SkillVo design system.
  * It extends the sv-nav-control-base class to maintain design consistency.
  */
-
- @use './abstracts' as *;
-   @use './base' as *;
+ @use './../../abstracts/' as *;
+ @use './../../base/' as *;
  /* ==========================================================================
     TABLE OF CONTENTS:
     

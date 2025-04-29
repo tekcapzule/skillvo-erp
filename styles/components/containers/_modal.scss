@@ -32,8 +32,8 @@
    ========================================================================== */
 
 // Import necessary mixins
-@use './abstracts' as *;
-@use './base' as *;
+@use './../../abstracts/' as *;
+@use './../../base/' as *;
 // Modal-specific variables
 $modal-overlay-bg: rgba(0, 0, 0, 0.5);
 $modal-default-radius: var(--sv-radius-md);

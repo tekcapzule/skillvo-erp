@@ -23,8 +23,8 @@
 /* ==========================================================================
    1. VARIABLES & CONFIGURATION
    ========================================================================== */
-   @use './abstracts' as *;
-   @use './base' as *;
+   @use './../../abstracts/' as *;
+   @use './../../base/' as *;
 // Multi-select specific variables
 $multiselect-max-height: var(--sv-size-64);
 $multiselect-z-index: var(--sv-z-index-dropdown);

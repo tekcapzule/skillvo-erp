@@ -32,8 +32,8 @@
    ========================================================================== */
 
 // Import necessary mixins
-@use './abstracts' as *;
-@use './base' as *;
+@use './../../abstracts/' as *;
+@use './../../base/' as *;
 // Drawer-specific variables
 $drawer-overlay-bg: rgba(0, 0, 0, 0.5);
 $drawer-bg: var(--sv-bg-surface);

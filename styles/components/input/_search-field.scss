@@ -20,8 +20,8 @@
 /* ==========================================================================
    1. IMPORTS & VARIABLES
    ========================================================================== */
-   @use './abstracts' as *;
-   @use './base' as *;
+   @use './../../abstracts/' as *;
+   @use './../../base/' as *;
    
    // Component-specific variables
    $search-icon-size: var(--sv-icon-size-sm);

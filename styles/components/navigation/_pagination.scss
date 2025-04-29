@@ -7,8 +7,8 @@
  * It extends the sv-nav-control-base class to create consistent pagination controls.
  */
 
- @use './abstracts' as *;
-   @use './base' as *;
+ @use './../../abstracts/' as *;
+ @use './../../base/' as *;
  /* ==========================================================================
     TABLE OF CONTENTS:
     

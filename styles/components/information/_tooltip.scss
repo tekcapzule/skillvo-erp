@@ -20,9 +20,8 @@
    7. RESPONSIVE ADAPTATIONS
    8. ACCESSIBILITY ENHANCEMENTS
    ========================================================================== */
-
-   @use './abstracts' as *;
-   @use './base' as *;
+   @use './../../abstracts/' as *;
+   @use './../../base/' as *;
    
    /* ==========================================================================
       1. VARIABLES & CONFIGURATION
