@@ -1,0 +1,420 @@
+/**
+ * Tabs Component Styles
+ * Version: 1.0.0
+ * Last Updated: April 29, 2025
+ * 
+ * This file contains styles for the tabs navigation component in the SkillVo design system.
+ * It extends the base sv-nav-control-base class to create a consistent tab interface.
+ */
+
+ @use './mixins' as *;
+
+ /* ==========================================================================
+    TABLE OF CONTENTS:
+    
+    1. TAB LIST CONTAINER
+    2. TAB ITEM STYLES
+    3. TAB CONTENT
+    4. TAB VARIANTS
+    5. RESPONSIVE TABS
+    6. ACCESSIBILITY ENHANCEMENTS
+    ========================================================================== */
+ 
+ /* ==========================================================================
+    1. TAB LIST CONTAINER
+    ========================================================================== */
+ 
+ .sv-tabs {
+   display: flex;
+   flex-direction: column;
+   width: 100%;
+ }
+ 
+ .sv-tabs__list {
+   // Extend the navigation control base class
+   @extend .sv-nav-control-base;
+   
+   // Use horizontal container for tabs
+   @include nav-container-horizontal;
+   
+   // Tab list specific styles
+   display: flex;
+   flex-wrap: nowrap;
+   overflow-x: auto; // Allow scrolling on smaller screens
+   scrollbar-width: none; // Hide scrollbar in Firefox
+   -ms-overflow-style: none; // Hide scrollbar in IE/Edge
+   border-bottom: 1px solid var(--sv-border-light);
+   margin-bottom: var(--sv-space-4);
+   padding: 0;
+   
+   // Hide scrollbar in Chrome/Safari
+   &::-webkit-scrollbar {
+     display: none;
+   }
+   
+   // Remove list styling
+   list-style: none;
+ }
+ 
+ /* ==========================================================================
+    2. TAB ITEM STYLES
+    ========================================================================== */
+ 
+ .sv-tabs__item {
+   position: relative;
+   display: flex;
+   align-items: center;
+   white-space: nowrap;
+   margin-bottom: -1px; // Overlap the bottom border
+ }
+ 
+ .sv-tabs__link {
+   display: inline-flex;
+   align-items: center;
+   padding: var(--sv-padding-3) var(--sv-padding-4);
+   color: var(--sv-text-primary);
+   @include typography('base', 'medium', 'normal');
+   text-decoration: none;
+   position: relative;
+   border-bottom: 2px solid transparent;
+   
+   // Transition for hover/focus effects
+   @include transition((color, border-color), 'short', 'standard');
+   
+   // Active state styles
+   &.active,
+   &[aria-selected="true"] {
+     color: var(--sv-primary);
+     font-weight: var(--sv-font-semibold);
+     border-bottom-color: var(--sv-primary);
+   }
+   
+   &:hover:not(:disabled):not(.disabled) {
+     color: var(--sv-primary);
+   }
+   
+   &:focus-visible {
+     @include focus-visible-state;
+     text-decoration: none;
+   }
+   
+   // Disabled state
+   &:disabled,
+   &.disabled,
+   &[aria-disabled="true"] {
+     opacity: 0.65;
+     cursor: not-allowed;
+     color: var(--sv-text-tertiary);
+     border-bottom-color: transparent;
+   }
+   
+   // Tab with counter/badge
+   .sv-tabs__counter {
+     display: inline-flex;
+     align-items: center;
+     justify-content: center;
+     min-width: 1.5em;
+     height: 1.5em;
+     padding: 0 var(--sv-padding-1);
+     margin-left: var(--sv-space-2);
+     background-color: var(--sv-bg-element);
+     color: var(--sv-text-secondary);
+     font-size: var(--sv-text-xs);
+     @include border-radius('full');
+     
+     // Active state for counter
+     .active &,
+     [aria-selected="true"] & {
+       background-color: var(--sv-primary-light);
+       color: var(--sv-text-on-dark);
+     }
+   }
+   
+   // Tab with icon
+   .sv-tabs__icon {
+     margin-right: var(--sv-space-2);
+     font-size: var(--sv-icon-size-sm);
+   }
+ }
+ 
+ /* ==========================================================================
+    3. TAB CONTENT
+    ========================================================================== */
+ 
+ .sv-tabs__content {
+   flex: 1;
+ }
+ 
+ .sv-tabs__panel {
+   display: none;
+   padding: var(--sv-padding-4);
+   
+   // Show active panel
+   &.active,
+   &[aria-hidden="false"] {
+     display: block;
+     @include animate(fade-in, 'short');
+   }
+ }
+ 
+ /* ==========================================================================
+    4. TAB VARIANTS
+    ========================================================================== */
+ 
+ // Filled tabs - with background color
+ .sv-tabs--filled {
+   .sv-tabs__list {
+     background-color: var(--sv-bg-secondary);
+     border-radius: var(--sv-radius-md) var(--sv-radius-md) 0 0;
+     border-bottom: none;
+   }
+   
+   .sv-tabs__link {
+     border-bottom: none;
+     padding: var(--sv-padding-3) var(--sv-padding-4);
+     
+     &.active,
+     &[aria-selected="true"] {
+       background-color: var(--sv-bg-surface);
+       color: var(--sv-primary);
+       border-radius: var(--sv-radius-md) var(--sv-radius-md) 0 0;
+     }
+   }
+   
+   .sv-tabs__panel {
+     border: 1px solid var(--sv-border-light);
+     border-top: none;
+     border-radius: 0 0 var(--sv-radius-md) var(--sv-radius-md);
+   }
+ }
+ 
+ // Pill tabs
+ .sv-tabs--pills {
+   .sv-tabs__list {
+     border-bottom: none;
+     gap: var(--sv-space-2);
+   }
+   
+   .sv-tabs__link {
+     border-bottom: none;
+     @include border-radius('full');
+     padding: var(--sv-padding-2) var(--sv-padding-4);
+     
+     &.active,
+     &[aria-selected="true"] {
+       background-color: var(--sv-primary);
+       color: var(--sv-text-on-dark);
+     }
+   }
+ }
+ 
+ // Minimal tabs - subtle styling
+ .sv-tabs--minimal {
+   .sv-tabs__list {
+     border-bottom: none;
+   }
+   
+   .sv-tabs__link {
+     padding: var(--sv-padding-2) var(--sv-padding-3);
+     
+     &::after {
+       content: "";
+       position: absolute;
+       bottom: -2px;
+       left: 50%;
+       width: 0;
+       height: 2px;
+       background-color: var(--sv-primary);
+       @include transition(all, 'short', 'standard');
+     }
+     
+     &.active,
+     &[aria-selected="true"] {
+       border-bottom-color: transparent;
+       
+       &::after {
+         width: 100%;
+         left: 0;
+       }
+     }
+   }
+ }
+ 
+ // Vertical tabs
+ .sv-tabs--vertical {
+   flex-direction: row;
+   
+   .sv-tabs__list {
+     @include nav-container-vertical;
+     border-bottom: none;
+     border-right: 1px solid var(--sv-border-light);
+     flex-direction: column;
+     align-items: flex-start;
+     padding-right: var(--sv-padding-4);
+     margin-bottom: 0;
+     margin-right: var(--sv-space-4);
+     min-width: 200px;
+     overflow-y: auto;
+     overflow-x: visible;
+   }
+   
+   .sv-tabs__item {
+     width: 100%;
+     margin-bottom: 0;
+   }
+   
+   .sv-tabs__link {
+     width: 100%;
+     justify-content: flex-start;
+     border-bottom: none;
+     border-left: 2px solid transparent;
+     border-radius: 0;
+     padding: var(--sv-padding-3) var(--sv-padding-3);
+     
+     &.active,
+     &[aria-selected="true"] {
+       border-left-color: var(--sv-primary);
+       background-color: var(--sv-bg-element-hover);
+     }
+   }
+   
+   .sv-tabs__content {
+     flex: 1;
+   }
+   
+   .sv-tabs__panel {
+     height: 100%;
+   }
+ }
+ 
+ /* ==========================================================================
+    5. RESPONSIVE TABS
+    ========================================================================== */
+ 
+ @include breakpoint-down('md') {
+   // Stack vertical tabs in mobile view
+   .sv-tabs--vertical {
+     flex-direction: column;
+     
+     .sv-tabs__list {
+       flex-direction: row;
+       border-right: none;
+       border-bottom: 1px solid var(--sv-border-light);
+       padding-right: 0;
+       margin-right: 0;
+       margin-bottom: var(--sv-space-4);
+       width: 100%;
+       min-width: auto;
+     }
+     
+     .sv-tabs__link {
+       border-left: none;
+       border-bottom: 2px solid transparent;
+       
+       &.active,
+       &[aria-selected="true"] {
+         border-left-color: transparent;
+         border-bottom-color: var(--sv-primary);
+       }
+     }
+   }
+   
+   // Make standard tabs more compact on mobile
+   .sv-tabs__link {
+     padding: var(--sv-padding-2) var(--sv-padding-3);
+   }
+   
+   // Convert tabs to dropdown on very small screens
+   .sv-tabs--responsive {
+     .sv-tabs__list {
+       position: relative;
+     }
+     
+     // Show only active tab on mobile, make it look like a dropdown
+     &.sv-tabs--collapsed {
+       .sv-tabs__item {
+         display: none;
+         
+         &.active {
+           display: flex;
+           width: 100%;
+           
+           .sv-tabs__link::after {
+             content: "";
+             display: inline-block;
+             margin-left: var(--sv-space-2);
+             width: 0.5em;
+             height: 0.5em;
+             border-right: 2px solid currentColor;
+             border-bottom: 2px solid currentColor;
+             transform: rotate(45deg);
+           }
+         }
+       }
+       
+       // When expanded, show all tabs in a dropdown menu
+       &.sv-tabs--expanded {
+         .sv-tabs__list {
+           flex-direction: column;
+           position: absolute;
+           z-index: var(--sv-z-index-dropdown);
+           background-color: var(--sv-bg-surface);
+           border: 1px solid var(--sv-border-light);
+           @include border-radius('md');
+           @include shadow('md');
+           width: 100%;
+         }
+         
+         .sv-tabs__item {
+           display: flex;
+           border-bottom: none;
+         }
+         
+         .sv-tabs__link {
+           border-bottom: none;
+           width: 100%;
+           
+           &.active,
+           &[aria-selected="true"] {
+             background-color: var(--sv-bg-element-active);
+           }
+         }
+       }
+     }
+   }
+ }
+ 
+ /* ==========================================================================
+    6. ACCESSIBILITY ENHANCEMENTS
+    ========================================================================== */
+ 
+ // Ensure focus states are clearly visible
+ .sv-tabs__link:focus-visible {
+   outline: var(--sv-focus-ring-width) solid var(--sv-focus-ring-color);
+   outline-offset: var(--sv-focus-ring-offset);
+   z-index: 1; // Ensure focus ring is visible
+ }
+ 
+ // Make sure aria states are visually represented
+ .sv-tabs__link[aria-disabled="true"] {
+   opacity: 0.65;
+   cursor: not-allowed;
+   color: var(--sv-text-tertiary);
+ }
+ 
+ // Support for keyboard navigation
+ .sv-tabs__list {
+   &:focus {
+     outline: none;
+   }
+ }
+ 
+ // Ensure panels have appropriate focus states
+ .sv-tabs__panel:focus {
+   outline: none;
+   
+   &:focus-visible {
+     outline: var(--sv-focus-ring-width) solid var(--sv-focus-ring-color);
+     outline-offset: var(--sv-focus-ring-offset);
+   }
+ }

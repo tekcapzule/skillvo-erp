@@ -1,0 +1,482 @@
+/**
+ * Radio Button Component Styles
+ * Version: 1.0.0
+ * Last Updated: April 29, 2025
+ * 
+ * This file contains styles specific to the radio button component,
+ * extending the selection-control-base class.
+ */
+
+/* ==========================================================================
+   TABLE OF CONTENTS:
+   
+   1. RADIO BUTTON SPECIFIC STYLES
+   2. RADIO BUTTON VARIATIONS
+   3. RADIO BUTTON STATES
+   4. RADIO BUTTON ANIMATIONS
+   5. ACCESSIBILITY ENHANCEMENTS
+   6. RADIO BUTTON GROUPS
+   7. RESPONSIVE ADJUSTMENTS
+   ========================================================================== */
+
+/* ==========================================================================
+   1. RADIO BUTTON SPECIFIC STYLES
+   ========================================================================== */
+
+   .sv-radio {
+    // Extend the base selection control class
+    @extend .sv-selection-control-base;
+    
+    // Radio-specific control styles
+    &__control {
+      border-radius: var(--sv-radius-full);
+      
+      // Radio-specific indicator (dot)
+      &::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: calc(var(--sv-size-4) * 0.5);
+        height: calc(var(--sv-size-4) * 0.5);
+        border-radius: var(--sv-radius-full);
+        background-color: var(--sv-text-on-dark);
+        transform: translate(-50%, -50%) scale(0);
+        transition: transform var(--sv-motion-duration-short) var(--sv-motion-ease-standard);
+      }
+    }
+    
+    // Apply transitions for smooth state changes
+    input:checked + .sv-radio__control::after {
+      transform: translate(-50%, -50%) scale(1);
+    }
+  }
+  
+  /* ==========================================================================
+     2. RADIO BUTTON VARIATIONS
+     ========================================================================== */
+  
+  // Card radios - larger clickable area with more content
+  .sv-radio-card {
+    @extend .sv-radio;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    border: 1px solid var(--sv-border-medium);
+    border-radius: var(--sv-radius-md);
+    padding: var(--sv-padding-3);
+    transition: border-color var(--sv-motion-duration-short) var(--sv-motion-ease-standard),
+                background-color var(--sv-motion-duration-short) var(--sv-motion-ease-standard);
+    
+    &:hover {
+      border-color: var(--sv-border-dark);
+      background-color: var(--sv-bg-element-hover);
+    }
+    
+    .sv-radio__control {
+      margin-right: var(--sv-space-3);
+    }
+    
+    .sv-radio__label {
+      font-weight: var(--sv-font-medium);
+    }
+    
+    &.selected,
+    input:checked ~ & {
+      border-color: var(--sv-primary);
+      background-color: var(--sv-bg-element-active);
+    }
+    
+    // Content container for additional info
+    &__content {
+      margin-top: var(--sv-space-2);
+      margin-left: calc(var(--sv-size-4) + var(--sv-space-3));
+      color: var(--sv-text-secondary);
+      font-size: var(--sv-text-sm);
+    }
+    
+    // Responsive adjustments
+    @include breakpoint-down(sm) {
+      padding: var(--sv-padding-2);
+      
+      .sv-radio__label {
+        font-size: var(--sv-text-sm);
+      }
+      
+      &__content {
+        font-size: var(--sv-text-xs);
+      }
+    }
+  }
+  
+  // Button-style radios
+  .sv-radio-button-group {
+    display: inline-flex;
+    border-radius: var(--sv-radius-md);
+    border: 1px solid var(--sv-border-medium);
+    overflow: hidden;
+    
+    .sv-radio-button {
+      @extend .sv-radio;
+      margin: 0;
+      position: relative;
+      
+      input {
+        position: absolute;
+        opacity: 0;
+      }
+      
+      // Hide the standard radio control
+      .sv-radio__control {
+        display: none;
+      }
+      
+      // Style the label as a button
+      .sv-radio__label {
+        margin: 0;
+        padding: var(--sv-padding-2) var(--sv-padding-3);
+        background-color: var(--sv-bg-surface);
+        border-right: 1px solid var(--sv-border-medium);
+        transition: all var(--sv-motion-duration-short) var(--sv-motion-ease-standard);
+        text-align: center;
+      }
+      
+      &:last-child .sv-radio__label {
+        border-right: none;
+      }
+      
+      // Hover state
+      &:hover .sv-radio__label {
+        background-color: var(--sv-bg-element-hover);
+      }
+      
+      // Selected state
+      input:checked + .sv-radio__label {
+        background-color: var(--sv-primary);
+        color: var(--sv-text-on-dark);
+      }
+      
+      // Focus state
+      input:focus-visible + .sv-radio__label {
+        box-shadow: inset 0 0 0 2px var(--sv-focus-ring-color);
+      }
+      
+      // Disabled state
+      input:disabled + .sv-radio__label {
+        opacity: 0.65;
+        cursor: not-allowed;
+        color: var(--sv-text-tertiary);
+        background-color: var(--sv-bg-element);
+      }
+    }
+    
+    // Responsive adjustments
+    @include breakpoint-down(sm) {
+      flex-direction: column;
+      
+      .sv-radio-button {
+        .sv-radio__label {
+          border-right: none;
+          border-bottom: 1px solid var(--sv-border-medium);
+          width: 100%;
+        }
+        
+        &:last-child .sv-radio__label {
+          border-bottom: none;
+        }
+      }
+    }
+  }
+  
+  /* ==========================================================================
+     3. RADIO BUTTON STATES
+     ========================================================================== */
+  
+  // Custom states beyond what's inherited from selection-control-base
+  .sv-radio {
+    // Read-only state - distinct from disabled
+    &.readonly {
+      cursor: default;
+      
+      .sv-radio__control {
+        background-color: var(--sv-bg-element);
+        border-color: var(--sv-border-light);
+      }
+      
+      .sv-radio__label {
+        color: var(--sv-text-secondary);
+      }
+    }
+    
+    // Required indicator
+    &.required .sv-radio__label::after {
+      content: "*";
+      color: var(--sv-error);
+      margin-left: var(--sv-space-1);
+    }
+    
+    // Custom invalid/valid states (beyond what's in the base)
+    &.invalid .sv-radio__description {
+      color: var(--sv-error);
+    }
+    
+    &.valid .sv-radio__description {
+      color: var(--sv-success);
+    }
+  }
+  
+  /* ==========================================================================
+     4. RADIO BUTTON ANIMATIONS
+     ========================================================================== */
+  
+  // Animation for radio when checked
+  @keyframes radio-pulse {
+    0% {
+      transform: translate(-50%, -50%) scale(0);
+    }
+    50% {
+      transform: translate(-50%, -50%) scale(1.2);
+    }
+    100% {
+      transform: translate(-50%, -50%) scale(1);
+    }
+  }
+  
+  // Apply animation class
+  .sv-radio.sv-radio-animate {
+    input:checked + .sv-radio__control::after {
+      animation: radio-pulse var(--sv-motion-duration-short) var(--sv-motion-ease-standard);
+    }
+    
+    // Respect user preferences
+    @media (prefers-reduced-motion: reduce) {
+      input:checked + .sv-radio__control::after {
+        animation: none;
+      }
+    }
+  }
+  
+  /* ==========================================================================
+     5. ACCESSIBILITY ENHANCEMENTS
+     ========================================================================== */
+  
+  // High contrast mode adjustments
+  @media (forced-colors: active) {
+    .sv-radio {
+      &__control {
+        border: 2px solid CanvasText;
+        
+        &::after {
+          background-color: CanvasText;
+        }
+      }
+      
+      input:checked + .sv-radio__control {
+        background-color: Canvas;
+        border-color: Highlight;
+        
+        &::after {
+          background-color: Highlight;
+        }
+      }
+      
+      &.invalid .sv-radio__control {
+        border-color: Mark;
+      }
+    }
+    
+    .sv-radio-card {
+      border: 1px solid CanvasText;
+      
+      &.selected,
+      input:checked ~ & {
+        border: 2px solid Highlight;
+      }
+    }
+    
+    .sv-radio-button-group {
+      border-color: CanvasText;
+      
+      .sv-radio-button {
+        input:checked + .sv-radio__label {
+          background-color: Highlight;
+          color: Canvas;
+        }
+        
+        .sv-radio__label {
+          border-color: CanvasText;
+        }
+      }
+    }
+  }
+  
+  /* ==========================================================================
+     6. RADIO BUTTON GROUPS
+     ========================================================================== */
+  
+  .sv-radio-group {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sv-space-3);
+    
+    // Horizontal layout
+    &.sv-radio-group-horizontal {
+      flex-direction: row;
+      flex-wrap: wrap;
+      
+      @include breakpoint-down(sm) {
+        flex-direction: column;
+      }
+    }
+    
+    // Fieldset style with legend
+    &.sv-radio-group-fieldset {
+      border: 1px solid var(--sv-border-medium);
+      border-radius: var(--sv-radius-md);
+      padding: var(--sv-padding-3);
+      margin: 0;
+      
+      .sv-radio-group-legend {
+        padding: 0 var(--sv-padding-2);
+        font-weight: var(--sv-font-medium);
+      }
+      
+      &.invalid {
+        border-color: var(--sv-error);
+        
+        .sv-radio-group-legend {
+          color: var(--sv-error);
+        }
+      }
+    }
+    
+    // Group helper text
+    &__helper-text {
+      margin-top: var(--sv-space-1);
+      font-size: var(--sv-text-sm);
+      color: var(--sv-text-secondary);
+      
+      &.error {
+        color: var(--sv-error);
+      }
+    }
+  }
+  
+  /* ==========================================================================
+     7. RESPONSIVE ADJUSTMENTS
+     ========================================================================== */
+  
+  @include breakpoint-down(sm) {
+    .sv-radio {
+      // Increase touch target size for mobile
+      &__control {
+        width: calc(var(--sv-size-4) * 1.2);
+        height: calc(var(--sv-size-4) * 1.2);
+        min-width: calc(var(--sv-size-4) * 1.2);
+        min-height: calc(var(--sv-size-4) * 1.2);
+      }
+      
+      // Adjust spacing for mobile views
+      & + & {
+        margin-top: var(--sv-space-4);
+      }
+      
+      // Adjust label font size for better readability
+      &__label {
+        font-size: var(--sv-text-sm);
+      }
+      
+      // Ensure description is clearly readable
+      &__description {
+        font-size: var(--sv-text-xs);
+        margin-top: var(--sv-space-2);
+      }
+    }
+    
+    // Make radio cards more touch-friendly
+    .sv-radio-card {
+      margin-bottom: var(--sv-space-3);
+      
+      // Increase spacing for touch targets
+      .sv-radio__control {
+        margin-right: var(--sv-space-4);
+      }
+    }
+    
+    // Stack radio-card items vertically with proper spacing
+    .sv-radio-card + .sv-radio-card {
+      margin-top: var(--sv-space-3);
+    }
+    
+    // Adjust radio-button-group for mobile
+    .sv-radio-button-group {
+      width: 100%; // Full width on mobile
+      
+      .sv-radio-button .sv-radio__label {
+        padding: var(--sv-padding-3) var(--sv-padding-2);
+        min-height: var(--sv-min-touch-target); // Ensure minimum touch target size
+      }
+    }
+    
+    // Adjust fieldset padding for mobile
+    .sv-radio-group.sv-radio-group-fieldset {
+      padding: var(--sv-padding-2);
+      
+      .sv-radio-group-legend {
+        font-size: var(--sv-text-sm);
+      }
+    }
+    
+    // Adjust spacing between radio groups for mobile
+    .sv-radio-group + .sv-radio-group {
+      margin-top: var(--sv-space-4);
+    }
+    
+    // Adjust horizontal layout spacing for better mobile display
+    .sv-radio-group.sv-radio-group-horizontal {
+      gap: var(--sv-space-4);
+    }
+    
+    // Image-based radio buttons (if used)
+    .sv-radio-image {
+      .sv-radio__image {
+        width: 100%; // Full width on mobile
+        height: auto;
+        aspect-ratio: 16/9; // Maintain aspect ratio
+      }
+    }
+  }
+  
+  // Tablet-specific adjustments
+  @include breakpoint-between(sm, md) {
+    .sv-radio-group.sv-radio-group-horizontal {
+      .sv-radio {
+        flex: 0 0 calc(50% - var(--sv-space-2)); // 2 per row on tablets
+      }
+    }
+    
+    .sv-radio-card {
+      // Adjust card layout for tablets
+      flex-direction: row;
+      align-items: center;
+      
+      &__content {
+        margin-top: 0;
+        margin-left: var(--sv-space-4);
+      }
+    }
+  }
+  
+  // Ensure proper display on larger screens
+  @include breakpoint-up(lg) {
+    .sv-radio-group.sv-radio-group-horizontal {
+      flex-wrap: nowrap; // Allow horizontal scrolling on smaller screens instead of wrapping
+      overflow-x: auto;
+      
+      // Hide scrollbar but keep functionality
+      &::-webkit-scrollbar {
+        display: none;
+      }
+      scrollbar-width: none;
+    }
+  }

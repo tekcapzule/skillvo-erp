@@ -1,0 +1,438 @@
+/**
+ * Menu Button Component - Specific Styles
+ * Version: 1.0.0
+ * Last Updated: April 29, 2025
+ * 
+ * This file establishes the specific styles for the menu button component
+ * in the SkillVo design system. This serves as the third level in our 
+ * three-tier styling architecture:
+ * 1. sv-ui-control-base - Base styles for all interactive controls
+ * 2. sv-action-control-base - Base styles for action controls
+ * 3. sv-menu-button (this file) - Component-specific styles for menu buttons
+ */
+
+/* ==========================================================================
+   TABLE OF CONTENTS:
+   
+   1. IMPORTS
+   2. VARIABLES
+   3. MENU BUTTON BASE
+   4. MENU BUTTON VARIANTS
+   5. MENU BUTTON STATES
+   6. DROPDOWN MENU STYLING
+   7. MENU ITEM STYLES
+   8. ANIMATIONS
+   9. RESPONSIVE ADJUSTMENTS
+   ========================================================================== */
+
+/* ==========================================================================
+   1. IMPORTS
+   ========================================================================== */
+   @use './mixins' as *;
+
+   /* ==========================================================================
+      2. VARIABLES
+      ========================================================================== */
+   
+   // Z-index for menu
+   $menu-z-index: var(--sv-z-index-dropdown);
+   
+   // Animation duration
+   $menu-animation-duration: var(--sv-motion-duration-medium);
+   $menu-animation-timing: var(--sv-motion-ease-standard);
+   
+   /* ==========================================================================
+      3. MENU BUTTON BASE
+      ========================================================================== */
+   
+   .sv-menu-button {
+     // Extend the action control base
+     @extend .sv-action-control-base;
+     
+     // Specific styling for menu buttons
+     position: relative;
+     display: inline-flex;
+     align-items: center;
+     
+     // Dropdown indicator
+     &::after {
+       content: "";
+       display: inline-block;
+       margin-left: var(--sv-space-2);
+       width: 0.5em;
+       height: 0.5em;
+       border: 1px solid currentColor;
+       border-width: 0 1px 1px 0;
+       transform: rotate(45deg);
+       transition: transform $menu-animation-duration $menu-animation-timing;
+     }
+     
+     // Target for screenreaders
+     .sv-menu-button-sr-label {
+       @include visually-hidden;
+     }
+   }
+   
+   /* ==========================================================================
+      4. MENU BUTTON VARIANTS
+      ========================================================================== */
+   
+   // Primary menu button
+   .sv-menu-button.sv-menu-button-primary {
+     @extend .sv-action-primary;
+   }
+   
+   // Secondary menu button
+   .sv-menu-button.sv-menu-button-secondary {
+     @extend .sv-action-secondary;
+   }
+   
+   // Tertiary menu button (ghost style)
+   .sv-menu-button.sv-menu-button-tertiary {
+     @extend .sv-action-tertiary;
+   }
+   
+   // Outline menu button
+   .sv-menu-button.sv-menu-button-outline {
+     background-color: transparent;
+     border: 1px solid var(--sv-border-medium);
+     color: var(--sv-text-primary);
+     
+     &:hover:not(:disabled):not(.disabled) {
+       border-color: var(--sv-border-dark);
+       background-color: var(--sv-bg-element-hover);
+     }
+   }
+   
+   // Icon-only menu button
+   .sv-menu-button.sv-menu-button-icon-only {
+     padding: var(--sv-padding-2);
+     min-width: unset;
+     aspect-ratio: 1;
+     
+     &::after {
+       margin-left: 0;
+     }
+     
+     // If there's an icon and no text, hide the caret
+     &.sv-menu-button-no-caret::after {
+       display: none;
+     }
+   }
+   
+   // Link menu button
+   .sv-menu-button.sv-menu-button-link {
+     background-color: transparent;
+     border-color: transparent;
+     color: var(--sv-primary);
+     padding-left: var(--sv-padding-2);
+     padding-right: var(--sv-padding-2);
+     text-decoration: none;
+     min-width: auto;
+     
+     &:hover:not(:disabled):not(.disabled) {
+       text-decoration: underline;
+       background-color: transparent;
+     }
+     
+     &:active:not(:disabled):not(.disabled) {
+       color: var(--sv-primary-dark);
+     }
+   }
+   
+   /* ==========================================================================
+      5. MENU BUTTON STATES
+      ========================================================================== */
+   
+   .sv-menu-button {
+     // Expanded state
+     &[aria-expanded="true"] {
+       background-color: var(--sv-bg-element-active);
+       border-color: var(--sv-border-dark);
+       
+       // Rotate dropdown caret
+       &::after {
+         transform: rotate(-135deg);
+       }
+       
+       // Primary variant expanded
+       &.sv-menu-button-primary {
+         background-color: var(--sv-primary-dark);
+       }
+     }
+     
+     // Selected state
+     &[aria-pressed="true"] {
+       background-color: var(--sv-bg-element-active);
+       
+       // Primary variant selected
+       &.sv-menu-button-primary {
+         background-color: var(--sv-primary-dark);
+       }
+     }
+   }
+   
+   /* ==========================================================================
+      6. DROPDOWN MENU STYLING
+      ========================================================================== */
+   
+   // Menu container
+   .sv-menu {
+     position: absolute;
+     z-index: $menu-z-index;
+     top: 100%;
+     left: 0;
+     display: none;
+     min-width: 12rem;
+     padding: var(--sv-padding-2) 0;
+     margin-top: var(--sv-space-1);
+     background-color: var(--sv-bg-surface);
+     border: 1px solid var(--sv-border-medium);
+     border-radius: var(--sv-radius-md);
+     box-shadow: var(--sv-shadow-md);
+     max-height: 75vh;
+     overflow-y: auto;
+     
+     // Visible state
+     &.show {
+       display: block;
+     }
+     
+     // Different positions for the menu
+     &.sv-menu-right {
+       left: auto;
+       right: 0;
+     }
+     
+     &.sv-menu-center {
+       left: 50%;
+       transform: translateX(-50%);
+     }
+     
+     &.sv-menu-top {
+       top: auto;
+       bottom: 100%;
+       margin-top: 0;
+       margin-bottom: var(--sv-space-1);
+     }
+     
+     &.sv-menu-start {
+       top: 0;
+       left: 100%;
+       margin-top: 0;
+       margin-left: var(--sv-space-1);
+     }
+     
+     &.sv-menu-end {
+       top: 0;
+       right: 100%;
+       left: auto;
+       margin-top: 0;
+       margin-right: var(--sv-space-1);
+     }
+   }
+   
+   /* ==========================================================================
+      7. MENU ITEM STYLES
+      ========================================================================== */
+   
+   // Menu items
+   .sv-menu-item {
+     display: flex;
+     align-items: center;
+     width: 100%;
+     padding: var(--sv-padding-2) var(--sv-padding-3);
+     clear: both;
+     text-align: inherit;
+     white-space: nowrap;
+     background-color: transparent;
+     border: 0;
+     color: var(--sv-text-primary);
+     cursor: pointer;
+     transition: background-color var(--sv-motion-duration-short) $menu-animation-timing;
+     
+     &:hover,
+     &:focus {
+       text-decoration: none;
+       background-color: var(--sv-bg-element-hover);
+     }
+     
+     &:active {
+       background-color: var(--sv-bg-element-active);
+     }
+     
+     &.disabled,
+     &:disabled {
+       color: var(--sv-text-tertiary);
+       pointer-events: none;
+       background-color: transparent;
+     }
+     
+     // Active/selected state
+     &.active,
+     &[aria-selected="true"] {
+       background-color: var(--sv-bg-element-hover);
+       color: var(--sv-primary);
+       font-weight: var(--sv-font-medium);
+     }
+     
+     // Item with icons
+     .sv-menu-item-icon {
+       margin-right: var(--sv-space-2);
+       flex-shrink: 0;
+       width: var(--sv-icon-size-sm);
+       height: var(--sv-icon-size-sm);
+     }
+     
+     // Badge or additional content
+     .sv-menu-item-badge {
+       margin-left: auto;
+       padding-left: var(--sv-padding-2);
+     }
+     
+     // Submenu indicator
+     &.sv-menu-item-with-submenu {
+       position: relative;
+       
+       &::after {
+         content: "";
+         display: inline-block;
+         margin-left: auto;
+         width: 0.5em;
+         height: 0.5em;
+         border: 1px solid currentColor;
+         border-width: 0 1px 1px 0;
+         transform: rotate(-45deg);
+       }
+     }
+   }
+   
+   // Divider
+   .sv-menu-divider {
+     height: 0;
+     margin: var(--sv-space-2) 0;
+     overflow: hidden;
+     border-top: 1px solid var(--sv-border-light);
+   }
+   
+   // Header
+   .sv-menu-header {
+     display: block;
+     padding: var(--sv-padding-1) var(--sv-padding-3);
+     margin-bottom: 0;
+     font-size: var(--sv-text-xs);
+     color: var(--sv-text-secondary);
+     text-transform: uppercase;
+     letter-spacing: var(--sv-tracking-wider);
+     white-space: nowrap;
+   }
+   
+   // Group
+   .sv-menu-group {
+     display: block;
+   }
+   
+   /* ==========================================================================
+      8. ANIMATIONS
+      ========================================================================== */
+   
+   // Animation for the menu opening
+   .sv-menu {
+     &.sv-menu-animated {
+       opacity: 0;
+       transform-origin: top center;
+       transition: opacity $menu-animation-duration $menu-animation-timing,
+                   transform $menu-animation-duration $menu-animation-timing;
+       transform: translateY(-10px) scale(0.95);
+       
+       &.show {
+         opacity: 1;
+         transform: translateY(0) scale(1);
+       }
+       
+       // Different animation directions based on menu position
+       &.sv-menu-top {
+         transform-origin: bottom center;
+         transform: translateY(10px) scale(0.95);
+         
+         &.show {
+           transform: translateY(0) scale(1);
+         }
+       }
+       
+       &.sv-menu-start {
+         transform-origin: left center;
+         transform: translateX(-10px) scale(0.95);
+         
+         &.show {
+           transform: translateX(0) scale(1);
+         }
+       }
+       
+       &.sv-menu-end {
+         transform-origin: right center;
+         transform: translateX(10px) scale(0.95);
+         
+         &.show {
+           transform: translateX(0) scale(1);
+         }
+       }
+       
+       // Respect reduced motion preferences
+       @media (prefers-reduced-motion: reduce) {
+         transition: none;
+         transform: none;
+         
+         &.sv-menu-top,
+         &.sv-menu-start,
+         &.sv-menu-end {
+           transform: none;
+           
+           &.show {
+             transform: none;
+           }
+         }
+       }
+     }
+   }
+   
+   /* ==========================================================================
+      9. RESPONSIVE ADJUSTMENTS
+      ========================================================================== */
+   
+   // Full width on small screens
+   @include breakpoint-down(sm) {
+     .sv-menu-button.sv-menu-button-responsive {
+       display: flex;
+       width: 100%;
+     }
+     
+     // Full width menu on mobile
+     .sv-menu.sv-menu-responsive {
+       width: 100vw;
+       left: 0 !important;
+       right: 0 !important;
+       transform: none !important;
+       max-height: 80vh;
+       border-radius: 0;
+       box-shadow: var(--sv-shadow-lg);
+       margin: 0;
+       position: fixed;
+       
+       // Handle different positions
+       &.sv-menu-top {
+         top: auto;
+         bottom: 0;
+       }
+       
+       &:not(.sv-menu-top) {
+         top: auto;
+         bottom: 0;
+       }
+       
+       // Full width menu items on mobile
+       .sv-menu-item {
+         padding: var(--sv-padding-3);
+       }
+     }
+   }

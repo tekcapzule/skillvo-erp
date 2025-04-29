@@ -1,0 +1,449 @@
+/**
+ * Button Group Component - Specific Styles
+ * Version: 1.0.0
+ * Last Updated: April 29, 2025
+ * 
+ * This file establishes the specific styles for the button group component
+ * in the SkillVo design system. This serves as the third level in our 
+ * three-tier styling architecture:
+ * 1. sv-ui-control-base - Base styles for all interactive controls
+ * 2. sv-action-control-base - Base styles for action controls
+ * 3. sv-button-group (this file) - Component-specific styles for button groups
+ */
+
+/* ==========================================================================
+   TABLE OF CONTENTS:
+   
+   1. IMPORTS
+   2. VARIABLES
+   3. BUTTON GROUP BASE
+   4. BUTTON GROUP VARIANTS
+   5. BUTTON GROUP ORIENTATIONS
+   6. BUTTON GROUP SPACING VARIANTS
+   7. BUTTON GROUP SPECIAL STATES
+   8. RESPONSIVE ADJUSTMENTS
+   ========================================================================== */
+
+/* ==========================================================================
+   1. IMPORTS
+   ========================================================================== */
+   @use './mixins' as *;
+
+   /* ==========================================================================
+      2. VARIABLES
+      ========================================================================== */
+   
+   // Spacing between buttons in spaced variant
+   $button-group-spacing: var(--sv-space-2);
+   
+   /* ==========================================================================
+      3. BUTTON GROUP BASE
+      ========================================================================== */
+   
+   .sv-button-group {
+     // Use the action group layout mixin from action-controls.scss
+     @extend .sv-action-group;
+     
+     // Base group styles
+     display: inline-flex;
+     vertical-align: middle;
+     
+     // Basic button group styling
+     > .sv-button,
+     > .sv-icon-button {
+       // Flatten borders between items
+       position: relative;
+       border-radius: 0;
+       margin-right: -1px; // Collapse borders between buttons
+       
+       // Ensure buttons don't double in size when border collapses
+       box-sizing: border-box;
+       
+       // Remove active transform from buttons in a group
+       &:active:not(:disabled):not(.disabled) {
+         transform: none;
+       }
+       
+       // First button
+       &:first-child {
+         border-top-left-radius: var(--sv-radius-md);
+         border-bottom-left-radius: var(--sv-radius-md);
+       }
+       
+       // Last button
+       &:last-child {
+         border-top-right-radius: var(--sv-radius-md);
+         border-bottom-right-radius: var(--sv-radius-md);
+         margin-right: 0;
+       }
+       
+       // Ensure focus state is visible above other buttons
+       &:focus {
+         z-index: 1;
+       }
+       
+       // Handle hover overlap
+       &:hover {
+         z-index: 2;
+       }
+       
+       // Handle active state overlap
+       &:active,
+       &.active,
+       &[aria-pressed="true"],
+       &[aria-checked="true"],
+       &[aria-selected="true"] {
+         z-index: 3;
+       }
+     }
+   }
+   
+   /* ==========================================================================
+      4. BUTTON GROUP VARIANTS
+      ========================================================================== */
+   
+   // Primary button group
+   .sv-button-group.sv-button-group-primary {
+     > .sv-button,
+     > .sv-icon-button {
+       @extend .sv-action-primary;
+       
+       // Enhance visibility of borders for adjacent primary buttons
+       border-right-color: rgba(255, 255, 255, 0.2);
+       
+       &:last-child {
+         border-right-color: var(--sv-primary);
+       }
+       
+       &:hover {
+         background-color: var(--sv-primary-dark);
+       }
+     }
+   }
+   
+   // Secondary button group
+   .sv-button-group.sv-button-group-secondary {
+     > .sv-button,
+     > .sv-icon-button {
+       @extend .sv-action-secondary;
+     }
+   }
+   
+   // Outline button group
+   .sv-button-group.sv-button-group-outline {
+     > .sv-button,
+     > .sv-icon-button {
+       background-color: transparent;
+       border-color: var(--sv-border-medium);
+       color: var(--sv-text-primary);
+       
+       &:hover:not(:disabled):not(.disabled) {
+         background-color: var(--sv-bg-element-hover);
+         z-index: 1;
+       }
+       
+       &:active:not(:disabled):not(.disabled),
+       &[aria-pressed="true"] {
+         background-color: var(--sv-bg-element-active);
+         z-index: 2;
+       }
+     }
+   }
+   
+   // Text button group
+   .sv-button-group.sv-button-group-text {
+     > .sv-button,
+     > .sv-icon-button {
+       background-color: transparent;
+       border-color: transparent;
+       
+       // No border collapses for text buttons
+       margin-right: 0;
+       
+       &:hover:not(:disabled):not(.disabled) {
+         background-color: var(--sv-bg-element-hover);
+       }
+       
+       &:active:not(:disabled):not(.disabled),
+       &[aria-pressed="true"] {
+         background-color: var(--sv-bg-element-active);
+       }
+     }
+   }
+   
+   /* ==========================================================================
+      5. BUTTON GROUP ORIENTATIONS
+      ========================================================================== */
+   
+   // Vertical button group
+   .sv-button-group.sv-button-group-vertical {
+     flex-direction: column;
+     align-items: stretch;
+     
+     > .sv-button,
+     > .sv-icon-button {
+       margin-right: 0;
+       margin-bottom: -1px; // Collapse borders vertically
+       
+       // Reset horizontal radius
+       border-radius: 0;
+       
+       // First button
+       &:first-child {
+         border-top-left-radius: var(--sv-radius-md);
+         border-top-right-radius: var(--sv-radius-md);
+         border-bottom-left-radius: 0;
+         border-bottom-right-radius: 0;
+       }
+       
+       // Last button
+       &:last-child {
+         border-top-left-radius: 0;
+         border-top-right-radius: 0;
+         border-bottom-left-radius: var(--sv-radius-md);
+         border-bottom-right-radius: var(--sv-radius-md);
+         margin-bottom: 0;
+       }
+     }
+   }
+   
+   /* ==========================================================================
+      6. BUTTON GROUP SPACING VARIANTS
+      ========================================================================== */
+   
+   // Spaced button group
+   .sv-button-group.sv-button-group-spaced {
+     > .sv-button,
+     > .sv-icon-button {
+       margin-right: $button-group-spacing;
+       border-radius: var(--sv-radius-md); // Restore individual button radius
+       
+       &:last-child {
+         margin-right: 0;
+       }
+     }
+     
+     // Vertical spaced button group
+     &.sv-button-group-vertical {
+       > .sv-button,
+       > .sv-icon-button {
+         margin-right: 0;
+         margin-bottom: $button-group-spacing;
+         
+         &:last-child {
+           margin-bottom: 0;
+         }
+       }
+     }
+   }
+   
+   // Pill shaped button group
+   .sv-button-group.sv-button-group-pill {
+     > .sv-button,
+     > .sv-icon-button {
+       &:first-child {
+         border-top-left-radius: var(--sv-radius-full);
+         border-bottom-left-radius: var(--sv-radius-full);
+       }
+       
+       &:last-child {
+         border-top-right-radius: var(--sv-radius-full);
+         border-bottom-right-radius: var(--sv-radius-full);
+       }
+     }
+     
+     &.sv-button-group-vertical {
+       > .sv-button,
+       > .sv-icon-button {
+         &:first-child {
+           border-top-left-radius: var(--sv-radius-full);
+           border-top-right-radius: var(--sv-radius-full);
+           border-bottom-left-radius: 0;
+           border-bottom-right-radius: 0;
+         }
+         
+         &:last-child {
+           border-top-left-radius: 0;
+           border-top-right-radius: 0;
+           border-bottom-left-radius: var(--sv-radius-full);
+           border-bottom-right-radius: var(--sv-radius-full);
+         }
+       }
+     }
+   }
+   
+   /* ==========================================================================
+      7. BUTTON GROUP SPECIAL STATES
+      ========================================================================== */
+   
+   // Button group with dividers
+   .sv-button-group.sv-button-group-dividers {
+     > .sv-button,
+     > .sv-icon-button {
+       &:not(:last-child)::after {
+         content: "";
+         position: absolute;
+         top: var(--sv-space-2);
+         bottom: var(--sv-space-2);
+         right: -1px;
+         width: 1px;
+         background-color: var(--sv-border-medium);
+         z-index: 4;
+       }
+     }
+     
+     &.sv-button-group-vertical {
+       > .sv-button,
+       > .sv-icon-button {
+         &:not(:last-child)::after {
+           top: auto;
+           right: var(--sv-space-2);
+           left: var(--sv-space-2);
+           bottom: -1px;
+           width: auto;
+           height: 1px;
+         }
+       }
+     }
+     
+     // Special handling for primary button group
+     &.sv-button-group-primary {
+       > .sv-button,
+       > .sv-icon-button {
+         &:not(:last-child)::after {
+           background-color: rgba(255, 255, 255, 0.3);
+         }
+       }
+     }
+   }
+   
+   // Segmented control style (for toggles/selection)
+   .sv-button-group.sv-button-group-segmented {
+     background-color: var(--sv-bg-element);
+     border-radius: var(--sv-radius-md);
+     padding: var(--sv-padding-1);
+     
+     > .sv-button,
+     > .sv-icon-button {
+       border: none;
+       margin-right: var(--sv-space-1);
+       border-radius: var(--sv-radius-sm);
+       
+       &:last-child {
+         margin-right: 0;
+       }
+       
+       // Selected button in segmented control
+       &[aria-pressed="true"],
+       &[aria-checked="true"],
+       &[aria-selected="true"],
+       &.active {
+         background-color: var(--sv-bg-surface);
+         box-shadow: var(--sv-shadow-sm);
+       }
+     }
+     
+     &.sv-button-group-vertical {
+       > .sv-button,
+       > .sv-icon-button {
+         margin-right: 0;
+         margin-bottom: var(--sv-space-1);
+         
+         &:last-child {
+           margin-bottom: 0;
+         }
+       }
+     }
+   }
+   
+   // Full width button group
+   .sv-button-group.sv-button-group-full-width {
+     display: flex;
+     width: 100%;
+     
+     > .sv-button,
+     > .sv-icon-button {
+       flex: 1;
+     }
+   }
+   
+   /* ==========================================================================
+      8. RESPONSIVE ADJUSTMENTS
+      ========================================================================== */
+   
+   // Stack buttons on mobile
+   .sv-button-group.sv-button-group-responsive {
+     @include breakpoint-down(sm) {
+       flex-direction: column;
+       width: 100%;
+       
+       > .sv-button,
+       > .sv-icon-button {
+         width: 100%;
+         margin-right: 0;
+         margin-bottom: -1px;
+         border-radius: 0;
+         
+         // First button
+         &:first-child {
+           border-top-left-radius: var(--sv-radius-md);
+           border-top-right-radius: var(--sv-radius-md);
+           border-bottom-left-radius: 0;
+           border-bottom-right-radius: 0;
+         }
+         
+         // Last button
+         &:last-child {
+           border-top-left-radius: 0;
+           border-top-right-radius: 0;
+           border-bottom-left-radius: var(--sv-radius-md);
+           border-bottom-right-radius: var(--sv-radius-md);
+           margin-bottom: 0;
+         }
+       }
+       
+       // Adjust spaced variant in responsive mode
+       &.sv-button-group-spaced {
+         > .sv-button,
+         > .sv-icon-button {
+           margin-bottom: $button-group-spacing;
+           border-radius: var(--sv-radius-md);
+           
+           &:last-child {
+             margin-bottom: 0;
+           }
+         }
+       }
+       
+       // Adjust pill variant in responsive mode
+       &.sv-button-group-pill {
+         > .sv-button,
+         > .sv-icon-button {
+           &:first-child {
+             border-top-left-radius: var(--sv-radius-full);
+             border-top-right-radius: var(--sv-radius-full);
+           }
+           
+           &:last-child {
+             border-bottom-left-radius: var(--sv-radius-full);
+             border-bottom-right-radius: var(--sv-radius-full);
+           }
+         }
+       }
+       
+       // Adjust dividers in responsive mode
+       &.sv-button-group-dividers {
+         > .sv-button,
+         > .sv-icon-button {
+           &:not(:last-child)::after {
+             top: auto;
+             right: var(--sv-space-2);
+             left: var(--sv-space-2);
+             bottom: -1px;
+             width: auto;
+             height: 1px;
+           }
+         }
+       }
+     }
+   }

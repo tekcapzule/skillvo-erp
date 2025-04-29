@@ -1,0 +1,548 @@
+/**
+ * Floating Action Button Component - Specific Styles
+ * Version: 1.0.0
+ * Last Updated: April 29, 2025
+ * 
+ * This file establishes the specific styles for the floating action button component
+ * in the SkillVo design system. This serves as the third level in our 
+ * three-tier styling architecture:
+ * 1. sv-ui-control-base - Base styles for all interactive controls
+ * 2. sv-action-control-base - Base styles for action controls
+ * 3. sv-fab (this file) - Component-specific styles for floating action buttons
+ */
+
+/* ==========================================================================
+   TABLE OF CONTENTS:
+   
+   1. IMPORTS
+   2. VARIABLES
+   3. FAB BASE
+   4. FAB VARIANTS
+   5. FAB POSITIONING
+   6. FAB STATES
+   7. EXPANDABLE FAB
+   8. FAB SPEED DIAL
+   9. RESPONSIVE ADJUSTMENTS
+   ========================================================================== */
+
+/* ==========================================================================
+   1. IMPORTS
+   ========================================================================== */
+   @use './mixins' as *;
+
+   /* ==========================================================================
+      2. VARIABLES
+      ========================================================================== */
+   
+   // Define z-index for FAB to ensure it's above other content
+   $fab-z-index: var(--sv-z-index-overlay);
+   
+   // Default position offset from edge
+   $fab-position-offset: var(--sv-space-4);
+   
+   // Shadow for raised appearance
+   $fab-shadow: var(--sv-shadow-lg);
+   
+   /* ==========================================================================
+      3. FAB BASE
+      ========================================================================== */
+   
+   .sv-fab {
+     // Extend the action control base
+     @extend .sv-action-control-base;
+     
+     // FAB-specific base styles
+     position: fixed; // Fixed position by default
+     z-index: $fab-z-index;
+     border-radius: var(--sv-radius-full); // Circular shape
+     aspect-ratio: 1; // Maintain 1:1 aspect ratio
+     padding: 0; // Reset padding for precise sizing
+     
+     // Enhanced shadow for "floating" appearance
+     box-shadow: $fab-shadow;
+     
+     // Center icon
+     display: inline-flex;
+     justify-content: center;
+     align-items: center;
+     
+     // Default size - medium FAB
+     width: calc(var(--sv-btn-size-lg) * 1.2);
+     height: calc(var(--sv-btn-size-lg) * 1.2);
+     
+     // Center the icon
+     .sv-icon {
+       margin: 0;
+     }
+     
+     // Transition for smooth hover/active states
+     transition: transform var(--sv-motion-duration-medium) var(--sv-motion-ease-standard),
+                 box-shadow var(--sv-motion-duration-medium) var(--sv-motion-ease-standard),
+                 background-color var(--sv-motion-duration-short) var(--sv-motion-ease-standard);
+     
+     // Enhanced hover effect
+     &:hover:not(:disabled):not(.disabled) {
+       transform: translateY(-2px);
+       box-shadow: var(--sv-shadow-xl);
+     }
+     
+     // Active state effect
+     &:active:not(:disabled):not(.disabled) {
+       transform: translateY(0);
+       box-shadow: $fab-shadow;
+     }
+   }
+   
+   /* ==========================================================================
+      4. FAB VARIANTS
+      ========================================================================== */
+   
+   .sv-fab {
+     // Primary FAB (default)
+     &.sv-fab-primary {
+       @extend .sv-action-primary;
+     }
+     
+     // Secondary FAB
+     &.sv-fab-secondary {
+       @extend .sv-action-secondary;
+     }
+     
+     // Success FAB
+     &.sv-fab-success {
+       background-color: var(--sv-success);
+       border-color: var(--sv-success);
+       color: var(--sv-text-on-dark);
+       
+       &:hover:not(:disabled):not(.disabled) {
+         background-color: var(--sv-success-dark, var(--sv-success));
+         border-color: var(--sv-success-dark, var(--sv-success));
+       }
+     }
+     
+     // Extended FAB with text label
+     &.sv-fab-extended {
+       aspect-ratio: auto;
+       border-radius: var(--sv-radius-full);
+       padding: var(--sv-padding-2) var(--sv-padding-4);
+       white-space: nowrap;
+       
+       .sv-icon {
+         margin-right: var(--sv-space-2);
+       }
+     }
+     
+     // Mini FAB (smaller size)
+     &.sv-fab-mini {
+       width: var(--sv-btn-size-md);
+       height: var(--sv-btn-size-md);
+       
+       .sv-icon {
+         width: var(--sv-icon-size-sm);
+         height: var(--sv-icon-size-sm);
+       }
+     }
+     
+     // Large FAB
+     &.sv-fab-large {
+       width: calc(var(--sv-btn-size-lg) * 1.5);
+       height: calc(var(--sv-btn-size-lg) * 1.5);
+       
+       .sv-icon {
+         width: var(--sv-icon-size-lg);
+         height: var(--sv-icon-size-lg);
+       }
+     }
+   }
+   
+   /* ==========================================================================
+      5. FAB POSITIONING
+      ========================================================================== */
+   
+   // Position utilities
+   .sv-fab {
+     // Bottom right (default)
+     &.sv-fab-bottom-right {
+       bottom: $fab-position-offset;
+       right: $fab-position-offset;
+     }
+     
+     // Bottom left
+     &.sv-fab-bottom-left {
+       bottom: $fab-position-offset;
+       left: $fab-position-offset;
+     }
+     
+     // Top right
+     &.sv-fab-top-right {
+       top: $fab-position-offset;
+       right: $fab-position-offset;
+     }
+     
+     // Top left
+     &.sv-fab-top-left {
+       top: $fab-position-offset;
+       left: $fab-position-offset;
+     }
+     
+     // Center
+     &.sv-fab-center {
+       top: 50%;
+       left: 50%;
+       transform: translate(-50%, -50%);
+       
+       &:hover:not(:disabled):not(.disabled) {
+         transform: translate(-50%, calc(-50% - 2px));
+       }
+       
+       &:active:not(:disabled):not(.disabled) {
+         transform: translate(-50%, -50%);
+       }
+     }
+     
+     // Replace fixed with absolute for contained positioning
+     &.sv-fab-absolute {
+       position: absolute;
+     }
+   }
+   
+   /* ==========================================================================
+      6. FAB STATES
+      ========================================================================== */
+   
+   .sv-fab {
+     // Toggled state
+     &[aria-pressed="true"] {
+       background-color: var(--sv-bg-element-active);
+       
+       &.sv-fab-primary {
+         background-color: var(--sv-primary-dark);
+       }
+     }
+     
+     // Loading state enhancement
+     &.loading,
+     &.is-loading,
+     &[aria-busy="true"] {
+       &::after {
+         width: 1.5em;
+         height: 1.5em;
+         margin: -0.75em 0 0 -0.75em;
+         border-width: 0.2em;
+       }
+     }
+     
+     // Enhanced focus state
+     &:focus-visible {
+       outline-offset: 4px;
+     }
+   }
+   
+   /* ==========================================================================
+      7. EXPANDABLE FAB
+      ========================================================================== */
+   
+   // Expandable FAB that shows text on hover/focus
+   .sv-fab.sv-fab-expandable {
+     overflow: hidden;
+     width: calc(var(--sv-btn-size-lg) * 1.2);
+     transition: width var(--sv-motion-duration-medium) var(--sv-motion-ease-standard), 
+                 transform var(--sv-motion-duration-medium) var(--sv-motion-ease-standard),
+                 box-shadow var(--sv-motion-duration-medium) var(--sv-motion-ease-standard);
+     
+     .sv-fab-text {
+       opacity: 0;
+       width: 0;
+       margin-left: 0;
+       transition: opacity var(--sv-motion-duration-short) var(--sv-motion-ease-standard),
+                   width var(--sv-motion-duration-medium) var(--sv-motion-ease-standard),
+                   margin-left var(--sv-motion-duration-medium) var(--sv-motion-ease-standard);
+       white-space: nowrap;
+     }
+     
+     &:hover:not(:disabled):not(.disabled),
+     &:focus-within:not(:disabled):not(.disabled) {
+       width: auto;
+       padding-right: var(--sv-padding-4);
+       padding-left: var(--sv-padding-4);
+       
+       .sv-fab-text {
+         opacity: 1;
+         width: auto;
+         margin-left: var(--sv-space-2);
+       }
+     }
+     
+     // Respect reduced motion settings
+     @media (prefers-reduced-motion: reduce) {
+       transition: none;
+       
+       .sv-fab-text {
+         transition: none;
+       }
+     }
+   }
+   
+   /* ==========================================================================
+      8. FAB SPEED DIAL
+      ========================================================================== */
+   
+   // FAB speed dial container
+   .sv-fab-speed-dial {
+     position: fixed;
+     z-index: $fab-z-index;
+     
+     // Positioning utilities (same as standard FAB)
+     &.sv-fab-bottom-right {
+       bottom: $fab-position-offset;
+       right: $fab-position-offset;
+     }
+     
+     &.sv-fab-bottom-left {
+       bottom: $fab-position-offset;
+       left: $fab-position-offset;
+     }
+     
+     &.sv-fab-top-right {
+       top: $fab-position-offset;
+       right: $fab-position-offset;
+     }
+     
+     &.sv-fab-top-left {
+       top: $fab-position-offset;
+       left: $fab-position-offset;
+     }
+     
+     // Use absolute positioning within containers
+     &.sv-fab-absolute {
+       position: absolute;
+     }
+     
+     // Speed dial items container
+     .sv-fab-speed-dial-items {
+       position: absolute;
+       display: flex;
+       flex-direction: column;
+       align-items: center;
+       gap: var(--sv-space-3);
+       visibility: hidden;
+       opacity: 0;
+       transition: visibility var(--sv-motion-duration-medium) var(--sv-motion-ease-standard),
+                   opacity var(--sv-motion-duration-medium) var(--sv-motion-ease-standard);
+       
+       // Position items based on parent position
+       &.sv-fab-items-up {
+         bottom: 100%;
+         margin-bottom: var(--sv-space-3);
+       }
+       
+       &.sv-fab-items-down {
+         top: 100%;
+         margin-top: var(--sv-space-3);
+       }
+       
+       &.sv-fab-items-left {
+         right: 100%;
+         margin-right: var(--sv-space-3);
+         flex-direction: row;
+       }
+       
+       &.sv-fab-items-right {
+         left: 100%;
+         margin-left: var(--sv-space-3);
+         flex-direction: row;
+       }
+       
+       // Individual speed dial items
+       .sv-fab-item {
+         transform: scale(0.8);
+         transition: transform var(--sv-motion-duration-medium) var(--sv-motion-ease-standard);
+       }
+     }
+     
+     // Trigger button
+     .sv-fab-trigger {
+       position: relative;
+       z-index: 1;
+       
+       // Rotate icon when open
+       .sv-icon {
+         transition: transform var(--sv-motion-duration-medium) var(--sv-motion-ease-standard);
+       }
+     }
+     
+     // Label for FAB items
+     .sv-fab-label {
+       position: absolute;
+       background-color: var(--sv-bg-surface);
+       color: var(--sv-text-primary);
+       padding: var(--sv-padding-1) var(--sv-padding-2);
+       border-radius: var(--sv-radius-md);
+       box-shadow: var(--sv-shadow-md);
+       font-size: var(--sv-text-sm);
+       white-space: nowrap;
+       pointer-events: none;
+       opacity: 0;
+       transition: opacity var(--sv-motion-duration-short) var(--sv-motion-ease-standard);
+       
+       // Position labels based on items position
+       .sv-fab-items-up &, 
+       .sv-fab-items-down & {
+         left: 50%;
+         transform: translateX(-50%);
+       }
+       
+       .sv-fab-items-up & {
+         bottom: 100%;
+         margin-bottom: var(--sv-space-2);
+       }
+       
+       .sv-fab-items-down & {
+         top: 100%;
+         margin-top: var(--sv-space-2);
+       }
+       
+       .sv-fab-items-left &, 
+       .sv-fab-items-right & {
+         top: 50%;
+         transform: translateY(-50%);
+       }
+       
+       .sv-fab-items-left & {
+         right: 100%;
+         margin-right: var(--sv-space-2);
+       }
+       
+       .sv-fab-items-right & {
+         left: 100%;
+         margin-left: var(--sv-space-2);
+       }
+     }
+     
+     // Open state
+     &.sv-fab-open {
+       .sv-fab-speed-dial-items {
+         visibility: visible;
+         opacity: 1;
+         
+         .sv-fab-item {
+           transform: scale(1);
+         }
+       }
+       
+       // Rotate the icon on open
+       .sv-fab-trigger .sv-icon {
+         transform: rotate(45deg);
+       }
+     }
+     
+     // Show labels on hover
+     .sv-fab-item:hover {
+       .sv-fab-label {
+         opacity: 1;
+       }
+     }
+     
+     // Respect reduced motion settings
+     @media (prefers-reduced-motion: reduce) {
+       .sv-fab-speed-dial-items,
+       .sv-fab-item,
+       .sv-fab-trigger .sv-icon,
+       .sv-fab-label {
+         transition: none;
+       }
+     }
+   }
+   
+   /* ==========================================================================
+      9. RESPONSIVE ADJUSTMENTS
+      ========================================================================== */
+   
+   // Adjust position offset on smaller screens
+   @include breakpoint-down(sm) {
+     // Decrease offset on mobile to avoid covering content
+     .sv-fab,
+     .sv-fab-speed-dial {
+       &.sv-fab-bottom-right,
+       &.sv-fab-bottom-left,
+       &.sv-fab-top-right,
+       &.sv-fab-top-left {
+         $mobile-offset: var(--sv-space-3);
+         
+         &.sv-fab-bottom-right {
+           bottom: $mobile-offset;
+           right: $mobile-offset;
+         }
+         
+         &.sv-fab-bottom-left {
+           bottom: $mobile-offset;
+           left: $mobile-offset;
+         }
+         
+         &.sv-fab-top-right {
+           top: $mobile-offset;
+           right: $mobile-offset;
+         }
+         
+         &.sv-fab-top-left {
+           top: $mobile-offset;
+           left: $mobile-offset;
+         }
+       }
+     }
+     
+     // Ensure minimum touch target size
+     .sv-fab {
+       min-width: var(--sv-min-touch-target);
+       min-height: var(--sv-min-touch-target);
+       
+       // Reduce extended FAB to icon-only on small screens
+       &.sv-fab-extended {
+         width: calc(var(--sv-btn-size-lg) * 1.2);
+         padding: 0;
+         aspect-ratio: 1;
+         
+         .sv-fab-text {
+           display: none;
+         }
+         
+         .sv-icon {
+           margin-right: 0;
+         }
+       }
+       
+       // Disable expandable behavior on small screens
+       &.sv-fab-expandable {
+         &:hover:not(:disabled):not(.disabled),
+         &:focus-within:not(:disabled):not(.disabled) {
+           width: calc(var(--sv-btn-size-lg) * 1.2);
+           padding: 0;
+           
+           .sv-fab-text {
+             opacity: 0;
+             width: 0;
+             margin-left: 0;
+           }
+         }
+       }
+     }
+     
+     // Adjust speed dial spacing for mobile
+     .sv-fab-speed-dial {
+       .sv-fab-speed-dial-items {
+         gap: var(--sv-space-2);
+         
+         &.sv-fab-items-up,
+         &.sv-fab-items-down {
+           margin-bottom: var(--sv-space-2);
+           margin-top: var(--sv-space-2);
+         }
+         
+         &.sv-fab-items-left,
+         &.sv-fab-items-right {
+           margin-left: var(--sv-space-2);
+           margin-right: var(--sv-space-2);
+         }
+       }
+     }
+   }

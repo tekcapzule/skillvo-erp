@@ -1,0 +1,546 @@
+/**
+ * File Upload Component
+ * Version: 2.0.0
+ * Last Updated: April 29, 2025
+ * 
+ * This file contains styles specific to the file upload component.
+ * It extends the sv-input-base class and adds file upload-specific functionality.
+ */
+
+/* ==========================================================================
+   TABLE OF CONTENTS:
+   
+   1. IMPORTS & VARIABLES
+   2. FILE UPLOAD BASE
+   3. FILE DROPZONE
+   4. FILE LIST & PREVIEW
+   5. UPLOAD PROGRESS
+   6. RESPONSIVE ADJUSTMENTS
+   ========================================================================== */
+
+/* ==========================================================================
+   1. IMPORTS & VARIABLES
+   ========================================================================== */
+   @use '../mixins' as *;
+   @use '../base-control' as *;
+   @use '../input-controls' as *;
+   
+   // Component-specific variables
+   $file-upload-min-height: var(--sv-size-24);
+   $file-preview-size: var(--sv-size-12);
+   $file-icon-size: var(--sv-icon-size-md);
+   $progress-height: var(--sv-size-2);
+   
+   /* ==========================================================================
+      2. FILE UPLOAD BASE
+      ========================================================================== */
+   
+   .sv-file-upload {
+     // Extend the input base styles
+     @extend .sv-input-base;
+     
+     // Reset height for file inputs
+     height: auto;
+     width: 100%;
+     padding: 0;
+     
+     &-container {
+       position: relative;
+       width: 100%;
+     }
+     
+     // Hide the native file input
+     &-input {
+       position: absolute;
+       width: 0.1px;
+       height: 0.1px;
+       opacity: 0;
+       overflow: hidden;
+       z-index: -1;
+       
+       // Focus styles applied to label instead
+       &:focus + .sv-file-upload-label {
+         outline: none;
+         border-color: var(--sv-primary);
+         box-shadow: var(--sv-shadow-focus);
+       }
+       
+       // Disabled state
+       &:disabled + .sv-file-upload-label {
+         @include disabled-state;
+       }
+     }
+     
+     // Custom file input label
+     &-label {
+       display: flex;
+       flex-direction: column;
+       align-items: center;
+       justify-content: center;
+       width: 100%;
+       min-height: $file-upload-min-height;
+       padding: var(--sv-padding-5);
+       border: 2px dashed var(--sv-border-medium);
+       border-radius: var(--sv-radius-md);
+       background-color: var(--sv-bg-element);
+       cursor: pointer;
+       transition: all var(--sv-motion-duration-medium) var(--sv-motion-ease-standard);
+       
+       &:hover {
+         border-color: var(--sv-primary);
+         background-color: var(--sv-bg-element-hover);
+       }
+       
+       &-icon {
+         width: $file-icon-size;
+         height: $file-icon-size;
+         margin-bottom: var(--sv-space-2);
+         color: var(--sv-text-secondary);
+       }
+       
+       &-text {
+         font-size: var(--sv-text-sm);
+         color: var(--sv-text-secondary);
+         text-align: center;
+         
+         &-primary {
+           font-weight: var(--sv-font-medium);
+           color: var(--sv-primary);
+           margin-bottom: var(--sv-space-1);
+         }
+         
+         &-secondary {
+           font-size: var(--sv-text-xs);
+           color: var(--sv-text-tertiary);
+           margin-top: var(--sv-space-1);
+         }
+       }
+     }
+     
+     // Compact version of file upload
+     &-compact {
+       .sv-file-upload-label {
+         flex-direction: row;
+         min-height: var(--sv-size-10);
+         padding: var(--sv-padding-2) var(--sv-padding-3);
+         
+         &-icon {
+           width: var(--sv-icon-size-sm);
+           height: var(--sv-icon-size-sm);
+           margin-bottom: 0;
+           margin-right: var(--sv-space-2);
+         }
+         
+         &-text {
+           display: flex;
+           align-items: center;
+           
+           &-primary {
+             margin-bottom: 0;
+             margin-right: var(--sv-space-2);
+           }
+           
+           &-secondary {
+             margin-top: 0;
+           }
+         }
+       }
+     }
+   }
+   
+   /* ==========================================================================
+      3. FILE DROPZONE
+      ========================================================================== */
+   
+   .sv-file-dropzone {
+     position: relative;
+     
+     // Drag-over state
+     &.drag-over {
+       .sv-file-upload-label {
+         border-color: var(--sv-primary);
+         background-color: rgba(var(--sv-primary-500-rgb), 0.05);
+         box-shadow: var(--sv-shadow-sm);
+         transform: scale(1.01);
+       }
+     }
+     
+     // Drop indicator
+     &-indicator {
+       position: absolute;
+       top: 0;
+       left: 0;
+       right: 0;
+       bottom: 0;
+       background-color: rgba(var(--sv-primary-500-rgb), 0.1);
+       border: 2px dashed var(--sv-primary);
+       border-radius: var(--sv-radius-md);
+       display: flex;
+       flex-direction: column;
+       align-items: center;
+       justify-content: center;
+       z-index: 1;
+       pointer-events: none;
+       opacity: 0;
+       transition: opacity var(--sv-motion-duration-medium) var(--sv-motion-ease-standard);
+       
+       &.active {
+         opacity: 1;
+       }
+       
+       &-icon {
+         width: calc($file-icon-size * 1.5);
+         height: calc($file-icon-size * 1.5);
+         color: var(--sv-primary);
+         margin-bottom: var(--sv-space-3);
+       }
+       
+       &-text {
+         font-size: var(--sv-text-lg);
+         font-weight: var(--sv-font-medium);
+         color: var(--sv-primary);
+       }
+     }
+   }
+   
+   /* ==========================================================================
+      4. FILE LIST & PREVIEW
+      ========================================================================== */
+   
+   .sv-file-list {
+     margin-top: var(--sv-space-3);
+     
+     &-item {
+       display: flex;
+       align-items: center;
+       padding: var(--sv-padding-2);
+       border: 1px solid var(--sv-border-light);
+       border-radius: var(--sv-radius-md);
+       background-color: var(--sv-bg-surface);
+       margin-bottom: var(--sv-space-2);
+       
+       &:last-child {
+         margin-bottom: 0;
+       }
+       
+       // File preview (image thumbnail or file type icon)
+       &-preview {
+         width: $file-preview-size;
+         height: $file-preview-size;
+         margin-right: var(--sv-space-3);
+         border-radius: var(--sv-radius-sm);
+         overflow: hidden;
+         background-color: var(--sv-bg-element);
+         display: flex;
+         align-items: center;
+         justify-content: center;
+         
+         &-img {
+           width: 100%;
+           height: 100%;
+           object-fit: cover;
+         }
+         
+         &-icon {
+           width: var(--sv-icon-size-md);
+           height: var(--sv-icon-size-md);
+           color: var(--sv-text-secondary);
+         }
+       }
+       
+       // File details
+       &-details {
+         flex: 1;
+         min-width: 0; // Ensures text truncation works
+         
+         &-name {
+           font-weight: var(--sv-font-medium);
+           color: var(--sv-text-primary);
+           margin-bottom: var(--sv-space-1);
+           @include text-truncate;
+         }
+         
+         &-info {
+           display: flex;
+           font-size: var(--sv-text-xs);
+           color: var(--sv-text-tertiary);
+           
+           &-size {
+             margin-right: var(--sv-space-3);
+           }
+           
+           &-type {
+             // Empty for future use
+           }
+         }
+       }
+       
+       // Action buttons
+       &-actions {
+         display: flex;
+         margin-left: var(--sv-space-2);
+         
+         &-btn {
+           display: flex;
+           align-items: center;
+           justify-content: center;
+           width: var(--sv-size-8);
+           height: var(--sv-size-8);
+           border: none;
+           background-color: transparent;
+           border-radius: var(--sv-radius-md);
+           cursor: pointer;
+           color: var(--sv-text-secondary);
+           
+           &:hover {
+             background-color: var(--sv-bg-element-hover);
+             color: var(--sv-text-primary);
+           }
+           
+           &:focus {
+             outline: none;
+             box-shadow: var(--sv-shadow-focus);
+           }
+           
+           &-icon {
+             width: var(--sv-icon-size-sm);
+             height: var(--sv-icon-size-sm);
+           }
+           
+           // Remove button variants
+           &-remove {
+             &:hover {
+               background-color: rgba(var(--sv-error), 0.1);
+               color: var(--sv-error);
+             }
+           }
+           
+           // Download button variants
+           &-download {
+             &:hover {
+               color: var(--sv-primary);
+             }
+           }
+         }
+       }
+       
+       // Error state
+       &-error {
+         border-color: var(--sv-error);
+         
+         .sv-file-list-item-details-name {
+           color: var(--sv-error);
+         }
+         
+         .sv-file-list-item-preview {
+           background-color: rgba(var(--sv-error), 0.1);
+           
+           &-icon {
+             color: var(--sv-error);
+           }
+         }
+       }
+       
+       // Success state
+       &-success {
+         border-color: var(--sv-success);
+         
+         .sv-file-list-item-preview {
+           background-color: rgba(var(--sv-success), 0.1);
+           
+           &-icon {
+             color: var(--sv-success);
+           }
+         }
+       }
+     }
+     
+     // Empty state
+     &-empty {
+       text-align: center;
+       padding: var(--sv-padding-4);
+       color: var(--sv-text-secondary);
+       font-size: var(--sv-text-sm);
+     }
+   }
+   
+   /* ==========================================================================
+      5. UPLOAD PROGRESS
+      ========================================================================== */
+   
+   .sv-file-progress {
+     width: 100%;
+     margin-top: var(--sv-space-2);
+     
+     &-bar {
+       height: $progress-height;
+       width: 100%;
+       background-color: var(--sv-bg-element);
+       border-radius: calc($progress-height / 2);
+       overflow: hidden;
+       
+       &-fill {
+         height: 100%;
+         background-color: var(--sv-primary);
+         width: 0;
+         border-radius: calc($progress-height / 2);
+         transition: width var(--sv-motion-duration-medium) var(--sv-motion-ease-decelerate);
+       }
+     }
+     
+     &-info {
+       display: flex;
+       justify-content: space-between;
+       margin-top: var(--sv-space-1);
+       font-size: var(--sv-text-xs);
+       color: var(--sv-text-secondary);
+       
+       &-percent {
+         font-weight: var(--sv-font-medium);
+       }
+       
+       &-status {
+         text-transform: capitalize;
+       }
+     }
+     
+     // Upload status variants
+     &-uploading {
+       .sv-file-progress-bar-fill {
+         background-color: var(--sv-primary);
+       }
+     }
+     
+     &-success {
+       .sv-file-progress-bar-fill {
+         background-color: var(--sv-success);
+       }
+       
+       .sv-file-progress-info-status {
+         color: var(--sv-success);
+       }
+     }
+     
+     &-error {
+       .sv-file-progress-bar-fill {
+         background-color: var(--sv-error);
+       }
+       
+       .sv-file-progress-info-status {
+         color: var(--sv-error);
+       }
+     }
+     
+     &-paused {
+       .sv-file-progress-bar-fill {
+         background-color: var(--sv-warning);
+       }
+       
+       .sv-file-progress-info-status {
+         color: var(--sv-warning);
+       }
+     }
+   }
+   
+   /* ==========================================================================
+      6. RESPONSIVE ADJUSTMENTS
+      ========================================================================== */
+   
+   @include breakpoint-down(md) {
+     .sv-file-upload {
+       &-label {
+         min-height: var(--sv-size-20);
+         
+         &-icon {
+           width: calc($file-icon-size * 0.9);
+           height: calc($file-icon-size * 0.9);
+         }
+       }
+     }
+   }
+   
+   @include breakpoint-down(sm) {
+     .sv-file-upload {
+       &-label {
+         min-height: var(--sv-size-16);
+         
+         &-icon {
+           width: calc($file-icon-size * 0.8);
+           height: calc($file-icon-size * 0.8);
+         }
+         
+         &-text {
+           &-secondary {
+             display: none;
+           }
+         }
+       }
+     }
+     
+     .sv-file-list-item {
+       flex-wrap: wrap;
+       
+       &-preview {
+         width: calc($file-preview-size * 0.8);
+         height: calc($file-preview-size * 0.8);
+       }
+       
+       &-details {
+         width: calc(100% - #{$file-preview-size} - var(--sv-space-5));
+       }
+       
+       &-actions {
+         width: 100%;
+         margin-left: calc($file-preview-size * 0.8 + var(--sv-space-3));
+         margin-top: var(--sv-space-2);
+         justify-content: flex-end;
+       }
+     }
+   }
+   
+   // RTL support
+   [dir="rtl"] {
+     .sv-file-upload {
+       &-compact {
+         .sv-file-upload-label {
+           &-icon {
+             margin-right: 0;
+             margin-left: var(--sv-space-2);
+           }
+           
+           &-text {
+             &-primary {
+               margin-right: 0;
+               margin-left: var(--sv-space-2);
+             }
+           }
+         }
+       }
+     }
+     
+     .sv-file-list-item {
+       &-preview {
+         margin-right: 0;
+         margin-left: var(--sv-space-3);
+       }
+       
+       &-actions {
+         margin-left: 0;
+         margin-right: var(--sv-space-2);
+       }
+       
+       &-details-info-size {
+         margin-right: 0;
+         margin-left: var(--sv-space-3);
+       }
+     }
+     
+     @include breakpoint-down(sm) {
+       .sv-file-list-item {
+         &-actions {
+           margin-left: 0;
+           margin-right: calc($file-preview-size * 0.8 + var(--sv-space-3));
+         }
+       }
+     }
+   }

@@ -1,0 +1,211 @@
+/**
+ * Breadcrumbs Component Styles
+ * Version: 1.0.0
+ * Last Updated: April 29, 2025
+ * 
+ * This file contains styles for the breadcrumbs navigation component in the SkillVo design system.
+ * It extends the sv-nav-control-base class to maintain design consistency.
+ */
+
+ @use './mixins' as *;
+
+ /* ==========================================================================
+    TABLE OF CONTENTS:
+    
+    1. CORE BREADCRUMBS STYLES
+    2. BREADCRUMB ITEM STYLES
+    3. BREADCRUMB VARIANTS
+    4. RESPONSIVE BEHAVIOR
+    5. ACCESSIBILITY ENHANCEMENTS
+    ========================================================================== */
+ 
+ /* ==========================================================================
+    1. CORE BREADCRUMBS STYLES
+    ========================================================================== */
+ 
+ .sv-breadcrumbs {
+   // Extend the navigation control base class
+   @extend .sv-nav-control-base;
+   
+   // Container styles
+   display: flex;
+   flex-wrap: wrap;
+   align-items: center;
+   padding: var(--sv-padding-2) 0;
+   margin: 0;
+   list-style: none;
+   
+   // Font size and spacing
+   @include typography('sm', 'normal', 'normal');
+ }
+ 
+ /* ==========================================================================
+    2. BREADCRUMB ITEM STYLES
+    ========================================================================== */
+ 
+ .sv-breadcrumbs__item {
+   display: flex;
+   align-items: center;
+   color: var(--sv-text-secondary);
+   
+   // Add separator between items
+   & + & {
+     position: relative;
+     padding-left: var(--sv-space-2);
+     
+     &::before {
+       content: "/";
+       display: inline-block;
+       margin-right: var(--sv-space-2);
+       color: var(--sv-text-tertiary);
+     }
+   }
+   
+   // Current/active breadcrumb
+   &.active,
+   &[aria-current="page"] {
+     color: var(--sv-text-primary);
+     font-weight: var(--sv-font-medium);
+   }
+ }
+ 
+ .sv-breadcrumbs__link {
+   color: var(--sv-text-secondary);
+   text-decoration: none;
+   @include transition(color, 'short', 'standard');
+   
+   &:hover {
+     color: var(--sv-primary);
+     text-decoration: underline;
+   }
+   
+   &:focus-visible {
+     outline: var(--sv-focus-ring-width) solid var(--sv-focus-ring-color);
+     outline-offset: var(--sv-focus-ring-offset);
+     text-decoration: none;
+   }
+   
+   // Active/current link
+   .active &,
+   [aria-current="page"] & {
+     color: var(--sv-text-primary);
+     cursor: default;
+     
+     &:hover {
+       text-decoration: none;
+     }
+   }
+   
+   // Breadcrumb with home icon
+   .sv-breadcrumbs__icon {
+     margin-right: var(--sv-space-1);
+     font-size: var(--sv-icon-size-sm);
+   }
+ }
+ 
+ /* ==========================================================================
+    3. BREADCRUMB VARIANTS
+    ========================================================================== */
+ 
+ // Breadcrumbs with a light background
+ .sv-breadcrumbs--light {
+   background-color: var(--sv-bg-secondary);
+   padding: var(--sv-padding-2) var(--sv-padding-4);
+   @include border-radius('md');
+ }
+ 
+ // Breadcrumbs with custom separators
+ .sv-breadcrumbs--chevron {
+   .sv-breadcrumbs__item + .sv-breadcrumbs__item::before {
+     content: "";
+     display: inline-block;
+     width: 0.5em;
+     height: 0.5em;
+     border-right: 1px solid var(--sv-text-tertiary);
+     border-top: 1px solid var(--sv-text-tertiary);
+     transform: rotate(45deg);
+     margin: 0 var(--sv-space-2);
+   }
+ }
+ 
+ // Arrow separator variant
+ .sv-breadcrumbs--arrow {
+   .sv-breadcrumbs__item + .sv-breadcrumbs__item::before {
+     content: "→";
+     margin: 0 var(--sv-space-2);
+   }
+ }
+ 
+ // Dot separator variant
+ .sv-breadcrumbs--dot {
+   .sv-breadcrumbs__item + .sv-breadcrumbs__item::before {
+     content: "•";
+     margin: 0 var(--sv-space-2);
+   }
+ }
+ 
+ // Compact breadcrumbs
+ .sv-breadcrumbs--compact {
+   @include typography('xs', 'normal', 'normal');
+   padding: var(--sv-padding-1) 0;
+ }
+ 
+ /* ==========================================================================
+    4. RESPONSIVE BEHAVIOR
+    ========================================================================== */
+ 
+ @include breakpoint-down('sm') {
+   // Collapse middle items on small screens
+   .sv-breadcrumbs--collapsible {
+     .sv-breadcrumbs__item:not(:first-child):not(:last-child):not(.sv-breadcrumbs__item--important) {
+       display: none;
+     }
+     
+     // Show ellipsis indicator for collapsed items
+     .sv-breadcrumbs__item--ellipsis {
+       display: flex;
+     }
+   }
+   
+   // Smaller text and padding on mobile
+   .sv-breadcrumbs {
+     @include typography('xs', 'normal', 'normal');
+     padding: var(--sv-padding-1) 0;
+   }
+ }
+ 
+ // Ellipsis for collapsed breadcrumbs
+ .sv-breadcrumbs__item--ellipsis {
+   display: none; // Hidden by default, shown when needed
+   
+   &::before {
+     content: "...";
+     margin: 0 var(--sv-space-2);
+   }
+ }
+ 
+ /* ==========================================================================
+    5. ACCESSIBILITY ENHANCEMENTS
+    ========================================================================== */
+ 
+ // Enhanced focus states
+ .sv-breadcrumbs__link:focus-visible {
+   outline: var(--sv-focus-ring-width) solid var(--sv-focus-ring-color);
+   outline-offset: var(--sv-focus-ring-offset);
+   text-decoration: none;
+ }
+ 
+ // Proper ARIA role for breadcrumbs container
+ .sv-breadcrumbs[aria-label],
+ .sv-breadcrumbs[aria-labelledby] {
+   // These attributes are needed for proper screen reader announcement
+ }
+ 
+ // Current page indicator for screen readers
+ .sv-breadcrumbs__item[aria-current="page"] {
+   .sv-breadcrumbs__link {
+     text-decoration: none;
+     font-weight: var(--sv-font-medium);
+     pointer-events: none; // Disable clicking on current page link
+   }
+ }
