@@ -43,17 +43,17 @@ $container-max-widths: (
 // These will be available for use across the app
 :root {
   // Breakpoints
-  --breakpoint-xs: #{$breakpoint-xs};
-  --breakpoint-sm: #{$breakpoint-sm};
-  --breakpoint-md: #{$breakpoint-md};
-  --breakpoint-lg: #{$breakpoint-lg};
-  --breakpoint-xl: #{$breakpoint-xl};
-  --breakpoint-xxl: #{$breakpoint-xxl};
+  --sv-breakpoint-xs: #{$breakpoint-xs};
+  --sv-breakpoint-sm: #{$breakpoint-sm};
+  --sv-breakpoint-md: #{$breakpoint-md};
+  --sv-breakpoint-lg: #{$breakpoint-lg};
+  --sv-breakpoint-xl: #{$breakpoint-xl};
+  --sv-breakpoint-xxl: #{$breakpoint-xxl};
 
   // Container max widths
-  --container-sm: #{map.get($container-max-widths, 'sm')};
-  --container-md: #{map.get($container-max-widths, 'md')};
-  --container-lg: #{map.get($container-max-widths, 'lg')};
-  --container-xl: #{map.get($container-max-widths, 'xl')};
-  --container-xxl: #{map.get($container-max-widths, 'xxl')};
+  --sv-container-sm: #{map.get($container-max-widths, 'sm')};
+  --sv-container-md: #{map.get($container-max-widths, 'md')};
+  --sv-container-lg: #{map.get($container-max-widths, 'lg')};
+  --sv-container-xl: #{map.get($container-max-widths, 'xl')};
+  --sv-container-xxl: #{map.get($container-max-widths, 'xxl')};
 }

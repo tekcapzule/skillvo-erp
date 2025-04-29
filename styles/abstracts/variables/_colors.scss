@@ -142,7 +142,7 @@ $light-theme-map: (
   'error': #f44336,
   
   // Standardized icon color for light theme
-  --icon-color: var(--text-primary)
+  'icon-color': 'var(--sv-text-primary)'
 );
 
 // ========================================
@@ -193,7 +193,7 @@ $dark-theme-map: (
   'shadow-default': '0 2px 8px rgba(0, 0, 0, 0.3)',
   
   // Standardized icon color for dark theme
-  --icon-color: var(--text-inverse)
+  'icon-color': 'var(--sv-text-inverse)'
 );
 
 // Common colors map for utility classes

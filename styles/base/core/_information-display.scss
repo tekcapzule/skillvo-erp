@@ -6,37 +6,37 @@
 .label {
   @extend .ui-control-base; 
   display: inline-block;
-  padding: var(--spacing-1) var(--spacing-2);
-  font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-medium);
+  padding: var(--sv-spacing-1) var(--sv-spacing-2);
+  font-size: var(--sv-font-size-sm);
+  font-weight: var(--sv-font-weight-medium);
   text-align: center;
   white-space: nowrap;
   vertical-align: baseline;
-  border-radius: var(--radius-sm);
-  background-color: var(--secondary);
-  color: var(--text-on-secondary);
+  border-radius: var(--sv-radius-sm);
+  background-color: var(--sv-secondary);
+  color: var(--sv-text-on-secondary);
 
-  &.label-primary { background-color: var(--primary); }
-  &.label-success { background-color: var(--success); }
-  &.label-info    { background-color: var(--info); }
-  &.label-warning { background-color: var(--warning); }
-  &.label-danger  { background-color: var(--error); }
+  &.label-primary { background-color: var(--sv-primary); }
+  &.label-success { background-color: var(--sv-success); }
+  &.label-info    { background-color: var(--sv-info); }
+  &.label-warning { background-color: var(--sv-warning); }
+  &.label-danger  { background-color: var(--sv-error); }
 }
 
 .badge {
   @extend .label;
-  border-radius: var(--radius-full);
-  padding: var(--spacing-1) var(--spacing-2);
+  border-radius: var(--sv-radius-full);
+  padding: var(--sv-spacing-1) var(--sv-spacing-2);
 }
 
 .tooltip {
   position: absolute;
-  z-index: var(--z-index-tooltip, 1070);
-  padding: var(--spacing-2) var(--spacing-3);
-  font-size: var(--font-size-sm);
+  z-index: var(--sv-z-index-tooltip, 1070);
+  padding: var(--sv-spacing-2) var(--sv-spacing-3);
+  font-size: var(--sv-font-size-sm);
   background-color: rgba(0, 0, 0, 0.8);
-  color: var(--text-on-dark);
-  border-radius: var(--radius-sm);
+  color: var(--sv-text-on-dark);
+  border-radius: var(--sv-radius-sm);
   max-width: 200px;
   word-wrap: break-word;
   opacity: 0;
@@ -86,16 +86,16 @@
   @extend .ui-control-base; 
   display: inline-flex;
   align-items: center;
-  padding: var(--spacing-1) var(--spacing-2);
-  font-size: var(--font-size-sm);
-  background-color: var(--background-alt);
-  border: var(--border-width-sm, 1px) solid var(--border-default);
-  border-radius: var(--radius-full);
-  margin-right: var(--spacing-1);
-  margin-bottom: var(--spacing-1);
+  padding: var(--sv-spacing-1) var(--sv-spacing-2);
+  font-size: var(--sv-font-size-sm);
+  background-color: var(--sv-background-alt);
+  border: var(--sv-border-width-sm, 1px) solid var(--sv-border-default);
+  border-radius: var(--sv-radius-full);
+  margin-right: var(--sv-spacing-1);
+  margin-bottom: var(--sv-spacing-1);
 
   .tag-remove, .chip-remove {
-    margin-left: var(--spacing-1);
+    margin-left: var(--sv-spacing-1);
     cursor: pointer;
     opacity: 0.5;
 
@@ -105,27 +105,27 @@
   }
 
   &.tag-primary, &.chip-primary {
-    background-color: var(--primary-light-bg, rgba(0, 0, 0, 0.05));
-    border-color: var(--primary-border, rgba(0, 0, 0, 0.1));
-    color: var(--primary);
+    background-color: var(--sv-primary-light-bg, rgba(0, 0, 0, 0.05));
+    border-color: var(--sv-primary-border, rgba(0, 0, 0, 0.1));
+    color: var(--sv-primary);
   }
 
   &.tag-success, &.chip-success {
-    background-color: var(--success-light-bg, rgba(0, 0, 0, 0.05));
-    border-color: var(--success-border, rgba(0, 0, 0, 0.1));
-    color: var(--success);
+    background-color: var(--sv-success-light-bg, rgba(0, 0, 0, 0.05));
+    border-color: var(--sv-success-border, rgba(0, 0, 0, 0.1));
+    color: var(--sv-success);
   }
 
   &.tag-warning, &.chip-warning {
-    background-color: var(--warning-light-bg, rgba(0, 0, 0, 0.05));
-    border-color: var(--warning-border, rgba(0, 0, 0, 0.1));
-    color: var(--warning-dark, var(--warning));
+    background-color: var(--sv-warning-light-bg, rgba(0, 0, 0, 0.05));
+    border-color: var(--sv-warning-border, rgba(0, 0, 0, 0.1));
+    color: var(--sv-warning-dark, var(--sv-warning));
   }
 
   &.tag-danger, &.chip-danger {
-    background-color: var(--error-light-bg, rgba(0, 0, 0, 0.05));
-    border-color: var(--error-border, rgba(0, 0, 0, 0.1));
-    color: var(--error);
+    background-color: var(--sv-error-light-bg, rgba(0, 0, 0, 0.05));
+    border-color: var(--sv-error-border, rgba(0, 0, 0, 0.1));
+    color: var(--sv-error);
   }
 }
 
@@ -133,8 +133,8 @@
   @extend .ui-control-base; 
   display: flex;
   height: 8px;
-  background-color: var(--background-alt);
-  border-radius: var(--radius-full);
+  background-color: var(--sv-background-alt);
+  border-radius: var(--sv-radius-full);
   overflow: hidden;
 
   .progress-bar {
@@ -142,7 +142,7 @@
     flex-direction: column;
     justify-content: center;
     text-align: center;
-    background-color: var(--primary);
+    background-color: var(--sv-primary);
     transition: width 0.6s ease;
 
     &.progress-bar-striped {
@@ -169,10 +169,10 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border-radius: var(--radius-full);
-  background-color: var(--primary);
-  color: var(--text-on-primary);
-  font-weight: var(--font-weight-medium);
+  border-radius: var(--sv-radius-full);
+  background-color: var(--sv-primary);
+  color: var(--sv-text-on-primary);
+  font-weight: var(--sv-font-weight-medium);
   overflow: hidden;
 
   img {
@@ -184,23 +184,23 @@
   &.avatar-sm {
     width: 32px;
     height: 32px;
-    font-size: var(--font-size-sm);
+    font-size: var(--sv-font-size-sm);
   }
 
   &.avatar-md {
     width: 48px;
     height: 48px;
-    font-size: var(--font-size-base);
+    font-size: var(--sv-font-size-base);
   }
 
   &.avatar-lg {
     width: 64px;
     height: 64px;
-    font-size: var(--font-size-lg);
+    font-size: var(--sv-font-size-lg);
   }
 
   &.avatar-square {
-    border-radius: var(--radius-md);
+    border-radius: var(--sv-radius-md);
   }
 }
 

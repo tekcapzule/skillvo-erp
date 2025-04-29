@@ -48,33 +48,32 @@ $size-3xl: $size-24 !default;  // 96px
 // ========================================
 :root {
   // Base Scale
-  --size-unit: #{$size-unit};
-  --size-0: #{$size-0};
-  --size-1: #{$size-1};
-  --size-2: #{$size-2};
-  --size-3: #{$size-3};
-  --size-4: #{$size-4};
-  --size-5: #{$size-5};
-  --size-6: #{$size-6};
-  --size-7: #{$size-7};
-  --size-8: #{$size-8};
-  --size-10: #{$size-10};
-  --size-12: #{$size-12};
-  --size-16: #{$size-16};
-  --size-20: #{$size-20};
-  --size-24: #{$size-24};
-  --size-32: #{$size-32};
-  --size-40: #{$size-40};
-  --size-48: #{$size-48};
-  --size-64: #{$size-64};
+  --sv-size-unit: #{$size-unit};
+  --sv-size-0: #{$size-0};
+  --sv-size-1: #{$size-1};
+  --sv-size-2: #{$size-2};
+  --sv-size-3: #{$size-3};
+  --sv-size-4: #{$size-4};
+  --sv-size-5: #{$size-5};
+  --sv-size-6: #{$size-6};
+  --sv-size-7: #{$size-7};
+  --sv-size-8: #{$size-8};
+  --sv-size-10: #{$size-10};
+  --sv-size-12: #{$size-12};
+  --sv-size-16: #{$size-16};
+  --sv-size-20: #{$size-20};
+  --sv-size-24: #{$size-24};
+  --sv-size-32: #{$size-32};
+  --sv-size-40: #{$size-40};
+  --sv-size-48: #{$size-48};
+  --sv-size-64: #{$size-64};
 
   // Semantic Aliases
-  --size-xs: #{$size-xs};
-  --size-sm: #{$size-sm};
-  --size-md: #{$size-md};
-  --size-lg: #{$size-lg};
-  --size-xl: #{$size-xl};
-  --size-2xl: #{$size-2xl};
-  --size-3xl: #{$size-3xl};
-
+  --sv-size-xs: #{$size-xs};
+  --sv-size-sm: #{$size-sm};
+  --sv-size-md: #{$size-md};
+  --sv-size-lg: #{$size-lg};
+  --sv-size-xl: #{$size-xl};
+  --sv-size-2xl: #{$size-2xl};
+  --sv-size-3xl: #{$size-3xl};
 }

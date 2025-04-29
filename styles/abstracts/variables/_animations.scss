@@ -28,17 +28,17 @@ $motion-keyspring: spring-in !default;
 // ========================================
 :root {
   // Durations
-  --motion-duration-short: #{$motion-duration-short};
-  --motion-duration-medium: #{$motion-duration-medium};
-  --motion-duration-long: #{$motion-duration-long};
+  --sv-motion-duration-short: #{$motion-duration-short};
+  --sv-motion-duration-medium: #{$motion-duration-medium};
+  --sv-motion-duration-long: #{$motion-duration-long};
 
   // Easings
-  --motion-ease-standard: #{$motion-ease-standard};
-  --motion-ease-decelerate: #{$motion-ease-decelerate};
-  --motion-ease-accelerate: #{$motion-ease-accelerate};
+  --sv-motion-ease-standard: #{$motion-ease-standard};
+  --sv-motion-ease-decelerate: #{$motion-ease-decelerate};
+  --sv-motion-ease-accelerate: #{$motion-ease-accelerate};
 
   // Keyframes (names only, no actual @keyframes defined here)
-  --motion-keyfade: #{$motion-keyfade};
-  --motion-keybounce: #{$motion-keybounce};
-  --motion-keyspring: #{$motion-keyspring};
+  --sv-motion-keyfade: #{$motion-keyfade};
+  --sv-motion-keybounce: #{$motion-keybounce};
+  --sv-motion-keyspring: #{$motion-keyspring};
 }

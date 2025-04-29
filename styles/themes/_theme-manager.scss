@@ -95,34 +95,34 @@ html.color-scheme-transition *::after {
 
 // Text color utility classes for theming
 .text-theme-primary {
-  color: var(--primary-600);
+  color: var(--sv-primary-600);
   
   [data-theme="dark"] & {
-    color: var(--primary-400);
+    color: var(--sv-primary-400);
   }
 }
 
 .text-theme-secondary {
-  color: var(--secondary-600);
+  color: var(--sv-secondary-600);
   
   [data-theme="dark"] & {
-    color: var(--secondary-400);
+    color: var(--sv-secondary-400);
   }
 }
 
 // Background color utility classes
 .bg-theme-primary {
-  background-color: var(--bg-primary);
+  background-color: var(--sv-bg-primary);
 }
 
 .bg-theme-secondary {
-  background-color: var(--bg-secondary);
+  background-color: var(--sv-bg-secondary);
 }
 
 .bg-theme-surface {
-  background-color: var(--bg-surface);
+  background-color: var(--sv-bg-surface);
 }
 
 .bg-theme-app {
-  background-color: var(--bg-app);
+  background-color: var(--sv-bg-app);
 }

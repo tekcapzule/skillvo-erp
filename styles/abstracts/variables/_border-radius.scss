@@ -24,13 +24,13 @@ $radius-full: 9999px !default;             // Fully rounded (circles, pills)
 // ========================================
 :root {
   // Base Radius Scale
-  --radius-none: #{$radius-none};
-  --radius-xs: #{$radius-xs};
-  --radius-sm: #{$radius-sm};
-  --radius-md: #{$radius-md};
-  --radius-lg: #{$radius-lg};
-  --radius-xl: #{$radius-xl};
-  --radius-2xl: #{$radius-2xl};
-  --radius-3xl: #{$radius-3xl};
-  --radius-full: #{$radius-full};
+  --sv-radius-none: #{$radius-none};
+  --sv-radius-xs: #{$radius-xs};
+  --sv-radius-sm: #{$radius-sm};
+  --sv-radius-md: #{$radius-md};
+  --sv-radius-lg: #{$radius-lg};
+  --sv-radius-xl: #{$radius-xl};
+  --sv-radius-2xl: #{$radius-2xl};
+  --sv-radius-3xl: #{$radius-3xl};
+  --sv-radius-full: #{$radius-full};
 }

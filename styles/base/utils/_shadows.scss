@@ -3,23 +3,23 @@
 // ========================================
 
 // Base Shadow Scale
-.shadow-none { box-shadow: var(--shadow-none); }
-.shadow-xs { box-shadow: var(--shadow-xs); }
-.shadow-sm { box-shadow: var(--shadow-sm); }
-.shadow-md { box-shadow: var(--shadow-md); }
-.shadow-lg { box-shadow: var(--shadow-lg); }
-.shadow-xl { box-shadow: var(--shadow-xl); }
-.shadow-2xl { box-shadow: var(--shadow-2xl); }
-.shadow-inner { box-shadow: var(--shadow-inner); }
-.shadow-outline { box-shadow: var(--shadow-outline); }
+.shadow-none { box-shadow: var(--sv-shadow-none); }
+.shadow-xs { box-shadow: var(--sv-shadow-xs); }
+.shadow-sm { box-shadow: var(--sv-shadow-sm); }
+.shadow-md { box-shadow: var(--sv-shadow-md); }
+.shadow-lg { box-shadow: var(--sv-shadow-lg); }
+.shadow-xl { box-shadow: var(--sv-shadow-xl); }
+.shadow-2xl { box-shadow: var(--sv-shadow-2xl); }
+.shadow-inner { box-shadow: var(--sv-shadow-inner); }
+.shadow-outline { box-shadow: var(--sv-shadow-outline); }
 
 // Directional Shadows
-.shadow-top { box-shadow: var(--shadow-top); }
-.shadow-right { box-shadow: var(--shadow-right); }
-.shadow-bottom { box-shadow: var(--shadow-bottom); }
-.shadow-left { box-shadow: var(--shadow-left); }
+.shadow-top { box-shadow: var(--sv-shadow-top); }
+.shadow-right { box-shadow: var(--sv-shadow-right); }
+.shadow-bottom { box-shadow: var(--sv-shadow-bottom); }
+.shadow-left { box-shadow: var(--sv-shadow-left); }
 
 // Interactive States
-.shadow-focus { box-shadow: var(--shadow-focus); }
-.shadow-focus-error { box-shadow: var(--shadow-focus-error); }
-.shadow-focus-success { box-shadow: var(--shadow-focus-success); }
+.shadow-focus { box-shadow: var(--sv-shadow-focus); }
+.shadow-focus-error { box-shadow: var(--sv-shadow-focus-error); }
+.shadow-focus-success { box-shadow: var(--sv-shadow-focus-success); }

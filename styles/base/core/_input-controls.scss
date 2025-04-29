@@ -7,39 +7,39 @@
   @extend .ui-control-base; 
   display: block;
   width: 100%;
-  padding: var(--spacing-2) var(--spacing-3);
-  background-color: var(--background-base);
-  border: var(--border-width-sm, 1px) solid var(--border-default);
-  border-radius: var(--radius-md);
+  padding: var(--sv-spacing-2) var(--sv-spacing-3);
+  background-color: var(--sv-background-base);
+  border: var(--sv-border-width-sm, 1px) solid var(--sv-border-default);
+  border-radius: var(--sv-radius-md);
 
   &::placeholder {
-    color: var(--text-tertiary);
+    color: var(--sv-text-tertiary);
     opacity: 1;
   }
 
   &:hover:not(:disabled):not(.disabled) {
-    border-color: var(--border-hover);
+    border-color: var(--sv-border-hover);
   }
 
   &:focus:not(:disabled):not(.disabled) {
-    border-color: var(--border-focus);
-    background-color: var(--background-base);
+    border-color: var(--sv-border-focus);
+    background-color: var(--sv-background-base);
   }
 
   &.filled {
-    background-color: var(--background-alt);
+    background-color: var(--sv-background-alt);
   }
 
   &.error, &.has-error {
-    border-color: var(--border-error);
+    border-color: var(--sv-border-error);
 
     & + .helper-text {
-      color: var(--error);
+      color: var(--sv-error);
     }
   }
 
   &.with-icon {
-    padding-left: var(--spacing-8);
+    padding-left: var(--sv-spacing-8);
   }
 
   // Specific input types
@@ -61,17 +61,17 @@
     padding: 0;
 
     &::file-selector-button {
-      padding: var(--spacing-2) var(--spacing-3);
-      background-color: var(--secondary);
-      color: var(--text-on-secondary);
+      padding: var(--sv-spacing-2) var(--sv-spacing-3);
+      background-color: var(--sv-secondary);
+      color: var(--sv-text-on-secondary);
       border: none;
-      border-radius: var(--radius-sm);
-      margin-right: var(--spacing-3);
+      border-radius: var(--sv-radius-sm);
+      margin-right: var(--sv-spacing-3);
       cursor: pointer;
-      transition: var(--transition-base);
+      transition: var(--sv-transition-base);
 
       &:hover {
-        background-color: var(--secondary-dark, var(--secondary));
+        background-color: var(--sv-secondary-dark, var(--sv-secondary));
       }
     }
   }
@@ -79,16 +79,16 @@
 
 .input-label {
   display: block;
-  margin-bottom: var(--spacing-1);
-  font-weight: var(--font-weight-medium);
-  color: var(--text-secondary);
+  margin-bottom: var(--sv-spacing-1);
+  font-weight: var(--sv-font-weight-medium);
+  color: var(--sv-text-secondary);
 }
 
 .helper-text {
   display: block;
-  margin-top: var(--spacing-1);
-  font-size: var(--font-size-sm);
-  color: var(--text-tertiary);
+  margin-top: var(--sv-spacing-1);
+  font-size: var(--sv-font-size-sm);
+  color: var(--sv-text-tertiary);
 }
 
 .textarea-control {

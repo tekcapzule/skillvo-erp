@@ -3,14 +3,14 @@
 // ========================================
 
 // Icon Size Utilities
-.icon-size-xs { width: var(--icon-size-xs); height: var(--icon-size-xs); }
-.icon-size-sm { width: var(--icon-size-sm); height: var(--icon-size-sm); }
-.icon-size-md { width: var(--icon-size-md); height: var(--icon-size-md); }
-.icon-size-lg { width: var(--icon-size-lg); height: var(--icon-size-lg); }
-.icon-size-xl { width: var(--icon-size-xl); height: var(--icon-size-xl); }
-.icon-size-2xl { width: var(--icon-size-2xl); height: var(--icon-size-2xl); }
+.icon-size-xs { width: var(--sv-icon-size-xs); height: var(--sv-icon-size-xs); }
+.icon-size-sm { width: var(--sv-icon-size-sm); height: var(--sv-icon-size-sm); }
+.icon-size-md { width: var(--sv-icon-size-md); height: var(--sv-icon-size-md); }
+.icon-size-lg { width: var(--sv-icon-size-lg); height: var(--sv-icon-size-lg); }
+.icon-size-xl { width: var(--sv-icon-size-xl); height: var(--sv-icon-size-xl); }
+.icon-size-2xl { width: var(--sv-icon-size-2xl); height: var(--sv-icon-size-2xl); }
 
 // Button Size Utilities
-.btn-size-sm { width: var(--btn-size-sm); height: var(--btn-size-sm); }
-.btn-size-md { width: var(--btn-size-md); height: var(--btn-size-md); }
-.btn-size-lg { width: var(--btn-size-lg); height: var(--btn-size-lg); }
+.btn-size-sm { width: var(--sv-btn-size-sm); height: var(--sv-btn-size-sm); }
+.btn-size-md { width: var(--sv-btn-size-md); height: var(--sv-btn-size-md); }
+.btn-size-lg { width: var(--sv-btn-size-lg); height: var(--sv-btn-size-lg); }

@@ -15,60 +15,60 @@
     display: block;
 
     & + .nav-item {
-      margin-left: var(--spacing-2);
+      margin-left: var(--sv-spacing-2);
     }
   }
 
   .nav-link {
     display: block;
-    padding: var(--spacing-2) var(--spacing-3);
-    border-radius: var(--radius-md);
-    color: var(--text-secondary);
+    padding: var(--sv-spacing-2) var(--sv-spacing-3);
+    border-radius: var(--sv-radius-md);
+    color: var(--sv-text-secondary);
     text-decoration: none;
-    transition: var(--transition-base);
+    transition: var(--sv-transition-base);
 
     &:hover {
-      color: var(--primary);
-      background-color: var(--primary-light-bg, rgba(0, 0, 0, 0.05));
+      color: var(--sv-primary);
+      background-color: var(--sv-primary-light-bg, rgba(0, 0, 0, 0.05));
     }
 
     &.active {
-      color: var(--primary);
-      font-weight: var(--font-weight-medium);
-      background-color: var(--primary-lighter-bg, rgba(0, 0, 0, 0.1));
+      color: var(--sv-primary);
+      font-weight: var(--sv-font-weight-medium);
+      background-color: var(--sv-primary-lighter-bg, rgba(0, 0, 0, 0.1));
     }
 
     &.disabled {
-      color: var(--text-disabled);
+      color: var(--sv-text-disabled);
       cursor: not-allowed;
       pointer-events: none;
     }
   }
 
   &.nav-tabs {
-    border-bottom: var(--border-width-sm, 1px) solid var(--border-default);
+    border-bottom: var(--sv-border-width-sm, 1px) solid var(--sv-border-default);
 
     .nav-item {
-      margin-bottom: calc(-1 * var(--border-width-sm));
+      margin-bottom: calc(-1 * var(--sv-border-width-sm));
 
       & + .nav-item {
-        margin-left: var(--spacing-4);
+        margin-left: var(--sv-spacing-4);
       }
     }
 
     .nav-link {
-      border: var(--border-width-sm, 1px) solid transparent;
-      border-top-left-radius: var(--radius-md);
-      border-top-right-radius: var(--radius-md);
+      border: var(--sv-border-width-sm, 1px) solid transparent;
+      border-top-left-radius: var(--sv-radius-md);
+      border-top-right-radius: var(--sv-radius-md);
 
       &:hover {
-        border-color: transparent transparent var(--border-default);
+        border-color: transparent transparent var(--sv-border-default);
       }
 
       &.active {
-        color: var(--text-primary);
-        background-color: var(--background-base);
-        border-color: var(--border-default) var(--border-default) var(--background-base);
+        color: var(--sv-text-primary);
+        background-color: var(--sv-background-base);
+        border-color: var(--sv-border-default) var(--sv-border-default) var(--sv-background-base);
       }
     }
   }
@@ -76,8 +76,8 @@
   &.nav-pills {
     .nav-link {
       &.active {
-        color: var(--text-on-primary);
-        background-color: var(--primary);
+        color: var(--sv-text-on-primary);
+        background-color: var(--sv-primary);
       }
     }
   }
@@ -90,7 +90,7 @@
 
       & + .nav-item {
         margin-left: 0;
-        margin-top: var(--spacing-1);
+        margin-top: var(--sv-spacing-1);
       }
     }
   }
@@ -100,8 +100,8 @@
   @extend .ui-control-base; 
   display: flex;
   flex-wrap: wrap;
-  padding: var(--spacing-2) 0;
-  margin-bottom: var(--spacing-3);
+  padding: var(--sv-spacing-2) 0;
+  margin-bottom: var(--sv-spacing-3);
   list-style: none;
 
   .breadcrumb-item {
@@ -109,18 +109,18 @@
     align-items: center;
 
     & + .breadcrumb-item {
-      padding-left: var(--spacing-2);
+      padding-left: var(--sv-spacing-2);
 
       &::before {
         content: "/";
         display: inline-block;
-        padding-right: var(--spacing-2);
-        color: var(--text-tertiary);
+        padding-right: var(--sv-spacing-2);
+        color: var(--sv-text-tertiary);
       }
     }
 
     a {
-      color: var(--primary);
+      color: var(--sv-primary);
       text-decoration: none;
 
       &:hover {
@@ -129,7 +129,7 @@
     }
 
     &.active {
-      color: var(--text-tertiary);
+      color: var(--sv-text-tertiary);
     }
   }
 }
@@ -139,47 +139,47 @@
   display: flex;
   padding-left: 0;
   list-style: none;
-  border-radius: var(--radius-md);
+  border-radius: var(--sv-radius-md);
 
   .page-item {
     &:first-child .page-link {
-      border-top-left-radius: var(--radius-md);
-      border-bottom-left-radius: var(--radius-md);
+      border-top-left-radius: var(--sv-radius-md);
+      border-bottom-left-radius: var(--sv-radius-md);
     }
 
     &:last-child .page-link {
-      border-top-right-radius: var(--radius-md);
-      border-bottom-right-radius: var(--radius-md);
+      border-top-right-radius: var(--sv-radius-md);
+      border-bottom-right-radius: var(--sv-radius-md);
     }
 
     &.active .page-link {
-      background-color: var(--primary);
-      border-color: var(--primary);
-      color: var(--text-on-primary);
+      background-color: var(--sv-primary);
+      border-color: var(--sv-primary);
+      color: var(--sv-text-on-primary);
       z-index: 1;
     }
 
     &.disabled .page-link {
-      color: var(--text-disabled);
+      color: var(--sv-text-disabled);
       pointer-events: none;
-      background-color: var(--background-base);
-      border-color: var(--border-default);
+      background-color: var(--sv-background-base);
+      border-color: var(--sv-border-default);
     }
   }
 
   .page-link {
     position: relative;
     display: block;
-    padding: var(--spacing-2) var(--spacing-3);
+    padding: var(--sv-spacing-2) var(--sv-spacing-3);
     margin-left: -1px;
-    color: var(--primary);
-    background-color: var(--background-base);
-    border: var(--border-width-sm, 1px) solid var(--border-default);
+    color: var(--sv-primary);
+    background-color: var(--sv-background-base);
+    border: var(--sv-border-width-sm, 1px) solid var(--sv-border-default);
     text-decoration: none;
 
     &:hover {
-      background-color: var(--background-alt);
-      border-color: var(--border-default);
+      background-color: var(--sv-background-alt);
+      border-color: var(--sv-border-default);
       z-index: 2;
     }
 
@@ -192,7 +192,7 @@
 .stepper {
   @extend .ui-control-base; 
   display: flex;
-  margin: var(--spacing-5) 0;
+  margin: var(--sv-spacing-5) 0;
 
   .step {
     flex: 1;
@@ -206,52 +206,52 @@
       left: 60%;
       right: -40%;
       height: 2px;
-      background-color: var(--border-default);
+      background-color: var(--sv-border-default);
       z-index: 0;
     }
 
     &.completed:not(:last-child)::after {
-      background-color: var(--primary);
+      background-color: var(--sv-primary);
     }
 
     .step-indicator {
       width: 30px;
       height: 30px;
-      border-radius: var(--radius-full);
-      background-color: var(--background-base);
-      border: 2px solid var(--border-default);
-      color: var(--text-tertiary);
+      border-radius: var(--sv-radius-full);
+      background-color: var(--sv-background-base);
+      border: 2px solid var(--sv-border-default);
+      color: var(--sv-text-tertiary);
       display: flex;
       align-items: center;
       justify-content: center;
-      margin: 0 auto var(--spacing-2);
+      margin: 0 auto var(--sv-spacing-2);
       position: relative;
       z-index: 1;
     }
 
     .step-label {
-      font-size: var(--font-size-sm);
-      color: var(--text-secondary);
+      font-size: var(--sv-font-size-sm);
+      color: var(--sv-text-secondary);
     }
 
     &.active {
       .step-indicator {
-        background-color: var(--primary);
-        border-color: var(--primary);
-        color: var(--text-on-primary);
+        background-color: var(--sv-primary);
+        border-color: var(--sv-primary);
+        color: var(--sv-text-on-primary);
       }
 
       .step-label {
-        color: var(--text-primary);
-        font-weight: var(--font-weight-medium);
+        color: var(--sv-text-primary);
+        font-weight: var(--sv-font-weight-medium);
       }
     }
 
     &.completed {
       .step-indicator {
-        background-color: var(--success);
-        border-color: var(--success);
-        color: var(--text-on-success, #fff);
+        background-color: var(--sv-primary);
+        border-color: var(--sv-primary);
+        color: var(--sv-text-on-primary);
       }
     }
   }

@@ -18,14 +18,14 @@
 
   &.sv-button--disabled {
     pointer-events: none;
-    opacity: var(--button-disabled-opacity, 0.65);
+    opacity: var(--sv-button-disabled-opacity, 0.65);
   }
 }
 
 .sv-button {
   @extend .button-base;
-  font-weight: var(--button-font-weight);
-  transition: var(--button-transition, all 0.2s ease-in-out);
+  font-weight: var(--sv-button-font-weight);
+  transition: var(--sv-button-transition, all 0.2s ease-in-out);
 
   &__content {
     display: flex;
@@ -40,11 +40,11 @@
     font-size: inherit;
 
     &--left {
-      margin-right: var(--button-icon-spacing, 8px);
+      margin-right: var(--sv-button-icon-spacing, 8px);
     }
 
     &--right {
-      margin-left: var(--button-icon-spacing, 8px);
+      margin-left: var(--sv-button-icon-spacing, 8px);
     }
   }
 }

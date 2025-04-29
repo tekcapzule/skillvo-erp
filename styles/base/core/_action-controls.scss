@@ -9,14 +9,14 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: var(--spacing-2) var(--spacing-4);
-  font-weight: var(--font-weight-medium);
+  padding: var(--sv-spacing-2) var(--sv-spacing-4);
+  font-weight: var(--sv-font-weight-medium);
   text-align: left;
   vertical-align: middle;
   cursor: pointer;
   user-select: none;
-  border: var(--border-width-sm, 1px) solid transparent;
-  border-radius: var(--radius-md);
+  border: var(--sv-border-width-sm, 1px) solid transparent;
+  border-radius: var(--sv-radius-md);
   white-space: nowrap;
 }
 
@@ -25,9 +25,9 @@
   @extend .button-base;
   height: 56px;
   width: 56px;
-  border-radius: var(--radius-full);
+  border-radius: var(--sv-radius-full);
   padding: 0;
-  box-shadow: var(--shadow-md);
+  box-shadow: var(--sv-shadow-md);
 
   &.fab-sm {
     height: 40px;

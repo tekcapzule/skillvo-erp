@@ -41,42 +41,42 @@ $shadow-focus-success: 0 0 0 3px rgba(0, 0, 0, 0.08) !default;
 // ========================================
 :root {
   // Base Colors
-  --shadow-color-light: #{$shadow-color-light};
-  --shadow-color-medium: #{$shadow-color-medium};
-  --shadow-color-dark: #{$shadow-color-dark};
+  --sv-shadow-color-light: #{$shadow-color-light};
+  --sv-shadow-color-medium: #{$shadow-color-medium};
+  --sv-shadow-color-dark: #{$shadow-color-dark};
 
   // Base Scale
-  --shadow-none: #{$shadow-none};
-  --shadow-xs: #{$shadow-xs};
-  --shadow-sm: #{$shadow-sm};
-  --shadow-md: #{$shadow-md};
-  --shadow-lg: #{$shadow-lg};
-  --shadow-xl: #{$shadow-xl};
-  --shadow-2xl: #{$shadow-2xl};
-  --shadow-inner: #{$shadow-inner};
-  --shadow-outline: #{$shadow-outline};
+  --sv-shadow-none: #{$shadow-none};
+  --sv-shadow-xs: #{$shadow-xs};
+  --sv-shadow-sm: #{$shadow-sm};
+  --sv-shadow-md: #{$shadow-md};
+  --sv-shadow-lg: #{$shadow-lg};
+  --sv-shadow-xl: #{$shadow-xl};
+  --sv-shadow-2xl: #{$shadow-2xl};
+  --sv-shadow-inner: #{$shadow-inner};
+  --sv-shadow-outline: #{$shadow-outline};
 
   // Directional
-  --shadow-top: #{$shadow-top};
-  --shadow-right: #{$shadow-right};
-  --shadow-bottom: #{$shadow-bottom};
-  --shadow-left: #{$shadow-left};
+  --sv-shadow-top: #{$shadow-top};
+  --sv-shadow-right: #{$shadow-right};
+  --sv-shadow-bottom: #{$shadow-bottom};
+  --sv-shadow-left: #{$shadow-left};
 
   // Interaction
-  --shadow-focus: #{$shadow-focus};
-  --shadow-focus-error: #{$shadow-focus-error};
-  --shadow-focus-success: #{$shadow-focus-success};
+  --sv-shadow-focus: #{$shadow-focus};
+  --sv-shadow-focus-error: #{$shadow-focus-error};
+  --sv-shadow-focus-success: #{$shadow-focus-success};
 }
 
 // ========================================
 // Dark Theme Shadow Overrides
 // ========================================
 .dark-theme {
-  --shadow-color-light: rgba(0, 0, 0, 0.25);
-  --shadow-color-medium: rgba(0, 0, 0, 0.35);
-  --shadow-color-dark: rgba(0, 0, 0, 0.5);
+  --sv-shadow-color-light: rgba(0, 0, 0, 0.25);
+  --sv-shadow-color-medium: rgba(0, 0, 0, 0.35);
+  --sv-shadow-color-dark: rgba(0, 0, 0, 0.5);
 
-  --shadow-focus: 0 0 0 3px rgba(255, 255, 255, 0.1);
-  --shadow-focus-error: 0 0 0 3px rgba(0, 0, 0, 0.25);
-  --shadow-focus-success: 0 0 0 3px rgba(255, 255, 255, 0.1);
+  --sv-shadow-focus: 0 0 0 3px rgba(255, 255, 255, 0.1);
+  --sv-shadow-focus-error: 0 0 0 3px rgba(0, 0, 0, 0.25);
+  --sv-shadow-focus-success: 0 0 0 3px rgba(255, 255, 255, 0.1);
 }

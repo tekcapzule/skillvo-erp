@@ -41,32 +41,31 @@ $space-3xl: $space-24 !default;
 // CSS Custom Properties
 :root {
   // Base Unit
-  --spacing-unit: #{$spacing-unit};
+  --sv-spacing-unit: #{$spacing-unit};
 
   // Base Scale
-  --space-0: #{$space-0};
-  --space-1: #{$space-1};
-  --space-2: #{$space-2};
-  --space-3: #{$space-3};
-  --space-4: #{$space-4};
-  --space-5: #{$space-5};
-  --space-6: #{$space-6};
-  --space-7: #{$space-7};
-  --space-8: #{$space-8};
-  --space-10: #{$space-10};
-  --space-12: #{$space-12};
-  --space-16: #{$space-16};
-  --space-20: #{$space-20};
-  --space-24: #{$space-24};
-  --space-32: #{$space-32};
+  --sv-space-0: #{$space-0};
+  --sv-space-1: #{$space-1};
+  --sv-space-2: #{$space-2};
+  --sv-space-3: #{$space-3};
+  --sv-space-4: #{$space-4};
+  --sv-space-5: #{$space-5};
+  --sv-space-6: #{$space-6};
+  --sv-space-7: #{$space-7};
+  --sv-space-8: #{$space-8};
+  --sv-space-10: #{$space-10};
+  --sv-space-12: #{$space-12};
+  --sv-space-16: #{$space-16};
+  --sv-space-20: #{$space-20};
+  --sv-space-24: #{$space-24};
+  --sv-space-32: #{$space-32};
 
   // Semantic Aliases
-  --space-xs: #{$space-xs};
-  --space-sm: #{$space-sm};
-  --space-md: #{$space-md};
-  --space-lg: #{$space-lg};
-  --space-xl: #{$space-xl};
-  --space-2xl: #{$space-2xl};
-  --space-3xl: #{$space-3xl};
-
+  --sv-space-xs: #{$space-xs};
+  --sv-space-sm: #{$space-sm};
+  --sv-space-md: #{$space-md};
+  --sv-space-lg: #{$space-lg};
+  --sv-space-xl: #{$space-xl};
+  --sv-space-2xl: #{$space-2xl};
+  --sv-space-3xl: #{$space-3xl};
 }

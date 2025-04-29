@@ -9,23 +9,23 @@
   width: 100%;
   margin-right: auto;
   margin-left: auto;
-  padding-right: var(--space-4);
-  padding-left: var(--space-4);
+  padding-right: var(--sv-space-4);
+  padding-left: var(--sv-space-4);
 
-  @media (min-width: var(--breakpoint-sm)) {
-    max-width: var(--container-sm);
+  @media (min-width: var(--sv-breakpoint-sm)) {
+    max-width: var(--sv-container-sm);
   }
-  @media (min-width: var(--breakpoint-md)) {
-    max-width: var(--container-md);
+  @media (min-width: var(--sv-breakpoint-md)) {
+    max-width: var(--sv-container-md);
   }
-  @media (min-width: var(--breakpoint-lg)) {
-    max-width: var(--container-lg);
+  @media (min-width: var(--sv-breakpoint-lg)) {
+    max-width: var(--sv-container-lg);
   }
-  @media (min-width: var(--breakpoint-xl)) {
-    max-width: var(--container-xl);
+  @media (min-width: var(--sv-breakpoint-xl)) {
+    max-width: var(--sv-container-xl);
   }
-  @media (min-width: var(--breakpoint-xxl)) {
-    max-width: var(--container-xxl);
+  @media (min-width: var(--sv-breakpoint-xxl)) {
+    max-width: var(--sv-container-xxl);
   }
 }
 
@@ -138,8 +138,8 @@
 }
 
 @mixin container-spacing {
-  padding-right: var(--space-4);
-  padding-left: var(--space-4);
+  padding-right: var(--sv-space-4);
+  padding-left: var(--sv-space-4);
 }
 
 // Usage:

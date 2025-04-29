@@ -4,26 +4,26 @@
 
 @mixin focus-ring {
   outline: none;
-  box-shadow: var(--shadow-focus);
+  box-shadow: var(--sv-shadow-focus);
 }
 
 @mixin disabled {
   opacity: 0.65;
   cursor: not-allowed;
-  background-color: var(--background-disabled);
-  border-color: var(--border-disabled);
-  color: var(--text-disabled);
+  background-color: var(--sv-background-disabled);
+  border-color: var(--sv-border-disabled);
+  color: var(--sv-text-disabled);
   pointer-events: none;
 }
 
 .ui-control-base {
-  font-family: var(--font-family-base);
-  font-size: var(--font-size-base);
+  font-family: var(--sv-font-family-base);
+  font-size: var(--sv-font-size-base);
   font-weight: 400; // Regular weight, usually default
-  line-height: var(--line-height-base);
-  color: var(--text-primary);
+  line-height: var(--sv-line-height-base);
+  color: var(--sv-text-primary);
   box-sizing: border-box;
-  transition: var(--transition-base);
+  transition: var(--sv-transition-base);
   margin: 0;
 
   &:focus {
@@ -37,8 +37,8 @@
 
   &.error, 
   &.has-error {
-    border-color: var(--error);
-    color: var(--error);
+    border-color: var(--sv-error);
+    color: var(--sv-error);
   }
 
   @media (prefers-reduced-motion: reduce) {

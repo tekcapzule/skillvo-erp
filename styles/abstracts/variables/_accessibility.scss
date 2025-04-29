@@ -38,29 +38,29 @@ $skip-link-position-left: 8px !default;
 // ========================================
 :root {
   // Focus indicators
-  --focus-ring-color: rgba(37, 99, 235, 0.8);
-  --focus-ring-width: #{$focus-outline-width};
-  --focus-ring-offset: #{$focus-outline-offset};
-  --focus-ring-style: #{$focus-outline-style};
+  --sv-focus-ring-color: rgba(37, 99, 235, 0.8);
+  --sv-focus-ring-width: #{$focus-outline-width};
+  --sv-focus-ring-offset: #{$focus-outline-offset};
+  --sv-focus-ring-style: #{$focus-outline-style};
   
   // Z-index layers
-  --z-index-skip-link: #{$z-index-skip-link};
-  --z-index-modal: #{$z-index-modal};
-  --z-index-popover: #{$z-index-popover};
-  --z-index-tooltip: #{$z-index-tooltip};
-  --z-index-header: #{$z-index-header};
-  --z-index-dropdown: #{$z-index-dropdown};
-  --z-index-overlay: #{$z-index-overlay};
-  --z-index-default: #{$z-index-default};
-  --z-index-negative: #{$z-index-negative};
+  --sv-z-index-skip-link: #{$z-index-skip-link};
+  --sv-z-index-modal: #{$z-index-modal};
+  --sv-z-index-popover: #{$z-index-popover};
+  --sv-z-index-tooltip: #{$z-index-tooltip};
+  --sv-z-index-header: #{$z-index-header};
+  --sv-z-index-dropdown: #{$z-index-dropdown};
+  --sv-z-index-overlay: #{$z-index-overlay};
+  --sv-z-index-default: #{$z-index-default};
+  --sv-z-index-negative: #{$z-index-negative};
   
   // Touch target
-  --min-touch-target: #{$min-touch-target-size};
+  --sv-min-touch-target: #{$min-touch-target-size};
   
   // Skip links
-  --skip-link-bg: #{$skip-link-bg};
-  --skip-link-color: #{$skip-link-color};
-  --skip-link-padding: #{$skip-link-padding};
-  --skip-link-position-top: #{$skip-link-position-top};
-  --skip-link-position-left: #{$skip-link-position-left};
+  --sv-skip-link-bg: #{$skip-link-bg};
+  --sv-skip-link-color: #{$skip-link-color};
+  --sv-skip-link-padding: #{$skip-link-padding};
+  --sv-skip-link-position-top: #{$skip-link-position-top};
+  --sv-skip-link-position-left: #{$skip-link-position-left};
 }

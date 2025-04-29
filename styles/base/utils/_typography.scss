@@ -54,50 +54,50 @@
   }
 
 // Font Family Utilities
-.font-main { font-family: var(--font-family-main); }
-.font-heading { font-family: var(--font-family-heading); }
-.font-mono { font-family: var(--font-family-mono); }
+.font-main { font-family: var(--sv-font-family-main); }
+.font-heading { font-family: var(--sv-font-family-heading); }
+.font-mono { font-family: var(--sv-font-family-mono); }
 
 // Font Size Utilities
-.text-xs { font-size: var(--text-xs); }
-.text-sm { font-size: var(--text-sm); }
-.text-base { font-size: var(--text-base); }
-.text-lg { font-size: var(--text-lg); }
-.text-xl { font-size: var(--text-xl); }
-.text-2xl { font-size: var(--text-2xl); }
-.text-3xl { font-size: var(--text-3xl); }
-.text-4xl { font-size: var(--text-4xl); }
-.text-5xl { font-size: var(--text-5xl); }
-.text-6xl { font-size: var(--text-6xl); }
+.text-xs { font-size: var(--sv-text-xs); }
+.text-sm { font-size: var(--sv-text-sm); }
+.text-base { font-size: var(--sv-text-base); }
+.text-lg { font-size: var(--sv-text-lg); }
+.text-xl { font-size: var(--sv-text-xl); }
+.text-2xl { font-size: var(--sv-text-2xl); }
+.text-3xl { font-size: var(--sv-text-3xl); }
+.text-4xl { font-size: var(--sv-text-4xl); }
+.text-5xl { font-size: var(--sv-text-5xl); }
+.text-6xl { font-size: var(--sv-text-6xl); }
 
 // Semantic Text Sizes
-.text-body-sm { font-size: var(--text-body-sm); }
-.text-body-md { font-size: var(--text-body-md); }
-.text-body-lg { font-size: var(--text-body-lg); }
-.text-heading-sm { font-size: var(--text-heading-sm); }
-.text-heading-md { font-size: var(--text-heading-md); }
-.text-heading-lg { font-size: var(--text-heading-lg); }
+.text-body-sm { font-size: var(--sv-text-body-sm); }
+.text-body-md { font-size: var(--sv-text-body-md); }
+.text-body-lg { font-size: var(--sv-text-body-lg); }
+.text-heading-sm { font-size: var(--sv-text-heading-sm); }
+.text-heading-md { font-size: var(--sv-text-heading-md); }
+.text-heading-lg { font-size: var(--sv-text-heading-lg); }
 
 // Font Weight Utilities
-.font-light { font-weight: var(--font-light); }
-.font-normal { font-weight: var(--font-normal); }
-.font-medium { font-weight: var(--font-medium); }
-.font-semibold { font-weight: var(--font-semibold); }
-.font-bold { font-weight: var(--font-bold); }
-.font-extrabold { font-weight: var(--font-extrabold); }
+.font-light { font-weight: var(--sv-font-light); }
+.font-normal { font-weight: var(--sv-font-normal); }
+.font-medium { font-weight: var(--sv-font-medium); }
+.font-semibold { font-weight: var(--sv-font-semibold); }
+.font-bold { font-weight: var(--sv-font-bold); }
+.font-extrabold { font-weight: var(--sv-font-extrabold); }
 
 // Line Height Utilities
-.leading-none { line-height: var(--leading-none); }
-.leading-tight { line-height: var(--leading-tight); }
-.leading-snug { line-height: var(--leading-snug); }
-.leading-normal { line-height: var(--leading-normal); }
-.leading-relaxed { line-height: var(--leading-relaxed); }
-.leading-loose { line-height: var(--leading-loose); }
+.leading-none { line-height: var(--sv-leading-none); }
+.leading-tight { line-height: var(--sv-leading-tight); }
+.leading-snug { line-height: var(--sv-leading-snug); }
+.leading-normal { line-height: var(--sv-leading-normal); }
+.leading-relaxed { line-height: var(--sv-leading-relaxed); }
+.leading-loose { line-height: var(--sv-leading-loose); }
 
 // Letter Spacing Utilities
-.tracking-tighter { letter-spacing: var(--tracking-tighter); }
-.tracking-tight { letter-spacing: var(--tracking-tight); }
-.tracking-normal { letter-spacing: var(--tracking-normal); }
-.tracking-wide { letter-spacing: var(--tracking-wide); }
-.tracking-wider { letter-spacing: var(--tracking-wider); }
-.tracking-widest { letter-spacing: var(--tracking-widest); }
+.tracking-tighter { letter-spacing: var(--sv-tracking-tighter); }
+.tracking-tight { letter-spacing: var(--sv-tracking-tight); }
+.tracking-normal { letter-spacing: var(--sv-tracking-normal); }
+.tracking-wide { letter-spacing: var(--sv-tracking-wide); }
+.tracking-wider { letter-spacing: var(--sv-tracking-wider); }
+.tracking-widest { letter-spacing: var(--sv-tracking-widest); }

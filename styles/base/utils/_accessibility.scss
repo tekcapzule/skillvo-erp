@@ -6,8 +6,8 @@
 // Focus Styles (Global)
 :focus,
 :focus-visible {
-  outline: var(--focus-ring-width, 2px) solid var(--focus-ring-color, rgba(37, 99, 235, 0.8));
-  outline-offset: var(--focus-ring-offset, 2px);
+  outline: var(--sv-focus-ring-width, 2px) solid var(--sv-focus-ring-color, rgba(37, 99, 235, 0.8));
+  outline-offset: var(--sv-focus-ring-offset, 2px);
 }
 
 :focus:not(:focus-visible) {
@@ -23,8 +23,8 @@ select,
 textarea,
 a {
   &:focus-visible {
-    outline: var(--focus-ring-width, 2px) solid var(--focus-ring-color, rgba(37, 99, 235, 0.8));
-    outline-offset: var(--focus-ring-offset, 2px);
+    outline: var(--sv-focus-ring-width, 2px) solid var(--sv-focus-ring-color, rgba(37, 99, 235, 0.8));
+    outline-offset: var(--sv-focus-ring-offset, 2px);
   }
 }
 
@@ -44,24 +44,24 @@ input,
 select,
 textarea,
 button {
-  min-height: var(--input-height-md, 2.5rem); // 40px fallback
+  min-height: var(--sv-input-height-md, 2.5rem); // 40px fallback
 }
 
 label {
   display: block;
-  margin-bottom: var(--space-2, 0.5rem); // 8px fallback
+  margin-bottom: var(--sv-space-2, 0.5rem); // 8px fallback
 }
 
 // ----------------------------------------
 // Skip Link (for screen readers)
 .skip-to-content {
   position: absolute;
-  top: var(--skip-link-position-top, 0.5rem);
-  left: var(--skip-link-position-left, 0.5rem);
-  background-color: var(--skip-link-bg, #ffffff);
-  color: var(--skip-link-color, #111111);
-  padding: var(--skip-link-padding, 0.5rem 1rem);
-  z-index: var(--z-index-skip-link, 9999);
+  top: var(--sv-skip-link-position-top, 0.5rem);
+  left: var(--sv-skip-link-position-left, 0.5rem);
+  background-color: var(--sv-skip-link-bg, #ffffff);
+  color: var(--sv-skip-link-color, #111111);
+  padding: var(--sv-skip-link-padding, 0.5rem 1rem);
+  z-index: var(--sv-z-index-skip-link, 9999);
   transform: translateY(-200%);
   transition: transform 0.3s ease;
 
@@ -88,8 +88,8 @@ label {
 // ----------------------------------------
 // Touch Target Utilities
 .touch-target {
-  min-width: var(--min-touch-target, 2.75rem); // 44px fallback
-  min-height: var(--min-touch-target, 2.75rem);
+  min-width: var(--sv-min-touch-target, 2.75rem); // 44px fallback
+  min-height: var(--sv-min-touch-target, 2.75rem);
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -97,12 +97,12 @@ label {
 
 // ----------------------------------------
 // Z-Index Utilities
-.z-default { z-index: var(--z-index-default, 1); }
-.z-dropdown { z-index: var(--z-index-dropdown, 1010); }
-.z-header { z-index: var(--z-index-header, 1020); }
-.z-tooltip { z-index: var(--z-index-tooltip, 1030); }
-.z-popover { z-index: var(--z-index-popover, 1040); }
-.z-modal { z-index: var(--z-index-modal, 1050); }
-.z-overlay { z-index: var(--z-index-overlay, 1000); }
-.z-skip-link { z-index: var(--z-index-skip-link, 9999); }
-.z-negative { z-index: var(--z-index-negative, -1); }
+.z-default { z-index: var(--sv-z-index-default, 1); }
+.z-dropdown { z-index: var(--sv-z-index-dropdown, 1010); }
+.z-header { z-index: var(--sv-z-index-header, 1020); }
+.z-tooltip { z-index: var(--sv-z-index-tooltip, 1030); }
+.z-popover { z-index: var(--sv-z-index-popover, 1040); }
+.z-modal { z-index: var(--sv-z-index-modal, 1050); }
+.z-overlay { z-index: var(--sv-z-index-overlay, 1000); }
+.z-skip-link { z-index: var(--sv-z-index-skip-link, 9999); }
+.z-negative { z-index: var(--sv-z-index-negative, -1); }

@@ -142,52 +142,51 @@ $heading-styles: (
 // ========================================
 :root {
   // Font Families
-  --font-family-main: #{$font-family-main};
-  --font-family-heading: #{$font-family-heading};
-  --font-family-mono: #{$font-family-mono};
+  --sv-font-family-main: #{$font-family-main};
+  --sv-font-family-heading: #{$font-family-heading};
+  --sv-font-family-mono: #{$font-family-mono};
 
   // Font Sizes
-  --text-xs: #{$text-xs};
-  --text-sm: #{$text-sm};
-  --text-base: #{$text-base};
-  --text-lg: #{$text-lg};
-  --text-xl: #{$text-xl};
-  --text-2xl: #{$text-2xl};
-  --text-3xl: #{$text-3xl};
-  --text-4xl: #{$text-4xl};
-  --text-5xl: #{$text-5xl};
-  --text-6xl: #{$text-6xl};
+  --sv-text-xs: #{$text-xs};
+  --sv-text-sm: #{$text-sm};
+  --sv-text-base: #{$text-base};
+  --sv-text-lg: #{$text-lg};
+  --sv-text-xl: #{$text-xl};
+  --sv-text-2xl: #{$text-2xl};
+  --sv-text-3xl: #{$text-3xl};
+  --sv-text-4xl: #{$text-4xl};
+  --sv-text-5xl: #{$text-5xl};
+  --sv-text-6xl: #{$text-6xl};
 
   // Semantic Text Aliases
-  --text-body-sm: #{$text-body-sm};
-  --text-body-md: #{$text-body-md};
-  --text-body-lg: #{$text-body-lg};
-  --text-heading-sm: #{$text-heading-sm};
-  --text-heading-md: #{$text-heading-md};
-  --text-heading-lg: #{$text-heading-lg};
+  --sv-text-body-sm: #{$text-body-sm};
+  --sv-text-body-md: #{$text-body-md};
+  --sv-text-body-lg: #{$text-body-lg};
+  --sv-text-heading-sm: #{$text-heading-sm};
+  --sv-text-heading-md: #{$text-heading-md};
+  --sv-text-heading-lg: #{$text-heading-lg};
 
   // Font Weights
-  --font-light: #{$font-light};
-  --font-normal: #{$font-normal};
-  --font-medium: #{$font-medium};
-  --font-semibold: #{$font-semibold};
-  --font-bold: #{$font-bold};
-  --font-extrabold: #{$font-extrabold};
+  --sv-font-light: #{$font-light};
+  --sv-font-normal: #{$font-normal};
+  --sv-font-medium: #{$font-medium};
+  --sv-font-semibold: #{$font-semibold};
+  --sv-font-bold: #{$font-bold};
+  --sv-font-extrabold: #{$font-extrabold};
 
   // Line Heights
-  --leading-none: #{$leading-none};
-  --leading-tight: #{$leading-tight};
-  --leading-snug: #{$leading-snug};
-  --leading-normal: #{$leading-normal};
-  --leading-relaxed: #{$leading-relaxed};
-  --leading-loose: #{$leading-loose};
+  --sv-leading-none: #{$leading-none};
+  --sv-leading-tight: #{$leading-tight};
+  --sv-leading-snug: #{$leading-snug};
+  --sv-leading-normal: #{$leading-normal};
+  --sv-leading-relaxed: #{$leading-relaxed};
+  --sv-leading-loose: #{$leading-loose};
 
   // Letter Spacing
-  --tracking-tighter: #{$tracking-tighter};
-  --tracking-tight: #{$tracking-tight};
-  --tracking-normal: #{$tracking-normal};
-  --tracking-wide: #{$tracking-wide};
-  --tracking-wider: #{$tracking-wider};
-  --tracking-widest: #{$tracking-widest};
-
+  --sv-tracking-tighter: #{$tracking-tighter};
+  --sv-tracking-tight: #{$tracking-tight};
+  --sv-tracking-normal: #{$tracking-normal};
+  --sv-tracking-wide: #{$tracking-wide};
+  --sv-tracking-wider: #{$tracking-wider};
+  --sv-tracking-widest: #{$tracking-widest};
 }

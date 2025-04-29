@@ -41,32 +41,31 @@ $padding-3xl: $padding-24 !default;
 // CSS Custom Properties
 :root {
   // Base Unit
-  --padding-unit: #{$padding-unit};
+  --sv-padding-unit: #{$padding-unit};
 
   // Base Scale
-  --padding-0: #{$padding-0};
-  --padding-1: #{$padding-1};
-  --padding-2: #{$padding-2};
-  --padding-3: #{$padding-3};
-  --padding-4: #{$padding-4};
-  --padding-5: #{$padding-5};
-  --padding-6: #{$padding-6};
-  --padding-7: #{$padding-7};
-  --padding-8: #{$padding-8};
-  --padding-10: #{$padding-10};
-  --padding-12: #{$padding-12};
-  --padding-16: #{$padding-16};
-  --padding-20: #{$padding-20};
-  --padding-24: #{$padding-24};
-  --padding-32: #{$padding-32};
+  --sv-padding-0: #{$padding-0};
+  --sv-padding-1: #{$padding-1};
+  --sv-padding-2: #{$padding-2};
+  --sv-padding-3: #{$padding-3};
+  --sv-padding-4: #{$padding-4};
+  --sv-padding-5: #{$padding-5};
+  --sv-padding-6: #{$padding-6};
+  --sv-padding-7: #{$padding-7};
+  --sv-padding-8: #{$padding-8};
+  --sv-padding-10: #{$padding-10};
+  --sv-padding-12: #{$padding-12};
+  --sv-padding-16: #{$padding-16};
+  --sv-padding-20: #{$padding-20};
+  --sv-padding-24: #{$padding-24};
+  --sv-padding-32: #{$padding-32};
 
   // Semantic Aliases
-  --padding-xs: #{$padding-xs};
-  --padding-sm: #{$padding-sm};
-  --padding-md: #{$padding-md};
-  --padding-lg: #{$padding-lg};
-  --padding-xl: #{$padding-xl};
-  --padding-2xl: #{$padding-2xl};
-  --padding-3xl: #{$padding-3xl};
-
+  --sv-padding-xs: #{$padding-xs};
+  --sv-padding-sm: #{$padding-sm};
+  --sv-padding-md: #{$padding-md};
+  --sv-padding-lg: #{$padding-lg};
+  --sv-padding-xl: #{$padding-xl};
+  --sv-padding-2xl: #{$padding-2xl};
+  --sv-padding-3xl: #{$padding-3xl};
 }

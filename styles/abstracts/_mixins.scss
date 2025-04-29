@@ -8,20 +8,20 @@
 // Mixin to generate CSS custom properties for a given theme map
 @mixin generate-theme-vars($theme-map) {
   @each $name, $value in $theme-map {
-    --#{$name}: #{$value};
+    --sv-#{$name}: #{$value};
   }
 }
 
 @mixin generate-theme-utility-classes($theme-map) {
   @each $name, $color in $theme-map {
     .text-#{$name} {
-      color: var(--#{$name}) !important;
+      color: var(--sv-#{$name}) !important;
     }
     .bg-#{$name} {
-      background-color: var(--#{$name}) !important;
+      background-color: var(--sv-#{$name}) !important;
     }
     .border-#{$name} {
-      border-color: var(--#{$name}) !important;
+      border-color: var(--sv-#{$name}) !important;
     }
   }
 }
