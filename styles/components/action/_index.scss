@@ -1,0 +1,15 @@
+// ========================================
+// Action Components Index
+// ========================================
+// This file imports necessary abstracts and base files before forwarding components
+
+@use '../../abstracts' as *;
+@use '../../base' as *;
+
+// Forward all action components
+@forward './button';
+@forward './icon-button';
+@forward './floating-action-button';
+@forward './button-group';
+@forward './split-button';
+@forward './menu-button'; 

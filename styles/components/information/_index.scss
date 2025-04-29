@@ -1,0 +1,16 @@
+// ========================================
+// Information Components Index
+// ========================================
+// This file imports necessary abstracts and base files before forwarding components
+
+@use '../../abstracts' as *;
+@use '../../base' as *;
+
+// Forward all information components
+@forward './label';
+@forward './tooltip';
+@forward './badge';
+@forward './tag';
+@forward './progress-indicator';
+@forward './status-indicator';
+@forward './avatar'; 

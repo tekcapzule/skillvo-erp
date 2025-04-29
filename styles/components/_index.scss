@@ -4,66 +4,12 @@
 // This file forwards all component styles to allow importing everything with a single import
 // @use '../components'; instead of multiple imports
 
-// Input Components
-@forward './input/text-field';
-@forward './input/password-field';
-@forward './input/number-input';
-@forward './input/date-time-picker';
-@forward './input/color-picker';
-@forward './input/file-upload';
-@forward './input/search-field';
-
-// Selection Components
-@forward './selection/checkbox';
-@forward './selection/radio-button';
-@forward './selection/toggle-switch';
-@forward './selection/dropdown-menu';
-@forward './selection/multi-select-list';
-
-// Action Components
-@forward './action/button';
-@forward './action/icon-button';
-@forward './action/floating-action-button';
-@forward './action/button-group';
-@forward './action/split-button';
-@forward './action/menu-button';
-
-// Navigation Components
-@forward './navigation/nav-bar';
-@forward './navigation/tabs';
-@forward './navigation/breadcrumbs';
-@forward './navigation/pagination';
-@forward './navigation/side-nav';
-
-// Information Components
-@forward './information/label';
-@forward './information/tooltip';
-@forward './information/badge';
-@forward './information/tag';
-@forward './information/progress-indicator';
-@forward './information/status-indicator';
-@forward './information/avatar';
-
-// Container Components
-@forward './containers/card';
-@forward './containers/panel';
-@forward './containers/modal';
-@forward './containers/accordion';
-@forward './containers/tabs-panel';
-@forward './containers/drawer';
-@forward './containers/sidebar';
-
-// Feedback Components
-@forward './feedback/alert';
-@forward './feedback/toast';
-@forward './feedback/snackbar';
-@forward './feedback/popover';
-@forward './feedback/dialog';
-@forward './feedback/loading-indicator';
-@forward './feedback/error-message';
-
-// Data Components
-@forward './data/table';
-@forward './data/list';
-@forward './data/grid';
-@forward './data/dashboard'; 
+// Forward component categories
+@forward './input';
+@forward './selection';
+@forward './action';
+@forward './navigation';
+@forward './information';
+@forward './containers';
+@forward './feedback';
+@forward './data'; 

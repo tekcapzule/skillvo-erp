@@ -1,0 +1,13 @@
+// ========================================
+// Data Components Index
+// ========================================
+// This file imports necessary abstracts and base files before forwarding components
+
+@use '../../abstracts' as *;
+@use '../../base' as *;
+
+// Forward all data components
+@forward './table';
+@forward './list';
+@forward './grid';
+@forward './dashboard'; 

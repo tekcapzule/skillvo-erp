@@ -1,0 +1,16 @@
+// ========================================
+// Container Components Index
+// ========================================
+// This file imports necessary abstracts and base files before forwarding components
+
+@use '../../abstracts' as *;
+@use '../../base' as *;
+
+// Forward all container components
+@forward './card';
+@forward './panel';
+@forward './modal';
+@forward './accordion';
+@forward './tabs-panel';
+@forward './drawer';
+@forward './sidebar'; 

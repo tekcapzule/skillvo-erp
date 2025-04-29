@@ -1,0 +1,16 @@
+// ========================================
+// Input Components Index
+// ========================================
+// This file imports necessary abstracts and base files before forwarding components
+
+@use '../../abstracts' as *;
+@use '../../base' as *;
+
+// Forward all input components
+@forward './text-field';
+@forward './password-field';
+@forward './number-input';
+@forward './date-time-picker';
+@forward './color-picker';
+@forward './file-upload';
+@forward './search-field'; 

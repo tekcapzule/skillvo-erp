@@ -1,0 +1,16 @@
+// ========================================
+// Feedback Components Index
+// ========================================
+// This file imports necessary abstracts and base files before forwarding components
+
+@use '../../abstracts' as *;
+@use '../../base' as *;
+
+// Forward all feedback components
+@forward './alert';
+@forward './toast';
+@forward './snackbar';
+@forward './popover';
+@forward './dialog';
+@forward './loading-indicator';
+@forward './error-message'; 
