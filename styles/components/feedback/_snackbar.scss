@@ -257,19 +257,19 @@
      }
      
      &.sv-snackbar-success::before {
-       background-image: url("path/to/success-icon.svg");
+       //background-image: url("path/to/success-icon.svg");
      }
      
      &.sv-snackbar-error::before {
-       background-image: url("path/to/error-icon.svg");
+       //background-image: url("path/to/error-icon.svg");
      }
      
      &.sv-snackbar-warning::before {
-       background-image: url("path/to/warning-icon.svg");
+       //background-image: url("path/to/warning-icon.svg");
      }
      
      &.sv-snackbar-info::before {
-       background-image: url("path/to/info-icon.svg");
+       //background-image: url("path/to/info-icon.svg");
      }
    }
    

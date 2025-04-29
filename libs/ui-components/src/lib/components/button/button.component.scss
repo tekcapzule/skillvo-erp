@@ -1,50 +1,102 @@
-@use '../../../../../../styles/abstracts' as *;
-@use '../../../../../../styles/base' as *;
-@use './partials' as *;
+// Import abstracts with namespaces to avoid conflicts
+@use '../../../../../../styles/abstracts/mixins' as abstracts;
+@use '../../../../../../styles/components/action' as *;
 
+// Host styling - we're using the existing sv-button class structure
 :host {
   display: inline-block;
   vertical-align: middle;
   width: auto;
-
-  &.sv-button--full-width {
-    display: block;
-    width: 100%;
-    
-    .sv-button {
+  
+  // For responsive full-width buttons
+  &.sv-button-responsive {
+    @include abstracts.breakpoint-down(sm) {
+      display: block;
       width: 100%;
     }
   }
+}
 
-  &.sv-button--disabled {
-    pointer-events: none;
-    opacity: var(--sv-button-disabled-opacity, 0.65);
+// We're using the button directly rather than creating a new class
+// This leverages all the existing sv-button styles
+.sv-button {
+  // These styles augment the existing sv-button styles
+  position: relative;
+  
+  // Loading state adjustments
+  &:disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
   }
 }
 
-.sv-button {
-  @extend .button-base;
-  font-weight: var(--sv-button-font-weight);
-  transition: var(--sv-button-transition, all 0.2s ease-in-out);
+// Icon styling
+.sv-button-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
-  &__content {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  &-left {
+    margin-right: var(--sv-space-2);
   }
 
-  &__icon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: inherit;
+  &-right {
+    margin-left: var(--sv-space-2);
+  }
+}
 
-    &--left {
-      margin-right: var(--sv-button-icon-spacing, 8px);
-    }
+// New loader functionality
+.sv-button-loader {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+}
 
-    &--right {
-      margin-left: var(--sv-button-icon-spacing, 8px);
-    }
+.sv-button-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  &-hidden {
+    visibility: hidden;
+  }
+}
+
+// Spinner animation
+.sv-button-spinner {
+  animation: spin 1s linear infinite;
+  height: 20px;
+  width: 20px;
+  
+  &-track {
+    stroke: currentColor;
+    opacity: 0.2;
+    fill: none;
+  }
+  
+  &-head {
+    stroke: currentColor;
+    fill: none;
+    stroke-dasharray: 80;
+    stroke-dashoffset: 60;
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+// Respect reduced motion preferences
+@media (prefers-reduced-motion: reduce) {
+  .sv-button-spinner {
+    animation-duration: 1.5s;
   }
 }

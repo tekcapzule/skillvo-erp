@@ -1,0 +1,19 @@
+.button-demo {
+  padding: 16px;
+
+  .button-row {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+  }
+
+  mat-card {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  mat-card-content {
+    padding: 16px;
+  }
+} 

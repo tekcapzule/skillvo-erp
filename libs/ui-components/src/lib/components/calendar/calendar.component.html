@@ -2,34 +2,34 @@
   <!-- Calendar Header -->
   <div class="sv-calendar-header">
     <div class="sv-calendar-nav">
-      <sv-button variant="ghost" size="sm" iconLeft="fas fa-chevron-left" (click)="navigate('prev')"></sv-button>
-      <sv-button variant="ghost" size="sm" iconRight="fas fa-chevron-right" (click)="navigate('next')"></sv-button>
-      <sv-button variant="ghost" size="sm" (click)="navigate('today')">Today</sv-button>
+      <sv-button variant="primary" size="sm" iconLeft="fas fa-chevron-left" (click)="navigate('prev')"></sv-button>
+      <sv-button variant="primary" size="sm" iconRight="fas fa-chevron-right" (click)="navigate('next')"></sv-button>
+      <sv-button variant="primary" size="sm" (click)="navigate('today')">Today</sv-button>
       <div class="sv-calendar-title">{{ dateRangeText }}</div>
     </div>
     <div class="sv-calendar-views">
       <sv-button 
-        variant="ghost" 
+        variant="primary" 
         size="sm" 
         [class.active]="view === 'day'" 
         (click)="changeView('day')">Day</sv-button>
       <sv-button 
-        variant="ghost" 
+        variant="primary" 
         size="sm" 
         [class.active]="view === 'week'" 
         (click)="changeView('week')">Week</sv-button>
       <sv-button 
-        variant="ghost" 
+        variant="primary" 
         size="sm" 
         [class.active]="view === 'work-week'" 
         (click)="changeView('work-week')">Work Week</sv-button>
       <sv-button 
-        variant="ghost" 
+        variant="primary" 
         size="sm" 
         [class.active]="view === 'month'" 
         (click)="changeView('month')">Month</sv-button>
       <sv-button 
-        variant="ghost" 
+        variant="primary" 
         size="sm" 
         [class.active]="view === 'agenda'" 
         (click)="changeView('agenda')">Agenda</sv-button>
@@ -322,7 +322,7 @@
         </div>
       </div>
       <div class="sv-calendar-modal-footer">
-        <sv-button variant="ghost" *ngIf="selectedEvent" (click)="deleteEvent()">Delete</sv-button>
+        <sv-button variant="primary" *ngIf="selectedEvent" (click)="deleteEvent()">Delete</sv-button>
         <div class="sv-calendar-modal-actions">
           <sv-button variant="secondary" (click)="closeEventModal()">Cancel</sv-button>
           <sv-button 

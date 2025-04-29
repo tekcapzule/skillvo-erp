@@ -1,0 +1,25 @@
+<div class="home-container">
+  <div class="welcome-section">
+    <h1>SkillVo UI Components</h1>
+    <p>Welcome to the SkillVo UI component library demo.</p>
+    <p>Explore our beautifully crafted, accessible components for building modern web applications.</p>
+  </div>
+  
+  <div class="category-grid">
+    <mat-card *ngFor="let category of componentCategories" [routerLink]="category.route" class="category-card">
+      <mat-card-header>
+        <mat-icon mat-card-avatar>{{ category.icon }}</mat-icon>
+        <mat-card-title>{{ category.title }}</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <p>{{ category.description }}</p>
+      </mat-card-content>
+    </mat-card>
+  </div>
+  
+  <div class="getting-started">
+    <h2>Getting Started</h2>
+    <p>Click on any category to view the individual components and their demos.</p>
+    <p>Each component includes usage examples, API documentation, and configuration options.</p>
+  </div>
+</div> 

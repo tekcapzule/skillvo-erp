@@ -1,16 +1,17 @@
-import { Component, Input, Output, EventEmitter, HostBinding } from '@angular/core';
+import { Component, Input, Output, EventEmitter, HostBinding, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-export type ButtonVariant = 'primary' | 'secondary' | 'tertiary' | 'ghost' | 'danger';
-export type ButtonSize = 'sm' | 'md' | 'lg';
+export type ButtonVariant = 'primary' | 'secondary' | 'tertiary' | 'outline' | 'link' | 'destructive';
+export type ButtonSize = 'sm' | 'md' | 'lg' | 'xl';
 export type ButtonType = 'button' | 'submit' | 'reset';
 
 @Component({
   selector: 'sv-button',
+  encapsulation: ViewEncapsulation.None,
   standalone: true,
   imports: [CommonModule],
   templateUrl: './button.component.html',
-  styleUrl: './button.component.scss'
+  styleUrls: ['./button.component.scss']
 })
 export class ButtonComponent {
   @Input() variant: ButtonVariant = 'primary';
@@ -18,18 +19,26 @@ export class ButtonComponent {
   @Input() type: ButtonType = 'button';
   @Input() disabled = false;
   @Input() fullWidth = false;
-  @Input() iconLeft = '';
-  @Input() iconRight = '';
+  @Input() icon: string | null = null;
+  @Input() iconPosition: 'left' | 'right' = 'left';
+  @Input() withRipple = false;
   @Input() ariaLabel: string | null = null;
+  @Input() loading = false;
+  @Input() responsive = false;
   
-  @Output() buttonClick = new EventEmitter<Event>();
+  @Output() clicked = new EventEmitter<Event>();
   
+  // Apply button variant classes
   @HostBinding('class') get hostClasses(): string {
     return [
-      `sv-button--${this.variant}`,
-      `sv-button--${this.size}`,
-      this.fullWidth ? 'sv-button--full-width' : '',
-      this.disabled ? 'sv-button--disabled' : ''
+      // Add variant class based on input
+      `sv-button-${this.variant}`,
+      // Add size class based on input
+      `sv-ui-size-${this.size}`,
+      // Add additional feature classes as needed
+      this.fullWidth ? 'sv-button-responsive' : '',
+      this.withRipple ? 'sv-button-with-ripple' : '',
+      this.responsive ? 'sv-button-responsive' : ''
     ].filter(Boolean).join(' ');
   }
   
@@ -41,16 +50,12 @@ export class ButtonComponent {
     return this.disabled ? 'true' : 'false';
   }
   
-  @HostBinding('attr.type') get buttonType(): ButtonType {
-    return this.type;
-  }
-
   onClick(event: Event): void {
-    const rootStyles = getComputedStyle(document.documentElement);
-    if (!this.disabled) {
-      this.buttonClick.emit(event);
+    if (!this.disabled && !this.loading) {
+      this.clicked.emit(event);
     } else {
       event.stopPropagation();
+      event.preventDefault();
     }
   }
 }

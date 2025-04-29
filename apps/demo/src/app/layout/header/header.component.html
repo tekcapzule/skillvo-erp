@@ -1,0 +1,16 @@
+<mat-toolbar color="primary" class="demo-header">
+  <div class="logo">
+    <mat-icon>layers</mat-icon>
+    <span>SkillVo UI Components</span>
+  </div>
+  <div class="spacer"></div>
+  <div class="theme-toggle">
+    <mat-icon>light_mode</mat-icon>
+    <mat-slide-toggle 
+      [checked]="isDarkTheme" 
+      (change)="toggleTheme()" 
+      color="primary">
+    </mat-slide-toggle>
+    <mat-icon>dark_mode</mat-icon>
+  </div>
+</mat-toolbar> 
