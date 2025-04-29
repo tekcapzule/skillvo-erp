@@ -7,8 +7,8 @@
  * It extends the sv-nav-control-base class to create consistent step indicators for multi-step processes.
  */
 
- @use './mixins' as *;
-
+ @use './abstracts' as *;
+   @use './base' as *;
  /* ==========================================================================
     TABLE OF CONTENTS:
     

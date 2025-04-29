@@ -30,8 +30,8 @@
    ========================================================================== */
 
 // Import necessary mixins
-@use '../mixins' as *;
-
+@use './abstracts' as *;
+@use './base' as *;
 // Card-specific variables
 $card-default-radius: var(--sv-radius-md);
 $card-default-shadow: var(--sv-shadow-md);

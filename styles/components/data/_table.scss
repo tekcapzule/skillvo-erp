@@ -1,0 +1,589 @@
+/**
+ * Data Table Component
+ * Version: 1.0.0
+ * Last Updated: April 29, 2025
+ * 
+ * This file provides styles for the data table component in the SkillVo design system.
+ * It extends the sv-data-display-base class and adds table-specific styling.
+ */
+
+/* ==========================================================================
+   TABLE OF CONTENTS:
+   
+   1. VARIABLES & CONFIGURATION
+   2. BASE TABLE STYLES
+   3. TABLE HEADER STYLES
+   4. TABLE BODY STYLES
+   5. TABLE CELL VARIATIONS
+   6. ROW STATES & INTERACTIONS
+   7. TABLE VARIANTS
+   8. UTILITY CLASSES
+   9. RESPONSIVE BEHAVIOR
+   ========================================================================== */
+
+/* ==========================================================================
+   1. VARIABLES & CONFIGURATION
+   ========================================================================== */
+@use './abstracts' as *;
+@use './base' as *;
+// Table-specific variables
+$table-border-width: 1px;
+$table-border-color: var(--sv-border-light);
+$table-header-bg: var(--sv-bg-secondary);
+$table-header-color: var(--sv-text-secondary);
+$table-striped-bg: var(--sv-bg-element);
+$table-hover-bg: var(--sv-bg-element-hover);
+$table-active-bg: var(--sv-bg-element-active);
+$table-selected-bg: var(--sv-bg-element-active);
+
+// Cell spacing variables
+$table-cell-padding-x: var(--sv-padding-3);
+$table-cell-padding-y: var(--sv-padding-3);
+$table-compact-cell-padding-x: var(--sv-padding-2);
+$table-compact-cell-padding-y: var(--sv-padding-1);
+$table-comfortable-cell-padding-x: var(--sv-padding-4);
+$table-comfortable-cell-padding-y: var(--sv-padding-4);
+
+// Sort icon variables
+$table-sort-icon-size: 16px;
+$table-sort-icon-margin: var(--sv-space-1);
+
+// Typography variables
+$table-header-font-weight: var(--sv-font-semibold);
+$table-header-font-size: var(--sv-text-sm);
+$table-body-font-size: var(--sv-text-base);
+
+/* ==========================================================================
+   2. BASE TABLE STYLES
+   ========================================================================== */
+
+.sv-table {
+  // Extend base data display class
+  @extend .sv-data-display-base;
+  
+  // Set display and layout properties
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  table-layout: auto;
+  
+  // Border styling
+  border: $table-border-width solid $table-border-color;
+  border-radius: var(--sv-radius-md);
+  
+  // Prevent text selection unless explicitly enabled
+  &:not(.sv-table-selectable-text) {
+    user-select: none;
+  }
+  
+  // Default font size
+  font-size: $table-body-font-size;
+  
+  // Default caption styling
+  caption {
+    @extend .sv-data-caption;
+    caption-side: bottom;
+    text-align: left;
+    padding: var(--sv-padding-2);
+  }
+  
+  // Container for when the table needs to be scrollable
+  &-container {
+    position: relative;
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    
+    // For tables that are too wide for their container
+    &.sv-table-responsive {
+      margin-bottom: var(--sv-space-4);
+      
+      // Style scrollbars for better visibility
+      &::-webkit-scrollbar {
+        height: 8px;
+      }
+      
+      &::-webkit-scrollbar-track {
+        background-color: var(--sv-bg-element);
+        border-radius: 4px;
+      }
+      
+      &::-webkit-scrollbar-thumb {
+        background-color: var(--sv-border-dark);
+        border-radius: 4px;
+        
+        &:hover {
+          background-color: var(--sv-text-tertiary);
+        }
+      }
+    }
+  }
+}
+
+/* ==========================================================================
+   3. TABLE HEADER STYLES
+   ========================================================================== */
+
+.sv-table {
+  thead {
+    // Apply border to bottom of header
+    border-bottom: $table-border-width solid $table-border-color;
+    
+    // Header cell styling
+    th {
+      padding: $table-cell-padding-y $table-cell-padding-x;
+      background-color: $table-header-bg;
+      color: $table-header-color;
+      font-weight: $table-header-font-weight;
+      font-size: $table-header-font-size;
+      text-align: left;
+      vertical-align: middle;
+      position: relative;
+      
+      // First and last cells should have rounded corners in header
+      &:first-child {
+        border-top-left-radius: calc(var(--sv-radius-md) - 1px);
+      }
+      
+      &:last-child {
+        border-top-right-radius: calc(var(--sv-radius-md) - 1px);
+      }
+      
+      // Sticky header support
+      &.sv-table-sticky-header {
+        position: sticky;
+        top: 0;
+        z-index: var(--sv-z-index-default);
+        box-shadow: 0 1px 0 $table-border-color;
+      }
+      
+      // Sortable header styles
+      &.sv-table-sortable {
+        cursor: pointer;
+        user-select: none;
+        
+        // Hover effect for sortable headers
+        &:hover {
+          background-color: var(--sv-bg-element-hover);
+        }
+        
+        // Sort indicator arrow space
+        &::after {
+          content: "";
+          display: inline-block;
+          width: $table-sort-icon-size;
+          margin-left: $table-sort-icon-margin;
+          text-align: center;
+          opacity: 0.5;
+        }
+        
+        // Sort indicators
+        &[aria-sort="ascending"]::after {
+          content: "↑";
+          opacity: 1;
+        }
+        
+        &[aria-sort="descending"]::after {
+          content: "↓";
+          opacity: 1;
+        }
+      }
+    }
+  }
+}
+
+/* ==========================================================================
+   4. TABLE BODY STYLES
+   ========================================================================== */
+
+.sv-table {
+  tbody {
+    // Basic body cell styling
+    td {
+      padding: $table-cell-padding-y $table-cell-padding-x;
+      text-align: left;
+      vertical-align: middle;
+      border-bottom: $table-border-width solid $table-border-color;
+      
+      // Overflow handling for cells with long content
+      &.sv-table-cell-truncate {
+        max-width: 200px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      
+      // Allow multiline text in cells
+      &.sv-table-cell-wrap {
+        white-space: normal;
+        word-break: break-word;
+      }
+    }
+    
+    // Remove border from last row
+    tr:last-child td {
+      border-bottom: none;
+      
+      // Last row's first and last cells should have rounded corners
+      &:first-child {
+        border-bottom-left-radius: calc(var(--sv-radius-md) - 1px);
+      }
+      
+      &:last-child {
+        border-bottom-right-radius: calc(var(--sv-radius-md) - 1px);
+      }
+    }
+  }
+}
+
+/* ==========================================================================
+   5. TABLE CELL VARIATIONS
+   ========================================================================== */
+
+.sv-table {
+  // Numeric cell alignment
+  .sv-table-cell-numeric {
+    text-align: right;
+  }
+  
+  // Cell width variations
+  .sv-table-cell-auto {
+    width: auto;
+  }
+  
+  .sv-table-cell-fit {
+    width: 1%;
+    white-space: nowrap;
+  }
+  
+  .sv-table-cell-expand {
+    width: 100%;
+  }
+  
+  // Cell with fixed width
+  .sv-table-cell-fixed {
+    width: 150px; // Default fixed width
+  }
+  
+  // Status cell styles
+  .sv-table-cell-status {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    
+    &::before {
+      content: "";
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      margin-right: var(--sv-space-2);
+    }
+    
+    &.sv-status-success::before {
+      background-color: var(--sv-success);
+    }
+    
+    &.sv-status-error::before {
+      background-color: var(--sv-error);
+    }
+    
+    &.sv-status-warning::before {
+      background-color: var(--sv-warning);
+    }
+    
+    &.sv-status-info::before {
+      background-color: var(--sv-info);
+    }
+  }
+  
+  // Cell with actions (buttons, toggles, etc.)
+  .sv-table-cell-actions {
+    white-space: nowrap;
+    text-align: right;
+    
+    // Buttons within action cells
+    button, 
+    .sv-btn {
+      margin-left: var(--sv-space-1);
+      
+      // Hide overflow buttons until row is hovered
+      &.sv-action-overflow {
+        opacity: 0;
+        transition: opacity $data-transition-duration $data-transition-timing;
+      }
+    }
+  }
+}
+
+/* ==========================================================================
+   6. ROW STATES & INTERACTIONS
+   ========================================================================== */
+
+.sv-table {
+  // Interactive rows
+  &.sv-table-interactive {
+    tbody tr {
+      cursor: pointer;
+      
+      &:hover {
+        background-color: $table-hover-bg;
+        
+        // Show overflow actions on hover
+        .sv-table-cell-actions .sv-action-overflow {
+          opacity: 1;
+        }
+      }
+      
+      &:active {
+        background-color: $table-active-bg;
+      }
+    }
+  }
+  
+  // Selected row state
+  tbody tr {
+    &.sv-table-row-selected,
+    &[aria-selected="true"] {
+      background-color: $table-selected-bg;
+      font-weight: var(--sv-font-medium);
+    }
+  }
+  
+  // Row with error state
+  tbody tr.sv-table-row-error {
+    background-color: rgba(var(--sv-error), 0.1);
+    
+    td {
+      color: var(--sv-error);
+    }
+  }
+  
+  // Row with success state
+  tbody tr.sv-table-row-success {
+    background-color: rgba(var(--sv-success), 0.1);
+    
+    td {
+      color: var(--sv-success);
+    }
+  }
+  
+  // Disabled row state
+  tbody tr.sv-table-row-disabled {
+    opacity: 0.65;
+    pointer-events: none;
+    
+    td {
+      color: var(--sv-text-tertiary);
+    }
+  }
+  
+  // Row with highlighted status
+  tbody tr.sv-table-row-highlight {
+    background-color: rgba(var(--sv-primary), 0.1);
+  }
+}
+
+/* ==========================================================================
+   7. TABLE VARIANTS
+   ========================================================================== */
+
+// Striped table variant
+.sv-table-striped {
+  tbody tr:nth-child(even) {
+    background-color: $table-striped-bg;
+  }
+}
+
+// Bordered table variant (all cells have borders)
+.sv-table-bordered {
+  td, th {
+    border: $table-border-width solid $table-border-color;
+  }
+}
+
+// Borderless table variant
+.sv-table-borderless {
+  border: none;
+  
+  td, th {
+    border-bottom: none;
+  }
+  
+  thead {
+    border-bottom: none;
+  }
+}
+
+// Density variations
+.sv-table-compact {
+  th, td {
+    padding: $table-compact-cell-padding-y $table-compact-cell-padding-x;
+    font-size: var(--sv-text-sm);
+  }
+}
+
+.sv-table-comfortable {
+  th, td {
+    padding: $table-comfortable-cell-padding-y $table-comfortable-cell-padding-x;
+  }
+}
+
+/* ==========================================================================
+   8. UTILITY CLASSES
+   ========================================================================== */
+
+// Empty state for table
+.sv-table-empty {
+  .sv-table-empty-message {
+    padding: var(--sv-padding-md);
+    text-align: center;
+    color: var(--sv-text-secondary);
+    font-style: italic;
+  }
+}
+
+// Loading state for table
+.sv-table-loading {
+  position: relative;
+  
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(var(--sv-bg-primary), 0.5);
+    z-index: var(--sv-z-index-overlay);
+    border-radius: var(--sv-radius-md);
+  }
+  
+  &::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 24px;
+    height: 24px;
+    margin: -12px 0 0 -12px;
+    border-radius: 50%;
+    border: 2px solid rgba(var(--sv-primary-500-rgb), 0.3);
+    border-top-color: var(--sv-primary);
+    z-index: var(--sv-z-index-overlay);
+    animation: spin 1s linear infinite;
+  }
+}
+
+// Footer with pagination or table summary
+.sv-table-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--sv-padding-3);
+  border-top: $table-border-width solid $table-border-color;
+  background-color: var(--sv-bg-secondary);
+  font-size: var(--sv-text-sm);
+  color: var(--sv-text-secondary);
+  
+  // Round corners for footer
+  border-bottom-left-radius: var(--sv-radius-md);
+  border-bottom-right-radius: var(--sv-radius-md);
+  
+  .sv-table-summary {
+    margin-right: var(--sv-space-2);
+  }
+}
+
+/* ==========================================================================
+   9. RESPONSIVE BEHAVIOR
+   ========================================================================== */
+
+// Stack table on mobile
+@include breakpoint-down(md) {
+  .sv-table-stack {
+    thead {
+      display: none;
+    }
+    
+    tbody, tr, td {
+      display: block;
+      width: 100%;
+    }
+    
+    tr {
+      margin-bottom: var(--sv-space-4);
+      border: $table-border-width solid $table-border-color;
+      border-radius: var(--sv-radius-md);
+    }
+    
+    td {
+      display: flex;
+      text-align: right;
+      justify-content: space-between;
+      border-bottom: $table-border-width solid $table-border-color;
+      
+      &:last-child {
+        border-bottom: none;
+      }
+      
+      // Add data attribute for headers in mobile view
+      &::before {
+        content: attr(data-label);
+        font-weight: $table-header-font-weight;
+        color: $table-header-color;
+        margin-right: var(--sv-space-2);
+      }
+    }
+  }
+  
+  // Hide certain columns on mobile
+  .sv-table:not(.sv-table-stack) {
+    .sv-table-hide-mobile {
+      display: none;
+    }
+  }
+  
+  // Adjust cell padding for better mobile experience
+  .sv-table:not(.sv-table-compact) {
+    th, td {
+      padding: $table-compact-cell-padding-y $table-compact-cell-padding-x;
+    }
+  }
+  
+  // Always make tables scrollable on small screens
+  .sv-table-container {
+    overflow-x: auto;
+  }
+}
+
+// Medium screen adjustments
+@include breakpoint-between(md, lg) {
+  .sv-table {
+    .sv-table-hide-tablet {
+      display: none;
+    }
+  }
+}
+
+// Handle print styles
+@media print {
+  .sv-table {
+    border-collapse: collapse;
+    
+    th, td {
+      background-color: transparent !important;
+      color: #000 !important;
+      border: 1px solid #000 !important;
+    }
+    
+    tr.sv-table-row-selected {
+      font-weight: bold;
+      background-color: transparent !important;
+    }
+    
+    .sv-table-actions {
+      display: none;
+    }
+  }
+}

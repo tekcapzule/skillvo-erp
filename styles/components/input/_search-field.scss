@@ -20,9 +20,8 @@
 /* ==========================================================================
    1. IMPORTS & VARIABLES
    ========================================================================== */
-   @use '../mixins' as *;
-   @use '../base-control' as *;
-   @use '../input-controls' as *;
+   @use './abstracts' as *;
+   @use './base' as *;
    
    // Component-specific variables
    $search-icon-size: var(--sv-icon-size-sm);

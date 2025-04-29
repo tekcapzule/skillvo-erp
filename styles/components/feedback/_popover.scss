@@ -22,8 +22,8 @@
    8. RESPONSIVE ADAPTATIONS
    ========================================================================== */
 
-   @use '../mixins' as *;
-   @use '../feedback-controls' as *;
+   @use './abstracts' as *;
+   @use './base' as *;
    
    /* ==========================================================================
       1. VARIABLES & CONFIGURATION

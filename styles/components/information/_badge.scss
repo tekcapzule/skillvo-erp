@@ -22,8 +22,8 @@
    8. ACCESSIBILITY ENHANCEMENTS
    ========================================================================== */
 
-   @use '../mixins' as *;
-   @use '../information-display' as info-display;
+   @use './abstracts' as *;
+   @use './base' as *;
    
    /* ==========================================================================
       1. VARIABLES & CONFIGURATION

@@ -1,0 +1,1282 @@
+/**
+ * Dashboard Component
+ * Version: 1.0.0
+ * Last Updated: April 29, 2025
+ * 
+ * This file provides styles for the dashboard component in the SkillVo design system.
+ * It extends the sv-data-display-base class and adds dashboard-specific styling.
+ * The dashboard is designed for displaying multiple data components in a cohesive layout.
+ */
+
+/* ==========================================================================
+   TABLE OF CONTENTS:
+   
+   1. VARIABLES & CONFIGURATION
+   2. BASE DASHBOARD STYLES
+   3. DASHBOARD LAYOUT
+   4. DASHBOARD PANEL STYLES
+   5. DASHBOARD WIDGET STYLES
+   6. DASHBOARD CONTROLS
+   7. DASHBOARD THEMES
+   8. UTILITY CLASSES
+   9. RESPONSIVE BEHAVIOR
+   ========================================================================== */
+
+/* ==========================================================================
+   1. VARIABLES & CONFIGURATION
+   ========================================================================== */
+@use './abstracts' as *;
+@use './base' as *;
+// Dashboard-specific variables
+$dashboard-gap: var(--sv-space-4);
+$dashboard-padding: var(--sv-padding-4);
+$dashboard-panel-border-width: 1px;
+$dashboard-panel-border-color: var(--sv-border-light);
+$dashboard-panel-bg: var(--sv-bg-surface);
+$dashboard-panel-header-bg: var(--sv-bg-secondary);
+$dashboard-bg: var(--sv-bg-secondary);
+
+// Spacing variables
+$dashboard-panel-padding: var(--sv-padding-4);
+$dashboard-panel-header-padding-x: var(--sv-padding-4);
+$dashboard-panel-header-padding-y: var(--sv-padding-3);
+$dashboard-panel-content-padding: var(--sv-padding-4);
+$dashboard-compact-padding: var(--sv-padding-3);
+$dashboard-compact-gap: var(--sv-space-3);
+
+// Typography variables
+$dashboard-title-font-size: var(--sv-text-xl);
+$dashboard-title-font-weight: var(--sv-font-bold);
+$dashboard-panel-title-font-size: var(--sv-text-lg);
+$dashboard-panel-title-font-weight: var(--sv-font-semibold);
+$dashboard-widget-title-font-size: var(--sv-text-base);
+$dashboard-widget-title-font-weight: var(--sv-font-medium);
+
+// Animation variables
+$dashboard-transition-duration: var(--sv-motion-duration-medium);
+$dashboard-transition-timing: var(--sv-motion-ease-standard);
+
+// Default grid layout
+$dashboard-grid-columns: 12;
+$dashboard-grid-row-height: 100px;
+$dashboard-grid-auto-rows: var(--sv-size-xl);
+
+/* ==========================================================================
+   2. BASE DASHBOARD STYLES
+   ========================================================================== */
+
+.sv-dashboard {
+  // Extend base data display class
+  @extend .sv-data-display-base;
+  
+  // Base styling
+  position: relative;
+  width: 100%;
+  padding: $dashboard-padding;
+  background-color: $dashboard-bg;
+  border-radius: var(--sv-radius-md);
+  
+  // Prevent text selection unless explicitly enabled
+  &:not(.sv-dashboard-selectable-text) {
+    user-select: none;
+  }
+  
+  // Dashboard header
+  &-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: $dashboard-gap;
+    
+    // Dashboard title
+    &-title {
+      font-size: $dashboard-title-font-size;
+      font-weight: $dashboard-title-font-weight;
+      color: var(--sv-text-primary);
+    }
+    
+    // Dashboard actions
+    &-actions {
+      display: flex;
+      align-items: center;
+      gap: var(--sv-space-2);
+    }
+  }
+  
+  // Dashboard description or message
+  &-description {
+    margin-top: calc(-1 * var(--sv-space-2));
+    margin-bottom: $dashboard-gap;
+    color: var(--sv-text-secondary);
+    font-size: var(--sv-text-base);
+  }
+  
+  // Dashboard toolbar for controls and filters
+  &-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: $dashboard-gap;
+    
+    // Toolbar section
+    &-section {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: var(--sv-space-3);
+      margin-bottom: var(--sv-space-2);
+    }
+    
+    // Toolbar on dark background
+    &.sv-toolbar-dark {
+      background-color: var(--sv-bg-element);
+      padding: var(--sv-padding-3);
+      border-radius: var(--sv-radius-md);
+    }
+  }
+  
+  // Dashboard footer
+  &-footer {
+    margin-top: $dashboard-gap;
+    padding-top: var(--sv-padding-3);
+    border-top: $dashboard-panel-border-width solid $dashboard-panel-border-color;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: var(--sv-text-sm);
+    color: var(--sv-text-secondary);
+    
+    // Last update information
+    &-update {
+      display: flex;
+      align-items: center;
+      
+      .sv-update-icon {
+        margin-right: var(--sv-space-1);
+      }
+    }
+    
+    // Additional footer content
+    &-content {
+      display: flex;
+      align-items: center;
+      gap: var(--sv-space-3);
+    }
+  }
+}
+
+/* ==========================================================================
+   3. DASHBOARD LAYOUT
+   ========================================================================== */
+
+// Grid layout system
+.sv-dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat($dashboard-grid-columns, 1fr);
+  grid-auto-rows: minmax($dashboard-grid-row-height, auto);
+  gap: $dashboard-gap;
+  width: 100%;
+  
+  // Spans for grid columns (1-12)
+  @for $i from 1 through $dashboard-grid-columns {
+    .sv-col-#{$i} {
+      grid-column: span $i;
+    }
+  }
+  
+  // Spans for grid rows (1-6)
+  @for $i from 1 through 6 {
+    .sv-row-#{$i} {
+      grid-row: span $i;
+    }
+  }
+  
+  // Auto-fit layout for dynamic sizing
+  &.sv-dashboard-auto-fit {
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  }
+  
+  // Auto-fill layout for consistent sizing
+  &.sv-dashboard-auto-fill {
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  }
+  
+  // Adjust min-width for auto layouts
+  &.sv-dashboard-xs-items {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  }
+  
+  &.sv-dashboard-sm-items {
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  }
+  
+  &.sv-dashboard-lg-items {
+    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+  }
+  
+  &.sv-dashboard-xl-items {
+    grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
+  }
+}
+
+// Flex layout system
+.sv-dashboard-flex {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $dashboard-gap;
+  
+  // Flex items with different widths
+  .sv-flex-item {
+    flex: 1 1 300px;
+    min-width: 0; // Allow flex items to shrink below content size
+    
+    // Sizes for flex items
+    &.sv-flex-xs {
+      flex-basis: 200px;
+    }
+    
+    &.sv-flex-sm {
+      flex-basis: 250px;
+    }
+    
+    &.sv-flex-md {
+      flex-basis: 300px;
+    }
+    
+    &.sv-flex-lg {
+      flex-basis: 400px;
+    }
+    
+    &.sv-flex-xl {
+      flex-basis: 500px;
+    }
+    
+    // Fixed width items
+    &.sv-flex-fixed {
+      flex-grow: 0;
+      flex-shrink: 0;
+    }
+    
+    // Full width item on any screen
+    &.sv-flex-full {
+      flex-basis: 100%;
+    }
+  }
+  
+  // Different alignments for flex layout
+  &.sv-flex-start {
+    justify-content: flex-start;
+  }
+  
+  &.sv-flex-center {
+    justify-content: center;
+  }
+  
+  &.sv-flex-end {
+    justify-content: flex-end;
+  }
+  
+  &.sv-flex-space-between {
+    justify-content: space-between;
+  }
+}
+
+// Areas layout (for fixed dashboard designs)
+.sv-dashboard-areas {
+  display: grid;
+  gap: $dashboard-gap;
+  grid-template-columns: repeat($dashboard-grid-columns, 1fr);
+  grid-template-rows: auto;
+  
+  // Define named grid areas for template
+  &.sv-areas-template {
+    grid-template-areas:
+      "header header header header header header header header header header header header"
+      "sidebar main main main main main main main main main main main"
+      "sidebar main main main main main main main main main main main"
+      "footer footer footer footer footer footer footer footer footer footer footer footer";
+    
+    .sv-area-header {
+      grid-area: header;
+    }
+    
+    .sv-area-sidebar {
+      grid-area: sidebar;
+    }
+    
+    .sv-area-main {
+      grid-area: main;
+    }
+    
+    .sv-area-footer {
+      grid-area: footer;
+    }
+  }
+}
+
+/* ==========================================================================
+   4. DASHBOARD PANEL STYLES
+   ========================================================================== */
+
+.sv-dashboard-panel {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background-color: $dashboard-panel-bg;
+  border: $dashboard-panel-border-width solid $dashboard-panel-border-color;
+  border-radius: var(--sv-radius-md);
+  overflow: hidden;
+  transition: box-shadow $dashboard-transition-duration $dashboard-transition-timing;
+  height: 100%;
+  
+  // Panel with shadow
+  &.sv-panel-elevated {
+    box-shadow: var(--sv-shadow-sm);
+    
+    &:hover {
+      box-shadow: var(--sv-shadow-md);
+    }
+  }
+  
+  // Panel header
+  &-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: $dashboard-panel-header-padding-y $dashboard-panel-header-padding-x;
+    background-color: $dashboard-panel-header-bg;
+    border-bottom: $dashboard-panel-border-width solid $dashboard-panel-border-color;
+    min-height: 60px;
+    
+    // Panel title
+    &-title {
+      font-size: $dashboard-panel-title-font-size;
+      font-weight: $dashboard-panel-title-font-weight;
+      color: var(--sv-text-primary);
+      
+      // Subtitle or description
+      .sv-panel-subtitle {
+        display: block;
+        font-size: var(--sv-text-sm);
+        font-weight: var(--sv-font-normal);
+        color: var(--sv-text-secondary);
+        margin-top: var(--sv-space-1);
+      }
+    }
+    
+    // Panel actions
+    &-actions {
+      display: flex;
+      align-items: center;
+      gap: var(--sv-space-2);
+      
+      // Dropdown menu trigger
+      .sv-panel-menu {
+        cursor: pointer;
+        color: var(--sv-text-secondary);
+        
+        &:hover {
+          color: var(--sv-text-primary);
+        }
+      }
+    }
+  }
+  
+  // Panel content
+  &-content {
+    flex: 1;
+    padding: $dashboard-panel-content-padding;
+    overflow: auto;
+    
+    // No padding option for content that needs full width
+    &.sv-panel-content-no-padding {
+      padding: 0;
+    }
+  }
+  
+  // Panel footer
+  &-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: $dashboard-panel-header-padding-y $dashboard-panel-header-padding-x;
+    border-top: $dashboard-panel-border-width solid $dashboard-panel-border-color;
+    background-color: $dashboard-panel-header-bg;
+    
+    // Links in footer
+    .sv-panel-link {
+      color: var(--sv-primary);
+      font-size: var(--sv-text-sm);
+      text-decoration: none;
+      
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+  
+  // Panel actions for minimize, expand, close
+  &-window-actions {
+    position: absolute;
+    top: var(--sv-space-2);
+    right: var(--sv-space-2);
+    display: flex;
+    align-items: center;
+    gap: var(--sv-space-1);
+    z-index: 1;
+    
+    // Action buttons
+    .sv-window-action {
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      cursor: pointer;
+      opacity: 0.7;
+      
+      &:hover {
+        opacity: 1;
+      }
+      
+      &.sv-action-minimize {
+        background-color: var(--sv-warning);
+      }
+      
+      &.sv-action-expand {
+        background-color: var(--sv-success);
+      }
+      
+      &.sv-action-close {
+        background-color: var(--sv-error);
+      }
+    }
+  }
+  
+  // Collapsible panel
+  &.sv-panel-collapsible {
+    .sv-dashboard-panel-header {
+      cursor: pointer;
+    }
+    
+    &.sv-panel-collapsed {
+      .sv-dashboard-panel-content,
+      .sv-dashboard-panel-footer {
+        display: none;
+      }
+    }
+  }
+  
+  // Fixed height panel with scrollable content
+  &.sv-panel-fixed-height {
+    .sv-dashboard-panel-content {
+      max-height: 400px; // Default height, can be overridden
+      overflow-y: auto;
+    }
+  }
+  
+  // Panel states
+  &.sv-panel-success {
+    border-top: 3px solid var(--sv-success);
+  }
+  
+  &.sv-panel-warning {
+    border-top: 3px solid var(--sv-warning);
+  }
+  
+  &.sv-panel-error {
+    border-top: 3px solid var(--sv-error);
+  }
+  
+  &.sv-panel-info {
+    border-top: 3px solid var(--sv-info);
+  }
+  
+  &.sv-panel-primary {
+    border-top: 3px solid var(--sv-primary);
+  }
+}
+
+/* ==========================================================================
+   5. DASHBOARD WIDGET STYLES
+   ========================================================================== */
+
+.sv-dashboard-widget {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background-color: $dashboard-panel-bg;
+  border: $dashboard-panel-border-width solid $dashboard-panel-border-color;
+  border-radius: var(--sv-radius-md);
+  padding: $dashboard-panel-padding;
+  height: 100%;
+  
+  // Widget header
+  &-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--sv-space-3);
+    
+    // Widget title
+    &-title {
+      font-size: $dashboard-widget-title-font-size;
+      font-weight: $dashboard-widget-title-font-weight;
+      color: var(--sv-text-primary);
+    }
+    
+    // Widget actions
+    &-actions {
+      display: flex;
+      align-items: center;
+      gap: var(--sv-space-2);
+    }
+  }
+  
+  // Widget content
+  &-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    
+    // Center content vertically
+    &.sv-widget-content-center {
+      align-items: center;
+      text-align: center;
+    }
+  }
+  
+  // Widget footer
+  &-footer {
+    margin-top: var(--sv-space-3);
+    padding-top: var(--sv-space-2);
+    border-top: $dashboard-panel-border-width solid $dashboard-panel-border-color;
+    font-size: var(--sv-text-sm);
+    color: var(--sv-text-secondary);
+    
+    // Comparison indicators
+    .sv-comparison {
+      display: flex;
+      align-items: center;
+      
+      &.sv-trend-up {
+        color: var(--sv-success);
+      }
+      
+      &.sv-trend-down {
+        color: var(--sv-error);
+      }
+      
+      .sv-trend-icon {
+        margin-right: var(--sv-space-1);
+      }
+      
+      .sv-trend-value {
+        font-weight: var(--sv-font-medium);
+      }
+      
+      .sv-trend-period {
+        margin-left: var(--sv-space-1);
+        opacity: 0.8;
+      }
+    }
+  }
+  
+  // KPI widget (Key Performance Indicator)
+  &.sv-widget-kpi {
+    .sv-kpi-value {
+      font-size: var(--sv-text-4xl);
+      font-weight: var(--sv-font-bold);
+      color: var(--sv-text-primary);
+      line-height: 1.2;
+    }
+    
+    .sv-kpi-label {
+      font-size: var(--sv-text-sm);
+      color: var(--sv-text-secondary);
+      margin-bottom: var(--sv-space-1);
+    }
+    
+    // KPI content centered
+    &.sv-kpi-centered {
+      text-align: center;
+      
+      .sv-dashboard-widget-content {
+        align-items: center;
+      }
+    }
+  }
+  
+  // Stat widget (Simple statistic)
+  &.sv-widget-stat {
+    text-align: center;
+    
+    .sv-stat-icon {
+      font-size: var(--sv-text-3xl);
+      margin-bottom: var(--sv-space-2);
+      color: var(--sv-primary);
+    }
+    
+    .sv-stat-value {
+      font-size: var(--sv-text-2xl);
+      font-weight: var(--sv-font-bold);
+      color: var(--sv-text-primary);
+      margin-bottom: var(--sv-space-1);
+    }
+    
+    .sv-stat-label {
+      font-size: var(--sv-text-sm);
+      color: var(--sv-text-secondary);
+    }
+  }
+  
+  // Chart widget
+  &.sv-widget-chart {
+    // Chart container needs height
+    .sv-chart-container {
+      flex: 1;
+      width: 100%;
+      min-height: 200px;
+      position: relative;
+    }
+  }
+  
+  // List widget
+  &.sv-widget-list {
+    .sv-widget-list-container {
+      max-height: 300px;
+      overflow-y: auto;
+      margin: calc(-1 * var(--sv-space-2));
+      
+      // Scrollbar styling
+      &::-webkit-scrollbar {
+        width: 6px;
+      }
+      
+      &::-webkit-scrollbar-track {
+        background-color: var(--sv-bg-element);
+        border-radius: 4px;
+      }
+      
+      &::-webkit-scrollbar-thumb {
+        background-color: var(--sv-border-dark);
+        border-radius: 4px;
+      }
+    }
+    
+    // List items
+    .sv-widget-list-item {
+      padding: var(--sv-padding-2) var(--sv-padding-3);
+      border-bottom: $dashboard-panel-border-width solid $dashboard-panel-border-color;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      
+      &:last-child {
+        border-bottom: none;
+      }
+      
+      // Hover effect
+      &:hover {
+        background-color: var(--sv-bg-element-hover);
+      }
+      
+      // Item content
+      .sv-list-item-content {
+        display: flex;
+        flex-direction: column;
+      }
+      
+      // Item title
+      .sv-list-item-title {
+        font-size: var(--sv-text-base);
+        color: var(--sv-text-primary);
+      }
+      
+      // Item subtitle
+      .sv-list-item-subtitle {
+        font-size: var(--sv-text-xs);
+        color: var(--sv-text-tertiary);
+      }
+      
+      // Item value
+      .sv-list-item-value {
+        font-weight: var(--sv-font-medium);
+        
+        &.sv-value-positive {
+          color: var(--sv-success);
+        }
+        
+        &.sv-value-negative {
+          color: var(--sv-error);
+        }
+      }
+    }
+  }
+}
+
+/* ==========================================================================
+   6. DASHBOARD CONTROLS
+   ========================================================================== */
+
+// Dashboard controls bar
+.sv-dashboard-controls {
+  display: flex;
+  align-items: center;
+  gap: var(--sv-space-3);
+  background-color: var(--sv-bg-element);
+  padding: var(--sv-padding-2) var(--sv-padding-3);
+  border-radius: var(--sv-radius-md);
+  margin-bottom: $dashboard-gap;
+  
+  // Control section
+  &-section {
+    display: flex;
+    align-items: center;
+    gap: var(--sv-space-2);
+    
+    // Label for control section
+    .sv-control-label {
+      font-size: var(--sv-text-sm);
+      color: var(--sv-text-secondary);
+      margin-right: var(--sv-space-1);
+    }
+  }
+  
+  // Separator between control sections
+  &-separator {
+    width: 1px;
+    height: 24px;
+    background-color: $dashboard-panel-border-color;
+    margin: 0 var(--sv-space-2);
+  }
+  
+  // Mobile toggle for control bar
+  &-toggle {
+    display: none;
+    cursor: pointer;
+  }
+}
+
+// Date range picker
+.sv-date-range {
+  display: flex;
+  align-items: center;
+  
+  // Current range display
+  &-display {
+    background-color: var(--sv-bg-surface);
+    border: $dashboard-panel-border-width solid $dashboard-panel-border-color;
+    border-radius: var(--sv-radius-md);
+    padding: var(--sv-padding-2) var(--sv-padding-3);
+    cursor: pointer;
+    font-size: var(--sv-text-sm);
+    display: flex;
+    align-items: center;
+    
+    &:hover {
+      border-color: var(--sv-border-dark);
+    }
+    
+    // Date range icon
+    .sv-date-range-icon {
+      margin-right: var(--sv-space-2);
+      color: var(--sv-text-secondary);
+    }
+  }
+  
+  // Preset options
+  &-presets {
+    display: flex;
+    align-items: center;
+    gap: var(--sv-space-1);
+    
+    .sv-date-preset {
+      font-size: var(--sv-text-xs);
+      padding: var(--sv-padding-1) var(--sv-padding-2);
+      border-radius: var(--sv-radius-full);
+      background-color: var(--sv-bg-element);
+      cursor: pointer;
+      
+      &:hover {
+        background-color: var(--sv-bg-element-hover);
+      }
+      
+      &.sv-preset-active {
+        background-color: var(--sv-primary);
+        color: var(--sv-text-on-dark);
+      }
+    }
+  }
+}
+
+// View type selector
+.sv-view-selector {
+  display: flex;
+  align-items: center;
+  
+  // View options
+  .sv-view-option {
+    padding: var(--sv-padding-1) var(--sv-padding-2);
+    cursor: pointer;
+    color: var(--sv-text-secondary);
+    border-radius: var(--sv-radius-md);
+    
+    &:hover {
+      background-color: var(--sv-bg-element-hover);
+    }
+    
+    &.sv-view-active {
+      background-color: var(--sv-primary);
+      color: var(--sv-text-on-dark);
+    }
+  }
+}
+
+// Refresh control
+.sv-refresh-control {
+  display: flex;
+  align-items: center;
+  font-size: var(--sv-text-sm);
+  
+  // Refresh button
+  &-button {
+    cursor: pointer;
+    color: var(--sv-text-secondary);
+    margin-left: var(--sv-space-1);
+    transition: transform 0.3s ease;
+    
+    &:hover {
+      color: var(--sv-text-primary);
+    }
+    
+    &.sv-refreshing {
+      animation: spin 1s linear infinite;
+    }
+  }
+  
+  // Auto-refresh toggle
+  &-auto {
+    margin-left: var(--sv-space-2);
+    display: flex;
+    align-items: center;
+    font-size: var(--sv-text-xs);
+    
+    .sv-auto-refresh-label {
+      margin-right: var(--sv-space-1);
+    }
+  }
+}
+
+/* ==========================================================================
+   7. DASHBOARD THEMES
+   ========================================================================== */
+
+// Light theme variant (default)
+.sv-dashboard-light {
+  background-color: var(--sv-bg-primary);
+  
+  .sv-dashboard-panel,
+  .sv-dashboard-widget {
+    background-color: var(--sv-bg-surface);
+  }
+}
+
+// Dark theme variant
+.sv-dashboard-dark {
+  background-color: var(--sv-bg-secondary);
+  
+  .sv-dashboard-panel,
+  .sv-dashboard-widget {
+    background-color: var(--sv-bg-surface);
+  }
+}
+
+// Minimal theme with less borders
+.sv-dashboard-minimal {
+  .sv-dashboard-panel,
+  .sv-dashboard-widget {
+    border: none;
+    box-shadow: var(--sv-shadow-sm);
+  }
+}
+
+// Dense theme with smaller gaps and padding
+.sv-dashboard-dense {
+  padding: $dashboard-compact-padding;
+  gap: $dashboard-compact-gap;
+  
+  .sv-dashboard-grid {
+    gap: $dashboard-compact-gap;
+  }
+  
+  .sv-dashboard-panel {
+    &-header {
+      padding: calc($dashboard-panel-header-padding-y / 1.5) calc($dashboard-panel-header-padding-x / 1.5);
+    }
+    
+    &-content {
+      padding: calc($dashboard-panel-content-padding / 1.5);
+    }
+  }
+  
+  .sv-dashboard-widget {
+    padding: calc($dashboard-panel-padding / 1.5);
+  }
+}
+
+// Colorful theme with accent borders
+.sv-dashboard-colorful {
+  .sv-dashboard-panel,
+  .sv-dashboard-widget {
+    border-top-width: 3px;
+    
+    &.sv-color-primary {
+      border-top-color: var(--sv-primary);
+    }
+    
+    &.sv-color-success {
+      border-top-color: var(--sv-success);
+    }
+    
+    &.sv-color-warning {
+      border-top-color: var(--sv-warning);
+    }
+    
+    &.sv-color-error {
+      border-top-color: var(--sv-error);
+    }
+    
+    &.sv-color-info {
+      border-top-color: var(--sv-info);
+    }
+  }
+}
+
+/* ==========================================================================
+   8. UTILITY CLASSES
+   ========================================================================== */
+
+// Loading state for dashboard
+.sv-dashboard-loading {
+  position: relative;
+  min-height: 200px;
+  
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(var(--sv-bg-primary), 0.5);
+    z-index: var(--sv-z-index-overlay);
+    border-radius: var(--sv-radius-md);
+  }
+  
+  &::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 32px;
+    height: 32px;
+    margin: -16px 0 0 -16px;
+    border-radius: 50%;
+    border: 3px solid rgba(var(--sv-primary-500-rgb), 0.3);
+    border-top-color: var(--sv-primary);
+    z-index: var(--sv-z-index-overlay);
+    animation: spin 1s linear infinite;
+  }
+  
+  // Loading placeholders
+  .sv-dashboard-panel,
+  .sv-dashboard-widget {
+    background-color: var(--sv-bg-element);
+    animation: pulse 1.5s ease-in-out infinite;
+    
+    &-header,
+    &-content,
+    &-footer {
+      visibility: hidden;
+    }
+  }
+}
+
+// Empty dashboard state
+.sv-dashboard-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: var(--sv-padding-xl);
+  min-height: 300px;
+  
+  .sv-empty-icon {
+    font-size: var(--sv-text-3xl);
+    margin-bottom: var(--sv-space-4);
+    color: var(--sv-text-tertiary);
+    opacity: 0.5;
+  }
+  
+  .sv-empty-title {
+    font-size: var(--sv-text-xl);
+    font-weight: var(--sv-font-medium);
+    color: var(--sv-text-primary);
+    margin-bottom: var(--sv-space-2);
+  }
+  
+  .sv-empty-message {
+    color: var(--sv-text-secondary);
+    margin-bottom: var(--sv-space-4);
+    max-width: 500px;
+  }
+  
+  .sv-empty-action {
+    margin-top: var(--sv-space-3);
+  }
+}
+
+// Placeholder for widgets and panels
+.sv-dashboard-placeholder {
+  padding: var(--sv-padding-lg);
+  background-color: var(--sv-bg-element);
+  border: 2px dashed $dashboard-panel-border-color;
+  border-radius: var(--sv-radius-md);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  height: 100%;
+  min-height: 150px;
+  
+  .sv-placeholder-icon {
+    font-size: var(--sv-text-2xl);
+    margin-bottom: var(--sv-space-3);
+    color: var(--sv-text-tertiary);
+    opacity: 0.5;
+  }
+  
+  .sv-placeholder-text {
+    color: var(--sv-text-secondary);
+    margin-bottom: var(--sv-space-2);
+  }
+  
+  &.sv-placeholder-add {
+    cursor: pointer;
+    transition: all $dashboard-transition-duration $dashboard-transition-timing;
+    
+    &:hover {
+      background-color: var(--sv-bg-element-hover);
+      border-color: var(--sv-border-dark);
+    }
+  }
+}
+
+// Print-friendly dashboard
+@media print {
+  .sv-dashboard {
+    padding: 0;
+    background-color: transparent;
+    border: none;
+    
+    &-grid,
+    &-flex,
+    &-areas {
+      gap: 10px;
+    }
+    
+    &-controls,
+    &-toolbar {
+      display: none;
+    }
+    
+    .sv-dashboard-panel,
+    .sv-dashboard-widget {
+      break-inside: avoid;
+      border: 1px solid #000;
+      
+      &-header-actions,
+      &-window-actions {
+        display: none;
+      }
+    }
+  }
+}
+
+/* ==========================================================================
+   9. RESPONSIVE BEHAVIOR
+   ========================================================================== */
+
+// Mobile layout (xs screens)
+@include breakpoint-down(sm) {
+  .sv-dashboard {
+    padding: $dashboard-compact-padding;
+    
+    &-header {
+      flex-direction: column;
+      align-items: flex-start;
+      
+      &-actions {
+        margin-top: var(--sv-space-3);
+        width: 100%;
+        justify-content: flex-end;
+      }
+    }
+    
+    &-toolbar {
+      flex-direction: column;
+      align-items: flex-start;
+      
+      &-section {
+        width: 100%;
+        margin-bottom: var(--sv-space-3);
+        
+        &:last-child {
+          margin-bottom: 0;
+        }
+      }
+    }
+    
+    &-controls {
+      flex-direction: column;
+      align-items: flex-start;
+      
+      &-toggle {
+        display: block;
+        width: 100%;
+        text-align: center;
+        padding: var(--sv-padding-2);
+        background-color: var(--sv-bg-element-hover);
+        border-radius: var(--sv-radius-md);
+        margin-bottom: var(--sv-space-2);
+      }
+      
+      &-section {
+        width: 100%;
+        margin-bottom: var(--sv-space-2);
+        
+        .sv-control-label {
+          width: 80px; // Fixed width for alignment
+        }
+      }
+      
+      &-separator {
+        width: 100%;
+        height: 1px;
+        margin: var(--sv-space-2) 0;
+      }
+      
+      // Hide controls by default on mobile
+      &-content {
+        display: none;
+        width: 100%;
+        
+        &.sv-mobile-expanded {
+          display: block;
+        }
+      }
+    }
+    
+    // Mobile grid layout
+    &-grid {
+      gap: $dashboard-compact-gap;
+      
+      .sv-col-1,
+      .sv-col-2,
+      .sv-col-3,
+      .sv-col-4,
+      .sv-col-5,
+      .sv-col-6,
+      .sv-col-7,
+      .sv-col-8,
+      .sv-col-9,
+      .sv-col-10,
+      .sv-col-11,
+      .sv-col-12 {
+        grid-column: 1 / -1; // Full width on mobile
+      }
+    }
+    
+    // Mobile areas layout
+    &-areas {
+      &.sv-areas-template {
+        grid-template-areas:
+          "header"
+          "sidebar"
+          "main"
+          "footer";
+        grid-template-columns: 1fr;
+      }
+    }
+    
+    // Adjust panels for mobile
+    .sv-dashboard-panel {
+      &-header {
+        flex-direction: column;
+        align-items: flex-start;
+        
+        &-actions {
+          margin-top: var(--sv-space-2);
+          width: 100%;
+          justify-content: flex-end;
+        }
+      }
+    }
+    
+    // Hide non-essential elements on mobile
+    .sv-hide-mobile {
+      display: none;
+    }
+  }
+  
+  // Adjust KPI widgets for mobile
+  .sv-dashboard-widget {
+    &.sv-widget-kpi {
+      .sv-kpi-value {
+        font-size: var(--sv-text-3xl);
+      }
+    }
+  }
+  
+  // Force single column layout for mobile
+  .sv-dashboard-flex {
+    .sv-flex-item {
+      flex-basis: 100%;
+    }
+  }
+}
+
+// Small tablet layout (sm screens)
+@include breakpoint-between(sm, md) {
+  .sv-dashboard {
+    &-grid {
+      gap: var(--sv-space-3);
+      
+      // Limit column spans on small tablets
+      .sv-col-9,
+      .sv-col-10,
+      .sv-col-11,
+      .sv-col-12 {
+        grid-column: span 6; // Max 6 columns on small tablets
+      }
+    }
+  }
+}
+
+// Tablet layout (md screens)
+@include breakpoint-between(md, lg) {
+  .sv-dashboard {
+    &-grid {
+      // Limit column spans on tablets
+      .sv-col-10,
+      .sv-col-11,
+      .sv-col-12 {
+        grid-column: span 8; // Max 8 columns on tablets
+      }
+    }
+  }
+}
