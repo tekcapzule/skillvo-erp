@@ -1,4 +1,3 @@
-@charset "UTF-8";
 :root {
   --sv-font-family-main: Inter, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Open Sans, Helvetica Neue, sans-serif;
   --sv-font-family-heading: Inter, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Open Sans, Helvetica Neue, sans-serif;
@@ -193,6 +192,7 @@
   --sv-motion-duration-short: 0.15s;
   --sv-motion-duration-medium: 0.3s;
   --sv-motion-duration-long: 0.5s;
+  --sv-spinner-duration: 0.75s;
   --sv-motion-ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
   --sv-motion-ease-decelerate: cubic-bezier(0, 0, 0.2, 1);
   --sv-motion-ease-accelerate: cubic-bezier(0.4, 0, 1, 1);
@@ -249,6 +249,9 @@
   --sv-success: #4caf50;
   --sv-warning: #ffa726;
   --sv-error: #f44336;
+  --sv-error-dark: #d73128;
+  --sv-error-darker: #c62828;
+  --sv-error-500-rgb: 244, 67, 54;
   --sv-icon-color: var(--sv-text-primary);
 }
 
@@ -280,6 +283,9 @@
   --sv-success: #4caf50;
   --sv-warning: #ffa726;
   --sv-error: #f44336;
+  --sv-error-dark: #d73128;
+  --sv-error-darker: #c62828;
+  --sv-error-500-rgb: 244, 67, 54;
   --sv-shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.25);
   --sv-shadow-md: 0 2px 8px rgba(0, 0, 0, 0.25);
   --sv-shadow-lg: 0 4px 16px rgba(0, 0, 0, 0.3);
@@ -313,6 +319,9 @@
   --sv-success: #4caf50;
   --sv-warning: #ffa726;
   --sv-error: #f44336;
+  --sv-error-dark: #d73128;
+  --sv-error-darker: #c62828;
+  --sv-error-500-rgb: 244, 67, 54;
   --sv-icon-color: var(--sv-text-primary);
   transition: 0.3s ease-in-out;
   color-scheme: light;
@@ -347,6 +356,9 @@
     --sv-success: #4caf50;
     --sv-warning: #ffa726;
     --sv-error: #f44336;
+    --sv-error-dark: #d73128;
+    --sv-error-darker: #c62828;
+    --sv-error-500-rgb: 244, 67, 54;
     --sv-shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.25);
     --sv-shadow-md: 0 2px 8px rgba(0, 0, 0, 0.25);
     --sv-shadow-lg: 0 4px 16px rgba(0, 0, 0, 0.3);
@@ -381,6 +393,9 @@
   --sv-success: #4caf50;
   --sv-warning: #ffa726;
   --sv-error: #f44336;
+  --sv-error-dark: #d73128;
+  --sv-error-darker: #c62828;
+  --sv-error-500-rgb: 244, 67, 54;
   --sv-icon-color: var(--sv-text-primary);
   color-scheme: light;
 }
@@ -413,6 +428,9 @@
   --sv-success: #4caf50;
   --sv-warning: #ffa726;
   --sv-error: #f44336;
+  --sv-error-dark: #d73128;
+  --sv-error-darker: #c62828;
+  --sv-error-500-rgb: 244, 67, 54;
   --sv-shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.25);
   --sv-shadow-md: 0 2px 8px rgba(0, 0, 0, 0.25);
   --sv-shadow-lg: 0 4px 16px rgba(0, 0, 0, 0.3);
@@ -2215,1426 +2233,2879 @@ label {
   animation-timing-function: var(--sv-motion-ease-accelerate);
 }
 
-.ui-control-base, .toggle-switch, .select-control, .slider-control, .nav, .breadcrumb, .pagination, .stepper, .input-control, .textarea-control, .label, .badge, .tag, .chip, .progress, .alert, .table, .list-group, .grid, .card, .panel, .accordion, .button-base, .fab-base {
-  font-family: var(--sv-font-family-base);
-  font-size: var(--sv-font-size-base);
-  font-weight: 400;
-  line-height: var(--sv-line-height-base);
-  color: var(--sv-text-primary);
+.motion-spinner {
+  animation-name: spin;
+  animation-duration: var(--sv-spinner-duration);
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+/**
+ * UI Control Base - Core Styles
+ * Version: 2.0.0
+ * Last Updated: April 29, 2025
+ * 
+ * This file establishes the foundational styles for all interactive UI components
+ * in the SkillVo design system. It serves as the first level in our 
+ * three-tier styling architecture:
+ * 1. sv-ui-control-base (this file) - Base styles for all interactive controls
+ * 2. Category-specific base classes (e.g., sv-button-base, sv-input-base)
+ * 3. Component-specific classes (e.g., sv-button, sv-input)
+ */
+/* ==========================================================================
+   TABLE OF CONTENTS:
+
+   1. VARIABLES & CONFIGURATION
+   2. MIXINS
+      2.1 State Mixins
+      2.2 Layout Mixins
+      2.3 Visual Style Mixins
+      2.4 Typography Mixins
+      2.5 Spacing Mixins
+      2.6 Animation Mixins
+      2.7 Accessibility Mixins
+   3. BASE CLASS DEFINITION
+   4. SIZE VARIATIONS
+   5. ANIMATION KEYFRAMES
+   6. ANIMATION UTILITIES
+   7. ACCESSIBILITY UTILITIES
+   8. PRINT STYLES
+   9. RTL SUPPORT
+   10. HIGH CONTRAST MODE
+   ========================================================================== */
+/* ==========================================================================
+   1. VARIABLES & CONFIGURATION
+   ========================================================================== */
+/* ==========================================================================
+   2. MIXINS
+   ========================================================================== */
+/* 2.1 State Mixins
+   ========================================================================== */
+/* 2.2 Layout Mixins
+   ========================================================================== */
+/* 2.3 Visual Style Mixins
+   ========================================================================== */
+/* 2.4 Typography Mixins
+   ========================================================================== */
+/* 2.5 Spacing Mixins
+   ========================================================================== */
+/* 2.6 Animation Mixins
+   ========================================================================== */
+/* 2.7 Accessibility Mixins
+   ========================================================================== */
+/* ==========================================================================
+   3. BASE CLASS DEFINITION
+   ========================================================================== */
+.sv-ui-control-base, .sv-selection-control-base, .sv-nav-control-base, .sv-input-base, .sv-info-display-base, .sv-feedback-base, .sv-data-display-base, .sv-container-base, .sv-action-control-base {
   box-sizing: border-box;
-  transition: var(--sv-transition-base);
   margin: 0;
-}
-.ui-control-base:focus, .toggle-switch:focus, .select-control:focus, .slider-control:focus, .nav:focus, .breadcrumb:focus, .pagination:focus, .stepper:focus, .input-control:focus, .textarea-control:focus, .label:focus, .badge:focus, .tag:focus, .chip:focus, .progress:focus, .alert:focus, .table:focus, .list-group:focus, .grid:focus, .card:focus, .panel:focus, .accordion:focus, .button-base:focus, .fab-base:focus {
-  outline: none;
-  box-shadow: var(--sv-shadow-focus);
-}
-.ui-control-base:disabled, .toggle-switch:disabled, .select-control:disabled, .slider-control:disabled, .nav:disabled, .breadcrumb:disabled, .pagination:disabled, .stepper:disabled, .input-control:disabled, .textarea-control:disabled, .label:disabled, .badge:disabled, .tag:disabled, .chip:disabled, .progress:disabled, .alert:disabled, .table:disabled, .list-group:disabled, .grid:disabled, .card:disabled, .panel:disabled, .accordion:disabled, .button-base:disabled, .fab-base:disabled, .ui-control-base.disabled, .disabled.toggle-switch, .disabled.select-control, .disabled.slider-control, .disabled.nav, .disabled.breadcrumb, .disabled.pagination, .disabled.stepper, .disabled.input-control, .disabled.textarea-control, .disabled.label, .disabled.badge, .disabled.tag, .disabled.chip, .disabled.progress, .disabled.alert, .disabled.table, .disabled.list-group, .disabled.grid, .disabled.card, .disabled.panel, .disabled.accordion, .disabled.button-base, .disabled.fab-base {
-  opacity: 0.65;
-  cursor: not-allowed;
-  background-color: var(--sv-background-disabled);
-  border-color: var(--sv-border-disabled);
-  color: var(--sv-text-disabled);
-  pointer-events: none;
-}
-.ui-control-base.error, .error.toggle-switch, .error.select-control, .error.slider-control, .error.nav, .error.breadcrumb, .error.pagination, .error.stepper, .error.input-control, .error.textarea-control, .error.label, .error.badge, .error.tag, .error.chip, .error.progress, .error.alert, .error.table, .error.list-group, .error.grid, .error.card, .error.panel, .error.accordion, .error.button-base, .error.fab-base, .ui-control-base.has-error, .has-error.toggle-switch, .has-error.select-control, .has-error.slider-control, .has-error.nav, .has-error.breadcrumb, .has-error.pagination, .has-error.stepper, .has-error.input-control, .has-error.textarea-control, .has-error.label, .has-error.badge, .has-error.tag, .has-error.chip, .has-error.progress, .has-error.alert, .has-error.table, .has-error.list-group, .has-error.grid, .has-error.card, .has-error.panel, .has-error.accordion, .has-error.button-base, .has-error.fab-base {
-  border-color: var(--sv-error);
-  color: var(--sv-error);
+  font-family: var(--sv-font-family-main);
+  font-size: var(--sv-text-base);
+  font-weight: var(--sv-font-normal);
+  line-height: var(--sv-leading-normal);
+  color: var(--sv-text-primary);
+  background-color: var(--sv-bg-surface);
+  border: 1px solid var(--sv-border-medium);
+  border-radius: var(--sv-radius-md);
+  transition-property: all;
+  transition-duration: var(--sv-motion-duration-medium);
+  transition-timing-function: var(--sv-motion-ease-standard);
 }
 @media (prefers-reduced-motion: reduce) {
-  .ui-control-base, .toggle-switch, .select-control, .slider-control, .nav, .breadcrumb, .pagination, .stepper, .input-control, .textarea-control, .label, .badge, .tag, .chip, .progress, .alert, .table, .list-group, .grid, .card, .panel, .accordion, .button-base, .fab-base {
+  .sv-ui-control-base, .sv-selection-control-base, .sv-nav-control-base, .sv-input-base, .sv-info-display-base, .sv-feedback-base, .sv-data-display-base, .sv-container-base, .sv-action-control-base {
     transition: none;
   }
 }
-
-.button-base, .fab-base {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: var(--sv-spacing-2) var(--sv-spacing-4);
-  font-weight: var(--sv-font-weight-medium);
-  text-align: left;
-  vertical-align: middle;
-  cursor: pointer;
-  user-select: none;
-  border: var(--sv-border-width-sm, 1px) solid transparent;
-  border-radius: var(--sv-radius-md);
-  white-space: nowrap;
+.sv-ui-control-base:focus, .sv-selection-control-base:focus, .sv-nav-control-base:focus, .sv-input-base:focus, .sv-info-display-base:focus, .sv-feedback-base:focus, .sv-data-display-base:focus, .sv-container-base:focus, .sv-action-control-base:focus {
+  outline: none;
+  box-shadow: var(--sv-shadow-focus);
 }
-
-.fab-base {
-  height: 56px;
-  width: 56px;
-  border-radius: var(--sv-radius-full);
-  padding: 0;
-  box-shadow: var(--sv-shadow-md);
+.sv-ui-control-base:focus-visible, .sv-selection-control-base:focus-visible, .sv-nav-control-base:focus-visible, .sv-input-base:focus-visible, .sv-info-display-base:focus-visible, .sv-feedback-base:focus-visible, .sv-data-display-base:focus-visible, .sv-container-base:focus-visible, .sv-action-control-base:focus-visible {
+  outline: var(--sv-focus-ring-width) solid var(--sv-focus-ring-color);
+  outline-offset: var(--sv-focus-ring-offset);
 }
-.fab-base.fab-sm {
-  height: 40px;
-  width: 40px;
+.sv-ui-control-base:hover:not(:disabled):not(.disabled):not([readonly]):not(.readonly):not(:disabled):not(.disabled):not([readonly]):not(.readonly), .sv-selection-control-base:hover:not(:disabled):not(.disabled):not([readonly]):not(.readonly):not(:disabled):not(.disabled):not([readonly]):not(.readonly), .sv-nav-control-base:hover:not(:disabled):not(.disabled):not([readonly]):not(.readonly):not(:disabled):not(.disabled):not([readonly]):not(.readonly), .sv-input-base:hover:not(:disabled):not(.disabled):not([readonly]):not(.readonly):not(:disabled):not(.disabled):not([readonly]):not(.readonly), .sv-info-display-base:hover:not(:disabled):not(.disabled):not([readonly]):not(.readonly):not(:disabled):not(.disabled):not([readonly]):not(.readonly), .sv-feedback-base:hover:not(:disabled):not(.disabled):not([readonly]):not(.readonly):not(:disabled):not(.disabled):not([readonly]):not(.readonly), .sv-data-display-base:hover:not(:disabled):not(.disabled):not([readonly]):not(.readonly):not(:disabled):not(.disabled):not([readonly]):not(.readonly), .sv-container-base:hover:not(:disabled):not(.disabled):not([readonly]):not(.readonly):not(:disabled):not(.disabled):not([readonly]):not(.readonly), .sv-action-control-base:hover:not(:disabled):not(.disabled):not([readonly]):not(.readonly):not(:disabled):not(.disabled):not([readonly]):not(.readonly) {
+  background-color: var(--sv-bg-element-hover);
+  border-color: var(--sv-border-medium);
 }
-.fab-base.fab-lg {
-  height: 64px;
-  width: 64px;
+.sv-ui-control-base:active:not(:disabled):not(.disabled):not([readonly]):not(.readonly):not(:disabled):not(.disabled):not([readonly]):not(.readonly), .sv-selection-control-base:active:not(:disabled):not(.disabled):not([readonly]):not(.readonly):not(:disabled):not(.disabled):not([readonly]):not(.readonly), .sv-nav-control-base:active:not(:disabled):not(.disabled):not([readonly]):not(.readonly):not(:disabled):not(.disabled):not([readonly]):not(.readonly), .sv-input-base:active:not(:disabled):not(.disabled):not([readonly]):not(.readonly):not(:disabled):not(.disabled):not([readonly]):not(.readonly), .sv-info-display-base:active:not(:disabled):not(.disabled):not([readonly]):not(.readonly):not(:disabled):not(.disabled):not([readonly]):not(.readonly), .sv-feedback-base:active:not(:disabled):not(.disabled):not([readonly]):not(.readonly):not(:disabled):not(.disabled):not([readonly]):not(.readonly), .sv-data-display-base:active:not(:disabled):not(.disabled):not([readonly]):not(.readonly):not(:disabled):not(.disabled):not([readonly]):not(.readonly), .sv-container-base:active:not(:disabled):not(.disabled):not([readonly]):not(.readonly):not(:disabled):not(.disabled):not([readonly]):not(.readonly), .sv-action-control-base:active:not(:disabled):not(.disabled):not([readonly]):not(.readonly):not(:disabled):not(.disabled):not([readonly]):not(.readonly) {
+  background-color: var(--sv-bg-element-active);
+  border-color: var(--sv-border-dark);
 }
-
-.card, .panel {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  min-width: 0;
-  word-wrap: break-word;
-  background-color: var(--sv-background-base);
-  background-clip: border-box;
-  border: var(--sv-border-width-sm, 1px) solid var(--sv-border-default);
-  border-radius: var(--sv-radius-lg);
-  box-shadow: var(--sv-shadow-sm);
+.sv-ui-control-base.error, .error.sv-selection-control-base, .error.sv-nav-control-base, .error.sv-input-base, .error.sv-info-display-base, .error.sv-feedback-base, .error.sv-data-display-base, .error.sv-container-base, .error.sv-action-control-base, .sv-ui-control-base.has-error, .has-error.sv-selection-control-base, .has-error.sv-nav-control-base, .has-error.sv-input-base, .has-error.sv-info-display-base, .has-error.sv-feedback-base, .has-error.sv-data-display-base, .has-error.sv-container-base, .has-error.sv-action-control-base, .sv-ui-control-base[aria-invalid=true], [aria-invalid=true].sv-selection-control-base, [aria-invalid=true].sv-nav-control-base, [aria-invalid=true].sv-input-base, [aria-invalid=true].sv-info-display-base, [aria-invalid=true].sv-feedback-base, [aria-invalid=true].sv-data-display-base, [aria-invalid=true].sv-container-base, [aria-invalid=true].sv-action-control-base {
+  border-color: var(--sv-error);
+  color: var(--sv-error);
 }
-.card .card-header, .panel .card-header {
-  padding: var(--sv-spacing-3) var(--sv-spacing-4);
-  margin-bottom: 0;
-  background-color: var(--sv-background-alt);
-  border-bottom: var(--sv-border-width-sm, 1px) solid var(--sv-border-default);
-  font-weight: var(--sv-font-weight-medium);
+.sv-ui-control-base.error:focus, .error.sv-selection-control-base:focus, .error.sv-nav-control-base:focus, .error.sv-input-base:focus, .error.sv-info-display-base:focus, .error.sv-feedback-base:focus, .error.sv-data-display-base:focus, .error.sv-container-base:focus, .error.sv-action-control-base:focus, .sv-ui-control-base.has-error:focus, .has-error.sv-selection-control-base:focus, .has-error.sv-nav-control-base:focus, .has-error.sv-input-base:focus, .has-error.sv-info-display-base:focus, .has-error.sv-feedback-base:focus, .has-error.sv-data-display-base:focus, .has-error.sv-container-base:focus, .has-error.sv-action-control-base:focus, .sv-ui-control-base[aria-invalid=true]:focus, [aria-invalid=true].sv-selection-control-base:focus, [aria-invalid=true].sv-nav-control-base:focus, [aria-invalid=true].sv-input-base:focus, [aria-invalid=true].sv-info-display-base:focus, [aria-invalid=true].sv-feedback-base:focus, [aria-invalid=true].sv-data-display-base:focus, [aria-invalid=true].sv-container-base:focus, [aria-invalid=true].sv-action-control-base:focus {
+  box-shadow: var(--sv-shadow-focus-error);
 }
-.card .card-header:first-child, .panel .card-header:first-child {
-  border-top-left-radius: var(--sv-radius-lg);
-  border-top-right-radius: var(--sv-radius-lg);
+.sv-ui-control-base.success, .success.sv-selection-control-base, .success.sv-nav-control-base, .success.sv-input-base, .success.sv-info-display-base, .success.sv-feedback-base, .success.sv-data-display-base, .success.sv-container-base, .success.sv-action-control-base, .sv-ui-control-base.has-success, .has-success.sv-selection-control-base, .has-success.sv-nav-control-base, .has-success.sv-input-base, .has-success.sv-info-display-base, .has-success.sv-feedback-base, .has-success.sv-data-display-base, .has-success.sv-container-base, .has-success.sv-action-control-base, .sv-ui-control-base[aria-invalid=false], [aria-invalid=false].sv-selection-control-base, [aria-invalid=false].sv-nav-control-base, [aria-invalid=false].sv-input-base, [aria-invalid=false].sv-info-display-base, [aria-invalid=false].sv-feedback-base, [aria-invalid=false].sv-data-display-base, [aria-invalid=false].sv-container-base, [aria-invalid=false].sv-action-control-base {
+  border-color: var(--sv-success);
+  color: var(--sv-success);
 }
-.card .card-body, .panel .card-body {
-  flex: 1 1 auto;
-  padding: var(--sv-spacing-4);
+.sv-ui-control-base.success:focus, .success.sv-selection-control-base:focus, .success.sv-nav-control-base:focus, .success.sv-input-base:focus, .success.sv-info-display-base:focus, .success.sv-feedback-base:focus, .success.sv-data-display-base:focus, .success.sv-container-base:focus, .success.sv-action-control-base:focus, .sv-ui-control-base.has-success:focus, .has-success.sv-selection-control-base:focus, .has-success.sv-nav-control-base:focus, .has-success.sv-input-base:focus, .has-success.sv-info-display-base:focus, .has-success.sv-feedback-base:focus, .has-success.sv-data-display-base:focus, .has-success.sv-container-base:focus, .has-success.sv-action-control-base:focus, .sv-ui-control-base[aria-invalid=false]:focus, [aria-invalid=false].sv-selection-control-base:focus, [aria-invalid=false].sv-nav-control-base:focus, [aria-invalid=false].sv-input-base:focus, [aria-invalid=false].sv-info-display-base:focus, [aria-invalid=false].sv-feedback-base:focus, [aria-invalid=false].sv-data-display-base:focus, [aria-invalid=false].sv-container-base:focus, [aria-invalid=false].sv-action-control-base:focus {
+  box-shadow: var(--sv-shadow-focus-success);
 }
-.card .card-footer, .panel .card-footer {
-  padding: var(--sv-spacing-3) var(--sv-spacing-4);
-  background-color: var(--sv-background-alt);
-  border-top: var(--sv-border-width-sm, 1px) solid var(--sv-border-default);
+.sv-ui-control-base:disabled, .sv-selection-control-base:disabled, .sv-nav-control-base:disabled, .sv-input-base:disabled, .sv-info-display-base:disabled, .sv-feedback-base:disabled, .sv-data-display-base:disabled, .sv-container-base:disabled, .sv-action-control-base:disabled, .sv-ui-control-base.disabled, .disabled.sv-selection-control-base, .disabled.sv-nav-control-base, .disabled.sv-input-base, .disabled.sv-info-display-base, .disabled.sv-feedback-base, .disabled.sv-data-display-base, .disabled.sv-container-base, .disabled.sv-action-control-base {
+  opacity: 0.65;
+  cursor: not-allowed;
+  background-color: var(--sv-bg-element);
+  border-color: var(--sv-border-light);
+  color: var(--sv-text-tertiary);
+  pointer-events: none;
 }
-.card .card-footer:last-child, .panel .card-footer:last-child {
-  border-bottom-left-radius: var(--sv-radius-lg);
-  border-bottom-right-radius: var(--sv-radius-lg);
+.sv-ui-control-base[readonly], [readonly].sv-selection-control-base, [readonly].sv-nav-control-base, [readonly].sv-input-base, [readonly].sv-info-display-base, [readonly].sv-feedback-base, [readonly].sv-data-display-base, [readonly].sv-container-base, [readonly].sv-action-control-base, .sv-ui-control-base.readonly, .readonly.sv-selection-control-base, .readonly.sv-nav-control-base, .readonly.sv-input-base, .readonly.sv-info-display-base, .readonly.sv-feedback-base, .readonly.sv-data-display-base, .readonly.sv-container-base, .readonly.sv-action-control-base {
+  background-color: var(--sv-bg-element);
+  border-color: var(--sv-border-light);
+  cursor: default;
 }
-.card.card-hover:hover, .card-hover.panel:hover {
-  box-shadow: var(--sv-shadow-md);
-  transform: translateY(-2px);
-}
-
-.panel {
+.sv-ui-control-base[readonly]:focus, [readonly].sv-selection-control-base:focus, [readonly].sv-nav-control-base:focus, [readonly].sv-input-base:focus, [readonly].sv-info-display-base:focus, [readonly].sv-feedback-base:focus, [readonly].sv-data-display-base:focus, [readonly].sv-container-base:focus, [readonly].sv-action-control-base:focus, .sv-ui-control-base.readonly:focus, .readonly.sv-selection-control-base:focus, .readonly.sv-nav-control-base:focus, .readonly.sv-input-base:focus, .readonly.sv-info-display-base:focus, .readonly.sv-feedback-base:focus, .readonly.sv-data-display-base:focus, .readonly.sv-container-base:focus, .readonly.sv-action-control-base:focus {
   box-shadow: none;
 }
-.panel .panel-collapse {
-  display: none;
-}
-.panel .panel-collapse.show {
-  display: block;
-}
-
-.accordion .accordion-item {
-  border: var(--sv-border-width-sm, 1px) solid var(--sv-border-default);
-}
-.accordion .accordion-item:not(:first-child) {
-  border-top: 0;
-}
-.accordion .accordion-item:first-child {
-  border-top-left-radius: var(--sv-radius-md);
-  border-top-right-radius: var(--sv-radius-md);
-}
-.accordion .accordion-item:last-child {
-  border-bottom-left-radius: var(--sv-radius-md);
-  border-bottom-right-radius: var(--sv-radius-md);
-}
-.accordion .accordion-header {
-  margin: 0;
-}
-.accordion .accordion-button {
+.sv-ui-control-base.loading, .loading.sv-selection-control-base, .loading.sv-nav-control-base, .loading.sv-input-base, .loading.sv-info-display-base, .loading.sv-feedback-base, .loading.sv-data-display-base, .loading.sv-container-base, .loading.sv-action-control-base, .sv-ui-control-base.is-loading, .is-loading.sv-selection-control-base, .is-loading.sv-nav-control-base, .is-loading.sv-input-base, .is-loading.sv-info-display-base, .is-loading.sv-feedback-base, .is-loading.sv-data-display-base, .is-loading.sv-container-base, .is-loading.sv-action-control-base, .sv-ui-control-base[aria-busy=true], [aria-busy=true].sv-selection-control-base, [aria-busy=true].sv-nav-control-base, [aria-busy=true].sv-input-base, [aria-busy=true].sv-info-display-base, [aria-busy=true].sv-feedback-base, [aria-busy=true].sv-data-display-base, [aria-busy=true].sv-container-base, [aria-busy=true].sv-action-control-base {
   position: relative;
-  display: flex;
-  align-items: center;
-  width: 100%;
-  padding: var(--sv-spacing-3) var(--sv-spacing-4);
-  font-size: var(--sv-font-size-base);
-  color: var(--sv-text-primary);
-  text-align: left;
-  background-color: var(--sv-background-base);
-  border: 0;
-  border-radius: 0;
-  overflow-anchor: none;
-  transition: var(--sv-transition-base);
-  cursor: pointer;
+  color: transparent;
+  pointer-events: none;
 }
-.accordion .accordion-button:not(.collapsed) {
-  color: var(--sv-primary);
-  background-color: var(--sv-primary-light-bg, rgba(0, 0, 0, 0.05));
-  box-shadow: inset 0 -1px 0 var(--sv-border-default);
-}
-.accordion .accordion-button:not(.collapsed)::after {
-  transform: rotate(-180deg);
-}
-.accordion .accordion-button::after {
-  flex-shrink: 0;
+.sv-ui-control-base.loading::after, .loading.sv-selection-control-base::after, .loading.sv-nav-control-base::after, .loading.sv-input-base::after, .loading.sv-info-display-base::after, .loading.sv-feedback-base::after, .loading.sv-data-display-base::after, .loading.sv-container-base::after, .loading.sv-action-control-base::after, .sv-ui-control-base.is-loading::after, .is-loading.sv-selection-control-base::after, .is-loading.sv-nav-control-base::after, .is-loading.sv-input-base::after, .is-loading.sv-info-display-base::after, .is-loading.sv-feedback-base::after, .is-loading.sv-data-display-base::after, .is-loading.sv-container-base::after, .is-loading.sv-action-control-base::after, .sv-ui-control-base[aria-busy=true]::after, [aria-busy=true].sv-selection-control-base::after, [aria-busy=true].sv-nav-control-base::after, [aria-busy=true].sv-input-base::after, [aria-busy=true].sv-info-display-base::after, [aria-busy=true].sv-feedback-base::after, [aria-busy=true].sv-data-display-base::after, [aria-busy=true].sv-container-base::after, [aria-busy=true].sv-action-control-base::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
   width: 16px;
   height: 16px;
-  margin-left: auto;
-  content: "";
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='%23212529' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-size: 16px;
-  transition: transform 0.2s ease-in-out;
+  margin: -8px 0 0 -8px;
+  border-radius: 50%;
+  border: 2px solid rgba(var(--sv-primary-500-rgb), 0.3);
+  border-top-color: var(--sv-primary);
+  animation: spin var(--sv-spinner-duration) linear infinite;
 }
-.accordion .accordion-collapse {
-  display: none;
-}
-.accordion .accordion-collapse.show {
-  display: block;
-}
-.accordion .accordion-body {
-  padding: var(--sv-spacing-3) var(--sv-spacing-4);
-}
-
-.modal-backdrop {
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: var(--sv-z-index-modal-backdrop, 1040);
-  width: 100vw;
-  height: 100vh;
-  background-color: #000;
-  opacity: 0.5;
-}
-
-.modal {
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: var(--sv-z-index-modal, 1050);
-  width: 100%;
-  height: 100%;
-  overflow-x: hidden;
-  overflow-y: auto;
-  display: none;
-  outline: 0;
-}
-.modal.show {
-  display: block;
-}
-.modal .modal-dialog {
-  position: relative;
-  width: auto;
-  margin: var(--sv-spacing-5) auto;
-  pointer-events: none;
-  max-width: 500px;
-}
-.modal .modal-dialog.modal-dialog-centered {
-  display: flex;
-  align-items: center;
-  min-height: calc(100% - var(--sv-spacing-5) * 2);
-}
-.modal .modal-dialog.modal-sm {
-  max-width: 300px;
-}
-.modal .modal-dialog.modal-lg {
-  max-width: 800px;
-}
-.modal .modal-dialog.modal-xl {
-  max-width: 1140px;
-}
-.modal .modal-content {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  pointer-events: auto;
-  background-color: var(--sv-background-base);
-  background-clip: padding-box;
-  border: var(--sv-border-width-sm, 1px) solid rgba(0, 0, 0, 0.2);
-  border-radius: var(--sv-radius-lg);
-  outline: 0;
-  box-shadow: var(--sv-shadow-lg);
-}
-.modal .modal-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: var(--sv-spacing-3) var(--sv-spacing-4);
-  border-bottom: var(--sv-border-width-sm, 1px) solid var(--sv-border-default);
-  border-top-left-radius: var(--sv-radius-lg);
-  border-top-right-radius: var(--sv-radius-lg);
-}
-.modal .modal-header .modal-title {
-  margin: 0;
-  font-size: var(--sv-font-size-xl);
-  font-weight: var(--sv-font-weight-medium);
-  line-height: var(--sv-line-height-base);
-}
-.modal .modal-header .modal-close {
-  padding: var(--sv-spacing-1);
-  background-color: transparent;
-  border: 0;
-  cursor: pointer;
-  font-size: var(--sv-font-size-xl);
-  font-weight: var(--sv-font-weight-bold);
-  line-height: 1;
-  color: var(--sv-text-tertiary);
-  opacity: 0.5;
-}
-.modal .modal-header .modal-close:hover {
-  opacity: 1;
-}
-.modal .modal-body {
-  position: relative;
-  flex: 1 1 auto;
-  padding: var(--sv-spacing-4);
-}
-.modal .modal-footer {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: flex-end;
-  padding: var(--sv-spacing-3) var(--sv-spacing-4);
-  border-top: var(--sv-border-width-sm, 1px) solid var(--sv-border-default);
-}
-.modal .modal-footer > * {
-  margin: var(--sv-spacing-1);
-}
-
-.drawer {
-  position: fixed;
-  top: 0;
-  height: 100%;
-  z-index: var(--sv-z-index-modal, 1050);
-  background-color: var(--sv-background-base);
-  box-shadow: var(--sv-shadow-lg);
-  transition: transform 0.3s ease-in-out;
-  overflow-y: auto;
-}
-.drawer.drawer-left {
-  left: 0;
-  transform: translateX(-100%);
-}
-.drawer.drawer-left.show {
-  transform: translateX(0);
-}
-.drawer.drawer-right {
-  right: 0;
-  transform: translateX(100%);
-}
-.drawer.drawer-right.show {
-  transform: translateX(0);
-}
-.drawer .drawer-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: var(--sv-spacing-3) var(--sv-spacing-4);
-  border-bottom: var(--sv-border-width-sm, 1px) solid var(--sv-border-default);
-}
-.drawer .drawer-header .drawer-title {
-  margin: 0;
-  font-size: var(--sv-font-size-lg);
-  font-weight: var(--sv-font-weight-medium);
-}
-.drawer .drawer-body {
-  padding: var(--sv-spacing-4);
-}
-.drawer .drawer-footer {
-  padding: var(--sv-spacing-3) var(--sv-spacing-4);
-  border-top: var(--sv-border-width-sm, 1px) solid var(--sv-border-default);
-}
-
-.table {
-  width: 100%;
-  margin-bottom: var(--sv-spacing-3);
-  background-color: transparent;
-  border-collapse: collapse;
-}
-.table th, .table td {
-  padding: var(--sv-spacing-3) var(--sv-spacing-3);
-  vertical-align: top;
-  border-top: var(--sv-border-width-sm, 1px) solid var(--sv-border-default);
-  text-align: left;
-}
-.table thead th {
-  vertical-align: bottom;
-  border-bottom: calc(var(--sv-border-width-sm, 1px) * 2) solid var(--sv-border-default);
-  font-weight: var(--sv-font-weight-medium);
-  background-color: var(--sv-background-alt);
-  position: sticky;
-  top: 0;
-  z-index: 1;
-}
-.table tbody + tbody {
-  border-top: calc(var(--sv-border-width-sm, 1px) * 2) solid var(--sv-border-default);
-}
-.table.table-sm th, .table.table-sm td {
-  padding: var(--sv-spacing-1) var(--sv-spacing-2);
-}
-.table.table-bordered {
-  border: var(--sv-border-width-sm, 1px) solid var(--sv-border-default);
-}
-.table.table-bordered th, .table.table-bordered td {
-  border: var(--sv-border-width-sm, 1px) solid var(--sv-border-default);
-}
-.table.table-striped tbody tr:nth-of-type(odd) {
-  background-color: var(--sv-background-striped, rgba(0, 0, 0, 0.05));
-}
-.table.table-hover tbody tr:hover {
-  background-color: var(--sv-background-hover, rgba(0, 0, 0, 0.05));
-}
-.table.table-responsive {
-  display: block;
-  width: 100%;
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
-}
-.table .sorted-asc::after {
-  content: " ↑";
-  opacity: 0.5;
-}
-.table .sorted-desc::after {
-  content: " ↓";
-  opacity: 0.5;
-}
-
-.list-group {
-  display: flex;
-  flex-direction: column;
-  padding-left: 0;
-  margin-bottom: 0;
-  border-radius: var(--sv-radius-md);
-}
-.list-group .list-group-item {
-  position: relative;
-  display: block;
-  padding: var(--sv-spacing-3) var(--sv-spacing-4);
-  background-color: var(--sv-background-base);
-  border: var(--sv-border-width-sm, 1px) solid var(--sv-border-default);
-}
-.list-group .list-group-item:first-child {
-  border-top-left-radius: inherit;
-  border-top-right-radius: inherit;
-}
-.list-group .list-group-item:last-child {
-  border-bottom-left-radius: inherit;
-  border-bottom-right-radius: inherit;
-}
-.list-group .list-group-item + .list-group-item {
-  border-top-width: 0;
-}
-.list-group .list-group-item.active {
-  z-index: 2;
-  color: var(--sv-text-on-primary);
-  background-color: var(--sv-primary);
+.sv-ui-control-base.selected, .selected.sv-selection-control-base, .selected.sv-nav-control-base, .selected.sv-input-base, .selected.sv-info-display-base, .selected.sv-feedback-base, .selected.sv-data-display-base, .selected.sv-container-base, .selected.sv-action-control-base, .sv-ui-control-base.checked, .checked.sv-selection-control-base, .checked.sv-nav-control-base, .checked.sv-input-base, .checked.sv-info-display-base, .checked.sv-feedback-base, .checked.sv-data-display-base, .checked.sv-container-base, .checked.sv-action-control-base, .sv-ui-control-base[aria-selected=true], [aria-selected=true].sv-selection-control-base, [aria-selected=true].sv-nav-control-base, [aria-selected=true].sv-input-base, [aria-selected=true].sv-info-display-base, [aria-selected=true].sv-feedback-base, [aria-selected=true].sv-data-display-base, [aria-selected=true].sv-container-base, [aria-selected=true].sv-action-control-base, .sv-ui-control-base[aria-checked=true], [aria-checked=true].sv-selection-control-base, [aria-checked=true].sv-nav-control-base, [aria-checked=true].sv-input-base, [aria-checked=true].sv-info-display-base, [aria-checked=true].sv-feedback-base, [aria-checked=true].sv-data-display-base, [aria-checked=true].sv-container-base, [aria-checked=true].sv-action-control-base {
+  background-color: var(--sv-bg-element-active);
   border-color: var(--sv-primary);
-}
-.list-group .list-group-item.disabled, .list-group .list-group-item:disabled {
-  color: var(--sv-text-disabled);
-  pointer-events: none;
-  background-color: var(--sv-background-base);
-}
-.list-group .list-group-item.list-group-item-action {
-  width: 100%;
-  text-align: inherit;
-  cursor: pointer;
-}
-.list-group .list-group-item.list-group-item-action:hover, .list-group .list-group-item.list-group-item-action:focus {
-  z-index: 1;
-  background-color: var(--sv-background-alt);
-}
-
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  grid-gap: var(--sv-spacing-4);
-}
-.grid.grid-sm {
-  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-  grid-gap: var(--sv-spacing-2);
-}
-.grid.grid-lg {
-  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-  grid-gap: var(--sv-spacing-5);
-}
-.grid .grid-item {
-  background-color: var(--sv-background-base);
-  border: var(--sv-border-width-sm, 1px) solid var(--sv-border-default);
-  border-radius: var(--sv-radius-md);
-  padding: var(--sv-spacing-3);
-}
-.grid .grid-item:hover {
-  box-shadow: var(--sv-shadow-sm);
-}
-
-.alert {
-  position: relative;
-  padding: var(--sv-spacing-3) var(--sv-spacing-4);
-  margin-bottom: var(--sv-spacing-3);
-  border: var(--sv-border-width-sm, 1px) solid transparent;
-  border-radius: var(--sv-radius-md);
-}
-.alert .alert-heading {
-  margin-top: 0;
-  font-weight: var(--sv-font-weight-bold);
-}
-.alert .alert-link {
-  font-weight: var(--sv-font-weight-bold);
-  text-decoration: underline;
-}
-.alert .alert-close {
-  position: absolute;
-  top: var(--sv-spacing-3);
-  right: var(--sv-spacing-3);
-  padding: 0;
-  background-color: transparent;
-  border: 0;
-  font-size: var(--sv-font-size-lg);
-  line-height: 1;
-  color: inherit;
-  opacity: 0.5;
-  cursor: pointer;
-}
-.alert .alert-close:hover {
-  opacity: 1;
-}
-.alert.alert-success {
-  color: var(--sv-text-success);
-  background-color: var(--sv-background-success);
-  border-color: var(--sv-border-success);
-}
-.alert.alert-success .alert-link {
-  color: var(--sv-text-success-dark);
-}
-.alert.alert-info {
-  color: var(--sv-text-info);
-  background-color: var(--sv-background-info);
-  border-color: var(--sv-border-info);
-}
-.alert.alert-info .alert-link {
-  color: var(--sv-text-info-dark);
-}
-.alert.alert-warning {
-  color: var(--sv-text-warning);
-  background-color: var(--sv-background-warning);
-  border-color: var(--sv-border-warning);
-}
-.alert.alert-warning .alert-link {
-  color: var(--sv-text-warning-dark);
-}
-.alert.alert-danger {
-  color: var(--sv-text-error);
-  background-color: var(--sv-background-error);
-  border-color: var(--sv-border-error);
-}
-.alert.alert-danger .alert-link {
-  color: var(--sv-text-error-dark);
-}
-
-.toast-container {
-  position: fixed;
-  z-index: var(--sv-z-index-tooltip, 1070);
-  padding: var(--sv-spacing-3);
-}
-.toast-container.top-right {
-  top: 0;
-  right: 0;
-}
-.toast-container.top-left {
-  top: 0;
-  left: 0;
-}
-.toast-container.bottom-right {
-  bottom: 0;
-  right: 0;
-}
-.toast-container.bottom-left {
-  bottom: 0;
-  left: 0;
-}
-.toast-container.top-center {
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-}
-.toast-container.bottom-center {
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-}
-
-.toast {
-  width: 350px;
-  background-color: var(--sv-background-toast, rgba(255, 255, 255, 0.95));
-  border: var(--sv-border-width-sm, 1px) solid var(--sv-border-default);
-  border-radius: var(--sv-radius-md);
-  box-shadow: var(--sv-shadow-md);
-  opacity: 0;
-  transform: translateY(10px);
-  transition: opacity 0.3s, transform 0.3s;
-  overflow: hidden;
-}
-.toast.show {
-  opacity: 1;
-  transform: translateY(0);
-}
-.toast + .toast {
-  margin-top: var(--sv-spacing-2);
-}
-.toast .toast-header {
-  display: flex;
-  align-items: center;
-  padding: var(--sv-spacing-2) var(--sv-spacing-3);
-  background-color: var(--sv-background-alt);
-  border-bottom: var(--sv-border-width-sm, 1px) solid var(--sv-border-default);
-}
-.toast .toast-header .toast-title {
-  margin-right: auto;
-  font-weight: var(--sv-font-weight-medium);
-}
-.toast .toast-header .toast-close {
-  padding: 0;
-  background-color: transparent;
-  border: 0;
-  font-size: var(--sv-font-size-base);
-  line-height: 1;
-  color: var(--sv-text-tertiary);
-  opacity: 0.5;
-  cursor: pointer;
-}
-.toast .toast-header .toast-close:hover {
-  opacity: 1;
-}
-.toast .toast-body {
-  padding: var(--sv-spacing-3);
-}
-
-.snackbar {
-  position: fixed;
-  left: 50%;
-  bottom: var(--sv-spacing-4);
-  transform: translateX(-50%);
-  min-width: 250px;
-  max-width: 90%;
-  background-color: var(--sv-background-snackbar, #333);
-  color: var(--sv-text-on-dark);
-  padding: var(--sv-spacing-3) var(--sv-spacing-4);
-  border-radius: var(--sv-radius-md);
-  box-shadow: var(--sv-shadow-md);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  z-index: var(--sv-z-index-tooltip, 1070);
-  opacity: 0;
-  transition: opacity 0.3s, transform 0.3s;
-}
-.snackbar.show {
-  opacity: 1;
-}
-.snackbar .snackbar-action {
-  margin-left: var(--sv-spacing-3);
-  color: var(--sv-primary-light);
-  background: none;
-  border: none;
-  padding: var(--sv-spacing-1) var(--sv-spacing-2);
-  cursor: pointer;
-  font-weight: var(--sv-font-weight-medium);
-  text-transform: uppercase;
-  font-size: var(--sv-font-size-sm);
-}
-.snackbar .snackbar-action:hover {
-  text-decoration: underline;
-}
-
-.popover {
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: var(--sv-z-index-popover, 1060);
-  max-width: 276px;
-  font-size: var(--sv-font-size-sm);
-  background-color: var(--sv-background-base);
-  border: var(--sv-border-width-sm, 1px) solid rgba(0, 0, 0, 0.2);
-  border-radius: var(--sv-radius-md);
-  box-shadow: var(--sv-shadow-md);
-}
-.popover .popover-header {
-  padding: var(--sv-spacing-2) var(--sv-spacing-3);
-  margin: 0;
-  background-color: var(--sv-background-alt);
-  border-bottom: var(--sv-border-width-sm, 1px) solid rgba(0, 0, 0, 0.2);
-  font-size: var(--sv-font-size-base);
-  font-weight: var(--sv-font-weight-medium);
-}
-.popover .popover-body {
-  padding: var(--sv-spacing-2) var(--sv-spacing-3);
   color: var(--sv-text-primary);
 }
-.popover .popover-arrow {
-  position: absolute;
-  width: 10px;
-  height: 10px;
+.sv-ui-control-base.indeterminate, .indeterminate.sv-selection-control-base, .indeterminate.sv-nav-control-base, .indeterminate.sv-input-base, .indeterminate.sv-info-display-base, .indeterminate.sv-feedback-base, .indeterminate.sv-data-display-base, .indeterminate.sv-container-base, .indeterminate.sv-action-control-base, .sv-ui-control-base[aria-checked=mixed], [aria-checked=mixed].sv-selection-control-base, [aria-checked=mixed].sv-nav-control-base, [aria-checked=mixed].sv-input-base, [aria-checked=mixed].sv-info-display-base, [aria-checked=mixed].sv-feedback-base, [aria-checked=mixed].sv-data-display-base, [aria-checked=mixed].sv-container-base, [aria-checked=mixed].sv-action-control-base {
+  background-color: var(--sv-bg-element-hover);
+  border-color: var(--sv-primary);
 }
-.popover .popover-arrow::before, .popover .popover-arrow::after {
-  position: absolute;
-  display: block;
+.sv-ui-control-base.indeterminate::after, .indeterminate.sv-selection-control-base::after, .indeterminate.sv-nav-control-base::after, .indeterminate.sv-input-base::after, .indeterminate.sv-info-display-base::after, .indeterminate.sv-feedback-base::after, .indeterminate.sv-data-display-base::after, .indeterminate.sv-container-base::after, .indeterminate.sv-action-control-base::after, .sv-ui-control-base[aria-checked=mixed]::after, [aria-checked=mixed].sv-selection-control-base::after, [aria-checked=mixed].sv-nav-control-base::after, [aria-checked=mixed].sv-input-base::after, [aria-checked=mixed].sv-info-display-base::after, [aria-checked=mixed].sv-feedback-base::after, [aria-checked=mixed].sv-data-display-base::after, [aria-checked=mixed].sv-container-base::after, [aria-checked=mixed].sv-action-control-base::after {
   content: "";
-  border-width: 10px;
-  border-style: solid;
-  border-color: transparent;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 8px;
+  height: 2px;
+  margin: -1px 0 0 -4px;
+  background-color: var(--sv-primary);
 }
-.popover.bs-popover-top > .popover-arrow {
-  bottom: -10px;
+.sv-ui-control-base[aria-expanded=true], [aria-expanded=true].sv-selection-control-base, [aria-expanded=true].sv-nav-control-base, [aria-expanded=true].sv-input-base, [aria-expanded=true].sv-info-display-base, [aria-expanded=true].sv-feedback-base, [aria-expanded=true].sv-data-display-base, [aria-expanded=true].sv-container-base, [aria-expanded=true].sv-action-control-base {
+  background-color: var(--sv-bg-element-active);
+  border-color: var(--sv-border-dark);
 }
-.popover.bs-popover-top > .popover-arrow::before {
-  bottom: 0;
-  border-top-color: rgba(0, 0, 0, 0.25);
+@media (forced-colors: active) {
+  .sv-ui-control-base, .sv-selection-control-base, .sv-nav-control-base, .sv-input-base, .sv-info-display-base, .sv-feedback-base, .sv-data-display-base, .sv-container-base, .sv-action-control-base {
+    border: 1px solid transparent;
+  }
+  .sv-ui-control-base:focus, .sv-selection-control-base:focus, .sv-nav-control-base:focus, .sv-input-base:focus, .sv-info-display-base:focus, .sv-feedback-base:focus, .sv-data-display-base:focus, .sv-container-base:focus, .sv-action-control-base:focus {
+    outline: 2px solid transparent;
+    outline-offset: 4px;
+  }
 }
-.popover.bs-popover-top > .popover-arrow::after {
-  bottom: 1px;
-  border-top-color: var(--sv-background-base);
-}
-.popover.bs-popover-bottom > .popover-arrow {
-  top: -10px;
-}
-.popover.bs-popover-bottom > .popover-arrow::before {
-  top: 0;
-  border-bottom-color: rgba(0, 0, 0, 0.25);
-}
-.popover.bs-popover-bottom > .popover-arrow::after {
-  top: 1px;
-  border-bottom-color: var(--sv-background-alt);
-}
-
-.spinner {
-  display: inline-block;
-  width: 40px;
-  height: 40px;
-  border: 4px solid rgba(var(--sv-primary-rgb), 0.25);
-  border-right-color: var(--sv-primary);
-  border-radius: 50%;
-  animation: spinner-border 0.75s linear infinite;
-}
-.spinner.spinner-sm {
-  width: 20px;
-  height: 20px;
-  border-width: 2px;
-}
-.spinner.spinner-lg {
-  width: 60px;
-  height: 60px;
-  border-width: 6px;
+.sv-ui-control-base::placeholder, .sv-selection-control-base::placeholder, .sv-nav-control-base::placeholder, .sv-input-base::placeholder, .sv-info-display-base::placeholder, .sv-feedback-base::placeholder, .sv-data-display-base::placeholder, .sv-container-base::placeholder, .sv-action-control-base::placeholder {
+  color: var(--sv-text-tertiary);
+  opacity: 1;
 }
 
-@keyframes spinner-animation {
-  to {
+/* ==========================================================================
+   4. SIZE VARIATIONS
+   ========================================================================== */
+.sv-ui-size-xs {
+  padding-top: var(--sv-padding-1);
+  padding-bottom: var(--sv-padding-1);
+  padding-left: var(--sv-padding-2);
+  padding-right: var(--sv-padding-2);
+  font-size: var(--sv-text-xs);
+  font-weight: var(--sv-font-normal);
+  line-height: var(--sv-leading-normal);
+  border-radius: var(--sv-radius-xs);
+  height: calc(var(--sv-min-touch-target) * 0.6);
+}
+
+.sv-ui-size-sm {
+  padding-top: var(--sv-padding-1);
+  padding-bottom: var(--sv-padding-1);
+  padding-left: var(--sv-padding-2);
+  padding-right: var(--sv-padding-2);
+  font-size: var(--sv-text-sm);
+  font-weight: var(--sv-font-normal);
+  line-height: var(--sv-leading-normal);
+  border-radius: var(--sv-radius-sm);
+  height: calc(var(--sv-min-touch-target) * 0.75);
+}
+
+.sv-ui-size-md {
+  padding-top: var(--sv-padding-2);
+  padding-bottom: var(--sv-padding-2);
+  padding-left: var(--sv-padding-3);
+  padding-right: var(--sv-padding-3);
+  font-size: var(--sv-text-base);
+  font-weight: var(--sv-font-normal);
+  line-height: var(--sv-leading-normal);
+  border-radius: var(--sv-radius-md);
+  height: var(--sv-min-touch-target);
+}
+
+.sv-ui-size-lg {
+  padding-top: var(--sv-padding-3);
+  padding-bottom: var(--sv-padding-3);
+  padding-left: var(--sv-padding-4);
+  padding-right: var(--sv-padding-4);
+  font-size: var(--sv-text-lg);
+  font-weight: var(--sv-font-normal);
+  line-height: var(--sv-leading-normal);
+  border-radius: var(--sv-radius-lg);
+  height: calc(var(--sv-min-touch-target) * 1.25);
+}
+
+.sv-ui-size-xl {
+  padding-top: var(--sv-padding-4);
+  padding-bottom: var(--sv-padding-4);
+  padding-left: var(--sv-padding-5);
+  padding-right: var(--sv-padding-5);
+  font-size: var(--sv-text-xl);
+  font-weight: var(--sv-font-normal);
+  line-height: var(--sv-leading-normal);
+  border-radius: var(--sv-radius-xl);
+  height: calc(var(--sv-min-touch-target) * 1.5);
+}
+
+/* ==========================================================================
+   5. ANIMATION KEYFRAMES
+   ========================================================================== */
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
     transform: rotate(360deg);
   }
 }
-.loader {
-  display: inline-block;
-  width: 80px;
-  height: 20px;
-  position: relative;
-}
-.loader::before {
-  content: "";
-  position: absolute;
-  background-color: var(--primary);
-  top: 0;
-  left: 0;
-  width: 15px;
-  height: 15px;
-  border-radius: 50%;
-  animation: loader-animation 1.5s infinite;
-}
-
-@keyframes loader-animation {
+@keyframes pulse {
   0% {
-    transform: translateX(0) scale(1);
     opacity: 1;
-  }
-  25% {
-    transform: translateX(20px) scale(0.9);
-    opacity: 0.9;
   }
   50% {
-    transform: translateX(40px) scale(0.8);
-    opacity: 0.8;
-  }
-  75% {
-    transform: translateX(60px) scale(0.7);
-    opacity: 0.7;
+    opacity: 0.5;
   }
   100% {
-    transform: translateX(0) scale(1);
     opacity: 1;
   }
 }
-.label, .badge {
-  display: inline-block;
-  padding: var(--sv-spacing-1) var(--sv-spacing-2);
-  font-size: var(--sv-font-size-sm);
-  font-weight: var(--sv-font-weight-medium);
-  text-align: center;
-  white-space: nowrap;
-  vertical-align: baseline;
-  border-radius: var(--sv-radius-sm);
-  background-color: var(--sv-secondary);
-  color: var(--sv-text-on-secondary);
-}
-.label.label-primary, .label-primary.badge {
-  background-color: var(--sv-primary);
-}
-.label.label-success, .label-success.badge {
-  background-color: var(--sv-success);
-}
-.label.label-info, .label-info.badge {
-  background-color: var(--sv-info);
-}
-.label.label-warning, .label-warning.badge {
-  background-color: var(--sv-warning);
-}
-.label.label-danger, .label-danger.badge {
-  background-color: var(--sv-error);
-}
-
-.badge {
-  border-radius: var(--sv-radius-full);
-  padding: var(--sv-spacing-1) var(--sv-spacing-2);
-}
-
-.tooltip {
-  position: absolute;
-  z-index: var(--sv-z-index-tooltip, 1070);
-  padding: var(--sv-spacing-2) var(--sv-spacing-3);
-  font-size: var(--sv-font-size-sm);
-  background-color: rgba(0, 0, 0, 0.8);
-  color: var(--sv-text-on-dark);
-  border-radius: var(--sv-radius-sm);
-  max-width: 200px;
-  word-wrap: break-word;
-  opacity: 0;
-  transition: opacity 0.3s;
-}
-.tooltip.show {
-  opacity: 1;
-}
-.tooltip::before {
-  content: "";
-  position: absolute;
-  border-width: 5px;
-  border-style: solid;
-}
-.tooltip.tooltip-top::before {
-  bottom: -10px;
-  left: 50%;
-  margin-left: -5px;
-  border-color: rgba(0, 0, 0, 0.8) transparent transparent transparent;
-}
-.tooltip.tooltip-right::before {
-  top: 50%;
-  left: -10px;
-  margin-top: -5px;
-  border-color: transparent rgba(0, 0, 0, 0.8) transparent transparent;
-}
-.tooltip.tooltip-bottom::before {
-  top: -10px;
-  left: 50%;
-  margin-left: -5px;
-  border-color: transparent transparent rgba(0, 0, 0, 0.8) transparent;
-}
-.tooltip.tooltip-left::before {
-  top: 50%;
-  right: -10px;
-  margin-top: -5px;
-  border-color: transparent transparent transparent rgba(0, 0, 0, 0.8);
-}
-
-.tag, .chip {
-  display: inline-flex;
-  align-items: center;
-  padding: var(--sv-spacing-1) var(--sv-spacing-2);
-  font-size: var(--sv-font-size-sm);
-  background-color: var(--sv-background-alt);
-  border: var(--sv-border-width-sm, 1px) solid var(--sv-border-default);
-  border-radius: var(--sv-radius-full);
-  margin-right: var(--sv-spacing-1);
-  margin-bottom: var(--sv-spacing-1);
-}
-.tag .tag-remove, .tag .chip-remove, .chip .tag-remove, .chip .chip-remove {
-  margin-left: var(--sv-spacing-1);
-  cursor: pointer;
-  opacity: 0.5;
-}
-.tag .tag-remove:hover, .tag .chip-remove:hover, .chip .tag-remove:hover, .chip .chip-remove:hover {
-  opacity: 1;
-}
-.tag.tag-primary, .tag.chip-primary, .chip.tag-primary, .chip.chip-primary {
-  background-color: var(--sv-primary-light-bg, rgba(0, 0, 0, 0.05));
-  border-color: var(--sv-primary-border, rgba(0, 0, 0, 0.1));
-  color: var(--sv-primary);
-}
-.tag.tag-success, .tag.chip-success, .chip.tag-success, .chip.chip-success {
-  background-color: var(--sv-success-light-bg, rgba(0, 0, 0, 0.05));
-  border-color: var(--sv-success-border, rgba(0, 0, 0, 0.1));
-  color: var(--sv-success);
-}
-.tag.tag-warning, .tag.chip-warning, .chip.tag-warning, .chip.chip-warning {
-  background-color: var(--sv-warning-light-bg, rgba(0, 0, 0, 0.05));
-  border-color: var(--sv-warning-border, rgba(0, 0, 0, 0.1));
-  color: var(--sv-warning-dark, var(--sv-warning));
-}
-.tag.tag-danger, .tag.chip-danger, .chip.tag-danger, .chip.chip-danger {
-  background-color: var(--sv-error-light-bg, rgba(0, 0, 0, 0.05));
-  border-color: var(--sv-error-border, rgba(0, 0, 0, 0.1));
-  color: var(--sv-error);
-}
-
-.progress {
-  display: flex;
-  height: 8px;
-  background-color: var(--sv-background-alt);
-  border-radius: var(--sv-radius-full);
-  overflow: hidden;
-}
-.progress .progress-bar {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  text-align: center;
-  background-color: var(--sv-primary);
-  transition: width 0.6s ease;
-}
-.progress .progress-bar.progress-bar-striped {
-  background-image: linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
-  background-size: 1rem 1rem;
-}
-.progress .progress-bar.progress-bar-animated {
-  animation: progress-bar-stripes 1s linear infinite;
-}
-
-.avatar {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: var(--sv-radius-full);
-  background-color: var(--sv-primary);
-  color: var(--sv-text-on-primary);
-  font-weight: var(--sv-font-weight-medium);
-  overflow: hidden;
-}
-.avatar img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-.avatar.avatar-sm {
-  width: 32px;
-  height: 32px;
-  font-size: var(--sv-font-size-sm);
-}
-.avatar.avatar-md {
-  width: 48px;
-  height: 48px;
-  font-size: var(--sv-font-size-base);
-}
-.avatar.avatar-lg {
-  width: 64px;
-  height: 64px;
-  font-size: var(--sv-font-size-lg);
-}
-.avatar.avatar-square {
-  border-radius: var(--sv-radius-md);
-}
-
-@keyframes progress-bar-stripes {
-  from {
-    background-position: 1rem 0;
+@keyframes fade-in {
+  0% {
+    opacity: 0;
   }
-  to {
-    background-position: 0 0;
+  100% {
+    opacity: 1;
   }
 }
-.input-control {
-  display: block;
-  width: 100%;
-  padding: var(--sv-spacing-2) var(--sv-spacing-3);
-  background-color: var(--sv-background-base);
-  border: var(--sv-border-width-sm, 1px) solid var(--sv-border-default);
-  border-radius: var(--sv-radius-md);
+@keyframes fade-out {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
 }
-.input-control::placeholder {
-  color: var(--sv-text-tertiary);
-  opacity: 1;
+@keyframes slide-in-up {
+  0% {
+    transform: translateY(10px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
-.input-control:hover:not(:disabled):not(.disabled) {
-  border-color: var(--sv-border-hover);
+@keyframes slide-in-down {
+  0% {
+    transform: translateY(-10px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
-.input-control:focus:not(:disabled):not(.disabled) {
-  border-color: var(--sv-border-focus);
-  background-color: var(--sv-background-base);
+@keyframes slide-in-left {
+  0% {
+    transform: translateX(-10px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
 }
-.input-control.filled {
-  background-color: var(--sv-background-alt);
+@keyframes slide-in-right {
+  0% {
+    transform: translateX(10px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
 }
-.input-control.error, .input-control.has-error {
-  border-color: var(--sv-border-error);
+@keyframes shake {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  10%, 30%, 50%, 70%, 90% {
+    transform: translateX(-5px);
+  }
+  20%, 40%, 60%, 80% {
+    transform: translateX(5px);
+  }
 }
-.input-control.error + .helper-text, .input-control.has-error + .helper-text {
-  color: var(--sv-error);
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-10px);
+  }
+  60% {
+    transform: translateY(-5px);
+  }
 }
-.input-control.with-icon {
-  padding-left: var(--sv-spacing-8);
+@keyframes scale-in {
+  0% {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
 }
-.input-control[type=date]::-webkit-calendar-picker-indicator, .input-control[type=datetime-local]::-webkit-calendar-picker-indicator, .input-control[type=month]::-webkit-calendar-picker-indicator, .input-control[type=time]::-webkit-calendar-picker-indicator {
-  cursor: pointer;
-  opacity: 0.6;
+@keyframes scale-out {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(0.9);
+    opacity: 0;
+  }
 }
-.input-control[type=date]::-webkit-calendar-picker-indicator:hover, .input-control[type=datetime-local]::-webkit-calendar-picker-indicator:hover, .input-control[type=month]::-webkit-calendar-picker-indicator:hover, .input-control[type=time]::-webkit-calendar-picker-indicator:hover {
-  opacity: 1;
+/* ==========================================================================
+   6. ANIMATION UTILITIES
+   ========================================================================== */
+.sv-animate-fade-in {
+  animation-name: fade-in;
+  animation-duration: var(--sv-motion-duration-medium);
+  animation-delay: 0s;
+  animation-timing-function: var(--sv-motion-ease-standard);
+  animation-iteration-count: 1;
+  animation-fill-mode: both;
 }
-.input-control[type=file] {
+@media (prefers-reduced-motion: reduce) {
+  .sv-animate-fade-in {
+    animation: none;
+  }
+}
+
+.sv-animate-fade-out {
+  animation-name: fade-out;
+  animation-duration: var(--sv-motion-duration-medium);
+  animation-delay: 0s;
+  animation-timing-function: var(--sv-motion-ease-standard);
+  animation-iteration-count: 1;
+  animation-fill-mode: both;
+}
+@media (prefers-reduced-motion: reduce) {
+  .sv-animate-fade-out {
+    animation: none;
+  }
+}
+
+.sv-animate-slide-in-up {
+  animation-name: slide-in-up;
+  animation-duration: var(--sv-motion-duration-medium);
+  animation-delay: 0s;
+  animation-timing-function: var(--sv-motion-ease-standard);
+  animation-iteration-count: 1;
+  animation-fill-mode: both;
+}
+@media (prefers-reduced-motion: reduce) {
+  .sv-animate-slide-in-up {
+    animation: none;
+  }
+}
+
+.sv-animate-slide-in-down {
+  animation-name: slide-in-down;
+  animation-duration: var(--sv-motion-duration-medium);
+  animation-delay: 0s;
+  animation-timing-function: var(--sv-motion-ease-standard);
+  animation-iteration-count: 1;
+  animation-fill-mode: both;
+}
+@media (prefers-reduced-motion: reduce) {
+  .sv-animate-slide-in-down {
+    animation: none;
+  }
+}
+
+.sv-animate-slide-in-left {
+  animation-name: slide-in-left;
+  animation-duration: var(--sv-motion-duration-medium);
+  animation-delay: 0s;
+  animation-timing-function: var(--sv-motion-ease-standard);
+  animation-iteration-count: 1;
+  animation-fill-mode: both;
+}
+@media (prefers-reduced-motion: reduce) {
+  .sv-animate-slide-in-left {
+    animation: none;
+  }
+}
+
+.sv-animate-slide-in-right {
+  animation-name: slide-in-right;
+  animation-duration: var(--sv-motion-duration-medium);
+  animation-delay: 0s;
+  animation-timing-function: var(--sv-motion-ease-standard);
+  animation-iteration-count: 1;
+  animation-fill-mode: both;
+}
+@media (prefers-reduced-motion: reduce) {
+  .sv-animate-slide-in-right {
+    animation: none;
+  }
+}
+
+.sv-animate-spin {
+  animation-name: spin;
+  animation-duration: var(--sv-motion-duration-medium);
+  animation-delay: 0s;
+  animation-timing-function: var(--sv-motion-ease-linear);
+  animation-iteration-count: infinite;
+  animation-fill-mode: both;
+}
+@media (prefers-reduced-motion: reduce) {
+  .sv-animate-spin {
+    animation: none;
+  }
+}
+
+.sv-animate-pulse {
+  animation-name: pulse;
+  animation-duration: var(--sv-motion-duration-medium);
+  animation-delay: 0s;
+  animation-timing-function: var(--sv-motion-ease-ease);
+  animation-iteration-count: infinite;
+  animation-fill-mode: both;
+}
+@media (prefers-reduced-motion: reduce) {
+  .sv-animate-pulse {
+    animation: none;
+  }
+}
+
+.sv-animate-shake {
+  animation-name: shake;
+  animation-duration: var(--sv-motion-duration-medium);
+  animation-delay: 0s;
+  animation-timing-function: var(--sv-motion-ease-standard);
+  animation-iteration-count: 1;
+  animation-fill-mode: both;
+}
+@media (prefers-reduced-motion: reduce) {
+  .sv-animate-shake {
+    animation: none;
+  }
+}
+
+.sv-animate-bounce {
+  animation-name: bounce;
+  animation-duration: var(--sv-motion-duration-medium);
+  animation-delay: 0s;
+  animation-timing-function: var(--sv-motion-ease-standard);
+  animation-iteration-count: 1;
+  animation-fill-mode: both;
+}
+@media (prefers-reduced-motion: reduce) {
+  .sv-animate-bounce {
+    animation: none;
+  }
+}
+
+.sv-animate-scale-in {
+  animation-name: scale-in;
+  animation-duration: var(--sv-motion-duration-medium);
+  animation-delay: 0s;
+  animation-timing-function: var(--sv-motion-ease-standard);
+  animation-iteration-count: 1;
+  animation-fill-mode: both;
+}
+@media (prefers-reduced-motion: reduce) {
+  .sv-animate-scale-in {
+    animation: none;
+  }
+}
+
+.sv-animate-scale-out {
+  animation-name: scale-out;
+  animation-duration: var(--sv-motion-duration-medium);
+  animation-delay: 0s;
+  animation-timing-function: var(--sv-motion-ease-standard);
+  animation-iteration-count: 1;
+  animation-fill-mode: both;
+}
+@media (prefers-reduced-motion: reduce) {
+  .sv-animate-scale-out {
+    animation: none;
+  }
+}
+
+/* ==========================================================================
+   7. ACCESSIBILITY UTILITIES
+   ========================================================================== */
+.sv-ui-visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
   padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
-.input-control[type=file]::file-selector-button {
-  padding: var(--sv-spacing-2) var(--sv-spacing-3);
-  background-color: var(--sv-secondary);
-  color: var(--sv-text-on-secondary);
-  border: none;
-  border-radius: var(--sv-radius-sm);
-  margin-right: var(--sv-spacing-3);
+
+.sv-ui-touch-target {
+  min-width: var(--sv-min-touch-target);
+  min-height: var(--sv-min-touch-target);
+}
+
+/* ==========================================================================
+   8. PRINT STYLES
+   ========================================================================== */
+@media print {
+  .sv-ui-control-base, .sv-selection-control-base, .sv-nav-control-base, .sv-input-base, .sv-info-display-base, .sv-feedback-base, .sv-data-display-base, .sv-container-base, .sv-action-control-base {
+    border-color: #000 !important;
+    color: #000 !important;
+    background-color: #fff !important;
+    box-shadow: none !important;
+  }
+  .sv-ui-control-base:not(.sv-ui-no-print-adjust), .sv-selection-control-base:not(.sv-ui-no-print-adjust), .sv-nav-control-base:not(.sv-ui-no-print-adjust), .sv-input-base:not(.sv-ui-no-print-adjust), .sv-info-display-base:not(.sv-ui-no-print-adjust), .sv-feedback-base:not(.sv-ui-no-print-adjust), .sv-data-display-base:not(.sv-ui-no-print-adjust), .sv-container-base:not(.sv-ui-no-print-adjust), .sv-action-control-base:not(.sv-ui-no-print-adjust) {
+    border-width: 0.5pt !important;
+  }
+  .sv-ui-no-print {
+    display: none !important;
+  }
+  * {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+/* ==========================================================================
+   9. RTL SUPPORT
+   ========================================================================== */
+[dir=rtl] .sv-ui-control-base.has-directional-padding, [dir=rtl] .has-directional-padding.sv-selection-control-base, [dir=rtl] .has-directional-padding.sv-nav-control-base, [dir=rtl] .has-directional-padding.sv-input-base, [dir=rtl] .has-directional-padding.sv-info-display-base, [dir=rtl] .has-directional-padding.sv-feedback-base, [dir=rtl] .has-directional-padding.sv-data-display-base, [dir=rtl] .has-directional-padding.sv-container-base, [dir=rtl] .has-directional-padding.sv-action-control-base {
+  padding-right: var(--sv-padding-start, var(--sv-padding-3));
+  padding-left: var(--sv-padding-end, var(--sv-padding-3));
+}
+
+/* ==========================================================================
+   10. HIGH CONTRAST MODE
+   ========================================================================== */
+@media (forced-colors: active) {
+  .sv-ui-control-base, .sv-selection-control-base, .sv-nav-control-base, .sv-input-base, .sv-info-display-base, .sv-feedback-base, .sv-data-display-base, .sv-container-base, .sv-action-control-base {
+    border-color: CanvasText;
+    color: CanvasText;
+    background-color: Canvas;
+    forced-color-adjust: none;
+  }
+  .sv-ui-control-base:focus, .sv-selection-control-base:focus, .sv-nav-control-base:focus, .sv-input-base:focus, .sv-info-display-base:focus, .sv-feedback-base:focus, .sv-data-display-base:focus, .sv-container-base:focus, .sv-action-control-base:focus, .sv-ui-control-base:focus-visible, .sv-selection-control-base:focus-visible, .sv-nav-control-base:focus-visible, .sv-input-base:focus-visible, .sv-info-display-base:focus-visible, .sv-feedback-base:focus-visible, .sv-data-display-base:focus-visible, .sv-container-base:focus-visible, .sv-action-control-base:focus-visible {
+    outline: 2px solid Highlight;
+    outline-offset: 2px;
+  }
+  .sv-ui-control-base:disabled, .sv-selection-control-base:disabled, .sv-nav-control-base:disabled, .sv-input-base:disabled, .sv-info-display-base:disabled, .sv-feedback-base:disabled, .sv-data-display-base:disabled, .sv-container-base:disabled, .sv-action-control-base:disabled, .sv-ui-control-base.disabled, .disabled.sv-selection-control-base, .disabled.sv-nav-control-base, .disabled.sv-input-base, .disabled.sv-info-display-base, .disabled.sv-feedback-base, .disabled.sv-data-display-base, .disabled.sv-container-base, .disabled.sv-action-control-base {
+    opacity: 1;
+    color: GrayText;
+    border-color: GrayText;
+    background-color: Canvas;
+  }
+  .sv-ui-control-base.error, .error.sv-selection-control-base, .error.sv-nav-control-base, .error.sv-input-base, .error.sv-info-display-base, .error.sv-feedback-base, .error.sv-data-display-base, .error.sv-container-base, .error.sv-action-control-base, .sv-ui-control-base.has-error, .has-error.sv-selection-control-base, .has-error.sv-nav-control-base, .has-error.sv-input-base, .has-error.sv-info-display-base, .has-error.sv-feedback-base, .has-error.sv-data-display-base, .has-error.sv-container-base, .has-error.sv-action-control-base, .sv-ui-control-base[aria-invalid=true], [aria-invalid=true].sv-selection-control-base, [aria-invalid=true].sv-nav-control-base, [aria-invalid=true].sv-input-base, [aria-invalid=true].sv-info-display-base, [aria-invalid=true].sv-feedback-base, [aria-invalid=true].sv-data-display-base, [aria-invalid=true].sv-container-base, [aria-invalid=true].sv-action-control-base {
+    border-color: Mark;
+    color: Mark;
+  }
+}
+/**
+ * Action Controls Base - Core Styles
+ * Version: 1.0.0
+ * Last Updated: April 29, 2025
+ * 
+ * This file establishes the foundational styles for all action-based UI components
+ * in the SkillVo design system. This serves as the second level in our 
+ * three-tier styling architecture:
+ * 1. sv-ui-control-base - Base styles for all interactive controls
+ * 2. sv-action-control-base (this file) - Base styles for action controls
+ * 3. Component-specific classes (e.g., sv-button, sv-link, sv-icon-button)
+ */
+/* ==========================================================================
+   TABLE OF CONTENTS:
+
+   1. VARIABLES & CONFIGURATION
+   2. MIXINS
+      2.1 Action-Specific State Mixins
+      2.2 Action Layout Mixins 
+   3. BASE CLASS DEFINITION
+   4. VARIANTS
+      4.1 Emphasis Variants
+      4.2 Connectivity Variants
+   5. ICONOGRAPHY SUPPORT
+   6. SIZE ADJUSTMENTS
+   7. ACCESSIBILITY ENHANCEMENTS
+   ========================================================================== */
+/* ==========================================================================
+   1. VARIABLES & CONFIGURATION
+   ========================================================================== */
+/* ==========================================================================
+   2. MIXINS
+   ========================================================================== */
+/* 2.1 Action-Specific State Mixins
+   ========================================================================== */
+/* 2.2 Action Layout Mixins
+   ========================================================================== */
+/* ==========================================================================
+   3. BASE CLASS DEFINITION
+   ========================================================================== */
+.sv-action-control-base {
+  min-width: calc(var(--sv-min-touch-target) * 2);
+  text-align: center;
+  line-height: 1.2;
+  padding-left: calc(var(--sv-padding-3) * 1.5);
+  padding-right: calc(var(--sv-padding-3) * 1.5);
   cursor: pointer;
-  transition: var(--sv-transition-base);
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sv-space-2);
+  white-space: nowrap;
+  text-align: center;
 }
-.input-control[type=file]::file-selector-button:hover {
-  background-color: var(--sv-secondary-dark, var(--sv-secondary));
+.sv-action-control-base:focus {
+  box-shadow: 0 0 0 var(--sv-focus-ring-width) rgba(var(--sv-primary-500-rgb), 0.25);
 }
-
-.input-label {
-  display: block;
-  margin-bottom: var(--sv-spacing-1);
-  font-weight: var(--sv-font-weight-medium);
-  color: var(--sv-text-secondary);
+.sv-action-control-base:hover:not(:disabled):not(.disabled) {
+  filter: brightness(0.95);
 }
-
-.helper-text {
-  display: block;
-  margin-top: var(--sv-spacing-1);
-  font-size: var(--sv-font-size-sm);
-  color: var(--sv-text-tertiary);
+.sv-action-control-base:active:not(:disabled):not(.disabled) {
+  transform: translateY(1px);
+  filter: brightness(0.9);
 }
-
-.textarea-control {
-  min-height: 100px;
-  resize: vertical;
-}
-
-.nav {
-  display: flex;
-  flex-wrap: wrap;
-  padding-left: 0;
-  margin-bottom: 0;
-  list-style: none;
-}
-.nav .nav-item {
-  display: block;
-}
-.nav .nav-item + .nav-item {
-  margin-left: var(--sv-spacing-2);
-}
-.nav .nav-link {
-  display: block;
-  padding: var(--sv-spacing-2) var(--sv-spacing-3);
-  border-radius: var(--sv-radius-md);
-  color: var(--sv-text-secondary);
-  text-decoration: none;
-  transition: var(--sv-transition-base);
-}
-.nav .nav-link:hover {
-  color: var(--sv-primary);
-  background-color: var(--sv-primary-light-bg, rgba(0, 0, 0, 0.05));
-}
-.nav .nav-link.active {
-  color: var(--sv-primary);
-  font-weight: var(--sv-font-weight-medium);
-  background-color: var(--sv-primary-lighter-bg, rgba(0, 0, 0, 0.1));
-}
-.nav .nav-link.disabled {
-  color: var(--sv-text-disabled);
-  cursor: not-allowed;
+.sv-action-control-base.loading, .sv-action-control-base.is-loading, .sv-action-control-base[aria-busy=true] {
+  position: relative;
+  color: transparent;
   pointer-events: none;
 }
-.nav.nav-tabs {
-  border-bottom: var(--sv-border-width-sm, 1px) solid var(--sv-border-default);
+.sv-action-control-base.loading::after, .sv-action-control-base.is-loading::after, .sv-action-control-base[aria-busy=true]::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 1em;
+  height: 1em;
+  margin: -0.5em 0 0 -0.5em;
+  border-radius: 50%;
+  border: 0.125em solid transparent;
+  border-top-color: currentColor;
+  animation: spin var(--sv-spinner-duration) linear infinite;
 }
-.nav.nav-tabs .nav-item {
-  margin-bottom: calc(-1 * var(--sv-border-width-sm));
-}
-.nav.nav-tabs .nav-item + .nav-item {
-  margin-left: var(--sv-spacing-4);
-}
-.nav.nav-tabs .nav-link {
-  border: var(--sv-border-width-sm, 1px) solid transparent;
-  border-top-left-radius: var(--sv-radius-md);
-  border-top-right-radius: var(--sv-radius-md);
-}
-.nav.nav-tabs .nav-link:hover {
-  border-color: transparent transparent var(--sv-border-default);
-}
-.nav.nav-tabs .nav-link.active {
-  color: var(--sv-text-primary);
-  background-color: var(--sv-background-base);
-  border-color: var(--sv-border-default) var(--sv-border-default) var(--sv-background-base);
-}
-.nav.nav-pills .nav-link.active {
-  color: var(--sv-text-on-primary);
+
+/* ==========================================================================
+   4. VARIANTS
+   ========================================================================== */
+/* 4.1 Emphasis Variants
+   ========================================================================== */
+.sv-action-control-base.sv-action-primary {
   background-color: var(--sv-primary);
+  border-color: var(--sv-primary);
+  color: var(--sv-text-on-dark);
 }
-.nav.nav-vertical {
-  flex-direction: column;
+.sv-action-control-base.sv-action-primary:hover:not(:disabled):not(.disabled) {
+  background-color: var(--sv-primary-dark);
+  border-color: var(--sv-primary-dark);
 }
-.nav.nav-vertical .nav-item {
-  width: 100%;
+.sv-action-control-base.sv-action-primary:active:not(:disabled):not(.disabled) {
+  background-color: var(--sv-primary-dark);
+  border-color: var(--sv-primary-dark);
+  transform: translateY(1px);
 }
-.nav.nav-vertical .nav-item + .nav-item {
-  margin-left: 0;
-  margin-top: var(--sv-spacing-1);
+.sv-action-control-base.sv-action-primary:focus {
+  box-shadow: 0 0 0 var(--sv-focus-ring-width) rgba(var(--sv-primary-500-rgb), 0.4);
+}
+.sv-action-control-base.sv-action-secondary {
+  background-color: var(--sv-bg-element);
+  border-color: var(--sv-border-medium);
+  color: var(--sv-text-primary);
+}
+.sv-action-control-base.sv-action-secondary:hover:not(:disabled):not(.disabled) {
+  background-color: var(--sv-bg-element-hover);
+  border-color: var(--sv-border-dark);
+}
+.sv-action-control-base.sv-action-secondary:active:not(:disabled):not(.disabled) {
+  background-color: var(--sv-bg-element-active);
+  border-color: var(--sv-border-dark);
+  transform: translateY(1px);
+}
+.sv-action-control-base.sv-action-tertiary {
+  background-color: transparent;
+  border-color: transparent;
+  color: var(--sv-text-primary);
+}
+.sv-action-control-base.sv-action-tertiary:hover:not(:disabled):not(.disabled) {
+  background-color: var(--sv-bg-element-hover);
+  color: var(--sv-text-accent);
+}
+.sv-action-control-base.sv-action-tertiary:active:not(:disabled):not(.disabled) {
+  background-color: var(--sv-bg-element-active);
+  transform: translateY(1px);
+}
+.sv-action-control-base.sv-action-destructive {
+  background-color: var(--sv-error);
+  border-color: var(--sv-error);
+  color: var(--sv-text-on-dark);
+}
+.sv-action-control-base.sv-action-destructive:hover:not(:disabled):not(.disabled) {
+  background-color: var(--sv-error-dark, var(--sv-error));
+  border-color: var(--sv-error-dark, var(--sv-error));
+}
+.sv-action-control-base.sv-action-destructive:active:not(:disabled):not(.disabled) {
+  background-color: var(--sv-error-darker, var(--sv-error-dark, var(--sv-error)));
+  border-color: var(--sv-error-darker, var(--sv-error-dark, var(--sv-error)));
+  transform: translateY(1px);
+}
+.sv-action-control-base.sv-action-destructive:focus {
+  box-shadow: 0 0 0 var(--sv-focus-ring-width) rgba(var(--sv-error-500-rgb), 0.4);
 }
 
-.breadcrumb {
-  display: flex;
-  flex-wrap: wrap;
-  padding: var(--sv-spacing-2) 0;
-  margin-bottom: var(--sv-spacing-3);
-  list-style: none;
+/* 4.2 Connectivity Variants
+   ========================================================================== */
+.sv-action-group {
+  display: inline-flex;
 }
-.breadcrumb .breadcrumb-item {
-  display: flex;
-  align-items: center;
+.sv-action-group > * {
+  border-radius: 0;
+  margin-right: -1px;
 }
-.breadcrumb .breadcrumb-item + .breadcrumb-item {
-  padding-left: var(--sv-spacing-2);
-}
-.breadcrumb .breadcrumb-item + .breadcrumb-item::before {
-  content: "/";
-  display: inline-block;
-  padding-right: var(--sv-spacing-2);
-  color: var(--sv-text-tertiary);
-}
-.breadcrumb .breadcrumb-item a {
-  color: var(--sv-primary);
-  text-decoration: none;
-}
-.breadcrumb .breadcrumb-item a:hover {
-  text-decoration: underline;
-}
-.breadcrumb .breadcrumb-item.active {
-  color: var(--sv-text-tertiary);
-}
-
-.pagination {
-  display: flex;
-  padding-left: 0;
-  list-style: none;
-  border-radius: var(--sv-radius-md);
-}
-.pagination .page-item:first-child .page-link {
+.sv-action-group > *:first-child {
   border-top-left-radius: var(--sv-radius-md);
   border-bottom-left-radius: var(--sv-radius-md);
 }
-.pagination .page-item:last-child .page-link {
+.sv-action-group > *:last-child {
   border-top-right-radius: var(--sv-radius-md);
   border-bottom-right-radius: var(--sv-radius-md);
+  margin-right: 0;
 }
-.pagination .page-item.active .page-link {
-  background-color: var(--sv-primary);
-  border-color: var(--sv-primary);
-  color: var(--sv-text-on-primary);
+.sv-action-group > *:focus {
   z-index: 1;
 }
-.pagination .page-item.disabled .page-link {
-  color: var(--sv-text-disabled);
-  pointer-events: none;
-  background-color: var(--sv-background-base);
-  border-color: var(--sv-border-default);
-}
-.pagination .page-link {
-  position: relative;
-  display: block;
-  padding: var(--sv-spacing-2) var(--sv-spacing-3);
-  margin-left: -1px;
-  color: var(--sv-primary);
-  background-color: var(--sv-background-base);
-  border: var(--sv-border-width-sm, 1px) solid var(--sv-border-default);
-  text-decoration: none;
-}
-.pagination .page-link:hover {
-  background-color: var(--sv-background-alt);
-  border-color: var(--sv-border-default);
-  z-index: 2;
-}
-.pagination .page-link:focus {
-  z-index: 3;
-}
 
-.stepper {
-  display: flex;
-  margin: var(--sv-spacing-5) 0;
-}
-.stepper .step {
-  flex: 1;
-  text-align: center;
+.sv-action-control-base.sv-action-with-dropdown {
   position: relative;
+  padding-right: calc(var(--sv-padding-6) * 1.5);
 }
-.stepper .step:not(:last-child)::after {
+.sv-action-control-base.sv-action-with-dropdown::after {
   content: "";
   position: absolute;
-  top: 14px;
-  left: 60%;
-  right: -40%;
-  height: 2px;
-  background-color: var(--sv-border-default);
-  z-index: 0;
+  right: var(--sv-padding-3);
+  top: 50%;
+  width: 0.5em;
+  height: 0.5em;
+  border: 1px solid currentColor;
+  border-width: 0 1px 1px 0;
+  transform: translateY(-75%) rotate(45deg);
+  pointer-events: none;
 }
-.stepper .step.completed:not(:last-child)::after {
-  background-color: var(--sv-primary);
+
+/* ==========================================================================
+   5. ICONOGRAPHY SUPPORT
+   ========================================================================== */
+.sv-action-control-base.sv-action-icon-only {
+  padding: var(--sv-padding-2);
+  min-width: auto;
+  aspect-ratio: 1;
+  justify-content: center;
 }
-.stepper .step .step-indicator {
-  width: 30px;
-  height: 30px;
-  border-radius: var(--sv-radius-full);
-  background-color: var(--sv-background-base);
-  border: 2px solid var(--sv-border-default);
-  color: var(--sv-text-tertiary);
+.sv-action-control-base.sv-action-icon-only .sv-icon {
+  margin: 0;
+}
+.sv-action-control-base .sv-icon {
+  flex-shrink: 0;
+  width: var(--sv-icon-size-sm);
+  height: var(--sv-icon-size-sm);
+  vertical-align: -0.125em;
+  position: relative;
+}
+.sv-action-control-base .sv-icon-leading {
+  margin-right: var(--sv-space-2);
+  margin-left: calc(-1 * var(--sv-space-2));
+}
+.sv-action-control-base .sv-icon-trailing {
+  margin-left: var(--sv-space-2);
+  margin-right: calc(-1 * var(--sv-space-2));
+}
+
+/* ==========================================================================
+   6. SIZE ADJUSTMENTS
+   ========================================================================== */
+.sv-ui-size-xs.sv-action-control-base {
+  font-size: var(--sv-text-xs);
+  font-weight: var(--sv-font-medium);
+  line-height: var(--sv-leading-normal);
+  padding-left: calc(var(--sv-padding-2) * 1.5);
+  padding-right: calc(var(--sv-padding-2) * 1.5);
+  min-width: calc(var(--sv-min-touch-target) * 2 * 0.75);
+}
+.sv-ui-size-xs.sv-action-control-base .sv-icon {
+  width: var(--sv-icon-size-xs);
+  height: var(--sv-icon-size-xs);
+}
+
+.sv-ui-size-sm.sv-action-control-base {
+  font-size: var(--sv-text-sm);
+  font-weight: var(--sv-font-medium);
+  line-height: var(--sv-leading-normal);
+  padding-left: calc(var(--sv-padding-2) * 1.5);
+  padding-right: calc(var(--sv-padding-2) * 1.5);
+  min-width: calc(var(--sv-min-touch-target) * 2 * 0.85);
+}
+
+.sv-ui-size-md.sv-action-control-base {
+  font-size: var(--sv-text-base);
+  font-weight: var(--sv-font-medium);
+  line-height: var(--sv-leading-normal);
+}
+
+.sv-ui-size-lg.sv-action-control-base {
+  font-size: var(--sv-text-lg);
+  font-weight: var(--sv-font-medium);
+  line-height: var(--sv-leading-normal);
+  padding-left: calc(var(--sv-padding-4) * 1.5);
+  padding-right: calc(var(--sv-padding-4) * 1.5);
+  min-width: calc(var(--sv-min-touch-target) * 2 * 1.15);
+}
+.sv-ui-size-lg.sv-action-control-base .sv-icon {
+  width: var(--sv-icon-size-md);
+  height: var(--sv-icon-size-md);
+}
+
+.sv-ui-size-xl.sv-action-control-base {
+  font-size: var(--sv-text-xl);
+  font-weight: var(--sv-font-medium);
+  line-height: var(--sv-leading-normal);
+  padding-left: calc(var(--sv-padding-5) * 1.5);
+  padding-right: calc(var(--sv-padding-5) * 1.5);
+  min-width: calc(var(--sv-min-touch-target) * 2 * 1.3);
+}
+.sv-ui-size-xl.sv-action-control-base .sv-icon {
+  width: var(--sv-icon-size-lg);
+  height: var(--sv-icon-size-lg);
+}
+
+/* ==========================================================================
+   7. ACCESSIBILITY ENHANCEMENTS
+   ========================================================================== */
+.sv-action-control-base:focus-visible {
+  outline-offset: calc(var(--sv-focus-ring-offset) + 1px);
+}
+.sv-action-control-base[href]:not([role]).sv-action-primary, .sv-action-control-base[href]:not([role]).sv-action-secondary, .sv-action-control-base[href]:not([role]).sv-action-tertiary, .sv-action-control-base[href]:not([role]).sv-action-destructive {
+  role: "button";
+}
+@media (forced-colors: active) {
+  .sv-action-control-base:focus {
+    outline: 2px solid Highlight;
+    outline-offset: 4px;
+  }
+  .sv-action-control-base.sv-action-primary {
+    border: 1px solid ButtonText;
+    background-color: ButtonFace;
+    color: ButtonText;
+  }
+  .sv-action-control-base.sv-action-destructive {
+    border: 1px solid ButtonText;
+    background-color: Mark;
+    color: ButtonText;
+  }
+  .sv-action-control-base:disabled {
+    color: GrayText;
+    border-color: GrayText;
+  }
+}
+
+/**
+ * Container Base - Category-level Styles
+ * Version: 1.0.0
+ * Last Updated: April 29, 2025
+ * 
+ * This file establishes the foundational styles for all container components
+ * in the SkillVo design system. It serves as the second level in our 
+ * three-tier styling architecture:
+ * 1. sv-ui-control-base - Base styles for all interactive controls
+ * 2. sv-container-base (this file) - Base styles for all container components
+ * 3. Component-specific classes (e.g., sv-card, sv-panel, sv-accordion)
+ */
+/* ==========================================================================
+   TABLE OF CONTENTS:
+
+   1. VARIABLES & CONFIGURATION
+   2. MIXINS
+      2.1 Container-Specific Mixins
+      2.2 Layout Mixins
+      2.3 Visual Style Mixins
+   3. BASE CLASS DEFINITION
+   4. CONTAINER VARIATIONS
+      4.1 Size Variations
+      4.2 Padding Variations
+      4.3 Border Variations
+      4.4 Background Variations
+   5. CONTAINER STATES
+   6. CONTAINER ANIMATION UTILITIES
+   7. ACCESSIBILITY UTILITIES
+   8. RESPONSIVE BEHAVIORS
+   9. RTL SUPPORT
+   ========================================================================== */
+/* ==========================================================================
+   1. VARIABLES & CONFIGURATION
+   ========================================================================== */
+/* ==========================================================================
+   2. MIXINS
+   ========================================================================== */
+/* 2.1 Container-Specific Mixins
+   ========================================================================== */
+/* 2.2 Layout Mixins
+   ========================================================================== */
+/* 2.3 Visual Style Mixins
+   ========================================================================== */
+/* ==========================================================================
+   3. BASE CLASS DEFINITION
+   ========================================================================== */
+.sv-container-base {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  position: relative;
+  background-color: var(--sv-bg-surface);
+  border: 1px solid var(--sv-border-light);
+  border-radius: var(--sv-radius-md);
+  padding: var(--sv-padding-md);
+  overflow: visible;
+}
+.sv-container-base:focus {
+  box-shadow: var(--sv-shadow-sm);
+}
+.sv-container-base:hover:not(:disabled):not(.disabled).is-interactive {
+  background-color: var(--sv-bg-element-hover);
+}
+.sv-container-base:active:not(:disabled):not(.disabled).is-interactive {
+  background-color: var(--sv-bg-element-active);
+}
+.sv-container-base:disabled, .sv-container-base.disabled {
+  opacity: 0.75;
+}
+
+/* ==========================================================================
+   4. CONTAINER VARIATIONS
+   ========================================================================== */
+/* 4.1 Size Variations
+   ========================================================================== */
+.sv-container-size-xs {
+  min-height: var(--sv-size-8);
+}
+
+.sv-container-size-sm {
+  min-height: var(--sv-size-12);
+}
+
+.sv-container-size-md {
+  min-height: var(--sv-size-16);
+}
+
+.sv-container-size-lg {
+  min-height: var(--sv-size-24);
+}
+
+.sv-container-size-xl {
+  min-height: var(--sv-size-32);
+}
+
+.sv-container-full-height {
+  height: 100%;
+}
+
+.sv-container-full-width {
+  width: 100%;
+}
+
+.sv-container-auto {
+  width: auto;
+  height: auto;
+}
+
+/* 4.2 Padding Variations
+   ========================================================================== */
+.sv-container-padding-none {
+  padding: 0;
+}
+
+.sv-container-padding-xs {
+  padding: var(--sv-padding-xs);
+}
+
+.sv-container-padding-sm {
+  padding: var(--sv-padding-sm);
+}
+
+.sv-container-padding-md {
+  padding: var(--sv-padding-md);
+}
+
+.sv-container-padding-lg {
+  padding: var(--sv-padding-lg);
+}
+
+.sv-container-padding-xl {
+  padding: var(--sv-padding-xl);
+}
+
+.sv-container-padding-x-only {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.sv-container-padding-y-only {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+/* 4.3 Border Variations
+   ========================================================================== */
+.sv-container-border-none {
+  border: none;
+}
+
+.sv-container-border-thin {
+  border-width: 1px;
+}
+
+.sv-container-border-medium {
+  border-width: 2px;
+}
+
+.sv-container-border-thick {
+  border-width: 3px;
+}
+
+.sv-container-border-top {
+  border: none;
+  border-top: 1px solid var(--sv-border-medium);
+}
+
+.sv-container-border-right {
+  border: none;
+  border-right: 1px solid var(--sv-border-medium);
+}
+
+.sv-container-border-bottom {
+  border: none;
+  border-bottom: 1px solid var(--sv-border-medium);
+}
+
+.sv-container-border-left {
+  border: none;
+  border-left: 1px solid var(--sv-border-medium);
+}
+
+.sv-container-radius-none {
+  border-radius: 0;
+}
+
+.sv-container-radius-sm {
+  border-radius: var(--sv-radius-sm);
+}
+
+.sv-container-radius-md {
+  border-radius: var(--sv-radius-md);
+}
+
+.sv-container-radius-lg {
+  border-radius: var(--sv-radius-lg);
+}
+
+.sv-container-radius-xl {
+  border-radius: var(--sv-radius-xl);
+}
+
+.sv-container-radius-top {
+  border-top-left-radius: var(--sv-radius-md);
+  border-top-right-radius: var(--sv-radius-md);
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.sv-container-radius-right {
+  border-top-right-radius: var(--sv-radius-md);
+  border-bottom-right-radius: var(--sv-radius-md);
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.sv-container-radius-bottom {
+  border-bottom-left-radius: var(--sv-radius-md);
+  border-bottom-right-radius: var(--sv-radius-md);
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+.sv-container-radius-left {
+  border-top-left-radius: var(--sv-radius-md);
+  border-bottom-left-radius: var(--sv-radius-md);
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+/* 4.4 Background Variations
+   ========================================================================== */
+.sv-container-bg-primary {
+  background-color: var(--sv-bg-primary);
+}
+
+.sv-container-bg-secondary {
+  background-color: var(--sv-bg-secondary);
+}
+
+.sv-container-bg-surface {
+  background-color: var(--sv-bg-surface);
+}
+
+.sv-container-bg-element {
+  background-color: var(--sv-bg-element);
+}
+
+.sv-container-bg-transparent {
+  background-color: transparent;
+}
+
+/* ==========================================================================
+   5. CONTAINER STATES
+   ========================================================================== */
+.sv-container-elevated-sm {
+  box-shadow: var(--sv-shadow-sm);
+}
+
+.sv-container-elevated-md {
+  box-shadow: var(--sv-shadow-md);
+}
+
+.sv-container-elevated-lg {
+  box-shadow: var(--sv-shadow-lg);
+}
+
+.sv-container-interactive {
+  cursor: pointer;
+}
+.sv-container-interactive:hover {
+  background-color: var(--sv-bg-element-hover);
+}
+.sv-container-interactive:active {
+  background-color: var(--sv-bg-element-active);
+}
+
+.sv-container-overflow-hidden {
+  overflow: hidden;
+}
+
+.sv-container-overflow-auto {
+  overflow: auto;
+}
+
+.sv-container-overflow-scroll {
+  overflow: scroll;
+}
+
+.sv-container-overflow-visible {
+  overflow: visible;
+}
+
+.sv-container-selected {
+  border-color: var(--sv-primary);
+  background-color: var(--sv-bg-element-hover);
+}
+
+.sv-container-highlighted {
+  border-color: var(--sv-primary);
+  background-color: rgba(var(--sv-primary-500-rgb), 0.05);
+}
+
+/* ==========================================================================
+   6. CONTAINER ANIMATION UTILITIES
+   ========================================================================== */
+.sv-container-fade {
+  transition: opacity var(--sv-motion-duration-medium) var(--sv-motion-ease-standard);
+}
+
+.sv-container-scale {
+  transition: transform var(--sv-motion-duration-medium) var(--sv-motion-ease-standard);
+}
+
+.sv-container-slide {
+  transition: transform var(--sv-motion-duration-medium) var(--sv-motion-ease-standard);
+}
+
+/* ==========================================================================
+   7. ACCESSIBILITY UTILITIES
+   ========================================================================== */
+.sv-container-focusable:focus {
+  outline: none;
+  box-shadow: var(--sv-shadow-focus);
+}
+.sv-container-focusable:focus-visible {
+  outline: var(--sv-focus-ring-width) solid var(--sv-focus-ring-color);
+  outline-offset: var(--sv-focus-ring-offset);
+}
+
+.sv-container-region[role=region]:focus {
+  outline: none;
+}
+
+/* ==========================================================================
+   8. RESPONSIVE BEHAVIORS
+   ========================================================================== */
+.sv-container-responsive-sm {
+  width: 100%;
+  max-width: var(--sv-container-sm);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.sv-container-responsive-md {
+  width: 100%;
+  max-width: var(--sv-container-md);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.sv-container-responsive-lg {
+  width: 100%;
+  max-width: var(--sv-container-lg);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.sv-container-responsive-xl {
+  width: 100%;
+  max-width: var(--sv-container-xl);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.sv-container-responsive-xxl {
+  width: 100%;
+  max-width: var(--sv-container-xxl);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@media (max-width: var(--sv-breakpoint-sm)) {
+  .sv-container-base {
+    padding: var(--sv-padding-sm);
+  }
+}
+/* ==========================================================================
+   9. RTL SUPPORT
+   ========================================================================== */
+[dir=rtl] .sv-container-base.has-directional-padding {
+  padding-right: var(--sv-padding-start, var(--sv-padding-md));
+  padding-left: var(--sv-padding-end, var(--sv-padding-md));
+}
+[dir=rtl] .sv-container-base.sv-container-border-left {
+  border: none;
+  border-right: 1px solid var(--sv-border-medium);
+}
+[dir=rtl] .sv-container-base.sv-container-border-right {
+  border: none;
+  border-left: 1px solid var(--sv-border-medium);
+}
+
+/**
+ * Data Display Base - Core Styles
+ * Version: 1.0.0
+ * Last Updated: April 29, 2025
+ * 
+ * This file establishes the common styles for all data display components
+ * in the SkillVo design system. It serves as the second level in our 
+ * three-tier styling architecture:
+ * 1. sv-ui-control-base - Base styles for all interactive controls
+ * 2. sv-data-display-base (this file) - Common styles for data display components
+ * 3. Component-specific classes (e.g., sv-table, sv-list, sv-card, sv-chart)
+ */
+/* ==========================================================================
+   TABLE OF CONTENTS:
+
+   1. IMPORTS
+   2. VARIABLES & CONFIGURATION
+   3. BASE CLASS DEFINITION
+   4. DATA CONTAINER STYLES
+   5. DATA CONTENT STYLES
+   6. TYPOGRAPHY & TEXT TREATMENT
+   7. LAYOUT UTILITIES
+   8. DENSITY VARIATIONS
+   9. RESPONSIVE BEHAVIOR
+   10. ACCESSIBILITY CONSIDERATIONS
+   ========================================================================== */
+/* ==========================================================================
+   1. IMPORTS
+   ========================================================================== */
+/* ==========================================================================
+   2. VARIABLES & CONFIGURATION
+   ========================================================================== */
+/* ==========================================================================
+   3. BASE CLASS DEFINITION
+   ========================================================================== */
+.sv-data-display-base {
+  padding: 0;
+  overflow: auto;
+  background-color: var(--sv-bg-surface);
+  border: 1px solid var(--sv-border-medium);
+  border-radius: var(--sv-radius-md);
+  font-family: var(--sv-font-family-main);
+  font-size: var(--sv-text-base);
+  line-height: var(--sv-leading-normal);
+  color: var(--sv-text-primary);
+  transition: background-color var(--sv-motion-duration-medium) var(--sv-motion-ease-standard), border-color var(--sv-motion-duration-medium) var(--sv-motion-ease-standard), box-shadow var(--sv-motion-duration-medium) var(--sv-motion-ease-standard);
+  user-select: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .sv-data-display-base {
+    transition: none;
+  }
+}
+@media print {
+  .sv-data-display-base {
+    border-color: #000;
+    color: #000;
+    background-color: transparent;
+  }
+}
+
+/* ==========================================================================
+   4. DATA CONTAINER STYLES
+   ========================================================================== */
+.sv-data-container {
+  position: relative;
+  height: 100%;
+  width: 100%;
+}
+.sv-data-container.sv-data-scrollable {
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.sv-data-container.sv-data-scrollable::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+.sv-data-container.sv-data-scrollable::-webkit-scrollbar-track {
+  background-color: var(--sv-bg-element);
+  border-radius: 4px;
+}
+.sv-data-container.sv-data-scrollable::-webkit-scrollbar-thumb {
+  background-color: var(--sv-border-dark);
+  border-radius: 4px;
+}
+.sv-data-container.sv-data-scrollable::-webkit-scrollbar-thumb:hover {
+  background-color: var(--sv-border-dark);
+}
+.sv-data-container.sv-data-fixed-height {
+  max-height: 100%;
+  overflow-y: auto;
+}
+.sv-data-container.sv-data-scrollable-x {
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+/* ==========================================================================
+   5. DATA CONTENT STYLES
+   ========================================================================== */
+.sv-data-content {
+  position: relative;
+}
+.sv-data-content.sv-data-empty {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 0 auto var(--sv-spacing-2);
+  padding: var(--sv-padding-lg);
+  color: var(--sv-text-secondary);
+  font-style: italic;
+}
+.sv-data-content.sv-data-loading {
+  opacity: 0.7;
+  pointer-events: none;
+}
+.sv-data-content.sv-data-error {
+  border-color: var(--sv-error);
+  color: var(--sv-error);
+}
+
+/* ==========================================================================
+   6. TYPOGRAPHY & TEXT TREATMENT
+   ========================================================================== */
+.sv-data-title {
+  font-size: var(--sv-text-lg);
+  font-weight: var(--sv-font-semibold);
+  color: var(--sv-text-primary);
+  margin-bottom: var(--sv-space-2);
+}
+
+.sv-data-subtitle {
+  font-size: var(--sv-text-base);
+  font-weight: var(--sv-font-medium);
+  color: var(--sv-text-secondary);
+  margin-bottom: var(--sv-space-2);
+}
+
+.sv-data-caption {
+  font-size: var(--sv-text-sm);
+  color: var(--sv-text-tertiary);
+  margin-top: var(--sv-space-2);
+}
+
+.sv-data-label {
+  font-size: var(--sv-text-sm);
+  font-weight: var(--sv-font-medium);
+  color: var(--sv-text-secondary);
+}
+
+.sv-data-value {
+  font-size: var(--sv-text-base);
+  color: var(--sv-text-primary);
+}
+.sv-data-value.sv-data-value-emphasized {
+  font-weight: var(--sv-font-semibold);
+}
+.sv-data-value.sv-data-value-muted {
+  color: var(--sv-text-secondary);
+}
+
+.sv-data-selectable-text {
+  user-select: text;
+}
+
+.sv-data-truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ==========================================================================
+   7. LAYOUT UTILITIES
+   ========================================================================== */
+.sv-data-layout-flex {
+  display: flex;
+}
+.sv-data-layout-flex.sv-data-layout-column {
+  flex-direction: column;
+}
+.sv-data-layout-flex.sv-data-layout-row {
+  flex-direction: row;
+}
+.sv-data-layout-flex.sv-data-layout-wrap {
+  flex-wrap: wrap;
+}
+.sv-data-layout-flex.sv-data-layout-center {
+  align-items: center;
+  justify-content: center;
+}
+.sv-data-layout-flex.sv-data-layout-space-between {
+  justify-content: space-between;
+}
+
+.sv-data-layout-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: var(--sv-space-4);
+}
+.sv-data-layout-grid.sv-data-layout-grid-compact {
+  gap: var(--sv-space-2);
+}
+.sv-data-layout-grid.sv-data-layout-grid-tight {
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+}
+.sv-data-layout-grid.sv-data-layout-grid-wide {
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+}
+
+/* ==========================================================================
+   8. DENSITY VARIATIONS
+   ========================================================================== */
+.sv-data-density-compact .sv-data-cell,
+.sv-data-density-compact .sv-data-item {
+  padding: var(--sv-padding-1) var(--sv-padding-2);
+}
+
+.sv-data-density-regular .sv-data-cell,
+.sv-data-density-regular .sv-data-item {
+  padding: var(--sv-padding-2) var(--sv-padding-3);
+}
+
+.sv-data-density-comfortable .sv-data-cell,
+.sv-data-density-comfortable .sv-data-item {
+  padding: var(--sv-padding-3) var(--sv-padding-4);
+}
+
+/* ==========================================================================
+   9. RESPONSIVE BEHAVIOR
+   ========================================================================== */
+@media (max-width: var(--sv-breakpoint-md)) {
+  .sv-data-display-base.sv-data-responsive {
+    font-size: 0.9em;
+  }
+  .sv-data-display-base.sv-data-responsive .sv-data-cell,
+  .sv-data-display-base.sv-data-responsive .sv-data-item {
+    padding: var(--sv-padding-1) var(--sv-padding-2);
+  }
+}
+/* ==========================================================================
+   10. ACCESSIBILITY CONSIDERATIONS
+   ========================================================================== */
+.sv-data-interactive {
+  cursor: pointer;
+}
+.sv-data-interactive:focus {
+  outline: none;
+  box-shadow: var(--sv-shadow-focus);
+}
+.sv-data-interactive:focus-visible {
+  outline: var(--sv-focus-ring-width) solid var(--sv-focus-ring-color);
+  outline-offset: var(--sv-focus-ring-offset);
+}
+@media (forced-colors: active) {
+  .sv-data-interactive:focus {
+    outline: 2px solid Highlight;
+    outline-offset: 2px;
+  }
+}
+
+.sv-data-hoverable:hover:not(:disabled):not(.disabled) {
+  background-color: var(--sv-bg-element-hover);
+}
+
+.sv-data-selectable.sv-data-selected, .sv-data-selectable[aria-selected=true] {
+  background-color: var(--sv-bg-element-active);
+  font-weight: var(--sv-font-medium);
+}
+
+[aria-sort=ascending],
+[aria-sort=descending] {
+  font-weight: var(--sv-font-semibold);
+}
+
+.sv-data-keyboard-navigation:focus {
   position: relative;
   z-index: 1;
 }
-.stepper .step .step-label {
-  font-size: var(--sv-font-size-sm);
-  color: var(--sv-text-secondary);
-}
-.stepper .step.active .step-indicator {
-  background-color: var(--sv-primary);
-  border-color: var(--sv-primary);
-  color: var(--sv-text-on-primary);
-}
-.stepper .step.active .step-label {
-  color: var(--sv-text-primary);
-  font-weight: var(--sv-font-weight-medium);
-}
-.stepper .step.completed .step-indicator {
-  background-color: var(--sv-primary);
-  border-color: var(--sv-primary);
-  color: var(--sv-text-on-primary);
-}
 
-.selection-control-group {
-  display: flex;
-  flex-direction: column;
-  gap: var(--sv-spacing-2);
-}
+/**
+ * Feedback Components Base - Core Styles
+ * Version: 1.0.0
+ * Last Updated: April 29, 2025
+ * 
+ * This file establishes the foundational styles for all feedback UI components
+ * in the SkillVo design system. It serves as the second level in our 
+ * three-tier styling architecture:
+ * 1. sv-ui-control-base - Base styles for all interactive controls
+ * 2. sv-feedback-base (this file) - Common styles for all feedback components
+ * 3. Component-specific classes (e.g., sv-toast, sv-alert, sv-notification)
+ */
+/* ==========================================================================
+   TABLE OF CONTENTS:
 
-.selection-control-wrapper {
-  display: flex;
-  align-items: center;
+   1. VARIABLES & CONFIGURATION
+   2. MIXINS
+      2.1 Feedback-Specific Mixins
+      2.2 Positioning Mixins
+      2.3 Animation Mixins
+   3. BASE CLASS DEFINITION
+   4. FEEDBACK TYPES/SEVERITY
+   5. FEEDBACK POSITIONING
+   6. ACCESSIBILITY FEATURES
+   7. RTL SUPPORT
+   8. MOTION SENSITIVITY
+   ========================================================================== */
+/* ==========================================================================
+   1. VARIABLES & CONFIGURATION
+   ========================================================================== */
+/* ==========================================================================
+   2. MIXINS
+   ========================================================================== */
+/* 2.1 Feedback-Specific Mixins
+   ========================================================================== */
+/* 2.2 Positioning Mixins
+   ========================================================================== */
+/* 2.3 Animation Mixins
+   ========================================================================== */
+/* ==========================================================================
+   3. BASE CLASS DEFINITION
+   ========================================================================== */
+.sv-feedback-base {
   position: relative;
+  box-sizing: border-box;
+  max-width: 100%;
+  width: auto;
+  font-size: var(--sv-text-base);
+  font-weight: var(--sv-font-normal);
+  line-height: var(--sv-leading-normal);
+  padding: var(--sv-padding-4);
+  border-radius: var(--sv-radius-md);
+  box-shadow: var(--sv-shadow-md);
+  border-width: 1px;
+  border-style: solid;
+  background-color: var(--sv-bg-surface);
+  border-color: var(--sv-border-medium);
+  z-index: var(--sv-z-index-tooltip);
+  transition-property: all;
+  transition-duration: var(--sv-motion-duration-medium);
+  transition-timing-function: var(--sv-motion-ease-standard);
 }
-.selection-control-wrapper.horizontal {
-  flex-direction: row;
-  gap: var(--sv-spacing-4);
+@media (prefers-reduced-motion: reduce) {
+  .sv-feedback-base {
+    transition: none;
+  }
 }
-
-.checkbox-control,
-.radio-control {
-  position: absolute;
-  opacity: 0;
-  width: 0;
-  height: 0;
+.sv-feedback-base .sv-feedback-content {
+  flex: 1;
+  min-width: 0;
 }
-.checkbox-control + label,
-.radio-control + label {
-  position: relative;
-  cursor: pointer;
-  padding-left: var(--sv-spacing-6);
+.sv-feedback-base .sv-feedback-title {
+  font-size: var(--sv-text-lg);
+  font-weight: var(--sv-font-semibold);
+  line-height: var(--sv-leading-normal);
+  margin: 0 0 var(--sv-space-2) 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.sv-feedback-base .sv-feedback-message {
+  font-size: var(--sv-text-base);
+  font-weight: var(--sv-font-normal);
+  line-height: var(--sv-leading-normal);
+  margin: 0;
+}
+.sv-feedback-base .sv-feedback-icon {
+  flex-shrink: 0;
+  width: var(--sv-icon-size-md);
+  height: var(--sv-icon-size-md);
   display: inline-flex;
   align-items: center;
-  user-select: none;
+  justify-content: center;
 }
-.checkbox-control + label::before,
-.radio-control + label::before {
-  content: "";
+.sv-feedback-base .sv-feedback-close {
   position: absolute;
-  left: 0;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 18px;
-  height: 18px;
-  border: var(--sv-border-width-sm, 1px) solid var(--sv-border-default);
-  background-color: var(--sv-background-base);
-  transition: var(--sv-transition-base);
+  top: var(--sv-space-2);
+  right: var(--sv-space-2);
+  width: var(--sv-btn-size-sm);
+  height: var(--sv-btn-size-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--sv-radius-full);
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  color: var(--sv-text-secondary);
+  transition: background-color var(--sv-motion-duration-medium) var(--sv-motion-ease-standard);
 }
-.checkbox-control:hover + label::before,
-.radio-control:hover + label::before {
-  border-color: var(--sv-border-hover);
+.sv-feedback-base .sv-feedback-close:hover {
+  background-color: var(--sv-bg-element-hover);
 }
-.checkbox-control:focus + label::before,
-.radio-control:focus + label::before {
-  border-color: var(--sv-border-focus);
+.sv-feedback-base .sv-feedback-close:focus {
+  outline: none;
   box-shadow: var(--sv-shadow-focus);
 }
-.checkbox-control:checked + label::before,
-.radio-control:checked + label::before {
-  background-color: var(--sv-primary);
+.sv-feedback-base .sv-feedback-close:focus-visible {
+  outline: var(--sv-focus-ring-width) solid var(--sv-focus-ring-color);
+  outline-offset: var(--sv-focus-ring-offset);
+}
+.sv-feedback-base:not(.sv-feedback-full-width) {
+  max-width: 32rem;
+}
+.sv-feedback-base .sv-feedback-actions {
+  display: flex;
+  margin-top: var(--sv-space-3);
+  gap: var(--sv-space-2);
+}
+.sv-feedback-base .sv-feedback-actions.sv-feedback-actions-end {
+  justify-content: flex-end;
+}
+.sv-feedback-base .sv-feedback-actions.sv-feedback-actions-center {
+  justify-content: center;
+}
+.sv-feedback-base .sv-feedback-actions.sv-feedback-actions-between {
+  justify-content: space-between;
+}
+
+/* ==========================================================================
+   4. FEEDBACK TYPES/SEVERITY
+   ========================================================================== */
+.sv-feedback-info {
+  border-color: var(--sv-info);
+  background-color: rgba(41, 182, 246, 0.1);
+  color: var(--sv-text-primary);
+}
+.sv-feedback-info .sv-feedback-icon {
+  color: var(--sv-info);
+}
+
+.sv-feedback-success {
+  border-color: var(--sv-success);
+  background-color: rgba(76, 175, 80, 0.1);
+  color: var(--sv-text-primary);
+}
+.sv-feedback-success .sv-feedback-icon {
+  color: var(--sv-success);
+}
+
+.sv-feedback-warning {
+  border-color: var(--sv-warning);
+  background-color: rgba(255, 167, 38, 0.1);
+  color: var(--sv-text-primary);
+}
+.sv-feedback-warning .sv-feedback-icon {
+  color: var(--sv-warning);
+}
+
+.sv-feedback-error {
+  border-color: var(--sv-error);
+  background-color: rgba(244, 67, 54, 0.1);
+  color: var(--sv-text-primary);
+}
+.sv-feedback-error .sv-feedback-icon {
+  color: var(--sv-error);
+}
+
+/* ==========================================================================
+   5. FEEDBACK POSITIONING
+   ========================================================================== */
+.sv-feedback-fixed {
+  position: fixed;
+}
+
+.sv-feedback-absolute {
+  position: absolute;
+}
+
+.sv-feedback-position-top {
+  top: var(--sv-space-4);
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.sv-feedback-position-bottom {
+  bottom: var(--sv-space-4);
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.sv-feedback-position-top-right {
+  top: var(--sv-space-4);
+  right: var(--sv-space-4);
+}
+
+.sv-feedback-position-top-left {
+  top: var(--sv-space-4);
+  left: var(--sv-space-4);
+}
+
+.sv-feedback-position-bottom-right {
+  bottom: var(--sv-space-4);
+  right: var(--sv-space-4);
+}
+
+.sv-feedback-position-bottom-left {
+  bottom: var(--sv-space-4);
+  left: var(--sv-space-4);
+}
+
+.sv-feedback-full-width {
+  width: calc(100% - 2 * var(--sv-space-4));
+  max-width: none;
+}
+
+/* ==========================================================================
+   6. ACCESSIBILITY FEATURES
+   ========================================================================== */
+.sv-feedback-interactive:not([role=status]):focus {
+  outline: none;
+  box-shadow: var(--sv-shadow-focus);
+}
+.sv-feedback-interactive:not([role=status]):focus-visible {
+  outline: var(--sv-focus-ring-width) solid var(--sv-focus-ring-color);
+  outline-offset: var(--sv-focus-ring-offset);
+}
+
+/* ==========================================================================
+   7. RTL SUPPORT
+   ========================================================================== */
+[dir=rtl] .sv-feedback-base .sv-feedback-icon {
+  margin-right: 0;
+  margin-left: var(--sv-space-3);
+}
+[dir=rtl] .sv-feedback-base .sv-feedback-close {
+  right: auto;
+  left: var(--sv-space-2);
+}
+[dir=rtl] .sv-feedback-base.sv-feedback-position-top-right {
+  right: auto;
+  left: var(--sv-space-4);
+}
+[dir=rtl] .sv-feedback-base.sv-feedback-position-top-left {
+  left: auto;
+  right: var(--sv-space-4);
+}
+[dir=rtl] .sv-feedback-base.sv-feedback-position-bottom-right {
+  right: auto;
+  left: var(--sv-space-4);
+}
+[dir=rtl] .sv-feedback-base.sv-feedback-position-bottom-left {
+  left: auto;
+  right: var(--sv-space-4);
+}
+
+/* ==========================================================================
+   8. MOTION SENSITIVITY
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  .sv-feedback-base {
+    transition: opacity var(--sv-motion-duration-medium) linear !important;
+    animation: fade-in var(--sv-motion-duration-medium) linear !important;
+  }
+  .sv-feedback-base.sv-feedback-exiting {
+    animation: fade-out var(--sv-motion-duration-medium) linear !important;
+  }
+}
+@keyframes slide-out-up {
+  0% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-10px);
+    opacity: 0;
+  }
+}
+@keyframes slide-out-down {
+  0% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(10px);
+    opacity: 0;
+  }
+}
+/**
+ * Information Display Controls Base - Category-Level Styles
+ * Version: 1.0.0
+ * Last Updated: April 29, 2025
+ * 
+ * This file establishes the category-level styles for all information display components
+ * in the SkillVo design system. It serves as the middle layer in our 
+ * three-tier styling architecture:
+ * 1. sv-ui-control-base - Base styles for all interactive controls
+ * 2. sv-info-display-base (this file) - Base styles for information display components
+ * 3. Component-specific classes (e.g., sv-label, sv-badge, sv-tooltip, sv-tag)
+ */
+/* ==========================================================================
+   TABLE OF CONTENTS:
+
+   1. VARIABLES & CONFIGURATION
+   2. MIXINS
+      2.1 Layout Mixins
+      2.2 Content Formatting Mixins
+      2.3 Visual Style Mixins
+   3. BASE CLASS DEFINITION
+   4. PRIORITY VARIATIONS
+   5. DENSITY VARIATIONS
+   6. ALIGNMENT VARIATIONS
+   7. TRUNCATION VARIATIONS
+   8. ANIMATION EXTENSIONS
+   9. PRINT REFINEMENTS
+   10. ACCESSIBILITY ENHANCEMENTS
+   ========================================================================== */
+/* ==========================================================================
+   1. VARIABLES & CONFIGURATION
+   ========================================================================== */
+/* ==========================================================================
+   2. MIXINS
+   ========================================================================== */
+/* 2.1 Layout Mixins
+   ========================================================================== */
+/* 2.2 Content Formatting Mixins
+   ========================================================================== */
+/* 2.3 Visual Style Mixins
+   ========================================================================== */
+/* ==========================================================================
+   3. BASE CLASS DEFINITION
+   ========================================================================== */
+.sv-info-display-base {
+  display: inline-flex;
+  align-items: center;
+  padding: var(--sv-padding-1) var(--sv-padding-2);
+  line-height: var(--sv-leading-normal);
+  text-align: left;
+  justify-content: flex-start;
+  border: none;
+  background-color: transparent;
+  font-size: var(--sv-text-base);
+  font-weight: var(--sv-font-normal);
+  line-height: var(--sv-leading-normal);
+  white-space: normal;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  transition-property: color, background-color, border-color, box-shadow, opacity;
+  transition-duration: var(--sv-motion-duration-short);
+}
+.sv-info-display-base.has-icon {
+  gap: var(--sv-space-2);
+}
+.sv-info-display-base.has-icon .sv-icon {
+  color: currentColor;
+  flex-shrink: 0;
+}
+.sv-info-display-base.is-interactive {
+  cursor: pointer;
+}
+.sv-info-display-base.is-interactive:hover {
+  color: var(--sv-primary);
+}
+.sv-info-display-base.is-interactive:focus-visible {
+  outline: var(--sv-focus-ring-width) solid var(--sv-focus-ring-color);
+  outline-offset: var(--sv-focus-ring-offset);
+}
+.sv-info-display-base.is-conditional {
+  opacity: 0;
+}
+.sv-info-display-base.is-conditional.is-visible {
+  opacity: 1;
+}
+
+/* ==========================================================================
+   4. PRIORITY VARIATIONS
+   ========================================================================== */
+.sv-info-priority-high {
+  font-weight: var(--sv-font-semibold);
+  color: var(--sv-text-primary);
+}
+
+.sv-info-priority-normal {
+  font-weight: var(--sv-font-normal);
+  color: var(--sv-text-primary);
+}
+
+.sv-info-priority-low {
+  font-weight: var(--sv-font-normal);
+  color: var(--sv-text-secondary);
+}
+
+.sv-info-priority-subtle {
+  font-weight: var(--sv-font-normal);
+  color: var(--sv-text-tertiary);
+}
+
+/* ==========================================================================
+   5. DENSITY VARIATIONS
+   ========================================================================== */
+.sv-info-density-compact {
+  padding: var(--sv-padding-1) var(--sv-padding-2);
+  line-height: var(--sv-leading-tight);
+}
+
+.sv-info-density-normal {
+  padding: var(--sv-padding-1) var(--sv-padding-2);
+  line-height: var(--sv-leading-normal);
+}
+
+.sv-info-density-comfortable {
+  padding: var(--sv-padding-2) var(--sv-padding-3);
+  line-height: var(--sv-leading-relaxed);
+}
+
+/* ==========================================================================
+   6. ALIGNMENT VARIATIONS
+   ========================================================================== */
+.sv-info-align-left {
+  text-align: left;
+  justify-content: flex-start;
+}
+
+.sv-info-align-center {
+  text-align: center;
+  justify-content: center;
+}
+
+.sv-info-align-right {
+  text-align: right;
+  justify-content: flex-end;
+}
+
+/* ==========================================================================
+   7. TRUNCATION VARIATIONS
+   ========================================================================== */
+.sv-info-truncate-single {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.sv-info-truncate-multi {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.sv-info-no-truncate {
+  text-overflow: initial;
+  white-space: normal;
+  overflow: visible;
+}
+
+/* ==========================================================================
+   8. ANIMATION EXTENSIONS
+   ========================================================================== */
+.sv-info-animate-highlight {
+  animation: info-highlight 2s ease-out;
+}
+
+@keyframes info-highlight {
+  0% {
+    background-color: var(--sv-primary-light);
+  }
+  100% {
+    background-color: transparent;
+  }
+}
+.sv-info-animate-update {
+  animation: info-update 1s ease-out;
+}
+
+@keyframes info-update {
+  0%, 50% {
+    color: var(--sv-primary);
+  }
+  100% {
+    color: inherit;
+  }
+}
+/* ==========================================================================
+   9. PRINT REFINEMENTS
+   ========================================================================== */
+@media print {
+  .sv-info-display-base {
+    color: #000 !important;
+  }
+  .sv-info-display-base.sv-info-truncate-single, .sv-info-display-base.sv-info-truncate-multi {
+    text-overflow: initial;
+    white-space: normal;
+    overflow: visible;
+    -webkit-line-clamp: initial;
+    -webkit-box-orient: initial;
+    display: block;
+  }
+  .sv-info-display-base.is-conditional:not(.is-visible) {
+    display: none !important;
+  }
+}
+/* ==========================================================================
+   10. ACCESSIBILITY ENHANCEMENTS
+   ========================================================================== */
+@media (prefers-contrast: more) {
+  .sv-info-display-base.sv-info-priority-low, .sv-info-display-base.sv-info-priority-subtle {
+    color: var(--sv-text-primary);
+  }
+}
+@media (forced-colors: active) {
+  .sv-info-display-base {
+    color: CanvasText;
+  }
+  .sv-info-display-base.is-interactive:hover {
+    color: Highlight;
+  }
+  .sv-info-display-base.sv-info-priority-high {
+    font-weight: bold;
+  }
+}
+/**
+ * Input Base - Common Styles for Input Controls
+ * Version: 2.0.0
+ * Last Updated: April 29, 2025
+ * 
+ * This file establishes the intermediate layer in the three-tier styling architecture
+ * specifically for input-type controls, serving as a bridge between:
+ * 1. sv-ui-control-base - Base styles for all interactive controls
+ * 2. sv-input-base (this file) - Common styles for all input controls
+ * 3. Component-specific classes (e.g., sv-input-text, sv-textarea, sv-select)
+ */
+/* ==========================================================================
+   TABLE OF CONTENTS:
+
+   1. VARIABLES & CONFIGURATION
+   2. INPUT-SPECIFIC MIXINS
+   3. BASE INPUT CLASS DEFINITION
+   4. INPUT FIELD STYLING
+   5. LABEL STYLING
+   6. HELPER TEXT & VALIDATION STYLING
+   7. INPUT GROUPS & LAYOUT
+   8. UTILITY CLASSES
+   9. RTL INPUT SUPPORT
+   10. ACCESSIBILITY ENHANCEMENTS
+   ========================================================================== */
+/* ==========================================================================
+   1. VARIABLES & CONFIGURATION
+   ========================================================================== */
+/* ==========================================================================
+   2. INPUT-SPECIFIC MIXINS
+   ========================================================================== */
+/* ==========================================================================
+   3. BASE INPUT CLASS DEFINITION
+   ========================================================================== */
+.sv-input-base {
+  position: relative;
+  display: block;
+  min-width: var(--sv-size-40);
+  height: var(--sv-size-10);
+  padding: var(--sv-padding-2) var(--sv-padding-3);
+  transition-property: border-color color background-color box-shadow;
+  transition-duration: var(--sv-motion-duration-short);
+  transition-timing-function: var(--sv-motion-ease-standard);
+}
+@media (prefers-reduced-motion: reduce) {
+  .sv-input-base {
+    transition: none;
+  }
+}
+.sv-input-base {
+  cursor: text;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.sv-input-base.required .sv-input-label::after, .sv-input-base[required] .sv-input-label::after, .sv-input-base[aria-required=true] .sv-input-label::after {
+  content: "*";
+  color: var(--sv-error);
+  margin-left: var(--sv-space-1);
+}
+
+/* ==========================================================================
+   4. INPUT FIELD STYLING
+   ========================================================================== */
+.sv-input-field {
+  width: 100%;
+  appearance: none;
+  background-color: var(--sv-bg-surface);
+}
+.sv-input-field:focus {
   border-color: var(--sv-primary);
 }
-.checkbox-control:disabled + label,
-.radio-control:disabled + label {
-  cursor: not-allowed;
-  color: var(--sv-text-disabled);
+.sv-input-field::placeholder {
+  color: var(--sv-text-tertiary);
+  opacity: 1;
 }
-.checkbox-control:disabled + label::before,
-.radio-control:disabled + label::before {
-  background-color: var(--sv-background-disabled);
-  border-color: var(--sv-border-default);
+.sv-input-field[type=password] {
+  font-family: var(--sv-font-family-mono);
+  letter-spacing: 0.125em;
+}
+.sv-input-field[type=number] {
+  -moz-appearance: textfield;
+}
+.sv-input-field[type=number]::-webkit-outer-spin-button, .sv-input-field[type=number]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.sv-input-field[type=search]::-webkit-search-decoration, .sv-input-field[type=search]::-webkit-search-cancel-button, .sv-input-field[type=search]::-webkit-search-results-button, .sv-input-field[type=search]::-webkit-search-results-decoration {
+  -webkit-appearance: none;
+}
+.sv-input-field[type=date]::-webkit-calendar-picker-indicator, .sv-input-field[type=time]::-webkit-calendar-picker-indicator, .sv-input-field[type=datetime-local]::-webkit-calendar-picker-indicator {
+  opacity: 0.6;
+  cursor: pointer;
+}
+.sv-input-field[type=date]::-webkit-calendar-picker-indicator:hover, .sv-input-field[type=time]::-webkit-calendar-picker-indicator:hover, .sv-input-field[type=datetime-local]::-webkit-calendar-picker-indicator:hover {
+  opacity: 1;
 }
 
-.checkbox-control + label::before {
-  border-radius: var(--sv-radius-sm);
-}
-.checkbox-control:checked + label::after {
-  content: "";
-  position: absolute;
-  left: 6px;
-  top: 50%;
-  transform: translateY(-60%) rotate(45deg);
-  width: 6px;
-  height: 10px;
-  border: solid white;
-  border-width: 0 2px 2px 0;
+/* ==========================================================================
+   5. LABEL STYLING
+   ========================================================================== */
+.sv-input-label {
+  display: block;
+  margin-bottom: var(--sv-space-2);
+  font-size: var(--sv-text-sm);
+  font-weight: var(--sv-font-medium);
+  color: var(--sv-text-secondary);
 }
 
-.radio-control + label::before {
-  border-radius: var(--sv-radius-full);
+/* ==========================================================================
+   6. HELPER TEXT & VALIDATION STYLING
+   ========================================================================== */
+.sv-input-helper {
+  font-size: var(--sv-text-xs);
+  margin-top: var(--sv-space-1);
+  color: var(--sv-text-secondary);
 }
-.radio-control:checked + label::after {
-  content: "";
+.sv-input-helper.error {
+  color: var(--sv-error);
+}
+.sv-input-helper.success {
+  color: var(--sv-success);
+}
+
+.sv-input-validation-error {
+  font-size: var(--sv-text-xs);
+  margin-top: var(--sv-space-1);
+  color: var(--sv-text-secondary);
+  color: var(--sv-error);
+}
+.sv-input-validation-error.error {
+  color: var(--sv-error);
+}
+.sv-input-validation-error.success {
+  color: var(--sv-success);
+}
+.sv-input-validation-success {
+  font-size: var(--sv-text-xs);
+  margin-top: var(--sv-space-1);
+  color: var(--sv-text-secondary);
+  color: var(--sv-success);
+}
+.sv-input-validation-success.error {
+  color: var(--sv-error);
+}
+.sv-input-validation-success.success {
+  color: var(--sv-success);
+}
+
+.sv-input-counter {
+  font-size: var(--sv-text-xs);
+  margin-top: var(--sv-space-1);
+  color: var(--sv-text-secondary);
+  text-align: right;
+}
+.sv-input-counter.error {
+  color: var(--sv-error);
+}
+.sv-input-counter.success {
+  color: var(--sv-success);
+}
+
+/* ==========================================================================
+   7. INPUT GROUPS & LAYOUT
+   ========================================================================== */
+.sv-input-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: var(--sv-space-4);
+}
+.sv-input-container .sv-input-field:focus ~ .sv-input-icon,
+.sv-input-container .sv-input-field:focus ~ .sv-input-addon {
+  border-color: var(--sv-primary);
+  color: var(--sv-text-primary);
+}
+
+.sv-input-group {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+}
+.sv-input-group .sv-input-base {
+  flex: 1;
+}
+.sv-input-group .sv-input-base:not(:first-child) {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+.sv-input-group .sv-input-base:not(:last-child) {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  border-right-width: 0;
+}
+.sv-input-group-prepend, .sv-input-group-append {
+  display: flex;
+  align-items: center;
+  padding: 0 var(--sv-padding-2);
+  background-color: var(--sv-bg-element);
+  border: 1px solid var(--sv-border-medium);
+  color: var(--sv-text-secondary);
+  font-size: var(--sv-text-sm);
+}
+.sv-input-group-prepend {
+  border-right-width: 0;
+  border-top-left-radius: var(--sv-radius-md);
+  border-bottom-left-radius: var(--sv-radius-md);
+}
+.sv-input-group-append {
+  border-left-width: 0;
+  border-top-right-radius: var(--sv-radius-md);
+  border-bottom-right-radius: var(--sv-radius-md);
+}
+
+.sv-input-icon {
   position: absolute;
-  left: 5px;
   top: 50%;
   transform: translateY(-50%);
-  width: 8px;
-  height: 8px;
-  border-radius: var(--sv-radius-full);
-  background-color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--sv-text-secondary);
+}
+.sv-input-icon-left {
+  left: var(--sv-padding-3);
+}
+.sv-input-icon-left + .sv-input-field {
+  padding-left: calc(var(--sv-padding-6) + var(--sv-icon-size-sm));
+}
+.sv-input-icon-right {
+  right: var(--sv-padding-3);
+}
+.sv-input-field ~ .sv-input-icon-right {
+  padding-right: calc(var(--sv-padding-6) + var(--sv-icon-size-sm));
 }
 
-.toggle-switch {
-  position: relative;
-  display: inline-block;
-  width: 50px;
-  height: 24px;
+/* ==========================================================================
+   8. UTILITY CLASSES
+   ========================================================================== */
+.sv-input-fullwidth {
+  width: 100%;
+  min-width: 100%;
+  max-width: 100%;
 }
-.toggle-switch input {
+
+.sv-input-autowidth {
+  width: auto;
+  min-width: var(--sv-size-40);
+}
+
+.sv-input-compact {
+  padding: var(--sv-padding-1) var(--sv-padding-2);
+  height: auto;
+  min-height: var(--sv-size-8);
+}
+
+.sv-input-inline {
+  display: inline-flex;
+  vertical-align: middle;
+  margin-bottom: 0;
+}
+
+/* ==========================================================================
+   9. RTL INPUT SUPPORT
+   ========================================================================== */
+[dir=rtl] .sv-input-icon-left {
+  left: auto;
+  right: var(--sv-padding-3);
+}
+[dir=rtl] .sv-input-icon-left + .sv-input-field {
+  padding-left: var(--sv-padding-3);
+  padding-right: calc(var(--sv-padding-6) + var(--sv-icon-size-sm));
+}
+[dir=rtl] .sv-input-icon-right {
+  right: auto;
+  left: var(--sv-padding-3);
+}
+.sv-input-field ~ [dir=rtl] .sv-input-icon-right {
+  padding-right: var(--sv-padding-3);
+  padding-left: calc(var(--sv-padding-6) + var(--sv-icon-size-sm));
+}
+[dir=rtl] .sv-input-counter {
+  text-align: left;
+}
+[dir=rtl] .sv-input-group .sv-input-base:not(:first-child) {
+  border-radius: 0;
+  border-top-right-radius: var(--sv-radius-md);
+  border-bottom-right-radius: var(--sv-radius-md);
+}
+[dir=rtl] .sv-input-group .sv-input-base:not(:last-child) {
+  border-radius: 0;
+  border-top-left-radius: var(--sv-radius-md);
+  border-bottom-left-radius: var(--sv-radius-md);
+  border-right-width: 1px;
+  border-left-width: 0;
+}
+[dir=rtl] .sv-input-group-prepend {
+  border-radius: 0;
+  border-top-right-radius: var(--sv-radius-md);
+  border-bottom-right-radius: var(--sv-radius-md);
+  border-right-width: 1px;
+  border-left-width: 0;
+}
+[dir=rtl] .sv-input-group-append {
+  border-radius: 0;
+  border-top-left-radius: var(--sv-radius-md);
+  border-bottom-left-radius: var(--sv-radius-md);
+  border-left-width: 1px;
+  border-right-width: 0;
+}
+
+/* ==========================================================================
+   10. ACCESSIBILITY ENHANCEMENTS
+   ========================================================================== */
+.sv-input-base:focus[data-focused-by=keyboard] {
+  outline: var(--sv-focus-ring-width) solid var(--sv-focus-ring-color);
+  outline-offset: var(--sv-focus-ring-offset);
+}
+
+.sv-input-label-sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@media (forced-colors: active) {
+  .sv-input-base {
+    border: 1px solid ButtonBorder;
+  }
+  .sv-input-base:focus {
+    outline: 2px solid Highlight;
+    outline-offset: 2px;
+  }
+  .sv-input-icon,
+  .sv-input-group-prepend,
+  .sv-input-group-append {
+    border-color: ButtonBorder;
+    color: ButtonText;
+  }
+}
+/**
+ * Navigation Control Base - Core Styles
+ * Version: 1.0.0
+ * Last Updated: April 29, 2025
+ * 
+ * This file establishes the foundational styles for all navigation components
+ * in the SkillVo design system. It serves as the second level in our 
+ * three-tier styling architecture:
+ * 1. sv-ui-control-base - Base styles for all interactive controls
+ * 2. sv-nav-control-base (this file) - Base styles for all navigation controls
+ * 3. Component-specific classes (e.g., sv-nav-menu, sv-nav-tabs, sv-breadcrumbs)
+ */
+/* ==========================================================================
+   TABLE OF CONTENTS:
+
+   1. VARIABLES & CONFIGURATION
+   2. NAVIGATION-SPECIFIC MIXINS
+   3. NAVIGATION BASE CLASS DEFINITION
+   4. NAVIGATION STATES
+   5. NAVIGATION ACCESSIBILITY
+   6. RESPONSIVE NAVIGATION BEHAVIORS
+   7. PRINT STYLES FOR NAVIGATION
+   8. RTL SUPPORT FOR NAVIGATION
+   ========================================================================== */
+/* ==========================================================================
+   1. VARIABLES & CONFIGURATION
+   ========================================================================== */
+/* ==========================================================================
+   2. NAVIGATION-SPECIFIC MIXINS
+   ========================================================================== */
+.sv-nav-control-base {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: var(--sv-text-base);
+  font-weight: var(--sv-font-medium);
+  line-height: var(--sv-leading-normal);
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  user-select: none;
+  color: var(--sv-text-primary);
+  transition-property: color, background-color, border-color;
+  transition-duration: var(--sv-motion-duration-short);
+  transition-timing-function: var(--sv-motion-ease-standard);
+}
+.sv-nav-control-base:hover:not(:disabled):not(.disabled):not([readonly]):not(.readonly) {
+  background-color: var(--sv-bg-element-hover);
+  border-color: var(--sv-border-medium);
+}
+.sv-nav-control-base:active:not(:disabled):not(.disabled):not([readonly]):not(.readonly) {
+  background-color: var(--sv-bg-element-active);
+  border-color: var(--sv-border-dark);
+}
+@media (prefers-reduced-motion: reduce) {
+  .sv-nav-control-base {
+    transition: none;
+  }
+}
+.sv-nav-control-base {
+  min-width: var(--sv-min-touch-target);
+  min-height: var(--sv-min-touch-target);
+}
+.sv-nav-control-base.sv-nav-vertical {
+  flex-direction: column;
+}
+.sv-nav-control-base.sv-nav-vertical .sv-nav-item {
+  padding: var(--sv-padding-2) var(--sv-padding-3);
+}
+
+/* ==========================================================================
+   3. NAVIGATION-SPECIFIC MIXINS
+   ========================================================================== */
+/* ==========================================================================
+   4. NAVIGATION STATES
+   ========================================================================== */
+.sv-nav-control-base:hover:not(:disabled):not(.disabled) {
+  color: var(--sv-primary);
+  text-decoration: none;
+}
+.sv-nav-control-base.active, .sv-nav-control-base[aria-current=page], .sv-nav-control-base[aria-selected=true] {
+  color: var(--sv-primary);
+  font-weight: var(--sv-font-semibold);
+}
+.sv-nav-control-base[aria-expanded=true] {
+  color: var(--sv-primary);
+  background-color: var(--sv-bg-element-active);
+}
+
+/* ==========================================================================
+   5. NAVIGATION ACCESSIBILITY
+   ========================================================================== */
+.sv-nav-control-base:focus-visible {
+  outline: var(--sv-focus-ring-width) solid var(--sv-focus-ring-color);
+  outline-offset: var(--sv-focus-ring-offset);
+  text-decoration: none;
+}
+.sv-nav-control-base.sv-nav-skip-link {
+  position: absolute;
+  top: -9999px;
+  left: -9999px;
+  z-index: var(--sv-z-index-skip-link);
+  background-color: var(--sv-bg-primary);
+  padding: var(--sv-padding-2) var(--sv-padding-4);
+}
+.sv-nav-control-base.sv-nav-skip-link:focus {
+  top: var(--sv-skip-link-position-top);
+  left: var(--sv-skip-link-position-left);
+}
+.sv-nav-control-base[aria-disabled=true] {
+  opacity: 0.65;
+  cursor: not-allowed;
+  background-color: var(--sv-bg-element);
+  border-color: var(--sv-border-light);
+  color: var(--sv-text-tertiary);
+  pointer-events: none;
+}
+
+/* ==========================================================================
+   6. RESPONSIVE NAVIGATION BEHAVIORS
+   ========================================================================== */
+@media (max-width: var(--sv-breakpoint-md)) {
+  .sv-nav-control-base.sv-nav-responsive {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .sv-nav-control-base.sv-nav-responsive {
+    min-width: var(--sv-min-touch-target);
+    min-height: var(--sv-min-touch-target);
+  }
+  .sv-nav-control-base.sv-nav-responsive {
+    padding: var(--sv-padding-2) var(--sv-padding-3);
+  }
+}
+/* ==========================================================================
+   7. PRINT STYLES FOR NAVIGATION
+   ========================================================================== */
+@media print {
+  .sv-nav-control-base a[href]::after {
+    content: " (" attr(href) ")";
+    font-size: 90%;
+    font-style: italic;
+  }
+  .sv-nav-control-base.sv-nav-no-print, .sv-nav-control-base[data-print=hide] {
+    display: none !important;
+  }
+}
+/* ==========================================================================
+   8. RTL SUPPORT FOR NAVIGATION
+   ========================================================================== */
+[dir=rtl] .sv-nav-control-base.sv-nav-horizontal {
+  flex-direction: row-reverse;
+}
+[dir=rtl] .sv-nav-control-base.sv-nav-with-dividers > * + *::before {
+  left: auto;
+  right: calc(-1 * var(--sv-space-2));
+}
+[dir=rtl] .sv-nav-control-base .sv-nav-chevron {
+  transform: scaleX(-1);
+}
+
+/**
+ * Selection Controls Base - Core Styles
+ * Version: 1.0.0
+ * Last Updated: April 29, 2025
+ * 
+ * This file establishes the foundational styles for all selection control components
+ * in the SkillVo design system. It serves as the second level in our 
+ * three-tier styling architecture:
+ * 1. sv-ui-control-base - Base styles for all interactive controls
+ * 2. sv-selection-control-base (this file) - Base styles for all selection controls
+ * 3. Component-specific classes (e.g., sv-checkbox, sv-radio, sv-switch)
+ *
+ * Selection controls include checkboxes, radio buttons, switches, and other
+ * components that allow users to select options from a set of choices.
+ */
+/* ==========================================================================
+   TABLE OF CONTENTS:
+
+   1. VARIABLES & CONFIGURATION
+   2. MIXINS
+      2.1 Selection Control Specific Mixins
+   3. BASE CLASS DEFINITION
+   4. SIZE VARIATIONS
+   5. SELECTION STATES
+   6. ACCESSIBILITY ENHANCEMENTS
+   7. PRINT STYLES
+   ========================================================================== */
+/* ==========================================================================
+   1. VARIABLES & CONFIGURATION
+   ========================================================================== */
+/* ==========================================================================
+   2. MIXINS
+   ========================================================================== */
+/* 2.1 Selection Control Specific Mixins
+   ========================================================================== */
+/* ==========================================================================
+   3. BASE CLASS DEFINITION
+   ========================================================================== */
+.sv-selection-control-base {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+  background-color: transparent;
+  padding: 0;
+}
+.sv-selection-control-base + .sv-selection-control-base {
+  margin-top: var(--sv-space-3);
+}
+.sv-selection-control-base.sv-selection-control-inline + .sv-selection-control-base.sv-selection-control-inline {
+  margin-top: 0;
+  margin-left: var(--sv-space-4);
+}
+.sv-selection-control-base__input {
+  position: absolute;
   opacity: 0;
   width: 0;
   height: 0;
+  margin: 0;
 }
-.toggle-switch input:checked + .toggle-slider {
+.sv-selection-control-base__input:focus-visible + .sv-selection-control-base__control {
+  outline: var(--sv-focus-ring-width) solid var(--sv-focus-ring-color);
+  outline-offset: var(--sv-focus-ring-offset);
+}
+.sv-selection-control-base__input:checked + .sv-selection-control-base__control {
   background-color: var(--sv-primary);
+  border-color: var(--sv-primary);
 }
-.toggle-switch input:checked + .toggle-slider:before {
-  transform: translateX(26px);
+.sv-selection-control-base__input:checked + .sv-selection-control-base__control::after {
+  transform: translate(-50%, -50%) scale(1);
 }
-.toggle-switch input:focus + .toggle-slider {
-  box-shadow: var(--sv-shadow-focus);
+.sv-selection-control-base__input:indeterminate + .sv-selection-control-base__control {
+  background-color: var(--sv-primary-light);
+  border-color: var(--sv-primary);
 }
-.toggle-switch input:disabled + .toggle-slider {
-  opacity: 0.5;
+.sv-selection-control-base__input:indeterminate + .sv-selection-control-base__control::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 50%;
+  height: 2px;
+  background-color: var(--sv-text-on-dark);
+  transform: translate(-50%, -50%) scale(1);
+}
+.sv-selection-control-base__input:disabled + .sv-selection-control-base__control {
+  opacity: 0.65;
+  cursor: not-allowed;
+  background-color: var(--sv-bg-element);
+  border-color: var(--sv-border-light);
+  color: var(--sv-text-tertiary);
+  pointer-events: none;
+}
+.sv-selection-control-base__input:disabled + .sv-selection-control-base__control ~ .sv-selection-control-base__label {
+  color: var(--sv-text-tertiary);
   cursor: not-allowed;
 }
-.toggle-switch .toggle-slider {
-  position: absolute;
-  cursor: pointer;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: var(--sv-secondary);
-  transition: var(--sv-transition-base);
-  border-radius: var(--sv-radius-full);
+.sv-selection-control-base__control {
+  position: relative;
+  display: inline-block;
+  width: var(--sv-size-4);
+  height: var(--sv-size-4);
+  min-width: var(--sv-size-4);
+  min-height: var(--sv-size-4);
+  background-color: var(--sv-bg-surface);
+  border: 2px solid var(--sv-border-medium);
+  transition: all var(--sv-motion-duration-short) var(--sv-motion-ease-standard);
 }
-.toggle-switch .toggle-slider:before {
+.sv-selection-control-base__control::after {
   position: absolute;
-  content: "";
-  height: 18px;
-  width: 18px;
-  left: 3px;
-  bottom: 3px;
-  background-color: white;
-  transition: var(--sv-transition-base);
-  border-radius: 50%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  transition: transform var(--sv-motion-duration-short) var(--sv-motion-ease-standard);
+}
+.sv-selection-control-base:hover .sv-selection-control-base__control:not(.disabled) {
+  border-color: var(--sv-border-dark);
+  background-color: var(--sv-bg-element-hover);
+}
+.sv-selection-control-base__label {
+  margin-left: var(--sv-space-3);
+  font-size: var(--sv-text-base);
+  color: var(--sv-text-primary);
+  user-select: none;
+}
+.sv-selection-control-base__description {
+  display: block;
+  margin-top: var(--sv-space-1);
+  margin-left: calc(var(--sv-size-4) + var(--sv-space-3));
+  font-size: var(--sv-text-sm);
+  color: var(--sv-text-secondary);
+}
+.sv-selection-control-base.has-error .sv-selection-control-base__control, .sv-selection-control-base.error .sv-selection-control-base__control, .sv-selection-control-base[aria-invalid=true] .sv-selection-control-base__control {
+  border-color: var(--sv-error);
+}
+.sv-selection-control-base.has-error .sv-selection-control-base__description, .sv-selection-control-base.error .sv-selection-control-base__description, .sv-selection-control-base[aria-invalid=true] .sv-selection-control-base__description {
+  color: var(--sv-error);
+}
+.sv-selection-control-base.has-success .sv-selection-control-base__control, .sv-selection-control-base.success .sv-selection-control-base__control, .sv-selection-control-base[aria-invalid=false] .sv-selection-control-base__control {
+  border-color: var(--sv-success);
+}
+.sv-selection-control-base.has-success .sv-selection-control-base__description, .sv-selection-control-base.success .sv-selection-control-base__description, .sv-selection-control-base[aria-invalid=false] .sv-selection-control-base__description {
+  color: var(--sv-success);
+}
+.sv-selection-control-base.required .sv-selection-control-base__label::after {
+  content: "*";
+  color: var(--sv-error);
+  margin-left: var(--sv-space-1);
 }
 
-.select-control {
-  cursor: pointer;
-  padding-right: var(--sv-spacing-8);
-  appearance: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='%236c757d'%3E%3Cpath fill-rule='evenodd' d='M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z' clip-rule='evenodd'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: right var(--sv-spacing-3) center;
-  background-size: 16px 16px;
+/* ==========================================================================
+   4. SIZE VARIATIONS
+   ========================================================================== */
+.sv-selection-control-base.sv-ui-size-sm .sv-selection-control-base__control {
+  width: calc(var(--sv-size-4) * 0.75);
+  height: calc(var(--sv-size-4) * 0.75);
+  min-width: calc(var(--sv-size-4) * 0.75);
+  min-height: calc(var(--sv-size-4) * 0.75);
 }
-.select-control[multiple] {
-  padding-right: var(--sv-spacing-3);
-  background-image: none;
-  min-height: 100px;
+.sv-selection-control-base.sv-ui-size-sm .sv-selection-control-base__label {
+  font-size: var(--sv-text-sm);
 }
-.select-control option {
-  padding: var(--sv-spacing-2);
+.sv-selection-control-base.sv-ui-size-sm .sv-selection-control-base__description {
+  font-size: var(--sv-text-xs);
+  margin-left: calc(var(--sv-size-4) * 0.75 + var(--sv-space-3));
 }
 
-.slider-control {
-  -webkit-appearance: none;
-  width: 100%;
-  height: 6px;
-  border-radius: var(--sv-radius-full);
-  background: var(--sv-background-alt);
-  outline: none;
+.sv-selection-control-base.sv-ui-size-lg .sv-selection-control-base__control {
+  width: calc(var(--sv-size-4) * 1.25);
+  height: calc(var(--sv-size-4) * 1.25);
+  min-width: calc(var(--sv-size-4) * 1.25);
+  min-height: calc(var(--sv-size-4) * 1.25);
 }
-.slider-control::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  appearance: none;
-  width: 18px;
-  height: 18px;
-  border-radius: 50%;
-  background: var(--sv-primary);
-  cursor: pointer;
-  transition: var(--sv-transition-base);
+.sv-selection-control-base.sv-ui-size-lg .sv-selection-control-base__label {
+  font-size: var(--sv-text-lg);
 }
-.slider-control::-webkit-slider-thumb:hover {
-  background: var(--sv-primary-dark, var(--sv-primary));
-  transform: scale(1.1);
+.sv-selection-control-base.sv-ui-size-lg .sv-selection-control-base__description {
+  font-size: var(--sv-text-base);
+  margin-left: calc(var(--sv-size-4) * 1.25 + var(--sv-space-3));
 }
-.slider-control::-moz-range-thumb {
-  width: 18px;
-  height: 18px;
-  border-radius: 50%;
-  background: var(--sv-primary);
-  cursor: pointer;
-  border: none;
-  transition: var(--sv-transition-base);
+
+/* ==========================================================================
+   5. SELECTION STATES
+   ========================================================================== */
+.sv-selection-control-inline {
+  display: inline-flex;
+  margin-right: var(--sv-space-4);
 }
-.slider-control::-moz-range-thumb:hover {
-  background: var(--sv-primary-dark, var(--sv-primary));
-  transform: scale(1.1);
+
+.sv-selection-control-group {
+  display: flex;
+  flex-direction: column;
 }
-.slider-control:focus::-webkit-slider-thumb {
-  box-shadow: var(--sv-shadow-focus);
+.sv-selection-control-group.sv-selection-control-group-horizontal {
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: var(--sv-space-4);
 }
-.slider-control:focus::-moz-range-thumb {
-  box-shadow: var(--sv-shadow-focus);
+
+/* ==========================================================================
+   6. ACCESSIBILITY ENHANCEMENTS
+   ========================================================================== */
+@media (forced-colors: active) {
+  .sv-selection-control-base__control {
+    border: 2px solid CanvasText;
+  }
+  .sv-selection-control-base__control::after {
+    background-color: CanvasText;
+  }
+  .sv-selection-control-base__input:checked + .sv-selection-control-base__control {
+    background-color: Highlight;
+    border-color: Highlight;
+  }
+  .sv-selection-control-base__input:checked + .sv-selection-control-base__control::after {
+    background-color: Canvas;
+  }
+  .sv-selection-control-base__input:focus-visible + .sv-selection-control-base__control {
+    outline: 2px solid Highlight;
+    outline-offset: 2px;
+  }
+}
+/* ==========================================================================
+   7. PRINT STYLES
+   ========================================================================== */
+@media print {
+  .sv-selection-control-base__control {
+    border: 1px solid #000 !important;
+    box-shadow: none !important;
+  }
+  .sv-selection-control-base__control::after {
+    transform: translate(-50%, -50%) scale(1) !important;
+    border-color: #000 !important;
+    background-color: #000 !important;
+  }
+  .sv-selection-control-base__input:checked + .sv-selection-control-base__control::after {
+    transform: translate(-50%, -50%) scale(1) !important;
+  }
+  .sv-selection-control-base__label, .sv-selection-control-base__description {
+    color: #000 !important;
+  }
 }
 
 /*# sourceMappingURL=test.css.map */

@@ -1,258 +1,302 @@
-// =================================================
-// _navigation-controls.scss - Styles for navigation controls
-// =================================================
-@use './base-control' as *;
+/**
+ * Navigation Control Base - Core Styles
+ * Version: 1.0.0
+ * Last Updated: April 29, 2025
+ * 
+ * This file establishes the foundational styles for all navigation components
+ * in the SkillVo design system. It serves as the second level in our 
+ * three-tier styling architecture:
+ * 1. sv-ui-control-base - Base styles for all interactive controls
+ * 2. sv-nav-control-base (this file) - Base styles for all navigation controls
+ * 3. Component-specific classes (e.g., sv-nav-menu, sv-nav-tabs, sv-breadcrumbs)
+ */
 
-.nav {
-  @extend .ui-control-base; 
+/* ==========================================================================
+   TABLE OF CONTENTS:
+   
+   1. VARIABLES & CONFIGURATION
+   2. NAVIGATION-SPECIFIC MIXINS
+   3. NAVIGATION BASE CLASS DEFINITION
+   4. NAVIGATION STATES
+   5. NAVIGATION ACCESSIBILITY
+   6. RESPONSIVE NAVIGATION BEHAVIORS
+   7. PRINT STYLES FOR NAVIGATION
+   8. RTL SUPPORT FOR NAVIGATION
+   ========================================================================== */
+
+/* ==========================================================================
+   1. VARIABLES & CONFIGURATION
+   ========================================================================== */
+   @use './base-control' as *;
+
+// Navigation structure variables
+$nav-item-spacing: var(--sv-space-4);
+$nav-item-spacing-compact: var(--sv-space-2);
+$nav-indicator-height: 2px;
+$nav-indicator-offset: -2px;
+
+// Navigation-specific colors
+$nav-active-color: var(--sv-primary);
+$nav-hover-color: var(--sv-primary);
+$nav-default-color: var(--sv-text-primary);
+$nav-disabled-color: var(--sv-text-tertiary);
+
+// Navigation dividers
+$nav-divider-color: var(--sv-border-light);
+$nav-divider-size: 1px;
+
+// Skip link configuration
+$nav-skip-z-index: var(--sv-z-index-skip-link);
+$nav-skip-bg: var(--sv-bg-primary);
+$nav-skip-padding: var(--sv-padding-2) var(--sv-padding-4);
+$nav-skip-top: var(--sv-skip-link-position-top);
+$nav-skip-left: var(--sv-skip-link-position-left);
+
+// Mobile breakpoint for responsive navigation
+$nav-mobile-breakpoint: var(--sv-breakpoint-md);
+
+/* ==========================================================================
+   2. NAVIGATION-SPECIFIC MIXINS
+   ========================================================================== */
+
+.sv-nav-control-base {
+  // Extend the base UI control class
+  @extend .sv-ui-control-base;
+  
+  // Box model adjustments for navigation elements
   display: flex;
   flex-wrap: wrap;
-  padding-left: 0;
-  margin-bottom: 0;
-  list-style: none;
-
-  .nav-item {
-    display: block;
-
-    & + .nav-item {
-      margin-left: var(--sv-spacing-2);
-    }
-  }
-
-  .nav-link {
-    display: block;
-    padding: var(--sv-spacing-2) var(--sv-spacing-3);
-    border-radius: var(--sv-radius-md);
-    color: var(--sv-text-secondary);
-    text-decoration: none;
-    transition: var(--sv-transition-base);
-
-    &:hover {
-      color: var(--sv-primary);
-      background-color: var(--sv-primary-light-bg, rgba(0, 0, 0, 0.05));
-    }
-
-    &.active {
-      color: var(--sv-primary);
-      font-weight: var(--sv-font-weight-medium);
-      background-color: var(--sv-primary-lighter-bg, rgba(0, 0, 0, 0.1));
-    }
-
-    &.disabled {
-      color: var(--sv-text-disabled);
-      cursor: not-allowed;
-      pointer-events: none;
-    }
-  }
-
-  &.nav-tabs {
-    border-bottom: var(--sv-border-width-sm, 1px) solid var(--sv-border-default);
-
-    .nav-item {
-      margin-bottom: calc(-1 * var(--sv-border-width-sm));
-
-      & + .nav-item {
-        margin-left: var(--sv-spacing-4);
-      }
-    }
-
-    .nav-link {
-      border: var(--sv-border-width-sm, 1px) solid transparent;
-      border-top-left-radius: var(--sv-radius-md);
-      border-top-right-radius: var(--sv-radius-md);
-
-      &:hover {
-        border-color: transparent transparent var(--sv-border-default);
-      }
-
-      &.active {
-        color: var(--sv-text-primary);
-        background-color: var(--sv-background-base);
-        border-color: var(--sv-border-default) var(--sv-border-default) var(--sv-background-base);
-      }
-    }
-  }
-
-  &.nav-pills {
-    .nav-link {
-      &.active {
-        color: var(--sv-text-on-primary);
-        background-color: var(--sv-primary);
-      }
-    }
-  }
-
-  &.nav-vertical {
+  margin: 0;
+  padding: 0;
+  list-style: none; // Remove default list styling for nav elements
+  
+  // Typography settings specific to navigation
+  @include typography('base', 'medium', 'normal');
+  
+  // Navigation-specific resets
+  text-decoration: none;
+  white-space: nowrap; // Prevent wrapping by default in navigation items
+  
+  // Navigation elements are often interactive
+  @include interactive-element;
+  
+  // Ensure sufficient contrast for navigation elements
+  color: $nav-default-color;
+  
+  // Default transition for navigation interactions
+  @include transition((color, background-color, border-color), 'short', 'standard');
+  
+  // Improve touch target size for mobile devices
+  @include touch-target;
+  
+  // Vertical navigation variant
+  &.sv-nav-vertical {
+    // Vertical navigation with items stacked
     flex-direction: column;
-
-    .nav-item {
-      width: 100%;
-
-      & + .nav-item {
-        margin-left: 0;
-        margin-top: var(--sv-spacing-1);
-      }
+    
+    .sv-nav-item {
+      // Add padding for touch targets
+      padding: var(--sv-padding-2) var(--sv-padding-3);
     }
   }
 }
 
-.breadcrumb {
-  @extend .ui-control-base; 
-  display: flex;
-  flex-wrap: wrap;
-  padding: var(--sv-spacing-2) 0;
-  margin-bottom: var(--sv-spacing-3);
-  list-style: none;
+/* ==========================================================================
+   3. NAVIGATION-SPECIFIC MIXINS
+   ========================================================================== */
 
-  .breadcrumb-item {
-    display: flex;
-    align-items: center;
-
-    & + .breadcrumb-item {
-      padding-left: var(--sv-spacing-2);
-
-      &::before {
-        content: "/";
-        display: inline-block;
-        padding-right: var(--sv-spacing-2);
-        color: var(--sv-text-tertiary);
-      }
-    }
-
-    a {
-      color: var(--sv-primary);
-      text-decoration: none;
-
-      &:hover {
-        text-decoration: underline;
-      }
-    }
-
-    &.active {
-      color: var(--sv-text-tertiary);
-    }
-  }
+// Navigation container that positions items horizontally
+@mixin nav-container-horizontal {
+  @include flex-container(row, flex-start, center, wrap);
+  gap: $nav-item-spacing;
 }
 
-.pagination {
-  @extend .ui-control-base; 
-  display: flex;
-  padding-left: 0;
-  list-style: none;
-  border-radius: var(--sv-radius-md);
+// Navigation container that positions items vertically
+@mixin nav-container-vertical {
+  @include flex-container(column, flex-start, stretch, nowrap);
+  gap: $nav-item-spacing-compact;
+}
 
-  .page-item {
-    &:first-child .page-link {
-      border-top-left-radius: var(--sv-radius-md);
-      border-bottom-left-radius: var(--sv-radius-md);
-    }
-
-    &:last-child .page-link {
-      border-top-right-radius: var(--sv-radius-md);
-      border-bottom-right-radius: var(--sv-radius-md);
-    }
-
-    &.active .page-link {
-      background-color: var(--sv-primary);
-      border-color: var(--sv-primary);
-      color: var(--sv-text-on-primary);
-      z-index: 1;
-    }
-
-    &.disabled .page-link {
-      color: var(--sv-text-disabled);
-      pointer-events: none;
-      background-color: var(--sv-background-base);
-      border-color: var(--sv-border-default);
-    }
-  }
-
-  .page-link {
+// Style for navigation container with dividers between items
+@mixin nav-with-dividers($divider-color: $nav-divider-color) {
+  > * + * {
     position: relative;
-    display: block;
-    padding: var(--sv-spacing-2) var(--sv-spacing-3);
-    margin-left: -1px;
-    color: var(--sv-primary);
-    background-color: var(--sv-background-base);
-    border: var(--sv-border-width-sm, 1px) solid var(--sv-border-default);
-    text-decoration: none;
-
-    &:hover {
-      background-color: var(--sv-background-alt);
-      border-color: var(--sv-border-default);
-      z-index: 2;
-    }
-
-    &:focus {
-      z-index: 3;
-    }
-  }
-}
-
-.stepper {
-  @extend .ui-control-base; 
-  display: flex;
-  margin: var(--sv-spacing-5) 0;
-
-  .step {
-    flex: 1;
-    text-align: center;
-    position: relative;
-
-    &:not(:last-child)::after {
+    
+    &::before {
       content: "";
       position: absolute;
-      top: 14px;
-      left: 60%;
-      right: -40%;
-      height: 2px;
-      background-color: var(--sv-border-default);
-      z-index: 0;
+      left: calc(-1 * $nav-item-spacing-compact);
+      top: 50%;
+      transform: translateY(-50%);
+      height: 1em;
+      width: $nav-divider-size;
+      background-color: $divider-color;
     }
+  }
+}
 
-    &.completed:not(:last-child)::after {
-      background-color: var(--sv-primary);
+// Style for a container with vertical dividers
+@mixin nav-with-vertical-dividers($divider-color: $nav-divider-color) {
+  > * + * {
+    position: relative;
+    
+    &::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: $nav-divider-size;
+      background-color: $divider-color;
     }
+  }
+}
 
-    .step-indicator {
-      width: 30px;
-      height: 30px;
-      border-radius: var(--sv-radius-full);
-      background-color: var(--sv-background-base);
-      border: 2px solid var(--sv-border-default);
-      color: var(--sv-text-tertiary);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin: 0 auto var(--sv-spacing-2);
-      position: relative;
-      z-index: 1;
+/* ==========================================================================
+   4. NAVIGATION STATES
+   ========================================================================== */
+
+// Active/Current state for navigation items
+@mixin nav-active-state {
+  color: $nav-active-color;
+  font-weight: var(--sv-font-semibold);
+  
+  &::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: $nav-indicator-offset;
+    width: 100%;
+    height: $nav-indicator-height;
+    background-color: $nav-active-color;
+  }
+}
+
+// Selected state for navigation items (different from active)
+@mixin nav-selected-state {
+  color: $nav-active-color;
+  background-color: var(--sv-bg-element-active);
+  border-color: $nav-active-color;
+}
+
+// Override the standard hover behavior for navigation
+.sv-nav-control-base {
+  &:hover:not(:disabled):not(.disabled) {
+    color: $nav-hover-color;
+    text-decoration: none;
+  }
+  
+  // Active/Selected state
+  &.active,
+  &[aria-current="page"],
+  &[aria-selected="true"] {
+    color: $nav-active-color;
+    font-weight: var(--sv-font-semibold);
+  }
+  
+  // Expanded state for dropdown navigation
+  &[aria-expanded="true"] {
+    color: $nav-active-color;
+    background-color: var(--sv-bg-element-active);
+  }
+}
+
+/* ==========================================================================
+   5. NAVIGATION ACCESSIBILITY
+   ========================================================================== */
+
+.sv-nav-control-base {
+  // Improve keyboard focus visibility for navigation
+  &:focus-visible {
+    @include focus-visible-state;
+    text-decoration: none;
+  }
+  
+  // Skip navigation pattern (a11y)
+  &.sv-nav-skip-link {
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+    z-index: $nav-skip-z-index;
+    background-color: $nav-skip-bg;
+    padding: $nav-skip-padding;
+    
+    &:focus {
+      top: $nav-skip-top;
+      left: $nav-skip-left;
     }
+  }
+  
+  // Ensure proper ARIA states are visually represented
+  &[aria-disabled="true"] {
+    @include disabled-state;
+  }
+}
 
-    .step-label {
-      font-size: var(--sv-font-size-sm);
-      color: var(--sv-text-secondary);
-    }
+/* ==========================================================================
+   6. RESPONSIVE NAVIGATION BEHAVIORS
+   ========================================================================== */
 
-    &.active {
-      .step-indicator {
-        background-color: var(--sv-primary);
-        border-color: var(--sv-primary);
-        color: var(--sv-text-on-primary);
+// Different display modes based on screen size
+@media (max-width: $nav-mobile-breakpoint) {
+  .sv-nav-control-base {
+    &.sv-nav-responsive {
+      // On smaller screens, change to vertical layout by default
+      flex-direction: column;
+      align-items: flex-start;
+      
+      // Adjust touch target for mobile
+      @include touch-target;
+      
+      // Add padding for touch targets
+      & {
+        padding: var(--sv-padding-2) var(--sv-padding-3);
       }
-
-      .step-label {
-        color: var(--sv-text-primary);
-        font-weight: var(--sv-font-weight-medium);
-      }
     }
+  }
+}
 
-    &.completed {
-      .step-indicator {
-        background-color: var(--sv-primary);
-        border-color: var(--sv-primary);
-        color: var(--sv-text-on-primary);
-      }
+/* ==========================================================================
+   7. PRINT STYLES FOR NAVIGATION
+   ========================================================================== */
+
+@media print {
+  .sv-nav-control-base {
+    // Show URLs for navigation links when printing
+    a[href]::after {
+      content: " (" attr(href) ")";
+      font-size: 90%;
+      font-style: italic;
+    }
+    
+    // Hide navigation elements that aren't useful in print
+    &.sv-nav-no-print,
+    &[data-print="hide"] {
+      display: none !important;
+    }
+  }
+}
+
+/* ==========================================================================
+   8. RTL SUPPORT FOR NAVIGATION
+   ========================================================================== */
+
+[dir="rtl"] {
+  .sv-nav-control-base {
+    // Adjust direction for RTL languages
+    &.sv-nav-horizontal {
+      flex-direction: row-reverse;
+    }
+    
+    // Adjust position of dividers and indicators for RTL
+    &.sv-nav-with-dividers > * + *::before {
+      left: auto;
+      right: calc(-1 * $nav-item-spacing-compact);
+    }
+    
+    // Adjust chevrons and arrows in navigation
+    .sv-nav-chevron {
+      transform: scaleX(-1);
     }
   }
 }

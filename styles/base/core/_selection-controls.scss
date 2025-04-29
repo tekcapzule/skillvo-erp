@@ -1,239 +1,369 @@
-// =================================================
-// _selection-controls.scss - Styles for selection controls
-// =================================================
-@use './base-control' as *;
-@use './input-controls' as *;
+/**
+ * Selection Controls Base - Core Styles
+ * Version: 1.0.0
+ * Last Updated: April 29, 2025
+ * 
+ * This file establishes the foundational styles for all selection control components
+ * in the SkillVo design system. It serves as the second level in our 
+ * three-tier styling architecture:
+ * 1. sv-ui-control-base - Base styles for all interactive controls
+ * 2. sv-selection-control-base (this file) - Base styles for all selection controls
+ * 3. Component-specific classes (e.g., sv-checkbox, sv-radio, sv-switch)
+ *
+ * Selection controls include checkboxes, radio buttons, switches, and other
+ * components that allow users to select options from a set of choices.
+ */
 
-.selection-control-group {
-  display: flex;
-  flex-direction: column;
-  gap: var(--sv-spacing-2);
-}
+/* ==========================================================================
+   TABLE OF CONTENTS:
+   
+   1. VARIABLES & CONFIGURATION
+   2. MIXINS
+      2.1 Selection Control Specific Mixins
+   3. BASE CLASS DEFINITION
+   4. SIZE VARIATIONS
+   5. SELECTION STATES
+   6. ACCESSIBILITY ENHANCEMENTS
+   7. PRINT STYLES
+   ========================================================================== */
 
-.selection-control-wrapper {
-  display: flex;
-  align-items: center;
-  position: relative;
+/* ==========================================================================
+   1. VARIABLES & CONFIGURATION
+   ========================================================================== */
+   @use './base-control' as *;
 
-  &.horizontal {
-    flex-direction: row;
-    gap: var(--sv-spacing-4);
-  }
-}
+// Selection control properties
+$selection-control-size: var(--sv-size-4);
+$selection-control-border-width: 2px;
+$selection-control-transition: all var(--sv-motion-duration-short) var(--sv-motion-ease-standard);
 
-.checkbox-control,
-.radio-control {
+// Indicator properties (for checkmarks, dots, etc.)
+$indicator-color: var(--sv-text-on-dark);
+$indicator-size-ratio: 0.5; // Size of the indicator in relation to the control
+
+/* ==========================================================================
+   2. MIXINS
+   ========================================================================== */
+
+/* 2.1 Selection Control Specific Mixins
+   ========================================================================== */
+
+// Base styles for selection control indicators (checkmarks, dots, etc.)
+@mixin selection-indicator-base {
   position: absolute;
-  opacity: 0;
-  width: 0;
-  height: 0;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  transition: transform var(--sv-motion-duration-short) var(--sv-motion-ease-standard);
+}
 
-  & + label {
-    position: relative;
-    cursor: pointer;
-    padding-left: var(--sv-spacing-6);
-    display: inline-flex;
-    align-items: center;
-    user-select: none;
+// Checkbox indicator (checkmark) styling
+@mixin checkbox-indicator {
+  content: '';
+  width: calc($selection-control-size * $indicator-size-ratio);
+  height: calc($selection-control-size * $indicator-size-ratio * 0.5);
+  border-left: 2px solid $indicator-color;
+  border-bottom: 2px solid $indicator-color;
+  transform: translate(-50%, -70%) rotate(-45deg) scale(0);
+}
 
-    &::before {
-      content: '';
-      position: absolute;
-      left: 0;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 18px;
-      height: 18px;
-      border: var(--sv-border-width-sm, 1px) solid var(--sv-border-default);
-      background-color: var(--sv-background-base);
-      transition: var(--sv-transition-base);
-    }
+// Radio indicator (dot) styling
+@mixin radio-indicator {
+  content: '';
+  width: calc($selection-control-size * $indicator-size-ratio);
+  height: calc($selection-control-size * $indicator-size-ratio);
+  border-radius: 50%;
+  background-color: $indicator-color;
+}
+
+// Ensure sufficient separation between adjacent controls
+@mixin selection-control-spacing {
+  & + & {
+    margin-top: var(--sv-space-3);
   }
-
-  &:hover + label::before {
-    border-color: var(--sv-border-hover);
+  
+  &.sv-selection-control-inline + &.sv-selection-control-inline {
+    margin-top: 0;
+    margin-left: var(--sv-space-4);
   }
+}
 
-  &:focus + label::before {
-    border-color: var(--sv-border-focus);
-    box-shadow: var(--sv-shadow-focus);
-  }
-
-  &:checked + label::before {
-    background-color: var(--sv-primary);
+// Focus styles specific to selection controls
+@mixin selection-control-focus {
+  &:focus-visible {
     border-color: var(--sv-primary);
-  }
-
-  &:disabled + label {
-    cursor: not-allowed;
-    color: var(--sv-text-disabled);
-
-    &::before {
-      background-color: var(--sv-background-disabled);
-      border-color: var(--sv-border-default);
-    }
+    box-shadow: 0 0 0 $focus-ring-offset var(--sv-primary-light);
   }
 }
 
-.checkbox-control {
-  & + label::before {
-    border-radius: var(--sv-radius-sm);
-  }
+/* ==========================================================================
+   3. BASE CLASS DEFINITION
+   ========================================================================== */
 
-  &:checked + label::after {
-    content: '';
-    position: absolute;
-    left: 6px;
-    top: 50%;
-    transform: translateY(-60%) rotate(45deg);
-    width: 6px;
-    height: 10px;
-    border: solid white;
-    border-width: 0 2px 2px 0;
-  }
-}
-
-.radio-control {
-  & + label::before {
-    border-radius: var(--sv-radius-full);
-  }
-
-  &:checked + label::after {
-    content: '';
-    position: absolute;
-    left: 5px;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 8px;
-    height: 8px;
-    border-radius: var(--sv-radius-full);
-    background-color: white;
-  }
-}
-
-.toggle-switch {
-  @extend .ui-control-base; 
+.sv-selection-control-base {
+  // Inherit all base UI control styles
+  @extend .sv-ui-control-base;
+  
+  // Basic layout and appearance
   position: relative;
-  display: inline-block;
-  width: 50px;
-  height: 24px;
-
-  input {
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+  
+  // Reset some inherited properties that don't apply to selection controls
+  background-color: transparent;
+  padding: 0;
+  
+  // Apply spacing between stacked controls
+  @include selection-control-spacing;
+  
+  // Selection control input (checkbox, radio, etc.)
+  &__input {
+    // Hidden but accessible for screen readers
+    position: absolute;
     opacity: 0;
     width: 0;
     height: 0;
-
-    &:checked + .toggle-slider {
+    margin: 0;
+    
+    // Focus styles handled via the control element
+    &:focus-visible + .sv-selection-control-base__control {
+      @include focus-visible-state;
+    }
+    
+    // Checked state styling
+    &:checked + .sv-selection-control-base__control {
       background-color: var(--sv-primary);
-
-      &:before {
-        transform: translateX(26px);
+      border-color: var(--sv-primary);
+      
+      &::after {
+        transform: translate(-50%, -50%) scale(1);
       }
     }
-
-    &:focus + .toggle-slider {
-      box-shadow: var(--sv-shadow-focus);
+    
+    // Special styling for indeterminate state (mainly for checkboxes)
+    &:indeterminate + .sv-selection-control-base__control {
+      background-color: var(--sv-primary-light);
+      border-color: var(--sv-primary);
+      
+      &::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 50%;
+        height: 2px;
+        background-color: $indicator-color;
+        transform: translate(-50%, -50%) scale(1);
+      }
     }
-
-    &:disabled + .toggle-slider {
-      opacity: 0.5;
-      cursor: not-allowed;
+    
+    // Disabled state styling
+    &:disabled + .sv-selection-control-base__control {
+      @include disabled-state;
+      
+      & ~ .sv-selection-control-base__label {
+        color: var(--sv-text-tertiary);
+        cursor: not-allowed;
+      }
     }
   }
+  
+  // The visual control element (the box/circle that gets checked)
+  &__control {
+    position: relative;
+    display: inline-block;
+    width: $selection-control-size;
+    height: $selection-control-size;
+    min-width: $selection-control-size;
+    min-height: $selection-control-size;
+    background-color: var(--sv-bg-surface);
+    border: $selection-control-border-width solid var(--sv-border-medium);
+    transition: $selection-control-transition;
+    
+    &::after {
+      @include selection-indicator-base;
+    }
+    
+    // Apply hover state
+    .sv-selection-control-base:hover &:not(.disabled) {
+      border-color: var(--sv-border-dark);
+      background-color: var(--sv-bg-element-hover);
+    }
+  }
+  
+  // The label text
+  &__label {
+    margin-left: var(--sv-space-3);
+    font-size: var(--sv-text-base);
+    color: var(--sv-text-primary);
+    user-select: none;
+  }
+  
+  // Container for additional help text or validation messages
+  &__description {
+    display: block;
+    margin-top: var(--sv-space-1);
+    margin-left: calc($selection-control-size + var(--sv-space-3));
+    font-size: var(--sv-text-sm);
+    color: var(--sv-text-secondary);
+  }
+  
+  // Error state styling
+  &.has-error,
+  &.error,
+  &[aria-invalid="true"] {
+    .sv-selection-control-base__control {
+      border-color: var(--sv-error);
+    }
+    
+    .sv-selection-control-base__description {
+      color: var(--sv-error);
+    }
+  }
+  
+  // Success state styling
+  &.has-success,
+  &.success,
+  &[aria-invalid="false"] {
+    .sv-selection-control-base__control {
+      border-color: var(--sv-success);
+    }
+    
+    .sv-selection-control-base__description {
+      color: var(--sv-success);
+    }
+  }
+  
+  // Required indicator
+  &.required .sv-selection-control-base__label::after {
+    content: "*";
+    color: var(--sv-error);
+    margin-left: var(--sv-space-1);
+  }
+}
 
-  .toggle-slider {
-    position: absolute;
-    cursor: pointer;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: var(--sv-secondary);
-    transition: var(--sv-transition-base);
-    border-radius: var(--sv-radius-full);
+/* ==========================================================================
+   4. SIZE VARIATIONS
+   ========================================================================== */
 
-    &:before {
-      position: absolute;
-      content: "";
-      height: 18px;
-      width: 18px;
-      left: 3px;
-      bottom: 3px;
-      background-color: white;
-      transition: var(--sv-transition-base);
-      border-radius: 50%;
+// Small size
+.sv-selection-control-base.sv-ui-size-sm {
+  .sv-selection-control-base__control {
+    width: calc($selection-control-size * 0.75);
+    height: calc($selection-control-size * 0.75);
+    min-width: calc($selection-control-size * 0.75);
+    min-height: calc($selection-control-size * 0.75);
+  }
+  
+  .sv-selection-control-base__label {
+    font-size: var(--sv-text-sm);
+  }
+  
+  .sv-selection-control-base__description {
+    font-size: var(--sv-text-xs);
+    margin-left: calc((#{$selection-control-size} * 0.75) + var(--sv-space-3));
+  }
+}
+
+// Large size
+.sv-selection-control-base.sv-ui-size-lg {
+  .sv-selection-control-base__control {
+    width: calc($selection-control-size * 1.25);
+    height: calc($selection-control-size * 1.25);
+    min-width: calc($selection-control-size * 1.25);
+    min-height: calc($selection-control-size * 1.25);
+  }
+  
+  .sv-selection-control-base__label {
+    font-size: var(--sv-text-lg);
+  }
+  
+  .sv-selection-control-base__description {
+    font-size: var(--sv-text-base);
+    margin-left: calc((#{$selection-control-size} * 1.25) + var(--sv-space-3));
+  }
+}
+
+/* ==========================================================================
+   5. SELECTION STATES
+   ========================================================================== */
+
+// Horizontal layout for selection controls
+.sv-selection-control-inline {
+  display: inline-flex;
+  margin-right: var(--sv-space-4);
+}
+
+// Group container for selection controls
+.sv-selection-control-group {
+  display: flex;
+  flex-direction: column;
+  
+  &.sv-selection-control-group-horizontal {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: var(--sv-space-4);
+  }
+}
+
+/* ==========================================================================
+   6. ACCESSIBILITY ENHANCEMENTS
+   ========================================================================== */
+
+// High contrast mode adjustments for better visibility
+@media (forced-colors: active) {
+  .sv-selection-control-base {
+    &__control {
+      border: 2px solid CanvasText;
+      
+      &::after {
+        background-color: CanvasText;
+      }
+    }
+    
+    &__input:checked + .sv-selection-control-base__control {
+      background-color: Highlight;
+      border-color: Highlight;
+      
+      &::after {
+        background-color: Canvas;
+      }
+    }
+    
+    &__input:focus-visible + .sv-selection-control-base__control {
+      outline: 2px solid Highlight;
+      outline-offset: 2px;
     }
   }
 }
 
-.select-control {
-  @extend .ui-control-base; 
-  cursor: pointer;
-  padding-right: var(--sv-spacing-8);
-  appearance: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='%236c757d'%3E%3Cpath fill-rule='evenodd' d='M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z' clip-rule='evenodd'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: right var(--sv-spacing-3) center;
-  background-size: 16px 16px;
+/* ==========================================================================
+   7. PRINT STYLES
+   ========================================================================== */
 
-  &[multiple] {
-    padding-right: var(--sv-spacing-3);
-    background-image: none;
-    min-height: 100px;
-  }
-
-  option {
-    padding: var(--sv-spacing-2);
-  }
-}
-
-.slider-control {
-  @extend .ui-control-base; 
-  -webkit-appearance: none;
-  width: 100%;
-  height: 6px;
-  border-radius: var(--sv-radius-full);
-  background: var(--sv-background-alt);
-  outline: none;
-
-  &::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    appearance: none;
-    width: 18px;
-    height: 18px;
-    border-radius: 50%;
-    background: var(--sv-primary);
-    cursor: pointer;
-    transition: var(--sv-transition-base);
-
-    &:hover {
-      background: var(--sv-primary-dark, var(--sv-primary));
-      transform: scale(1.1);
+@media print {
+  .sv-selection-control-base {
+    &__control {
+      border: 1px solid #000 !important;
+      box-shadow: none !important;
+      
+      // For print, make the selection state very clear
+      &::after {
+        transform: translate(-50%, -50%) scale(1) !important;
+        border-color: #000 !important;
+        background-color: #000 !important;
+      }
     }
-  }
-
-  &::-moz-range-thumb {
-    width: 18px;
-    height: 18px;
-    border-radius: 50%;
-    background: var(--sv-primary);
-    cursor: pointer;
-    border: none;
-    transition: var(--sv-transition-base);
-
-    &:hover {
-      background: var(--sv-primary-dark, var(--sv-primary));
-      transform: scale(1.1);
+    
+    // Ensure checked state is visible in print
+    &__input:checked + .sv-selection-control-base__control::after {
+      transform: translate(-50%, -50%) scale(1) !important;
     }
-  }
-
-  &:focus {
-    &::-webkit-slider-thumb {
-      box-shadow: var(--sv-shadow-focus);
-    }
-
-    &::-moz-range-thumb {
-      box-shadow: var(--sv-shadow-focus);
+    
+    &__label,
+    &__description {
+      color: #000 !important;
     }
   }
 }

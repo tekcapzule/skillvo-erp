@@ -71,6 +71,8 @@ $error-50: #fce8e8;
 $error-400: #e57373;
 $error-500: #f44336;
 $error-600: #d73128;
+$error-700: #c62828;
+$error-500-rgb: '244, 67, 54';
 $error-color: $error-500;
 
 // Warning
@@ -140,6 +142,9 @@ $light-theme-map: (
   'success': #4caf50,
   'warning': #ffa726,
   'error': #f44336,
+  'error-dark': #d73128,
+  'error-darker': #c62828,
+  'error-500-rgb': '244, 67, 54',
   
   // Standardized icon color for light theme
   'icon-color': 'var(--sv-text-primary)'
@@ -185,6 +190,9 @@ $dark-theme-map: (
   'success': #4caf50,
   'warning': #ffa726,
   'error': #f44336,
+  'error-dark': #d73128,
+  'error-darker': #c62828,
+  'error-500-rgb': '244, 67, 54',
   
   // Shadow variables
   'shadow-sm': '0 1px 3px rgba(0, 0, 0, 0.25)',

@@ -47,3 +47,11 @@
     animation-timing-function: var(--sv-motion-ease-accelerate);
   }
   
+  // Spinner Animation Utility
+  .motion-spinner {
+    animation-name: spin;
+    animation-duration: var(--sv-spinner-duration);
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+  }
+  

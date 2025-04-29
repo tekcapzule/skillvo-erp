@@ -1,0 +1,423 @@
+@charset "UTF-8";
+:root {
+  --sv-font-family-main: Inter, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Open Sans, Helvetica Neue, sans-serif;
+  --sv-font-family-heading: Inter, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Open Sans, Helvetica Neue, sans-serif;
+  --sv-font-family-mono: JetBrains Mono, Courier New, Courier, monospace;
+  --sv-text-xs: 0.75rem;
+  --sv-text-sm: 0.875rem;
+  --sv-text-base: 1rem;
+  --sv-text-lg: 1.125rem;
+  --sv-text-xl: 1.25rem;
+  --sv-text-2xl: 1.5rem;
+  --sv-text-3xl: 1.875rem;
+  --sv-text-4xl: 2.25rem;
+  --sv-text-5xl: 3rem;
+  --sv-text-6xl: 4rem;
+  --sv-text-body-sm: 0.875rem;
+  --sv-text-body-md: 1rem;
+  --sv-text-body-lg: 1.125rem;
+  --sv-text-heading-sm: 1.25rem;
+  --sv-text-heading-md: 1.5rem;
+  --sv-text-heading-lg: 1.875rem;
+  --sv-font-light: 300;
+  --sv-font-normal: 400;
+  --sv-font-medium: 500;
+  --sv-font-semibold: 600;
+  --sv-font-bold: 700;
+  --sv-font-extrabold: 800;
+  --sv-leading-none: 1;
+  --sv-leading-tight: 1.25;
+  --sv-leading-snug: 1.375;
+  --sv-leading-normal: 1.5;
+  --sv-leading-relaxed: 1.625;
+  --sv-leading-loose: 2;
+  --sv-tracking-tighter: -0.05em;
+  --sv-tracking-tight: -0.025em;
+  --sv-tracking-normal: 0;
+  --sv-tracking-wide: 0.025em;
+  --sv-tracking-wider: 0.05em;
+  --sv-tracking-widest: 0.1em;
+}
+
+:root {
+  --sv-spacing-unit: 0.25rem;
+  --sv-space-0: 0;
+  --sv-space-1: 0.25rem;
+  --sv-space-2: 0.5rem;
+  --sv-space-3: 0.75rem;
+  --sv-space-4: 1rem;
+  --sv-space-5: 1.25rem;
+  --sv-space-6: 1.5rem;
+  --sv-space-7: 1.75rem;
+  --sv-space-8: 2rem;
+  --sv-space-10: 2.5rem;
+  --sv-space-12: 3rem;
+  --sv-space-16: 4rem;
+  --sv-space-20: 5rem;
+  --sv-space-24: 6rem;
+  --sv-space-32: 8rem;
+  --sv-space-xs: 0.5rem;
+  --sv-space-sm: 1rem;
+  --sv-space-md: 1.5rem;
+  --sv-space-lg: 2rem;
+  --sv-space-xl: 2.5rem;
+  --sv-space-2xl: 4rem;
+  --sv-space-3xl: 6rem;
+}
+
+:root {
+  --sv-padding-unit: 0.25rem;
+  --sv-padding-0: 0;
+  --sv-padding-1: 0.25rem;
+  --sv-padding-2: 0.5rem;
+  --sv-padding-3: 0.75rem;
+  --sv-padding-4: 1rem;
+  --sv-padding-5: 1.25rem;
+  --sv-padding-6: 1.5rem;
+  --sv-padding-7: 1.75rem;
+  --sv-padding-8: 2rem;
+  --sv-padding-10: 2.5rem;
+  --sv-padding-12: 3rem;
+  --sv-padding-16: 4rem;
+  --sv-padding-20: 5rem;
+  --sv-padding-24: 6rem;
+  --sv-padding-32: 8rem;
+  --sv-padding-xs: 0.5rem;
+  --sv-padding-sm: 1rem;
+  --sv-padding-md: 1.5rem;
+  --sv-padding-lg: 2rem;
+  --sv-padding-xl: 2.5rem;
+  --sv-padding-2xl: 4rem;
+  --sv-padding-3xl: 6rem;
+}
+
+:root {
+  --sv-size-unit: 0.25rem;
+  --sv-size-0: 0;
+  --sv-size-1: 0.25rem;
+  --sv-size-2: 0.5rem;
+  --sv-size-3: 0.75rem;
+  --sv-size-4: 1rem;
+  --sv-size-5: 1.25rem;
+  --sv-size-6: 1.5rem;
+  --sv-size-7: 1.75rem;
+  --sv-size-8: 2rem;
+  --sv-size-10: 2.5rem;
+  --sv-size-12: 3rem;
+  --sv-size-16: 4rem;
+  --sv-size-20: 5rem;
+  --sv-size-24: 6rem;
+  --sv-size-32: 8rem;
+  --sv-size-40: 10rem;
+  --sv-size-48: 12rem;
+  --sv-size-64: 16rem;
+  --sv-size-xs: 0.5rem;
+  --sv-size-sm: 1rem;
+  --sv-size-md: 1.5rem;
+  --sv-size-lg: 2rem;
+  --sv-size-xl: 2.5rem;
+  --sv-size-2xl: 4rem;
+  --sv-size-3xl: 6rem;
+}
+
+:root {
+  --sv-radius-none: 0;
+  --sv-radius-xs: 0.125rem;
+  --sv-radius-sm: 0.25rem;
+  --sv-radius-md: 0.5rem;
+  --sv-radius-lg: 0.75rem;
+  --sv-radius-xl: 1rem;
+  --sv-radius-2xl: 1.5rem;
+  --sv-radius-3xl: 2rem;
+  --sv-radius-full: 9999px;
+}
+
+:root {
+  --sv-shadow-color-light: rgba(0, 0, 0, 0.1);
+  --sv-shadow-color-medium: rgba(0, 0, 0, 0.14);
+  --sv-shadow-color-dark: rgba(0, 0, 0, 0.2);
+  --sv-shadow-none: none;
+  --sv-shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.1);
+  --sv-shadow-sm: 0 2px 4px -1px rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.14);
+  --sv-shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.14);
+  --sv-shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.14);
+  --sv-shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.14);
+  --sv-shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.14);
+  --sv-shadow-inner: inset 0 2px 4px 0 rgba(0, 0, 0, 0.1);
+  --sv-shadow-outline: 0 0 0 3px rgba(0, 0, 0, 0.05);
+  --sv-shadow-top: 0 -6px 16px -8px rgba(0, 0, 0, 0.1);
+  --sv-shadow-right: 6px 0 16px -8px rgba(0, 0, 0, 0.1);
+  --sv-shadow-bottom: 0 6px 16px -8px rgba(0, 0, 0, 0.1);
+  --sv-shadow-left: -6px 0 16px -8px rgba(0, 0, 0, 0.1);
+  --sv-shadow-focus: 0 0 0 3px rgba(0, 0, 0, 0.08);
+  --sv-shadow-focus-error: 0 0 0 3px rgba(0, 0, 0, 0.12);
+  --sv-shadow-focus-success: 0 0 0 3px rgba(0, 0, 0, 0.08);
+}
+
+.dark-theme {
+  --sv-shadow-color-light: rgba(0, 0, 0, 0.25);
+  --sv-shadow-color-medium: rgba(0, 0, 0, 0.35);
+  --sv-shadow-color-dark: rgba(0, 0, 0, 0.5);
+  --sv-shadow-focus: 0 0 0 3px rgba(255, 255, 255, 0.1);
+  --sv-shadow-focus-error: 0 0 0 3px rgba(0, 0, 0, 0.25);
+  --sv-shadow-focus-success: 0 0 0 3px rgba(255, 255, 255, 0.1);
+}
+
+:root {
+  --sv-breakpoint-xs: 0;
+  --sv-breakpoint-sm: 576px;
+  --sv-breakpoint-md: 768px;
+  --sv-breakpoint-lg: 992px;
+  --sv-breakpoint-xl: 1200px;
+  --sv-breakpoint-xxl: 1400px;
+  --sv-container-sm: 540px;
+  --sv-container-md: 720px;
+  --sv-container-lg: 960px;
+  --sv-container-xl: 1140px;
+  --sv-container-xxl: 1320px;
+}
+
+:root {
+  --sv-icon-size-xs: 0.75rem;
+  --sv-icon-size-sm: 1rem;
+  --sv-icon-size-md: 1.5rem;
+  --sv-icon-size-lg: 2rem;
+  --sv-icon-size-xl: 2.5rem;
+  --sv-icon-size-2xl: 3rem;
+  --sv-btn-size-sm: 1.75rem;
+  --sv-btn-size-md: 2rem;
+  --sv-btn-size-lg: 2.75rem;
+}
+
+:root {
+  --sv-motion-duration-short: 0.15s;
+  --sv-motion-duration-medium: 0.3s;
+  --sv-motion-duration-long: 0.5s;
+  --sv-motion-ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
+  --sv-motion-ease-decelerate: cubic-bezier(0, 0, 0.2, 1);
+  --sv-motion-ease-accelerate: cubic-bezier(0.4, 0, 1, 1);
+  --sv-motion-keyfade: fade-in-out;
+  --sv-motion-keybounce: bounce-in;
+  --sv-motion-keyspring: spring-in;
+}
+
+:root {
+  --sv-focus-ring-color: rgba(37, 99, 235, 0.8);
+  --sv-focus-ring-width: 2px;
+  --sv-focus-ring-offset: 2px;
+  --sv-focus-ring-style: solid;
+  --sv-z-index-skip-link: 9999;
+  --sv-z-index-modal: 1050;
+  --sv-z-index-popover: 1040;
+  --sv-z-index-tooltip: 1030;
+  --sv-z-index-header: 1020;
+  --sv-z-index-dropdown: 1010;
+  --sv-z-index-overlay: 1000;
+  --sv-z-index-default: 1;
+  --sv-z-index-negative: -1;
+  --sv-min-touch-target: 44px;
+  --sv-skip-link-bg: #ffffff;
+  --sv-skip-link-color: #111111;
+  --sv-skip-link-padding: 8px 16px;
+  --sv-skip-link-position-top: 8px;
+  --sv-skip-link-position-left: 8px;
+}
+
+:root {
+  --sv-bg-primary: #ffffff;
+  --sv-bg-secondary: #f8f9fa;
+  --sv-bg-surface: #ffffff;
+  --sv-bg-element: #f5f5f5;
+  --sv-bg-element-hover: #e9ecef;
+  --sv-bg-element-active: #dce1e6;
+  --sv-text-primary: #212529;
+  --sv-text-secondary: #6c757d;
+  --sv-text-tertiary: #adb5bd;
+  --sv-text-accent: #0a9fff;
+  --sv-text-on-dark: #ffffff;
+  --sv-text-on-light: #212529;
+  --sv-border-light: #e9ecef;
+  --sv-border-medium: #dee2e6;
+  --sv-border-dark: #ced4da;
+  --sv-primary: #0a9fff;
+  --sv-primary-light: #30b1ff;
+  --sv-primary-dark: #007ef3;
+  --sv-secondary: #364c5e;
+  --sv-secondary-light: #455b70;
+  --sv-secondary-dark: #2d4052;
+  --sv-info: #29b6f6;
+  --sv-success: #4caf50;
+  --sv-warning: #ffa726;
+  --sv-error: #f44336;
+  --sv-icon-color: var(--sv-text-primary);
+}
+
+[data-theme=dark] {
+  --sv-bg-primary: #121212;
+  --sv-bg-secondary: #1e1e1e;
+  --sv-bg-surface: #242424;
+  --sv-bg-element: #2d2d2d;
+  --sv-bg-element-hover: #383838;
+  --sv-bg-element-active: #454545;
+  --sv-text-primary: #e9ecef;
+  --sv-text-secondary: #adb5bd;
+  --sv-text-tertiary: #6c757d;
+  --sv-text-accent: #30b1ff;
+  --sv-text-on-dark: #ffffff;
+  --sv-text-on-light: #212529;
+  --sv-border-light: #383838;
+  --sv-border-medium: #454545;
+  --sv-border-dark: #505050;
+  --sv-border-default: #383838;
+  --sv-primary: #30b1ff;
+  --sv-primary-light: #56c1ff;
+  --sv-primary-dark: #0a9fff;
+  --sv-primary-500-rgb: 48, 177, 255;
+  --sv-secondary: #455b70;
+  --sv-secondary-light: #58687c;
+  --sv-secondary-dark: #364c5e;
+  --sv-info: #29b6f6;
+  --sv-success: #4caf50;
+  --sv-warning: #ffa726;
+  --sv-error: #f44336;
+  --sv-shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.25);
+  --sv-shadow-md: 0 2px 8px rgba(0, 0, 0, 0.25);
+  --sv-shadow-lg: 0 4px 16px rgba(0, 0, 0, 0.3);
+  --sv-shadow-default: 0 2px 8px rgba(0, 0, 0, 0.3);
+  --sv-icon-color: var(--sv-text-inverse);
+}
+
+:root {
+  --sv-bg-primary: #ffffff;
+  --sv-bg-secondary: #f8f9fa;
+  --sv-bg-surface: #ffffff;
+  --sv-bg-element: #f5f5f5;
+  --sv-bg-element-hover: #e9ecef;
+  --sv-bg-element-active: #dce1e6;
+  --sv-text-primary: #212529;
+  --sv-text-secondary: #6c757d;
+  --sv-text-tertiary: #adb5bd;
+  --sv-text-accent: #0a9fff;
+  --sv-text-on-dark: #ffffff;
+  --sv-text-on-light: #212529;
+  --sv-border-light: #e9ecef;
+  --sv-border-medium: #dee2e6;
+  --sv-border-dark: #ced4da;
+  --sv-primary: #0a9fff;
+  --sv-primary-light: #30b1ff;
+  --sv-primary-dark: #007ef3;
+  --sv-secondary: #364c5e;
+  --sv-secondary-light: #455b70;
+  --sv-secondary-dark: #2d4052;
+  --sv-info: #29b6f6;
+  --sv-success: #4caf50;
+  --sv-warning: #ffa726;
+  --sv-error: #f44336;
+  --sv-icon-color: var(--sv-text-primary);
+  transition: 0.3s ease-in-out;
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme=light]) {
+    --sv-bg-primary: #121212;
+    --sv-bg-secondary: #1e1e1e;
+    --sv-bg-surface: #242424;
+    --sv-bg-element: #2d2d2d;
+    --sv-bg-element-hover: #383838;
+    --sv-bg-element-active: #454545;
+    --sv-text-primary: #e9ecef;
+    --sv-text-secondary: #adb5bd;
+    --sv-text-tertiary: #6c757d;
+    --sv-text-accent: #30b1ff;
+    --sv-text-on-dark: #ffffff;
+    --sv-text-on-light: #212529;
+    --sv-border-light: #383838;
+    --sv-border-medium: #454545;
+    --sv-border-dark: #505050;
+    --sv-border-default: #383838;
+    --sv-primary: #30b1ff;
+    --sv-primary-light: #56c1ff;
+    --sv-primary-dark: #0a9fff;
+    --sv-primary-500-rgb: 48, 177, 255;
+    --sv-secondary: #455b70;
+    --sv-secondary-light: #58687c;
+    --sv-secondary-dark: #364c5e;
+    --sv-info: #29b6f6;
+    --sv-success: #4caf50;
+    --sv-warning: #ffa726;
+    --sv-error: #f44336;
+    --sv-shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.25);
+    --sv-shadow-md: 0 2px 8px rgba(0, 0, 0, 0.25);
+    --sv-shadow-lg: 0 4px 16px rgba(0, 0, 0, 0.3);
+    --sv-shadow-default: 0 2px 8px rgba(0, 0, 0, 0.3);
+    --sv-icon-color: var(--sv-text-inverse);
+    color-scheme: dark;
+  }
+}
+[data-theme=light] {
+  --sv-bg-primary: #ffffff;
+  --sv-bg-secondary: #f8f9fa;
+  --sv-bg-surface: #ffffff;
+  --sv-bg-element: #f5f5f5;
+  --sv-bg-element-hover: #e9ecef;
+  --sv-bg-element-active: #dce1e6;
+  --sv-text-primary: #212529;
+  --sv-text-secondary: #6c757d;
+  --sv-text-tertiary: #adb5bd;
+  --sv-text-accent: #0a9fff;
+  --sv-text-on-dark: #ffffff;
+  --sv-text-on-light: #212529;
+  --sv-border-light: #e9ecef;
+  --sv-border-medium: #dee2e6;
+  --sv-border-dark: #ced4da;
+  --sv-primary: #0a9fff;
+  --sv-primary-light: #30b1ff;
+  --sv-primary-dark: #007ef3;
+  --sv-secondary: #364c5e;
+  --sv-secondary-light: #455b70;
+  --sv-secondary-dark: #2d4052;
+  --sv-info: #29b6f6;
+  --sv-success: #4caf50;
+  --sv-warning: #ffa726;
+  --sv-error: #f44336;
+  --sv-icon-color: var(--sv-text-primary);
+  color-scheme: light;
+}
+
+[data-theme=dark] {
+  --sv-bg-primary: #121212;
+  --sv-bg-secondary: #1e1e1e;
+  --sv-bg-surface: #242424;
+  --sv-bg-element: #2d2d2d;
+  --sv-bg-element-hover: #383838;
+  --sv-bg-element-active: #454545;
+  --sv-text-primary: #e9ecef;
+  --sv-text-secondary: #adb5bd;
+  --sv-text-tertiary: #6c757d;
+  --sv-text-accent: #30b1ff;
+  --sv-text-on-dark: #ffffff;
+  --sv-text-on-light: #212529;
+  --sv-border-light: #383838;
+  --sv-border-medium: #454545;
+  --sv-border-dark: #505050;
+  --sv-border-default: #383838;
+  --sv-primary: #30b1ff;
+  --sv-primary-light: #56c1ff;
+  --sv-primary-dark: #0a9fff;
+  --sv-primary-500-rgb: 48, 177, 255;
+  --sv-secondary: #455b70;
+  --sv-secondary-light: #58687c;
+  --sv-secondary-dark: #364c5e;
+  --sv-info: #29b6f6;
+  --sv-success: #4caf50;
+  --sv-warning: #ffa726;
+  --sv-error: #f44336;
+  --sv-shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.25);
+  --sv-shadow-md: 0 2px 8px rgba(0, 0, 0, 0.25);
+  --sv-shadow-lg: 0 4px 16px rgba(0, 0, 0, 0.3);
+  --sv-shadow-default: 0 2px 8px rgba(0, 0, 0, 0.3);
+  --sv-icon-color: var(--sv-text-inverse);
+  color-scheme: dark;
+}
+

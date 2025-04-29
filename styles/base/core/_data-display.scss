@@ -1,159 +1,400 @@
-// =================================================
-// _data-display.scss - Styles for data display controls
-// =================================================
-@use './base-control' as *;
+/**
+ * Data Display Base - Core Styles
+ * Version: 1.0.0
+ * Last Updated: April 29, 2025
+ * 
+ * This file establishes the common styles for all data display components
+ * in the SkillVo design system. It serves as the second level in our 
+ * three-tier styling architecture:
+ * 1. sv-ui-control-base - Base styles for all interactive controls
+ * 2. sv-data-display-base (this file) - Common styles for data display components
+ * 3. Component-specific classes (e.g., sv-table, sv-list, sv-card, sv-chart)
+ */
 
-.table {
-  @extend .ui-control-base; 
-  width: 100%;
-  margin-bottom: var(--sv-spacing-3);
-  background-color: transparent;
-  border-collapse: collapse;
+/* ==========================================================================
+   TABLE OF CONTENTS:
+   
+   1. IMPORTS
+   2. VARIABLES & CONFIGURATION
+   3. BASE CLASS DEFINITION
+   4. DATA CONTAINER STYLES
+   5. DATA CONTENT STYLES
+   6. TYPOGRAPHY & TEXT TREATMENT
+   7. LAYOUT UTILITIES
+   8. DENSITY VARIATIONS
+   9. RESPONSIVE BEHAVIOR
+   10. ACCESSIBILITY CONSIDERATIONS
+   ========================================================================== */
 
-  th, td {
-    padding: var(--sv-spacing-3) var(--sv-spacing-3);
-    vertical-align: top;
-    border-top: var(--sv-border-width-sm, 1px) solid var(--sv-border-default);
-    text-align: left;
-  }
+/* ==========================================================================
+   1. IMPORTS
+   ========================================================================== */
 
-  thead th {
-    vertical-align: bottom;
-    border-bottom: calc(var(--sv-border-width-sm, 1px) * 2) solid var(--sv-border-default);
-    font-weight: var(--sv-font-weight-medium);
-    background-color: var(--sv-background-alt);
-    position: sticky;
-    top: 0;
-    z-index: 1;
-  }
+// Import any additional mixins or utilities needed
 
-  tbody + tbody {
-    border-top: calc(var(--sv-border-width-sm, 1px) * 2) solid var(--sv-border-default);
-  }
+/* ==========================================================================
+   2. VARIABLES & CONFIGURATION
+   ========================================================================== */
+   @use './base-control' as *;
 
-  &.table-sm {
-    th, td {
-      padding: var(--sv-spacing-1) var(--sv-spacing-2);
+// Content container properties
+$data-padding-x: var(--sv-padding-md);
+$data-padding-y: var(--sv-padding-md);
+$data-border-color: var(--sv-border-medium);
+$data-border-width: 1px;
+
+// Data typography settings
+$data-font-family: var(--sv-font-family-main);
+$data-font-size: var(--sv-text-base);
+$data-line-height: var(--sv-leading-normal);
+
+// Data density variations
+$data-density-compact-padding-y: var(--sv-padding-1);
+$data-density-compact-padding-x: var(--sv-padding-2);
+$data-density-regular-padding-y: var(--sv-padding-2);
+$data-density-regular-padding-x: var(--sv-padding-3);
+$data-density-comfortable-padding-y: var(--sv-padding-3);
+$data-density-comfortable-padding-x: var(--sv-padding-4);
+
+// Animation settings
+$data-transition-duration: var(--sv-motion-duration-medium);
+$data-transition-timing: var(--sv-motion-ease-standard);
+
+// Interaction settings
+$data-hover-bg: var(--sv-bg-element-hover);
+$data-selected-bg: var(--sv-bg-element-active);
+
+/* ==========================================================================
+   3. BASE CLASS DEFINITION
+   ========================================================================== */
+
+.sv-data-display-base {
+  // Inherit from the base control class
+  @extend .sv-ui-control-base;
+  
+  // Box model overrides
+  padding: 0; // Reset padding to be defined at component level
+  overflow: auto; // Enable scrolling for data that exceeds container
+  
+  // Content container
+  background-color: var(--sv-bg-surface);
+  border: $data-border-width solid $data-border-color;
+  border-radius: var(--sv-radius-md);
+  
+  // Typography settings
+  font-family: $data-font-family;
+  font-size: $data-font-size;
+  line-height: $data-line-height;
+  color: var(--sv-text-primary);
+  
+  // Animation settings
+  transition: 
+    background-color $data-transition-duration $data-transition-timing,
+    border-color $data-transition-duration $data-transition-timing,
+    box-shadow $data-transition-duration $data-transition-timing;
+    
+  // Prevent text selection by default
+  user-select: none;
+  
+  // Wrap media query in & {}
+  & {
+    @media (prefers-reduced-motion: reduce) {
+      transition: none;
     }
   }
-
-  &.table-bordered {
-    border: var(--sv-border-width-sm, 1px) solid var(--sv-border-default);
-
-    th, td {
-      border: var(--sv-border-width-sm, 1px) solid var(--sv-border-default);
+  
+  // Support for proper printing
+  & {
+    @media print {
+      border-color: #000;
+      color: #000;
+      background-color: transparent;
     }
-  }
-
-  &.table-striped {
-    tbody tr:nth-of-type(odd) {
-      background-color: var(--sv-background-striped, rgba(0, 0, 0, 0.05));
-    }
-  }
-
-  &.table-hover {
-    tbody tr:hover {
-      background-color: var(--sv-background-hover, rgba(0, 0, 0, 0.05));
-    }
-  }
-
-  &.table-responsive {
-    display: block;
-    width: 100%;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-  }
-
-  .sorted-asc::after {
-    content: " ↑";
-    opacity: 0.5;
-  }
-
-  .sorted-desc::after {
-    content: " ↓";
-    opacity: 0.5;
   }
 }
 
-.list-group {
-  @extend .ui-control-base; 
+/* ==========================================================================
+   4. DATA CONTAINER STYLES
+   ========================================================================== */
+
+.sv-data-container {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  
+  // For components that need to be scrollable
+  &.sv-data-scrollable {
+    overflow: auto;
+    -webkit-overflow-scrolling: touch; // Smooth scrolling on iOS
+    
+    // Styling for scrollbars in modern browsers
+    &::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+    
+    &::-webkit-scrollbar-track {
+      background-color: var(--sv-bg-element);
+      border-radius: 4px;
+    }
+    
+    &::-webkit-scrollbar-thumb {
+      background-color: var(--sv-border-dark);
+      border-radius: 4px;
+      
+      &:hover {
+        background-color: var(--sv-border-dark);
+      }
+    }
+  }
+  
+  // For components that need a fixed height
+  &.sv-data-fixed-height {
+    max-height: 100%;
+    overflow-y: auto;
+  }
+  
+  // For components that need horizontal scrolling
+  &.sv-data-scrollable-x {
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
+}
+
+/* ==========================================================================
+   5. DATA CONTENT STYLES
+   ========================================================================== */
+
+.sv-data-content {
+  position: relative;
+  
+  // For empty state
+  &.sv-data-empty {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--sv-padding-lg);
+    color: var(--sv-text-secondary);
+    font-style: italic;
+  }
+  
+  // For loading state
+  &.sv-data-loading {
+    opacity: 0.7;
+    pointer-events: none;
+  }
+  
+  // For error state
+  &.sv-data-error {
+    border-color: var(--sv-error);
+    color: var(--sv-error);
+  }
+}
+
+/* ==========================================================================
+   6. TYPOGRAPHY & TEXT TREATMENT
+   ========================================================================== */
+
+// Common text treatments for data elements
+.sv-data-title {
+  font-size: var(--sv-text-lg);
+  font-weight: var(--sv-font-semibold);
+  color: var(--sv-text-primary);
+  margin-bottom: var(--sv-space-2);
+}
+
+.sv-data-subtitle {
+  font-size: var(--sv-text-base);
+  font-weight: var(--sv-font-medium);
+  color: var(--sv-text-secondary);
+  margin-bottom: var(--sv-space-2);
+}
+
+.sv-data-caption {
+  font-size: var(--sv-text-sm);
+  color: var(--sv-text-tertiary);
+  margin-top: var(--sv-space-2);
+}
+
+.sv-data-label {
+  font-size: var(--sv-text-sm);
+  font-weight: var(--sv-font-medium);
+  color: var(--sv-text-secondary);
+}
+
+.sv-data-value {
+  font-size: var(--sv-text-base);
+  color: var(--sv-text-primary);
+  
+  // Variation for emphasized values
+  &.sv-data-value-emphasized {
+    font-weight: var(--sv-font-semibold);
+  }
+  
+  // Variation for less emphasized values
+  &.sv-data-value-muted {
+    color: var(--sv-text-secondary);
+  }
+}
+
+// Make text within data selectable
+.sv-data-selectable-text {
+  user-select: text;
+}
+
+// Truncate long text with ellipsis
+.sv-data-truncate {
+  @include text-truncate;
+}
+
+/* ==========================================================================
+   7. LAYOUT UTILITIES
+   ========================================================================== */
+
+// Flex layout for data items
+.sv-data-layout-flex {
   display: flex;
-  flex-direction: column;
-  padding-left: 0;
-  margin-bottom: 0;
-  border-radius: var(--sv-radius-md);
+  
+  &.sv-data-layout-column {
+    flex-direction: column;
+  }
+  
+  &.sv-data-layout-row {
+    flex-direction: row;
+  }
+  
+  &.sv-data-layout-wrap {
+    flex-wrap: wrap;
+  }
+  
+  &.sv-data-layout-center {
+    align-items: center;
+    justify-content: center;
+  }
+  
+  &.sv-data-layout-space-between {
+    justify-content: space-between;
+  }
+}
 
-  .list-group-item {
-    position: relative;
-    display: block;
-    padding: var(--sv-spacing-3) var(--sv-spacing-4);
-    background-color: var(--sv-background-base);
-    border: var(--sv-border-width-sm, 1px) solid var(--sv-border-default);
+// Grid layout for data items
+.sv-data-layout-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: var(--sv-space-4);
+  
+  &.sv-data-layout-grid-compact {
+    gap: var(--sv-space-2);
+  }
+  
+  &.sv-data-layout-grid-tight {
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  }
+  
+  &.sv-data-layout-grid-wide {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  }
+}
 
-    &:first-child {
-      border-top-left-radius: inherit;
-      border-top-right-radius: inherit;
-    }
+/* ==========================================================================
+   8. DENSITY VARIATIONS
+   ========================================================================== */
 
-    &:last-child {
-      border-bottom-left-radius: inherit;
-      border-bottom-right-radius: inherit;
-    }
+// Density variations for data display
+.sv-data-density-compact {
+  .sv-data-cell,
+  .sv-data-item {
+    padding: $data-density-compact-padding-y $data-density-compact-padding-x;
+  }
+}
 
-    & + .list-group-item {
-      border-top-width: 0;
-    }
+.sv-data-density-regular {
+  .sv-data-cell,
+  .sv-data-item {
+    padding: $data-density-regular-padding-y $data-density-regular-padding-x;
+  }
+}
 
-    &.active {
-      z-index: 2;
-      color: var(--sv-text-on-primary);
-      background-color: var(--sv-primary);
-      border-color: var(--sv-primary);
-    }
+.sv-data-density-comfortable {
+  .sv-data-cell,
+  .sv-data-item {
+    padding: $data-density-comfortable-padding-y $data-density-comfortable-padding-x;
+  }
+}
 
-    &.disabled, &:disabled {
-      color: var(--sv-text-disabled);
-      pointer-events: none;
-      background-color: var(--sv-background-base);
-    }
+/* ==========================================================================
+   9. RESPONSIVE BEHAVIOR
+   ========================================================================== */
 
-    &.list-group-item-action {
-      width: 100%;
-      text-align: inherit;
-      cursor: pointer;
-
-      &:hover, &:focus {
-        z-index: 1;
-        background-color: var(--sv-background-alt);
+// Base responsive behavior - specifics will be defined at component level
+@media (max-width: var(--sv-breakpoint-md)) {
+  .sv-data-display-base {
+    &.sv-data-responsive {
+      // Adjust font size for better readability on smaller screens
+      font-size: 0.9em;
+      
+      // Apply compact density automatically
+      .sv-data-cell,
+      .sv-data-item {
+        padding: $data-density-compact-padding-y $data-density-compact-padding-x;
       }
     }
   }
 }
 
-.grid {
-  @extend .ui-control-base; 
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  grid-gap: var(--sv-spacing-4);
+/* ==========================================================================
+   10. ACCESSIBILITY CONSIDERATIONS
+   ========================================================================== */
 
-  &.grid-sm {
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-    grid-gap: var(--sv-spacing-2);
+// Focus indicators for interactive data elements
+.sv-data-interactive {
+  cursor: pointer;
+  
+  &:focus {
+    outline: none;
+    box-shadow: var(--sv-shadow-focus);
   }
-
-  &.grid-lg {
-    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-    grid-gap: var(--sv-spacing-5);
+  
+  &:focus-visible {
+    outline: var(--sv-focus-ring-width) solid var(--sv-focus-ring-color);
+    outline-offset: var(--sv-focus-ring-offset);
   }
-
-  .grid-item {
-    background-color: var(--sv-background-base);
-    border: var(--sv-border-width-sm, 1px) solid var(--sv-border-default);
-    border-radius: var(--sv-radius-md);
-    padding: var(--sv-spacing-3);
-
-    &:hover {
-      box-shadow: var(--sv-shadow-sm);
+  
+  // High contrast mode support
+  @media (forced-colors: active) {
+    &:focus {
+      outline: 2px solid Highlight;
+      outline-offset: 2px;
     }
+  }
+}
+
+// Hover state for interactive data elements
+.sv-data-hoverable {
+  &:hover:not(:disabled):not(.disabled) {
+    background-color: $data-hover-bg;
+  }
+}
+
+// Selected state for data elements
+.sv-data-selectable {
+  &.sv-data-selected,
+  &[aria-selected="true"] {
+    background-color: $data-selected-bg;
+    font-weight: var(--sv-font-medium);
+  }
+}
+
+// ARIA states for data elements
+[aria-sort="ascending"],
+[aria-sort="descending"] {
+  font-weight: var(--sv-font-semibold);
+}
+
+// Supporting keyboard navigation
+.sv-data-keyboard-navigation {
+  &:focus {
+    position: relative;
+    z-index: 1; // Ensure focused items appear above others
   }
 }

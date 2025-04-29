@@ -9,6 +9,7 @@
 $motion-duration-short: 0.15s !default;
 $motion-duration-medium: 0.3s !default;
 $motion-duration-long: 0.5s !default;
+$spinner-duration: 0.75s !default; // Duration for loading spinners
 
 // Easing Functions
 // ----------------------------------------
@@ -31,6 +32,7 @@ $motion-keyspring: spring-in !default;
   --sv-motion-duration-short: #{$motion-duration-short};
   --sv-motion-duration-medium: #{$motion-duration-medium};
   --sv-motion-duration-long: #{$motion-duration-long};
+  --sv-spinner-duration: #{$spinner-duration};
 
   // Easings
   --sv-motion-ease-standard: #{$motion-ease-standard};
