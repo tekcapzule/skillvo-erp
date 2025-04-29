@@ -1,0 +1,657 @@
+/**
+ * Progress Indicator Component - UI Component Styles
+ * Version: 1.0.0
+ * Last Updated: April 29, 2025
+ * 
+ * This file provides the styling for the sv-progress-indicator component,
+ * which extends the sv-info-display-base class.
+ * Progress indicators show the completion status of an operation or activity.
+ */
+
+/* ==========================================================================
+   TABLE OF CONTENTS:
+   
+   1. VARIABLES & CONFIGURATION
+   2. BASE PROGRESS INDICATOR STYLES
+   3. LINEAR PROGRESS INDICATOR
+   4. CIRCULAR PROGRESS INDICATOR
+   5. STEPPED PROGRESS INDICATOR
+   6. PROGRESS INDICATOR VARIATIONS
+   7. PROGRESS INDICATOR STATES
+   8. RESPONSIVE ADAPTATIONS
+   9. ACCESSIBILITY ENHANCEMENTS
+   ========================================================================== */
+
+   @use '../mixins' as *;
+   @use '../information-display' as info-display;
+   
+   /* ==========================================================================
+      1. VARIABLES & CONFIGURATION
+      ========================================================================== */
+   
+   // Progress indicator common variables
+   $progress-color-default: var(--sv-primary);
+   $progress-bg-color: var(--sv-bg-element);
+   $progress-border-radius: var(--sv-radius-md);
+   $progress-height: 8px;
+   $progress-transition-duration: var(--sv-motion-duration-medium);
+   $progress-transition-timing: var(--sv-motion-ease-standard);
+   
+   // Linear progress indicator
+   $linear-progress-label-margin: var(--sv-space-2);
+   
+   // Circular progress indicator
+   $circular-progress-size-sm: 32px;
+   $circular-progress-size-md: 48px;
+   $circular-progress-size-lg: 64px;
+   $circular-progress-stroke-width: 4px;
+   $circular-progress-font-size-sm: var(--sv-text-xs);
+   $circular-progress-font-size-md: var(--sv-text-sm);
+   $circular-progress-font-size-lg: var(--sv-text-base);
+   
+   // Stepped progress indicator
+   $stepped-progress-connector-height: 2px;
+   $stepped-progress-step-size: 24px;
+   $stepped-progress-step-spacing: var(--sv-space-4);
+   $stepped-progress-label-margin: var(--sv-space-2);
+   
+   // Color variants
+   $progress-primary: var(--sv-primary);
+   $progress-secondary: var(--sv-secondary);
+   $progress-success: var(--sv-success);
+   $progress-warning: var(--sv-warning);
+   $progress-error: var(--sv-error);
+   $progress-info: var(--sv-info);
+   
+   /* ==========================================================================
+      2. BASE PROGRESS INDICATOR STYLES
+      ========================================================================== */
+   
+   .sv-progress-indicator {
+     // Extend the information display base class
+     @extend .sv-info-display-base;
+     
+     // Override and add progress-specific styles
+     position: relative;
+     display: block;
+     overflow: hidden;
+     
+     // Default color and transition
+     --sv-progress-color: #{$progress-color-default};
+     transition: opacity $progress-transition-duration $progress-transition-timing;
+     
+     // Optional label styling
+     .sv-progress-label {
+       font-size: var(--sv-text-sm);
+       color: var(--sv-text-secondary);
+     }
+     
+     // Value display
+     .sv-progress-value {
+       font-weight: var(--sv-font-medium);
+       color: var(--sv-text-primary);
+     }
+   }
+   
+   /* ==========================================================================
+      3. LINEAR PROGRESS INDICATOR
+      ========================================================================== */
+   
+   .sv-progress-linear {
+     height: $progress-height;
+     background-color: $progress-bg-color;
+     border-radius: $progress-border-radius;
+     margin: var(--sv-space-2) 0;
+     
+     // Progress bar
+     .sv-progress-bar {
+       height: 100%;
+       background-color: var(--sv-progress-color);
+       border-radius: $progress-border-radius;
+       transition: width $progress-transition-duration $progress-transition-timing;
+     }
+     
+     // Label and value layout
+     .sv-progress-labels {
+       display: flex;
+       justify-content: space-between;
+       margin-bottom: $linear-progress-label-margin;
+       
+       &.sv-progress-labels-below {
+         margin-top: $linear-progress-label-margin;
+         margin-bottom: 0;
+       }
+     }
+     
+     // Buffer mode (segments that load before main progress)
+     &.sv-progress-buffer {
+       position: relative;
+       
+       .sv-progress-buffer-bar {
+         position: absolute;
+         top: 0;
+         left: 0;
+         height: 100%;
+         background-color: rgba(var(--sv-primary-500-rgb), 0.3);
+         border-radius: $progress-border-radius;
+         transition: width $progress-transition-duration $progress-transition-timing;
+       }
+     }
+     
+     // Striped variant
+     &.sv-progress-striped {
+       .sv-progress-bar {
+         background-image: linear-gradient(
+           45deg,
+           rgba(255, 255, 255, 0.15) 25%,
+           transparent 25%,
+           transparent 50%,
+           rgba(255, 255, 255, 0.15) 50%,
+           rgba(255, 255, 255, 0.15) 75%,
+           transparent 75%,
+           transparent
+         );
+         background-size: 40px 40px;
+       }
+       
+       &.sv-progress-animated .sv-progress-bar {
+         animation: sv-progress-stripes 1s linear infinite;
+       }
+     }
+     
+     // Size variants
+     &.sv-progress-linear-sm {
+       height: calc($progress-height * 0.75);
+     }
+     
+     &.sv-progress-linear-lg {
+       height: calc($progress-height * 1.5);
+     }
+   }
+   
+   @keyframes sv-progress-stripes {
+     from {
+       background-position: 40px 0;
+     }
+     to {
+       background-position: 0 0;
+     }
+   }
+   
+   /* ==========================================================================
+      4. CIRCULAR PROGRESS INDICATOR
+      ========================================================================== */
+   
+   .sv-progress-circular {
+     position: relative;
+     display: inline-flex;
+     align-items: center;
+     justify-content: center;
+     
+     // Default size
+     width: $circular-progress-size-md;
+     height: $circular-progress-size-md;
+     
+     // SVG styling
+     svg {
+       position: absolute;
+       top: 0;
+       left: 0;
+       width: 100%;
+       height: 100%;
+       transform: rotate(-90deg);
+       transform-origin: center;
+     }
+     
+     // Circle base and progress
+     .sv-progress-circle-bg {
+       fill: none;
+       stroke: $progress-bg-color;
+       stroke-width: $circular-progress-stroke-width;
+     }
+     
+     .sv-progress-circle-value {
+       fill: none;
+       stroke: var(--sv-progress-color);
+       stroke-width: $circular-progress-stroke-width;
+       stroke-linecap: round;
+       transition: stroke-dashoffset $progress-transition-duration $progress-transition-timing;
+     }
+     
+     // Value display in the center
+     .sv-progress-center {
+       display: flex;
+       align-items: center;
+       justify-content: center;
+       position: absolute;
+       top: 0;
+       left: 0;
+       width: 100%;
+       height: 100%;
+       font-size: $circular-progress-font-size-md;
+       font-weight: var(--sv-font-semibold);
+     }
+     
+     // Size variants
+     &.sv-progress-circular-sm {
+       width: $circular-progress-size-sm;
+       height: $circular-progress-size-sm;
+       
+       .sv-progress-circle-bg,
+       .sv-progress-circle-value {
+         stroke-width: calc($circular-progress-stroke-width * 0.75);
+       }
+       
+       .sv-progress-center {
+         font-size: $circular-progress-font-size-sm;
+       }
+     }
+     
+     &.sv-progress-circular-lg {
+       width: $circular-progress-size-lg;
+       height: $circular-progress-size-lg;
+       
+       .sv-progress-circle-bg,
+       .sv-progress-circle-value {
+         stroke-width: calc($circular-progress-stroke-width * 1.25);
+       }
+       
+       .sv-progress-center {
+         font-size: $circular-progress-font-size-lg;
+       }
+     }
+     
+     // Indeterminate animation
+     &.sv-progress-indeterminate {
+       .sv-progress-circle-value {
+         animation: sv-progress-circular-rotate 2s linear infinite;
+         stroke-dasharray: 80, 200;
+         stroke-dashoffset: 0;
+       }
+     }
+   }
+   
+   @keyframes sv-progress-circular-rotate {
+     0% {
+       stroke-dasharray: 1, 200;
+       stroke-dashoffset: 0;
+     }
+     50% {
+       stroke-dasharray: 100, 200;
+       stroke-dashoffset: -15;
+     }
+     100% {
+       stroke-dasharray: 100, 200;
+       stroke-dashoffset: -125;
+     }
+   }
+   
+   /* ==========================================================================
+      5. STEPPED PROGRESS INDICATOR
+      ========================================================================== */
+   
+   .sv-progress-stepped {
+     display: flex;
+     justify-content: space-between;
+     position: relative;
+     margin: var(--sv-space-6) 0;
+     
+     // Connector line
+     &::before {
+       content: "";
+       position: absolute;
+       top: calc($stepped-progress-step-size / 2);
+       left: calc($stepped-progress-step-size / 2);
+       right: calc($stepped-progress-step-size / 2);
+       height: $stepped-progress-connector-height;
+       background-color: $progress-bg-color;
+       transform: translateY(-50%);
+       z-index: 0;
+     }
+     
+     // Progress line
+     &::after {
+       content: "";
+       position: absolute;
+       top: calc($stepped-progress-step-size / 2);
+       left: calc($stepped-progress-step-size / 2);
+       height: $stepped-progress-connector-height;
+       background-color: var(--sv-progress-color);
+       transform: translateY(-50%);
+       z-index: 1;
+       transition: width $progress-transition-duration $progress-transition-timing;
+     }
+     
+     // Step container
+     .sv-progress-step {
+       z-index: 2;
+       display: flex;
+       flex-direction: column;
+       align-items: center;
+       position: relative;
+       
+       &:not(:last-child) {
+         margin-right: $stepped-progress-step-spacing;
+       }
+       
+       // Step indicator
+       .sv-progress-step-indicator {
+         width: $stepped-progress-step-size;
+         height: $stepped-progress-step-size;
+         border-radius: 50%;
+         display: flex;
+         align-items: center;
+         justify-content: center;
+         background-color: $progress-bg-color;
+         color: var(--sv-text-primary);
+         margin-bottom: $stepped-progress-label-margin;
+         font-weight: var(--sv-font-medium);
+         transition: background-color $progress-transition-duration $progress-transition-timing,
+                     color $progress-transition-duration $progress-transition-timing;
+                     
+         // Step icon if present
+         .sv-progress-step-icon {
+           width: calc($stepped-progress-step-size * 0.5);
+           height: calc($stepped-progress-step-size * 0.5);
+         }
+       }
+       
+       // Step label
+       .sv-progress-step-label {
+         font-size: var(--sv-text-sm);
+         color: var(--sv-text-secondary);
+         margin-top: $stepped-progress-label-margin;
+         text-align: center;
+       }
+       
+       // Completed step
+       &.sv-progress-step-completed {
+         .sv-progress-step-indicator {
+           background-color: var(--sv-progress-color);
+           color: var(--sv-text-on-dark);
+         }
+       }
+       
+       // Current step
+       &.sv-progress-step-current {
+         .sv-progress-step-indicator {
+           background-color: var(--sv-progress-color);
+           color: var(--sv-text-on-dark);
+           box-shadow: 0 0 0 3px rgba(var(--sv-primary-500-rgb), 0.3);
+         }
+         
+         .sv-progress-step-label {
+           color: var(--sv-text-primary);
+           font-weight: var(--sv-font-medium);
+         }
+       }
+     }
+     
+     // Vertical layout
+     &.sv-progress-stepped-vertical {
+       flex-direction: column;
+       align-items: flex-start;
+       
+       &::before {
+         top: calc($stepped-progress-step-size / 2);
+         bottom: calc($stepped-progress-step-size / 2);
+         left: calc($stepped-progress-step-size / 2);
+         width: $stepped-progress-connector-height;
+         height: auto;
+         transform: translateX(-50%);
+       }
+       
+       &::after {
+         top: calc($stepped-progress-step-size / 2);
+         left: calc($stepped-progress-step-size / 2);
+         width: $stepped-progress-connector-height;
+         transform: translateX(-50%);
+         height: auto;
+         transition: height $progress-transition-duration $progress-transition-timing;
+       }
+       
+       .sv-progress-step {
+         flex-direction: row;
+         width: 100%;
+         
+         &:not(:last-child) {
+           margin-right: 0;
+           margin-bottom: $stepped-progress-step-spacing;
+         }
+         
+         .sv-progress-step-indicator {
+           margin-bottom: 0;
+           margin-right: $stepped-progress-label-margin;
+         }
+         
+         .sv-progress-step-label {
+           margin-top: 0;
+           text-align: left;
+         }
+       }
+     }
+   }
+   
+   /* ==========================================================================
+      6. PROGRESS INDICATOR VARIATIONS
+      ========================================================================== */
+   
+   // Color variants
+   .sv-progress-primary {
+     --sv-progress-color: #{$progress-primary};
+   }
+   
+   .sv-progress-secondary {
+     --sv-progress-color: #{$progress-secondary};
+   }
+   
+   .sv-progress-success {
+     --sv-progress-color: #{$progress-success};
+   }
+   
+   .sv-progress-warning {
+     --sv-progress-color: #{$progress-warning};
+   }
+   
+   .sv-progress-error {
+     --sv-progress-color: #{$progress-error};
+   }
+   
+   .sv-progress-info {
+     --sv-progress-color: #{$progress-info};
+   }
+   
+   // Rounded corners
+   .sv-progress-rounded {
+     border-radius: var(--sv-radius-full);
+     
+     .sv-progress-bar {
+       border-radius: var(--sv-radius-full);
+     }
+   }
+   
+   // Thin variant
+   .sv-progress-thin {
+     &.sv-progress-linear {
+       height: 4px;
+     }
+     
+     &.sv-progress-circular {
+       .sv-progress-circle-bg,
+       .sv-progress-circle-value {
+         stroke-width: calc($circular-progress-stroke-width * 0.5);
+       }
+     }
+   }
+   
+   /* ==========================================================================
+      7. PROGRESS INDICATOR STATES
+      ========================================================================== */
+   
+   // Indeterminate linear progress
+   .sv-progress-linear.sv-progress-indeterminate {
+     .sv-progress-bar {
+       width: 100%;
+       background-image: linear-gradient(
+         to right,
+         rgba(var(--sv-primary-500-rgb), 0.2) 0%,
+         var(--sv-progress-color) 50%,
+         rgba(var(--sv-primary-500-rgb), 0.2) 100%
+       );
+       background-size: 200% 100%;
+       animation: sv-progress-indeterminate 1.5s infinite linear;
+     }
+   }
+   
+   @keyframes sv-progress-indeterminate {
+     0% {
+       background-position: 200% 0;
+     }
+     100% {
+       background-position: -200% 0;
+     }
+   }
+   
+   // Disabled progress
+   .sv-progress-indicator.sv-progress-disabled {
+     opacity: 0.6;
+     cursor: not-allowed;
+   }
+   
+   // Animated value changes
+   .sv-progress-animate-value {
+     .sv-progress-value {
+       transition: all 0.3s ease-out;
+     }
+   }
+   
+   /* ==========================================================================
+      8. RESPONSIVE ADAPTATIONS
+      ========================================================================== */
+   
+   @include breakpoint-down('md') {
+     // Adjust stepped progress for medium screens
+     .sv-progress-stepped {
+       &:not(.sv-progress-stepped-vertical) {
+         // Hide labels on medium screens for horizontal stepped progress
+         .sv-progress-step-label {
+           font-size: var(--sv-text-xs);
+           max-width: 80px;
+           text-align: center;
+           overflow-wrap: break-word;
+         }
+       }
+     }
+   }
+   
+   @include breakpoint-down('sm') {
+     // Convert horizontal stepped progress to vertical on small screens
+     .sv-progress-stepped:not(.sv-progress-stepped-vertical):not(.sv-progress-stepped-horizontal-force) {
+       flex-direction: column;
+       align-items: flex-start;
+       
+       &::before {
+         top: calc($stepped-progress-step-size / 2);
+         bottom: calc($stepped-progress-step-size / 2);
+         left: calc($stepped-progress-step-size / 2);
+         width: $stepped-progress-connector-height;
+         height: auto;
+         transform: translateX(-50%);
+       }
+       
+       &::after {
+         top: calc($stepped-progress-step-size / 2);
+         left: calc($stepped-progress-step-size / 2);
+         width: $stepped-progress-connector-height;
+         transform: translateX(-50%);
+         height: var(--sv-progress-complete-height, 0%);
+         transition: height $progress-transition-duration $progress-transition-timing;
+       }
+       
+       .sv-progress-step {
+         flex-direction: row;
+         width: 100%;
+         
+         &:not(:last-child) {
+           margin-right: 0;
+           margin-bottom: $stepped-progress-step-spacing;
+         }
+         
+         .sv-progress-step-indicator {
+           margin-bottom: 0;
+           margin-right: $stepped-progress-label-margin;
+         }
+         
+         .sv-progress-step-label {
+           margin-top: 0;
+           text-align: left;
+           max-width: none;
+           font-size: var(--sv-text-sm);
+         }
+       }
+     }
+   }
+   
+   /* ==========================================================================
+      9. ACCESSIBILITY ENHANCEMENTS
+      ========================================================================== */
+   
+   // ARIA attributes
+   .sv-progress-indicator {
+     // Screen reader text
+     .sv-progress-sr-text {
+       @include visually-hidden;
+     }
+   }
+   
+   // High contrast mode support
+   @media (forced-colors: active) {
+     .sv-progress-linear {
+       border: 1px solid CanvasText;
+       
+       .sv-progress-bar {
+         background-color: Highlight;
+       }
+     }
+     
+     .sv-progress-circular {
+       .sv-progress-circle-bg {
+         stroke: CanvasText;
+       }
+       
+       .sv-progress-circle-value {
+         stroke: Highlight;
+       }
+     }
+     
+     .sv-progress-stepped {
+       &::before {
+         background-color: CanvasText;
+       }
+       
+       &::after {
+         background-color: Highlight;
+       }
+       
+       .sv-progress-step {
+         .sv-progress-step-indicator {
+           border: 1px solid CanvasText;
+           
+           &.sv-progress-step-completed,
+           &.sv-progress-step-current {
+             background-color: Highlight;
+             color: HighlightText;
+           }
+         }
+       }
+     }
+   }
+   
+   // Reduced motion preference
+   @media (prefers-reduced-motion: reduce) {
+     .sv-progress-linear.sv-progress-indeterminate .sv-progress-bar,
+     .sv-progress-circular.sv-progress-indeterminate .sv-progress-circle-value,
+     .sv-progress-linear.sv-progress-striped.sv-progress-animated .sv-progress-bar {
+       animation: none;
+     }
+   }

@@ -1,0 +1,474 @@
+/**
+ * Tooltip Component - UI Component Styles
+ * Version: 1.0.0
+ * Last Updated: April 29, 2025
+ * 
+ * This file provides the styling for the sv-tooltip component,
+ * which extends the sv-info-display-base class.
+ * Tooltips provide additional information about UI elements on hover.
+ */
+
+/* ==========================================================================
+   TABLE OF CONTENTS:
+   
+   1. VARIABLES & CONFIGURATION
+   2. BASE TOOLTIP STYLES
+   3. TOOLTIP POSITIONING
+   4. TOOLTIP VARIATIONS
+   5. TOOLTIP ANIMATIONS
+   6. TOOLTIP ARROWS
+   7. RESPONSIVE ADAPTATIONS
+   8. ACCESSIBILITY ENHANCEMENTS
+   ========================================================================== */
+
+   @use '../mixins' as *;
+   @use '../information-display' as info-display;
+   
+   /* ==========================================================================
+      1. VARIABLES & CONFIGURATION
+      ========================================================================== */
+   
+   // Tooltip-specific variables
+   $tooltip-max-width: 200px;
+   $tooltip-bg-color: var(--sv-bg-secondary);
+   $tooltip-color: var(--sv-text-primary);
+   $tooltip-padding: var(--sv-padding-2);
+   $tooltip-border-radius: var(--sv-radius-md);
+   $tooltip-font-size: var(--sv-text-sm);
+   $tooltip-z-index: var(--sv-z-index-tooltip);
+   $tooltip-shadow: var(--sv-shadow-md);
+   
+   // Tooltip arrow
+   $tooltip-arrow-size: 6px;
+   $tooltip-offset: 10px;
+   
+   // Tooltip animation
+   $tooltip-animation-duration: var(--sv-motion-duration-medium);
+   $tooltip-animation-timing: var(--sv-motion-ease-standard);
+   
+   // Dark tooltip
+   $tooltip-dark-bg-color: var(--sv-secondary);
+   $tooltip-dark-color: var(--sv-text-on-dark);
+   
+   /* ==========================================================================
+      2. BASE TOOLTIP STYLES
+      ========================================================================== */
+   
+   // Tooltip container
+   .sv-tooltip-container {
+     position: relative;
+     display: inline-block;
+   }
+   
+   // Tooltip element
+   .sv-tooltip {
+     // Extend the information display base class
+     @extend .sv-info-display-base;
+     
+     // Override and add tooltip-specific styles
+     position: absolute;
+     max-width: $tooltip-max-width;
+     background-color: $tooltip-bg-color;
+     color: $tooltip-color;
+     padding: $tooltip-padding;
+     border-radius: $tooltip-border-radius;
+     font-size: $tooltip-font-size;
+     z-index: $tooltip-z-index;
+     box-shadow: $tooltip-shadow;
+     pointer-events: none;
+     opacity: 0;
+     visibility: hidden;
+     transition: opacity $tooltip-animation-duration $tooltip-animation-timing,
+                 visibility $tooltip-animation-duration $tooltip-animation-timing,
+                 transform $tooltip-animation-duration $tooltip-animation-timing;
+     
+     // Word wrapping
+     word-wrap: break-word;
+     overflow-wrap: break-word;
+     white-space: normal;
+     
+     // Default padding adjustment for arrow
+     &::before {
+       content: '';
+       position: absolute;
+       width: 0;
+       height: 0;
+       border-style: solid;
+     }
+     
+     // Ensure parent element positioning
+     .sv-tooltip-container:hover &,
+     .sv-tooltip-container:focus &,
+     &.sv-tooltip-visible {
+       opacity: 1;
+       visibility: visible;
+     }
+   }
+   
+   /* ==========================================================================
+      3. TOOLTIP POSITIONING
+      ========================================================================== */
+   
+   // Top positioned tooltip
+   .sv-tooltip-top {
+     bottom: 100%;
+     left: 50%;
+     transform: translateX(-50%) translateY(-$tooltip-offset);
+     margin-bottom: $tooltip-arrow-size;
+     
+     &::before {
+       top: 100%;
+       left: 50%;
+       transform: translateX(-50%);
+       border-width: $tooltip-arrow-size $tooltip-arrow-size 0;
+       border-color: $tooltip-bg-color transparent transparent;
+     }
+     
+     .sv-tooltip-container:hover &,
+     .sv-tooltip-container:focus &,
+     &.sv-tooltip-visible {
+       transform: translateX(-50%) translateY(calc(-$tooltip-offset - 5px));
+     }
+   }
+   
+   // Right positioned tooltip
+   .sv-tooltip-right {
+     top: 50%;
+     left: 100%;
+     transform: translateY(-50%) translateX($tooltip-offset);
+     margin-left: $tooltip-arrow-size;
+     
+     &::before {
+       top: 50%;
+       right: 100%;
+       transform: translateY(-50%);
+       border-width: $tooltip-arrow-size $tooltip-arrow-size $tooltip-arrow-size 0;
+       border-color: transparent $tooltip-bg-color transparent transparent;
+     }
+     
+     .sv-tooltip-container:hover &,
+     .sv-tooltip-container:focus &,
+     &.sv-tooltip-visible {
+       transform: translateY(-50%) translateX(calc($tooltip-offset + 5px));
+     }
+   }
+   
+   // Bottom positioned tooltip
+   .sv-tooltip-bottom {
+     top: 100%;
+     left: 50%;
+     transform: translateX(-50%) translateY($tooltip-offset);
+     margin-top: $tooltip-arrow-size;
+     
+     &::before {
+       bottom: 100%;
+       left: 50%;
+       transform: translateX(-50%);
+       border-width: 0 $tooltip-arrow-size $tooltip-arrow-size;
+       border-color: transparent transparent $tooltip-bg-color;
+     }
+     
+     .sv-tooltip-container:hover &,
+     .sv-tooltip-container:focus &,
+     &.sv-tooltip-visible {
+       transform: translateX(-50%) translateY(calc($tooltip-offset + 5px));
+     }
+   }
+   
+   // Left positioned tooltip
+   .sv-tooltip-left {
+     top: 50%;
+     right: 100%;
+     transform: translateY(-50%) translateX(-$tooltip-offset);
+     margin-right: $tooltip-arrow-size;
+     
+     &::before {
+       top: 50%;
+       left: 100%;
+       transform: translateY(-50%);
+       border-width: $tooltip-arrow-size 0 $tooltip-arrow-size $tooltip-arrow-size;
+       border-color: transparent transparent transparent $tooltip-bg-color;
+     }
+     
+     .sv-tooltip-container:hover &,
+     .sv-tooltip-container:focus &,
+     &.sv-tooltip-visible {
+       transform: translateY(-50%) translateX(calc(-$tooltip-offset - 5px));
+     }
+   }
+   
+   /* ==========================================================================
+      4. TOOLTIP VARIATIONS
+      ========================================================================== */
+   
+   // Dark tooltip
+   .sv-tooltip-dark {
+     background-color: $tooltip-dark-bg-color;
+     color: $tooltip-dark-color;
+     
+     &.sv-tooltip-top::before {
+       border-color: $tooltip-dark-bg-color transparent transparent;
+     }
+     
+     &.sv-tooltip-right::before {
+       border-color: transparent $tooltip-dark-bg-color transparent transparent;
+     }
+     
+     &.sv-tooltip-bottom::before {
+       border-color: transparent transparent $tooltip-dark-bg-color;
+     }
+     
+     &.sv-tooltip-left::before {
+       border-color: transparent transparent transparent $tooltip-dark-bg-color;
+     }
+   }
+   
+   // Size variations
+   .sv-tooltip-sm {
+     padding: var(--sv-padding-1);
+     font-size: var(--sv-text-xs);
+     max-width: 150px;
+   }
+   
+   .sv-tooltip-lg {
+     padding: var(--sv-padding-3);
+     font-size: var(--sv-text-base);
+     max-width: 250px;
+   }
+   
+   // Wide tooltip
+   .sv-tooltip-wide {
+     max-width: 300px;
+   }
+   
+   // Tooltip with rich content
+   .sv-tooltip-rich {
+     // For tooltips with structured content
+     padding: var(--sv-padding-3);
+     
+     .sv-tooltip-title {
+       font-weight: var(--sv-font-semibold);
+       margin-bottom: var(--sv-space-1);
+       border-bottom: 1px solid var(--sv-border-light);
+       padding-bottom: var(--sv-space-1);
+     }
+     
+     .sv-tooltip-description {
+       margin-top: var(--sv-space-2);
+     }
+   }
+   
+   /* ==========================================================================
+      5. TOOLTIP ANIMATIONS
+      ========================================================================== */
+   
+   // Custom animations for tooltips
+   @keyframes sv-tooltip-fade-in {
+     from {
+       opacity: 0;
+     }
+     to {
+       opacity: 1;
+     }
+   }
+   
+   @keyframes sv-tooltip-slide-in-top {
+     from {
+       opacity: 0;
+       transform: translateX(-50%) translateY(calc(-$tooltip-offset + 5px));
+     }
+     to {
+       opacity: 1;
+       transform: translateX(-50%) translateY(calc(-$tooltip-offset - 5px));
+     }
+   }
+   
+   @keyframes sv-tooltip-slide-in-bottom {
+     from {
+       opacity: 0;
+       transform: translateX(-50%) translateY(calc($tooltip-offset - 5px));
+     }
+     to {
+       opacity: 1;
+       transform: translateX(-50%) translateY(calc($tooltip-offset + 5px));
+     }
+   }
+   
+   // Animation variants
+   .sv-tooltip-animate {
+     &.sv-tooltip-top,
+     &.sv-tooltip-bottom {
+       animation-duration: $tooltip-animation-duration;
+       animation-timing-function: $tooltip-animation-timing;
+       animation-fill-mode: both;
+     }
+     
+     &.sv-tooltip-top {
+       animation-name: sv-tooltip-slide-in-top;
+     }
+     
+     &.sv-tooltip-bottom {
+       animation-name: sv-tooltip-slide-in-bottom;
+     }
+     
+     &.sv-tooltip-left,
+     &.sv-tooltip-right {
+       animation-name: sv-tooltip-fade-in;
+       animation-duration: $tooltip-animation-duration;
+       animation-timing-function: $tooltip-animation-timing;
+       animation-fill-mode: both;
+     }
+   }
+   
+   /* ==========================================================================
+      6. TOOLTIP ARROWS
+      ========================================================================== */
+   
+   // Custom arrow styling
+   .sv-tooltip-arrow-lg {
+     &::before {
+       border-width: 8px;
+     }
+     
+     &.sv-tooltip-top {
+       margin-bottom: 8px;
+     }
+     
+     &.sv-tooltip-right {
+       margin-left: 8px;
+     }
+     
+     &.sv-tooltip-bottom {
+       margin-top: 8px;
+     }
+     
+     &.sv-tooltip-left {
+       margin-right: 8px;
+     }
+   }
+   
+   // No arrow variant
+   .sv-tooltip-no-arrow {
+     &::before {
+       display: none;
+     }
+   }
+   
+   /* ==========================================================================
+      7. RESPONSIVE ADAPTATIONS
+      ========================================================================== */
+   
+   @include breakpoint-down('md') {
+     .sv-tooltip {
+       font-size: var(--sv-text-xs);
+     }
+     
+     .sv-tooltip-lg {
+       font-size: var(--sv-text-sm);
+       padding: var(--sv-padding-2);
+     }
+     
+     .sv-tooltip-wide {
+       max-width: 250px;
+     }
+   }
+   
+   @include breakpoint-down('sm') {
+     .sv-tooltip {
+       max-width: 180px;
+     }
+     
+     .sv-tooltip-wide {
+       max-width: 200px;
+     }
+     
+     // On smaller screens, prefer tooltips appearing above/below
+     // to avoid horizontal overflow
+     .sv-tooltip-left,
+     .sv-tooltip-right {
+       top: 100%;
+       bottom: auto;
+       left: 50%;
+       right: auto;
+       transform: translateX(-50%) translateY($tooltip-offset);
+       margin: $tooltip-arrow-size 0 0;
+       
+       &::before {
+         top: auto;
+         bottom: 100%;
+         left: 50%;
+         right: auto;
+         transform: translateX(-50%);
+         border-width: 0 $tooltip-arrow-size $tooltip-arrow-size;
+         border-color: transparent transparent $tooltip-bg-color;
+       }
+       
+       .sv-tooltip-container:hover &,
+       .sv-tooltip-container:focus &,
+       &.sv-tooltip-visible {
+         transform: translateX(-50%) translateY(calc($tooltip-offset + 5px));
+       }
+       
+       &.sv-tooltip-dark::before {
+         border-color: transparent transparent $tooltip-dark-bg-color;
+       }
+     }
+   }
+   
+   /* ==========================================================================
+      8. ACCESSIBILITY ENHANCEMENTS
+      ========================================================================== */
+   
+   // Focus visible tooltips
+   .sv-tooltip-focus-visible {
+     .sv-tooltip {
+       // Only shown when the container is focused
+       opacity: 0;
+       visibility: hidden;
+     }
+     
+     &:focus-visible .sv-tooltip {
+       opacity: 1;
+       visibility: visible;
+     }
+   }
+   
+   // For screen readers
+   .sv-tooltip-sr-only {
+     @include visually-hidden;
+   }
+   
+   // High contrast mode 
+   @media (forced-colors: active) {
+     .sv-tooltip {
+       background-color: Canvas;
+       color: CanvasText;
+       border: 1px solid CanvasText;
+       
+       &::before {
+         opacity: 0; // Hide arrow in high contrast mode
+       }
+     }
+   }
+   
+   // Respect reduced motion preference
+   @media (prefers-reduced-motion: reduce) {
+     .sv-tooltip {
+       transition: opacity 0.1s linear;
+     }
+     
+     .sv-tooltip-animate {
+       &.sv-tooltip-top,
+       &.sv-tooltip-bottom,
+       &.sv-tooltip-left,
+       &.sv-tooltip-right {
+         animation: none;
+       }
+     }
+     
+     .sv-tooltip-container:hover .sv-tooltip,
+     .sv-tooltip-container:focus .sv-tooltip,
+     .sv-tooltip.sv-tooltip-visible {
+       transform: none !important;
+     }
+   }

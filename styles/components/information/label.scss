@@ -1,0 +1,271 @@
+/**
+ * Label Component - UI Component Styles
+ * Version: 1.0.0
+ * Last Updated: April 29, 2025
+ * 
+ * This file provides the styling for the sv-label component,
+ * which extends the sv-info-display-base class.
+ * Labels are used to identify form elements, provide context,
+ * or display static information.
+ */
+
+/* ==========================================================================
+   TABLE OF CONTENTS:
+   
+   1. VARIABLES & CONFIGURATION
+   2. BASE LABEL STYLES
+   3. LABEL TYPES
+   4. LABEL STATES
+   5. LABEL VARIANTS
+   6. RESPONSIVE ADAPTATIONS
+   7. ACCESSIBILITY ENHANCEMENTS
+   ========================================================================== */
+
+   @use '../mixins' as *;
+   @use '../information-display' as info-display;
+   
+   /* ==========================================================================
+      1. VARIABLES & CONFIGURATION
+      ========================================================================== */
+   
+   // Label-specific variables
+   $label-margin-bottom: var(--sv-space-2);
+   $label-font-weight: var(--sv-font-medium);
+   $label-required-color: var(--sv-error);
+   $label-required-margin: var(--sv-space-1);
+   $label-disabled-opacity: 0.65;
+   $label-transition-properties: color, opacity;
+   
+   // Label sizes
+   $label-font-size-xs: var(--sv-text-xs);
+   $label-font-size-sm: var(--sv-text-sm);
+   $label-font-size-md: var(--sv-text-base);
+   $label-font-size-lg: var(--sv-text-lg);
+   
+   /* ==========================================================================
+      2. BASE LABEL STYLES
+      ========================================================================== */
+   
+   .sv-label {
+     // Extend the information display base class
+     @extend .sv-info-display-base;
+     
+     // Override or add label-specific properties
+     display: inline-block;
+     margin-bottom: $label-margin-bottom;
+     font-weight: $label-font-weight;
+     transition-property: $label-transition-properties;
+     
+     // Ensure proper cursor for labels that are associated with inputs
+     &[for] {
+       cursor: pointer;
+     }
+     
+     // Default sizing
+     font-size: $label-font-size-md;
+     
+     // When paired with a control, provide proper spacing
+     & + .sv-ui-control-base {
+       margin-top: 0;
+     }
+     
+     // Support for inline help text
+     .sv-label-help {
+       color: var(--sv-text-secondary);
+       margin-left: var(--sv-space-1);
+       font-weight: var(--sv-font-normal);
+       font-size: 0.9em;
+     }
+   }
+   
+   /* ==========================================================================
+      3. LABEL TYPES
+      ========================================================================== */
+   
+   // Form label (for input fields)
+   .sv-label-form {
+     display: block;
+     margin-bottom: $label-margin-bottom;
+     
+     // Optional wrapper to align label and field side by side
+     &.sv-label-inline {
+       display: flex;
+       align-items: center;
+       margin-bottom: 0;
+       
+       .sv-ui-control-base {
+         flex: 1;
+         margin-left: var(--sv-space-3);
+       }
+     }
+   }
+   
+   // Field label (in data displays)
+   .sv-label-field {
+     color: var(--sv-text-secondary);
+     margin-bottom: var(--sv-space-1);
+     font-size: $label-font-size-sm;
+   }
+   
+   // Section label (for group of controls)
+   .sv-label-section {
+     display: block;
+     margin-bottom: var(--sv-space-3);
+     font-weight: var(--sv-font-semibold);
+     color: var(--sv-text-primary);
+     border-bottom: 1px solid var(--sv-border-light);
+     padding-bottom: var(--sv-space-2);
+   }
+   
+   /* ==========================================================================
+      4. LABEL STATES
+      ========================================================================== */
+   
+   // Required indicator
+   .sv-label-required {
+     &::after {
+       content: "*";
+       color: $label-required-color;
+       margin-left: $label-required-margin;
+       font-weight: var(--sv-font-bold);
+     }
+   }
+   
+   // Disabled state
+   .sv-label-disabled,
+   .sv-label[disabled],
+   fieldset[disabled] .sv-label {
+     opacity: $label-disabled-opacity;
+     cursor: not-allowed;
+     
+     &[for] {
+       cursor: not-allowed;
+     }
+   }
+   
+   // Error state
+   .sv-label-error,
+   .has-error > .sv-label {
+     color: var(--sv-error);
+   }
+   
+   // Success state
+   .sv-label-success,
+   .has-success > .sv-label {
+     color: var(--sv-success);
+   }
+   
+   /* ==========================================================================
+      5. LABEL VARIANTS
+      ========================================================================== */
+   
+   // Size variants
+   .sv-label-xs {
+     font-size: $label-font-size-xs;
+   }
+   
+   .sv-label-sm {
+     font-size: $label-font-size-sm;
+   }
+   
+   .sv-label-md {
+     font-size: $label-font-size-md;
+   }
+   
+   .sv-label-lg {
+     font-size: $label-font-size-lg;
+   }
+   
+   // Optional label
+   .sv-label-optional {
+     &::after {
+       content: "(optional)";
+       color: var(--sv-text-tertiary);
+       margin-left: $label-required-margin;
+       font-weight: var(--sv-font-normal);
+       font-size: 0.9em;
+     }
+   }
+   
+   // Floating label (for material design style)
+   .sv-label-floating {
+     position: absolute;
+     top: 50%;
+     left: var(--sv-padding-3);
+     transform: translateY(-50%);
+     transition: all var(--sv-motion-duration-medium) var(--sv-motion-ease-standard);
+     pointer-events: none;
+     
+     .sv-ui-control-base:focus + &,
+     .sv-ui-control-base:not(:placeholder-shown) + &,
+     .sv-ui-control-base[value]:not([value=""]) + & {
+       top: 0;
+       font-size: $label-font-size-sm;
+       transform: translateY(-50%);
+       background-color: var(--sv-bg-surface);
+       padding: 0 var(--sv-padding-1);
+     }
+   }
+   
+   /* ==========================================================================
+      6. RESPONSIVE ADAPTATIONS
+      ========================================================================== */
+   
+   // Responsive styling using the mixins from _mixins.scss
+   @include breakpoint-down('md') {
+     .sv-label-form.sv-label-inline {
+       flex-direction: column;
+       align-items: flex-start;
+       
+       .sv-ui-control-base {
+         width: 100%;
+         margin-left: 0;
+         margin-top: var(--sv-space-2);
+       }
+     }
+     
+     .sv-label-section {
+       font-size: $label-font-size-md;
+     }
+   }
+   
+   @include breakpoint-down('sm') {
+     .sv-label {
+       margin-bottom: var(--sv-space-1);
+     }
+     
+     .sv-label-lg {
+       font-size: $label-font-size-md;
+     }
+   }
+   
+   /* ==========================================================================
+      7. ACCESSIBILITY ENHANCEMENTS
+      ========================================================================== */
+   
+   // High contrast mode support
+   @media (forced-colors: active) {
+     .sv-label-required::after {
+       color: Mark;
+     }
+     
+     .sv-label-error,
+     .has-error > .sv-label {
+       color: Mark;
+     }
+     
+     .sv-label-section {
+       border-bottom-color: CanvasText;
+     }
+   }
+   
+   // Increased contrast support
+   @media (prefers-contrast: more) {
+     .sv-label-field {
+       color: var(--sv-text-primary);
+     }
+     
+     .sv-label .sv-label-help {
+       color: var(--sv-text-primary);
+     }
+   }

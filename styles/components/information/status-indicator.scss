@@ -1,0 +1,548 @@
+/**
+ * Status Indicator Component - UI Component Styles
+ * Version: 1.0.0
+ * Last Updated: April 29, 2025
+ * 
+ * This file provides the styling for the sv-status-indicator component,
+ * which extends the sv-info-display-base class.
+ * Status indicators communicate the state of a system, feature, or process.
+ */
+
+/* ==========================================================================
+   TABLE OF CONTENTS:
+   
+   1. VARIABLES & CONFIGURATION
+   2. BASE STATUS INDICATOR STYLES
+   3. STATUS INDICATOR TYPES
+   4. STATUS INDICATOR VARIATIONS
+   5. STATUS INDICATOR ANIMATIONS
+   6. RESPONSIVE ADAPTATIONS
+   7. ACCESSIBILITY ENHANCEMENTS
+   ========================================================================== */
+
+   @use '../mixins' as *;
+   @use '../information-display' as info-display;
+   
+   /* ==========================================================================
+      1. VARIABLES & CONFIGURATION
+      ========================================================================== */
+   
+   // Status indicator common variables
+   $status-dot-size: 8px;
+   $status-dot-size-sm: 6px;
+   $status-dot-size-lg: 10px;
+   $status-text-spacing: var(--sv-space-2);
+   $status-padding-x: var(--sv-padding-3);
+   $status-padding-y: var(--sv-padding-1);
+   $status-border-radius: var(--sv-radius-md);
+   $status-font-size: var(--sv-text-sm);
+   
+   // Status types colors
+   $status-success-color: var(--sv-success);
+   $status-warning-color: var(--sv-warning);
+   $status-error-color: var(--sv-error);
+   $status-info-color: var(--sv-info);
+   $status-neutral-color: var(--sv-text-secondary);
+   $status-offline-color: var(--sv-text-tertiary);
+   
+   // Status icon sizes
+   $status-icon-size: 16px;
+   $status-icon-size-sm: 14px;
+   $status-icon-size-lg: 18px;
+   
+   // Pulse animation
+   $status-pulse-duration: 2s;
+   $status-pulse-size-multiplier: 2.5;
+   
+   /* ==========================================================================
+      2. BASE STATUS INDICATOR STYLES
+      ========================================================================== */
+   
+   .sv-status-indicator {
+     // Extend the information display base class
+     @extend .sv-info-display-base;
+     
+     // Override and add status-specific styles
+     display: inline-flex;
+     align-items: center;
+     font-size: $status-font-size;
+     
+     // Status dot
+     .sv-status-dot {
+       width: $status-dot-size;
+       height: $status-dot-size;
+       border-radius: 50%;
+       display: inline-block;
+       margin-right: $status-text-spacing;
+       flex-shrink: 0;
+     }
+     
+     // Status icon
+     .sv-status-icon {
+       width: $status-icon-size;
+       height: $status-icon-size;
+       margin-right: $status-text-spacing;
+       flex-shrink: 0;
+     }
+     
+     // Status text
+     .sv-status-text {
+       font-weight: var(--sv-font-medium);
+     }
+     
+     // Status label (optional descriptive text)
+     .sv-status-label {
+       color: var(--sv-text-secondary);
+       margin-left: $status-text-spacing;
+     }
+   }
+   
+   /* ==========================================================================
+      3. STATUS INDICATOR TYPES
+      ========================================================================== */
+   
+   // Dot-only status indicator
+   .sv-status-dot-only {
+     .sv-status-dot {
+       margin-right: 0;
+     }
+   }
+   
+   // Badge-style status indicator
+   .sv-status-badge {
+     padding: $status-padding-y $status-padding-x;
+     border-radius: $status-border-radius;
+     
+     // Color styles handled in status types
+     &.sv-status-success {
+       background-color: rgba(76, 175, 80, 0.15);
+     }
+     
+     &.sv-status-warning {
+       background-color: rgba(255, 167, 38, 0.15);
+     }
+     
+     &.sv-status-error {
+       background-color: rgba(244, 67, 54, 0.15);
+     }
+     
+     &.sv-status-info {
+       background-color: rgba(41, 182, 246, 0.15);
+     }
+     
+     &.sv-status-neutral {
+       background-color: rgba(108, 117, 125, 0.15);
+     }
+     
+     &.sv-status-offline {
+       background-color: rgba(173, 181, 189, 0.15);
+     }
+   }
+   
+   // Icon status indicator
+   .sv-status-with-icon {
+     .sv-status-icon {
+       color: currentColor;
+     }
+   }
+   
+   // Connected status indicator (for real-time connections)
+   .sv-status-connected {
+     .sv-status-connection-indicator {
+       position: relative;
+       width: $status-dot-size;
+       height: $status-dot-size;
+       border-radius: 50%;
+       background-color: currentColor;
+       margin-right: $status-text-spacing;
+       
+       &::before {
+         content: "";
+         position: absolute;
+         top: 50%;
+         left: 50%;
+         width: 100%;
+         height: 100%;
+         border-radius: 50%;
+         background-color: currentColor;
+         opacity: 0.3;
+         transform: translate(-50%, -50%) scale(1.5);
+         animation: sv-status-ripple $status-pulse-duration infinite;
+       }
+     }
+   }
+   
+   @keyframes sv-status-ripple {
+     0% {
+       transform: translate(-50%, -50%) scale(1);
+       opacity: 0.3;
+     }
+     100% {
+       transform: translate(-50%, -50%) scale(2.5);
+       opacity: 0;
+     }
+   }
+   
+   /* ==========================================================================
+      4. STATUS INDICATOR VARIATIONS
+      ========================================================================== */
+   
+   // Status type colors
+   .sv-status-success {
+     color: $status-success-color;
+     
+     .sv-status-dot {
+       background-color: $status-success-color;
+     }
+   }
+   
+   .sv-status-warning {
+     color: $status-warning-color;
+     
+     .sv-status-dot {
+       background-color: $status-warning-color;
+     }
+   }
+   
+   .sv-status-error {
+     color: $status-error-color;
+     
+     .sv-status-dot {
+       background-color: $status-error-color;
+     }
+   }
+   
+   .sv-status-info {
+     color: $status-info-color;
+     
+     .sv-status-dot {
+       background-color: $status-info-color;
+     }
+   }
+   
+   .sv-status-neutral {
+     color: $status-neutral-color;
+     
+     .sv-status-dot {
+       background-color: $status-neutral-color;
+     }
+   }
+   
+   .sv-status-offline {
+     color: $status-offline-color;
+     
+     .sv-status-dot {
+       background-color: $status-offline-color;
+     }
+   }
+   
+   // Size variations
+   .sv-status-sm {
+     font-size: var(--sv-text-xs);
+     
+     .sv-status-dot {
+       width: $status-dot-size-sm;
+       height: $status-dot-size-sm;
+     }
+     
+     .sv-status-icon {
+       width: $status-icon-size-sm;
+       height: $status-icon-size-sm;
+     }
+     
+     &.sv-status-badge {
+       padding: calc($status-padding-y * 0.75) calc($status-padding-x * 0.75);
+     }
+   }
+   
+   .sv-status-lg {
+     font-size: var(--sv-text-base);
+     
+     .sv-status-dot {
+       width: $status-dot-size-lg;
+       height: $status-dot-size-lg;
+     }
+     
+     .sv-status-icon {
+       width: $status-icon-size-lg;
+       height: $status-icon-size-lg;
+     }
+     
+     &.sv-status-badge {
+       padding: calc($status-padding-y * 1.25) calc($status-padding-x * 1.25);
+     }
+   }
+   
+   // Pill-shaped status badge
+   .sv-status-badge.sv-status-pill {
+     border-radius: var(--sv-radius-full);
+   }
+   
+   // Border variation
+   .sv-status-bordered {
+     border: 1px solid currentColor;
+     padding: $status-padding-y $status-padding-x;
+     border-radius: $status-border-radius;
+     
+     &.sv-status-pill {
+       border-radius: var(--sv-radius-full);
+     }
+   }
+   
+   // Outline variation (only border, transparent bg)
+   .sv-status-outline {
+     background-color: transparent;
+     border: 1px solid currentColor;
+     padding: $status-padding-y $status-padding-x;
+     border-radius: $status-border-radius;
+     
+     &.sv-status-pill {
+       border-radius: var(--sv-radius-full);
+     }
+   }
+   
+   // Inverted colors
+   .sv-status-inverted {
+     &.sv-status-success {
+       background-color: $status-success-color;
+       color: var(--sv-text-on-dark);
+     }
+     
+     &.sv-status-warning {
+       background-color: $status-warning-color;
+       color: var(--sv-text-on-dark);
+     }
+     
+     &.sv-status-error {
+       background-color: $status-error-color;
+       color: var(--sv-text-on-dark);
+     }
+     
+     &.sv-status-info {
+       background-color: $status-info-color;
+       color: var(--sv-text-on-dark);
+     }
+     
+     &.sv-status-neutral {
+       background-color: $status-neutral-color;
+       color: var(--sv-text-on-dark);
+     }
+     
+     &.sv-status-offline {
+       background-color: $status-offline-color;
+       color: var(--sv-text-on-dark);
+     }
+     
+     .sv-status-dot {
+       background-color: var(--sv-text-on-dark);
+     }
+   }
+   
+   /* ==========================================================================
+      5. STATUS INDICATOR ANIMATIONS
+      ========================================================================== */
+   
+   // Pulsing dot
+   .sv-status-pulsing {
+     .sv-status-dot {
+       position: relative;
+       
+       &::after {
+         content: "";
+         position: absolute;
+         top: 0;
+         left: 0;
+         width: 100%;
+         height: 100%;
+         border-radius: 50%;
+         background-color: currentColor;
+         opacity: 0.3;
+         transform: scale(1);
+         animation: sv-status-pulse $status-pulse-duration infinite;
+       }
+     }
+   }
+   
+   @keyframes sv-status-pulse {
+     0% {
+       transform: scale(1);
+       opacity: 0.3;
+     }
+     100% {
+       transform: scale($status-pulse-size-multiplier);
+       opacity: 0;
+     }
+   }
+   
+   // Blinking animation
+   .sv-status-blinking {
+     animation: sv-status-blink 1s infinite alternate;
+   }
+   
+   @keyframes sv-status-blink {
+     0% {
+       opacity: 0.5;
+     }
+     100% {
+       opacity: 1;
+     }
+   }
+   
+   // Loading animation
+   .sv-status-loading {
+     position: relative;
+     
+     &::after {
+       content: "...";
+       display: inline-block;
+       overflow: hidden;
+       vertical-align: bottom;
+       animation: sv-status-loading-dots 1.5s infinite;
+       width: 0;
+     }
+   }
+   
+   @keyframes sv-status-loading-dots {
+     0% { width: 0; }
+     33% { width: 0.5em; }
+     66% { width: 1em; }
+     100% { width: 1.5em; }
+   }
+   
+   // Transition animation for status changes
+   .sv-status-transition {
+     transition: color 0.3s ease-in-out,
+                 background-color 0.3s ease-in-out,
+                 border-color 0.3s ease-in-out;
+     
+     .sv-status-dot {
+       transition: background-color 0.3s ease-in-out;
+     }
+   }
+   
+   /* ==========================================================================
+      6. RESPONSIVE ADAPTATIONS
+      ========================================================================== */
+   
+   @include breakpoint-down('md') {
+     // Smaller margins on medium screens
+     .sv-status-indicator {
+       .sv-status-dot,
+       .sv-status-icon {
+         margin-right: var(--sv-space-1);
+       }
+       
+       .sv-status-label {
+         margin-left: var(--sv-space-1);
+       }
+     }
+     
+     // Badge adjustments
+     .sv-status-badge {
+       padding: calc($status-padding-y * 0.9) calc($status-padding-x * 0.9);
+     }
+   }
+   
+   @include breakpoint-down('sm') {
+     // Stack vertically on very small screens if needed
+     .sv-status-responsive-stack {
+       flex-direction: column;
+       align-items: flex-start;
+       
+       .sv-status-label {
+         margin-left: 0;
+         margin-top: var(--sv-space-1);
+       }
+     }
+     
+     // Option to hide descriptive text on small screens
+     .sv-status-hide-text-sm {
+       .sv-status-text {
+         @include visually-hidden;
+       }
+     }
+   }
+   
+   /* ==========================================================================
+      7. ACCESSIBILITY ENHANCEMENTS
+      ========================================================================== */
+   
+   // Screen reader text
+   .sv-status-sr-text {
+     @include visually-hidden;
+   }
+   
+   // Focus visible for interactive status
+   button.sv-status-indicator,
+   a.sv-status-indicator {
+     cursor: pointer;
+     
+     &:focus-visible {
+       outline: $focus-ring-width solid $focus-ring-color;
+       outline-offset: $focus-ring-offset;
+     }
+   }
+   
+   // High contrast mode support
+   @media (forced-colors: active) {
+     .sv-status-indicator {
+       border: 1px solid transparent;
+       
+       .sv-status-dot {
+         background-color: currentColor;
+         border: 1px solid currentColor;
+       }
+       
+       &.sv-status-success,
+       &.sv-status-warning,
+       &.sv-status-error,
+       &.sv-status-info {
+         color: CanvasText;
+       }
+       
+       &.sv-status-inverted {
+         background-color: Highlight;
+         color: HighlightText;
+         
+         .sv-status-dot {
+           background-color: HighlightText;
+           border-color: HighlightText;
+         }
+       }
+     }
+     
+     .sv-status-badge,
+     .sv-status-bordered,
+     .sv-status-outline {
+       border: 1px solid CanvasText;
+     }
+     
+     // Ensure animations are visible
+     .sv-status-pulsing .sv-status-dot::after {
+       border: 1px dashed currentColor;
+       background-color: transparent;
+     }
+   }
+   
+   // Reduced motion preference
+   @media (prefers-reduced-motion: reduce) {
+     .sv-status-pulsing .sv-status-dot::after,
+     .sv-status-blinking,
+     .sv-status-connected .sv-status-connection-indicator::before {
+       animation: none;
+     }
+     
+     .sv-status-transition {
+       transition: none;
+       
+       .sv-status-dot {
+         transition: none;
+       }
+     }
+     
+     .sv-status-loading::after {
+       content: "...";
+       width: auto;
+       animation: none;
+     }
+   }

@@ -1,0 +1,599 @@
+/**
+ * Tag Component - UI Component Styles
+ * Version: 1.0.0
+ * Last Updated: April 29, 2025
+ * 
+ * This file provides the styling for the sv-tag component,
+ * which extends the sv-info-display-base class.
+ * Tags/chips are compact elements used for labeling, categorizing,
+ * or showing selections/filters.
+ */
+
+/* ==========================================================================
+   TABLE OF CONTENTS:
+   
+   1. VARIABLES & CONFIGURATION
+   2. BASE TAG STYLES
+   3. TAG TYPES
+   4. TAG VARIATIONS
+   5. TAG STATES
+   6. TAG ANIMATIONS
+   7. RESPONSIVE ADAPTATIONS
+   8. ACCESSIBILITY ENHANCEMENTS
+   ========================================================================== */
+
+   @use '../mixins' as *;
+   @use '../information-display' as info-display;
+   
+   /* ==========================================================================
+      1. VARIABLES & CONFIGURATION
+      ========================================================================== */
+   
+   // Tag-specific variables
+   $tag-font-size: var(--sv-text-sm);
+   $tag-font-weight: var(--sv-font-medium);
+   $tag-padding-x: var(--sv-padding-3);
+   $tag-padding-y: var(--sv-padding-1);
+   $tag-border-radius: var(--sv-radius-md);
+   $tag-height: 28px;
+   
+   // Tag with icon/avatar
+   $tag-icon-size: 16px;
+   $tag-avatar-size: 20px;
+   $tag-icon-spacing: var(--sv-space-2);
+   
+   // Tag colors
+   $tag-bg-default: var(--sv-bg-element);
+   $tag-text-default: var(--sv-text-primary);
+   $tag-border-default: var(--sv-border-light);
+   $tag-bg-primary: var(--sv-primary-light);
+   $tag-text-primary: var(--sv-primary-dark);
+   $tag-bg-secondary: var(--sv-secondary-light);
+   $tag-text-secondary: var(--sv-secondary-dark);
+   $tag-bg-success: rgba(76, 175, 80, 0.2);
+   $tag-text-success: var(--sv-success);
+   $tag-bg-warning: rgba(255, 167, 38, 0.2);
+   $tag-text-warning: var(--sv-warning);
+   $tag-bg-error: rgba(244, 67, 54, 0.2);
+   $tag-text-error: var(--sv-error);
+   $tag-bg-info: rgba(41, 182, 246, 0.2);
+   $tag-text-info: var(--sv-info);
+   
+   /* ==========================================================================
+      2. BASE TAG STYLES
+      ========================================================================== */
+   
+   .sv-tag {
+     // Extend the information display base class
+     @extend .sv-info-display-base;
+     
+     // Override and add tag-specific styles
+     display: inline-flex;
+     align-items: center;
+     justify-content: center;
+     font-size: $tag-font-size;
+     font-weight: $tag-font-weight;
+     padding: $tag-padding-y $tag-padding-x;
+     border-radius: $tag-border-radius;
+     height: $tag-height;
+     max-width: 100%;
+     
+     // Default styling
+     background-color: $tag-bg-default;
+     color: $tag-text-default;
+     border: 1px solid $tag-border-default;
+     
+     // Text handling
+     white-space: nowrap;
+     overflow: hidden;
+     text-overflow: ellipsis;
+     
+     // Spacing when in groups
+     & + & {
+       margin-left: var(--sv-space-2);
+     }
+     
+     // Icon handling
+     .sv-tag-icon,
+     .sv-tag-avatar {
+       margin-right: $tag-icon-spacing;
+     }
+     
+     .sv-tag-icon {
+       width: $tag-icon-size;
+       height: $tag-icon-size;
+       display: inline-flex;
+       align-items: center;
+       justify-content: center;
+     }
+     
+     .sv-tag-avatar {
+       width: $tag-avatar-size;
+       height: $tag-avatar-size;
+       border-radius: 50%;
+       overflow: hidden;
+     }
+     
+     // Close/remove button
+     .sv-tag-remove {
+       margin-left: var(--sv-space-2);
+       margin-right: calc(-1 * var(--sv-space-1));
+       width: 16px;
+       height: 16px;
+       border-radius: 50%;
+       display: inline-flex;
+       align-items: center;
+       justify-content: center;
+       cursor: pointer;
+       opacity: 0.7;
+       transition: opacity var(--sv-motion-duration-short) var(--sv-motion-ease-standard),
+                   background-color var(--sv-motion-duration-short) var(--sv-motion-ease-standard);
+       
+       &:hover {
+         opacity: 1;
+         background-color: rgba(0, 0, 0, 0.1);
+       }
+       
+       &::before,
+       &::after {
+         content: "";
+         position: absolute;
+         width: 8px;
+         height: 1.5px;
+         background-color: currentColor;
+       }
+       
+       &::before {
+         transform: rotate(45deg);
+       }
+       
+       &::after {
+         transform: rotate(-45deg);
+       }
+     }
+   }
+   
+   // Tag group container
+   .sv-tag-group {
+     display: flex;
+     flex-wrap: wrap;
+     gap: var(--sv-space-2);
+     
+     // Inline tag group
+     &.sv-tag-group-inline {
+       flex-wrap: nowrap;
+       overflow-x: auto;
+       padding-bottom: var(--sv-padding-1); // For scrollbar space
+       
+       // Hide scrollbar visually but maintain functionality
+       &::-webkit-scrollbar {
+         height: 4px;
+       }
+       
+       &::-webkit-scrollbar-track {
+         background: transparent;
+       }
+       
+       &::-webkit-scrollbar-thumb {
+         background-color: rgba(0, 0, 0, 0.2);
+         border-radius: $tag-border-radius;
+       }
+     }
+   }
+   
+   /* ==========================================================================
+      3. TAG TYPES
+      ========================================================================== */
+   
+   // Filter tag (used for filtering data, often toggleable)
+   .sv-tag-filter {
+     cursor: pointer;
+     user-select: none;
+     transition: background-color var(--sv-motion-duration-short) var(--sv-motion-ease-standard),
+                 color var(--sv-motion-duration-short) var(--sv-motion-ease-standard),
+                 border-color var(--sv-motion-duration-short) var(--sv-motion-ease-standard);
+                 
+     &.sv-tag-selected {
+       background-color: $tag-bg-primary;
+       color: $tag-text-primary;
+       border-color: $tag-text-primary;
+     }
+   }
+   
+   // Input tag (used in tag input fields)
+   .sv-tag-input {
+     margin-bottom: var(--sv-space-1);
+     margin-right: var(--sv-space-1);
+     
+     .sv-tag-remove {
+       margin-left: var(--sv-space-1);
+     }
+   }
+   
+   // Link tag
+   .sv-tag-link {
+     cursor: pointer;
+     text-decoration: none;
+     transition: background-color var(--sv-motion-duration-short) var(--sv-motion-ease-standard),
+                 transform var(--sv-motion-duration-short) var(--sv-motion-ease-standard);
+     
+     &:hover {
+       background-color: var(--sv-bg-element-hover);
+     }
+     
+     &:active {
+       transform: translateY(1px);
+     }
+   }
+   
+   // Count tag (shows a number of items)
+   .sv-tag-count {
+     .sv-tag-value {
+       margin-left: var(--sv-space-1);
+       font-weight: var(--sv-font-semibold);
+       background-color: rgba(0, 0, 0, 0.1);
+       border-radius: var(--sv-radius-sm);
+       padding: 0 var(--sv-padding-1);
+     }
+   }
+   
+   /* ==========================================================================
+      4. TAG VARIATIONS
+      ========================================================================== */
+   
+   // Color variants
+   .sv-tag-primary {
+     background-color: $tag-bg-primary;
+     color: $tag-text-primary;
+     border-color: $tag-bg-primary;
+   }
+   
+   .sv-tag-secondary {
+     background-color: $tag-bg-secondary;
+     color: $tag-text-secondary;
+     border-color: $tag-bg-secondary;
+   }
+   
+   .sv-tag-success {
+     background-color: $tag-bg-success;
+     color: $tag-text-success;
+     border-color: $tag-bg-success;
+   }
+   
+   .sv-tag-warning {
+     background-color: $tag-bg-warning;
+     color: $tag-text-warning;
+     border-color: $tag-bg-warning;
+   }
+   
+   .sv-tag-error {
+     background-color: $tag-bg-error;
+     color: $tag-text-error;
+     border-color: $tag-bg-error;
+   }
+   
+   .sv-tag-info {
+     background-color: $tag-bg-info;
+     color: $tag-text-info;
+     border-color: $tag-bg-info;
+   }
+   
+   // Outlined variants
+   .sv-tag-outlined {
+     background-color: transparent;
+     
+     &.sv-tag-primary {
+       color: $tag-text-primary;
+       border-color: $tag-text-primary;
+     }
+     
+     &.sv-tag-secondary {
+       color: $tag-text-secondary;
+       border-color: $tag-text-secondary;
+     }
+     
+     &.sv-tag-success {
+       color: $tag-text-success;
+       border-color: $tag-text-success;
+     }
+     
+     &.sv-tag-warning {
+       color: $tag-text-warning;
+       border-color: $tag-text-warning;
+     }
+     
+     &.sv-tag-error {
+       color: $tag-text-error;
+       border-color: $tag-text-error;
+     }
+     
+     &.sv-tag-info {
+       color: $tag-text-info;
+       border-color: $tag-text-info;
+     }
+   }
+   
+   // Size variants
+   .sv-tag-sm {
+     height: 24px;
+     font-size: var(--sv-text-xs);
+     padding: calc($tag-padding-y * 0.8) calc($tag-padding-x * 0.8);
+     
+     .sv-tag-icon {
+       width: 14px;
+       height: 14px;
+     }
+     
+     .sv-tag-avatar {
+       width: 16px;
+       height: 16px;
+     }
+     
+     .sv-tag-remove {
+       width: 14px;
+       height: 14px;
+       
+       &::before,
+       &::after {
+         width: 7px;
+       }
+     }
+   }
+   
+   .sv-tag-lg {
+     height: 32px;
+     font-size: var(--sv-text-base);
+     padding: calc($tag-padding-y * 1.2) calc($tag-padding-x * 1.2);
+     
+     .sv-tag-icon {
+       width: 18px;
+       height: 18px;
+     }
+     
+     .sv-tag-avatar {
+       width: 24px;
+       height: 24px;
+     }
+   }
+   
+   // Pill-shaped tag
+   .sv-tag-pill {
+     border-radius: var(--sv-radius-full);
+   }
+   
+   // Solid color tags (no border)
+   .sv-tag-solid {
+     border: none;
+     
+     &.sv-tag-primary {
+       background-color: var(--sv-primary);
+       color: var(--sv-text-on-dark);
+     }
+     
+     &.sv-tag-secondary {
+       background-color: var(--sv-secondary);
+       color: var(--sv-text-on-dark);
+     }
+     
+     &.sv-tag-success {
+       background-color: var(--sv-success);
+       color: var(--sv-text-on-dark);
+     }
+     
+     &.sv-tag-warning {
+       background-color: var(--sv-warning);
+       color: var(--sv-text-on-dark);
+     }
+     
+     &.sv-tag-error {
+       background-color: var(--sv-error);
+       color: var(--sv-text-on-dark);
+     }
+     
+     &.sv-tag-info {
+       background-color: var(--sv-info);
+       color: var(--sv-text-on-dark);
+     }
+   }
+   
+   /* ==========================================================================
+      5. TAG STATES
+      ========================================================================== */
+   
+   // Inactive tag
+   .sv-tag-inactive {
+     opacity: 0.6;
+   }
+   
+   // Disabled tag
+   .sv-tag-disabled,
+   .sv-tag[disabled] {
+     opacity: 0.5;
+     cursor: not-allowed;
+     pointer-events: none;
+   }
+   
+   // Selected tag
+   .sv-tag-selected {
+     font-weight: var(--sv-font-semibold);
+   }
+   
+   // Max-width tag with ellipsis
+   .sv-tag-truncate {
+     max-width: 150px;
+     
+     .sv-tag-text {
+       overflow: hidden;
+       text-overflow: ellipsis;
+       white-space: nowrap;
+     }
+   }
+   
+   /* ==========================================================================
+      6. TAG ANIMATIONS
+      ========================================================================== */
+   
+   // Animation for new tags
+   @keyframes sv-tag-appear {
+     from {
+       opacity: 0;
+       transform: scale(0.8);
+     }
+     to {
+       opacity: 1;
+       transform: scale(1);
+     }
+   }
+   
+   // Animation for removing tags
+   @keyframes sv-tag-disappear {
+     from {
+       opacity: 1;
+       transform: scale(1);
+     }
+     to {
+       opacity: 0;
+       transform: scale(0.8);
+       width: 0;
+       padding: 0;
+       margin: 0;
+     }
+   }
+   
+   .sv-tag-appear {
+     animation: sv-tag-appear var(--sv-motion-duration-medium) var(--sv-motion-ease-standard) forwards;
+   }
+   
+   .sv-tag-disappear {
+     animation: sv-tag-disappear var(--sv-motion-duration-medium) var(--sv-motion-ease-standard) forwards;
+   }
+   
+   /* ==========================================================================
+      7. RESPONSIVE ADAPTATIONS
+      ========================================================================== */
+   
+   @include breakpoint-down('md') {
+     .sv-tag {
+       font-size: $tag-font-size * 0.9;
+     }
+     
+     .sv-tag-group {
+       &:not(.sv-tag-group-inline) {
+         .sv-tag {
+           margin-bottom: var(--sv-space-1);
+         }
+       }
+     }
+   }
+   
+   @include breakpoint-down('sm') {
+     .sv-tag {
+       height: 26px;
+       padding: calc($tag-padding-y * 0.8) calc($tag-padding-x * 0.8);
+     }
+     
+     .sv-tag-lg {
+       height: 30px;
+     }
+     
+     // Stack tag groups on small screens
+     .sv-tag-group-stack-sm {
+       flex-direction: column;
+       align-items: flex-start;
+       
+       .sv-tag {
+         width: 100%;
+         justify-content: flex-start;
+         margin-left: 0 !important;
+         margin-right: 0 !important;
+         margin-bottom: var(--sv-space-1);
+       }
+     }
+     
+     // Truncate more aggressively on small screens
+     .sv-tag-truncate {
+       max-width: 120px;
+     }
+   }
+   
+   /* ==========================================================================
+      8. ACCESSIBILITY ENHANCEMENTS
+      ========================================================================== */
+   
+   // Focus visible for interactive tags
+   .sv-tag-filter,
+   .sv-tag-link,
+   a.sv-tag {
+     &:focus-visible {
+       outline: $focus-ring-width solid $focus-ring-color;
+       outline-offset: $focus-ring-offset;
+     }
+   }
+   
+   // Screen reader only content
+   .sv-tag-sr-only {
+     @include visually-hidden;
+   }
+   
+   // High contrast mode support
+   @media (forced-colors: active) {
+     .sv-tag {
+       border: 1px solid CanvasText;
+       
+       &.sv-tag-primary,
+       &.sv-tag-secondary,
+       &.sv-tag-success,
+       &.sv-tag-warning,
+       &.sv-tag-error,
+       &.sv-tag-info {
+         border: 1px solid CanvasText;
+       }
+       
+       &.sv-tag-solid {
+         background-color: Highlight;
+         color: HighlightText;
+         border-color: Highlight;
+       }
+       
+       &.sv-tag-selected {
+         background-color: Highlight;
+         color: HighlightText;
+         border-color: Highlight;
+       }
+     }
+     
+     // Ensure visible interactive states
+     .sv-tag-filter,
+     .sv-tag-link {
+       &:hover,
+       &:active {
+         border-style: dashed;
+       }
+     }
+     
+     // Make remove button more visible
+     .sv-tag-remove {
+       &:hover {
+         background-color: ButtonFace;
+       }
+       
+       &::before,
+       &::after {
+         background-color: CanvasText;
+       }
+     }
+   }
+   
+   // Reduced motion preference
+   @media (prefers-reduced-motion: reduce) {
+     .sv-tag-appear,
+     .sv-tag-disappear {
+       animation: none;
+     }
+     
+     .sv-tag-link {
+       &:active {
+         transform: none;
+       }
+     }
+   }
