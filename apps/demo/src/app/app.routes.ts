@@ -11,7 +11,13 @@ export const appRoutes: Route[] = [
       { path: 'home', component: HomeComponent },
       {
         path: 'action',
-        loadChildren: () => import('./pages/action/button-demo/button-demo.component').then(m => m.ButtonDemoComponent)
+        children: [
+          { path: '', redirectTo: 'button', pathMatch: 'full' },
+          { 
+            path: 'button', 
+            loadComponent: () => import('./pages/action/button-demo/button-demo.component').then(m => m.ButtonDemoComponent) 
+          }
+        ]
       },
       // Other feature modules will be lazy loaded here
       { path: '**', redirectTo: 'home' }

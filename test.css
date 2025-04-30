@@ -19868,19 +19868,6 @@ a.sv-avatar:focus-visible,
   background-repeat: no-repeat;
   background-position: center;
 }
-.sv-snackbar-leading.sv-snackbar-success::before {
-  background-image: url("path/to/success-icon.svg");
-}
-.sv-snackbar-leading.sv-snackbar-error::before {
-  background-image: url("path/to/error-icon.svg");
-}
-.sv-snackbar-leading.sv-snackbar-warning::before {
-  background-image: url("path/to/warning-icon.svg");
-}
-.sv-snackbar-leading.sv-snackbar-info::before {
-  background-image: url("path/to/info-icon.svg");
-}
-
 /* ==========================================================================
    5. SNACKBAR POSITIONS
    ========================================================================== */

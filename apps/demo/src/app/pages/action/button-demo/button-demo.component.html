@@ -1,68 +1,100 @@
 <div class="button-demo">
   <mat-card>
     <mat-card-header>
-      <mat-card-title>Button Demo</mat-card-title>
-      <mat-card-subtitle>Various button styles and states</mat-card-subtitle>
+      <mat-card-title>SkillVo Button Component</mat-card-title>
+      <mat-card-subtitle>A showcase of the sv-button component with various styles and states</mat-card-subtitle>
     </mat-card-header>
     <mat-card-content>
-      <!-- Basic Buttons -->
+      <!-- Button Variants -->
       <div class="demo-section">
-        <h3>Basic Buttons</h3>
-        <div class="button-row">
-          <button mat-button>Basic</button>
-          <button mat-raised-button>Raised</button>
-          <button mat-stroked-button>Stroked</button>
-          <button mat-flat-button>Flat</button>
-        </div>
-      </div>
-
-      <!-- Icon Buttons -->
-      <div class="demo-section">
-        <h3>Icon Buttons</h3>
-        <div class="button-row">
-          <button mat-icon-button>
-            <mat-icon>favorite</mat-icon>
-          </button>
-          <button mat-fab>
-            <mat-icon>add</mat-icon>
-          </button>
-          <button mat-mini-fab>
-            <mat-icon>star</mat-icon>
-          </button>
-        </div>
-      </div>
-
-      <!-- Colored Buttons -->
-      <div class="demo-section">
-        <h3>Colored Buttons</h3>
-        <div class="button-row">
-          <button mat-button color="primary">Primary</button>
-          <button mat-button color="accent">Accent</button>
-          <button mat-button color="warn">Warn</button>
-        </div>
-      </div>
-
-      <!-- Button States -->
-      <div class="demo-section">
-        <h3>Button States</h3>
-        <div class="button-row">
-          <button mat-button disabled>Disabled</button>
-          <button mat-button class="loading">
-            <mat-spinner diameter="20"></mat-spinner>
-            Loading
-          </button>
-          <button mat-button class="selected">Selected</button>
+        <h3>Button Variants</h3>
+        <p>The button component supports multiple visual variants to represent different levels of emphasis.</p>
+        <div class="button-grid">
+          <div *ngFor="let variant of variants" class="button-item">
+            <sv-button [variant]="variant">{{ variant | titlecase }}</sv-button>
+            <span class="button-label">{{ variant }}</span>
+          </div>
         </div>
       </div>
 
       <!-- Button Sizes -->
       <div class="demo-section">
         <h3>Button Sizes</h3>
+        <p>Buttons come in multiple sizes to accommodate different UI contexts.</p>
         <div class="button-row">
-          <button mat-button class="small">Small</button>
-          <button mat-button>Medium</button>
-          <button mat-button class="large">Large</button>
+          <sv-button *ngFor="let size of sizes" [size]="size" variant="primary">
+            {{ size | uppercase }} Button
+          </sv-button>
         </div>
+      </div>
+
+      <!-- Button with Icons -->
+      <div class="demo-section">
+        <h3>Buttons with Icons</h3>
+        <p>Icons can be positioned on either side of the button text.</p>
+        <div class="button-row">
+          <sv-button variant="primary" icon="add" iconPosition="left">
+            Add Item
+          </sv-button>
+          <sv-button variant="secondary" icon="delete" iconPosition="left">
+            Delete
+          </sv-button>
+          <sv-button variant="tertiary" icon="arrow_forward" iconPosition="right">
+            Continue
+          </sv-button>
+        </div>
+      </div>
+
+      <!-- Button States -->
+      <div class="demo-section">
+        <h3>Button States</h3>
+        <p>Buttons have different states to represent their interactive status.</p>
+        <div class="button-row">
+          <sv-button variant="primary">Normal</sv-button>
+          <sv-button variant="primary" [disabled]="true">Disabled</sv-button>
+          <sv-button variant="primary" [loading]="isLoading" (clicked)="toggleLoading()">
+            {{ isLoading ? 'Loading...' : 'Click to Load' }}
+          </sv-button>
+        </div>
+      </div>
+
+      <!-- Full Width Button -->
+      <div class="demo-section">
+        <h3>Full Width Button</h3>
+        <p>Button can expand to fill its container width.</p>
+        <sv-button variant="primary" [fullWidth]="true">Full Width Button</sv-button>
+      </div>
+      
+      <!-- Interactive Example -->
+      <div class="demo-section">
+        <h3>Interactive Example</h3>
+        <p>Experiment with different button configurations:</p>
+        <div class="interactive-row">
+          <sv-button variant="primary" (clicked)="toggleLoading()">
+            Toggle Loading State
+          </sv-button>
+          <sv-button variant="secondary" routerLink="/home">
+            Navigate to Home
+          </sv-button>
+          <sv-button variant="outline" (clicked)="showAlert('Button clicked!')">
+            Show Alert
+          </sv-button>
+        </div>
+      </div>
+      
+      <!-- Usage Example -->
+      <div class="demo-section code-example">
+        <h3>Usage Example</h3>
+        <pre>
+&lt;sv-button 
+  variant="primary" 
+  size="md"
+  [disabled]="false"
+  [loading]="isLoading"
+  (clicked)="handleClick()"&gt;
+  Button Text
+&lt;/sv-button&gt;
+        </pre>
       </div>
     </mat-card-content>
   </mat-card>

@@ -9,7 +9,10 @@
   left: 0;
   right: 0;
   z-index: 100;
+  background-color: var(--sv-primary);
+  color: var(--sv-text-on-dark);
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .logo {
@@ -19,6 +22,10 @@
   font-weight: 500;
   font-size: 1.2rem;
   cursor: pointer;
+  
+  .mat-icon {
+    color: var(--sv-text-on-dark);
+  }
 }
 
 .spacer {
@@ -34,5 +41,13 @@
     font-size: 20px;
     width: 20px;
     height: 20px;
+    color: var(--sv-text-on-dark);
+  }
+  
+  .mat-mdc-slide-toggle {
+    --mdc-switch-selected-track-color: var(--sv-primary-light);
+    --mdc-switch-selected-handle-color: var(--sv-text-on-dark);
+    --mdc-switch-unselected-track-color: rgba(255, 255, 255, 0.3);
+    --mdc-switch-unselected-handle-color: var(--sv-text-on-dark);
   }
 } 

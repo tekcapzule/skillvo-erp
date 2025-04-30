@@ -1,2 +1,65 @@
-/* You can add global styles to this file, and also import other style files */
+@use '@angular/material' as mat;
+@use 'sass:map';
+
+/* Import main styles including theme system */
 @import '../../../styles/main.scss';
+
+/* Import Material prebuilt theme as base */
+@import '@angular/material/prebuilt-themes/indigo-pink.css';
+
+/* Import Material Icons font */
+@import url('https://fonts.googleapis.com/icon?family=Material+Icons');
+
+/* Override Material theming with SkillVo theme variables */
+:root {
+  --mdc-filled-text-field-container-color: var(--sv-bg-surface);
+  --mdc-filled-text-field-label-text-color: var(--sv-text-secondary);
+  --mdc-filled-text-field-input-text-color: var(--sv-text-primary);
+  --mdc-filled-text-field-focus-active-indicator-color: var(--sv-primary);
+  --mdc-filled-text-field-focus-label-text-color: var(--sv-primary);
+  
+  --mat-toolbar-container-background-color: var(--sv-primary);
+  --mat-toolbar-container-text-color: var(--sv-text-on-dark);
+  
+  --mat-sidenav-container-background-color: var(--sv-bg-primary);
+  --mat-sidenav-container-text-color: var(--sv-text-primary);
+}
+
+/* Global styles */
+html, body {
+  height: 100%;
+  margin: 0;
+  background-color: var(--sv-bg-primary);
+  color: var(--sv-text-primary);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+body {
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.mat-mdc-card {
+  background-color: var(--sv-bg-surface);
+  color: var(--sv-text-primary);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Fix expansion panel theming */
+.mat-expansion-panel {
+  background-color: var(--sv-bg-surface) !important;
+  color: var(--sv-text-primary) !important;
+}
+
+.mat-expansion-panel-header-title,
+.mat-expansion-panel-header-description {
+  color: var(--sv-text-primary) !important;
+}
+
+/* Add transitions for smooth theme changes */
+.color-scheme-transition,
+.color-scheme-transition *,
+.color-scheme-transition *:before,
+.color-scheme-transition *:after {
+  transition: all 0.3s ease !important;
+  transition-delay: 0 !important;
+}

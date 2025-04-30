@@ -4,6 +4,7 @@
   overflow-y: auto;
   background-color: var(--sv-bg-surface);
   border-right: 1px solid var(--sv-border-light);
+  transition: background-color 0.3s ease, border-color 0.3s ease;
   
   .sidenav-header {
     padding: 16px;
@@ -13,6 +14,7 @@
       margin: 0;
       font-weight: 500;
       color: var(--sv-text-primary);
+      transition: color 0.3s ease;
     }
   }
   
@@ -38,6 +40,14 @@
     .mat-expansion-panel-header-title {
       color: var(--sv-text-primary);
     }
+    
+    &:hover {
+      background-color: var(--sv-bg-element-hover) !important;
+    }
+  }
+  
+  .mat-expansion-panel-body {
+    padding: 0;
   }
 }
 
@@ -45,9 +55,11 @@
   display: flex;
   align-items: center;
   gap: 8px;
+  transition: color 0.3s ease;
   
   .mat-icon {
     color: var(--sv-text-secondary);
+    transition: color 0.3s ease;
   }
 }
 
@@ -56,11 +68,22 @@
   padding-left: 8px;
 }
 
+mat-nav-list a.mat-mdc-list-item {
+  color: var(--sv-text-primary);
+
+  &:hover {
+    background-color: var(--sv-bg-element-hover);
+  }
+}
+
 .active-link {
-  background-color: var(--sv-bg-element-active);
-  color: var(--sv-primary);
+  background-color: var(--sv-bg-element-active) !important;
   
-  .mat-icon {
+  .submenu-item {
     color: var(--sv-primary);
+  
+    .mat-icon {
+      color: var(--sv-primary);
+    }
   }
 } 

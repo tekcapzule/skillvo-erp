@@ -3,20 +3,27 @@
   flex-direction: column;
   height: 100vh;
   width: 100%;
+  background-color: var(--sv-bg-primary);
+  color: var(--sv-text-primary);
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .sidenav-container {
   flex: 1;
   margin-top: 64px; /* Match the height of the header */
+  background-color: var(--sv-bg-primary);
+  transition: background-color 0.3s ease;
 }
 
 .sidenav {
   width: 280px;
+  border-right: 1px solid var(--sv-border-light);
 }
 
 .content {
-  background-color: var(--sv-bg-body);
+  background-color: var(--sv-bg-primary);
   min-height: calc(100vh - 64px);
+  transition: background-color 0.3s ease;
 }
 
 .content-container {
