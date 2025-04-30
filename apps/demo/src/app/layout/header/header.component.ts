@@ -70,8 +70,10 @@ export class HeaderComponent implements OnInit {
     
     // Apply theme
     if (isDark) {
+      document.body.classList.add('dark-theme');
       document.documentElement.setAttribute('data-theme', 'dark');
     } else {
+      document.body.classList.remove('dark-theme');
       document.documentElement.setAttribute('data-theme', 'light');
     }
     

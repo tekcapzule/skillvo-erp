@@ -1,14 +1,17 @@
 .demo-shell-container {
   display: flex;
   flex-direction: column;
-  padding: 24px;
+  padding: 8px;
   height: 100%;
+  max-width: 1800px;
+  margin: 0 auto;
+  width: 100%;
   
   .demo-header {
-    margin-bottom: 24px;
+    margin-bottom: 16px;
     
     h1 {
-      margin: 0 0 8px;
+      margin: 0 0 4px;
       font-size: 28px;
       font-weight: 500;
       color: var(--sv-text-primary);
@@ -20,23 +23,60 @@
       font-size: 16px;
     }
   }
+}
+
+// Main tab group styles
+::ng-deep .mat-mdc-tab-group {
+  height: 100%;
   
-  // Main tab group styles
-  ::ng-deep .mat-mdc-tab-group {
-    height: 100%;
-    
-    .mat-mdc-tab-body-wrapper {
-      flex-grow: 1;
+  .mat-mdc-tab-body-wrapper {
+    flex-grow: 1;
+  }
+  
+  .mat-mdc-tab {
+    .mdc-tab__text-label {
+      color: var(--sv-text-primary);
     }
+    
+    &.mdc-tab--active {
+      .mdc-tab__text-label {
+        color: var(--sv-primary);
+      }
+      
+      .mdc-tab-indicator__content--underline {
+        border-color: var(--sv-primary) !important;
+      }
+    }
+  }
+  
+  .mat-mdc-tab-header {
+    --mdc-tab-indicator-active-indicator-color: var(--sv-primary) !important;
+    --mat-tab-header-active-label-text-color: var(--sv-primary) !important;
+    --mat-tab-header-inactive-label-text-color: var(--sv-text-primary) !important;
+    --mat-tab-header-active-ripple-color: var(--sv-primary-light) !important;
+    --mat-tab-header-inactive-ripple-color: var(--sv-bg-element-hover) !important;
+    
+    border-bottom: 1px solid var(--sv-border-light);
+    background-color: var(--sv-bg-surface) !important;
+  }
+  
+  .mat-mdc-tab-header .mdc-tab-indicator__content--underline {
+    border-color: var(--sv-primary) !important;
+  }
+  
+  .mat-mdc-tab-body-content {
+    background-color: var(--sv-bg-surface) !important;
+    color: var(--sv-text-primary) !important;
   }
 }
 
 // Tab content styles
 .tab-content {
-  padding: 24px 0;
+  padding: 16px 4px;
   display: flex;
   flex-direction: column;
-  height: calc(100vh - 200px); // Adjust based on header and tabs height
+  height: calc(100vh - 180px);
+  width: 100%;
 }
 
 // Overview tab
@@ -65,6 +105,7 @@
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 24px;
+  width: 100%;
   
   .variant-item {
     display: flex;
@@ -75,7 +116,7 @@
     transition: box-shadow 0.2s ease;
     
     &:hover {
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 4px 12px var(--sv-shadow-light);
     }
     
     .variant-preview {
@@ -125,6 +166,7 @@
 .properties-table-container,
 .events-table-container {
   margin-bottom: 32px;
+  width: 100%;
   
   h3 {
     margin: 0 0 16px;
@@ -138,7 +180,7 @@
     border-collapse: collapse;
     
     th, td {
-      padding: 12px 16px;
+      padding: 10px 12px;
       text-align: left;
       border-bottom: 1px solid var(--sv-border-light);
     }
@@ -178,8 +220,11 @@
   display: flex;
   flex-direction: column;
   gap: 24px;
+  width: 100%;
   
   .code-snippet {
+    width: 100%;
+    
     h3 {
       margin: 0 0 8px;
       font-size: 18px;
@@ -194,10 +239,11 @@
     
     pre {
       margin: 0;
-      padding: 16px;
+      padding: 12px;
       border-radius: 4px;
       background-color: var(--sv-bg-element);
       overflow-x: auto;
+      width: 100%;
       
       code {
         font-family: 'Roboto Mono', monospace;
@@ -213,16 +259,18 @@
   height: 100%;
   display: flex;
   flex-direction: column;
+  width: 100%;
   
   .playground-horizontal-layout {
     display: flex;
     flex-direction: row;
     height: 100%;
-    gap: 24px;
-    min-height: calc(100vh - 250px); // Ensure it takes up most of the viewport height
+    gap: 16px;
+    min-height: calc(100vh - 250px);
+    width: 100%;
     
     .component-preview-wrapper {
-      flex: 3;
+      flex: 4;
       display: flex;
       flex-direction: column;
       
@@ -231,13 +279,13 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        padding: 24px;
+        padding: 20px;
         border: 1px solid var(--sv-border-light);
         border-radius: 4px;
         background-color: var(--sv-bg-surface);
-        min-height: 600px;
-        position: relative; /* Add positioning context */
-        flex-direction: column; /* Stack elements vertically */
+        min-height: 400px;
+        position: relative;
+        flex-direction: column;
         
         /* Component mount point styling */
         .component-mount-point {
@@ -254,33 +302,36 @@
           margin-top: 20px;
           
           .sv-button {
-            display: inline-block;
-            padding: 12px 24px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8px 16px;
             border: none;
             border-radius: 4px;
-            font-size: 16px;
+            font-size: 14px;
             font-weight: 500;
             cursor: pointer;
-            background-color: var(--sv-primary, #2196f3);
+            background-color: var(--sv-primary);
             color: white;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            min-width: 120px;
             
-            &:hover {
-              background-color: var(--sv-primary-dark, #1976d2);
+            &.sv-button-primary {
+              background-color: var(--sv-primary);
+            }
+            
+            .sv-button-content {
+              color: white;
+              display: inline-flex;
+              align-items: center;
+              gap: 8px;
             }
           }
         }
         
         /* Debug placeholder styling */
         .component-debug-placeholder {
-          position: absolute;
-          top: 16px;
-          left: 16px;
-          padding: 4px 8px;
-          background-color: rgba(0,0,0,0.05);
-          border-radius: 4px;
-          font-size: 12px;
-          color: var(--sv-text-tertiary);
-          pointer-events: none; /* Prevent blocking component interaction */
+          display: none;
         }
         
         /* Add visual indicator if component is not visible */
@@ -298,13 +349,13 @@
         ::ng-deep {
           sv-button {
             margin: 0 auto;
-            display: inline-block !important; /* Force display */
+            display: inline-block !important;
             
             /* Make button content more visible */
             .sv-button {
               font-size: 16px;
               padding: 12px 24px;
-              min-width: 200px; /* Ensure button has minimum width */
+              min-width: 200px;
               
               .sv-button-content {
                 display: inline-block;
@@ -324,21 +375,44 @@
     
     .playground-tabs-container {
       flex: 1;
-      min-width: 300px;
-      max-width: 350px;
+      min-width: 280px;
+      max-width: 320px;
       border: 1px solid var(--sv-border-light);
       border-radius: 4px;
       overflow: hidden;
       height: 100%;
+      background-color: var(--sv-bg-surface);
       
       ::ng-deep .mat-mdc-tab-body-wrapper {
         height: 100%;
       }
       
       .playground-tab-content {
-        padding: 16px;
+        padding: 12px;
         height: 100%;
         overflow-y: auto;
+        background-color: var(--sv-bg-surface);
+        color: var(--sv-text-primary);
+      }
+      
+      // Fix accordion panels
+      ::ng-deep .mat-accordion .mat-expansion-panel {
+        background-color: var(--sv-bg-surface);
+        color: var(--sv-text-primary);
+        border: 1px solid var(--sv-border-light);
+        
+        .mat-expansion-panel-header {
+          background-color: var(--sv-bg-element);
+          
+          .mat-expansion-panel-header-title,
+          .mat-expansion-panel-header-description {
+            color: var(--sv-text-primary);
+          }
+        }
+        
+        .mat-expansion-panel-body {
+          background-color: var(--sv-bg-surface);
+        }
       }
       
       .css-classes-list {
@@ -358,6 +432,49 @@
           color: var(--sv-text-secondary);
         }
       }
+      
+      ::ng-deep {
+        // Fix input and select colors in dark mode for better readability
+        input, select, textarea {
+          background-color: var(--sv-bg-element) !important;
+          color: var(--sv-text-primary) !important;
+          border-color: var(--sv-border-medium) !important;
+          
+          &:focus {
+            border-color: var(--sv-primary) !important;
+            outline-color: var(--sv-primary) !important;
+          }
+        }
+        
+        // Fix form control labels
+        label {
+          color: var(--sv-text-primary) !important;
+        }
+        
+        // Fix expansion panel content in dark mode
+        .mat-expansion-panel {
+          background-color: var(--sv-bg-surface) !important;
+          
+          .mat-expansion-panel-header {
+            background-color: var(--sv-bg-element) !important;
+            
+            .mat-expansion-panel-header-title,
+            .mat-expansion-panel-header-description {
+              color: var(--sv-text-primary) !important;
+            }
+          }
+          
+          .mat-expansion-panel-body {
+            color: var(--sv-text-primary) !important;
+            background-color: var(--sv-bg-surface) !important;
+          }
+        }
+        
+        // Fix specific panel content readability
+        .property-description {
+          color: var(--sv-text-secondary) !important;
+        }
+      }
     }
   }
 }
@@ -367,158 +484,232 @@
   display: flex;
   flex-direction: column;
   height: 100%;
+  width: 100%;
   
-  .responsive-controls {
-    margin-bottom: 24px;
+  .responsive-horizontal-layout {
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+    gap: 16px;
+    min-height: calc(100vh - 250px);
+    width: 100%;
     
-    h3 {
-      margin: 0 0 16px;
-      font-size: 18px;
-      font-weight: 500;
-      color: var(--sv-text-primary);
-    }
-    
-    .viewport-controls {
+    .viewport-simulator-wrapper {
+      flex: 4;
       display: flex;
       flex-direction: column;
+      align-items: center;
       gap: 16px;
       
-      .viewport-presets {
+      .viewport-info {
         display: flex;
-        flex-wrap: wrap;
-        gap: 8px;
+        gap: 12px;
+        align-items: center;
+        align-self: flex-start;
         
-        .viewport-preset-button {
-          padding: 8px 16px;
+        .viewport-dimensions {
+          font-family: 'Roboto Mono', monospace;
+          font-size: 14px;
+          padding: 4px 8px;
           background-color: var(--sv-bg-element);
-          border: 1px solid var(--sv-border-light);
           border-radius: 4px;
           color: var(--sv-text-secondary);
+        }
+        
+        .viewport-name {
           font-size: 14px;
-          cursor: pointer;
-          transition: all 0.2s ease;
-          
-          &:hover {
-            background-color: var(--sv-bg-element-hover);
-          }
-          
-          &.active {
-            background-color: var(--sv-primary-light);
-            color: var(--sv-primary);
-            border-color: var(--sv-primary);
-          }
+          color: var(--sv-text-tertiary);
         }
       }
       
-      .viewport-custom {
-        display: flex;
-        align-items: center;
-        margin-top: 8px;
+      .viewport-frame {
+        border: 4px solid var(--sv-border-medium);
+        border-radius: 8px;
+        overflow: hidden;
+        background-color: var(--sv-bg-surface);
+        box-shadow: 0 4px 20px var(--sv-shadow-medium);
+        resize: both;
+        max-width: 100%;
+        margin: 0 auto;
+        position: relative;
         
-        .viewport-size-inputs {
+        &::after {
+          content: '';
+          position: absolute;
+          bottom: 0;
+          right: 0;
+          width: 16px;
+          height: 16px;
+          background-color: var(--sv-border-light);
+          clip-path: polygon(100% 0, 0% 100%, 100% 100%);
+          pointer-events: none;
+        }
+        
+        .viewport-content {
+          height: 100%;
+          width: 100%;
+          overflow: auto;
           display: flex;
-          gap: 16px;
           align-items: center;
+          justify-content: center;
+          position: relative;
+          padding: 16px;
           
-          label {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            color: var(--sv-text-secondary);
-            font-size: 14px;
-            
-            input {
-              width: 70px;
-              padding: 4px 8px;
-              border: 1px solid var(--sv-border-light);
+          // Add viewport size indicator as a watermark
+          &::before {
+            content: attr(data-size);
+            position: absolute;
+            bottom: 8px;
+            right: 8px;
+            font-size: 12px;
+            color: var(--sv-text-tertiary);
+            opacity: 0.5;
+            pointer-events: none;
+          }
+          
+          // Style the fallback button
+          .responsive-fallback-button {
+            .sv-button {
+              display: inline-block;
+              padding: 12px 24px;
+              border: none;
               border-radius: 4px;
-              background-color: var(--sv-bg-surface);
-              color: var(--sv-text-primary);
-              font-size: 14px;
-              text-align: right;
+              font-size: 16px;
+              font-weight: 500;
+              cursor: pointer;
+              background-color: var(--sv-primary);
+              color: var(--sv-text-on-primary);
+              box-shadow: 0 2px 4px var(--sv-shadow-light);
+              transition: all 0.2s ease;
               
-              &:focus {
-                outline: none;
-                border-color: var(--sv-primary);
+              &:hover {
+                background-color: var(--sv-primary-dark);
+                box-shadow: 0 4px 8px var(--sv-shadow-medium);
+              }
+              
+              .sv-button-content {
+                color: var(--sv-text-on-primary);
               }
             }
           }
         }
       }
     }
-  }
-  
-  .viewport-simulator {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 16px;
-    overflow: auto;
-    padding-bottom: 24px;
     
-    .viewport-info {
-      display: flex;
-      gap: 12px;
-      align-items: center;
-      
-      .viewport-dimensions {
-        font-family: 'Roboto Mono', monospace;
-        font-size: 14px;
-        padding: 4px 8px;
-        background-color: var(--sv-bg-element);
-        border-radius: 4px;
-        color: var(--sv-text-secondary);
-      }
-      
-      .viewport-name {
-        font-size: 14px;
-        color: var(--sv-text-tertiary);
-      }
-    }
-    
-    .viewport-frame {
-      border: 4px solid var(--sv-border-medium);
-      border-radius: 8px;
+    .responsive-controls-container {
+      flex: 1;
+      min-width: 280px;
+      max-width: 320px;
+      border: 1px solid var(--sv-border-light);
+      border-radius: 4px;
       overflow: hidden;
-      background-color: white;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-      resize: both;
-      max-width: 100%;
+      height: 100%;
+      padding: 12px;
+      background-color: var(--sv-bg-surface);
       
-      .viewport-content {
-        height: 100%;
-        width: 100%;
-        overflow: auto;
+      h3 {
+        margin: 0 0 16px;
+        font-size: 18px;
+        font-weight: 500;
+        color: var(--sv-text-primary);
+        border-bottom: 1px solid var(--sv-border-light);
+        padding-bottom: 8px;
+      }
+      
+      h4 {
+        margin: 16px 0 8px;
+        font-size: 14px;
+        font-weight: 500;
+        color: var(--sv-text-primary);
+      }
+      
+      .viewport-controls {
         display: flex;
-        align-items: center;
-        justify-content: center;
-        position: relative;
-        padding: 16px;
+        flex-direction: column;
+        gap: 16px;
         
-        // Add viewport size indicator as a watermark
-        &::before {
-          content: attr(data-size);
-          position: absolute;
-          bottom: 8px;
-          right: 8px;
-          font-size: 12px;
-          color: rgba(0, 0, 0, 0.2);
-          pointer-events: none;
+        .viewport-presets {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 8px;
+          
+          .viewport-preset-button {
+            padding: 8px 16px;
+            background-color: var(--sv-bg-element);
+            border: 1px solid var(--sv-border-light);
+            border-radius: 4px;
+            color: var(--sv-text-primary);
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            
+            &:hover {
+              background-color: var(--sv-bg-element-hover);
+            }
+            
+            &.active {
+              background-color: var(--sv-primary-light);
+              color: var(--sv-text-on-primary);
+              border-color: var(--sv-primary);
+              font-weight: 500;
+            }
+          }
         }
         
-        // Style the fallback button
-        .responsive-fallback-button {
-          .sv-button {
-            display: inline-block;
-            padding: 12px 24px;
-            border: none;
-            border-radius: 4px;
-            font-size: 16px;
-            font-weight: 500;
-            cursor: pointer;
-            background-color: var(--sv-primary, #2196f3);
-            color: white;
+        .viewport-custom {
+          display: flex;
+          align-items: center;
+          margin-top: 8px;
+          
+          .viewport-size-inputs {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            width: 100%;
+            
+            .input-group {
+              display: flex;
+              align-items: center;
+              gap: 8px;
+              
+              label {
+                color: var(--sv-text-primary);
+                font-size: 14px;
+                min-width: 60px;
+                flex: 0 0 auto;
+              }
+              
+              .input-with-unit {
+                display: flex;
+                flex: 1;
+                align-items: center;
+                
+                input {
+                  flex: 1;
+                  width: 60px;
+                  padding: 6px 8px;
+                  border: 1px solid var(--sv-border-light);
+                  border-radius: 4px;
+                  background-color: var(--sv-bg-element);
+                  color: var(--sv-text-primary);
+                  font-size: 14px;
+                  text-align: right;
+                  margin-right: 0;
+                  
+                  &:focus {
+                    outline: none;
+                    border-color: var(--sv-primary);
+                  }
+                }
+                
+                .unit {
+                  color: var(--sv-text-primary);
+                  font-size: 14px;
+                  margin-left: 4px;
+                  min-width: 16px;
+                }
+              }
+            }
           }
         }
       }
@@ -536,5 +727,231 @@
     color: var(--sv-text-secondary);
     font-size: 16px;
     margin: 0;
+  }
+}
+
+.mat-mdc-tab-body-content {
+  color: var(--sv-text-primary);
+  background-color: var(--sv-bg-surface);
+  
+  // Additional overrides for material styles
+  ::ng-deep {
+    .mat-mdc-tab-body-content {
+      overflow: visible;
+    }
+    
+    .mdc-tab-indicator__content {
+      border-color: var(--sv-primary) !important;
+    }
+  }
+}
+
+// Main tab group and nested tab group styles
+::ng-deep {
+  .mat-mdc-tab-group {
+    height: 100%;
+    
+    .mat-mdc-tab-body-wrapper {
+      flex-grow: 1;
+    }
+    
+    .mat-mdc-tab {
+      .mdc-tab__text-label {
+        color: var(--sv-text-primary);
+      }
+      
+      &.mdc-tab--active {
+        .mdc-tab__text-label {
+          color: var(--sv-primary);
+        }
+        
+        .mdc-tab-indicator__content--underline {
+          border-color: var(--sv-primary) !important;
+        }
+      }
+    }
+    
+    .mat-mdc-tab-header {
+      --mdc-tab-indicator-active-indicator-color: var(--sv-primary) !important;
+      --mat-tab-header-active-label-text-color: var(--sv-primary) !important;
+      --mat-tab-header-inactive-label-text-color: var(--sv-text-primary) !important;
+      --mat-tab-header-active-ripple-color: var(--sv-primary-light) !important;
+      --mat-tab-header-inactive-ripple-color: var(--sv-bg-element-hover) !important;
+      
+      border-bottom: 1px solid var(--sv-border-light);
+      background-color: var(--sv-bg-surface) !important;
+    }
+    
+    .mat-mdc-tab-header .mdc-tab-indicator__content--underline {
+      border-color: var(--sv-primary) !important;
+    }
+    
+    .mat-mdc-tab-body-content {
+      background-color: var(--sv-bg-surface) !important;
+      color: var(--sv-text-primary) !important;
+    }
+  }
+  
+  // Ensure nested tab groups work too (playground tabs and responsive tabs)
+  .playground-tabs-container .mat-mdc-tab-group,
+  .responsive-tabs-container .mat-mdc-tab-group {
+    .mat-mdc-tab-header {
+      background-color: var(--sv-bg-element) !important;
+      border-bottom: 1px solid var(--sv-border-light);
+    }
+    
+    .mdc-tab-indicator__content--underline {
+      border-color: var(--sv-primary) !important;
+    }
+  }
+}
+
+// Dark theme specific overrides
+:host-context([data-theme="dark"]) {
+  ::ng-deep {
+    // Fix tab header and indicator in dark mode
+    .mat-mdc-tab-header {
+      background-color: var(--sv-bg-surface) !important;
+      
+      .mdc-tab-indicator__content--underline {
+        border-color: var(--sv-primary) !important;
+      }
+      
+      .mat-mdc-tab .mdc-tab__text-label {
+        color: var(--sv-text-primary) !important;
+      }
+      
+      .mat-mdc-tab.mdc-tab--active .mdc-tab__text-label {
+        color: var(--sv-primary) !important;
+      }
+    }
+    
+    // Target the tab indicator directly with specific selectors
+    .mdc-tab-indicator__content--underline,
+    .mat-mdc-tab-header .mdc-tab-indicator__content--underline,
+    .mat-mdc-tab.mdc-tab--active .mdc-tab-indicator__content--underline {
+      border-color: var(--sv-primary) !important;
+    }
+    
+    // Additional selectors for Angular Material tab indicators
+    .mat-mdc-tab .mdc-tab-indicator--active .mdc-tab-indicator__content {
+      border-color: var(--sv-primary) !important;
+    }
+    
+    // Override Angular Material CSS custom properties for the tab indicator
+    .mat-mdc-tab-group {
+      --mdc-tab-indicator-active-indicator-color: var(--sv-primary) !important;
+    }
+    
+    // Fix tab content in dark mode
+    .mat-mdc-tab-body-content,
+    .tab-content,
+    .playground-tab-content {
+      background-color: var(--sv-bg-surface) !important;
+      color: var(--sv-text-primary) !important;
+    }
+    
+    // Fix form inputs in dark mode for better readability
+    input, select, textarea, .mat-form-field-infix {
+      background-color: var(--sv-bg-element) !important;
+      color: var(--sv-text-primary) !important;
+      border-color: var(--sv-border-medium) !important;
+      
+      &::placeholder {
+        color: var(--sv-text-tertiary) !important;
+        opacity: 0.7;
+      }
+      
+      &:focus {
+        border-color: var(--sv-primary) !important;
+        outline-color: var(--sv-primary) !important;
+      }
+    }
+    
+    // Fix expansion panels in dark mode
+    .mat-expansion-panel {
+      background-color: var(--sv-bg-surface) !important;
+      
+      .mat-expansion-panel-header {
+        background-color: var(--sv-bg-element) !important;
+        
+        &:hover {
+          background-color: var(--sv-bg-element-hover) !important;
+        }
+        
+        .mat-expansion-panel-header-title,
+        .mat-expansion-panel-header-description {
+          color: var(--sv-text-primary) !important;
+        }
+      }
+      
+      .mat-expansion-panel-body {
+        background-color: var(--sv-bg-surface) !important;
+        color: var(--sv-text-primary) !important;
+        
+        p, span, div {
+          color: var(--sv-text-primary) !important;
+        }
+      }
+    }
+    
+    // Fix mat-card in dark mode
+    .mat-mdc-card {
+      background-color: var(--sv-bg-surface) !important;
+      color: var(--sv-text-primary) !important;
+    }
+    
+    // Labels and descriptions in form controls
+    label, .property-description, .mat-form-field-label {
+      color: var(--sv-text-primary) !important;
+    }
+    
+    .input-with-unit, .unit {
+      color: var(--sv-text-primary) !important;
+    }
+    
+    // Fix switches and toggles
+    .mat-slide-toggle-bar, .mat-checkbox-frame {
+      background-color: var(--sv-bg-element-hover) !important;
+    }
+    
+    .mat-slide-toggle-thumb {
+      background-color: var(--sv-text-primary) !important;
+    }
+  }
+}
+
+// Fix playground and responsive tabs container
+.playground-tabs-container,
+.responsive-tabs-container {
+  background-color: var(--sv-bg-surface) !important;
+  
+  .mat-mdc-tab-header {
+    background-color: var(--sv-bg-element) !important;
+  }
+  
+  // Ensure the tab content has the right background
+  .playground-tab-content {
+    background-color: var(--sv-bg-surface) !important;
+  }
+  
+  // Fix nested tab groups
+  .mat-mdc-tab-group {
+    .mat-mdc-tab-header {
+      background-color: var(--sv-bg-element) !important;
+      border-bottom: 1px solid var(--sv-border-light) !important;
+      
+      .mdc-tab__text-label {
+        color: var(--sv-text-primary) !important;
+      }
+      
+      .mdc-tab--active .mdc-tab__text-label {
+        color: var(--sv-primary) !important;
+      }
+      
+      .mdc-tab-indicator__content--underline {
+        border-color: var(--sv-primary) !important;
+      }
+    }
   }
 } 

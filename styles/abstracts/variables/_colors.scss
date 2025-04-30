@@ -123,6 +123,7 @@ $light-theme-map: (
   'text-accent': #0a9fff,
   'text-on-dark': #ffffff,
   'text-on-light': #212529,
+  'text-on-primary': #ffffff,
   
   // Border colors
   'border-light': #e9ecef,
@@ -145,6 +146,15 @@ $light-theme-map: (
   'error-dark': #d73128,
   'error-darker': #c62828,
   'error-500-rgb': '244, 67, 54',
+  
+  // Shadow variables
+  'shadow-light': rgba(0, 0, 0, 0.1),
+  'shadow-medium': rgba(0, 0, 0, 0.15),
+  'shadow-dark': rgba(0, 0, 0, 0.2),
+  'shadow-sm': '0 1px 3px rgba(0, 0, 0, 0.1)',
+  'shadow-md': '0 2px 8px rgba(0, 0, 0, 0.15)',
+  'shadow-lg': '0 4px 16px rgba(0, 0, 0, 0.2)',
+  'shadow-default': '0 2px 4px rgba(0, 0, 0, 0.1)',
   
   // Standardized icon color for light theme
   'icon-color': 'var(--sv-text-primary)'
@@ -169,6 +179,7 @@ $dark-theme-map: (
   'text-accent': #30b1ff,
   'text-on-dark': #ffffff,
   'text-on-light': #212529,
+  'text-on-primary': #000000,
   
   // Border colors
   'border-light': #383838,
@@ -195,6 +206,9 @@ $dark-theme-map: (
   'error-500-rgb': '244, 67, 54',
   
   // Shadow variables
+  'shadow-light': rgba(0, 0, 0, 0.25),
+  'shadow-medium': rgba(0, 0, 0, 0.35),
+  'shadow-dark': rgba(0, 0, 0, 0.45),
   'shadow-sm': '0 1px 3px rgba(0, 0, 0, 0.25)',
   'shadow-md': '0 2px 8px rgba(0, 0, 0, 0.25)',
   'shadow-lg': '0 4px 16px rgba(0, 0, 0, 0.3)',

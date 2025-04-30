@@ -1,0 +1,91 @@
+@use './../../abstracts/' as *;
+@use './../../base/' as *;
+
+// Component-specific variables
+$text-field-max-width: var(--sv-size-64);
+$text-field-min-width: var(--sv-size-40);
+
+.sv-text-field {
+  // Extend the input base styles (this is handled in the template with ngClass)
+  
+  // Unique properties for text input field
+  max-width: $text-field-max-width;
+  
+  // Improve text readability
+  font-feature-settings: "kern", "liga", "calt";
+  
+  // Prefer width control with flex layout
+  &-wrapper {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+}
+
+// Multiline text field
+.sv-text-field-multiline {
+  height: auto;
+  min-height: calc($input-height * 2);
+  resize: vertical;
+  overflow-y: auto;
+  white-space: pre-wrap;
+  line-height: var(--sv-leading-normal);
+}
+
+// Text field with character limit
+.sv-text-field-with-limit {
+  .sv-input-counter {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: var(--sv-space-1);
+    font-size: var(--sv-text-xs);
+    color: var(--sv-text-tertiary);
+    
+    &.near-limit {
+      color: var(--sv-warning);
+    }
+    
+    &.at-limit {
+      color: var(--sv-error);
+    }
+  }
+}
+
+// Specific to text field: highlighting when text is being edited
+.sv-text-field {
+  &:focus-within {
+    border-color: var(--sv-primary);
+    box-shadow: var(--sv-shadow-focus);
+  }
+  
+  // Selection styling
+  &::selection {
+    background-color: var(--sv-primary-light);
+    color: var(--sv-text-on-dark);
+  }
+}
+
+/* Responsive adjustments */
+@include breakpoint-down(sm) {
+  .sv-text-field {
+    font-size: var(--sv-text-sm);
+    
+    // Adjust padding for smaller screens
+    padding: var(--sv-padding-2) var(--sv-padding-2);
+    
+    // Full width on mobile
+    width: 100%;
+    max-width: 100%;
+  }
+  
+  .sv-text-field-multiline {
+    min-height: calc($input-height * 1.5);
+  }
+}
+
+// For very small screens, reduce padding further
+@include breakpoint-down(xs) {
+  .sv-text-field {
+    padding: var(--sv-padding-1) var(--sv-padding-2);
+  }
+}

@@ -111,10 +111,10 @@
                 <ng-container #componentContainer></ng-container>
               </div>
               
-              <!-- Fallback element for buttons -->
-              <div *ngIf="activeDemo?.id?.includes('button')" class="fallback-button-container">
+              <!-- Fallback element for buttons - updated with better styling -->
+              <div *ngIf="activeDemo?.id?.includes('button') && !componentInstance" class="fallback-button-container">
                 <button class="sv-button sv-button-primary sv-ui-size-md">
-                  <span class="sv-button-content">Button Fallback</span>
+                  <span class="sv-button-content">Primary Button</span>
                 </button>
               </div>
             </div>
@@ -145,62 +145,71 @@
     <!-- Responsive Tab -->
     <mat-tab label="Responsive">
       <div class="tab-content responsive-container">
-        <div class="responsive-controls">
-          <h3>Responsive Testing</h3>
-          <div class="viewport-controls">
-            <div class="viewport-presets">
-              <button 
-                *ngFor="let preset of viewportPresets" 
-                class="viewport-preset-button" 
-                [class.active]="selectedViewport === preset.id"
-                (click)="setViewportSize(preset)">
-                {{ preset.name }}
-              </button>
+        <div class="responsive-horizontal-layout">
+          <div class="viewport-simulator-wrapper">
+            <div class="viewport-info">
+              <span class="viewport-dimensions">{{ currentViewport.width }} × {{ currentViewport.height }}px</span>
+              <span class="viewport-name" *ngIf="selectedViewport !== 'custom'">{{ getCurrentViewportName() }}</span>
             </div>
-            <div class="viewport-custom">
-              <div class="viewport-size-inputs">
-                <label>
-                  Width:
-                  <input 
-                    type="number" 
-                    [(ngModel)]="customViewport.width" 
-                    (input)="applyCustomViewport()"
-                    min="320" 
-                    max="1920" 
-                    step="10">
-                  px
-                </label>
-                <label>
-                  Height:
-                  <input 
-                    type="number" 
-                    [(ngModel)]="customViewport.height" 
-                    (input)="applyCustomViewport()"
-                    min="320" 
-                    max="1080" 
-                    step="10">
-                  px
-                </label>
+            
+            <div class="viewport-frame" [style.width.px]="currentViewport.width" [style.height.px]="currentViewport.height">
+              <div class="viewport-content" [attr.data-size]="currentViewport.width + '×' + currentViewport.height">
+                <ng-container #responsiveComponentContainer></ng-container>
+                
+                <!-- Fallback display if component doesn't render -->
+                <div *ngIf="activeDemo?.id?.includes('button') && !componentInstance" class="responsive-fallback-button">
+                  <button class="sv-button sv-button-primary sv-ui-size-md">
+                    <span class="sv-button-content">Primary Button</span>
+                  </button>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-        
-        <div class="viewport-simulator">
-          <div class="viewport-info">
-            <span class="viewport-dimensions">{{ currentViewport.width }} × {{ currentViewport.height }}px</span>
-            <span class="viewport-name" *ngIf="selectedViewport !== 'custom'">{{ getCurrentViewportName() }}</span>
-          </div>
           
-          <div class="viewport-frame" [style.width.px]="currentViewport.width" [style.height.px]="currentViewport.height">
-            <div class="viewport-content" [attr.data-size]="currentViewport.width + '×' + currentViewport.height">
-              <ng-container #responsiveComponentContainer></ng-container>
-              
-              <!-- Fallback display if component doesn't render -->
-              <div *ngIf="activeDemo?.id?.includes('button')" class="responsive-fallback-button">
-                <button class="sv-button sv-button-primary sv-ui-size-md">
-                  <span class="sv-button-content">Button Preview</span>
+          <div class="responsive-controls-container">
+            <h3>Viewport Settings</h3>
+            <div class="viewport-controls">
+              <h4>Device Presets</h4>
+              <div class="viewport-presets">
+                <button 
+                  *ngFor="let preset of viewportPresets" 
+                  class="viewport-preset-button" 
+                  [class.active]="selectedViewport === preset.id"
+                  (click)="setViewportSize(preset)">
+                  {{ preset.name }}
                 </button>
+              </div>
+              
+              <h4>Custom Size</h4>
+              <div class="viewport-custom">
+                <div class="viewport-size-inputs">
+                  <div class="input-group">
+                    <label>Width:</label>
+                    <div class="input-with-unit">
+                      <input 
+                        type="number" 
+                        [(ngModel)]="customViewport.width" 
+                        (input)="applyCustomViewport()"
+                        min="320" 
+                        max="1920" 
+                        step="10">
+                      <span class="unit">px</span>
+                    </div>
+                  </div>
+                  <div class="input-group">
+                    <label>Height:</label>
+                    <div class="input-with-unit">
+                      <input 
+                        type="number" 
+                        [(ngModel)]="customViewport.height" 
+                        (input)="applyCustomViewport()"
+                        min="320" 
+                        max="1080" 
+                        step="10">
+                      <span class="unit">px</span>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

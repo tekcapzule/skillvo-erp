@@ -9,15 +9,29 @@
   left: 0;
   right: 0;
   z-index: 100;
-  background-color: var(--sv-primary) !important;
-  color: var(--sv-text-on-dark) !important;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  background-color: var(--sv-primary);
+  color: var(--sv-text-on-primary);
+  box-shadow: 0 2px 5px var(--sv-shadow-light);
   transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+// Dark theme header override
+:host-context([data-theme="dark"]) {
+  .demo-header {
+    background-color: var(--sv-bg-secondary) !important;
+    color: var(--sv-text-primary) !important;
+  }
+  
+  .menu-button, 
+  .logo .mat-icon,
+  .theme-toggle .theme-icon {
+    color: var(--sv-text-primary) !important;
+  }
 }
 
 .menu-button {
   margin-right: 8px;
-  color: var(--sv-text-on-dark) !important;
+  color: var(--sv-text-on-primary);
 }
 
 .logo {
@@ -29,7 +43,7 @@
   cursor: pointer;
   
   .mat-icon {
-    color: var(--sv-text-on-dark) !important;
+    color: var(--sv-text-on-primary);
   }
   
   .mobile-title {
@@ -44,20 +58,48 @@
 .theme-toggle {
   display: flex;
   align-items: center;
-  gap: 8px;
+  justify-content: center;
+  padding: 4px 8px;
+  border-radius: 28px;
+  cursor: pointer;
+  position: relative;
+  transition: background-color 0.3s ease;
+  margin-right: 16px;
+  
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
   
   .theme-icon {
     font-size: 20px;
     width: 20px;
     height: 20px;
-    color: var(--sv-text-on-dark) !important;
+    transition: opacity 0.3s ease, transform 0.3s ease;
   }
   
-  .mat-mdc-slide-toggle {
-    --mdc-switch-selected-track-color: var(--sv-primary-light) !important;
-    --mdc-switch-selected-handle-color: var(--sv-text-on-dark) !important;
-    --mdc-switch-unselected-track-color: rgba(255, 255, 255, 0.3) !important;
-    --mdc-switch-unselected-handle-color: var(--sv-text-on-dark) !important;
+  .light-icon {
+    margin-right: 8px;
+    opacity: 0.7;
+  }
+  
+  .dark-icon {
+    opacity: 0.3;
+  }
+}
+
+:host-context(.dark-theme) {
+  .theme-toggle {
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.2);
+    }
+    
+    .light-icon {
+      opacity: 0.3;
+    }
+    
+    .dark-icon {
+      opacity: 0.7;
+    }
   }
 }
 

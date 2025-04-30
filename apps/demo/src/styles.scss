@@ -75,6 +75,28 @@ body {
   color: var(--sv-text-primary) !important;
 }
 
+/* Material tabs theming */
+.mat-mdc-tab-header {
+  --mdc-tab-indicator-active-indicator-color: var(--sv-primary) !important;
+  --mat-tab-header-active-label-text-color: var(--sv-primary) !important;
+  --mat-tab-header-inactive-label-text-color: var(--sv-text-primary) !important;
+  --mat-tab-header-active-ripple-color: var(--sv-primary-light) !important;
+  --mat-tab-header-inactive-ripple-color: var(--sv-bg-element-hover) !important;
+}
+
+.mat-mdc-tab-header .mat-mdc-tab-label-container {
+  background-color: var(--sv-bg-surface) !important;
+}
+
+.mat-mdc-tab-body-content {
+  background-color: var(--sv-bg-surface) !important;
+  color: var(--sv-text-primary) !important;
+}
+
+.mat-mdc-tab-header .mdc-tab-indicator__content--underline {
+  border-color: var(--sv-primary) !important;
+}
+
 /* Fix expansion panel theming */
 .mat-expansion-panel {
   background-color: var(--sv-bg-surface) !important;
@@ -174,6 +196,35 @@ body {
     fill: var(--sv-text-primary) !important;
   }
 
+  // Override header toolbar in dark mode
+  .mat-toolbar {
+    background-color: var(--sv-bg-secondary) !important;
+    color: var(--sv-text-primary) !important;
+  }
+  
+  // Override playground panels
+  .playground-tabs-container,
+  .responsive-controls-container {
+    background-color: var(--sv-bg-surface) !important;
+    border-color: var(--sv-border-light) !important;
+  }
+  
+  // Fix all panel backgrounds
+  .playground-tab-content,
+  .mat-card,
+  .mat-expansion-panel {
+    background-color: var(--sv-bg-surface) !important;
+  }
+  
+  // Fix accordions in dark mode
+  .mat-accordion {
+    background-color: var(--sv-bg-surface) !important;
+    
+    .mat-expansion-panel {
+      background-color: var(--sv-bg-surface) !important;
+    }
+  }
+
   /* Syntax highlighting overrides for dark mode - uses the same variables but with dark theme values */
   .hljs {
     background: var(--sv-bg-element);
@@ -213,5 +264,49 @@ body {
   
   .hljs-subst {
     font-weight: normal;
+  }
+
+  // More specific selectors for property accordions
+  .mat-accordion .mat-expansion-panel {
+    background-color: var(--sv-bg-surface); 
+    
+    .mat-expansion-panel-header {
+      background-color: var(--sv-bg-element);
+      
+      &:hover {
+        background-color: var(--sv-bg-element-hover) !important;
+      }
+      
+      .mat-expansion-panel-header-title {
+        color: var(--sv-text-primary);
+      }
+      
+      .mat-expansion-panel-header-description {
+        color: var(--sv-text-secondary);
+      }
+    }
+    
+    .mat-expansion-panel-body {
+      background-color: var(--sv-bg-surface);
+      color: var(--sv-text-primary);
+    }
+  }
+  
+  // Override more specific selectors for dark theme
+  .mat-accordion .mat-expansion-panel {
+    background-color: var(--sv-bg-surface) !important;
+    
+    .mat-expansion-panel-header {
+      background-color: var(--sv-bg-element) !important;
+    }
+    
+    .mat-expansion-panel-body {
+      background-color: var(--sv-bg-surface) !important;
+    }
+  }
+  
+  // Override mat-card styling in dark theme
+  .mat-mdc-card {
+    background-color: var(--sv-bg-surface) !important;
   }
 }
