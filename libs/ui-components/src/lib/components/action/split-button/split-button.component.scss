@@ -1,0 +1,32 @@
+// Import from the shared styles
+@import '../../abstracts/index';
+@import '../../base/index';
+
+// Component styles here are primarily referencing the SCSS from _split-button.scss
+// The styles are defined in the global stylesheet, so this file mainly handles
+// component-specific behavior and encapsulation concerns
+
+:host {
+  display: inline-block;
+  
+  &.disabled {
+    pointer-events: none;
+  }
+}
+
+// Handle click outside to close dropdown
+:host ::ng-deep {
+  .sv-split-button-item {
+    cursor: pointer;
+  }
+}
+
+// Ensure proper dropdown positioning based on host element
+.sv-split-button-dropdown {
+  min-width: 100%;
+}
+
+// Ensure dropdown respects host boundaries
+:host {
+  position: relative;
+}

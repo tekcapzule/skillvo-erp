@@ -1,0 +1,166 @@
+// Import from the shared styles
+@import '../../abstracts/index';
+@import '../../base/index';
+
+:host {
+  display: inline-block;
+  
+  &.sv-button-group-full-width {
+    display: block;
+    width: 100%;
+  }
+  
+  // Button group container to ensure proper styling of content
+  .sv-button-group-container {
+    @extend .sv-button-group;
+  }
+  
+  // Override properties for vertical orientation
+  &.sv-button-group-vertical {
+    .sv-button-group-container {
+      flex-direction: column;
+    }
+  }
+  
+  // Ensure proper width when full-width is selected
+  &.sv-button-group-full-width {
+    .sv-button-group-container {
+      display: flex;
+      width: 100%;
+      
+      ::ng-deep > * {
+        flex: 1;
+      }
+    }
+  }
+  
+  // Adjust spacing for spaced variant
+  &.sv-button-group-spaced {
+    .sv-button-group-container {
+      gap: var(--sv-space-2);
+      
+      ::ng-deep > * {
+        margin: 0 !important;
+        border-radius: var(--sv-radius-md) !important;
+      }
+    }
+  }
+  
+  // Apply pill shape
+  &.sv-button-group-pill {
+    ::ng-deep {
+      .sv-button, .sv-icon-button {
+        &:first-child {
+          border-top-left-radius: var(--sv-radius-full) !important;
+          border-bottom-left-radius: var(--sv-radius-full) !important;
+        }
+        
+        &:last-child {
+          border-top-right-radius: var(--sv-radius-full) !important;
+          border-bottom-right-radius: var(--sv-radius-full) !important;
+        }
+      }
+    }
+    
+    &.sv-button-group-vertical {
+      ::ng-deep {
+        .sv-button, .sv-icon-button {
+          &:first-child {
+            border-top-left-radius: var(--sv-radius-full) !important;
+            border-top-right-radius: var(--sv-radius-full) !important;
+            border-bottom-left-radius: 0 !important;
+            border-bottom-right-radius: 0 !important;
+          }
+          
+          &:last-child {
+            border-top-left-radius: 0 !important;
+            border-top-right-radius: 0 !important;
+            border-bottom-left-radius: var(--sv-radius-full) !important;
+            border-bottom-right-radius: var(--sv-radius-full) !important;
+          }
+        }
+      }
+    }
+  }
+  
+  // Add selected state styling for buttons in radiogroup
+  ::ng-deep {
+    .sv-button[aria-pressed="true"], 
+    .sv-button.selected {
+      background-color: var(--sv-bg-element-active);
+      
+      &.sv-button-primary {
+        background-color: var(--sv-primary-dark);
+      }
+      
+      &.sv-button-tertiary {
+        background-color: var(--sv-bg-element-hover);
+      }
+    }
+  }
+}
+
+// Responsive adjustments
+@include breakpoint-down(sm) {
+  :host.sv-button-group-responsive {
+    display: block;
+    width: 100%;
+    
+    .sv-button-group-container {
+      flex-direction: column;
+      width: 100%;
+      
+      ::ng-deep > * {
+        width: 100%;
+        margin-right: 0 !important;
+        margin-bottom: -1px !important;
+        
+        &:first-child {
+          border-top-left-radius: var(--sv-radius-md) !important;
+          border-top-right-radius: var(--sv-radius-md) !important;
+          border-bottom-left-radius: 0 !important;
+          border-bottom-right-radius: 0 !important;
+        }
+        
+        &:last-child {
+          border-top-left-radius: 0 !important;
+          border-top-right-radius: 0 !important;
+          border-bottom-left-radius: var(--sv-radius-md) !important;
+          border-bottom-right-radius: var(--sv-radius-md) !important;
+          margin-bottom: 0 !important;
+        }
+      }
+    }
+    
+    // Adjust spaced variant in responsive mode
+    &.sv-button-group-spaced {
+      .sv-button-group-container {
+        ::ng-deep > * {
+          margin-bottom: var(--sv-space-2) !important;
+          border-radius: var(--sv-radius-md) !important;
+          
+          &:last-child {
+            margin-bottom: 0 !important;
+          }
+        }
+      }
+    }
+    
+    // Adjust pill variant in responsive mode
+    &.sv-button-group-pill {
+      .sv-button-group-container {
+        ::ng-deep > * {
+          &:first-child {
+            border-top-left-radius: var(--sv-radius-full) !important;
+            border-top-right-radius: var(--sv-radius-full) !important;
+          }
+          
+          &:last-child {
+            border-bottom-left-radius: var(--sv-radius-full) !important;
+            border-bottom-right-radius: var(--sv-radius-full) !important;
+          }
+        }
+      }
+    }
+  }
+}

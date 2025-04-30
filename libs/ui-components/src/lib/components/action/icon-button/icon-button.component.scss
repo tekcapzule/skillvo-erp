@@ -1,0 +1,105 @@
+// Import from the shared styles
+@import '../../abstracts/index';
+@import '../../base/index';
+
+:host {
+  display: inline-block;
+  
+  &.disabled {
+    pointer-events: none;
+  }
+  
+  button {
+    @extend .sv-icon-button;
+    width: 100%;
+    height: 100%;
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0;
+    cursor: pointer;
+    
+    &:focus {
+      outline: none;
+    }
+  }
+  
+  // Handle expandable icon button 
+  &.sv-icon-button-expandable {
+    button {
+      white-space: nowrap;
+      transition: width var(--sv-motion-duration-medium) var(--sv-motion-ease-standard);
+      
+      .sv-icon-text {
+        opacity: 0;
+        margin-left: var(--sv-space-2);
+        transition: opacity var(--sv-motion-duration-medium) var(--sv-motion-ease-standard);
+      }
+    }
+    
+    &:hover, &:focus-within {
+      button {
+        width: auto;
+        padding-right: var(--sv-padding-4);
+        
+        .sv-icon-text {
+          opacity: 1;
+        }
+      }
+    }
+  }
+  
+  // Handle close button styling
+  &.sv-close-button {
+    button {
+      position: relative;
+      
+      &::before, &::after {
+        content: '';
+        position: absolute;
+        width: 60%;
+        height: 2px;
+        background-color: currentColor;
+        top: 50%;
+        left: 50%;
+      }
+      
+      &::before {
+        transform: translate(-50%, -50%) rotate(45deg);
+      }
+      
+      &::after {
+        transform: translate(-50%, -50%) rotate(-45deg);
+      }
+    }
+  }
+}
+
+// Responsive handling
+@include breakpoint-down(sm) {
+  :host {
+    // Increase touch target size for better mobile usability
+    min-width: var(--sv-min-touch-target);
+    min-height: var(--sv-min-touch-target);
+    
+    &.sv-ui-size-xs, &.sv-ui-size-sm {
+      min-width: calc(var(--sv-min-touch-target) * 0.85);
+      min-height: calc(var(--sv-min-touch-target) * 0.85);
+    }
+    
+    // Hide expandable text on small screens
+    &.sv-icon-button-expandable {
+      &:hover, &:focus-within {
+        button {
+          width: auto;
+          padding-right: 0;
+          
+          .sv-icon-text {
+            display: none;
+            opacity: 0;
+          }
+        }
+      }
+    }
+  }
+}

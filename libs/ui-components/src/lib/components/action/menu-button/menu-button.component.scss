@@ -1,0 +1,49 @@
+// Import from the shared styles
+@import '../../abstracts/index';
+@import '../../base/index';
+
+:host {
+  display: inline-block;
+  position: relative;
+  
+  &.disabled {
+    pointer-events: none;
+  }
+}
+
+.sv-menu-button-container {
+  position: relative;
+  display: inline-block;
+}
+
+.sv-menu-button-trigger {
+  @extend .sv-menu-button;
+}
+
+// Extend styles for menu items to allow click handling
+:host ::ng-deep {
+  .sv-menu-item {
+    cursor: pointer;
+  }
+}
+
+// Handle menu overlap at container edges
+.sv-menu {
+  // Ensure menu doesn't go off-screen on right edge
+  &.sv-menu-right {
+    right: 0;
+    left: auto;
+  }
+}
+
+// Ensure proper sizing for responsive mode
+@include breakpoint-down(sm) {
+  :host.sv-menu-button-responsive {
+    display: block;
+    width: 100%;
+    
+    .sv-menu-button-trigger {
+      width: 100%;
+    }
+  }
+}

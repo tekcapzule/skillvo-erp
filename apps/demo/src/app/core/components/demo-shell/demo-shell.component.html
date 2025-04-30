@@ -100,31 +100,44 @@
     <!-- Playground Tab -->
     <mat-tab label="Playground">
       <div class="tab-content playground-container">
-        <div class="component-preview">
-          <h3>Component Preview</h3>
-          <div class="component-container">
-            <ng-container #componentContainer></ng-container>
+        <div class="playground-horizontal-layout">
+          <div class="component-preview-wrapper">
+            <div class="component-container">
+              <!-- Debug placeholder to ensure container is visible -->
+              <div class="component-debug-placeholder">Component will appear here</div>
+              
+              <!-- Component container with direct rendering -->
+              <div class="component-mount-point">
+                <ng-container #componentContainer></ng-container>
+              </div>
+              
+              <!-- Fallback element for buttons -->
+              <div *ngIf="activeDemo?.id?.includes('button')" class="fallback-button-container">
+                <button class="sv-button sv-button-primary sv-ui-size-md">
+                  <span class="sv-button-content">Button Fallback</span>
+                </button>
+              </div>
+            </div>
           </div>
-
-          <div class="css-classes" *ngIf="activeDemo.cssClasses?.length">
-            <h4>CSS Classes</h4>
-            <ul>
-              <li *ngFor="let cssClass of activeDemo.cssClasses">{{ cssClass }}</li>
-            </ul>
+          
+          <div class="playground-tabs-container">
+            <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start" (selectedIndexChange)="onPlaygroundTabChange($event)" [selectedIndex]="playgroundTabIndex">
+              <mat-tab label="Properties">
+                <div class="playground-tab-content">
+                  <demo-property-editor 
+                    [componentInstance]="componentInstance" 
+                    [properties]="activeDemo.properties">
+                  </demo-property-editor>
+                </div>
+              </mat-tab>
+              
+              <mat-tab label="Events">
+                <div class="playground-tab-content">
+                  <demo-event-monitor></demo-event-monitor>
+                </div>
+              </mat-tab>
+            </mat-tab-group>
           </div>
-        </div>
-
-        <div class="property-controls">
-          <h3>Properties</h3>
-          <demo-property-editor 
-            [componentInstance]="componentInstance" 
-            [properties]="activeDemo.properties">
-          </demo-property-editor>
-        </div>
-
-        <div class="event-monitor">
-          <h3>Events</h3>
-          <demo-event-monitor></demo-event-monitor>
         </div>
       </div>
     </mat-tab>

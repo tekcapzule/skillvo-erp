@@ -1,0 +1,40 @@
+<div class="sv-split-button" #dropdown>
+    <button 
+      type="button" 
+      class="sv-split-button-action"
+      [disabled]="disabled"
+      [attr.aria-label]="ariaLabel"
+      [attr.aria-busy]="loading ? 'true' : null"
+      (click)="onActionClick($event)">
+      <ng-container *ngIf="actionContentTemplate; else defaultActionContent">
+        <ng-container *ngTemplateOutlet="actionContentTemplate"></ng-container>
+      </ng-container>
+      <ng-template #defaultActionContent>
+        <ng-content></ng-content>
+      </ng-template>
+    </button>
+    
+    <div class="sv-split-button-divider" *ngIf="!disabled"></div>
+    
+    <button 
+      type="button"
+      class="sv-split-button-toggle"
+      [disabled]="disabled"
+      [attr.aria-label]="toggleAriaLabel"
+      [attr.aria-expanded]="isDropdownOpen"
+      [attr.aria-haspopup]="true"
+      (click)="onToggleClick($event)">
+      <ng-container *ngIf="toggleContentTemplate && customToggleIcon">
+        <div class="sv-split-button-toggle-icon">
+          <ng-container *ngTemplateOutlet="toggleContentTemplate"></ng-container>
+        </div>
+      </ng-container>
+    </button>
+    
+    <div class="sv-split-button-dropdown" [class.show]="isDropdownOpen">
+      <ng-container *ngIf="dropdownContentTemplate">
+        <ng-container *ngTemplateOutlet="dropdownContentTemplate"></ng-container>
+      </ng-container>
+      <ng-content select="[dropdown-content]"></ng-content>
+    </div>
+  </div>

@@ -1,0 +1,37 @@
+<div class="sv-menu-button-container" #menuContainer>
+    <button 
+      type="button"
+      class="sv-menu-button-trigger"
+      [disabled]="disabled"
+      [attr.aria-expanded]="isMenuOpen"
+      [attr.aria-haspopup]="true"
+      [attr.aria-label]="ariaLabel"
+      (click)="toggleMenu($event)">
+      
+      <span class="sv-menu-button-sr-label" *ngIf="!ariaLabel">{{ menuLabel }}</span>
+      
+      <ng-container *ngIf="buttonContentTemplate; else defaultButtonContent">
+        <ng-container *ngTemplateOutlet="buttonContentTemplate"></ng-container>
+      </ng-container>
+      
+      <ng-template #defaultButtonContent>
+        <ng-content></ng-content>
+      </ng-template>
+    </button>
+    
+    <div class="sv-menu" [class.show]="isMenuOpen"
+      [class.sv-menu-right]="menuPosition === 'right'"
+      [class.sv-menu-center]="menuPosition === 'center'"
+      [class.sv-menu-top]="menuPosition === 'top'"
+      [class.sv-menu-start]="menuPosition === 'start'"
+      [class.sv-menu-end]="menuPosition === 'end'"
+      [class.sv-menu-animated]="animated"
+      [class.sv-menu-responsive]="responsive">
+      
+      <ng-container *ngIf="menuContentTemplate">
+        <ng-container *ngTemplateOutlet="menuContentTemplate"></ng-container>
+      </ng-container>
+      
+      <ng-content select="[menu-content]"></ng-content>
+    </div>
+  </div>
