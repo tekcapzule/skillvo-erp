@@ -1,6 +1,6 @@
 // Import abstracts with namespaces to avoid conflicts
-@use '../../../../../../styles/abstracts/mixins' as abstracts;
-@use '../../../../../../styles/components/action' as *;
+@use '../../../../../../../styles/abstracts/mixins' as abstracts;
+@use '../../../../../../../styles/components/action' as *;
 
 // Host styling - we're using the existing sv-button class structure
 :host {

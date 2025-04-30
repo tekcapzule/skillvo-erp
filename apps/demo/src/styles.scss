@@ -112,3 +112,18 @@ body {
   color: var(--sv-text-primary) !important;
   border: 1px solid var(--sv-border-light);
 }
+
+// Fix for material expansion panel indicators in dark theme
+[data-theme="dark"] {
+  .mat-expansion-indicator::after,
+  .mat-mdc-expansion-indicator::after {
+    color: var(--sv-text-primary) !important;
+    border-color: var(--sv-text-primary) !important;
+  }
+  
+  // Additional selectors for different Angular Material versions
+  .mat-expansion-panel-header-indicator svg,
+  .mat-mdc-expansion-panel-header-indicator svg {
+    fill: var(--sv-text-primary) !important;
+  }
+}

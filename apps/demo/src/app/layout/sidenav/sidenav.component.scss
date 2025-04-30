@@ -35,6 +35,29 @@
     &:not(:last-child) {
       border-bottom: 1px solid var(--sv-border-light);
     }
+
+    // Fix for expansion indicator icon in dark theme
+    .mat-expansion-indicator::after {
+      color: var(--sv-text-primary) !important;
+      border-color: var(--sv-text-primary) !important;
+    }
+    
+    // Additional fix for newer Angular Material versions
+    .mat-expansion-indicator, 
+    .mat-mdc-expansion-indicator {
+      color: var(--sv-text-primary) !important;
+    }
+    
+    // Fix for the icon in the arrow itself
+    .mat-expansion-panel-header-indicator,
+    .mat-mdc-expansion-panel-header-indicator {
+      color: var(--sv-text-primary) !important;
+      
+      &::after {
+        color: var(--sv-text-primary) !important;
+        border-color: var(--sv-text-primary) !important;
+      }
+    }
   }
   
   .mat-expansion-panel-header {

@@ -1,7 +1,7 @@
 import { Component, Input, Output, EventEmitter, OnInit, TemplateRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { ButtonComponent } from '../button/button.component';
+import { ButtonComponent } from '../../action/button/button.component';
 
 export type CalendarView = 'day' | 'week' | 'month' | 'work-week' | 'agenda';
 

@@ -5,6 +5,8 @@ import { CommonModule } from '@angular/common';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { HeaderComponent } from '../header/header.component';
 import { SidenavComponent } from '../sidenav/sidenav.component';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'demo-main-layout',
@@ -15,6 +17,8 @@ import { SidenavComponent } from '../sidenav/sidenav.component';
     CommonModule,
     RouterModule,
     MatSidenavModule,
+    MatIconModule,
+    MatButtonModule,
     HeaderComponent,
     SidenavComponent
   ]

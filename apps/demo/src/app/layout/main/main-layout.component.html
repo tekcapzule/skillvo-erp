@@ -15,4 +15,14 @@
       </div>
     </mat-sidenav-content>
   </mat-sidenav-container>
+  
+  <!-- Mobile FAB Menu Button -->
+  <button *ngIf="isMobile && !sidenav.opened" 
+          mat-fab 
+          class="mobile-fab-menu" 
+          color="primary" 
+          (click)="toggleSidenav()"
+          aria-label="Open navigation menu">
+    <mat-icon>menu</mat-icon>
+  </button>
 </div> 

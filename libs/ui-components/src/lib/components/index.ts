@@ -1,1 +1,1 @@
-export * from './tag-input'; 
+export * from './input/tag-input'; 

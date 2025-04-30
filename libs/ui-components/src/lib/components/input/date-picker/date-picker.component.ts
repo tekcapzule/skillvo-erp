@@ -1,7 +1,7 @@
 import { Component, Input, Output, EventEmitter, OnInit, HostBinding, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { CalendarComponent } from '../calendar/calendar.component';
+import { CalendarComponent } from '../../widgets/calendar/calendar.component';
 
 @Component({
   selector: 'sv-date-picker',
