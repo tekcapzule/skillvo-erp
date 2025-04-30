@@ -4,25 +4,25 @@
   width: 100%;
   border-radius: 6px;
   overflow: hidden;
-  background-color: #1e1e1e;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  background-color: var(--sv-bg-element);
+  box-shadow: var(--sv-shadow-sm);
   margin: 16px 0;
-  font-family: 'JetBrains Mono', 'Fira Code', 'Source Code Pro', monospace;
+  font-family: var(--sv-font-mono);
 
   .code-preview-header {
     display: flex;
     align-items: center;
     padding: 8px 12px;
-    background-color: #2d2d2d;
-    border-bottom: 1px solid #3e3e3e;
+    background-color: var(--sv-bg-surface);
+    border-bottom: 1px solid var(--sv-border-light);
 
     .language-tag {
       font-size: 12px;
       font-weight: 500;
       padding: 2px 8px;
       border-radius: 4px;
-      background-color: #4d4d4d;
-      color: #e0e0e0;
+      background-color: var(--sv-bg-element-hover);
+      color: var(--sv-text-secondary);
       text-transform: uppercase;
     }
 
@@ -31,11 +31,11 @@
     }
 
     .copy-button {
-      color: #a0a0a0;
+      color: var(--sv-text-tertiary);
       transition: all 0.2s ease;
 
       &:hover {
-        color: #ffffff;
+        color: var(--sv-primary);
         opacity: 0.9;
       }
 
@@ -55,26 +55,7 @@
 
     code {
       font-family: inherit;
-    }
-  }
-}
-
-:host-context(.light-theme) {
-  .code-preview {
-    background-color: #f5f5f5;
-    border: 1px solid rgba(0, 0, 0, 0.1);
-  }
-
-  .code-preview-header {
-    background-color: #e0e0e0;
-    color: #333333;
-  }
-
-  .copy-button {
-    color: #666666;
-
-    &:hover {
-      color: #333333;
+      color: var(--sv-text-primary);
     }
   }
 } 

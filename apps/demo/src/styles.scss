@@ -117,6 +117,49 @@ body {
   border: 1px solid var(--sv-border-light);
 }
 
+/* Syntax highlighting styles - light theme */
+.hljs {
+  background: var(--sv-bg-element);
+  color: var(--sv-text-primary);
+}
+
+.hljs-comment,
+.hljs-quote {
+  color: var(--sv-text-tertiary);
+}
+
+.hljs-keyword,
+.hljs-selector-tag,
+.hljs-built_in,
+.hljs-name {
+  color: var(--sv-primary);
+}
+
+.hljs-string,
+.hljs-attr,
+.hljs-attribute {
+  color: var(--sv-secondary);
+}
+
+.hljs-number,
+.hljs-literal,
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag .hljs-attr {
+  color: var(--sv-tertiary);
+}
+
+.hljs-title,
+.hljs-section,
+.hljs-selector-id {
+  color: var(--sv-primary);
+  font-weight: 500;
+}
+
+.hljs-subst {
+  font-weight: normal;
+}
+
 // Fix for material expansion panel indicators in dark theme
 [data-theme="dark"] {
   .mat-expansion-indicator::after,
@@ -131,7 +174,7 @@ body {
     fill: var(--sv-text-primary) !important;
   }
 
-  /* Override GitHub theme colors for dark mode */
+  /* Syntax highlighting overrides for dark mode - uses the same variables but with dark theme values */
   .hljs {
     background: var(--sv-bg-element);
     color: var(--sv-text-primary);
