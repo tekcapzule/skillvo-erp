@@ -2,21 +2,35 @@
   padding: 24px 0;
   
   mat-card {
+    background-color: var(--sv-bg-surface) !important;
+    color: var(--sv-text-primary) !important;
     transition: background-color 0.3s ease, color 0.3s ease;
+    border: 1px solid var(--sv-border-light);
+    
+    mat-card-header {
+      mat-card-title {
+        color: var(--sv-text-primary) !important;
+      }
+      
+      mat-card-subtitle {
+        color: var(--sv-text-secondary) !important;
+      }
+    }
   }
   
   .demo-section {
     margin-bottom: 32px;
+    padding: 8px 0;
     
     h3 {
       margin-bottom: 12px;
-      color: var(--sv-text-primary);
+      color: var(--sv-text-primary) !important;
       font-weight: 500;
     }
     
     p {
       margin-bottom: 16px;
-      color: var(--sv-text-secondary);
+      color: var(--sv-text-secondary) !important;
     }
   }
   
@@ -42,7 +56,7 @@
     
     .button-label {
       font-size: 12px;
-      color: var(--sv-text-secondary);
+      color: var(--sv-text-secondary) !important;
     }
   }
   
@@ -55,14 +69,15 @@
   
   .code-example {
     pre {
-      background-color: var(--sv-bg-element);
+      background-color: var(--sv-bg-element) !important;
       padding: 16px;
       border-radius: 4px;
       overflow-x: auto;
       font-family: 'Courier New', Courier, monospace;
-      color: var(--sv-text-primary);
+      color: var(--sv-text-primary) !important;
       font-size: 14px;
       line-height: 1.5;
+      border: 1px solid var(--sv-border-light);
     }
   }
   
