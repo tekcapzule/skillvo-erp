@@ -1,0 +1,65 @@
+.property-editor {
+  .full-width {
+    width: 100%;
+    margin-bottom: 16px;
+  }
+  
+  .toggle-field {
+    margin-bottom: 16px;
+    
+    .hint {
+      font-size: 12px;
+      color: var(--sv-text-tertiary);
+      margin-top: 4px;
+      margin-left: 34px;
+    }
+  }
+  
+  .non-editable-field {
+    margin-bottom: 16px;
+    padding: 12px;
+    background-color: var(--sv-bg-element);
+    border-radius: 4px;
+    
+    .label {
+      font-weight: 500;
+      margin-bottom: 4px;
+      color: var(--sv-text-primary);
+    }
+    
+    .value {
+      font-family: 'Roboto Mono', monospace;
+      font-size: 14px;
+      color: var(--sv-text-secondary);
+      margin-bottom: 4px;
+    }
+    
+    .hint {
+      font-size: 12px;
+      color: var(--sv-text-tertiary);
+    }
+  }
+  
+  .property-fields {
+    padding: 8px 0;
+  }
+  
+  // Custom styles for color input
+  .color-input {
+    height: 40px;
+    padding: 4px;
+    cursor: pointer;
+  }
+}
+
+.no-properties {
+  padding: 16px;
+  background-color: var(--sv-bg-element);
+  border-radius: 4px;
+  text-align: center;
+  
+  p {
+    margin: 0;
+    color: var(--sv-text-secondary);
+  }
+} 

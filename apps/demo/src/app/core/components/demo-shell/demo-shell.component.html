@@ -1,0 +1,139 @@
+<div class="demo-shell-container" *ngIf="activeDemo">
+  <header class="demo-header">
+    <h1>{{ activeDemo.name }}</h1>
+    <p *ngIf="activeDemo.description">{{ activeDemo.description }}</p>
+  </header>
+
+  <mat-tab-group (selectedIndexChange)="onTabChange($event)" [selectedIndex]="activeTabIndex">
+    <!-- Overview Tab -->
+    <mat-tab label="Overview">
+      <div class="tab-content">
+        <!-- Component Variants Section -->
+        <section class="component-variants-section">
+          <h2>Component Variants</h2>
+          <p>The component supports multiple variants for different use cases and visual styles.</p>
+          
+          <div class="variants-grid">
+            <div *ngFor="let variant of activeDemo.variants" class="variant-item">
+              <div class="variant-preview">
+                <ng-container #variantContainer></ng-container>
+              </div>
+              <div class="variant-info">
+                <h3>{{ variant.name }}</h3>
+                <p *ngIf="variant.description">{{ variant.description }}</p>
+                <div class="variant-properties" *ngIf="variant.properties">
+                  <pre><code>{{ getVariantPropertiesString(variant.properties) }}</code></pre>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        
+        <!-- Documentation Section -->
+        <section class="documentation-section">
+          <h2>Documentation</h2>
+          
+          <!-- Properties Table -->
+          <div class="properties-table-container">
+            <h3>Properties</h3>
+            <table class="properties-table">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Type</th>
+                  <th>Default</th>
+                  <th>Description</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let prop of activeDemo.properties">
+                  <td class="prop-name">{{ prop.name }}</td>
+                  <td class="prop-type">{{ prop.type }}</td>
+                  <td class="prop-default">{{ prop.defaultValue }}</td>
+                  <td class="prop-description">{{ prop.description }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          
+          <!-- Events Table -->
+          <div class="events-table-container" *ngIf="activeDemo.events?.length">
+            <h3>Events</h3>
+            <table class="events-table">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Description</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let event of activeDemo.events">
+                  <td class="event-name">{{ event.name }}</td>
+                  <td class="event-description">{{ event.description }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+        
+        <!-- Code Examples Section -->
+        <section class="code-examples-section">
+          <h2>Code Examples</h2>
+          <div class="code-snippets-container">
+            <div *ngFor="let snippet of activeDemo.codeSnippets" class="code-snippet">
+              <h3 *ngIf="snippet.title">{{ snippet.title }}</h3>
+              <p *ngIf="snippet.description">{{ snippet.description }}</p>
+              <pre><code>{{ snippet.code }}</code></pre>
+            </div>
+          </div>
+        </section>
+      </div>
+    </mat-tab>
+
+    <!-- Playground Tab -->
+    <mat-tab label="Playground">
+      <div class="tab-content playground-container">
+        <div class="component-preview">
+          <h3>Component Preview</h3>
+          <div class="component-container">
+            <ng-container #componentContainer></ng-container>
+          </div>
+
+          <div class="css-classes" *ngIf="activeDemo.cssClasses?.length">
+            <h4>CSS Classes</h4>
+            <ul>
+              <li *ngFor="let cssClass of activeDemo.cssClasses">{{ cssClass }}</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="property-controls">
+          <h3>Properties</h3>
+          <demo-property-editor 
+            [componentInstance]="componentInstance" 
+            [properties]="activeDemo.properties">
+          </demo-property-editor>
+        </div>
+
+        <div class="event-monitor">
+          <h3>Events</h3>
+          <demo-event-monitor></demo-event-monitor>
+        </div>
+      </div>
+    </mat-tab>
+
+    <!-- Responsive Tab -->
+    <mat-tab label="Responsive">
+      <div class="tab-content responsive-container">
+        <h3>Responsive Testing</h3>
+        <!-- Viewport simulator component will go here -->
+      </div>
+    </mat-tab>
+  </mat-tab-group>
+</div>
+
+<mat-card class="no-demo-message" *ngIf="!activeDemo">
+  <mat-card-content>
+    <p>No component demo selected or available.</p>
+  </mat-card-content>
+</mat-card> 

@@ -1,0 +1,31 @@
+<div class="event-monitor">
+  <div class="event-controls">
+    <button mat-stroked-button (click)="clearEvents()" [disabled]="!eventLogs.length">
+      <mat-icon>delete</mat-icon>
+      Clear Events
+    </button>
+  </div>
+  
+  <div class="event-logs">
+    <ng-container *ngIf="eventLogs.length; else noEvents">
+      <div class="event-log" *ngFor="let log of eventLogs">
+        <div class="event-header">
+          <span class="event-name">{{ log.eventName }}</span>
+          <span class="event-time">{{ formatTimestamp(log.timestamp) }}</span>
+        </div>
+        
+        <div class="event-payload">
+          <pre><code>{{ formatPayload(log.payload) }}</code></pre>
+        </div>
+      </div>
+    </ng-container>
+    
+    <ng-template #noEvents>
+      <div class="no-events">
+        <mat-icon>notifications_none</mat-icon>
+        <p>No events have been emitted yet.</p>
+        <p class="hint">Interact with the component to see events here.</p>
+      </div>
+    </ng-template>
+  </div>
+</div> 

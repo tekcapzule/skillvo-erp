@@ -1,0 +1,80 @@
+<div class="property-editor" *ngIf="propertiesForm">
+  <form [formGroup]="propertiesForm">
+    <mat-accordion multi>
+      <ng-container *ngFor="let category of objectKeys(groupedProperties)">
+        <mat-expansion-panel [expanded]="category === 'General'">
+          <mat-expansion-panel-header>
+            <mat-panel-title>{{ category }}</mat-panel-title>
+          </mat-expansion-panel-header>
+
+          <div class="property-fields">
+            <ng-container *ngFor="let property of groupedProperties[category]">
+              <!-- String property -->
+              <ng-container *ngIf="property.type === propertyType.STRING">
+                <mat-form-field appearance="outline" class="full-width">
+                  <mat-label>{{ property.name }}</mat-label>
+                  <input matInput [formControlName]="property.name">
+                  <mat-hint *ngIf="property.description">{{ property.description }}</mat-hint>
+                </mat-form-field>
+              </ng-container>
+
+              <!-- Number property -->
+              <ng-container *ngIf="property.type === propertyType.NUMBER">
+                <mat-form-field appearance="outline" class="full-width">
+                  <mat-label>{{ property.name }}</mat-label>
+                  <input matInput type="number" [formControlName]="property.name">
+                  <mat-hint *ngIf="property.description">{{ property.description }}</mat-hint>
+                </mat-form-field>
+              </ng-container>
+
+              <!-- Boolean property -->
+              <ng-container *ngIf="property.type === propertyType.BOOLEAN">
+                <div class="toggle-field">
+                  <mat-slide-toggle [formControlName]="property.name">
+                    {{ property.name }}
+                  </mat-slide-toggle>
+                  <div class="hint" *ngIf="property.description">{{ property.description }}</div>
+                </div>
+              </ng-container>
+
+              <!-- Select property -->
+              <ng-container *ngIf="property.type === propertyType.SELECT">
+                <mat-form-field appearance="outline" class="full-width">
+                  <mat-label>{{ property.name }}</mat-label>
+                  <mat-select [formControlName]="property.name">
+                    <mat-option *ngFor="let option of property.options" [value]="option.value || option">
+                      {{ option.label || option }}
+                    </mat-option>
+                  </mat-select>
+                  <mat-hint *ngIf="property.description">{{ property.description }}</mat-hint>
+                </mat-form-field>
+              </ng-container>
+
+              <!-- Color property -->
+              <ng-container *ngIf="property.type === propertyType.COLOR">
+                <mat-form-field appearance="outline" class="full-width">
+                  <mat-label>{{ property.name }}</mat-label>
+                  <input matInput [formControlName]="property.name" type="color" class="color-input">
+                  <mat-hint *ngIf="property.description">{{ property.description }}</mat-hint>
+                </mat-form-field>
+              </ng-container>
+
+              <!-- Simple Object property (not editable for now) -->
+              <ng-container *ngIf="property.type === propertyType.OBJECT || property.type === propertyType.ARRAY">
+                <div class="non-editable-field">
+                  <div class="label">{{ property.name }}</div>
+                  <div class="value">Complex type (not editable)</div>
+                  <div class="hint" *ngIf="property.description">{{ property.description }}</div>
+                </div>
+              </ng-container>
+            </ng-container>
+          </div>
+        </mat-expansion-panel>
+      </ng-container>
+    </mat-accordion>
+  </form>
+</div>
+
+<div class="no-properties" *ngIf="!properties.length">
+  <p>No editable properties available for this component.</p>
+</div> 
