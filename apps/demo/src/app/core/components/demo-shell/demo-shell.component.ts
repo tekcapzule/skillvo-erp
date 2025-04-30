@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { Component, Input, OnDestroy, OnInit, ViewChild, ViewChildren, ViewContainerRef, QueryList, AfterViewInit } from '@angular/core';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatCardModule } from '@angular/material/card';
+import { FormsModule } from '@angular/forms';
 import { Subject, takeUntil } from 'rxjs';
 import { ComponentDemo, ComponentVariant } from '../../interfaces/component-demo.interface';
 import { DemoRegistryService } from '../../services/demo-registry.service';
@@ -11,6 +12,13 @@ import { PropertyEditorComponent } from '../property-editor/property-editor.comp
 import { EventMonitorComponent } from '../event-monitor/event-monitor.component';
 import { CodePreviewComponent } from '../code-preview/code-preview.component';
 
+interface ViewportSize {
+  id: string;
+  name: string;
+  width: number;
+  height: number;
+}
+
 @Component({
   selector: 'demo-shell',
   standalone: true,
@@ -18,6 +26,7 @@ import { CodePreviewComponent } from '../code-preview/code-preview.component';
     CommonModule,
     MatTabsModule,
     MatCardModule,
+    FormsModule,
     PropertyEditorComponent,
     EventMonitorComponent,
     CodePreviewComponent
@@ -31,6 +40,9 @@ export class DemoShellComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('componentContainer', { read: ViewContainerRef, static: true })
   componentContainer!: ViewContainerRef;
   
+  @ViewChild('responsiveComponentContainer', { read: ViewContainerRef })
+  responsiveComponentContainer!: ViewContainerRef;
+  
   @ViewChildren('variantContainer', { read: ViewContainerRef })
   variantContainers!: QueryList<ViewContainerRef>;
   
@@ -38,6 +50,19 @@ export class DemoShellComponent implements OnInit, AfterViewInit, OnDestroy {
   activeTabIndex = 0;
   componentInstance: any = null;
   playgroundTabIndex = 0;
+  
+  // Viewport simulation properties
+  viewportPresets: ViewportSize[] = [
+    { id: 'mobile-small', name: 'Mobile (Small)', width: 320, height: 568 },
+    { id: 'mobile', name: 'Mobile', width: 375, height: 667 },
+    { id: 'tablet', name: 'Tablet', width: 768, height: 1024 },
+    { id: 'desktop', name: 'Desktop', width: 1280, height: 800 },
+    { id: 'desktop-large', name: 'Desktop (Large)', width: 1440, height: 900 }
+  ];
+  
+  selectedViewport: string = 'mobile';
+  currentViewport: ViewportSize = this.viewportPresets[1]; // Default to mobile
+  customViewport: ViewportSize = { id: 'custom', name: 'Custom', width: 375, height: 667 };
   
   private destroy$ = new Subject<void>();
   
@@ -69,6 +94,11 @@ export class DemoShellComponent implements OnInit, AfterViewInit, OnDestroy {
     // If we start directly on the playground tab, render the component
     if (this.activeTabIndex === 1 && this.activeDemo) {
       setTimeout(() => this.renderComponent(), 0);
+    }
+    
+    // If we start directly on the responsive tab, render the component
+    if (this.activeTabIndex === 2 && this.activeDemo) {
+      setTimeout(() => this.renderResponsiveComponent(), 0);
     }
     
     // When the view is initialized, render all variants
@@ -111,10 +141,37 @@ export class DemoShellComponent implements OnInit, AfterViewInit, OnDestroy {
         }, 100);
       }, 0);
     }
+    
+    // When switching to responsive tab
+    if (index === 2 && this.activeDemo) {
+      setTimeout(() => this.renderResponsiveComponent(), 0);
+    }
   }
   
   onPlaygroundTabChange(index: number): void {
     this.playgroundTabIndex = index;
+  }
+  
+  // Viewport control methods
+  setViewportSize(preset: ViewportSize): void {
+    this.selectedViewport = preset.id;
+    this.currentViewport = preset;
+    
+    // Re-render the component in the new viewport
+    setTimeout(() => this.renderResponsiveComponent(), 0);
+  }
+  
+  applyCustomViewport(): void {
+    this.selectedViewport = 'custom';
+    this.currentViewport = { ...this.customViewport };
+    
+    // Re-render the component in the new viewport
+    setTimeout(() => this.renderResponsiveComponent(), 0);
+  }
+  
+  getCurrentViewportName(): string {
+    const preset = this.viewportPresets.find(p => p.id === this.selectedViewport);
+    return preset ? preset.name : 'Custom';
   }
   
   /**
@@ -316,5 +373,57 @@ export class DemoShellComponent implements OnInit, AfterViewInit, OnDestroy {
         });
       }
     });
+  }
+  
+  /**
+   * Render a component in the responsive viewport container
+   */
+  private renderResponsiveComponent(): void {
+    if (!this.activeDemo || !this.responsiveComponentContainer) {
+      console.error('Cannot render responsive component - activeDemo or responsiveComponentContainer is null');
+      return;
+    }
+    
+    console.log('Rendering responsive component');
+    
+    // Clear existing component
+    this.responsiveComponentContainer.clear();
+    
+    try {
+      // Create new component
+      const componentRef = this.responsiveComponentContainer.createComponent(this.activeDemo.component);
+      const componentInstance = componentRef.instance;
+      
+      // Set properties from default variant
+      const defaultVariantId = this.activeDemo.defaultVariantId;
+      const variants = this.activeDemo.variants;
+      
+      if (defaultVariantId && variants) {
+        const defaultVariant = variants.find(v => v.id === defaultVariantId);
+        if (defaultVariant) {
+          Object.entries(defaultVariant.properties).forEach(([key, value]) => {
+            componentInstance[key] = value;
+          });
+        }
+      }
+      
+      // For buttons, add content
+      if (this.activeDemo.id.includes('button')) {
+        setTimeout(() => {
+          const element = componentRef.location.nativeElement;
+          if (element) {
+            // Force element to be visible
+            element.style.display = 'inline-block';
+            
+            const contentEl = element.querySelector('.sv-button-content');
+            if (contentEl) {
+              contentEl.innerHTML = 'Responsive Button';
+            }
+          }
+        }, 10);
+      }
+    } catch (error) {
+      console.error('Error rendering responsive component:', error);
+    }
   }
 } 

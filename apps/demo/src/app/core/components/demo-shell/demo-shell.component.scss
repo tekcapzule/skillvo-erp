@@ -364,11 +364,165 @@
 
 // Responsive tab
 .responsive-container {
-  h3 {
-    margin: 0 0 16px;
-    font-size: 18px;
-    font-weight: 500;
-    color: var(--sv-text-primary);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  
+  .responsive-controls {
+    margin-bottom: 24px;
+    
+    h3 {
+      margin: 0 0 16px;
+      font-size: 18px;
+      font-weight: 500;
+      color: var(--sv-text-primary);
+    }
+    
+    .viewport-controls {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      
+      .viewport-presets {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        
+        .viewport-preset-button {
+          padding: 8px 16px;
+          background-color: var(--sv-bg-element);
+          border: 1px solid var(--sv-border-light);
+          border-radius: 4px;
+          color: var(--sv-text-secondary);
+          font-size: 14px;
+          cursor: pointer;
+          transition: all 0.2s ease;
+          
+          &:hover {
+            background-color: var(--sv-bg-element-hover);
+          }
+          
+          &.active {
+            background-color: var(--sv-primary-light);
+            color: var(--sv-primary);
+            border-color: var(--sv-primary);
+          }
+        }
+      }
+      
+      .viewport-custom {
+        display: flex;
+        align-items: center;
+        margin-top: 8px;
+        
+        .viewport-size-inputs {
+          display: flex;
+          gap: 16px;
+          align-items: center;
+          
+          label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--sv-text-secondary);
+            font-size: 14px;
+            
+            input {
+              width: 70px;
+              padding: 4px 8px;
+              border: 1px solid var(--sv-border-light);
+              border-radius: 4px;
+              background-color: var(--sv-bg-surface);
+              color: var(--sv-text-primary);
+              font-size: 14px;
+              text-align: right;
+              
+              &:focus {
+                outline: none;
+                border-color: var(--sv-primary);
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  
+  .viewport-simulator {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    overflow: auto;
+    padding-bottom: 24px;
+    
+    .viewport-info {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      
+      .viewport-dimensions {
+        font-family: 'Roboto Mono', monospace;
+        font-size: 14px;
+        padding: 4px 8px;
+        background-color: var(--sv-bg-element);
+        border-radius: 4px;
+        color: var(--sv-text-secondary);
+      }
+      
+      .viewport-name {
+        font-size: 14px;
+        color: var(--sv-text-tertiary);
+      }
+    }
+    
+    .viewport-frame {
+      border: 4px solid var(--sv-border-medium);
+      border-radius: 8px;
+      overflow: hidden;
+      background-color: white;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      resize: both;
+      max-width: 100%;
+      
+      .viewport-content {
+        height: 100%;
+        width: 100%;
+        overflow: auto;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        padding: 16px;
+        
+        // Add viewport size indicator as a watermark
+        &::before {
+          content: attr(data-size);
+          position: absolute;
+          bottom: 8px;
+          right: 8px;
+          font-size: 12px;
+          color: rgba(0, 0, 0, 0.2);
+          pointer-events: none;
+        }
+        
+        // Style the fallback button
+        .responsive-fallback-button {
+          .sv-button {
+            display: inline-block;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            background-color: var(--sv-primary, #2196f3);
+            color: white;
+          }
+        }
+      }
+    }
   }
 }
 

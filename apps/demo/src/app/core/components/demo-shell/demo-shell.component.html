@@ -145,8 +145,66 @@
     <!-- Responsive Tab -->
     <mat-tab label="Responsive">
       <div class="tab-content responsive-container">
-        <h3>Responsive Testing</h3>
-        <!-- Viewport simulator component will go here -->
+        <div class="responsive-controls">
+          <h3>Responsive Testing</h3>
+          <div class="viewport-controls">
+            <div class="viewport-presets">
+              <button 
+                *ngFor="let preset of viewportPresets" 
+                class="viewport-preset-button" 
+                [class.active]="selectedViewport === preset.id"
+                (click)="setViewportSize(preset)">
+                {{ preset.name }}
+              </button>
+            </div>
+            <div class="viewport-custom">
+              <div class="viewport-size-inputs">
+                <label>
+                  Width:
+                  <input 
+                    type="number" 
+                    [(ngModel)]="customViewport.width" 
+                    (input)="applyCustomViewport()"
+                    min="320" 
+                    max="1920" 
+                    step="10">
+                  px
+                </label>
+                <label>
+                  Height:
+                  <input 
+                    type="number" 
+                    [(ngModel)]="customViewport.height" 
+                    (input)="applyCustomViewport()"
+                    min="320" 
+                    max="1080" 
+                    step="10">
+                  px
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="viewport-simulator">
+          <div class="viewport-info">
+            <span class="viewport-dimensions">{{ currentViewport.width }} × {{ currentViewport.height }}px</span>
+            <span class="viewport-name" *ngIf="selectedViewport !== 'custom'">{{ getCurrentViewportName() }}</span>
+          </div>
+          
+          <div class="viewport-frame" [style.width.px]="currentViewport.width" [style.height.px]="currentViewport.height">
+            <div class="viewport-content" [attr.data-size]="currentViewport.width + '×' + currentViewport.height">
+              <ng-container #responsiveComponentContainer></ng-container>
+              
+              <!-- Fallback display if component doesn't render -->
+              <div *ngIf="activeDemo?.id?.includes('button')" class="responsive-fallback-button">
+                <button class="sv-button sv-button-primary sv-ui-size-md">
+                  <span class="sv-button-content">Button Preview</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </mat-tab>
   </mat-tab-group>
