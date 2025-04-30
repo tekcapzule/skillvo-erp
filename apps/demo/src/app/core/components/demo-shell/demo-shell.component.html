@@ -22,7 +22,10 @@
                 <h3>{{ variant.name }}</h3>
                 <p *ngIf="variant.description">{{ variant.description }}</p>
                 <div class="variant-properties" *ngIf="variant.properties">
-                  <pre><code>{{ getVariantPropertiesString(variant.properties) }}</code></pre>
+                  <demo-code-preview 
+                    [code]="getVariantPropertiesString(variant.properties)"
+                    language="html">
+                  </demo-code-preview>
                 </div>
               </div>
             </div>
@@ -83,7 +86,11 @@
             <div *ngFor="let snippet of activeDemo.codeSnippets" class="code-snippet">
               <h3 *ngIf="snippet.title">{{ snippet.title }}</h3>
               <p *ngIf="snippet.description">{{ snippet.description }}</p>
-              <pre><code>{{ snippet.code }}</code></pre>
+              
+              <demo-code-preview 
+                [code]="snippet.code"
+                [language]="snippet.language">
+              </demo-code-preview>
             </div>
           </div>
         </section>

@@ -10,6 +10,10 @@
 /* Import Material Icons font */
 @import url('https://fonts.googleapis.com/icon?family=Material+Icons');
 
+/* Highlight.js theme */
+@import 'highlight.js/styles/github.css';
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;500&display=swap');
+
 /* Override Material theming with SkillVo theme variables */
 :root {
   /* Material input field variables */
@@ -125,5 +129,46 @@ body {
   .mat-expansion-panel-header-indicator svg,
   .mat-mdc-expansion-panel-header-indicator svg {
     fill: var(--sv-text-primary) !important;
+  }
+
+  /* Override GitHub theme colors for dark mode */
+  .hljs {
+    background: var(--sv-bg-element);
+    color: var(--sv-text-primary);
+  }
+  
+  .hljs-comment,
+  .hljs-quote {
+    color: var(--sv-text-tertiary);
+  }
+  
+  .hljs-keyword,
+  .hljs-selector-tag,
+  .hljs-subst {
+    color: var(--sv-primary);
+  }
+  
+  .hljs-number,
+  .hljs-literal,
+  .hljs-variable,
+  .hljs-template-variable,
+  .hljs-tag .hljs-attr {
+    color: var(--sv-tertiary);
+  }
+  
+  .hljs-string,
+  .hljs-doctag {
+    color: var(--sv-secondary);
+  }
+  
+  .hljs-title,
+  .hljs-section,
+  .hljs-selector-id {
+    color: var(--sv-primary);
+    font-weight: bold;
+  }
+  
+  .hljs-subst {
+    font-weight: normal;
   }
 }

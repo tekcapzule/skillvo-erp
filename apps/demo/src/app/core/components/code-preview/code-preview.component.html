@@ -1,0 +1,10 @@
+<div class="code-preview">
+  <div class="code-preview-header">
+    <span class="language-tag">{{ language }}</span>
+    <span class="spacer"></span>
+    <button mat-icon-button class="copy-button" (click)="copyToClipboard()">
+      <mat-icon>{{ isCopied ? 'check' : 'content_copy' }}</mat-icon>
+    </button>
+  </div>
+  <pre class="code-container"><code #codeElement [class]="'language-' + language">{{ code }}</code></pre>
+</div> 

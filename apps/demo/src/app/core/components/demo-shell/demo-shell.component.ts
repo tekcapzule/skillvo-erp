@@ -9,6 +9,7 @@ import { DemoRegistryService } from '../../services/demo-registry.service';
 import { EventTrackingService } from '../../services/event-tracking.service';
 import { PropertyEditorComponent } from '../property-editor/property-editor.component';
 import { EventMonitorComponent } from '../event-monitor/event-monitor.component';
+import { CodePreviewComponent } from '../code-preview/code-preview.component';
 
 @Component({
   selector: 'demo-shell',
@@ -18,7 +19,8 @@ import { EventMonitorComponent } from '../event-monitor/event-monitor.component'
     MatTabsModule,
     MatCardModule,
     PropertyEditorComponent,
-    EventMonitorComponent
+    EventMonitorComponent,
+    CodePreviewComponent
   ],
   templateUrl: './demo-shell.component.html',
   styleUrls: ['./demo-shell.component.scss']
