@@ -1,0 +1,17 @@
+// ========================================
+// Widgets Components Index
+// ========================================
+// This file imports necessary abstracts and base files before forwarding components
+
+@use '../../abstracts' as *;
+@use '../../base' as *;
+
+// Forward all widgets components
+@forward './calendar';
+@forward './code-editor';
+@forward './kanban-board';
+@forward './media-player';
+@forward './messenger';
+@forward './pdf-viewer';
+@forward './ppt-viewer';
+@forward './rich-text-editor';
