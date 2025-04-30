@@ -1,9 +1,12 @@
 <div class="demo-layout">
-  <demo-header></demo-header>
+  <demo-header (menuToggle)="toggleSidenav()"></demo-header>
   
   <mat-sidenav-container class="sidenav-container">
-    <mat-sidenav mode="side" opened class="sidenav">
-      <demo-sidenav></demo-sidenav>
+    <mat-sidenav #sidenav [mode]="isMobile ? 'over' : 'side'" 
+                 [opened]="!isMobile" 
+                 [disableClose]="!isMobile"
+                 class="sidenav">
+      <demo-sidenav (itemClicked)="isMobile && sidenav.close()"></demo-sidenav>
     </mat-sidenav>
     
     <mat-sidenav-content class="content">

@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatSidenavModule, MatSidenav } from '@angular/material/sidenav';
 import { CommonModule } from '@angular/common';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { HeaderComponent } from '../header/header.component';
 import { SidenavComponent } from '../sidenav/sidenav.component';
 
@@ -18,4 +19,21 @@ import { SidenavComponent } from '../sidenav/sidenav.component';
     SidenavComponent
   ]
 })
-export class MainLayoutComponent {} 
+export class MainLayoutComponent implements OnInit {
+  @ViewChild('sidenav') sidenav!: MatSidenav;
+  isMobile = false;
+
+  constructor(private breakpointObserver: BreakpointObserver) {}
+
+  ngOnInit() {
+    this.breakpointObserver
+      .observe([Breakpoints.XSmall, Breakpoints.Small])
+      .subscribe(result => {
+        this.isMobile = result.matches;
+      });
+  }
+
+  toggleSidenav() {
+    this.sidenav?.toggle();
+  }
+} 

@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { CommonModule } from '@angular/common';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 
 interface MenuItem {
   name: string;
@@ -25,7 +26,26 @@ interface MenuItem {
     MatExpansionModule
   ]
 })
-export class SidenavComponent {
+export class SidenavComponent implements OnInit {
+  @Output() itemClicked = new EventEmitter<void>();
+  isMobile = false;
+  
+  constructor(private breakpointObserver: BreakpointObserver) {}
+
+  ngOnInit() {
+    this.breakpointObserver
+      .observe([Breakpoints.XSmall, Breakpoints.Small])
+      .subscribe(result => {
+        this.isMobile = result.matches;
+      });
+  }
+  
+  onItemClick() {
+    if (this.isMobile) {
+      this.itemClicked.emit();
+    }
+  }
+
   menuItems: MenuItem[] = [
     {
       name: 'Input',

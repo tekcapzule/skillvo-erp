@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatButtonModule } from '@angular/material/button';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 
 @Component({
   selector: 'demo-header',
@@ -13,11 +15,17 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
     MatToolbarModule,
     MatIconModule,
     MatSlideToggleModule,
+    MatButtonModule,
     FormsModule
   ]
 })
 export class HeaderComponent implements OnInit {
   isDarkTheme = false;
+  isMobile = false;
+  
+  @Output() menuToggle = new EventEmitter<void>();
+
+  constructor(private breakpointObserver: BreakpointObserver) {}
 
   ngOnInit() {
     // Check localStorage first
@@ -39,6 +47,13 @@ export class HeaderComponent implements OnInit {
         this.applyTheme(this.isDarkTheme);
       }
     });
+    
+    // Check for mobile viewport
+    this.breakpointObserver
+      .observe([Breakpoints.XSmall, Breakpoints.Small])
+      .subscribe(result => {
+        this.isMobile = result.matches;
+      });
   }
 
   toggleTheme() {
@@ -64,5 +79,9 @@ export class HeaderComponent implements OnInit {
     setTimeout(() => {
       document.documentElement.classList.remove('color-scheme-transition');
     }, 300);
+  }
+  
+  onMenuToggle() {
+    this.menuToggle.emit();
   }
 } 

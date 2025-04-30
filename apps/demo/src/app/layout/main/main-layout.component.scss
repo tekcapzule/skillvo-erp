@@ -39,4 +39,24 @@
   padding: 24px;
   max-width: 1200px;
   margin: 0 auto;
+}
+
+/* Mobile styles */
+@media (max-width: 599px) {
+  .sidenav-container {
+    margin-top: 56px; /* Match the mobile header height */
+  }
+  
+  .sidenav {
+    width: 85%;
+    max-width: 300px;
+  }
+  
+  .content {
+    min-height: calc(100vh - 56px);
+  }
+  
+  .content-container {
+    padding: 16px;
+  }
 } 

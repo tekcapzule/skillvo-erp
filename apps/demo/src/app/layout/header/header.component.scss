@@ -15,6 +15,11 @@
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
+.menu-button {
+  margin-right: 8px;
+  color: var(--sv-text-on-dark) !important;
+}
+
 .logo {
   display: flex;
   align-items: center;
@@ -25,6 +30,10 @@
   
   .mat-icon {
     color: var(--sv-text-on-dark) !important;
+  }
+  
+  .mobile-title {
+    font-size: 1rem;
   }
 }
 
@@ -37,7 +46,7 @@
   align-items: center;
   gap: 8px;
   
-  .mat-icon {
+  .theme-icon {
     font-size: 20px;
     width: 20px;
     height: 20px;
@@ -49,5 +58,18 @@
     --mdc-switch-selected-handle-color: var(--sv-text-on-dark) !important;
     --mdc-switch-unselected-track-color: rgba(255, 255, 255, 0.3) !important;
     --mdc-switch-unselected-handle-color: var(--sv-text-on-dark) !important;
+  }
+}
+
+/* Mobile styles */
+@media (max-width: 599px) {
+  .theme-toggle {
+    gap: 4px;
+    
+    .theme-icon {
+      font-size: 16px;
+      width: 16px;
+      height: 16px;
+    }
   }
 } 
