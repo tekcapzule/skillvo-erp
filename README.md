@@ -1,4 +1,4 @@
-# SkillVo Talent Management Platform
+# SkillVo ERP
 
 A unified, multi-tenant talent management system covering the full lifecycle: hiring, onboarding, training, and administration.
 
