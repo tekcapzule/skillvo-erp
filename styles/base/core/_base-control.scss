@@ -36,6 +36,8 @@
 /* ==========================================================================
    1. VARIABLES & CONFIGURATION
    ========================================================================== */
+@use 'sass:map';
+@use './../../abstracts/' as *;  // Import the breakpoints file
 
 // Focus ring properties
 $focus-ring-color: var(--sv-focus-ring-color);
@@ -398,6 +400,7 @@ $touch-target-size: var(--sv-min-touch-target);
     @content;
   }
 }
+
 
 /* ==========================================================================
    3. BASE CLASS DEFINITION
