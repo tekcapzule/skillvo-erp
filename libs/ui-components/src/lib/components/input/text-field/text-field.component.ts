@@ -1,11 +1,15 @@
 import { Component, Input, forwardRef } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
-import { BaseInputComponent } from '../base-input/base-input.component';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { BaseInputComponent } from './../base-input/base-input.component';
 
 @Component({
   selector: 'sv-text-field',
   templateUrl: './text-field.component.html',
   styleUrls: ['./text-field.component.scss'],
+  standalone: true,
+  imports: [CommonModule, FormsModule],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,

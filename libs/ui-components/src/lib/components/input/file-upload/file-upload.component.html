@@ -1,0 +1,166 @@
+<div class="sv-file-upload-container">
+  <!-- Label -->
+  <label *ngIf="label" [attr.for]="id" class="sv-input-label">
+    {{ label }}
+    <span *ngIf="required" class="sv-input-required">*</span>
+  </label>
+  
+  <!-- File Dropzone -->
+  <div #dropZone 
+       class="sv-file-dropzone" 
+       [class.drag-over]="isDragging">
+    
+    <!-- Hidden Native Input -->
+    <input #fileInput
+           type="file"
+           class="sv-file-upload-input"
+           [id]="id"
+           [name]="name"
+           [accept]="config.accept"
+           [multiple]="config.multiple"
+           [disabled]="disabled || readonly"
+           [required]="required"
+           (change)="onFileInputChange($event)"
+           (blur)="onBlur()">
+    
+    <!-- Custom File Upload Label -->
+    <label for="{{id}}"
+           class="sv-file-upload-label"
+           [class.sv-file-upload-compact]="config.compact">
+      
+      <!-- Upload Icon -->
+      <svg class="sv-file-upload-label-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+        <polyline points="17 8 12 3 7 8"></polyline>
+        <line x1="12" y1="3" x2="12" y2="15"></line>
+      </svg>
+      
+      <!-- Label Text -->
+      <div class="sv-file-upload-label-text">
+        <div class="sv-file-upload-label-text-primary">
+          {{ config.multiple ? 'Choose files' : 'Choose a file' }}
+        </div>
+        <div class="sv-file-upload-label-text-secondary" *ngIf="!config.compact">
+          or drag and drop {{ config.multiple ? 'them' : 'it' }} here
+        </div>
+      </div>
+    </label>
+    
+    <!-- Drag Drop Indicator -->
+    <div class="sv-file-dropzone-indicator" [class.active]="isDragging">
+      <svg class="sv-file-dropzone-indicator-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M4 17h16"></path>
+        <path d="M10 10l-2 7h8l-2-7"></path>
+        <rect x="7" y="3" width="10" height="4" rx="1"></rect>
+      </svg>
+      <div class="sv-file-dropzone-indicator-text">Drop {{ config.multiple ? 'files' : 'a file' }} here</div>
+    </div>
+  </div>
+  
+  <!-- File List -->
+  <div class="sv-file-list" *ngIf="files.length > 0">
+    <div *ngFor="let file of files" 
+         class="sv-file-list-item"
+         [class.sv-file-list-item-error]="file.status === 'error'"
+         [class.sv-file-list-item-success]="file.status === 'success'">
+      
+      <!-- File Preview -->
+      <div class="sv-file-list-item-preview">
+        <img *ngIf="file.preview" [src]="file.preview" class="sv-file-list-item-preview-img" alt="File preview">
+        <svg *ngIf="!file.preview" class="sv-file-list-item-preview-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+          <polyline points="14 2 14 8 20 8"></polyline>
+          <line x1="16" y1="13" x2="8" y2="13"></line>
+          <line x1="16" y1="17" x2="8" y2="17"></line>
+          <line x1="10" y1="9" x2="8" y2="9"></line>
+        </svg>
+      </div>
+      
+      <!-- File Details -->
+      <div class="sv-file-list-item-details">
+        <div class="sv-file-list-item-details-name" [title]="file.name">{{ file.name }}</div>
+        <div class="sv-file-list-item-details-info">
+          <span class="sv-file-list-item-details-info-size">{{ formatBytes(file.size) }}</span>
+          <span class="sv-file-list-item-details-info-type">{{ file.type }}</span>
+        </div>
+        
+        <!-- Progress Bar -->
+        <div class="sv-file-progress" *ngIf="config.showProgressBar && file.status !== 'pending'">
+          <div class="sv-file-progress-bar">
+            <div class="sv-file-progress-bar-fill" 
+                 [class.sv-file-progress-uploading]="file.status === 'uploading'"
+                 [class.sv-file-progress-success]="file.status === 'success'"
+                 [class.sv-file-progress-error]="file.status === 'error'"
+                 [style.width.%]="file.progress">
+            </div>
+          </div>
+          <div class="sv-file-progress-info">
+            <span class="sv-file-progress-info-percent">{{ file.progress }}%</span>
+            <span class="sv-file-progress-info-status">{{ file.status }}</span>
+          </div>
+        </div>
+        
+        <!-- Error Message -->
+        <div class="sv-file-list-item-error-message" *ngIf="file.status === 'error'">
+          {{ file.error || 'Upload failed' }}
+        </div>
+      </div>
+      
+      <!-- File Actions -->
+      <div class="sv-file-list-item-actions">
+        <!-- Upload Button -->
+        <button *ngIf="file.status === 'pending'" 
+                type="button"
+                class="sv-file-list-item-actions-btn sv-file-list-item-actions-btn-upload"
+                (click)="uploadFile(file)">
+          <svg class="sv-file-list-item-actions-btn-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="16 16 12 12 8 16"></polyline>
+            <line x1="12" y1="12" x2="12" y2="21"></line>
+            <path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3"></path>
+            <polyline points="16 16 12 12 8 16"></polyline>
+          </svg>
+        </button>
+        
+        <!-- Download Button -->
+        <button *ngIf="file.status === 'success' && file.url" 
+                type="button"
+                class="sv-file-list-item-actions-btn sv-file-list-item-actions-btn-download"
+                [attr.download]="file.name"
+                [attr.href]="file.url">
+          <svg class="sv-file-list-item-actions-btn-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+            <polyline points="7 10 12 15 17 10"></polyline>
+            <line x1="12" y1="15" x2="12" y2="3"></line>
+          </svg>
+        </button>
+        
+        <!-- Remove Button -->
+        <button type="button"
+                class="sv-file-list-item-actions-btn sv-file-list-item-actions-btn-remove"
+                (click)="removeFile(file)">
+          <svg class="sv-file-list-item-actions-btn-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Upload Actions -->
+  <div class="sv-file-upload-actions" *ngIf="hasPendingFiles()">
+    <button type="button" class="sv-btn sv-btn-primary" (click)="uploadAll()">
+      Upload All
+    </button>
+    <button type="button" class="sv-btn sv-btn-secondary" (click)="clearFiles()">
+      Clear All
+    </button>
+  </div>
+  
+  <!-- Help Text -->
+  <div *ngIf="helpText" class="sv-input-help-text">{{ helpText }}</div>
+  
+  <!-- Error & Success Messages -->
+  <div *ngIf="!isValid && errorMessage && isTouched" class="sv-input-error-message">{{ errorMessage }}</div>
+  <div *ngIf="isValid && successMessage && isTouched" class="sv-input-success-message">{{ successMessage }}</div>
+</div>

@@ -1,0 +1,145 @@
+<div class="sv-search-field-container">
+    <label *ngIf="label" [for]="id" class="sv-input-label">
+      {{ label }}
+      <span *ngIf="required" class="sv-input-required">*</span>
+    </label>
+    
+    <div class="sv-search-field-inner" [ngClass]="getSearchFieldClasses()">
+      <!-- Search Icon -->
+      <div class="sv-search-field-icon">
+        <svg class="sv-search-field-icon-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+      </div>
+      
+      <!-- Search Input -->
+      <input
+        #searchInput
+        type="search"
+        [id]="id"
+        [name]="name"
+        [placeholder]="placeholder"
+        [disabled]="disabled"
+        [readonly]="readonly"
+        [required]="required"
+        class="sv-search-field-input"
+        [ngClass]="getInputClasses()"
+        [(ngModel)]="value"
+        (input)="onInputChange($event)"
+        (blur)="onBlur()"
+        (keydown)="handleKeyDown($event)"
+        autocomplete="off"
+      />
+      
+      <!-- Loading Spinner -->
+      <div *ngIf="isLoading" class="sv-search-field-loading">
+        <div class="sv-search-field-loading-spinner"></div>
+      </div>
+      
+      <!-- Clear Button -->
+      <button *ngIf="showClearButton && value && !isLoading" 
+        type="button" 
+        class="sv-search-field-clear"
+        [class.visible]="value"
+        (click)="clearSearch()"
+        [attr.aria-label]="'Clear search'"
+      >
+        <svg class="sv-search-field-clear-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+    
+    <!-- Submit Button -->
+    <button *ngIf="showSubmitButton" 
+      type="button" 
+      class="sv-search-field-with-button-button"
+      (click)="submitSearch()"
+    >
+      <svg class="sv-search-field-with-button-button-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="8"></circle>
+        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+      </svg>
+      <span class="sv-search-field-with-button-button-text">{{ submitButtonText }}</span>
+    </button>
+    
+    <!-- Search Results Dropdown -->
+    <div *ngIf="showResults" class="sv-search-results">
+      <!-- Loading State -->
+      <div *ngIf="isLoading" class="sv-search-results-loading">
+        <div class="sv-search-results-loading-spinner"></div>
+        <span class="sv-search-results-loading-text">{{ loadingMessage }}</span>
+      </div>
+      
+      <!-- Empty State -->
+      <div *ngIf="!isLoading && results.length === 0 && !hasGroups()" class="sv-search-results-empty">
+        {{ emptyResultsMessage }}
+      </div>
+      
+      <!-- Grouped Results -->
+      <ng-container *ngIf="hasGroups() && !isLoading">
+        <div *ngFor="let group of groupedResults | keyvalue">
+          <div class="sv-search-results-group-header">{{ group.key }}</div>
+          <ul class="sv-search-results-list">
+            <li *ngFor="let result of group.value; let i = index" 
+                class="sv-search-results-item"
+                [ngClass]="{'active': selectedResultIndex === i}"
+                (click)="selectResult(result)">
+              <div class="sv-search-results-item-content">
+                <div *ngIf="result.icon" class="sv-search-results-item-content-icon">
+                  <svg class="sv-search-results-item-content-icon-svg" [attr.viewBox]="'0 0 24 24'" [innerHTML]="result.icon"></svg>
+                </div>
+                <div class="sv-search-results-item-content-main">
+                  <div class="sv-search-results-item-content-main-title" [innerHTML]="highlightText(result.title)"></div>
+                  <div *ngIf="result.description" class="sv-search-results-item-content-main-description">
+                    {{ result.description }}
+                  </div>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </ng-container>
+      
+      <!-- Flat Results -->
+      <ul *ngIf="!isLoading && results.length > 0 && !hasGroups()" class="sv-search-results-list">
+        <li *ngFor="let result of results; let i = index" 
+            class="sv-search-results-item"
+            [ngClass]="{'active': selectedResultIndex === i}"
+            (click)="selectResult(result)">
+          <div class="sv-search-results-item-content">
+            <div *ngIf="result.icon" class="sv-search-results-item-content-icon">
+              <svg class="sv-search-results-item-content-icon-svg" [attr.viewBox]="'0 0 24 24'" [innerHTML]="result.icon"></svg>
+            </div>
+            <div class="sv-search-results-item-content-main">
+              <div class="sv-search-results-item-content-main-title" [innerHTML]="highlightText(result.title)"></div>
+              <div *ngIf="result.description" class="sv-search-results-item-content-main-description">
+                {{ result.description }}
+              </div>
+            </div>
+          </div>
+        </li>
+      </ul>
+      
+      <!-- Show More / Footer -->
+      <div *ngIf="!isLoading && results.length > 0" class="sv-search-results-footer">
+        <button type="button" class="sv-search-results-footer-btn" (click)="submitSearch()">
+          Show all results
+        </button>
+      </div>
+    </div>
+    
+    <div *ngIf="helpText" class="sv-input-help-text">
+      {{ helpText }}
+    </div>
+    
+    <div *ngIf="errorMessage && !isValid && isTouched" class="sv-input-error-message">
+      {{ errorMessage }}
+    </div>
+    
+    <div *ngIf="successMessage && isValid && isTouched && value" class="sv-input-success-message">
+      {{ successMessage }}
+    </div>
+  </div>

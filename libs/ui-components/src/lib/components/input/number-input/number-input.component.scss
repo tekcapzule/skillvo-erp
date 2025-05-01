@@ -1,0 +1,282 @@
+@use './../../abstracts/' as *;
+@use './../../base/' as *;
+
+// Component-specific variables
+$number-button-width: var(--sv-size-8);
+$number-button-height: calc(var(--sv-size-10) / 2 - 1px);
+$number-min-width: var(--sv-size-32);
+
+.sv-number-input {
+  // Extend the input base styles
+  // (this is handled in the template with ngClass)
+  
+  // Container for number input and step buttons
+  &-container {
+    position: relative;
+    display: flex;
+    width: 100%;
+    min-width: $number-min-width;
+  }
+  
+  // Specific number input styling
+  &-field {
+    // Remove default browser number input arrows
+    -moz-appearance: textfield;
+    
+    &::-webkit-outer-spin-button,
+    &::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+    
+    // Add right padding to make room for step buttons
+    padding-right: calc($number-button-width + var(--sv-padding-2));
+    width: 100%;
+    text-align: left;
+  }
+  
+  // High precision number inputs can have smaller width numbers
+  &-precise {
+    font-feature-settings: "tnum";
+    font-family: var(--sv-font-family-mono);
+  }
+}
+
+// Step Buttons
+.sv-number-step-buttons {
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  width: $number-button-width;
+  height: 100%;
+  border-left: 1px solid var(--sv-border-light);
+  
+  // Individual step button
+  &-btn {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--sv-bg-element);
+    border: none;
+    cursor: pointer;
+    color: var(--sv-text-secondary);
+    padding: 0;
+    
+    // Remove browser default button styles
+    -webkit-appearance: none;
+    appearance: none;
+    
+    &:hover {
+      background-color: var(--sv-bg-element-hover);
+      color: var(--sv-text-primary);
+    }
+    
+    &:active {
+      background-color: var(--sv-bg-element-active);
+    }
+    
+    &:focus {
+      outline: none;
+      color: var(--sv-primary);
+    }
+    
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      background-color: var(--sv-bg-element);
+      color: var(--sv-text-tertiary);
+    }
+    
+    // Up button styling
+    &-up {
+      border-bottom: 1px solid var(--sv-border-light);
+      border-top-right-radius: calc(var(--sv-radius-md) - 1px);
+    }
+    
+    // Down button styling
+    &-down {
+      border-top: none;
+      border-bottom-right-radius: calc(var(--sv-radius-md) - 1px);
+    }
+    
+    // Icon styling
+    &-icon {
+      width: var(--sv-icon-size-xs);
+      height: var(--sv-icon-size-xs);
+    }
+  }
+}
+
+// Range Slider Integration
+.sv-number-with-range {
+  margin-bottom: var(--sv-space-6);
+  
+  &-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: var(--sv-space-2);
+  }
+  
+  &-slider {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: var(--sv-size-2);
+    background-color: var(--sv-bg-element);
+    border-radius: var(--sv-radius-full);
+    outline: none;
+    
+    // Track styles
+    &::-webkit-slider-runnable-track {
+      width: 100%;
+      height: var(--sv-size-2);
+      cursor: pointer;
+      background: var(--sv-bg-element);
+      border-radius: var(--sv-radius-full);
+    }
+    
+    &::-moz-range-track {
+      width: 100%;
+      height: var(--sv-size-2);
+      cursor: pointer;
+      background: var(--sv-bg-element);
+      border-radius: var(--sv-radius-full);
+    }
+    
+    // Thumb styles
+    &::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      height: var(--sv-size-5);
+      width: var(--sv-size-5);
+      border-radius: 50%;
+      background: var(--sv-primary);
+      cursor: pointer;
+      margin-top: calc((var(--sv-size-5) - var(--sv-size-2)) / -2);
+      box-shadow: var(--sv-shadow-sm);
+      @include transition(all, 'short', 'standard');
+    }
+    
+    &::-moz-range-thumb {
+      height: var(--sv-size-5);
+      width: var(--sv-size-5);
+      border: none;
+      border-radius: 50%;
+      background: var(--sv-primary);
+      cursor: pointer;
+      box-shadow: var(--sv-shadow-sm);
+    }
+    
+    // Focus and hover states
+    &:focus,
+    &:hover {
+      &::-webkit-slider-thumb {
+        background-color: var(--sv-primary-light);
+        box-shadow: var(--sv-shadow-md);
+        transform: scale(1.1);
+      }
+      
+      &::-moz-range-thumb {
+        background-color: var(--sv-primary-light);
+        box-shadow: var(--sv-shadow-md);
+        transform: scale(1.1);
+      }
+    }
+  }
+  
+  // Range labels below slider
+  &-labels {
+    display: flex;
+    justify-content: space-between;
+    margin-top: var(--sv-space-1);
+    
+    &-min,
+    &-max {
+      font-size: var(--sv-text-xs);
+      color: var(--sv-text-secondary);
+    }
+  }
+}
+
+// Responsive Adjustments
+@include breakpoint-down(sm) {
+  .sv-number-input {
+    &-container {
+      min-width: 100%;
+    }
+    
+    &-field {
+      font-size: var(--sv-text-sm);
+    }
+  }
+  
+  .sv-number-step-buttons {
+    width: calc($number-button-width - var(--sv-size-1));
+    
+    &-btn {
+      &-icon {
+        width: var(--sv-icon-size-xs);
+        height: var(--sv-icon-size-xs);
+      }
+    }
+  }
+  
+  .sv-number-with-range {
+    &-slider {
+      height: var(--sv-size-3);
+      
+      &::-webkit-slider-runnable-track {
+        height: var(--sv-size-3);
+      }
+      
+      &::-moz-range-track {
+        height: var(--sv-size-3);
+      }
+      
+      &::-webkit-slider-thumb {
+        height: var(--sv-size-6);
+        width: var(--sv-size-6);
+        margin-top: calc((var(--sv-size-6) - var(--sv-size-3)) / -2);
+      }
+      
+      &::-moz-range-thumb {
+        height: var(--sv-size-6);
+        width: var(--sv-size-6);
+      }
+    }
+  }
+}
+
+// RTL support
+[dir="rtl"] {
+  .sv-number-input {
+    &-field {
+      padding-right: $input-padding-x;
+      padding-left: calc($number-button-width + var(--sv-padding-2));
+      text-align: right;
+    }
+  }
+  
+  .sv-number-step-buttons {
+    right: auto;
+    left: 0;
+    border-left: none;
+    border-right: 1px solid var(--sv-border-light);
+    
+    &-btn {
+      &-up {
+        border-top-right-radius: 0;
+        border-top-left-radius: calc(var(--sv-radius-md) - 1px);
+      }
+      
+      &-down {
+        border-bottom-right-radius: 0;
+        border-bottom-left-radius: calc(var(--sv-radius-md) - 1px);
+      }
+    }
+  }
+}

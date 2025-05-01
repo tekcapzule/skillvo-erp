@@ -1,62 +1,62 @@
 <div class="sv-text-field-wrapper">
-    <label *ngIf="label" [for]="id" class="sv-input-label">
-      {{ label }}
-      <span *ngIf="required" class="sv-input-required">*</span>
-    </label>
-    
-    <ng-container *ngIf="!multiline; else textareaTemplate">
-      <input
-        [type]="type"
-        [id]="id"
-        [name]="name"
-        [attr.maxlength]="maxLength"
-        [attr.minlength]="minLength"
-        [attr.pattern]="pattern"
-        [placeholder]="placeholder"
-        [disabled]="disabled"
-        [readonly]="readonly"
-        [required]="required"
-        [autocomplete]="autocomplete"
-        [class]="getTextFieldClasses()"
-        [ngClass]="getInputClasses()"
-        [value]="value"
-        (input)="onInputChange($event)"
-        (blur)="onBlur()"
-      />
-    </ng-container>
-    
-    <ng-template #textareaTemplate>
-      <textarea
-        [id]="id"
-        [name]="name"
-        [attr.maxlength]="maxLength"
-        [attr.minlength]="minLength"
-        [placeholder]="placeholder"
-        [disabled]="disabled"
-        [readonly]="readonly"
-        [required]="required"
-        [rows]="rows"
-        [class]="getTextFieldClasses()"
-        [ngClass]="getInputClasses()"
-        [value]="value"
-        (input)="onInputChange($event)"
-        (blur)="onBlur()"
-      ></textarea>
-    </ng-template>
-    
-    <div *ngIf="showCharacterCount && maxLength" class="sv-input-counter" [ngClass]="{'near-limit': isNearLimit, 'at-limit': isAtLimit}">
-      {{ characterCount }} / {{ maxLength }}
-    </div>
-    
-    <div *ngIf="helpText" class="sv-input-help-text">
-      {{ helpText }}
-    </div>
-    
-    <div *ngIf="errorMessage && !isValid && isTouched" class="sv-input-error-message">
-      {{ errorMessage }}
-    </div>
-    
-    <div *ngIf="successMessage && isValid && isTouched && value" class="sv-input-success-message">
-      {{ successMessage }}
-    </div>
+  <label *ngIf="label" [for]="id" class="sv-input-label">
+    {{ label }}
+    <span *ngIf="required" class="sv-input-required">*</span>
+  </label>
+  
+  <ng-container *ngIf="!multiline; else textareaTemplate">
+    <input
+      [type]="type"
+      [id]="id"
+      [name]="name"
+      [attr.maxlength]="maxLength"
+      [attr.minlength]="minLength"
+      [attr.pattern]="pattern"
+      [placeholder]="placeholder"
+      [disabled]="disabled"
+      [readonly]="readonly"
+      [required]="required"
+      [autocomplete]="autocomplete"
+      [class]="getTextFieldClasses()"
+      [ngClass]="getInputClasses()"
+      [value]="value"
+      (input)="onInputChange($event)"
+      (blur)="onBlur()"
+    />
+  </ng-container>
+  
+  <ng-template #textareaTemplate>
+    <textarea
+      [id]="id"
+      [name]="name"
+      [attr.maxlength]="maxLength"
+      [attr.minlength]="minLength"
+      [placeholder]="placeholder"
+      [disabled]="disabled"
+      [readonly]="readonly"
+      [required]="required"
+      [rows]="rows"
+      [class]="getTextFieldClasses()"
+      [ngClass]="getInputClasses()"
+      [value]="value"
+      (input)="onInputChange($event)"
+      (blur)="onBlur()"
+    ></textarea>
+  </ng-template>
+  
+  <div *ngIf="showCharacterCount && maxLength" class="sv-input-counter" [ngClass]="{'near-limit': isNearLimit, 'at-limit': isAtLimit}">
+    {{ characterCount }} / {{ maxLength }}
   </div>
+  
+  <div *ngIf="helpText" class="sv-input-help-text">
+    {{ helpText }}
+  </div>
+  
+  <div *ngIf="errorMessage && !isValid && isTouched" class="sv-input-error-message">
+    {{ errorMessage }}
+  </div>
+  
+  <div *ngIf="successMessage && isValid && isTouched && value" class="sv-input-success-message">
+    {{ successMessage }}
+  </div>
+</div>

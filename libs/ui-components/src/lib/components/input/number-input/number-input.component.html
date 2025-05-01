@@ -1,0 +1,84 @@
+<div class="sv-number-input-container"
+     [class.sv-number-with-range-container]="showSlider">
+  
+  <label *ngIf="label" [for]="id" class="sv-input-label">
+    {{ label }}
+    <span *ngIf="required" class="sv-input-required">*</span>
+  </label>
+  
+  <div class="sv-number-input">
+    <input
+      [id]="id"
+      type="number"
+      [name]="name"
+      [min]="min"
+      [max]="max"
+      [step]="step"
+      class="sv-number-input-field"
+      [class.sv-number-input-precise]="precision > 0"
+      [ngClass]="getInputClasses()"
+      [value]="numericValue"
+      [placeholder]="placeholder"
+      [disabled]="disabled"
+      [readonly]="readonly"
+      [required]="required"
+      (input)="onInputChange($event)"
+      (blur)="onBlur()"
+    />
+    
+    <div *ngIf="showStepButtons" class="sv-number-step-buttons">
+      <button 
+        type="button"
+        class="sv-number-step-buttons-btn sv-number-step-buttons-btn-up"
+        [disabled]="isIncrementDisabled()"
+        (click)="increment()"
+      >
+        <svg class="sv-number-step-buttons-btn-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="18 15 12 9 6 15"></polyline>
+        </svg>
+      </button>
+      
+      <button 
+        type="button"
+        class="sv-number-step-buttons-btn sv-number-step-buttons-btn-down"
+        [disabled]="isDecrementDisabled()"
+        (click)="decrement()"
+      >
+        <svg class="sv-number-step-buttons-btn-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="6 9 12 15 18 9"></polyline>
+        </svg>
+      </button>
+    </div>
+  </div>
+  
+  <!-- Range Slider -->
+  <div *ngIf="showSlider && min !== undefined && max !== undefined" class="sv-number-with-range">
+    <input 
+      type="range"
+      [min]="min"
+      [max]="max"
+      [step]="step"
+      [value]="numericValue"
+      class="sv-number-with-range-slider"
+      [disabled]="disabled || readonly"
+      (input)="onSliderChange($event)"
+    />
+    
+    <div class="sv-number-with-range-labels">
+      <div class="sv-number-with-range-labels-min">{{ min }}</div>
+      <div class="sv-number-with-range-labels-max">{{ max }}</div>
+    </div>
+  </div>
+  
+  <div *ngIf="helpText" class="sv-input-help-text">
+    {{ helpText }}
+  </div>
+  
+  <div *ngIf="errorMessage && !isValid && isTouched" class="sv-input-error-message">
+    {{ errorMessage }}
+  </div>
+  
+  <div *ngIf="successMessage && isValid && isTouched && value" class="sv-input-success-message">
+    {{ successMessage }}
+  </div>
+</div>
