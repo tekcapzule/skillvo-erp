@@ -1,0 +1,20 @@
+{
+    "courseId": "30434f65-3beb-44b2-87d2-0470d6fb1bd7",
+    "tenantId": "test-tenant-1",
+    "title": "Advanced AWS Services",
+    "description": "Deep dive into AWS services",
+    "level": "ADVANCED",
+    "learningMode": "HYBRID",
+    "authors": [
+        {
+            "name": "John Doe",
+            "email": "john.doe@example.com",
+            "bio": "AWS Certified Solutions Architect"
+        },
+        {
+            "name": "Jane Smith",
+            "email": "jane.smith@example.com",
+            "bio": "AWS DevOps Engineer"
+        }
+    ]
+} 

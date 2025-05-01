@@ -1,0 +1,256 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: Course Service API
+
+Parameters:
+  Environment:
+    Type: String
+    Default: dev
+    AllowedValues:
+      - dev
+      - uat
+      - prod
+    Description: Environment name (dev/uat/prod)
+
+  DynamoDBTableName:
+    Type: String
+    Default: courses
+    Description: Name of the DynamoDB table
+
+  SQSQueueName:
+    Type: String
+    Default: course-events
+    Description: Name of the SQS queue for domain events
+
+  DynamoDBReadCapacity:
+    Type: Number
+    Default: 5
+    Description: Read capacity units for DynamoDB table
+
+  DynamoDBWriteCapacity:
+    Type: Number
+    Default: 5
+    Description: Write capacity units for DynamoDB table
+
+  LambdaMemorySize:
+    Type: Number
+    Default: 512
+    Description: Memory size for Lambda functions
+
+  LambdaTimeout:
+    Type: Number
+    Default: 15
+    Description: Timeout for Lambda functions
+
+Globals:
+  Function:
+    Runtime: java11
+    MemorySize: !Ref LambdaMemorySize
+    Timeout: !Ref LambdaTimeout
+    Environment:
+      Variables:
+        DYNAMODB_TABLE_NAME: !Ref DynamoDBTableName
+        SQS_QUEUE_URL: !GetAtt CourseEventsQueue.QueueUrl
+        AWS_REGION: !Ref AWS::Region
+        ENVIRONMENT: !Ref Environment
+        LOG_LEVEL: !If 
+          - IsProd
+          - INFO
+          - DEBUG
+        SSM_PREFIX: !Sub /${Environment}/course-service
+
+Conditions:
+  IsProd: !Equals [!Ref Environment, prod]
+
+Resources:
+  # SSM Parameters
+  DynamoDBTableNameParam:
+    Type: AWS::SSM::Parameter
+    Properties:
+      Name: !Sub ${SSM_PREFIX}/dynamodb/table-name
+      Type: String
+      Value: !Sub ${DynamoDBTableName}-${Environment}
+      Description: DynamoDB table name for course service
+
+  SQSQueueUrlParam:
+    Type: AWS::SSM::Parameter
+    Properties:
+      Name: !Sub ${SSM_PREFIX}/sqs/queue-url
+      Type: String
+      Value: !GetAtt CourseEventsQueue.QueueUrl
+      Description: SQS queue URL for course events
+
+  # DynamoDB Table
+  CoursesTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: !Sub ${DynamoDBTableName}-${Environment}
+      BillingMode: PAY_PER_REQUEST
+      AttributeDefinitions:
+        - AttributeName: courseId
+          AttributeType: S
+        - AttributeName: tenantId
+          AttributeType: S
+        - AttributeName: inMarketplace
+          AttributeType: BOOL
+      KeySchema:
+        - AttributeName: courseId
+          KeyType: HASH
+      GlobalSecondaryIndexes:
+        - IndexName: TenantIndex
+          KeySchema:
+            - AttributeName: tenantId
+              KeyType: HASH
+            - AttributeName: inMarketplace
+              KeyType: RANGE
+          Projection:
+            ProjectionType: ALL
+
+  # SQS Queue for Domain Events
+  CourseEventsQueue:
+    Type: AWS::SQS::Queue
+    Properties:
+      QueueName: !Sub ${SQSQueueName}-${Environment}
+      VisibilityTimeout: 30
+      MessageRetentionPeriod: 1209600 # 14 days
+
+  # Lambda Functions
+  CreateCourseFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: interface/target/course-service-interface-1.0.0-SNAPSHOT.jar
+      Handler: com.skillvo.course.api.lambda.CreateCourseLambda::handleRequest
+      MemorySize: !Ref LambdaMemorySize
+      Timeout: !Ref LambdaTimeout
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: !Ref CoursesTable
+        - SQSSendMessagePolicy:
+            QueueName: !GetAtt CourseEventsQueue.QueueName
+        - SSMParameterReadPolicy:
+            ParameterName: !Sub ${SSM_PREFIX}/*
+      Environment:
+        Variables:
+          SSM_PREFIX: !Sub /${Environment}/course-service
+      Events:
+        CreateCourse:
+          Type: Api
+          Properties:
+            Path: /courses
+            Method: post
+        WarmUp:
+          Type: Schedule
+          Properties:
+            Schedule: rate(5 minutes)
+            Input: '{"warmup": true}'
+
+  UpdateCourseFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: interface/target/course-service-interface-1.0.0-SNAPSHOT.jar
+      Handler: com.skillvo.course.api.lambda.UpdateCourseLambda::handleRequest
+      MemorySize: 512
+      Timeout: 15
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: !Ref CoursesTable
+        - SQSSendMessagePolicy:
+            QueueName: !GetAtt CourseEventsQueue.QueueName
+      Events:
+        UpdateCourse:
+          Type: Api
+          Properties:
+            Path: /courses/{courseId}
+            Method: put
+        WarmUp:
+          Type: Schedule
+          Properties:
+            Schedule: rate(5 minutes)
+            Input: '{"warmup": true}'
+
+  DeleteCourseFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: interface/target/course-service-interface-1.0.0-SNAPSHOT.jar
+      Handler: com.skillvo.course.api.lambda.DeleteCourseLambda::handleRequest
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: !Ref CoursesTable
+        - SQSSendMessagePolicy:
+            QueueName: !GetAtt CourseEventsQueue.QueueName
+      Events:
+        DeleteCourse:
+          Type: Api
+          Properties:
+            Path: /courses/{courseId}
+            Method: delete
+
+  PublishCourseFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: interface/target/course-service-interface-1.0.0-SNAPSHOT.jar
+      Handler: com.skillvo.course.api.lambda.PublishCourseLambda::handleRequest
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: !Ref CoursesTable
+        - SQSSendMessagePolicy:
+            QueueName: !GetAtt CourseEventsQueue.QueueName
+      Events:
+        PublishCourse:
+          Type: Api
+          Properties:
+            Path: /courses/{courseId}/publish
+            Method: post
+
+  GetCourseFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: interface/target/course-service-interface-1.0.0-SNAPSHOT.jar
+      Handler: com.skillvo.course.api.lambda.GetCourseLambda::handleRequest
+      Policies:
+        - DynamoDBReadPolicy:
+            TableName: !Ref CoursesTable
+      Events:
+        GetCourse:
+          Type: Api
+          Properties:
+            Path: /courses/{courseId}
+            Method: get
+
+  ListCoursesFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: interface/target/course-service-interface-1.0.0-SNAPSHOT.jar
+      Handler: com.skillvo.course.api.lambda.ListCoursesLambda::handleRequest
+      Policies:
+        - DynamoDBReadPolicy:
+            TableName: !Ref CoursesTable
+      Events:
+        ListCourses:
+          Type: Api
+          Properties:
+            Path: /courses
+            Method: get
+
+  # API Gateway
+  CourseServiceApi:
+    Type: AWS::Serverless::Api
+    Properties:
+      StageName: !Ref Environment
+      Cors:
+        AllowMethods: "'*'"
+        AllowHeaders: "'*'"
+        AllowOrigin: !Sub "'https://${Environment}.skillvo.com'"
+
+Outputs:
+  ApiEndpoint:
+    Description: API Gateway endpoint URL
+    Value: !Sub "https://${CourseServiceApi}.execute-api.${AWS::Region}.amazonaws.com/${Environment}"
+
+  DynamoDBTableName:
+    Description: DynamoDB table name
+    Value: !Ref CoursesTable
+
+  SQSQueueUrl:
+    Description: SQS queue URL for domain events
+    Value: !GetAtt CourseEventsQueue.QueueUrl 

@@ -1,0 +1,665 @@
+{
+	"info": {
+		"_postman_id": "course-service-collection",
+		"name": "Course Service API",
+		"description": "API for managing courses, including CRUD operations and course management features",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:8080",
+			"type": "string"
+		},
+		{
+			"key": "jwt_token",
+			"value": "your_jwt_token_here",
+			"type": "string"
+		},
+		{
+			"key": "course_id",
+			"value": "course_id_here",
+			"type": "string"
+		},
+		{
+			"key": "tenant_id",
+			"value": "tenant_id_here",
+			"type": "string"
+		},
+		{
+			"key": "status",
+			"value": "DRAFT",
+			"type": "string"
+		},
+		{
+			"key": "api_version",
+			"value": "v1",
+			"type": "string"
+		},
+		{
+			"key": "default_page_size",
+			"value": "10",
+			"type": "string"
+		},
+		{
+			"key": "default_sort",
+			"value": "title,asc",
+			"type": "string"
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"// Validate required environment variables",
+					"if (!pm.environment.get('base_url')) {",
+					"    console.error('base_url environment variable is required');",
+					"}",
+					"if (!pm.environment.get('jwt_token')) {",
+					"    console.error('jwt_token environment variable is required');",
+					"}",
+					"",
+					"// Generate test data if needed",
+					"const generateTestData = () => {",
+					"    const testData = {",
+					"        title: `Test Course ${Date.now()}`,",
+					"        description: 'Test course description',",
+					"        topicCode: 'SPRING_BOOT',",
+					"        categoryCode: 'BACKEND',",
+					"        language: ['ENGLISH'],",
+					"        level: 'BEGINNER',",
+					"        pricingModel: 'PAID',",
+					"        prize: {",
+					"            amount: 49.99,",
+					"            currency: 'USD'",
+					"        },",
+					"        learningMode: 'ONLINE',",
+					"        points: 100,",
+					"        tags: ['test', 'spring', 'java'],",
+					"        authors: [{",
+					"            firstName: 'Test',",
+					"            lastName: 'User',",
+					"            emailId: 'test.user@example.com'",
+					"        }],",
+					"        publisher: {",
+					"            name: 'Test Publisher',",
+					"            type: 'COMPANY',",
+					"            contactEmail: 'contact@test.com'",
+					"        },",
+					"        duration: 300,",
+					"        sections: [],",
+					"        lessonNavigationMode: 'SEQUENTIAL'",
+					"    };",
+					"    pm.environment.set('test_course_data', JSON.stringify(testData));",
+					"};",
+					"",
+					"generateTestData();"
+				]
+			}
+		}
+	],
+	"item": [
+		{
+			"name": "Courses",
+			"description": "Endpoints for managing courses",
+			"item": [
+				{
+					"name": "Create Course",
+					"description": "Creates a new course with the provided details",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": "Request content type"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{jwt_token}}",
+								"description": "JWT authentication token"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{{test_course_data}}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/{{api_version}}/courses",
+							"host": ["{{base_url}}"],
+							"path": ["api", "{{api_version}}", "courses"]
+						},
+						"description": "Creates a new course with the provided details. Returns the created course with generated ID and status."
+					},
+					"response": [
+						{
+							"name": "Success Response",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{{test_course_data}}"
+								},
+								"url": {
+									"raw": "{{base_url}}/api/{{api_version}}/courses",
+									"host": ["{{base_url}}"],
+									"path": ["api", "{{api_version}}", "courses"]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Location",
+									"value": "/api/{{api_version}}/courses/123e4567-e89b-12d3-a456-426614174000"
+								}
+							],
+							"body": "{\n  \"courseId\": \"123e4567-e89b-12d3-a456-426614174000\",\n  \"title\": \"Test Course\",\n  \"description\": \"Test course description\",\n  \"topicCode\": \"SPRING_BOOT\",\n  \"categoryCode\": \"BACKEND\",\n  \"language\": [\"ENGLISH\"],\n  \"level\": \"BEGINNER\",\n  \"pricingModel\": \"PAID\",\n  \"prize\": {\n    \"amount\": 49.99,\n    \"currency\": \"USD\"\n  },\n  \"learningMode\": \"ONLINE\",\n  \"points\": 100,\n  \"tags\": [\"test\", \"spring\", \"java\"],\n  \"authors\": [\n    {\n      \"authorId\": \"123e4567-e89b-12d3-a456-426614174001\",\n      \"firstName\": \"Test\",\n      \"lastName\": \"User\",\n      \"emailId\": \"test.user@example.com\"\n    }\n  ],\n  \"publisher\": {\n    \"publisherId\": \"123e4567-e89b-12d3-a456-426614174002\",\n    \"name\": \"Test Publisher\",\n    \"type\": \"COMPANY\",\n    \"contactEmail\": \"contact@test.com\"\n  },\n  \"duration\": 300,\n  \"sections\": [],\n  \"lessonNavigationMode\": \"SEQUENTIAL\",\n  \"status\": \"DRAFT\",\n  \"version\": 1\n}"
+						},
+						{
+							"name": "Bad Request",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"title\": \"\"\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/api/{{api_version}}/courses",
+									"host": ["{{base_url}}"],
+									"path": ["api", "{{api_version}}", "courses"]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"body": "{\n  \"timestamp\": \"2024-03-20T10:00:00Z\",\n  \"status\": 400,\n  \"error\": \"Bad Request\",\n  \"message\": \"Title cannot be empty\",\n  \"path\": \"/api/{{api_version}}/courses\"\n}"
+						},
+						{
+							"name": "Unauthorized",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{{test_course_data}}"
+								},
+								"url": {
+									"raw": "{{base_url}}/api/{{api_version}}/courses",
+									"host": ["{{base_url}}"],
+									"path": ["api", "{{api_version}}", "courses"]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"body": "{\n  \"timestamp\": \"2024-03-20T10:00:00Z\",\n  \"status\": 401,\n  \"error\": \"Unauthorized\",\n  \"message\": \"Full authentication is required to access this resource\",\n  \"path\": \"/api/{{api_version}}/courses\"\n}"
+						},
+						{
+							"name": "Forbidden",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{{test_course_data}}"
+								},
+								"url": {
+									"raw": "{{base_url}}/api/{{api_version}}/courses",
+									"host": ["{{base_url}}"],
+									"path": ["api", "{{api_version}}", "courses"]
+								}
+							},
+							"status": "Forbidden",
+							"code": 403,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"body": "{\n  \"timestamp\": \"2024-03-20T10:00:00Z\",\n  \"status\": 403,\n  \"error\": \"Forbidden\",\n  \"message\": \"Access Denied\",\n  \"path\": \"/api/{{api_version}}/courses\"\n}"
+						},
+						{
+							"name": "Conflict",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{{test_course_data}}"
+								},
+								"url": {
+									"raw": "{{base_url}}/api/{{api_version}}/courses",
+									"host": ["{{base_url}}"],
+									"path": ["api", "{{api_version}}", "courses"]
+								}
+							},
+							"status": "Conflict",
+							"code": 409,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"body": "{\n  \"timestamp\": \"2024-03-20T10:00:00Z\",\n  \"status\": 409,\n  \"error\": \"Conflict\",\n  \"message\": \"Course with the same title already exists\",\n  \"path\": \"/api/{{api_version}}/courses\"\n}"
+						},
+						{
+							"name": "Internal Server Error",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{{test_course_data}}"
+								},
+								"url": {
+									"raw": "{{base_url}}/api/{{api_version}}/courses",
+									"host": ["{{base_url}}"],
+									"path": ["api", "{{api_version}}", "courses"]
+								}
+							},
+							"status": "Internal Server Error",
+							"code": 500,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"body": "{\n  \"timestamp\": \"2024-03-20T10:00:00Z\",\n  \"status\": 500,\n  \"error\": \"Internal Server Error\",\n  \"message\": \"An unexpected error occurred\",\n  \"path\": \"/api/{{api_version}}/courses\"\n}"
+						}
+					],
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"pm.test(\"Response has course ID\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.courseId).to.exist;",
+									"});",
+									"",
+									"pm.test(\"Response has Location header\", function () {",
+									"    pm.response.to.have.header(\"Location\");",
+									"});",
+									"",
+									"// Store the created course ID for subsequent requests",
+									"if (pm.response.code === 201) {",
+									"    var jsonData = pm.response.json();",
+									"    pm.environment.set(\"course_id\", jsonData.courseId);",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					]
+				},
+				{
+					"name": "Get Course",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{jwt_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/v1/courses/{{course_id}}",
+							"host": ["{{base_url}}"],
+							"path": ["api", "v1", "courses", "{{course_id}}"]
+						}
+					},
+					"response": [
+						{
+							"name": "Success Response",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/api/v1/courses/123e4567-e89b-12d3-a456-426614174000",
+									"host": ["{{base_url}}"],
+									"path": ["api", "v1", "courses", "123e4567-e89b-12d3-a456-426614174000"]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"body": "{\n  \"courseId\": \"123e4567-e89b-12d3-a456-426614174000\",\n  \"title\": \"Introduction to Spring Boot\",\n  \"description\": \"Learn Spring Boot from scratch\",\n  \"topicCode\": \"SPRING_BOOT\",\n  \"categoryCode\": \"BACKEND\",\n  \"language\": [\"ENGLISH\"],\n  \"level\": \"BEGINNER\",\n  \"pricingModel\": \"PAID\",\n  \"prize\": {\n    \"amount\": 49.99,\n    \"currency\": \"USD\"\n  },\n  \"learningMode\": \"ONLINE\",\n  \"points\": 100,\n  \"tags\": [\"spring\", \"java\", \"backend\"],\n  \"authors\": [\n    {\n      \"authorId\": \"123e4567-e89b-12d3-a456-426614174001\",\n      \"firstName\": \"John\",\n      \"lastName\": \"Doe\",\n      \"emailId\": \"john.doe@example.com\"\n    }\n  ],\n  \"publisher\": {\n    \"publisherId\": \"123e4567-e89b-12d3-a456-426614174002\",\n    \"name\": \"SkillVo Academy\",\n    \"type\": \"COMPANY\",\n    \"contactEmail\": \"contact@skillvo.com\"\n  },\n  \"duration\": 300,\n  \"sections\": [],\n  \"lessonNavigationMode\": \"SEQUENTIAL\",\n  \"status\": \"DRAFT\",\n  \"version\": 1\n}"
+						}
+					],
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response has course ID\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.courseId).to.exist;",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					]
+				},
+				{
+					"name": "Update Course",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{jwt_token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"title\": \"Advanced Spring Boot\",\n  \"description\": \"Advanced concepts in Spring Boot\",\n  \"level\": \"ADVANCED\",\n  \"prize\": {\n    \"amount\": 79.99,\n    \"currency\": \"USD\"\n  }\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/courses/{{course_id}}",
+							"host": ["{{base_url}}"],
+							"path": ["api", "v1", "courses", "{{course_id}}"]
+						}
+					},
+					"response": [
+						{
+							"name": "Success Response",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"title\": \"Advanced Spring Boot\",\n  \"description\": \"Advanced concepts in Spring Boot\",\n  \"level\": \"ADVANCED\",\n  \"prize\": {\n    \"amount\": 79.99,\n    \"currency\": \"USD\"\n  }\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/api/v1/courses/123e4567-e89b-12d3-a456-426614174000",
+									"host": ["{{base_url}}"],
+									"path": ["api", "v1", "courses", "123e4567-e89b-12d3-a456-426614174000"]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"body": "{\n  \"courseId\": \"123e4567-e89b-12d3-a456-426614174000\",\n  \"title\": \"Advanced Spring Boot\",\n  \"description\": \"Advanced concepts in Spring Boot\",\n  \"topicCode\": \"SPRING_BOOT\",\n  \"categoryCode\": \"BACKEND\",\n  \"language\": [\"ENGLISH\"],\n  \"level\": \"ADVANCED\",\n  \"pricingModel\": \"PAID\",\n  \"prize\": {\n    \"amount\": 79.99,\n    \"currency\": \"USD\"\n  },\n  \"learningMode\": \"ONLINE\",\n  \"points\": 100,\n  \"tags\": [\"spring\", \"java\", \"backend\"],\n  \"authors\": [\n    {\n      \"authorId\": \"123e4567-e89b-12d3-a456-426614174001\",\n      \"firstName\": \"John\",\n      \"lastName\": \"Doe\",\n      \"emailId\": \"john.doe@example.com\"\n    }\n  ],\n  \"publisher\": {\n    \"publisherId\": \"123e4567-e89b-12d3-a456-426614174002\",\n    \"name\": \"SkillVo Academy\",\n    \"type\": \"COMPANY\",\n    \"contactEmail\": \"contact@skillvo.com\"\n  },\n  \"duration\": 300,\n  \"sections\": [],\n  \"lessonNavigationMode\": \"SEQUENTIAL\",\n  \"status\": \"DRAFT\",\n  \"version\": 2\n}"
+						}
+					],
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response has updated fields\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.title).to.eql(\"Advanced Spring Boot\");",
+									"    pm.expect(jsonData.level).to.eql(\"ADVANCED\");",
+									"    pm.expect(jsonData.prize.amount).to.eql(79.99);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					]
+				},
+				{
+					"name": "Delete Course",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{jwt_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/v1/courses/{{course_id}}",
+							"host": ["{{base_url}}"],
+							"path": ["api", "v1", "courses", "{{course_id}}"]
+						}
+					},
+					"response": [
+						{
+							"name": "Success Response",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/api/v1/courses/123e4567-e89b-12d3-a456-426614174000",
+									"host": ["{{base_url}}"],
+									"path": ["api", "v1", "courses", "123e4567-e89b-12d3-a456-426614174000"]
+								}
+							},
+							"status": "No Content",
+							"code": 204,
+							"_postman_previewlanguage": "json",
+							"header": []
+						}
+					],
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 204\", function () {",
+									"    pm.response.to.have.status(204);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					]
+				},
+				{
+					"name": "List Courses",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{jwt_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/v1/courses?tenantId={{tenant_id}}&status={{status}}&page=0&size=10",
+							"host": ["{{base_url}}"],
+							"path": ["api", "v1", "courses"],
+							"query": [
+								{
+									"key": "tenantId",
+									"value": "{{tenant_id}}"
+								},
+								{
+									"key": "status",
+									"value": "{{status}}"
+								},
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "size",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Success Response",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/api/v1/courses?tenantId=tenant1&status=DRAFT&page=0&size=10",
+									"host": ["{{base_url}}"],
+									"path": ["api", "v1", "courses"],
+									"query": [
+										{
+											"key": "tenantId",
+											"value": "tenant1"
+										},
+										{
+											"key": "status",
+											"value": "DRAFT"
+										},
+										{
+											"key": "page",
+											"value": "0"
+										},
+										{
+											"key": "size",
+											"value": "10"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"body": "{\n  \"content\": [\n    {\n      \"courseId\": \"123e4567-e89b-12d3-a456-426614174000\",\n      \"title\": \"Introduction to Spring Boot\",\n      \"description\": \"Learn Spring Boot from scratch\",\n      \"topicCode\": \"SPRING_BOOT\",\n      \"categoryCode\": \"BACKEND\",\n      \"language\": [\"ENGLISH\"],\n      \"level\": \"BEGINNER\",\n      \"pricingModel\": \"PAID\",\n      \"prize\": {\n        \"amount\": 49.99,\n        \"currency\": \"USD\"\n      },\n      \"learningMode\": \"ONLINE\",\n      \"points\": 100,\n      \"tags\": [\"spring\", \"java\", \"backend\"],\n      \"authors\": [\n        {\n          \"authorId\": \"123e4567-e89b-12d3-a456-426614174001\",\n          \"firstName\": \"John\",\n          \"lastName\": \"Doe\",\n          \"emailId\": \"john.doe@example.com\"\n        }\n      ],\n      \"publisher\": {\n        \"publisherId\": \"123e4567-e89b-12d3-a456-426614174002\",\n        \"name\": \"SkillVo Academy\",\n        \"type\": \"COMPANY\",\n        \"contactEmail\": \"contact@skillvo.com\"\n      },\n      \"duration\": 300,\n      \"sections\": [],\n      \"lessonNavigationMode\": \"SEQUENTIAL\",\n      \"status\": \"DRAFT\",\n      \"version\": 1\n    }\n  ],\n  \"pageable\": {\n    \"pageNumber\": 0,\n    \"pageSize\": 10,\n    \"sort\": {\n      \"sorted\": false,\n      \"unsorted\": true,\n      \"empty\": true\n    }\n  },\n  \"totalElements\": 1,\n  \"totalPages\": 1,\n  \"last\": true,\n  \"size\": 10,\n  \"number\": 0,\n  \"sort\": {\n    \"sorted\": false,\n    \"unsorted\": true,\n    \"empty\": true\n  },\n  \"first\": true,\n  \"numberOfElements\": 1,\n  \"empty\": false\n}"
+						}
+					],
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response has content array\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.content).to.be.an('array');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					]
+				},
+				{
+					"name": "Publish Course",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{jwt_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/v1/courses/{{course_id}}/publish",
+							"host": ["{{base_url}}"],
+							"path": ["api", "v1", "courses", "{{course_id}}", "publish"]
+						}
+					},
+					"response": [
+						{
+							"name": "Success Response",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/api/v1/courses/123e4567-e89b-12d3-a456-426614174000/publish",
+									"host": ["{{base_url}}"],
+									"path": ["api", "v1", "courses", "123e4567-e89b-12d3-a456-426614174000", "publish"]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"body": "{\n  \"courseId\": \"123e4567-e89b-12d3-a456-426614174000\",\n  \"title\": \"Introduction to Spring Boot\",\n  \"description\": \"Learn Spring Boot from scratch\",\n  \"topicCode\": \"SPRING_BOOT\",\n  \"categoryCode\": \"BACKEND\",\n  \"language\": [\"ENGLISH\"],\n  \"level\": \"BEGINNER\",\n  \"pricingModel\": \"PAID\",\n  \"prize\": {\n    \"amount\": 49.99,\n    \"currency\": \"USD\"\n  },\n  \"learningMode\": \"ONLINE\",\n  \"points\": 100,\n  \"tags\": [\"spring\", \"java\", \"backend\"],\n  \"authors\": [\n    {\n      \"authorId\": \"123e4567-e89b-12d3-a456-426614174001\",\n      \"firstName\": \"John\",\n      \"lastName\": \"Doe\",\n      \"emailId\": \"john.doe@example.com\"\n    }\n  ],\n  \"publisher\": {\n    \"publisherId\": \"123e4567-e89b-12d3-a456-426614174002\",\n    \"name\": \"SkillVo Academy\",\n    \"type\": \"COMPANY\",\n    \"contactEmail\": \"contact@skillvo.com\"\n  },\n  \"duration\": 300,\n  \"sections\": [],\n  \"lessonNavigationMode\": \"SEQUENTIAL\",\n  \"status\": \"PUBLISHED\",\n  \"version\": 1,\n  \"publishedOn\": \"2024-03-20T10:00:00Z\"\n}"
+						}
+					],
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Course is published\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.status).to.eql(\"PUBLISHED\");",
+									"    pm.expect(jsonData.publishedOn).to.exist;",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					]
+				}
+			]
+		}
+	]
+} 

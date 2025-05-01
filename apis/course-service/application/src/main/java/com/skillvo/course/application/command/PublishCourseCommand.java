@@ -1,0 +1,13 @@
+package com.skillvo.course.application.command;
+
+import lombok.Builder;
+import lombok.Value;
+
+import java.util.UUID;
+
+@Value
+@Builder
+public class PublishCourseCommand {
+    UUID courseId;
+    String tenantId;
+} 

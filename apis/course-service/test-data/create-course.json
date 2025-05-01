@@ -1,0 +1,14 @@
+{
+    "tenantId": "test-tenant-1",
+    "title": "Introduction to AWS",
+    "description": "Learn the basics of AWS services",
+    "level": "BEGINNER",
+    "learningMode": "ONLINE",
+    "authors": [
+        {
+            "name": "John Doe",
+            "email": "john.doe@example.com",
+            "bio": "AWS Certified Solutions Architect"
+        }
+    ]
+} 

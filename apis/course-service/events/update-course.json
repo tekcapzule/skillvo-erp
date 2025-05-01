@@ -1,0 +1,6 @@
+{
+  "pathParameters": {
+    "courseId": "test-course-id"
+  },
+  "body": "{\"title\":\"Updated Test Course\",\"description\":\"An updated test course\",\"instructor\":\"Updated Instructor\",\"duration\":\"3 hours\",\"price\":149.99,\"category\":\"Technology\",\"level\":\"Intermediate\"}"
+} 

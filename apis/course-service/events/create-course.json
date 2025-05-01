@@ -1,0 +1,14 @@
+{
+  "body": "{\"title\":\"Test Course\",\"description\":\"A test course for local testing\",\"instructor\":\"Test Instructor\",\"duration\":\"2 hours\",\"price\":99.99,\"category\":\"Technology\",\"level\":\"Beginner\"}",
+  "resource": "/courses",
+  "path": "/courses",
+  "httpMethod": "POST",
+  "headers": {
+    "Content-Type": "application/json"
+  },
+  "requestContext": {
+    "resourcePath": "/courses",
+    "httpMethod": "POST",
+    "path": "/dev/courses"
+  }
+} 

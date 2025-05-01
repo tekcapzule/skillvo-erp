@@ -1,0 +1,650 @@
+openapi: 3.0.3
+info:
+  title: Course Service API
+  description: API for managing courses, including CRUD operations and course management features
+  version: 1.0.0
+  contact:
+    name: API Support
+    email: support@skillvo.com
+  license:
+    name: Proprietary
+    url: https://skillvo.com/license
+servers:
+  - url: /api/v1
+    description: API v1
+
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: JWT token for authentication
+
+  schemas:
+    Error:
+      type: object
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: string
+          description: Error code
+          enum: [VALIDATION_ERROR, BUSINESS_RULE_VIOLATION, NOT_FOUND, UNAUTHORIZED, INTERNAL_ERROR]
+        message:
+          type: string
+          description: Error message
+        details:
+          type: object
+          description: Additional error details
+          properties:
+            field:
+              type: string
+              description: Field that caused the error
+            reason:
+              type: string
+              description: Reason for the error
+
+    Course:
+      type: object
+      required:
+        - title
+        - description
+        - topicCode
+        - categoryCode
+        - language
+        - level
+        - pricingModel
+        - prize
+        - learningMode
+        - points
+        - authors
+        - publisher
+        - status
+        - duration
+        - sections
+        - lessonNavigationMode
+      properties:
+        courseId:
+          type: string
+          format: uuid
+          description: Unique identifier for the course
+        tenantId:
+          type: string
+          pattern: '^[a-zA-Z0-9-_]+$'
+          description: Tenant identifier (letters, numbers, hyphens, and underscores only)
+        title:
+          type: string
+          minLength: 1
+          maxLength: 200
+          description: Title of the course (1-200 characters)
+        description:
+          type: string
+          minLength: 1
+          maxLength: 1000
+          description: Detailed description of the course (1-1000 characters)
+        topicCode:
+          type: string
+          pattern: '^[A-Z0-9_]+$'
+          description: Code representing the course topic (uppercase letters, numbers, and underscores only)
+        categoryCode:
+          type: string
+          pattern: '^[A-Z0-9_]+$'
+          description: Code representing the course category (uppercase letters, numbers, and underscores only)
+        language:
+          type: array
+          minItems: 1
+          items:
+            type: string
+            enum: [ENGLISH, SPANISH, FRENCH, GERMAN, HINDI]
+          description: Languages in which the course is available
+        level:
+          type: string
+          enum: [BEGINNER, INTERMEDIATE, ADVANCED]
+          description: Difficulty level of the course
+        pricingModel:
+          type: string
+          enum: [FREE, PAID, SUBSCRIPTION]
+          description: Pricing model for the course
+        prize:
+          $ref: '#/components/schemas/Prize'
+        learningMode:
+          type: string
+          enum: [ONLINE, OFFLINE, HYBRID]
+          description: Mode of learning
+        points:
+          type: integer
+          minimum: 0
+          description: Points awarded for completing the course (must be >= 0)
+        tags:
+          type: array
+          items:
+            type: string
+          description: Tags associated with the course
+        authors:
+          type: array
+          minItems: 1
+          items:
+            $ref: '#/components/schemas/Author'
+        publisher:
+          $ref: '#/components/schemas/Publisher'
+        publishedOn:
+          type: string
+          format: date-time
+          description: Date and time when the course was published (automatically set when course is published)
+        imageUrl:
+          type: string
+          format: uri
+          description: URL of the course image
+        inMarketplace:
+          type: boolean
+          description: Whether the course is available in marketplace (defaults to false)
+        status:
+          type: string
+          enum: [DRAFT, PUBLISHED, ARCHIVED]
+          description: Current status of the course (defaults to DRAFT)
+        duration:
+          type: integer
+          minimum: 1
+          description: Duration of the course in minutes (must be > 0)
+        sections:
+          type: array
+          items:
+            $ref: '#/components/schemas/Section'
+        lessonNavigationMode:
+          type: string
+          enum: [SEQUENTIAL, RANDOM]
+          description: Navigation mode for lessons
+        version:
+          type: integer
+          description: Version number of the course (starts at 1, increments on updates)
+
+    Prize:
+      type: object
+      required:
+        - amount
+        - currency
+      properties:
+        amount:
+          type: number
+          format: float
+          minimum: 0
+          description: Price amount (must be >= 0)
+        discount:
+          type: number
+          format: float
+          minimum: 0
+          maximum: 100
+          description: Discount percentage (0-100)
+        currency:
+          type: string
+          enum: [USD, EUR, GBP, INR]
+          description: Currency code
+
+    Author:
+      type: object
+      required:
+        - firstName
+        - lastName
+        - emailId
+      properties:
+        authorId:
+          type: string
+          format: uuid
+          description: Unique identifier for the author
+        firstName:
+          type: string
+          minLength: 1
+          maxLength: 100
+          description: First name of the author (1-100 characters)
+        lastName:
+          type: string
+          minLength: 1
+          maxLength: 100
+          description: Last name of the author (1-100 characters)
+        emailId:
+          type: string
+          format: email
+          description: Email address of the author
+
+    Publisher:
+      type: object
+      required:
+        - name
+        - type
+        - contactEmail
+      properties:
+        publisherId:
+          type: string
+          format: uuid
+          description: Unique identifier for the publisher
+        name:
+          type: string
+          minLength: 1
+          maxLength: 200
+          description: Name of the publisher (1-200 characters)
+        type:
+          type: string
+          enum: [INDIVIDUAL, COMPANY]
+          description: Type of publisher
+        logoUrl:
+          type: string
+          format: uri
+          description: URL of the publisher's logo
+          nullable: true
+        website:
+          type: string
+          format: uri
+          description: Publisher's website URL
+          nullable: true
+        contactEmail:
+          type: string
+          format: email
+          description: Contact email address
+        description:
+          type: string
+          description: Description of the publisher
+          nullable: true
+        country:
+          type: string
+          description: Country of the publisher
+          nullable: true
+
+    Section:
+      type: object
+      required:
+        - title
+        - order
+        - duration
+      properties:
+        sectionId:
+          type: string
+          format: uuid
+          description: Unique identifier for the section
+        title:
+          type: string
+          minLength: 1
+          maxLength: 200
+          description: Title of the section (1-200 characters)
+        description:
+          type: string
+          description: Description of the section
+          nullable: true
+        order:
+          type: integer
+          minimum: 1
+          description: Order of the section in the course (must be > 0)
+        duration:
+          type: integer
+          minimum: 1
+          description: Duration of the section in minutes (must be > 0)
+
+paths:
+  /courses:
+    get:
+      summary: List all courses
+      description: Returns a list of all available courses. Supports filtering by status, level, language, and tags.
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: tenantId
+          in: query
+          required: true
+          schema:
+            type: string
+            pattern: '^[a-zA-Z0-9-_]+$'
+        - name: status
+          in: query
+          schema:
+            type: string
+            enum: [DRAFT, PUBLISHED, ARCHIVED]
+        - name: level
+          in: query
+          schema:
+            type: string
+            enum: [BEGINNER, INTERMEDIATE, ADVANCED]
+        - name: language
+          in: query
+          schema:
+            type: string
+            enum: [ENGLISH, SPANISH, FRENCH, GERMAN, HINDI]
+        - name: tags
+          in: query
+          schema:
+            type: array
+            items:
+              type: string
+        - name: inMarketplace
+          in: query
+          schema:
+            type: boolean
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 20
+        - name: offset
+          in: query
+          schema:
+            type: integer
+            minimum: 0
+            default: 0
+      responses:
+        '200':
+          description: List of courses
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  items:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Course'
+                  total:
+                    type: integer
+                    description: Total number of courses
+                  limit:
+                    type: integer
+                    description: Number of items per page
+                  offset:
+                    type: integer
+                    description: Starting position
+        '400':
+          description: Invalid request parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    post:
+      summary: Create a new course
+      description: |
+        Creates a new course with the provided details. The course will be created with:
+        - status set to DRAFT
+        - inMarketplace set to false
+        - version set to 1
+        - A CourseCreated event will be published
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Course'
+      responses:
+        '201':
+          description: Course created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Course'
+        '400':
+          description: Invalid input
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /courses/{courseId}:
+    get:
+      summary: Get course by ID
+      description: Returns a specific course by its ID. Returns 404 if the course is not found.
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: courseId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+            pattern: '^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$'
+      responses:
+        '200':
+          description: Course details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Course'
+        '400':
+          description: Invalid course ID format
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Course not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    put:
+      summary: Update course
+      description: |
+        Updates an existing course. Only courses in DRAFT status can be updated.
+        The courseId in the path must match the courseId in the request body.
+        The version number will be incremented automatically.
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: courseId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+            pattern: '^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Course'
+      responses:
+        '200':
+          description: Course updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Course'
+        '400':
+          description: Invalid input, course cannot be updated, or courseId mismatch
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Course not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    delete:
+      summary: Delete course
+      description: Deletes a specific course. Only courses in DRAFT status can be deleted.
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: courseId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+            pattern: '^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$'
+      responses:
+        '204':
+          description: Course deleted successfully
+        '400':
+          description: Course cannot be deleted (published or invalid ID format)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Course not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /courses/{courseId}/publish:
+    post:
+      summary: Publish course
+      description: |
+        Publishes a draft course. The course must be in DRAFT status and have all required fields completed.
+        - Sets status to PUBLISHED
+        - Sets publishedOn to current timestamp
+        - Increments version number
+        - Publishes a CoursePublished event
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: courseId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+            pattern: '^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$'
+      responses:
+        '200':
+          description: Course published successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Course'
+        '400':
+          description: Course cannot be published (archived or invalid ID format)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Course not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /courses/{courseId}/archive:
+    post:
+      summary: Archive course
+      description: Archives a published course. The course must be in PUBLISHED status.
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: courseId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+            pattern: '^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$'
+      responses:
+        '200':
+          description: Course archived successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Course'
+        '400':
+          description: Course cannot be archived (not published or invalid ID format)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Course not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error' 

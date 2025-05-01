@@ -1,0 +1,20 @@
+spring:
+  application:
+    name: reference-service
+
+server:
+  port: 8080
+
+aws:
+  region: us-east-1
+  dynamodb:
+    table-name: references
+    endpoint: http://localhost:8000
+  sqs:
+    queue-url: http://localhost:9324/queue/events
+    endpoint: http://localhost:9324
+
+logging:
+  level:
+    root: INFO
+    com.skillvo.reference: DEBUG 

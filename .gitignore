@@ -81,3 +81,49 @@ pids
 .env
 .env.* 
 .angular
+
+
+# Maven
+target/
+!**/src/main/**/target/
+!**/src/test/**/target/
+!.mvn/wrapper/maven-wrapper.jar
+.m2/repository
+
+# Java and Maven specific
+*.class
+*.jar
+*.war
+*.ear
+*.nar
+.mtj.tmp/
+hs_err_pid*
+replay_pid*
+
+# Maven additional
+.mvn/timing.properties
+.mvn/wrapper/maven-wrapper.jar
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+
+# Spring Boot
+.spring-boot-devtools
+
+# IntelliJ IDEA
+*.iml
+*.ipr
+*.iws
+.idea/
+out/
+
+# Eclipse additional
+.apt_generated
+.factorypath
+.springBeans
+.sts4-cache
+bin/
