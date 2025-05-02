@@ -1,49 +1,49 @@
 {
   "name": "mobile",
   "projectType": "application",
-  "sourceRoot": "apps/mobile/lib",
+  "sourceRoot": "mobile/lib",
   "tags": ["mobile", "flutter", "app"],
   "targets": {
     "build": {
       "executor": "nx:run-commands",
       "options": {
         "command": "flutter build",
-        "cwd": "apps/mobile"
+        "cwd": "mobile"
       }
     },
     "run": {
       "executor": "nx:run-commands",
       "options": {
         "command": "flutter run",
-        "cwd": "apps/mobile"
+        "cwd": "mobile"
       }
     },
     "test": {
       "executor": "nx:run-commands",
       "options": {
         "command": "flutter test",
-        "cwd": "apps/mobile"
+        "cwd": "mobile"
       }
     },
     "lint": {
       "executor": "nx:run-commands",
       "options": {
         "command": "flutter analyze",
-        "cwd": "apps/mobile"
+        "cwd": "mobile"
       }
     },
     "clean": {
       "executor": "nx:run-commands",
       "options": {
         "command": "flutter clean",
-        "cwd": "apps/mobile"
+        "cwd": "mobile"
       }
     },
     "get": {
       "executor": "nx:run-commands",
       "options": {
         "command": "flutter pub get",
-        "cwd": "apps/mobile"
+        "cwd": "mobile"
       }
     }
   }
