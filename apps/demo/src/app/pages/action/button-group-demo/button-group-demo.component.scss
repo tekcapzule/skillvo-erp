@@ -1,0 +1,12 @@
+.component-demo-container {
+  height: 100%;
+}
+
+/* Custom styles for button group demos if needed */
+::ng-deep {
+  .sv-button-group-container {
+    .sv-button {
+      min-width: 100px;
+    }
+  }
+} 

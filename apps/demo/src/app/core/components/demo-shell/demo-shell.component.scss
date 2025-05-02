@@ -329,6 +329,52 @@
           }
         }
         
+        /* Fallback button group styling */
+        .fallback-button-group-container {
+          margin-top: 20px;
+          
+          .sv-button-group {
+            display: inline-flex;
+            
+            .sv-button-group-container {
+              display: inline-flex;
+              
+              .sv-button {
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                padding: 8px 16px;
+                font-size: 14px;
+                font-weight: 500;
+                cursor: pointer;
+                min-width: 80px;
+                border: 1px solid var(--sv-border-medium);
+                background-color: transparent;
+                
+                &:not(:last-child) {
+                  border-right: none;
+                }
+                
+                &:first-child {
+                  border-top-left-radius: 4px;
+                  border-bottom-left-radius: 4px;
+                }
+                
+                &:last-child {
+                  border-top-right-radius: 4px;
+                  border-bottom-right-radius: 4px;
+                }
+                
+                .sv-button-content {
+                  display: inline-flex;
+                  align-items: center;
+                  gap: 8px;
+                }
+              }
+            }
+          }
+        }
+        
         /* Debug placeholder styling */
         .component-debug-placeholder {
           display: none;
@@ -589,6 +635,50 @@
               
               .sv-button-content {
                 color: var(--sv-text-on-primary);
+              }
+            }
+          }
+          
+          // Style the fallback button group
+          .responsive-fallback-button-group {
+            .sv-button-group {
+              display: inline-flex;
+              
+              .sv-button-group-container {
+                display: inline-flex;
+                
+                .sv-button {
+                  display: inline-flex;
+                  align-items: center;
+                  justify-content: center;
+                  padding: 8px 16px;
+                  font-size: 14px;
+                  font-weight: 500;
+                  cursor: pointer;
+                  min-width: 80px;
+                  border: 1px solid var(--sv-border-medium);
+                  background-color: transparent;
+                  
+                  &:not(:last-child) {
+                    border-right: none;
+                  }
+                  
+                  &:first-child {
+                    border-top-left-radius: 4px;
+                    border-bottom-left-radius: 4px;
+                  }
+                  
+                  &:last-child {
+                    border-top-right-radius: 4px;
+                    border-bottom-right-radius: 4px;
+                  }
+                  
+                  .sv-button-content {
+                    display: inline-flex;
+                    align-items: center;
+                    gap: 8px;
+                  }
+                }
               }
             }
           }

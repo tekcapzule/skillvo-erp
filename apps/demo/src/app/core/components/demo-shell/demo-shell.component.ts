@@ -225,37 +225,33 @@ export class DemoShellComponent implements OnInit, AfterViewInit, OnDestroy {
   /**
    * Create a component instance for a variant
    */
-  private createVariantComponent(variant: ComponentVariant, container: ViewContainerRef): void {
+  private createVariantComponent(variant: any, container: ViewContainerRef): void {
     if (!this.activeDemo) return;
     
     try {
-      // Create the component - use type assertion to bypass strict type checking
-      // @ts-ignore - This is fine, TypeScript is being too strict
+      // Create component
       const componentRef = container.createComponent(this.activeDemo.component);
+      const instance = componentRef.instance;
       
-      // Apply the variant properties
-      if (variant.properties) {
-        // @ts-ignore - Properties are dynamically set on the component instance
-        Object.entries(variant.properties).forEach(([key, value]) => {
-          componentRef.instance[key] = value;
-        });
-      }
+      // Apply variant properties to component
+      Object.entries(variant.properties).forEach(([key, value]) => {
+        instance[key] = value;
+      });
       
-      // Special handling for button component to add content
-      // @ts-ignore - We know the id exists here
-      if (this.activeDemo.id.includes('button')) {
+      // For normal buttons, manually set content if empty
+      if (this.activeDemo.id === 'button-component') {
         setTimeout(() => {
           const element = componentRef.location.nativeElement;
-          if (element) {
-            const contentEl = element.querySelector('.sv-button-content');
-            if (contentEl && !contentEl.textContent?.trim()) {
-              contentEl.textContent = variant.name || variant.id || 'Button';
-            }
+          const contentEl = element.querySelector('.sv-button-content');
+          if (contentEl && contentEl.textContent?.trim() === '') {
+            contentEl.textContent = variant.name;
           }
-        }, 0);
+        }, 10);
       }
+      
+      // Button groups will be handled by the ButtonGroupDemoComponent
     } catch (error) {
-      console.error('Error creating variant component:', error);
+      console.error('Error creating variant component', error);
     }
   }
   
@@ -305,8 +301,8 @@ export class DemoShellComponent implements OnInit, AfterViewInit, OnDestroy {
       // Set up event listeners
       this.setupEventListeners(this.componentInstance, this.activeDemo);
       
-      // Handle button components - direct DOM manipulation as fallback
-      if (this.activeDemo.id.includes('button')) {
+      // Handle regular button components - direct DOM manipulation as fallback
+      if (this.activeDemo.id === 'button-component') {
         // Get the container element
         const containerEl = this.componentContainer.element.nativeElement.parentElement;
         
@@ -350,6 +346,8 @@ export class DemoShellComponent implements OnInit, AfterViewInit, OnDestroy {
           }
         }, 10);
       }
+      
+      // Button group components will be handled by the ButtonGroupDemoComponent
       
       // If we're on the overview tab, render all variants
       if (this.activeTabIndex === 0) {
@@ -407,8 +405,8 @@ export class DemoShellComponent implements OnInit, AfterViewInit, OnDestroy {
         }
       }
       
-      // For buttons, add content
-      if (this.activeDemo.id.includes('button')) {
+      // For regular buttons, add content
+      if (this.activeDemo.id === 'button-component') {
         setTimeout(() => {
           const element = componentRef.location.nativeElement;
           if (element) {
@@ -422,6 +420,9 @@ export class DemoShellComponent implements OnInit, AfterViewInit, OnDestroy {
           }
         }, 10);
       }
+      
+      // For button groups, we'll use the custom method in ButtonGroupDemoComponent
+      // The component will handle populating its children
     } catch (error) {
       console.error('Error rendering responsive component:', error);
     }

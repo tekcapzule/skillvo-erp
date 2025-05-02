@@ -112,10 +112,27 @@
               </div>
               
               <!-- Fallback element for buttons - updated with better styling -->
-              <div *ngIf="activeDemo?.id?.includes('button') && !componentInstance" class="fallback-button-container">
+              <div *ngIf="activeDemo?.id === 'button-component' && !componentInstance" class="fallback-button-container">
                 <button class="sv-button sv-button-primary sv-ui-size-md">
                   <span class="sv-button-content">Primary Button</span>
                 </button>
+              </div>
+
+              <!-- Fallback element for button groups -->
+              <div *ngIf="activeDemo?.id === 'button-group-component' && !componentInstance" class="fallback-button-group-container">
+                <div class="sv-button-group sv-button-group-outline">
+                  <div class="sv-button-group-container">
+                    <button class="sv-button sv-button-outline sv-ui-size-md">
+                      <span class="sv-button-content">Left</span>
+                    </button>
+                    <button class="sv-button sv-button-outline sv-ui-size-md">
+                      <span class="sv-button-content">Middle</span>
+                    </button>
+                    <button class="sv-button sv-button-outline sv-ui-size-md">
+                      <span class="sv-button-content">Right</span>
+                    </button>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -157,10 +174,27 @@
                 <ng-container #responsiveComponentContainer></ng-container>
                 
                 <!-- Fallback display if component doesn't render -->
-                <div *ngIf="activeDemo?.id?.includes('button') && !componentInstance" class="responsive-fallback-button">
+                <div *ngIf="activeDemo?.id === 'button-component' && !componentInstance" class="responsive-fallback-button">
                   <button class="sv-button sv-button-primary sv-ui-size-md">
                     <span class="sv-button-content">Primary Button</span>
                   </button>
+                </div>
+
+                <!-- Fallback for button group -->
+                <div *ngIf="activeDemo?.id === 'button-group-component'" class="responsive-fallback-button-group">
+                  <div class="sv-button-group sv-button-group-outline">
+                    <div class="sv-button-group-container">
+                      <button class="sv-button sv-button-outline sv-ui-size-md">
+                        <span class="sv-button-content">Left</span>
+                      </button>
+                      <button class="sv-button sv-button-outline sv-ui-size-md">
+                        <span class="sv-button-content">Middle</span>
+                      </button>
+                      <button class="sv-button sv-button-outline sv-ui-size-md">
+                        <span class="sv-button-content">Right</span>
+                      </button>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>

@@ -16,6 +16,10 @@ export const appRoutes: Route[] = [
           { 
             path: 'button', 
             loadComponent: () => import('./pages/action/button-demo/button-demo.component').then(m => m.ButtonDemoComponent) 
+          },
+          { 
+            path: 'button-group', 
+            loadComponent: () => import('./pages/action/button-group-demo/button-group-demo.component').then(m => m.ButtonGroupDemoComponent) 
           }
         ]
       },
