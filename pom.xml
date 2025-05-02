@@ -9,6 +9,7 @@
 
 <modules>
     <module>apis/course-service</module>
-    <module>apis/reference-service</module>    
+    <module>apis/reference-service</module>
+    <module>apis/task-service</module>    
 </modules>
 </project>
