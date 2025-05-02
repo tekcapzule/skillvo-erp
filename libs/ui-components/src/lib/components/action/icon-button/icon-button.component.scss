@@ -1,6 +1,6 @@
 // Import from the shared styles
-@import '../../abstracts/index';
-@import '../../base/index';
+@use './../../../../../../../styles/abstracts/' as *;
+@use './../../../../../../../styles/base/' as *;
 
 :host {
   display: inline-block;
@@ -10,14 +10,31 @@
   }
   
   button {
-    @extend .sv-icon-button;
+    // Instead of extending .sv-icon-button, use direct styles
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    padding: var(--sv-padding-2);
+    aspect-ratio: 1;
+    border-radius: var(--sv-radius-md);
     width: 100%;
     height: 100%;
     background: none;
     border: none;
-    padding: 0;
     margin: 0;
     cursor: pointer;
+    
+    // Center icon visually
+    .sv-icon {
+      margin: 0;
+      vertical-align: middle;
+    }
+    
+    // Transitions
+    transition: background-color var(--sv-motion-duration-short) var(--sv-motion-ease-standard),
+                border-color var(--sv-motion-duration-short) var(--sv-motion-ease-standard),
+                color var(--sv-motion-duration-short) var(--sv-motion-ease-standard),
+                transform var(--sv-motion-duration-short) var(--sv-motion-ease-accelerate);
     
     &:focus {
       outline: none;

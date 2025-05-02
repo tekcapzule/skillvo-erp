@@ -1,0 +1,314 @@
+<div class="sv-date-picker-container" #pickerContainer>
+    <!-- Input Display Field -->
+    <div class="sv-date-picker-with-toggle">
+      <input 
+        [id]="id"
+        [name]="name"
+        class="sv-date-picker-field"
+        [placeholder]="placeholder"
+        [value]="formatDisplayValue()"
+        (input)="onInputChange($event)"
+        (blur)="onBlur()"
+        [disabled]="disabled"
+        [readonly]="readonly"
+        [required]="required"
+        [attr.aria-invalid]="!isValid && isTouched"
+        [attr.aria-describedby]="(helpText || errorMessage) ? id + '-description' : null"
+      />
+      <button 
+        type="button" 
+        class="sv-date-picker-toggle"
+        [disabled]="disabled" 
+        (click)="togglePicker()"
+        [attr.aria-label]="'Open ' + mode + ' picker'"
+      >
+        <svg *ngIf="mode === 'date' || mode === 'datetime'" class="sv-date-picker-toggle-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+          <line x1="16" y1="2" x2="16" y2="6"></line>
+          <line x1="8" y1="2" x2="8" y2="6"></line>
+          <line x1="3" y1="10" x2="21" y2="10"></line>
+        </svg>
+        <svg *ngIf="mode === 'time'" class="sv-date-picker-toggle-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"></circle>
+          <polyline points="12 6 12 12 16 14"></polyline>
+        </svg>
+      </button>
+    </div>
+    
+    <!-- Validation Messages -->
+    <div *ngIf="helpText && !errorMessage && !successMessage" [id]="id + '-description'" class="sv-input-helper">
+      {{ helpText }}
+    </div>
+    <div *ngIf="errorMessage && isTouched" [id]="id + '-description'" class="sv-input-validation-error">
+      {{ errorMessage }}
+    </div>
+    <div *ngIf="successMessage && isTouched && isValid" [id]="id + '-description'" class="sv-input-validation-success">
+      {{ successMessage }}
+    </div>
+    
+    <!-- Dropdown Picker -->
+    <div *ngIf="isOpen" class="sv-calendar" [ngClass]="{'sv-time-selector': currentView === 'time'}">
+      <!-- Calendar Header -->
+      <div class="sv-calendar-header" *ngIf="currentView !== 'time'">
+        <div class="sv-calendar-header-nav">
+          <button 
+            *ngIf="currentView === 'days'" 
+            type="button" 
+            class="sv-calendar-header-nav-btn"
+            (click)="prevMonth()"
+            aria-label="Previous month"
+          >
+            <svg class="sv-calendar-header-nav-btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="15 18 9 12 15 6"></polyline>
+            </svg>
+          </button>
+        </div>
+        
+        <div class="sv-calendar-header-title">
+          <button 
+            *ngIf="currentView === 'days'" 
+            type="button" 
+            class="sv-calendar-header-title-btn"
+            (click)="showMonthView()"
+          >
+            {{ monthsList[currentDate.getMonth()].name }}
+          </button>
+          <button 
+            *ngIf="currentView === 'days' || currentView === 'months'" 
+            type="button" 
+            class="sv-calendar-header-title-btn"
+            (click)="showYearView()"
+          >
+            {{ currentDate.getFullYear() }}
+          </button>
+          <span *ngIf="currentView === 'months'">Select Month</span>
+          <span *ngIf="currentView === 'years'">Select Year</span>
+        </div>
+        
+        <div class="sv-calendar-header-nav">
+          <button 
+            *ngIf="currentView === 'days'" 
+            type="button" 
+            class="sv-calendar-header-nav-btn"
+            (click)="nextMonth()"
+            aria-label="Next month"
+          >
+            <svg class="sv-calendar-header-nav-btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+          </button>
+        </div>
+      </div>
+      
+      <!-- Days View -->
+      <div *ngIf="currentView === 'days'" class="sv-calendar-grid">
+        <!-- Weekday Headers -->
+        <div *ngFor="let day of weekDays" class="sv-calendar-grid-header">
+          {{ day }}
+        </div>
+        
+        <!-- Calendar Days -->
+        <div 
+          *ngFor="let day of calendarDays"
+          class="sv-calendar-grid-cell" 
+          [ngClass]="{
+            'sv-calendar-grid-cell-day': day.isCurrentMonth, 
+            'sv-calendar-grid-cell-outside-month': !day.isCurrentMonth,
+            'sv-calendar-grid-cell-today': day.isToday,
+            'sv-calendar-grid-cell-selected': day.isSelected || day.isRangeStart || day.isRangeEnd,
+            'sv-calendar-grid-cell-in-range': day.isInRange,
+            'sv-calendar-grid-cell-disabled': day.isDisabled
+          }"
+          (click)="selectDay(day)"
+          (mouseenter)="hoverDay(day)"
+          [attr.aria-selected]="day.isSelected"
+          [attr.aria-disabled]="day.isDisabled"
+        >
+          {{ day.date.getDate() }}
+        </div>
+      </div>
+      
+      <!-- Months View -->
+      <div *ngIf="currentView === 'months'" class="sv-calendar-grid sv-calendar-months-grid">
+        <div 
+          *ngFor="let month of monthsList"
+          class="sv-calendar-grid-cell sv-calendar-month-cell"
+          (click)="selectMonth(month.value)"
+          [ngClass]="{'sv-calendar-grid-cell-selected': currentDate.getMonth() === month.value}"
+        >
+          {{ month.name.substr(0, 3) }}
+        </div>
+      </div>
+      
+      <!-- Years View -->
+      <div *ngIf="currentView === 'years'" class="sv-calendar-grid sv-calendar-years-grid">
+        <div 
+          *ngFor="let year of yearsList.slice(currentDate.getFullYear() - 20, currentDate.getFullYear() + 20)"
+          class="sv-calendar-grid-cell sv-calendar-year-cell"
+          (click)="selectYear(year)"
+          [ngClass]="{'sv-calendar-grid-cell-selected': currentDate.getFullYear() === year}"
+        >
+          {{ year }}
+        </div>
+      </div>
+      
+      <!-- Time View -->
+      <div *ngIf="currentView === 'time'" class="sv-time-selector-container">
+        <div class="sv-time-selector-display">
+          <span>{{ hours.toString().padStart(2, '0') }}</span>
+          <span class="sv-time-selector-display-separator">:</span>
+          <span>{{ minutes.toString().padStart(2, '0') }}</span>
+          <span *ngIf="showSeconds" class="sv-time-selector-display-separator">:</span>
+          <span *ngIf="showSeconds">{{ seconds.toString().padStart(2, '0') }}</span>
+          <span *ngIf="!use24HourFormat" class="sv-time-selector-display-period">{{ period }}</span>
+        </div>
+        
+        <div class="sv-time-selector-controls">
+          <!-- Hours -->
+          <div class="sv-time-selector-controls-unit">
+            <button 
+              type="button" 
+              class="sv-time-selector-controls-unit-up"
+              (click)="incrementHours()"
+              aria-label="Increment hours"
+            >
+              <svg class="sv-time-selector-controls-unit-up-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="18 15 12 9 6 15"></polyline>
+              </svg>
+            </button>
+            <div class="sv-time-selector-controls-unit-value">{{ hours.toString().padStart(2, '0') }}</div>
+            <button 
+              type="button" 
+              class="sv-time-selector-controls-unit-down"
+              (click)="decrementHours()"
+              aria-label="Decrement hours"
+            >
+              <svg class="sv-time-selector-controls-unit-down-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg>
+            </button>
+            <div class="sv-time-selector-controls-unit-label">Hours</div>
+          </div>
+          
+          <!-- Minutes -->
+          <div class="sv-time-selector-controls-unit">
+            <button 
+              type="button" 
+              class="sv-time-selector-controls-unit-up"
+              (click)="incrementMinutes()"
+              aria-label="Increment minutes"
+            >
+              <svg class="sv-time-selector-controls-unit-up-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="18 15 12 9 6 15"></polyline>
+              </svg>
+            </button>
+            <div class="sv-time-selector-controls-unit-value">{{ minutes.toString().padStart(2, '0') }}</div>
+            <button 
+              type="button" 
+              class="sv-time-selector-controls-unit-down"
+              (click)="decrementMinutes()"
+              aria-label="Decrement minutes"
+            >
+              <svg class="sv-time-selector-controls-unit-down-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg>
+            </button>
+            <div class="sv-time-selector-controls-unit-label">Minutes</div>
+          </div>
+          
+          <!-- Seconds -->
+          <div class="sv-time-selector-controls-unit" *ngIf="showSeconds">
+            <button 
+              type="button" 
+              class="sv-time-selector-controls-unit-up"
+              (click)="incrementSeconds()"
+              aria-label="Increment seconds"
+            >
+              <svg class="sv-time-selector-controls-unit-up-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="18 15 12 9 6 15"></polyline>
+              </svg>
+            </button>
+            <div class="sv-time-selector-controls-unit-value">{{ seconds.toString().padStart(2, '0') }}</div>
+            <button 
+              type="button" 
+              class="sv-time-selector-controls-unit-down"
+              (click)="decrementSeconds()"
+              aria-label="Decrement seconds"
+            >
+              <svg class="sv-time-selector-controls-unit-down-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg>
+            </button>
+            <div class="sv-time-selector-controls-unit-label">Seconds</div>
+          </div>
+        </div>
+        
+        <!-- AM/PM Toggle -->
+        <div class="sv-time-selector-period-toggle" *ngIf="!use24HourFormat">
+          <button 
+            type="button" 
+            class="sv-time-selector-period-toggle-btn"
+            [ngClass]="{'active': period === 'AM'}"
+            (click)="period = 'AM'; updateTimeValue()"
+          >
+            AM
+          </button>
+          <button 
+            type="button" 
+            class="sv-time-selector-period-toggle-btn"
+            [ngClass]="{'active': period === 'PM'}"
+            (click)="period = 'PM'; updateTimeValue()"
+          >
+            PM
+          </button>
+        </div>
+      </div>
+      
+      <!-- Footer -->
+      <div class="sv-calendar-footer">
+        <button 
+          *ngIf="showTodayButton && (currentView === 'days' || currentView === 'months' || currentView === 'years')"
+          type="button" 
+          class="sv-calendar-footer-btn sv-calendar-footer-btn-today"
+          (click)="goToToday()"
+        >
+          Today
+        </button>
+        
+        <button 
+          *ngIf="showClearButton"
+          type="button" 
+          class="sv-calendar-footer-btn sv-calendar-footer-btn-clear"
+          (click)="clearSelection()"
+        >
+          Clear
+        </button>
+        
+        <button 
+          *ngIf="mode === 'datetime' && currentView === 'days'"
+          type="button" 
+          class="sv-calendar-footer-btn sv-calendar-footer-btn-time"
+          (click)="showTimeView()"
+        >
+          Time
+        </button>
+        
+        <button 
+          *ngIf="mode === 'datetime' && currentView === 'time'"
+          type="button" 
+          class="sv-calendar-footer-btn sv-calendar-footer-btn-date"
+          (click)="showDayView()"
+        >
+          Date
+        </button>
+        
+        <button 
+          type="button" 
+          class="sv-calendar-footer-btn sv-calendar-footer-btn-apply"
+          (click)="applySelection()"
+        >
+          Apply
+        </button>
+      </div>
+    </div>
+  </div>

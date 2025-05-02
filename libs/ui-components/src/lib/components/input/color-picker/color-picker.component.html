@@ -1,0 +1,214 @@
+<div class="sv-color-picker-container">
+    <label *ngIf="label" [for]="id" class="sv-input-label">
+      {{ label }} <span *ngIf="required" class="sv-input-required">*</span>
+    </label>
+    
+    <div class="sv-color-picker-field" 
+         [class.sv-input-error]="!isValid && isTouched" 
+         [class.sv-input-success]="isValid && isTouched && value"
+         [class.sv-input-disabled]="disabled"
+         [class.sv-input-readonly]="readonly">
+      
+      <div class="sv-color-picker-field-preview">
+        <div class="sv-color-picker-field-preview-color" [style.backgroundColor]="selectedColor"></div>
+      </div>
+      
+      <input type="text" 
+             [id]="id" 
+             [name]="name" 
+             [placeholder]="placeholder" 
+             [required]="required" 
+             [disabled]="disabled" 
+             [readonly]="readonly"
+             [value]="selectedColor"
+             (change)="onInputChange($event)"
+             (blur)="onBlur()"
+             class="sv-color-picker-field-input">
+      
+      <button type="button" 
+              class="sv-color-picker-toggle" 
+              [disabled]="disabled || readonly"
+              (click)="togglePanel()">
+        <span class="sv-color-picker-toggle-icon">
+          <!-- SVG color sample icon -->
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+            <path d="M12 22a10 10 0 1 1 0-20 10 10 0 0 1 0 20zm0-2a8 8 0 1 0 0-16 8 8 0 0 0 0 16zm0-2a6 6 0 1 1 0-12 6 6 0 0 1 0 12z"/>
+          </svg>
+        </span>
+      </button>
+    </div>
+    
+    <div class="sv-input-helper" *ngIf="helpText && !errorMessage && (!isTouched || isValid)">{{ helpText }}</div>
+    <div class="sv-input-validation-error" *ngIf="errorMessage && !isValid && isTouched">{{ errorMessage }}</div>
+    <div class="sv-input-validation-success" *ngIf="successMessage && isValid && isTouched && value">{{ successMessage }}</div>
+    
+    <!-- Color panel dropdown -->
+    <div *ngIf="isOpen" #colorPanel class="sv-color-panel">
+      <!-- Main color area (hue/saturation picker) -->
+      <div class="sv-color-panel-section">
+        <div class="sv-color-panel-color-area" 
+             [style.backgroundColor]="'hsl(' + hue + ', 100%, 50%)'"
+             (mousedown)="updateHueFromColorArea($event)">
+          <div class="sv-color-panel-color-area-saturation"></div>
+          <div class="sv-color-panel-color-area-brightness"></div>
+          <div class="sv-color-panel-color-area-handle" 
+               [style.left]="saturation + '%'" 
+               [style.top]="(100 - lightness) + '%'"
+               [style.backgroundColor]="tempColor"></div>
+        </div>
+      </div>
+      
+      <!-- Hue slider -->
+      <div class="sv-color-panel-section">
+        <div class="sv-color-slider sv-color-slider-hue" 
+             (mousedown)="updateFromHueSlider($event)">
+          <div class="sv-color-slider-handle" 
+               [style.left]="(hue / 360 * 100) + '%'"></div>
+        </div>
+      </div>
+      
+      <!-- Alpha slider (if enabled) -->
+      <div class="sv-color-panel-section" *ngIf="showAlpha">
+        <div class="sv-color-slider sv-color-slider-alpha" 
+             (mousedown)="updateFromAlphaSlider($event)">
+          <div class="sv-color-slider-alpha-gradient" 
+               [style.background]="'linear-gradient(to right, transparent, ' + tempColor + ')'"></div>
+          <div class="sv-color-slider-handle" 
+               [style.left]="(alpha * 100) + '%'"></div>
+        </div>
+      </div>
+      
+      <!-- Format switcher (HEX/RGB/HSL) -->
+      <div class="sv-color-panel-section">
+        <div class="sv-color-panel-format-switch">
+          <button class="sv-color-panel-format-switch-btn" 
+                  [class.active]="activeFormat === 'hex'"
+                  (click)="changeFormat('hex')">HEX</button>
+          <button class="sv-color-panel-format-switch-btn" 
+                  [class.active]="activeFormat === 'rgb'"
+                  (click)="changeFormat('rgb')">RGB</button>
+          <button class="sv-color-panel-format-switch-btn" 
+                  [class.active]="activeFormat === 'hsl'"
+                  (click)="changeFormat('hsl')">HSL</button>
+        </div>
+      </div>
+      
+      <!-- Color input fields -->
+      <div class="sv-color-panel-section">
+        <!-- HEX input -->
+        <div class="sv-color-panel-inputs" *ngIf="activeFormat === 'hex'">
+          <div class="sv-color-panel-inputs-group sv-color-panel-inputs-hex">
+            <label class="sv-color-panel-inputs-group-label">Hex</label>
+            <input type="text" 
+                   class="sv-color-panel-inputs-group-input" 
+                   [value]="tempColor"
+                   (input)="onInputChange($event)">
+          </div>
+        </div>
+        
+        <!-- RGB inputs -->
+        <div class="sv-color-panel-inputs" *ngIf="activeFormat === 'rgb'">
+          <div class="sv-color-panel-inputs-group">
+            <label class="sv-color-panel-inputs-group-label">R</label>
+            <input type="number" 
+                   min="0" max="255"
+                   class="sv-color-panel-inputs-group-input" 
+                   [(ngModel)]="red"
+                   (input)="updateColorFromRGB()">
+          </div>
+          <div class="sv-color-panel-inputs-group">
+            <label class="sv-color-panel-inputs-group-label">G</label>
+            <input type="number" 
+                   min="0" max="255"
+                   class="sv-color-panel-inputs-group-input" 
+                   [(ngModel)]="green"
+                   (input)="updateColorFromRGB()">
+          </div>
+          <div class="sv-color-panel-inputs-group">
+            <label class="sv-color-panel-inputs-group-label">B</label>
+            <input type="number" 
+                   min="0" max="255"
+                   class="sv-color-panel-inputs-group-input" 
+                   [(ngModel)]="blue"
+                   (input)="updateColorFromRGB()">
+          </div>
+          <div class="sv-color-panel-inputs-group" *ngIf="showAlpha">
+            <label class="sv-color-panel-inputs-group-label">A</label>
+            <input type="number" 
+                   min="0" max="1" step="0.01"
+                   class="sv-color-panel-inputs-group-input" 
+                   [(ngModel)]="alpha"
+                   (input)="updateColorFromRGB()">
+          </div>
+        </div>
+        
+        <!-- HSL inputs -->
+        <div class="sv-color-panel-inputs" *ngIf="activeFormat === 'hsl'">
+          <div class="sv-color-panel-inputs-group">
+            <label class="sv-color-panel-inputs-group-label">H</label>
+            <input type="number" 
+                   min="0" max="360"
+                   class="sv-color-panel-inputs-group-input" 
+                   [(ngModel)]="hue"
+                   (input)="updateColorFromHSL()">
+          </div>
+          <div class="sv-color-panel-inputs-group">
+            <label class="sv-color-panel-inputs-group-label">S</label>
+            <input type="number" 
+                   min="0" max="100"
+                   class="sv-color-panel-inputs-group-input" 
+                   [(ngModel)]="saturation"
+                   (input)="updateColorFromHSL()">
+          </div>
+          <div class="sv-color-panel-inputs-group">
+            <label class="sv-color-panel-inputs-group-label">L</label>
+            <input type="number" 
+                   min="0" max="100"
+                   class="sv-color-panel-inputs-group-input" 
+                   [(ngModel)]="lightness"
+                   (input)="updateColorFromHSL()">
+          </div>
+          <div class="sv-color-panel-inputs-group" *ngIf="showAlpha">
+            <label class="sv-color-panel-inputs-group-label">A</label>
+            <input type="number" 
+                   min="0" max="1" step="0.01"
+                   class="sv-color-panel-inputs-group-input" 
+                   [(ngModel)]="alpha"
+                   (input)="updateColorFromHSL()">
+          </div>
+        </div>
+      </div>
+      
+      <!-- Color palette (if enabled) -->
+      <div class="sv-color-panel-section" *ngIf="showPalette">
+        <div class="sv-color-panel-section-title">Palette</div>
+        <div class="sv-color-palette">
+          <div *ngFor="let color of palette" 
+               class="sv-color-palette-swatch" 
+               [class.selected]="tempColor === color"
+               [style.backgroundColor]="color"
+               (click)="selectColor(color)"></div>
+        </div>
+      </div>
+      
+      <!-- Recent colors -->
+      <div class="sv-color-panel-section" *ngIf="recentColors && recentColors.length > 0">
+        <div class="sv-color-panel-section-title">Recent</div>
+        <div class="sv-color-palette-recent">
+          <div *ngFor="let color of recentColors" 
+               class="sv-color-palette-swatch" 
+               [class.selected]="tempColor === color"
+               [style.backgroundColor]="color"
+               (click)="selectColor(color)"></div>
+        </div>
+      </div>
+      
+      <!-- Footer with action buttons -->
+      <div class="sv-color-panel-footer">
+        <button class="sv-color-panel-footer-btn sv-color-panel-footer-btn-clear"
+                (click)="clearColor()">Clear</button>
+        <button class="sv-color-panel-footer-btn sv-color-panel-footer-btn-apply"
+                (click)="applyColor()">Apply</button>
+      </div>
+    </div>
+  </div>

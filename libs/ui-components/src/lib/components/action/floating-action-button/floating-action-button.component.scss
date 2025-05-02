@@ -1,6 +1,6 @@
 // Import from the shared styles
-@import '../../abstracts/index';
-@import '../../base/index';
+@use './../../../../../../../styles/abstracts/' as *;
+@use './../../../../../../../styles/base/' as *;
 
 :host {
   display: inline-block;
@@ -12,7 +12,36 @@
   
   // Button group container to ensure proper styling of content
   .sv-button-group-container {
-    @extend .sv-button-group;
+    // Instead of extending .sv-button-group, use direct styles
+    display: inline-flex;
+    vertical-align: middle;
+    
+    // Basic button group styling
+    > ::ng-deep .sv-button,
+    > ::ng-deep .sv-icon-button {
+      // Flatten borders between items
+      position: relative;
+      border-radius: 0;
+      margin-right: -1px; // Collapse borders between buttons
+      
+      // First button
+      &:first-child {
+        border-top-left-radius: var(--sv-radius-md);
+        border-bottom-left-radius: var(--sv-radius-md);
+      }
+      
+      // Last button
+      &:last-child {
+        border-top-right-radius: var(--sv-radius-md);
+        border-bottom-right-radius: var(--sv-radius-md);
+        margin-right: 0;
+      }
+      
+      // Ensure focus state is visible above other buttons
+      &:focus {
+        z-index: 1;
+      }
+    }
   }
   
   // Override properties for vertical orientation

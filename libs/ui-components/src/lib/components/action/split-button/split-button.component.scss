@@ -1,6 +1,6 @@
 // Import from the shared styles
-@import '../../abstracts/index';
-@import '../../base/index';
+@use './../../../../../../../styles/abstracts/' as *;
+@use './../../../../../../../styles/base/' as *;
 
 // Component styles here are primarily referencing the SCSS from _split-button.scss
 // The styles are defined in the global stylesheet, so this file mainly handles
