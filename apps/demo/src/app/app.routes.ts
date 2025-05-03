@@ -20,6 +20,10 @@ export const appRoutes: Route[] = [
           { 
             path: 'button-group', 
             loadComponent: () => import('./pages/action/button-group-demo/button-group-demo.component').then(m => m.ButtonGroupDemoComponent) 
+          },
+          { 
+            path: 'icon-button', 
+            loadComponent: () => import('./pages/action/icon-button-demo/icon-button-demo.component').then(m => m.IconButtonDemoComponent) 
           }
         ]
       },
