@@ -51,6 +51,7 @@ export class SidenavComponent implements OnInit {
       name: 'Input',
       icon: 'text_fields',
       children: [
+        { name: 'Input Controls', route: '/input/controls', icon: 'input' },
         { name: 'Text fields', route: '/input/text-field', icon: 'edit' },
         { name: 'Password fields', route: '/input/password-field', icon: 'lock' },
         { name: 'Number inputs', route: '/input/number-input', icon: 'pin' },

@@ -1,0 +1,31 @@
+.component-demo-container {
+  width: 100%;
+  height: 100%;
+
+  ::ng-deep {
+    // Date Time Picker demo styling
+    .date-picker-container,
+    .time-picker-container {
+      margin-bottom: 16px;
+    }
+
+    .picker-label {
+      font-size: 14px;
+      color: #666;
+      margin-bottom: 8px;
+    }
+
+    .date-range-example {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-top: 16px;
+    }
+
+    .mode-selector {
+      margin-bottom: 16px;
+      display: flex;
+      gap: 12px;
+    }
+  }
+} 
