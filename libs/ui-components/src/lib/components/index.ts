@@ -15,3 +15,7 @@ export * from './action/floating-action-button/floating-action-button.component'
 export * from './action/icon-button/icon-button.component';
 export * from './action/menu-button/menu-button.component';
 export * from './action/split-button/split-button.component';
+
+// Selection Controls
+export * from './selection/checkbox/checkbox.component';
+export * from './selection/base-selection/base-selection.component';

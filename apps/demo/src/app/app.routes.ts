@@ -73,6 +73,16 @@ export const appRoutes: Route[] = [
           }
         ]
       },
+      {
+        path: 'selection',
+        children: [
+          { path: '', redirectTo: 'checkbox', pathMatch: 'full' },
+          { 
+            path: 'checkbox', 
+            loadComponent: () => import('./pages/selection/checkbox-demo/checkbox-demo.component').then(m => m.CheckboxDemoComponent) 
+          }
+        ]
+      },
       // Other feature modules will be lazy loaded here
       { path: '**', redirectTo: 'home' }
     ]

@@ -421,7 +421,7 @@ $touch-target-size: var(--sv-min-touch-target);
   
   // Border defaults
   @include standard-border;
-  @include border-radius('md');
+  @include border-radius('sm');
   
   // Animation defaults
   @include transition(all, 'medium', 'standard');

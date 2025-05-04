@@ -1,0 +1,35 @@
+<div [class]="getCheckboxClasses()">
+  <input
+    type="checkbox"
+    class="sv-selection-control-base__input"
+    [id]="id"
+    [name]="name"
+    [checked]="value"
+    [required]="required"
+    [disabled]="disabled"
+    [readonly]="readonly"
+    [attr.aria-label]="ariaLabel"
+    [attr.aria-labelledby]="ariaLabelledby"
+    [attr.value]="inputValue"
+    (change)="onSelectionChange($event)"
+    (blur)="onBlur()"
+    #checkboxInput
+  />
+  <span class="sv-selection-control-base__control sv-checkbox__control"></span>
+  <label *ngIf="label" class="sv-selection-control-base__label" [for]="id">
+    {{ label }}
+    <span *ngIf="required" class="sv-selection-required">*</span>
+  </label>
+  
+  <div *ngIf="helpText" class="sv-selection-help-text">
+    {{ helpText }}
+  </div>
+  
+  <div *ngIf="errorMessage && !isValid && isTouched" class="sv-selection-error-message">
+    {{ errorMessage }}
+  </div>
+  
+  <div *ngIf="successMessage && isValid && isTouched && value" class="sv-selection-success-message">
+    {{ successMessage }}
+  </div>
+</div> 
