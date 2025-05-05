@@ -1,0 +1,123 @@
+/**
+ * Accessibility Mixins
+ * Version: 1.0.0
+ * Last Updated: 2024-06-28
+ * 
+ * This file contains mixins for handling accessibility features
+ * in the SkillVo design system.
+ */
+
+/* Visually hide an element while keeping it accessible to screen readers */
+@mixin visually-hidden {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+/* Visually hidden but focusable */
+@mixin visually-hidden-focusable {
+  @include visually-hidden;
+  
+  &:focus,
+  &:active {
+    position: static !important;
+    width: auto !important;
+    height: auto !important;
+    overflow: visible !important;
+    clip: auto !important;
+    white-space: normal !important;
+  }
+}
+
+/* Make sure an element has sufficient color contrast */
+@mixin ensure-contrast($color, $background) {
+  color: $color;
+  background-color: $background;
+  
+  @supports (color-contrast: black vs white) {
+    @if (color-contrast($color vs $background) < 4.5) {
+      color: color-adjust($color, $background, 4.5);
+    }
+  }
+}
+
+/* Keyboard focus ring */
+@mixin keyboard-focus {
+  &:focus-visible {
+    outline: var(--sv-focus-ring-width) solid var(--sv-focus-ring-color);
+    outline-offset: var(--sv-focus-ring-offset);
+  }
+}
+
+/* Ensure minimum touch target size */
+@mixin touch-target-size {
+  min-width: var(--sv-min-touch-target);
+  min-height: var(--sv-min-touch-target);
+  
+  &::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: var(--sv-min-touch-target);
+    height: var(--sv-min-touch-target);
+    z-index: -1;
+  }
+}
+
+/* High contrast mode adjustments */
+@mixin high-contrast-mode {
+  @media (forced-colors: active) {
+    border: 1px solid ButtonText;
+    
+    &:focus {
+      outline: 2px solid ButtonText;
+      outline-offset: 2px;
+    }
+    
+    /* High contrast mode styles */
+    @content;
+  }
+}
+
+/* Reduce motion for users who prefer reduced motion */
+@mixin reduced-motion {
+  @media (prefers-reduced-motion: reduce) {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+/* Skip link for keyboard navigation */
+@mixin skip-link {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  background: var(--sv-bg-element);
+  color: var(--sv-text-primary);
+  padding: var(--sv-space-2) var(--sv-space-4);
+  z-index: 9999;
+  
+  &:focus {
+    top: 0;
+  }
+}
+
+/* Accessible hiding for collapsed content */
+@mixin collapsed-content {
+  visibility: hidden;
+  height: 0;
+  overflow: hidden;
+  
+  &[aria-expanded="true"] {
+    visibility: visible;
+    height: auto;
+  }
+} 

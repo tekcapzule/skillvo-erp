@@ -1,7 +1,7 @@
 /**
  * UI Control Base - Core Styles
- * Version: 2.0.0
- * Last Updated: April 29, 2025
+ * Version: 3.1.0
+ * Last Updated: June 28, 2024
  * 
  * This file establishes the foundational styles for all interactive UI components
  * in the SkillVo design system. It serves as the first level in our 
@@ -9,738 +9,174 @@
  * 1. sv-ui-control-base (this file) - Base styles for all interactive controls
  * 2. Category-specific base classes (e.g., sv-button-base, sv-input-base)
  * 3. Component-specific classes (e.g., sv-button, sv-input)
+ * 
+ * For extension points and layer boundaries documentation, see:
+ * styles/docs/base-control-extensions.md
  */
 
 /* ==========================================================================
    TABLE OF CONTENTS:
    
-   1. VARIABLES & CONFIGURATION
-   2. MIXINS
-      2.1 State Mixins
-      2.2 Layout Mixins
-      2.3 Visual Style Mixins
-      2.4 Typography Mixins
-      2.5 Spacing Mixins
-      2.6 Animation Mixins
-      2.7 Accessibility Mixins
+   1. IMPORTS
+   2. VARIABLES & CONFIGURATION
    3. BASE CLASS DEFINITION
    4. SIZE VARIATIONS
-   5. ANIMATION KEYFRAMES
-   6. ANIMATION UTILITIES
-   7. ACCESSIBILITY UTILITIES
-   8. PRINT STYLES
-   9. RTL SUPPORT
-   10. HIGH CONTRAST MODE
    ========================================================================== */
 
 /* ==========================================================================
-   1. VARIABLES & CONFIGURATION
+   1. IMPORTS
    ========================================================================== */
 @use 'sass:map';
-@use './../../abstracts/' as *;  // Import the breakpoints file
-
-// Focus ring properties
-$focus-ring-color: var(--sv-focus-ring-color);
-$focus-ring-width: var(--sv-focus-ring-width);
-$focus-ring-offset: var(--sv-focus-ring-offset);
-
-// Animation durations
-$animation-duration-short: var(--sv-motion-duration-short);
-$animation-duration-medium: var(--sv-motion-duration-medium);
-$animation-duration-long: var(--sv-motion-duration-long);
-$spinner-animation-duration: var(--sv-spinner-duration);
-
-// Interaction settings
-$touch-target-size: var(--sv-min-touch-target);
+@use './../../abstracts/variables/' as *;
+@use './../utils/mixins/state' as state;
+@use './../utils/mixins/layout' as layout;
+@use './../utils/mixins/typography' as typography;
+@use './../utils/mixins/accessibility' as a11y;
+@use './../utils/mixins/print' as print;
+@use './../utils/mixins/rtl' as rtl;
 
 /* ==========================================================================
-   2. MIXINS
+   2. VARIABLES & CONFIGURATION
    ========================================================================== */
+// These variables are used only within this file and not exported
 
-/* 2.1 State Mixins
-   ========================================================================== */
+// Base dimensions
+$control-height-sm: var(--sv-control-height-sm);
+$control-height-md: var(--sv-control-height-md);
+$control-height-lg: var(--sv-control-height-lg);
 
-// Focus state styling with consistent ring effect
-@mixin focus-state {
-  outline: none;
-  box-shadow: var(--sv-shadow-focus);
-}
-
-// Focus-visible state for keyboard focus
-@mixin focus-visible-state {
-  outline: $focus-ring-width solid $focus-ring-color;
-  outline-offset: $focus-ring-offset;
-}
-
-// Error state styling
-@mixin error-state {
-  border-color: var(--sv-error);
-  color: var(--sv-error);
-  
-  &:focus {
-    box-shadow: var(--sv-shadow-focus-error);
-  }
-}
-
-// Success state styling
-@mixin success-state {
-  border-color: var(--sv-success);
-  color: var(--sv-success);
-  
-  &:focus {
-    box-shadow: var(--sv-shadow-focus-success);
-  }
-}
-
-// Hover state styling
-@mixin hover-state {
-  &:not(:disabled):not(.disabled):not([readonly]):not(.readonly) {
-    background-color: var(--sv-bg-element-hover);
-    border-color: var(--sv-border-medium);
-  }
-}
-
-// Active state styling
-@mixin active-state {
-  &:not(:disabled):not(.disabled):not([readonly]):not(.readonly) {
-    background-color: var(--sv-bg-element-active);
-    border-color: var(--sv-border-dark);
-  }
-}
-
-// Disabled state styling
-@mixin disabled-state {
-  opacity: 0.65;
-  cursor: not-allowed;
-  background-color: var(--sv-bg-element);
-  border-color: var(--sv-border-light);
-  color: var(--sv-text-tertiary);
-  pointer-events: none;
-}
-
-// Readonly state styling
-@mixin readonly-state {
-  background-color: var(--sv-bg-element);
-  border-color: var(--sv-border-light);
-  cursor: default;
-  
-  &:focus {
-    box-shadow: none;
-  }
-}
-
-// Loading state styling
-@mixin loading-state {
-  position: relative;
-  color: transparent;
-  pointer-events: none;
-  
-  &::after {
-    content: "";
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 16px;
-    height: 16px;
-    margin: -8px 0 0 -8px;
-    border-radius: 50%;
-    border: 2px solid rgba(var(--sv-primary-500-rgb), 0.3);
-    border-top-color: var(--sv-primary);
-    animation: spin $spinner-animation-duration linear infinite;
-  }
-}
-
-// Selected/Checked state styling
-@mixin selected-state {
-  background-color: var(--sv-bg-element-active);
-  border-color: var(--sv-primary);
-  color: var(--sv-text-primary);
-}
-
-// Indeterminate state for checkboxes
-@mixin indeterminate-state {
-  background-color: var(--sv-bg-element-hover);
-  border-color: var(--sv-primary);
-  
-  &::after {
-    content: "";
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 8px;
-    height: 2px;
-    margin: -1px 0 0 -4px;
-    background-color: var(--sv-primary);
-  }
-}
-
-// Expanded state (for dropdowns, accordions, etc.)
-@mixin expanded-state {
-  &[aria-expanded="true"] {
-    background-color: var(--sv-bg-element-active);
-    border-color: var(--sv-border-dark);
-  }
-}
-
-// Interactive element base (buttons, links, etc.)
-@mixin interactive-element {
-  cursor: pointer;
-  user-select: none;
-  
-  &:hover {
-    @include hover-state;
-  }
-  
-  &:active {
-    @include active-state;
-  }
-}
-
-/* 2.2 Layout Mixins
-   ========================================================================== */
-
-// Flexbox container with options
-@mixin flex-container($direction: row, $justify: flex-start, $align: stretch, $wrap: nowrap) {
-  display: flex;
-  flex-direction: $direction;
-  justify-content: $justify;
-  align-items: $align;
-  flex-wrap: $wrap;
-}
-
-// Centered flex container (both horizontal and vertical)
-@mixin flex-center {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-// Grid container with options
-@mixin grid-container($columns: 1fr, $rows: auto, $gap: var(--sv-space-4)) {
-  display: grid;
-  grid-template-columns: $columns;
-  grid-template-rows: $rows;
-  gap: $gap;
-}
-
-/* 2.3 Visual Style Mixins
-   ========================================================================== */
-
-// Standard border styling
-@mixin standard-border($color: var(--sv-border-medium)) {
-  border: 1px solid $color;
-}
-
-// Add standard border radius
-@mixin border-radius($size: 'md') {
-  border-radius: var(--sv-radius-#{$size});
-}
-
-// Add standard shadow
-@mixin shadow($size: 'sm') {
-  box-shadow: var(--sv-shadow-#{$size});
-}
-
-// Truncate text with ellipsis
-@mixin text-truncate {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-// Support multiline ellipsis (for browsers that support -webkit-line-clamp)
-@mixin text-truncate-multiline($lines: 2) {
-  display: -webkit-box;
-  -webkit-line-clamp: $lines;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-
-/* 2.4 Typography Mixins
-   ========================================================================== */
-
-// Typography with options
-@mixin typography($size: 'base', $weight: 'normal', $line-height: 'normal') {
-  font-size: var(--sv-text-#{$size});
-  font-weight: var(--sv-font-#{$weight});
-  line-height: var(--sv-leading-#{$line-height});
-}
-
-// Font family setter
-@mixin font-family($type: 'main') {
-  font-family: var(--sv-font-family-#{$type});
-}
-
-/* 2.5 Spacing Mixins
-   ========================================================================== */
-
-// Padding with options
-@mixin padding($size: 'md') {
-  padding: var(--sv-padding-#{$size});
-}
-
-// Add padding to specific sides
-@mixin padding-x($size: 'md') {
-  padding-left: var(--sv-padding-#{$size});
-  padding-right: var(--sv-padding-#{$size});
-}
-
-@mixin padding-y($size: 'md') {
-  padding-top: var(--sv-padding-#{$size});
-  padding-bottom: var(--sv-padding-#{$size});
-}
-
-// Margin with options
-@mixin margin($size: 'md') {
-  margin: var(--sv-space-#{$size});
-}
-
-// Add margin to specific sides
-@mixin margin-x($size: 'md') {
-  margin-left: var(--sv-space-#{$size});
-  margin-right: var(--sv-space-#{$size});
-}
-
-@mixin margin-y($size: 'md') {
-  margin-top: var(--sv-space-#{$size});
-  margin-bottom: var(--sv-space-#{$size});
-}
-
-/* 2.6 Animation Mixins
-   ========================================================================== */
-
-// Basic transition with reduced-motion support
-@mixin transition($property: all, $duration: 'medium', $easing: 'standard') {
-  transition-property: $property;
-  transition-duration: var(--sv-motion-duration-#{$duration});
-  transition-timing-function: var(--sv-motion-ease-#{$easing});
-  
-  // Wrap the media query to allow declarations after it
-  & {
-    @media (prefers-reduced-motion: reduce) {
-      transition: none;
-    }
-  }
-}
-
-// Apply animation with options
-@mixin animate($animation, $duration: 'medium', $delay: 0s, $timing-function: 'standard', $iteration-count: 1) {
-  animation-name: $animation;
-  animation-duration: var(--sv-motion-duration-#{$duration});
-  animation-delay: $delay;
-  animation-timing-function: var(--sv-motion-ease-#{$timing-function});
-  animation-iteration-count: $iteration-count;
-  animation-fill-mode: both;
-  
-  // Wrap the media query to allow declarations after it
-  & {
-    @media (prefers-reduced-motion: reduce) {
-      animation: none;
-    }
-  }
-}
-
-/* 2.7 Accessibility Mixins
-   ========================================================================== */
-
-// Visually hide an element but keep it accessible to screen readers
-@mixin visually-hidden {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border: 0;
-}
-
-  // Content only visible to screen readers but becomes visible on focus
-  @mixin sr-only-focusable {
-    @include visually-hidden;
-    
-    &:focus,
-    &:active {
-      position: static;
-      width: auto;
-      height: auto;
-      overflow: visible;
-      clip: auto;
-      white-space: normal;
-    }
-  }
-
-// Ensure touch targets are large enough for mobile use
-@mixin touch-target {
-  & {
-    min-width: $touch-target-size;
-    min-height: $touch-target-size;
-  }
-}
-
-// Support for Windows high contrast mode
-@mixin high-contrast-mode {
-  // Wrap the media query to allow declarations after it
-  & {
-    @media (forced-colors: active) {
-      border: 1px solid transparent;
-      
-      &:focus {
-        outline: 2px solid transparent;
-        outline-offset: 4px;
-      }
-    }
-  }
-}
-
-// ARIA state mixins
-@mixin aria-state($state, $value) {
-  &[aria-#{$state}="#{$value}"] {
-    @content;
-  }
-}
-
+// Base paddings
+$control-padding-x-sm: var(--sv-control-padding-x-sm);
+$control-padding-x-md: var(--sv-control-padding-x-md);
+$control-padding-x-lg: var(--sv-control-padding-x-lg);
 
 /* ==========================================================================
    3. BASE CLASS DEFINITION
    ========================================================================== */
 
+/**
+ * The sv-ui-control-base class provides fundamental styling for all
+ * interactive UI controls. This class should never be used directly in HTML,
+ * but serves as the base class that other control classes will extend.
+ * 
+ * Extension points:
+ * 1. Box model (height, padding, margin)
+ * 2. Visual styling (colors, borders, shadows)
+ * 3. State handling (hover, focus, disabled)
+ * 4. Layout & positioning (display, flex properties)
+ * 5. Typography (font size, weight, line-height)
+ * 
+ * See styles/docs/base-control-extensions.md for detailed documentation.
+ */
 .sv-ui-control-base {
-  // Box model & sizing
+  // Box model
   box-sizing: border-box;
   margin: 0;
+  padding: calc(var(--sv-space-1) / 2) var(--sv-space-2);
+  height: $control-height-md;
   
   // Typography
-  @include font-family('main');
-  @include typography('base', 'normal', 'normal');
-  
-  // Colors
+  @include typography.typography-base('md', 'regular', 'normal');
   color: var(--sv-text-primary);
-  background-color: var(--sv-bg-surface);
+  text-decoration: none;
   
-  // Border defaults
-  @include standard-border;
-  @include border-radius('sm');
+  // Visual styling
+  background-color: var(--sv-bg-element);
+  border: 1px solid var(--sv-border-medium);
+  border-radius: var(--sv-radius-md);
   
-  // Animation defaults
-  @include transition(all, 'medium', 'standard');
+  // Other properties
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  vertical-align: middle;
+  position: relative;
+  user-select: none;
+  transition: 
+    color var(--sv-motion-duration-short) ease-in-out,
+    background-color var(--sv-motion-duration-short) ease-in-out,
+    border-color var(--sv-motion-duration-short) ease-in-out,
+    box-shadow var(--sv-motion-duration-short) ease-in-out,
+    filter var(--sv-motion-duration-short) ease-in-out;
   
-  // Basic interaction model with sensible defaults
+  // Accessibility
+  min-width: var(--sv-min-touch-target);
+  min-height: var(--sv-min-touch-target);
+  
+  // States
   &:focus {
-    @include focus-state;
+    @include state.focus-state;
   }
   
   &:focus-visible {
-    @include focus-visible-state;
+    @include state.focus-visible-state;
   }
   
   &:hover:not(:disabled):not(.disabled):not([readonly]):not(.readonly) {
-    @include hover-state;
+    @include state.hover-state;
   }
   
   &:active:not(:disabled):not(.disabled):not([readonly]):not(.readonly) {
-    @include active-state;
+    @include state.active-state;
   }
   
-  // Validation states
-  &.error,
-  &.has-error,
-  &[aria-invalid="true"] {
-    @include error-state;
-  }
-  
-  &.success,
-  &.has-success,
-  &[aria-invalid="false"] {
-    @include success-state;
-  }
-  
-  // Disabled state
   &:disabled,
   &.disabled {
-    @include disabled-state;
+    @include state.disabled-state;
   }
   
-  // Readonly state
   &[readonly],
   &.readonly {
-    @include readonly-state;
+    @include state.readonly-state;
   }
   
-  // Status states
-  &.loading,
-  &.is-loading,
-  &[aria-busy="true"] {
-    @include loading-state;
+  &.loading {
+    @include state.loading-state;
   }
   
-  // Selection states
-  &.selected,
-  &.checked,
-  &[aria-selected="true"],
-  &[aria-checked="true"] {
-    @include selected-state;
+  &[aria-expanded="true"],
+  &.expanded {
+    @include state.expanded-state;
   }
   
-  &.indeterminate,
-  &[aria-checked="mixed"] {
-    @include indeterminate-state;
+  // Reduced motion
+  @include a11y.reduced-motion;
+  
+  // High contrast mode
+  @include a11y.high-contrast-mode {
+    // Provide high contrast overrides
   }
   
-  // Expanded state
-  @include expanded-state;
-  
-  // High contrast mode support
-  @include high-contrast-mode;
-  
-  // Placeholder styling for input controls
-  &::placeholder {
-    color: var(--sv-text-tertiary);
-    opacity: 1;
-  }
+  // Print styles
+  @include print.print-control-base;
 }
 
 /* ==========================================================================
    4. SIZE VARIATIONS
    ========================================================================== */
 
-// Size variations classes
-.sv-ui-size-xs {
-  @include padding-y('1');
-  @include padding-x('2');
-  @include typography('xs');
-  @include border-radius('xs');
-  height: calc($touch-target-size * 0.6);
-}
-
-.sv-ui-size-sm {
-  @include padding-y('1');
-  @include padding-x('2');
-  @include typography('sm');
-  @include border-radius('sm');
-  height: calc($touch-target-size * 0.75);
-}
-
-.sv-ui-size-md {
-  @include padding-y('2');
-  @include padding-x('3');
-  @include typography('base');
-  @include border-radius('md');
-  height: $touch-target-size;
-}
-
-.sv-ui-size-lg {
-  @include padding-y('3');
-  @include padding-x('4');
-  @include typography('lg');
-  @include border-radius('lg');
-  height: calc($touch-target-size * 1.25);
-}
-
-.sv-ui-size-xl {
-  @include padding-y('4');
-  @include padding-x('5');
-  @include typography('xl');
-  @include border-radius('xl');
-  height: calc($touch-target-size * 1.5);
-}
-
-/* ==========================================================================
-   5. ANIMATION KEYFRAMES
-   ========================================================================== */
-
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-
-@keyframes pulse {
-  0% { opacity: 1; }
-  50% { opacity: 0.5; }
-  100% { opacity: 1; }
-}
-
-@keyframes fade-in {
-  0% { opacity: 0; }
-  100% { opacity: 1; }
-}
-
-@keyframes fade-out {
-  0% { opacity: 1; }
-  100% { opacity: 0; }
-}
-
-@keyframes slide-in-up {
-  0% {
-    transform: translateY(10px);
-    opacity: 0;
-  }
-  100% {
-    transform: translateY(0);
-    opacity: 1;
-  }
-}
-
-@keyframes slide-in-down {
-  0% {
-    transform: translateY(-10px);
-    opacity: 0;
-  }
-  100% {
-    transform: translateY(0);
-    opacity: 1;
-  }
-}
-
-@keyframes slide-in-left {
-  0% {
-    transform: translateX(-10px);
-    opacity: 0;
-  }
-  100% {
-    transform: translateX(0);
-    opacity: 1;
-  }
-}
-
-@keyframes slide-in-right {
-  0% {
-    transform: translateX(10px);
-    opacity: 0;
-  }
-  100% {
-    transform: translateX(0);
-    opacity: 1;
-  }
-}
-
-@keyframes shake {
-  0%, 100% { transform: translateX(0); }
-  10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
-  20%, 40%, 60%, 80% { transform: translateX(5px); }
-}
-
-@keyframes bounce {
-  0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
-  40% { transform: translateY(-10px); }
-  60% { transform: translateY(-5px); }
-}
-
-@keyframes scale-in {
-  0% { transform: scale(0.9); opacity: 0; }
-  100% { transform: scale(1); opacity: 1; }
-}
-
-@keyframes scale-out {
-  0% { transform: scale(1); opacity: 1; }
-  100% { transform: scale(0.9); opacity: 0; }
-}
-
-/* ==========================================================================
-   6. ANIMATION UTILITIES
-   ========================================================================== */
-
-// Animation utility classes
-.sv-animate-fade-in { @include animate(fade-in); }
-.sv-animate-fade-out { @include animate(fade-out); }
-.sv-animate-slide-in-up { @include animate(slide-in-up); }
-.sv-animate-slide-in-down { @include animate(slide-in-down); }
-.sv-animate-slide-in-left { @include animate(slide-in-left); }
-.sv-animate-slide-in-right { @include animate(slide-in-right); }
-.sv-animate-spin { @include animate(spin, 'medium', 0s, 'linear', infinite); }
-.sv-animate-pulse { @include animate(pulse, 'medium', 0s, 'ease', infinite); }
-.sv-animate-shake { @include animate(shake); }
-.sv-animate-bounce { @include animate(bounce); }
-.sv-animate-scale-in { @include animate(scale-in); }
-.sv-animate-scale-out { @include animate(scale-out); }
-
-/* ==========================================================================
-   7. ACCESSIBILITY UTILITIES
-   ========================================================================== */
-
-// Visually hide an element but keep it accessible to screen readers
-.sv-ui-visually-hidden {
-  @include visually-hidden;
-}
-
-// Ensure touch targets are sufficiently sized for mobile
-.sv-ui-touch-target {
-  @include touch-target;
-}
-
-/* ==========================================================================
-   8. PRINT STYLES
-   ========================================================================== */
-
-@media print {
-  .sv-ui-control-base {
-    border-color: #000 !important;
-    color: #000 !important;
-    background-color: #fff !important;
-    box-shadow: none !important;
-    
-    &:not(.sv-ui-no-print-adjust) {
-      border-width: 0.5pt !important;
-    }
+/**
+ * Size variations for controls
+ */
+.sv-ui-control-base {
+  &.sv-size-sm {
+    height: $control-height-sm;
+    padding-left: $control-padding-x-sm;
+    padding-right: $control-padding-x-sm;
+    font-size: var(--sv-font-size-sm);
   }
   
-  // Hide elements not needed in print
-  .sv-ui-no-print {
-    display: none !important;
+  &.sv-size-md {
+    height: $control-height-md;
+    padding-left: $control-padding-x-md;
+    padding-right: $control-padding-x-md;
+    font-size: var(--sv-font-size-md);
   }
   
-  // Modify transitions and animations for print
-  * {
-    transition: none !important;
-    animation: none !important;
-  }
-}
-
-/* ==========================================================================
-   9. RTL SUPPORT
-   ========================================================================== */
-
-[dir="rtl"] {
-  .sv-ui-control-base {
-    // Handle directional padding if needed
-    &.has-directional-padding {
-      padding-right: var(--sv-padding-start, var(--sv-padding-3));
-      padding-left: var(--sv-padding-end, var(--sv-padding-3));
-    }
-  }
-}
-
-/* ==========================================================================
-   10. HIGH CONTRAST MODE
-   ========================================================================== */
-
-@media (forced-colors: active) {
-  .sv-ui-control-base {
-    border-color: CanvasText;
-    color: CanvasText;
-    background-color: Canvas;
-    forced-color-adjust: none;
-    
-    &:focus,
-    &:focus-visible {
-      outline: 2px solid Highlight;
-      outline-offset: 2px;
-    }
-    
-    &:disabled,
-    &.disabled {
-      opacity: 1;
-      color: GrayText;
-      border-color: GrayText;
-      background-color: Canvas;
-    }
-    
-    &.error,
-    &.has-error,
-    &[aria-invalid="true"] {
-      border-color: Mark;
-      color: Mark;
-    }
+  &.sv-size-lg {
+    height: $control-height-lg;
+    padding-left: $control-padding-x-lg;
+    padding-right: $control-padding-x-lg;
+    font-size: var(--sv-font-size-lg);
   }
 }

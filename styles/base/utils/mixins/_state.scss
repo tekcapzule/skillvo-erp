@@ -1,0 +1,149 @@
+/**
+ * State Mixins
+ * Version: 1.0.0
+ * Last Updated: 2024-06-28
+ * 
+ * This file contains mixins for handling interactive states for UI controls
+ * in the SkillVo design system.
+ */
+
+// Variables
+$focus-ring-color: var(--sv-focus-ring-color);
+$focus-ring-width: var(--sv-focus-ring-width);
+$focus-ring-offset: var(--sv-focus-ring-offset);
+
+/* Focus state styling with consistent ring effect */
+@mixin focus-state {
+  outline: none;
+  box-shadow: var(--sv-shadow-focus);
+}
+
+/* Focus-visible state for keyboard focus */
+@mixin focus-visible-state {
+  outline: $focus-ring-width solid $focus-ring-color;
+  outline-offset: $focus-ring-offset;
+}
+
+/* Error state styling */
+@mixin error-state {
+  border-color: var(--sv-error);
+  color: var(--sv-error);
+  
+  &:focus {
+    box-shadow: var(--sv-shadow-focus-error);
+  }
+}
+
+/* Success state styling */
+@mixin success-state {
+  border-color: var(--sv-success);
+  color: var(--sv-success);
+  
+  &:focus {
+    box-shadow: var(--sv-shadow-focus-success);
+  }
+}
+
+/* Hover state styling */
+@mixin hover-state {
+  &:not(:disabled):not(.disabled):not([readonly]):not(.readonly) {
+    background-color: var(--sv-bg-element-hover);
+    border-color: var(--sv-border-medium);
+  }
+}
+
+/* Active state styling */
+@mixin active-state {
+  &:not(:disabled):not(.disabled):not([readonly]):not(.readonly) {
+    background-color: var(--sv-bg-element-active);
+    border-color: var(--sv-border-dark);
+  }
+}
+
+/* Disabled state styling */
+@mixin disabled-state {
+  opacity: 0.65;
+  cursor: not-allowed;
+  background-color: var(--sv-bg-element);
+  border-color: var(--sv-border-light);
+  color: var(--sv-text-tertiary);
+  pointer-events: none;
+}
+
+/* Readonly state styling */
+@mixin readonly-state {
+  background-color: var(--sv-bg-element);
+  border-color: var(--sv-border-light);
+  cursor: default;
+  
+  &:focus {
+    box-shadow: none;
+  }
+}
+
+/* Loading state styling */
+@mixin loading-state {
+  position: relative;
+  color: transparent;
+  pointer-events: none;
+  
+  &::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 16px;
+    height: 16px;
+    margin: -8px 0 0 -8px;
+    border-radius: 50%;
+    border: 2px solid rgba(var(--sv-primary-500-rgb), 0.3);
+    border-top-color: var(--sv-primary);
+    animation: spin var(--sv-spinner-duration) linear infinite;
+  }
+}
+
+/* Selected/Checked state styling */
+@mixin selected-state {
+  background-color: var(--sv-bg-element-active);
+  border-color: var(--sv-primary);
+  color: var(--sv-text-primary);
+}
+
+/* Indeterminate state for checkboxes */
+@mixin indeterminate-state {
+  background-color: var(--sv-bg-element-hover);
+  border-color: var(--sv-primary);
+  
+  &::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 8px;
+    height: 2px;
+    margin: -1px 0 0 -4px;
+    background-color: var(--sv-primary);
+  }
+}
+
+/* Expanded state (for dropdowns, accordions, etc.) */
+@mixin expanded-state {
+  &[aria-expanded="true"] {
+    background-color: var(--sv-bg-element-active);
+    border-color: var(--sv-border-dark);
+  }
+}
+
+/* Interactive element base (buttons, links, etc.) */
+@mixin interactive-element {
+  cursor: pointer;
+  user-select: none;
+  
+  &:hover {
+    @include hover-state;
+  }
+  
+  &:active {
+    @include active-state;
+  }
+} 

@@ -1,0 +1,97 @@
+/**
+ * Typography Mixins
+ * Version: 1.0.0
+ * Last Updated: 2024-06-28
+ * 
+ * This file contains mixins for handling typography in the SkillVo design system.
+ */
+
+/* Base typography settings with size options */
+@mixin typography-base($size: 'md', $weight: 'regular', $line-height: 'normal') {
+  font-family: var(--sv-font-family);
+  font-size: var(--sv-font-size-#{$size});
+  font-weight: var(--sv-font-weight-#{$weight});
+  line-height: var(--sv-line-height-#{$line-height});
+}
+
+/* Heading styles */
+@mixin heading($level: 1) {
+  @if $level == 1 {
+    font-size: var(--sv-font-size-3xl);
+    font-weight: var(--sv-font-weight-bold);
+    line-height: var(--sv-line-height-tight);
+  } @else if $level == 2 {
+    font-size: var(--sv-font-size-2xl);
+    font-weight: var(--sv-font-weight-bold);
+    line-height: var(--sv-line-height-tight);
+  } @else if $level == 3 {
+    font-size: var(--sv-font-size-xl);
+    font-weight: var(--sv-font-weight-bold);
+    line-height: var(--sv-line-height-snug);
+  } @else if $level == 4 {
+    font-size: var(--sv-font-size-lg);
+    font-weight: var(--sv-font-weight-semi-bold);
+    line-height: var(--sv-line-height-snug);
+  } @else if $level == 5 {
+    font-size: var(--sv-font-size-md);
+    font-weight: var(--sv-font-weight-semi-bold);
+    line-height: var(--sv-line-height-normal);
+  } @else if $level == 6 {
+    font-size: var(--sv-font-size-sm);
+    font-weight: var(--sv-font-weight-semi-bold);
+    line-height: var(--sv-line-height-normal);
+  }
+}
+
+/* Body text styles */
+@mixin body-text($size: 'md') {
+  font-family: var(--sv-font-family);
+  font-size: var(--sv-font-size-#{$size});
+  font-weight: var(--sv-font-weight-regular);
+  line-height: var(--sv-line-height-normal);
+}
+
+/* Caption text style */
+@mixin caption-text {
+  font-family: var(--sv-font-family);
+  font-size: var(--sv-font-size-xs);
+  font-weight: var(--sv-font-weight-regular);
+  line-height: var(--sv-line-height-tight);
+  color: var(--sv-text-tertiary);
+}
+
+/* Label text style */
+@mixin label-text {
+  font-family: var(--sv-font-family);
+  font-size: var(--sv-font-size-sm);
+  font-weight: var(--sv-font-weight-medium);
+  line-height: var(--sv-line-height-snug);
+}
+
+/* Code text style */
+@mixin code-text {
+  font-family: var(--sv-font-family-mono);
+  font-size: var(--sv-font-size-sm);
+  line-height: var(--sv-line-height-normal);
+}
+
+/* Truncate text with ellipsis */
+@mixin text-truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Multi-line ellipsis */
+@mixin text-truncate-multiline($lines: 2) {
+  display: -webkit-box;
+  -webkit-line-clamp: $lines;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Font smoothing */
+@mixin font-smoothing {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+} 

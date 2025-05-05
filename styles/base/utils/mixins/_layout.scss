@@ -1,0 +1,89 @@
+/**
+ * Layout Mixins
+ * Version: 1.0.0
+ * Last Updated: 2024-06-28
+ * 
+ * This file contains mixins for handling layout, positioning, flex, and grid layouts
+ * in the SkillVo design system.
+ */
+
+/* Flexbox container with options */
+@mixin flex-container($direction: row, $justify: flex-start, $align: stretch, $wrap: nowrap) {
+  display: flex;
+  flex-direction: $direction;
+  justify-content: $justify;
+  align-items: $align;
+  flex-wrap: $wrap;
+}
+
+/* Centered flex container (both horizontal and vertical) */
+@mixin flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Vertical flex container with common settings */
+@mixin flex-column($justify: flex-start, $align: stretch) {
+  display: flex;
+  flex-direction: column;
+  justify-content: $justify;
+  align-items: $align;
+}
+
+/* Grid container with options */
+@mixin grid-container($columns: 1fr, $rows: auto, $gap: var(--sv-space-4)) {
+  display: grid;
+  grid-template-columns: $columns;
+  grid-template-rows: $rows;
+  gap: $gap;
+}
+
+/* Responsive grid columns */
+@mixin responsive-grid($min-width: 250px, $gap: var(--sv-space-4)) {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax($min-width, 1fr));
+  gap: $gap;
+}
+
+/* Absolute positioning with options */
+@mixin absolute-position($top: null, $right: null, $bottom: null, $left: null) {
+  position: absolute;
+  top: $top;
+  right: $right;
+  bottom: $bottom;
+  left: $left;
+}
+
+/* Center element absolutely */
+@mixin absolute-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* Fixed positioning with options */
+@mixin fixed-position($top: null, $right: null, $bottom: null, $left: null) {
+  position: fixed;
+  top: $top;
+  right: $right;
+  bottom: $bottom;
+  left: $left;
+}
+
+/* Sticky positioning with options */
+@mixin sticky-position($top: 0) {
+  position: sticky;
+  top: $top;
+}
+
+/* Container constraints */
+@mixin container($max-width: var(--sv-container-max-width), $padding: var(--sv-container-padding)) {
+  width: 100%;
+  max-width: $max-width;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: $padding;
+  padding-right: $padding;
+} 

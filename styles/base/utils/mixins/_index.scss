@@ -1,0 +1,15 @@
+/**
+ * Mixins Index
+ * Version: 1.0.0
+ * Last Updated: 2024-06-28
+ * 
+ * This file forwards all mixins from the mixins directory.
+ */
+
+@forward 'layout';
+@forward 'state';
+@forward 'responsive';
+@forward 'typography';
+@forward 'accessibility';
+@forward 'print';
+@forward 'rtl'; 

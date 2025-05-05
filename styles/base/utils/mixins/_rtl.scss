@@ -1,0 +1,159 @@
+/**
+ * RTL Support Utilities
+ * Version: 1.0.0
+ * Last Updated: 2024-06-28
+ * 
+ * This file contains mixins and utilities for supporting right-to-left (RTL) languages
+ * in the SkillVo design system.
+ */
+
+/* Flip padding for RTL contexts */
+@mixin rtl-padding($left, $right) {
+  padding-left: $left;
+  padding-right: $right;
+  
+  [dir="rtl"] & {
+    padding-left: $right;
+    padding-right: $left;
+  }
+}
+
+/* Flip margin for RTL contexts */
+@mixin rtl-margin($left, $right) {
+  margin-left: $left;
+  margin-right: $right;
+  
+  [dir="rtl"] & {
+    margin-left: $right;
+    margin-right: $left;
+  }
+}
+
+/* Flip position for RTL contexts */
+@mixin rtl-position($left, $right) {
+  left: $left;
+  right: $right;
+  
+  [dir="rtl"] & {
+    left: $right;
+    right: $left;
+  }
+}
+
+/* Flip transform origins for RTL contexts */
+@mixin rtl-transform-origin($x, $y) {
+  transform-origin: $x $y;
+  
+  [dir="rtl"] & {
+    transform-origin: if($x == left, right, if($x == right, left, $x)) $y;
+  }
+}
+
+/* Flip borders for RTL contexts */
+@mixin rtl-border($left-width, $right-width, $style, $color) {
+  border-left: $left-width $style $color;
+  border-right: $right-width $style $color;
+  
+  [dir="rtl"] & {
+    border-left: $right-width $style $color;
+    border-right: $left-width $style $color;
+  }
+}
+
+/* Flip border radius for RTL contexts */
+@mixin rtl-border-radius($tl, $tr, $br, $bl) {
+  border-radius: $tl $tr $br $bl;
+  
+  [dir="rtl"] & {
+    border-radius: $tr $tl $bl $br;
+  }
+}
+
+/* Flip text alignment for RTL contexts */
+@mixin rtl-text-align($align) {
+  @if $align == left or $align == right {
+    text-align: $align;
+    
+    [dir="rtl"] & {
+      text-align: if($align == left, right, left);
+    }
+  } @else {
+    text-align: $align;
+  }
+}
+
+/* Flip flexbox direction for RTL contexts */
+@mixin rtl-flex-direction($direction) {
+  @if $direction == row or $direction == row-reverse {
+    flex-direction: $direction;
+    
+    [dir="rtl"] & {
+      flex-direction: if($direction == row, row-reverse, row);
+    }
+  } @else {
+    flex-direction: $direction;
+  }
+}
+
+/* Flip background position for RTL contexts */
+@mixin rtl-background-position($x, $y) {
+  background-position: $x $y;
+  
+  [dir="rtl"] & {
+    background-position: 100% - $x $y;
+  }
+}
+
+/* Handle RTL for absolute positioned elements */
+@mixin rtl-absolute($top: auto, $right: auto, $bottom: auto, $left: auto) {
+  position: absolute;
+  top: $top;
+  right: $right;
+  bottom: $bottom;
+  left: $left;
+  
+  [dir="rtl"] & {
+    right: $left;
+    left: $right;
+  }
+}
+
+/* Apply styles only in RTL context */
+@mixin rtl-only {
+  [dir="rtl"] & {
+    @content;
+  }
+}
+
+/* Apply styles only in LTR context */
+@mixin ltr-only {
+  [dir="ltr"] & {
+    @content;
+  }
+}
+
+/* Global RTL classes */
+[dir="rtl"] {
+  .sv-ui-control-base {
+    &.has-directional-padding {
+      padding-right: var(--sv-padding-start, var(--sv-padding-3));
+      padding-left: var(--sv-padding-end, var(--sv-padding-3));
+    }
+  }
+  
+  .sv-ui-mirror-rtl {
+    transform: scaleX(-1);
+  }
+  
+  .sv-ui-swap-rtl {
+    &.sv-ui-right {
+      float: left;
+      text-align: left;
+    }
+    
+    &.sv-ui-left {
+      float: right;
+      text-align: right;
+    }
+  }
+} 

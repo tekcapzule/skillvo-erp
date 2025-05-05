@@ -1,0 +1,116 @@
+/**
+ * Print Styles
+ * Version: 1.0.0
+ * Last Updated: 2024-06-28
+ * 
+ * This file contains mixins and utilities for print styling
+ * in the SkillVo design system.
+ */
+
+/* Basic print settings for UI controls */
+@mixin print-control-base {
+  @media print {
+    border-color: #000 !important;
+    color: #000 !important;
+    background-color: #fff !important;
+    box-shadow: none !important;
+    
+    &:not(.sv-ui-no-print-adjust) {
+      border-width: 0.5pt !important;
+    }
+  }
+}
+
+/* Hide elements in print */
+@mixin print-hidden {
+  @media print {
+    display: none !important;
+  }
+}
+
+/* Show elements only in print */
+@mixin print-only {
+  display: none;
+  
+  @media print {
+    display: block !important;
+  }
+  
+  &.sv-print-inline {
+    @media print {
+      display: inline !important;
+    }
+  }
+  
+  &.sv-print-inline-block {
+    @media print {
+      display: inline-block !important;
+    }
+  }
+}
+
+/* Print page break controls */
+@mixin print-page-break-before {
+  @media print {
+    page-break-before: always;
+    break-before: page;
+  }
+}
+
+@mixin print-page-break-after {
+  @media print {
+    page-break-after: always;
+    break-after: page;
+  }
+}
+
+@mixin print-no-break {
+  @media print {
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+}
+
+/* Utility print classes */
+@media print {
+  .sv-ui-control-base {
+    @include print-control-base;
+  }
+  
+  .sv-ui-no-print {
+    display: none !important;
+  }
+  
+  .sv-ui-print-only {
+    display: block !important;
+  }
+  
+  .sv-ui-print-inline {
+    display: inline !important;
+  }
+  
+  .sv-ui-print-inline-block {
+    display: inline-block !important;
+  }
+  
+  .sv-ui-page-break-before {
+    page-break-before: always;
+    break-before: page;
+  }
+  
+  .sv-ui-page-break-after {
+    page-break-after: always;
+    break-after: page;
+  }
+  
+  .sv-ui-no-break {
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+  
+  /* Modify transitions and animations for print */
+  * {
+    transition: none !important;
+    animation: none !important;
+  }
+} 

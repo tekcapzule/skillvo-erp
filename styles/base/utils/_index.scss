@@ -1,0 +1,16 @@
+/**
+ * Base Utils Index
+ * Version: 1.2.0
+ * Last Updated: 2024-06-28
+ * 
+ * This file forwards all utility mixins and functions from the utils directory.
+ * Files are organized into two main categories:
+ * - css/: For CSS utility classes and variables
+ * - mixins/: For SCSS mixins and functions
+ */
+
+// Forward all CSS utilities
+@forward 'css';
+
+// Forward all mixins
+@forward 'mixins'; 
