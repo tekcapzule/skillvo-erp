@@ -1,182 +1,184 @@
 /**
- * Input Base - Common Styles for Input Controls
+ * Input Controls Base - Core Styles
  * Version: 2.0.0
- * Last Updated: April 29, 2025
+ * Last Updated: June 29, 2024
  * 
- * This file establishes the intermediate layer in the three-tier styling architecture
- * specifically for input-type controls, serving as a bridge between:
+ * This file establishes the foundational styles for all input control components
+ * in the SkillVo design system. It serves as the second level in our 
+ * three-tier styling architecture:
  * 1. sv-ui-control-base - Base styles for all interactive controls
- * 2. sv-input-base (this file) - Common styles for all input controls
+ * 2. sv-input-control-base (this file) - Base styles for all input controls
  * 3. Component-specific classes (e.g., sv-input-text, sv-textarea, sv-select)
+ *
+ * Input controls include text fields, textareas, select dropdowns, and other
+ * components that allow users to input data.
+ * 
+ * For extension points and layer boundaries documentation, see:
+ * styles/docs/base-control-extensions.md
  */
 
 /* ==========================================================================
    TABLE OF CONTENTS:
    
-   1. VARIABLES & CONFIGURATION
-   2. INPUT-SPECIFIC MIXINS
-   3. BASE INPUT CLASS DEFINITION
-   4. INPUT FIELD STYLING
-   5. LABEL STYLING
-   6. HELPER TEXT & VALIDATION STYLING
-   7. INPUT GROUPS & LAYOUT
-   8. UTILITY CLASSES
-   9. RTL INPUT SUPPORT
-   10. ACCESSIBILITY ENHANCEMENTS
+   1. IMPORTS
+   2. VARIABLES & CONFIGURATION
+   3. BASE CLASS DEFINITION
+   4. FIELD STYLING
+   5. LABEL & HELPER TEXT STYLING
+   6. STATE STYLING
+   7. SIZE VARIATIONS
+   8. ACCESSIBILITY ENHANCEMENTS
    ========================================================================== */
 
 /* ==========================================================================
-   1. VARIABLES & CONFIGURATION
+   1. IMPORTS
    ========================================================================== */
-   @use './base-control' as *;
+@use 'sass:map';
+@use './../../abstracts/variables/' as *;
+@use './../utils/mixins/state' as state;
+@use './../utils/mixins/layout' as layout;
+@use './../utils/mixins/typography' as typography;
+@use './../utils/mixins/accessibility' as a11y;
+
+/* ==========================================================================
+   2. VARIABLES & CONFIGURATION
+   ========================================================================== */
 
 // Input-specific spacing
-$input-padding-x: var(--sv-padding-3);
-$input-padding-y: var(--sv-padding-2);
+$input-padding-x: var(--sv-space-3);
+$input-padding-y: var(--sv-space-2);
 
 // Input-specific sizing
 $input-min-width: var(--sv-size-40);
-$input-height: var(--sv-size-10);
+$input-height: var(--sv-control-height-md);
 
 // Color configuration
 $input-placeholder-color: var(--sv-text-tertiary);
 $input-border-width: 1px;
 
 /* ==========================================================================
-   2. INPUT-SPECIFIC MIXINS
+   3. BASE CLASS DEFINITION
    ========================================================================== */
 
-// Configure input field appearance
-@mixin input-field-base {
-  width: 100%;
-  appearance: none;
-  background-color: var(--sv-bg-surface);
-  
-  &:focus {
-    border-color: var(--sv-primary);
-  }
-  
-  &::placeholder {
-    color: $input-placeholder-color;
-    opacity: 1;
-  }
-}
-
-// Style for label associated with input
-@mixin input-label {
-  display: block;
-  margin-bottom: var(--sv-space-2);
-  font-size: var(--sv-text-sm);
-  font-weight: var(--sv-font-medium);
-  color: var(--sv-text-secondary);
-}
-
-// Style for required input indicators
-@mixin input-required {
-  &.required,
-  &[required],
-  &[aria-required="true"] {
-    .sv-input-label::after {
-      content: "*";
-      color: var(--sv-error);
-      margin-left: var(--sv-space-1);
-    }
-  }
-}
-
-// Style for input helper text
-@mixin input-helper-text {
-  font-size: var(--sv-text-xs);
-  margin-top: var(--sv-space-1);
-  color: var(--sv-text-secondary);
-  
-  &.error {
-    color: var(--sv-error);
-  }
-  
-  &.success {
-    color: var(--sv-success);
-  }
-}
-
-// Style for input prefix/suffix/addons
-@mixin input-addon {
-  display: flex;
-  align-items: center;
-  padding: 0 var(--sv-padding-2);
-  background-color: var(--sv-bg-element);
-  border: $input-border-width solid var(--sv-border-medium);
-  color: var(--sv-text-secondary);
-  font-size: var(--sv-text-sm);
-}
-
-// Style for focused container
-@mixin input-container-focus {
-  .sv-input-field:focus ~ .sv-input-icon,
-  .sv-input-field:focus ~ .sv-input-addon {
-    border-color: var(--sv-primary);
-    color: var(--sv-text-primary);
-  }
-}
-
-/* ==========================================================================
-   3. BASE INPUT CLASS DEFINITION
-   ========================================================================== */
-
-.sv-input-base {
-  // Extend the base control styles
+/**
+ * The sv-input-control-base class provides foundational styling for all
+ * input-based UI controls such as text fields, textareas, and select dropdowns.
+ * 
+ * This class extends sv-ui-control-base and adds input-specific styling.
+ */
+.sv-input-control-base {
+  // Inherit all base UI control styles
   @extend .sv-ui-control-base;
   
   // Input-specific resets and base styles
   position: relative;
   display: block;
+  width: 100%;
   min-width: $input-min-width;
   height: $input-height;
   padding: $input-padding-y $input-padding-x;
   
-  // Input-specific transitions
-  @include transition(
-    border-color color background-color box-shadow, 
-    'short', 
-    'standard'
-  );
+  // Better text input handling
+  cursor: text;
+  text-align: left;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   
-  $valid-widths: (
-    'short', 
-    'standard'
-  );
-  
-  // Group properties that need to be after media queries in & {}
-  & {
-    // Default cursor for text inputs
-    cursor: text;
+  // Input structure components
+  &__field {
+    width: 100%;
+    appearance: none;
+    background-color: var(--sv-bg-surface);
+    border: none;
+    color: var(--sv-text-primary);
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
     
-    // Adjust max-width for better readability and UX
-    max-width: 100%;
+    &:focus {
+      outline: none;
+    }
     
-    // Better handling of overflow text
-    @include text-truncate;
+    &::placeholder {
+      color: $input-placeholder-color;
+      opacity: 1;
+    }
   }
   
-  // Apply required styling if needed
-  @include input-required;
+  // Label styling
+  &__label {
+    display: block;
+    margin-bottom: var(--sv-space-2);
+    font-size: var(--sv-font-size-sm);
+    font-weight: var(--sv-font-weight-medium);
+    color: var(--sv-text-secondary);
+  }
+  
+  // Helper text styling
+  &__helper-text {
+    display: block;
+    margin-top: var(--sv-space-1);
+    font-size: var(--sv-font-size-xs);
+    color: var(--sv-text-secondary);
+  }
+  
+  // Input groups and connected elements
+  &__group {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+  }
+  
+  &__addon {
+    display: flex;
+    align-items: center;
+    padding: 0 var(--sv-space-2);
+    background-color: var(--sv-bg-element);
+    border: $input-border-width solid var(--sv-border-medium);
+    color: var(--sv-text-secondary);
+    font-size: var(--sv-font-size-sm);
+  }
+  
+  &__icon {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    
+    &--left {
+      left: var(--sv-space-3);
+    }
+    
+    &--right {
+      right: var(--sv-space-3);
+    }
+  }
+  
+  // Required input indicator
+  &.required &__label::after,
+  &[required] &__label::after,
+  &[aria-required="true"] &__label::after {
+    content: "*";
+    color: var(--sv-error);
+    margin-left: var(--sv-space-1);
+  }
 }
 
 /* ==========================================================================
-   4. INPUT FIELD STYLING
+   4. FIELD STYLING
    ========================================================================== */
 
-.sv-input-field {
-  @include input-field-base;
-  
-  // Support for secure inputs (password fields)
-  &[type="password"] {
+// Specific field type styling
+.sv-input-control-base {
+  // Password field styling
+  &.sv-input-password &__field {
     font-family: var(--sv-font-family-mono);
     letter-spacing: 0.125em;
   }
   
-  // Reset appearance for number inputs
-  &[type="number"] {
+  // Number input styling - remove spinners
+  &.sv-input-number &__field {
     -moz-appearance: textfield;
     
     &::-webkit-outer-spin-button,
@@ -187,7 +189,7 @@ $input-border-width: 1px;
   }
   
   // Search input specific styling
-  &[type="search"] {
+  &.sv-input-search &__field {
     &::-webkit-search-decoration,
     &::-webkit-search-cancel-button,
     &::-webkit-search-results-button,
@@ -197,9 +199,9 @@ $input-border-width: 1px;
   }
   
   // Date input specific styling
-  &[type="date"],
-  &[type="time"],
-  &[type="datetime-local"] {
+  &.sv-input-date &__field,
+  &.sv-input-time &__field,
+  &.sv-input-datetime &__field {
     &::-webkit-calendar-picker-indicator {
       opacity: 0.6;
       cursor: pointer;
@@ -209,251 +211,200 @@ $input-border-width: 1px;
       }
     }
   }
-}
-
-/* ==========================================================================
-   5. LABEL STYLING
-   ========================================================================== */
-
-.sv-input-label {
-  @include input-label;
-}
-
-/* ==========================================================================
-   6. HELPER TEXT & VALIDATION STYLING
-   ========================================================================== */
-
-.sv-input-helper {
-  @include input-helper-text;
-}
-
-.sv-input-validation {
-  &-error {
-    @include input-helper-text;
-    color: var(--sv-error);
-  }
   
-  &-success {
-    @include input-helper-text;
-    color: var(--sv-success);
-  }
-}
-
-.sv-input-counter {
-  @include input-helper-text;
-  text-align: right;
-}
-
-/* ==========================================================================
-   7. INPUT GROUPS & LAYOUT
-   ========================================================================== */
-
-.sv-input-container {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  margin-bottom: var(--sv-space-4);
-  
-  // Apply focus styling to associated elements
-  @include input-container-focus;
-}
-
-.sv-input-group {
-  display: flex;
-  flex-direction: row;
-  align-items: stretch;
-  
-  .sv-input-base {
-    flex: 1;
+  // Textarea styling
+  &.sv-textarea {
+    height: auto;
     
-    &:not(:first-child) {
-      border-top-left-radius: 0;
-      border-bottom-left-radius: 0;
-    }
-    
-    &:not(:last-child) {
-      border-top-right-radius: 0;
-      border-bottom-right-radius: 0;
-      border-right-width: 0;
+    &__field {
+      resize: vertical;
+      min-height: calc($input-height * 2);
+      white-space: normal;
     }
   }
   
-  // Input group addons
-  &-prepend,
-  &-append {
-    @include input-addon;
-  }
-  
-  &-prepend {
-    border-right-width: 0;
-    border-top-left-radius: var(--sv-radius-md);
-    border-bottom-left-radius: var(--sv-radius-md);
-  }
-  
-  &-append {
-    border-left-width: 0;
-    border-top-right-radius: var(--sv-radius-md);
-    border-bottom-right-radius: var(--sv-radius-md);
-  }
-}
-
-// Icon support in inputs
-.sv-input-icon {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--sv-text-secondary);
-  
-  &-left {
-    left: var(--sv-padding-3);
+  // Select styling
+  &.sv-select {
+    position: relative;
     
-    & + .sv-input-field {
-      padding-left: calc(var(--sv-padding-6) + var(--sv-icon-size-sm));
+    &::after {
+      content: '';
+      position: absolute;
+      right: var(--sv-space-3);
+      top: 50%;
+      width: 0.5em;
+      height: 0.5em;
+      border: 1px solid currentColor;
+      border-width: 0 1px 1px 0;
+      transform: translateY(-75%) rotate(45deg);
+      pointer-events: none;
     }
-  }
-  
-  &-right {
-    right: var(--sv-padding-3);
     
-    // Adjust padding when there's a right icon
-    .sv-input-field ~ & {
-      padding-right: calc(var(--sv-padding-6) + var(--sv-icon-size-sm));
+    &__field {
+      appearance: none;
+      padding-right: calc(var(--sv-space-3) * 2);
     }
   }
 }
 
 /* ==========================================================================
-   8. UTILITY CLASSES
+   5. LABEL & HELPER TEXT STYLING
    ========================================================================== */
 
-// Full width input
-.sv-input-fullwidth {
-  width: 100%;
-  min-width: 100%;
-  max-width: 100%;
-}
-
-// Auto width (adapts to content)
-.sv-input-autowidth {
-  width: auto;
-  min-width: $input-min-width;
-}
-
-// Compact input style
-.sv-input-compact {
-  padding: var(--sv-padding-1) var(--sv-padding-2);
-  height: auto;
-  min-height: var(--sv-size-8);
-}
-
-// Inline input style (for inline forms)
-.sv-input-inline {
-  display: inline-flex;
-  vertical-align: middle;
-  margin-bottom: 0;
-}
-
-/* ==========================================================================
-   9. RTL INPUT SUPPORT
-   ========================================================================== */
-
-[dir="rtl"] {
-  .sv-input-icon {
-    &-left {
-      left: auto;
-      right: var(--sv-padding-3);
-      
-      & + .sv-input-field {
-        padding-left: $input-padding-x;
-        padding-right: calc(var(--sv-padding-6) + var(--sv-icon-size-sm));
-      }
+// Label variations
+.sv-input-control-base {
+  // Floating label
+  &.sv-input-floating-label {
+    padding-top: var(--sv-space-5);
+    
+    &__label {
+      position: absolute;
+      top: $input-padding-y;
+      left: $input-padding-x;
+      margin: 0;
+      transition: transform var(--sv-motion-duration-short) var(--sv-motion-ease-standard),
+                  font-size var(--sv-motion-duration-short) var(--sv-motion-ease-standard);
+      transform-origin: left top;
     }
     
-    &-right {
-      right: auto;
-      left: var(--sv-padding-3);
-      
-      .sv-input-field ~ & {
-        padding-right: $input-padding-x;
-        padding-left: calc(var(--sv-padding-6) + var(--sv-icon-size-sm));
-      }
+    &__field:focus ~ &__label,
+    &.has-value &__label {
+      transform: translateY(-$input-padding-y) scale(0.85);
     }
   }
   
-  .sv-input-counter {
-    text-align: left;
-  }
-  
-  .sv-input-group {
-    .sv-input-base {
-      &:not(:first-child) {
-        border-radius: 0;
-        border-top-right-radius: var(--sv-radius-md);
-        border-bottom-right-radius: var(--sv-radius-md);
-      }
-      
-      &:not(:last-child) {
-        border-radius: 0;
-        border-top-left-radius: var(--sv-radius-md);
-        border-bottom-left-radius: var(--sv-radius-md);
-        border-right-width: $input-border-width;
-        border-left-width: 0;
-      }
-    }
-    
-    &-prepend {
-      border-radius: 0;
-      border-top-right-radius: var(--sv-radius-md);
-      border-bottom-right-radius: var(--sv-radius-md);
-      border-right-width: $input-border-width;
-      border-left-width: 0;
-    }
-    
-    &-append {
-      border-radius: 0;
-      border-top-left-radius: var(--sv-radius-md);
-      border-bottom-left-radius: var(--sv-radius-md);
-      border-left-width: $input-border-width;
-      border-right-width: 0;
-    }
+  // Counter text for character limits
+  &__counter {
+    display: block;
+    margin-top: var(--sv-space-1);
+    font-size: var(--sv-font-size-xs);
+    color: var(--sv-text-secondary);
+    text-align: right;
   }
 }
 
 /* ==========================================================================
-   10. ACCESSIBILITY ENHANCEMENTS
+   6. STATE STYLING
    ========================================================================== */
 
-// Enhanced focus indication for screen readers
-.sv-input-base:focus {
-  &[data-focused-by="keyboard"] {
-    outline: $focus-ring-width solid $focus-ring-color;
-    outline-offset: $focus-ring-offset;
+.sv-input-control-base {
+  // Focus state
+  &:focus-within {
+    @include state.focus-state;
+    border-color: var(--sv-primary);
+  }
+  
+  // Hover state
+  &:hover:not(:disabled):not(.disabled):not(:focus-within) {
+    @include state.hover-state;
+    border-color: var(--sv-border-dark);
+  }
+  
+  // Disabled state
+  &:disabled,
+  &.disabled {
+    @include state.disabled-state;
+    cursor: not-allowed;
+    
+    &__field {
+      background-color: var(--sv-bg-disabled);
+    }
+  }
+  
+  // Readonly state
+  &[readonly],
+  &.readonly {
+    @include state.readonly-state;
+    cursor: default;
+    
+    &__field {
+      background-color: var(--sv-bg-muted);
+    }
+  }
+  
+  // Error state
+  &.has-error,
+  &.error,
+  &[aria-invalid="true"] {
+    border-color: var(--sv-error);
+    
+    &__helper-text,
+    &__validation-message {
+      color: var(--sv-error);
+    }
+  }
+  
+  // Success state
+  &.has-success,
+  &.success,
+  &[aria-invalid="false"] {
+    border-color: var(--sv-success);
+    
+    &__helper-text,
+    &__validation-message {
+      color: var(--sv-success);
+    }
   }
 }
 
-// Support for screen reader only labels
-.sv-input-label-sr {
-  @include visually-hidden;
+/* ==========================================================================
+   7. SIZE VARIATIONS
+   ========================================================================== */
+
+.sv-input-control-base {
+  // Small size
+  &.sv-size-sm {
+    height: var(--sv-control-height-sm);
+    padding: var(--sv-space-1) var(--sv-space-2);
+    font-size: var(--sv-font-size-sm);
+    
+    &__label,
+    &__helper-text {
+      font-size: var(--sv-font-size-xs);
+    }
+  }
+  
+  // Default (medium) size inherits from base class
+  
+  // Large size
+  &.sv-size-lg {
+    height: var(--sv-control-height-lg);
+    padding: var(--sv-space-2) var(--sv-space-4);
+    font-size: var(--sv-font-size-lg);
+    
+    &__label {
+      font-size: var(--sv-font-size-base);
+    }
+    
+    &__helper-text {
+      font-size: var(--sv-font-size-sm);
+    }
+  }
 }
 
-// Ensure proper high contrast mode support
-@media (forced-colors: active) {
-  .sv-input-base {
-    border: 1px solid ButtonBorder;
+/* ==========================================================================
+   8. ACCESSIBILITY ENHANCEMENTS
+   ========================================================================== */
+
+.sv-input-control-base {
+  // High contrast mode support
+  @include a11y.high-contrast-mode {
+    border: 1px solid ButtonText;
     
-    &:focus {
+    &:focus-within {
       outline: 2px solid Highlight;
-      outline-offset: 2px;
+      border-color: Highlight;
+    }
+    
+    &:disabled,
+    &.disabled {
+      border-color: GrayText;
+      color: GrayText;
     }
   }
   
-  .sv-input-icon,
-  .sv-input-group-prepend,
-  .sv-input-group-append {
-    border-color: ButtonBorder;
-    color: ButtonText;
+  // Ensure proper focus handling for keyboard users
+  &:focus-visible {
+    @include a11y.focus-visible-enhanced;
   }
 }

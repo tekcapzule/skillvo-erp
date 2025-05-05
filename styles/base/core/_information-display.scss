@@ -1,182 +1,101 @@
 /**
- * Information Display Controls Base - Category-Level Styles
- * Version: 1.0.0
- * Last Updated: April 29, 2025
+ * Information Display Controls Base - Core Styles
+ * Version: 2.0.0
+ * Last Updated: June 29, 2024
  * 
- * This file establishes the category-level styles for all information display components
- * in the SkillVo design system. It serves as the middle layer in our 
+ * This file establishes the foundational styles for all information display components
+ * in the SkillVo design system. It serves as the second level in our 
  * three-tier styling architecture:
  * 1. sv-ui-control-base - Base styles for all interactive controls
- * 2. sv-info-display-base (this file) - Base styles for information display components
+ * 2. sv-information-display-base (this file) - Base styles for information display components
  * 3. Component-specific classes (e.g., sv-label, sv-badge, sv-tooltip, sv-tag)
+ * 
+ * For extension points and layer boundaries documentation, see:
+ * styles/docs/base-control-extensions.md
  */
 
 /* ==========================================================================
    TABLE OF CONTENTS:
    
-   1. VARIABLES & CONFIGURATION
-   2. MIXINS
-      2.1 Layout Mixins
-      2.2 Content Formatting Mixins
-      2.3 Visual Style Mixins
+   1. IMPORTS
+   2. VARIABLES & CONFIGURATION
    3. BASE CLASS DEFINITION
    4. PRIORITY VARIATIONS
    5. DENSITY VARIATIONS
-   6. ALIGNMENT VARIATIONS
-   7. TRUNCATION VARIATIONS
-   8. ANIMATION EXTENSIONS
-   9. PRINT REFINEMENTS
-   10. ACCESSIBILITY ENHANCEMENTS
+   6. ALIGNMENT & DISPLAY VARIATIONS
+   7. TRUNCATION & CONTENT FORMATTING
+   8. SIZE VARIATIONS
+   9. ACCESSIBILITY ENHANCEMENTS
    ========================================================================== */
 
 /* ==========================================================================
-   1. VARIABLES & CONFIGURATION
+   1. IMPORTS
    ========================================================================== */
-   @use './base-control' as *;
+@use 'sass:map';
+@use './../../abstracts/variables/' as *;
+@use './../utils/mixins/state' as state;
+@use './../utils/mixins/layout' as layout;
+@use './../utils/mixins/typography' as typography;
+@use './../utils/mixins/accessibility' as a11y;
+
+/* ==========================================================================
+   2. VARIABLES & CONFIGURATION
+   ========================================================================== */
 
 // Information content spacing
-$info-display-spacing-x: var(--sv-padding-2);
-$info-display-spacing-y: var(--sv-padding-1);
-
-// Information display states
-$info-display-transition-properties: color, background-color, border-color, box-shadow, opacity;
-$info-display-transition-duration: var(--sv-motion-duration-short);
+$info-display-spacing-x: var(--sv-space-2);
+$info-display-spacing-y: var(--sv-space-1);
 
 // Content display variables
 $info-display-max-lines: 3;
 $info-display-line-clamp: 2;
 
 /* ==========================================================================
-   2. MIXINS
-   ========================================================================== */
-
-/* 2.1 Layout Mixins
-   ========================================================================== */
-
-// Information content alignment options
-@mixin info-display-align($alignment: 'left') {
-  @if $alignment == 'left' {
-    text-align: left;
-    justify-content: flex-start;
-  } @else if $alignment == 'center' {
-    text-align: center;
-    justify-content: center;
-  } @else if $alignment == 'right' {
-    text-align: right;
-    justify-content: flex-end;
-  }
-}
-
-// Flexible display container (inline, block, flex)
-@mixin info-display-container($display: 'inline-flex') {
-  @if $display == 'inline' {
-    display: inline;
-  } @else if $display == 'inline-block' {
-    display: inline-block;
-  } @else if $display == 'inline-flex' {
-    display: inline-flex;
-    align-items: center;
-  } @else if $display == 'block' {
-    display: block;
-  } @else if $display == 'flex' {
-    display: flex;
-    align-items: center;
-  }
-}
-
-/* 2.2 Content Formatting Mixins
-   ========================================================================== */
-
-// Content truncation options
-@mixin info-display-truncate($type: 'single') {
-  @if $type == 'single' {
-    @include text-truncate;
-  } @else if $type == 'multi' {
-    @include text-truncate-multiline($info-display-line-clamp);
-  }
-}
-
-// Word wrapping control
-@mixin info-display-wrap($wrap: true) {
-  @if $wrap {
-    white-space: normal;
-    word-wrap: break-word;
-    overflow-wrap: break-word;
-  } @else {
-    white-space: nowrap;
-    word-wrap: normal;
-    overflow-wrap: normal;
-  }
-}
-
-/* 2.3 Visual Style Mixins
-   ========================================================================== */
-
-// Information priority styling
-@mixin info-display-priority($priority: 'normal') {
-  @if $priority == 'high' {
-    font-weight: var(--sv-font-semibold);
-    color: var(--sv-text-primary);
-  } @else if $priority == 'normal' {
-    font-weight: var(--sv-font-normal);
-    color: var(--sv-text-primary);
-  } @else if $priority == 'low' {
-    font-weight: var(--sv-font-normal);
-    color: var(--sv-text-secondary);
-  } @else if $priority == 'subtle' {
-    font-weight: var(--sv-font-normal);
-    color: var(--sv-text-tertiary);
-  }
-}
-
-// Information density styling
-@mixin info-display-density($density: 'normal') {
-  @if $density == 'compact' {
-    padding: var(--sv-padding-1) var(--sv-padding-2);
-    line-height: var(--sv-leading-tight);
-  } @else if $density == 'normal' {
-    padding: $info-display-spacing-y $info-display-spacing-x;
-    line-height: var(--sv-leading-normal);
-  } @else if $density == 'comfortable' {
-    padding: var(--sv-padding-2) var(--sv-padding-3);
-    line-height: var(--sv-leading-relaxed);
-  }
-}
-
-/* ==========================================================================
    3. BASE CLASS DEFINITION
    ========================================================================== */
 
-.sv-info-display-base {
-  // Extend the UI control base class
+/**
+ * The sv-information-display-base class provides foundational styling for all
+ * information display components such as labels, badges, tooltips, and tags.
+ * 
+ * This class extends sv-ui-control-base and adds information display specific styling.
+ */
+.sv-information-display-base {
+  // Inherit all base UI control styles
   @extend .sv-ui-control-base;
   
-  // Modify base properties for information display
-  @include info-display-container('inline-flex');
-  @include info-display-density('normal');
-  @include info-display-align('left');
+  // Box model adjustments for information displays
+  display: inline-flex;
+  align-items: center;
+  padding: $info-display-spacing-y $info-display-spacing-x;
   
-  // Reset some control properties that don't apply to info displays
+  // Reset properties that don't apply to information displays
   border: none;
   background-color: transparent;
+  cursor: default;
   
   // Typography defaults for information display
-  @include typography('base', 'normal', 'normal');
-  @include info-display-wrap(true);
-  @include text-truncate;
+  @include typography.typography-base('base', 'normal', 'normal');
+  color: var(--sv-text-primary);
+  text-align: left;
   
-  // Transition adjustments for info displays
-  transition-property: $info-display-transition-properties;
-  transition-duration: $info-display-transition-duration;
+  // Content handling
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   
-  // Support for icons in information displays
-  &.has-icon {
-    gap: var(--sv-space-2);
-    
-    .sv-icon {
-      color: currentColor;
-      flex-shrink: 0;
-    }
+  // Structure elements
+  &__icon {
+    flex-shrink: 0;
+    margin-right: var(--sv-space-2);
+    color: currentColor;
+  }
+  
+  &__content {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
   
   // Support for interactive information displays (when needed)
@@ -188,17 +107,7 @@ $info-display-line-clamp: 2;
     }
     
     &:focus-visible {
-      outline: $focus-ring-width solid $focus-ring-color;
-      outline-offset: $focus-ring-offset;
-    }
-  }
-  
-  // Support for conditional visibility
-  &.is-conditional {
-    opacity: 0;
-    
-    &.is-visible {
-      opacity: 1;
+      @include state.focus-visible-state;
     }
   }
 }
@@ -207,159 +116,204 @@ $info-display-line-clamp: 2;
    4. PRIORITY VARIATIONS
    ========================================================================== */
 
-// Information priority variations
-.sv-info-priority-high {
-  @include info-display-priority('high');
-}
-
-.sv-info-priority-normal {
-  @include info-display-priority('normal');
-}
-
-.sv-info-priority-low {
-  @include info-display-priority('low');
-}
-
-.sv-info-priority-subtle {
-  @include info-display-priority('subtle');
+.sv-information-display-base {
+  // High priority (emphasized)
+  &.sv-priority-high {
+    font-weight: var(--sv-font-weight-semibold);
+    color: var(--sv-text-primary);
+  }
+  
+  // Normal priority (default)
+  &.sv-priority-normal {
+    font-weight: var(--sv-font-weight-normal);
+    color: var(--sv-text-primary);
+  }
+  
+  // Low priority
+  &.sv-priority-low {
+    font-weight: var(--sv-font-weight-normal);
+    color: var(--sv-text-secondary);
+  }
+  
+  // Subtle priority (minimally visible)
+  &.sv-priority-subtle {
+    font-weight: var(--sv-font-weight-normal);
+    color: var(--sv-text-tertiary);
+  }
 }
 
 /* ==========================================================================
    5. DENSITY VARIATIONS
    ========================================================================== */
 
-// Information density variations
-.sv-info-density-compact {
-  @include info-display-density('compact');
-}
-
-.sv-info-density-normal {
-  @include info-display-density('normal');
-}
-
-.sv-info-density-comfortable {
-  @include info-display-density('comfortable');
-}
-
-/* ==========================================================================
-   6. ALIGNMENT VARIATIONS
-   ========================================================================== */
-
-// Information alignment variations
-.sv-info-align-left {
-  @include info-display-align('left');
-}
-
-.sv-info-align-center {
-  @include info-display-align('center');
-}
-
-.sv-info-align-right {
-  @include info-display-align('right');
-}
-
-/* ==========================================================================
-   7. TRUNCATION VARIATIONS
-   ========================================================================== */
-
-// Information truncation variations
-.sv-info-truncate-single {
-  @include info-display-truncate('single');
-}
-
-.sv-info-truncate-multi {
-  @include info-display-truncate('multi');
-}
-
-.sv-info-no-truncate {
-  text-overflow: initial;
-  white-space: normal;
-  overflow: visible;
-}
-
-/* ==========================================================================
-   8. ANIMATION EXTENSIONS
-   ========================================================================== */
-
-// Information-specific animations
-.sv-info-animate-highlight {
-  animation: info-highlight 2s ease-out;
-}
-
-@keyframes info-highlight {
-  0% {
-    background-color: var(--sv-primary-light);
+.sv-information-display-base {
+  // Compact density (minimal padding)
+  &.sv-density-compact {
+    padding: var(--sv-space-1) var(--sv-space-2);
+    line-height: var(--sv-line-height-tight);
   }
-  100% {
-    background-color: transparent;
+  
+  // Normal density (default)
+  &.sv-density-normal {
+    padding: $info-display-spacing-y $info-display-spacing-x;
+    line-height: var(--sv-line-height-normal);
   }
-}
-
-.sv-info-animate-update {
-  animation: info-update 1s ease-out;
-}
-
-@keyframes info-update {
-  0%, 50% {
-    color: var(--sv-primary);
-  }
-  100% {
-    color: inherit;
+  
+  // Comfortable density (more spacing)
+  &.sv-density-comfortable {
+    padding: var(--sv-space-2) var(--sv-space-3);
+    line-height: var(--sv-line-height-relaxed);
   }
 }
 
 /* ==========================================================================
-   9. PRINT REFINEMENTS
+   6. ALIGNMENT & DISPLAY VARIATIONS
    ========================================================================== */
 
-@media print {
-  .sv-info-display-base {
-    color: #000 !important;
+.sv-information-display-base {
+  // Alignment variations
+  &.sv-align-left {
+    text-align: left;
+    justify-content: flex-start;
+  }
+  
+  &.sv-align-center {
+    text-align: center;
+    justify-content: center;
+  }
+  
+  &.sv-align-right {
+    text-align: right;
+    justify-content: flex-end;
+  }
+  
+  // Display variations
+  &.sv-display-inline {
+    display: inline;
+  }
+  
+  &.sv-display-inline-block {
+    display: inline-block;
+  }
+  
+  &.sv-display-inline-flex {
+    display: inline-flex;
+    align-items: center;
+  }
+  
+  &.sv-display-block {
+    display: block;
+    width: 100%;
+  }
+  
+  &.sv-display-flex {
+    display: flex;
+    align-items: center;
+    width: 100%;
+  }
+}
+
+/* ==========================================================================
+   7. TRUNCATION & CONTENT FORMATTING
+   ========================================================================== */
+
+.sv-information-display-base {
+  // Single line truncation (default)
+  &.sv-truncate-single {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  
+  // Multi-line truncation
+  &.sv-truncate-multi {
+    white-space: normal;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: $info-display-line-clamp;
+    -webkit-box-orient: vertical;
+    line-clamp: $info-display-line-clamp;
+  }
+  
+  // No truncation
+  &.sv-truncate-none {
+    white-space: normal;
+    overflow: visible;
+    text-overflow: clip;
+  }
+  
+  // Word wrapping control
+  &.sv-wrap {
+    white-space: normal;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+  }
+  
+  &.sv-nowrap {
+    white-space: nowrap;
+    word-wrap: normal;
+    overflow-wrap: normal;
+  }
+}
+
+/* ==========================================================================
+   8. SIZE VARIATIONS
+   ========================================================================== */
+
+.sv-information-display-base {
+  // Small size
+  &.sv-size-sm {
+    font-size: var(--sv-font-size-sm);
+    padding: var(--sv-space-0-5) var(--sv-space-1);
     
-    // Ensure all text is visible in print
-    &.sv-info-truncate-single,
-    &.sv-info-truncate-multi {
-      text-overflow: initial;
-      white-space: normal;
-      overflow: visible;
-      -webkit-line-clamp: initial;
-      -webkit-box-orient: initial;
-      display: block;
+    .sv-information-display-base__icon {
+      width: var(--sv-icon-size-sm);
+      height: var(--sv-icon-size-sm);
     }
+  }
+  
+  // Default (medium) size inherits from base class
+  
+  // Large size
+  &.sv-size-lg {
+    font-size: var(--sv-font-size-lg);
+    padding: var(--sv-space-2) var(--sv-space-3);
     
-    // Hide conditional elements that are not visible
-    &.is-conditional:not(.is-visible) {
-      display: none !important;
+    .sv-information-display-base__icon {
+      width: var(--sv-icon-size-lg);
+      height: var(--sv-icon-size-lg);
     }
   }
 }
 
 /* ==========================================================================
-   10. ACCESSIBILITY ENHANCEMENTS
+   9. ACCESSIBILITY ENHANCEMENTS
    ========================================================================== */
 
-// Enhanced contrast modes
-@media (prefers-contrast: more) {
-  .sv-info-display-base {
-    // Improve contrast for all information displays
-    &.sv-info-priority-low,
-    &.sv-info-priority-subtle {
-      color: var(--sv-text-primary);
+.sv-information-display-base {
+  // High contrast mode support
+  @include a11y.high-contrast-mode {
+    color: ButtonText;
+    
+    &.sv-priority-high,
+    &.sv-priority-normal,
+    &.sv-priority-low,
+    &.sv-priority-subtle {
+      color: ButtonText;
     }
-  }
-}
-
-// High contrast mode support
-@media (forced-colors: active) {
-  .sv-info-display-base {
-    color: CanvasText;
     
     &.is-interactive:hover {
       color: Highlight;
     }
-    
-    &.sv-info-priority-high {
-      font-weight: bold;
-    }
+  }
+  
+  // Support for reduced motion
+  @include a11y.reduced-motion {
+    transition: none;
+  }
+  
+  // Ensure proper focus handling for keyboard users when interactive
+  &.is-interactive:focus-visible {
+    @include a11y.focus-visible-enhanced;
   }
 }

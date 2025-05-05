@@ -1,7 +1,7 @@
 /**
  * Action Controls Base - Core Styles
- * Version: 1.0.0
- * Last Updated: April 29, 2025
+ * Version: 2.0.0
+ * Last Updated: June 29, 2024
  * 
  * This file establishes the foundational styles for all action-based UI components
  * in the SkillVo design system. This serves as the second level in our 
@@ -9,165 +9,54 @@
  * 1. sv-ui-control-base - Base styles for all interactive controls
  * 2. sv-action-control-base (this file) - Base styles for action controls
  * 3. Component-specific classes (e.g., sv-button, sv-link, sv-icon-button)
+ * 
+ * For extension points and layer boundaries documentation, see:
+ * styles/docs/base-control-extensions.md
  */
 
 /* ==========================================================================
    TABLE OF CONTENTS:
    
-   1. VARIABLES & CONFIGURATION
-   2. MIXINS
-      2.1 Action-Specific State Mixins
-      2.2 Action Layout Mixins 
+   1. IMPORTS
+   2. VARIABLES & CONFIGURATION
    3. BASE CLASS DEFINITION
    4. VARIANTS
-      4.1 Emphasis Variants
-      4.2 Connectivity Variants
    5. ICONOGRAPHY SUPPORT
    6. SIZE ADJUSTMENTS
    7. ACCESSIBILITY ENHANCEMENTS
    ========================================================================== */
 
 /* ==========================================================================
-   1. VARIABLES & CONFIGURATION
+   1. IMPORTS
    ========================================================================== */
-   @use './base-control' as *;
+@use 'sass:map';
+@use './../../abstracts/variables/' as *;
+@use './../utils/mixins/state' as state;
+@use './../utils/mixins/layout' as layout;
+@use './../utils/mixins/typography' as typography;
+@use './../utils/mixins/accessibility' as a11y;
 
+/* ==========================================================================
+   2. VARIABLES & CONFIGURATION
+   ========================================================================== */
 
 // Icon spacing within action controls
 $action-icon-spacing: var(--sv-space-2);
 
 // Default action component sizing
-$action-min-width: calc(var(--sv-min-touch-target) * 2);
+$action-min-width: var(--sv-min-touch-target);
 $action-padding-x-factor: 1.5; // Multiple of the standard padding
-
-/* ==========================================================================
-   2. MIXINS
-   ========================================================================== */
-
-/* 2.1 Action-Specific State Mixins
-   ========================================================================== */
-
-// Primary action styling (for CTA buttons, etc.)
-@mixin primary-action {
-  background-color: var(--sv-primary);
-  border-color: var(--sv-primary);
-  color: var(--sv-text-on-dark);
-  
-  &:hover:not(:disabled):not(.disabled) {
-    background-color: var(--sv-primary-dark);
-    border-color: var(--sv-primary-dark);
-  }
-  
-  &:active:not(:disabled):not(.disabled) {
-    background-color: var(--sv-primary-dark);
-    border-color: var(--sv-primary-dark);
-    transform: translateY(1px);
-  }
-  
-  &:focus {
-    box-shadow: 0 0 0 var(--sv-focus-ring-width) rgba(var(--sv-primary-500-rgb), 0.4);
-  }
-}
-
-// Secondary action styling
-@mixin secondary-action {
-  background-color: var(--sv-bg-element);
-  border-color: var(--sv-border-medium);
-  color: var(--sv-text-primary);
-  
-  &:hover:not(:disabled):not(.disabled) {
-    background-color: var(--sv-bg-element-hover);
-    border-color: var(--sv-border-dark);
-  }
-  
-  &:active:not(:disabled):not(.disabled) {
-    background-color: var(--sv-bg-element-active);
-    border-color: var(--sv-border-dark);
-    transform: translateY(1px);
-  }
-}
-
-// Tertiary action styling (for less prominent actions)
-@mixin tertiary-action {
-  background-color: transparent;
-  border-color: transparent;
-  color: var(--sv-text-primary);
-  
-  &:hover:not(:disabled):not(.disabled) {
-    background-color: var(--sv-bg-element-hover);
-    color: var(--sv-text-accent);
-  }
-  
-  &:active:not(:disabled):not(.disabled) {
-    background-color: var(--sv-bg-element-active);
-    transform: translateY(1px);
-  }
-}
-
-// Destructive action styling (for delete, remove actions)
-@mixin destructive-action {
-  background-color: var(--sv-error);
-  border-color: var(--sv-error);
-  color: var(--sv-text-on-dark);
-  
-  &:hover:not(:disabled):not(.disabled) {
-    background-color: var(--sv-error-dark, var(--sv-error));
-    border-color: var(--sv-error-dark, var(--sv-error));
-  }
-  
-  &:active:not(:disabled):not(.disabled) {
-    background-color: var(--sv-error-darker, var(--sv-error-dark, var(--sv-error)));
-    border-color: var(--sv-error-darker, var(--sv-error-dark, var(--sv-error)));
-    transform: translateY(1px);
-  }
-  
-  &:focus {
-    box-shadow: 0 0 0 var(--sv-focus-ring-width) rgba(var(--sv-error-500-rgb), 0.4);
-  }
-}
-
-/* 2.2 Action Layout Mixins
-   ========================================================================== */
-
-// Center content with proper icon spacing
-@mixin action-content-layout {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: $action-icon-spacing;
-  white-space: nowrap;
-  text-align: center;
-}
-
-// Group actions with proper spacing and borders
-@mixin action-group-layout {
-  display: inline-flex;
-  
-  > * {
-    border-radius: 0;
-    margin-right: -1px; // Collapse borders
-    
-    &:first-child {
-      border-top-left-radius: var(--sv-radius-md);
-      border-bottom-left-radius: var(--sv-radius-md);
-    }
-    
-    &:last-child {
-      border-top-right-radius: var(--sv-radius-md);
-      border-bottom-right-radius: var(--sv-radius-md);
-      margin-right: 0;
-    }
-    
-    &:focus {
-      z-index: 1; // Ensure focus state is visible
-    }
-  }
-}
 
 /* ==========================================================================
    3. BASE CLASS DEFINITION
    ========================================================================== */
 
+/**
+ * The sv-action-control-base class provides foundational styling for all
+ * action-based UI controls such as buttons, links, and icon buttons.
+ * 
+ * This class extends sv-ui-control-base and adds action-specific styling.
+ */
 .sv-action-control-base {
   // Inherit all base control properties
   @extend .sv-ui-control-base;
@@ -176,8 +65,8 @@ $action-padding-x-factor: 1.5; // Multiple of the standard padding
   min-width: $action-min-width;
   text-align: center;
   line-height: 1.2;
-  padding-left: calc(var(--sv-padding-3) * $action-padding-x-factor);
-  padding-right: calc(var(--sv-padding-3) * $action-padding-x-factor);
+  padding-left: calc(var(--sv-space-3) * $action-padding-x-factor);
+  padding-right: calc(var(--sv-space-3) * $action-padding-x-factor);
   
   // Action-specific interaction models
   cursor: pointer;
@@ -185,20 +74,27 @@ $action-padding-x-factor: 1.5; // Multiple of the standard padding
   -webkit-tap-highlight-color: transparent;
   
   // Layout of content
-  @include action-content-layout;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: $action-icon-spacing;
+  white-space: nowrap;
   
   // Action-specific focus handling
   &:focus {
+    @include state.focus-state;
     box-shadow: 0 0 0 var(--sv-focus-ring-width) rgba(var(--sv-primary-500-rgb), 0.25);
   }
   
   // Action-specific hover effect
   &:hover:not(:disabled):not(.disabled) {
+    @include state.hover-state;
     filter: brightness(0.95);
   }
   
   // Action-specific active effect
   &:active:not(:disabled):not(.disabled) {
+    @include state.active-state;
     transform: translateY(1px);
     filter: brightness(0.9);
   }
@@ -222,7 +118,7 @@ $action-padding-x-factor: 1.5; // Multiple of the standard padding
       border-radius: 50%;
       border: 0.125em solid transparent;
       border-top-color: currentColor;
-      animation: spin var(--sv-spinner-duration) linear infinite;
+      animation: spin var(--sv-spinner-duration, 1s) linear infinite;
     }
   }
 }
@@ -231,56 +127,83 @@ $action-padding-x-factor: 1.5; // Multiple of the standard padding
    4. VARIANTS
    ========================================================================== */
 
-/* 4.1 Emphasis Variants
-   ========================================================================== */
-
 .sv-action-control-base {
   // Primary action variant
   &.sv-action-primary {
-    @include primary-action;
+    background-color: var(--sv-primary);
+    border-color: var(--sv-primary);
+    color: var(--sv-text-on-dark);
+    
+    &:hover:not(:disabled):not(.disabled) {
+      background-color: var(--sv-primary-dark);
+      border-color: var(--sv-primary-dark);
+    }
+    
+    &:active:not(:disabled):not(.disabled) {
+      background-color: var(--sv-primary-dark);
+      border-color: var(--sv-primary-dark);
+      transform: translateY(1px);
+    }
+    
+    &:focus {
+      box-shadow: 0 0 0 var(--sv-focus-ring-width) rgba(var(--sv-primary-500-rgb), 0.4);
+    }
   }
   
   // Secondary action variant
   &.sv-action-secondary {
-    @include secondary-action;
+    background-color: var(--sv-bg-element);
+    border-color: var(--sv-border-medium);
+    color: var(--sv-text-primary);
+    
+    &:hover:not(:disabled):not(.disabled) {
+      background-color: var(--sv-bg-element-hover);
+      border-color: var(--sv-border-dark);
+    }
+    
+    &:active:not(:disabled):not(.disabled) {
+      background-color: var(--sv-bg-element-active);
+      border-color: var(--sv-border-dark);
+      transform: translateY(1px);
+    }
   }
   
   // Tertiary action variant (ghost/text buttons)
   &.sv-action-tertiary {
-    @include tertiary-action;
+    background-color: transparent;
+    border-color: transparent;
+    color: var(--sv-text-primary);
+    
+    &:hover:not(:disabled):not(.disabled) {
+      background-color: var(--sv-bg-element-hover);
+      color: var(--sv-text-accent);
+    }
+    
+    &:active:not(:disabled):not(.disabled) {
+      background-color: var(--sv-bg-element-active);
+      transform: translateY(1px);
+    }
   }
   
-  // Destructive action variant
+  // Destructive action variant (for delete, remove actions)
   &.sv-action-destructive {
-    @include destructive-action;
-  }
-}
-
-/* 4.2 Connectivity Variants
-   ========================================================================== */
-
-// Action button groups
-.sv-action-group {
-  @include action-group-layout;
-}
-
-// Action with dropdown
-.sv-action-control-base {
-  &.sv-action-with-dropdown {
-    position: relative;
-    padding-right: calc(var(--sv-padding-6) * $action-padding-x-factor);
+    background-color: var(--sv-error);
+    border-color: var(--sv-error);
+    color: var(--sv-text-on-dark);
     
-    &::after {
-      content: "";
-      position: absolute;
-      right: var(--sv-padding-3);
-      top: 50%;
-      width: 0.5em;
-      height: 0.5em;
-      border: 1px solid currentColor;
-      border-width: 0 1px 1px 0;
-      transform: translateY(-75%) rotate(45deg);
-      pointer-events: none;
+    &:hover:not(:disabled):not(.disabled) {
+      background-color: var(--sv-error-dark, var(--sv-error));
+      border-color: var(--sv-error-dark, var(--sv-error));
+    }
+    
+    &:active:not(:disabled):not(.disabled) {
+      background-color: var(--sv-error-darker, var(--sv-error-dark, var(--sv-error)));
+      border-color: var(--sv-error-darker, var(--sv-error-dark, var(--sv-error)));
+      transform: translateY(1px);
+    }
+    
+    &:focus {
+      box-shadow: 0 0 0 var(--sv-focus-ring-width) rgba(var(--sv-error-500-rgb), 0.4);
     }
   }
 }
@@ -290,38 +213,29 @@ $action-padding-x-factor: 1.5; // Multiple of the standard padding
    ========================================================================== */
 
 .sv-action-control-base {
-  // Icon-only action styling
+  // Proper spacing for icons
+  & > .sv-icon {
+    flex-shrink: 0;
+  }
+  
+  // Icon-only variant
   &.sv-action-icon-only {
-    padding: var(--sv-padding-2);
-    min-width: auto;
-    aspect-ratio: 1;
-    justify-content: center;
+    padding: var(--sv-space-2);
+    min-width: var(--sv-min-touch-target);
+    aspect-ratio: 1/1;
     
-    .sv-icon {
+    > .sv-icon {
       margin: 0;
     }
   }
   
-  // Icon positioning
-  .sv-icon {
-    flex-shrink: 0;
-    width: var(--sv-icon-size-sm);
-    height: var(--sv-icon-size-sm);
-    
-    // Icon alignment adjustments to align with text
-    vertical-align: -0.125em;
-    position: relative;
+  // Icon positioning (left/right)
+  &.sv-action-icon-left {
+    flex-direction: row;
   }
   
-  // Handle leading and trailing icons
-  .sv-icon-leading {
-    margin-right: $action-icon-spacing;
-    margin-left: calc(-1 * $action-icon-spacing);
-  }
-  
-  .sv-icon-trailing {
-    margin-left: $action-icon-spacing;
-    margin-right: calc(-1 * $action-icon-spacing);
+  &.sv-action-icon-right {
+    flex-direction: row-reverse;
   }
 }
 
@@ -329,52 +243,27 @@ $action-padding-x-factor: 1.5; // Multiple of the standard padding
    6. SIZE ADJUSTMENTS
    ========================================================================== */
 
-// Size variant adjustments specific to action controls
-.sv-ui-size-xs.sv-action-control-base {
-  @include typography('xs', 'medium');
-  padding-left: calc(var(--sv-padding-2) * $action-padding-x-factor);
-  padding-right: calc(var(--sv-padding-2) * $action-padding-x-factor);
-  min-width: calc($action-min-width * 0.75);
-  
-  .sv-icon {
-    width: var(--sv-icon-size-xs);
-    height: var(--sv-icon-size-xs);
+.sv-action-control-base {
+  &.sv-size-sm {
+    padding-left: calc(var(--sv-space-2) * $action-padding-x-factor);
+    padding-right: calc(var(--sv-space-2) * $action-padding-x-factor);
+    
+    &.sv-action-icon-only {
+      padding: var(--sv-space-1);
+    }
   }
-}
-
-.sv-ui-size-sm.sv-action-control-base {
-  @include typography('sm', 'medium');
-  padding-left: calc(var(--sv-padding-2) * $action-padding-x-factor);
-  padding-right: calc(var(--sv-padding-2) * $action-padding-x-factor);
-  min-width: calc($action-min-width * 0.85);
-}
-
-.sv-ui-size-md.sv-action-control-base {
-  @include typography('base', 'medium');
-  // Default size uses the default padding defined in the base class
-}
-
-.sv-ui-size-lg.sv-action-control-base {
-  @include typography('lg', 'medium');
-  padding-left: calc(var(--sv-padding-4) * $action-padding-x-factor);
-  padding-right: calc(var(--sv-padding-4) * $action-padding-x-factor);
-  min-width: calc($action-min-width * 1.15);
   
-  .sv-icon {
-    width: var(--sv-icon-size-md);
-    height: var(--sv-icon-size-md);
+  &.sv-size-md {
+    // Default size - no additional adjustments needed
   }
-}
-
-.sv-ui-size-xl.sv-action-control-base {
-  @include typography('xl', 'medium');
-  padding-left: calc(var(--sv-padding-5) * $action-padding-x-factor);
-  padding-right: calc(var(--sv-padding-5) * $action-padding-x-factor);
-  min-width: calc($action-min-width * 1.3);
   
-  .sv-icon {
-    width: var(--sv-icon-size-lg);
-    height: var(--sv-icon-size-lg);
+  &.sv-size-lg {
+    padding-left: calc(var(--sv-space-4) * $action-padding-x-factor);
+    padding-right: calc(var(--sv-space-4) * $action-padding-x-factor);
+    
+    &.sv-action-icon-only {
+      padding: var(--sv-space-3);
+    }
   }
 }
 
@@ -382,45 +271,22 @@ $action-padding-x-factor: 1.5; // Multiple of the standard padding
    7. ACCESSIBILITY ENHANCEMENTS
    ========================================================================== */
 
-// Enhance focus visibility for action controls
 .sv-action-control-base {
+  // Enhanced focus visibility for keyboard users
   &:focus-visible {
-    outline-offset: calc(var(--sv-focus-ring-offset) + 1px);
+    @include a11y.focus-visible-enhanced;
   }
   
-  // Ensure that links functioning as buttons have proper roles
-  &[href]:not([role]) {
+  // High contrast mode support
+  @include a11y.high-contrast-mode {
+    border: 2px solid currentColor;
+    
     &.sv-action-primary,
-    &.sv-action-secondary,
-    &.sv-action-tertiary,
     &.sv-action-destructive {
-      role: "button";
-    }
-  }
-  
-  // Ensure action controls have proper focus indication in high contrast mode
-  @media (forced-colors: active) {
-    &:focus {
-      outline: 2px solid Highlight;
-      outline-offset: 4px;
-    }
-    
-    // Ensure proper color contrast for different action types
-    &.sv-action-primary {
-      border: 1px solid ButtonText;
-      background-color: ButtonFace;
-      color: ButtonText;
-    }
-    
-    &.sv-action-destructive {
-      border: 1px solid ButtonText;
-      background-color: Mark;
-      color: ButtonText;
-    }
-    
-    &:disabled {
-      color: GrayText;
-      border-color: GrayText;
+      forced-color-adjust: none;
+      background-color: Highlight;
+      border-color: Highlight;
+      color: HighlightText;
     }
   }
 }

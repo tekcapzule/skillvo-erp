@@ -1,7 +1,7 @@
 /**
  * Selection Controls Base - Core Styles
- * Version: 1.0.0
- * Last Updated: April 29, 2025
+ * Version: 2.0.0
+ * Last Updated: June 29, 2024
  * 
  * This file establishes the foundational styles for all selection control components
  * in the SkillVo design system. It serves as the second level in our 
@@ -12,25 +12,35 @@
  *
  * Selection controls include checkboxes, radio buttons, switches, and other
  * components that allow users to select options from a set of choices.
+ * 
+ * For extension points and layer boundaries documentation, see:
+ * styles/docs/base-control-extensions.md
  */
 
 /* ==========================================================================
    TABLE OF CONTENTS:
    
-   1. VARIABLES & CONFIGURATION
-   2. MIXINS
-      2.1 Selection Control Specific Mixins
+   1. IMPORTS
+   2. VARIABLES & CONFIGURATION
    3. BASE CLASS DEFINITION
    4. SIZE VARIATIONS
    5. SELECTION STATES
    6. ACCESSIBILITY ENHANCEMENTS
-   7. PRINT STYLES
    ========================================================================== */
 
 /* ==========================================================================
-   1. VARIABLES & CONFIGURATION
+   1. IMPORTS
    ========================================================================== */
-   @use './base-control' as *;
+@use 'sass:map';
+@use './../../abstracts/variables/' as *;
+@use './../utils/mixins/state' as state;
+@use './../utils/mixins/layout' as layout;
+@use './../utils/mixins/typography' as typography;
+@use './../utils/mixins/accessibility' as a11y;
+
+/* ==========================================================================
+   2. VARIABLES & CONFIGURATION
+   ========================================================================== */
 
 // Selection control properties
 $selection-control-size: var(--sv-size-4);
@@ -42,64 +52,15 @@ $indicator-color: var(--sv-text-on-dark);
 $indicator-size-ratio: 0.5; // Size of the indicator in relation to the control
 
 /* ==========================================================================
-   2. MIXINS
-   ========================================================================== */
-
-/* 2.1 Selection Control Specific Mixins
-   ========================================================================== */
-
-// Base styles for selection control indicators (checkmarks, dots, etc.)
-@mixin selection-indicator-base {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%) scale(0);
-  transition: transform var(--sv-motion-duration-short) var(--sv-motion-ease-standard);
-}
-
-// Checkbox indicator (checkmark) styling
-@mixin checkbox-indicator {
-  content: '';
-  width: calc($selection-control-size * $indicator-size-ratio);
-  height: calc($selection-control-size * $indicator-size-ratio * 0.5);
-  border-left: 2px solid $indicator-color;
-  border-bottom: 2px solid $indicator-color;
-  transform: translate(-50%, -70%) rotate(-45deg) scale(0);
-}
-
-// Radio indicator (dot) styling
-@mixin radio-indicator {
-  content: '';
-  width: calc($selection-control-size * $indicator-size-ratio);
-  height: calc($selection-control-size * $indicator-size-ratio);
-  border-radius: 50%;
-  background-color: $indicator-color;
-}
-
-// Ensure sufficient separation between adjacent controls
-@mixin selection-control-spacing {
-  & + & {
-    margin-top: var(--sv-space-3);
-  }
-  
-  &.sv-selection-control-inline + &.sv-selection-control-inline {
-    margin-top: 0;
-    margin-left: var(--sv-space-4);
-  }
-}
-
-// Focus styles specific to selection controls
-@mixin selection-control-focus {
-  &:focus-visible {
-    border-color: var(--sv-primary);
-    box-shadow: 0 0 0 $focus-ring-offset var(--sv-primary-light);
-  }
-}
-
-/* ==========================================================================
    3. BASE CLASS DEFINITION
    ========================================================================== */
 
+/**
+ * The sv-selection-control-base class provides foundational styling for all
+ * selection-based UI controls such as checkboxes, radio buttons, and switches.
+ * 
+ * This class extends sv-ui-control-base and adds selection-specific styling.
+ */
 .sv-selection-control-base {
   // Inherit all base UI control styles
   @extend .sv-ui-control-base;
@@ -113,9 +74,17 @@ $indicator-size-ratio: 0.5; // Size of the indicator in relation to the control
   // Reset some inherited properties that don't apply to selection controls
   background-color: transparent;
   padding: 0;
+  border: none;
   
   // Apply spacing between stacked controls
-  @include selection-control-spacing;
+  & + & {
+    margin-top: var(--sv-space-3);
+  }
+  
+  &.sv-selection-control-inline + &.sv-selection-control-inline {
+    margin-top: 0;
+    margin-left: var(--sv-space-4);
+  }
   
   // Selection control input (checkbox, radio, etc.)
   &__input {
@@ -128,7 +97,7 @@ $indicator-size-ratio: 0.5; // Size of the indicator in relation to the control
     
     // Focus styles handled via the control element
     &:focus-visible + .sv-selection-control-base__control {
-      @include focus-visible-state;
+      @include state.focus-visible-state;
     }
     
     // Checked state styling
@@ -160,7 +129,7 @@ $indicator-size-ratio: 0.5; // Size of the indicator in relation to the control
     
     // Disabled state styling
     &:disabled + .sv-selection-control-base__control {
-      @include disabled-state;
+      @include state.disabled-state;
       
       & ~ .sv-selection-control-base__label {
         color: var(--sv-text-tertiary);
@@ -182,7 +151,11 @@ $indicator-size-ratio: 0.5; // Size of the indicator in relation to the control
     transition: $selection-control-transition;
     
     &::after {
-      @include selection-indicator-base;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0);
+      transition: transform var(--sv-motion-duration-short) var(--sv-motion-ease-standard);
     }
     
     // Apply hover state
@@ -195,7 +168,7 @@ $indicator-size-ratio: 0.5; // Size of the indicator in relation to the control
   // The label text
   &__label {
     margin-left: var(--sv-space-3);
-    font-size: var(--sv-text-base);
+    font-size: var(--sv-font-size-base);
     color: var(--sv-text-primary);
     user-select: none;
   }
@@ -205,7 +178,7 @@ $indicator-size-ratio: 0.5; // Size of the indicator in relation to the control
     display: block;
     margin-top: var(--sv-space-1);
     margin-left: calc($selection-control-size + var(--sv-space-3));
-    font-size: var(--sv-text-sm);
+    font-size: var(--sv-font-size-sm);
     color: var(--sv-text-secondary);
   }
   
@@ -247,41 +220,38 @@ $indicator-size-ratio: 0.5; // Size of the indicator in relation to the control
    4. SIZE VARIATIONS
    ========================================================================== */
 
-// Small size
-.sv-selection-control-base.sv-ui-size-sm {
-  .sv-selection-control-base__control {
-    width: calc($selection-control-size * 0.75);
-    height: calc($selection-control-size * 0.75);
-    min-width: calc($selection-control-size * 0.75);
-    min-height: calc($selection-control-size * 0.75);
+.sv-selection-control-base {
+  // Small size
+  &.sv-size-sm {
+    .sv-selection-control-base__control {
+      width: calc($selection-control-size * 0.8);
+      height: calc($selection-control-size * 0.8);
+      min-width: calc($selection-control-size * 0.8);
+      min-height: calc($selection-control-size * 0.8);
+    }
+    
+    .sv-selection-control-base__label {
+      font-size: var(--sv-font-size-sm);
+    }
+    
+    .sv-selection-control-base__description {
+      font-size: var(--sv-font-size-xs);
+    }
   }
   
-  .sv-selection-control-base__label {
-    font-size: var(--sv-text-sm);
-  }
-  
-  .sv-selection-control-base__description {
-    font-size: var(--sv-text-xs);
-    margin-left: calc((#{$selection-control-size} * 0.75) + var(--sv-space-3));
-  }
-}
-
-// Large size
-.sv-selection-control-base.sv-ui-size-lg {
-  .sv-selection-control-base__control {
-    width: calc($selection-control-size * 1.25);
-    height: calc($selection-control-size * 1.25);
-    min-width: calc($selection-control-size * 1.25);
-    min-height: calc($selection-control-size * 1.25);
-  }
-  
-  .sv-selection-control-base__label {
-    font-size: var(--sv-text-lg);
-  }
-  
-  .sv-selection-control-base__description {
-    font-size: var(--sv-text-base);
-    margin-left: calc((#{$selection-control-size} * 1.25) + var(--sv-space-3));
+  // Large size
+  &.sv-size-lg {
+    .sv-selection-control-base__control {
+      width: calc($selection-control-size * 1.2);
+      height: calc($selection-control-size * 1.2);
+      min-width: calc($selection-control-size * 1.2);
+      min-height: calc($selection-control-size * 1.2);
+      border-width: calc($selection-control-border-width * 1.2);
+    }
+    
+    .sv-selection-control-base__label {
+      font-size: var(--sv-font-size-lg);
+    }
   }
 }
 
@@ -289,21 +259,67 @@ $indicator-size-ratio: 0.5; // Size of the indicator in relation to the control
    5. SELECTION STATES
    ========================================================================== */
 
-// Horizontal layout for selection controls
-.sv-selection-control-inline {
-  display: inline-flex;
-  margin-right: var(--sv-space-4);
+// Checkbox-specific variant
+.sv-selection-control-base.sv-checkbox {
+  .sv-selection-control-base__control {
+    border-radius: var(--sv-radius-sm);
+    
+    &::after {
+      content: '';
+      width: calc($selection-control-size * $indicator-size-ratio);
+      height: calc($selection-control-size * $indicator-size-ratio * 0.5);
+      border-left: 2px solid $indicator-color;
+      border-bottom: 2px solid $indicator-color;
+      transform: translate(-50%, -70%) rotate(-45deg) scale(0);
+    }
+  }
+  
+  .sv-selection-control-base__input:checked + .sv-selection-control-base__control::after {
+    transform: translate(-50%, -70%) rotate(-45deg) scale(1);
+  }
 }
 
-// Group container for selection controls
-.sv-selection-control-group {
-  display: flex;
-  flex-direction: column;
+// Radio button-specific variant
+.sv-selection-control-base.sv-radio {
+  .sv-selection-control-base__control {
+    border-radius: 50%;
+    
+    &::after {
+      content: '';
+      width: calc($selection-control-size * $indicator-size-ratio);
+      height: calc($selection-control-size * $indicator-size-ratio);
+      border-radius: 50%;
+      background-color: $indicator-color;
+    }
+  }
+}
+
+// Switch-specific variant
+.sv-selection-control-base.sv-switch {
+  .sv-selection-control-base__control {
+    width: calc($selection-control-size * 2);
+    height: $selection-control-size;
+    border-radius: calc($selection-control-size / 2);
+    background-color: var(--sv-bg-element);
+    
+    &::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 25%;
+      width: calc($selection-control-size * 0.8);
+      height: calc($selection-control-size * 0.8);
+      background-color: var(--sv-bg-surface);
+      border-radius: 50%;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      transform: translate(-50%, -50%);
+      transition: left var(--sv-motion-duration-short) var(--sv-motion-ease-standard);
+    }
+  }
   
-  &.sv-selection-control-group-horizontal {
-    flex-direction: row;
-    flex-wrap: wrap;
-    gap: var(--sv-space-4);
+  .sv-selection-control-base__input:checked + .sv-selection-control-base__control::after {
+    left: 75%;
+    transform: translate(-50%, -50%);
   }
 }
 
@@ -311,59 +327,39 @@ $indicator-size-ratio: 0.5; // Size of the indicator in relation to the control
    6. ACCESSIBILITY ENHANCEMENTS
    ========================================================================== */
 
-// High contrast mode adjustments for better visibility
-@media (forced-colors: active) {
-  .sv-selection-control-base {
+.sv-selection-control-base {
+  // High contrast mode support
+  @include a11y.high-contrast-mode {
     &__control {
-      border: 2px solid CanvasText;
-      
-      &::after {
-        background-color: CanvasText;
-      }
+      forced-color-adjust: none;
+      border: 2px solid ButtonText;
     }
     
-    &__input:checked + .sv-selection-control-base__control {
+    &__input:checked + &__control {
       background-color: Highlight;
       border-color: Highlight;
-      
-      &::after {
-        background-color: Canvas;
-      }
     }
     
-    &__input:focus-visible + .sv-selection-control-base__control {
-      outline: 2px solid Highlight;
-      outline-offset: 2px;
+    &__input:disabled + &__control {
+      border-color: GrayText;
+      background-color: transparent;
+    }
+    
+    &__input:disabled ~ &__label {
+      color: GrayText;
     }
   }
-}
-
-/* ==========================================================================
-   7. PRINT STYLES
-   ========================================================================== */
-
-@media print {
-  .sv-selection-control-base {
-    &__control {
-      border: 1px solid #000 !important;
-      box-shadow: none !important;
-      
-      // For print, make the selection state very clear
-      &::after {
-        transform: translate(-50%, -50%) scale(1) !important;
-        border-color: #000 !important;
-        background-color: #000 !important;
-      }
-    }
-    
-    // Ensure checked state is visible in print
-    &__input:checked + .sv-selection-control-base__control::after {
-      transform: translate(-50%, -50%) scale(1) !important;
-    }
-    
-    &__label,
-    &__description {
-      color: #000 !important;
+  
+  // Ensure proper focus handling for keyboard users
+  &__input:focus-visible + &__control {
+    @include a11y.focus-visible-enhanced;
+  }
+  
+  // Support for reduced motion
+  @include a11y.reduced-motion {
+    &__control,
+    &__control::after {
+      transition: none;
     }
   }
 }

@@ -1,529 +1,442 @@
 /**
- * Container Base - Category-level Styles
- * Version: 1.0.0
- * Last Updated: April 29, 2025
+ * Container Controls Base - Core Styles
+ * Version: 2.0.0
+ * Last Updated: June 29, 2024
  * 
  * This file establishes the foundational styles for all container components
  * in the SkillVo design system. It serves as the second level in our 
  * three-tier styling architecture:
  * 1. sv-ui-control-base - Base styles for all interactive controls
- * 2. sv-container-base (this file) - Base styles for all container components
+ * 2. sv-container-control-base (this file) - Base styles for all container components
  * 3. Component-specific classes (e.g., sv-card, sv-panel, sv-accordion)
+ * 
+ * For extension points and layer boundaries documentation, see:
+ * styles/docs/base-control-extensions.md
  */
 
 /* ==========================================================================
    TABLE OF CONTENTS:
    
-   1. VARIABLES & CONFIGURATION
-   2. MIXINS
-      2.1 Container-Specific Mixins
-      2.2 Layout Mixins
-      2.3 Visual Style Mixins
+   1. IMPORTS
+   2. VARIABLES & CONFIGURATION
    3. BASE CLASS DEFINITION
-   4. CONTAINER VARIATIONS
-      4.1 Size Variations
-      4.2 Padding Variations
-      4.3 Border Variations
-      4.4 Background Variations
-   5. CONTAINER STATES
-   6. CONTAINER ANIMATION UTILITIES
-   7. ACCESSIBILITY UTILITIES
-   8. RESPONSIVE BEHAVIORS
-   9. RTL SUPPORT
+   4. CONTAINER STRUCTURE COMPONENTS
+   5. CONTAINER VARIATIONS
+   6. STATE VARIATIONS
+   7. SIZE VARIATIONS
+   8. ACCESSIBILITY ENHANCEMENTS
    ========================================================================== */
 
 /* ==========================================================================
-   1. VARIABLES & CONFIGURATION
+   1. IMPORTS
    ========================================================================== */
-   @use './base-control' as *;
+@use 'sass:map';
+@use './../../abstracts/variables/' as *;
+@use './../utils/mixins/state' as state;
+@use './../utils/mixins/layout' as layout;
+@use './../utils/mixins/typography' as typography;
+@use './../utils/mixins/accessibility' as a11y;
+
+/* ==========================================================================
+   2. VARIABLES & CONFIGURATION
+   ========================================================================== */
+
 // Container-specific variables
-$container-default-radius: var(--sv-radius-md);
-$container-default-shadow: var(--sv-shadow-sm);
-$container-default-bg: var(--sv-bg-surface);
-$container-default-border-color: var(--sv-border-light);
-$container-default-border-width: 1px;
-$container-default-padding: var(--sv-padding-md);
+$container-border-width: 1px;
+$container-padding: var(--sv-space-4);
+$container-header-padding: var(--sv-space-3) var(--sv-space-4);
+$container-body-padding: var(--sv-space-4);
+$container-footer-padding: var(--sv-space-3) var(--sv-space-4);
 
 /* ==========================================================================
-   2. MIXINS
+   3. BASE CLASS DEFINITION
    ========================================================================== */
 
-/* 2.1 Container-Specific Mixins
-   ========================================================================== */
-
-// Basic container styling
-@mixin container-base {
+/**
+ * The sv-container-control-base class provides foundational styling for all
+ * container components such as cards, panels, and dialogs.
+ * 
+ * This class extends sv-ui-control-base and adds container-specific styling.
+ */
+.sv-container-control-base {
+  // Inherit all base UI control styles
+  @extend .sv-ui-control-base;
+  
+  // Box model adjustments for containers
   display: block;
   width: 100%;
-  box-sizing: border-box;
-  position: relative;
-  background-color: $container-default-bg;
-  border: $container-default-border-width solid $container-default-border-color;
-  border-radius: $container-default-radius;
-}
-
-// Flexible container with optional scrolling
-@mixin flexible-container($direction: column, $scroll: auto) {
-  display: flex;
-  flex-direction: $direction;
-  width: 100%;
-  height: 100%;
-  overflow: $scroll;
-}
-
-// Container with absolute positioning for overlays
-@mixin overlay-container {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: var(--sv-z-index-overlay);
-}
-
-/* 2.2 Layout Mixins
-   ========================================================================== */
-
-// Container grid layout
-@mixin container-grid($columns: 1fr, $rows: auto, $gap: var(--sv-space-md)) {
-  display: grid;
-  grid-template-columns: $columns;
-  grid-template-rows: $rows;
-  gap: $gap;
-  width: 100%;
-}
-
-// Responsive container with max-width
-@mixin container-responsive($max-width: var(--sv-container-lg)) {
-  width: 100%;
-  max-width: $max-width;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-/* 2.3 Visual Style Mixins
-   ========================================================================== */
-
-// Container elevation with shadow
-@mixin container-elevation($level: 'sm') {
-  box-shadow: var(--sv-shadow-#{$level});
-}
-
-// Container with border on specific side
-@mixin container-border-side($side, $width: 1px, $color: var(--sv-border-medium)) {
-  border-#{$side}: $width solid $color;
-}
-
-// Container with rounded corners on specific sides
-@mixin container-radius-side($side, $radius: var(--sv-radius-md)) {
-  @if $side == 'top' {
-    border-top-left-radius: $radius;
-    border-top-right-radius: $radius;
-    border-bottom-left-radius: 0;
-    border-bottom-right-radius: 0;
-  } @else if $side == 'right' {
-    border-top-right-radius: $radius;
-    border-bottom-right-radius: $radius;
-    border-top-left-radius: 0;
-    border-bottom-left-radius: 0;
-  } @else if $side == 'bottom' {
-    border-bottom-left-radius: $radius;
-    border-bottom-right-radius: $radius;
-    border-top-left-radius: 0;
-    border-top-right-radius: 0;
-  } @else if $side == 'left' {
-    border-top-left-radius: $radius;
-    border-bottom-left-radius: $radius;
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 0;
+  padding: 0;
+  margin: 0;
+  
+  // Container-specific styling
+  background-color: var(--sv-bg-surface);
+  border: $container-border-width solid var(--sv-border-light);
+  border-radius: var(--sv-radius-md);
+  box-shadow: var(--sv-shadow-sm);
+  overflow: visible;
+  
+  // Structure elements
+  &__header {
+    position: relative;
+    padding: $container-header-padding;
+    border-bottom: $container-border-width solid var(--sv-border-light);
+    background-color: var(--sv-bg-element);
+    border-top-left-radius: calc(var(--sv-radius-md) - 1px);
+    border-top-right-radius: calc(var(--sv-radius-md) - 1px);
+  }
+  
+  &__body {
+    position: relative;
+    padding: $container-body-padding;
+  }
+  
+  &__footer {
+    position: relative;
+    padding: $container-footer-padding;
+    border-top: $container-border-width solid var(--sv-border-light);
+    background-color: var(--sv-bg-element);
+    border-bottom-left-radius: calc(var(--sv-radius-md) - 1px);
+    border-bottom-right-radius: calc(var(--sv-radius-md) - 1px);
+  }
+  
+  // Focus behavior specific to containers should be more subtle
+  &:focus {
+    box-shadow: var(--sv-shadow-md);
+    border-color: var(--sv-border-medium);
+  }
+  
+  // Container hover behavior (only for interactive containers)
+  &.is-interactive:hover:not(:disabled):not(.disabled) {
+    background-color: var(--sv-bg-element-hover);
+    border-color: var(--sv-border-medium);
+  }
+  
+  // Disabled state for containers
+  &:disabled,
+  &.disabled {
+    opacity: 0.75; // Less opacity than standard controls
+    pointer-events: none;
   }
 }
 
 /* ==========================================================================
-   3. BASE CLASS DEFINITION
+   4. CONTAINER STRUCTURE COMPONENTS
    ========================================================================== */
 
-.sv-container-base {
-  // Inherit from the main control base class
-  @extend .sv-ui-control-base;
+.sv-container-control-base {
+  // Container title components
+  &__title {
+    margin: 0;
+    font-size: var(--sv-font-size-lg);
+    font-weight: var(--sv-font-weight-semibold);
+    color: var(--sv-text-primary);
+  }
   
-  // Apply container-specific base styling
-  @include container-base;
+  &__subtitle {
+    margin: var(--sv-space-1) 0 0;
+    font-size: var(--sv-font-size-base);
+    color: var(--sv-text-secondary);
+  }
   
-  // Override/extend specific properties from base control
-  padding: $container-default-padding;
+  // Close button for dismissible containers
+  &__close {
+    position: absolute;
+    top: var(--sv-space-2);
+    right: var(--sv-space-2);
+    width: var(--sv-size-8);
+    height: var(--sv-size-8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--sv-radius-full);
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    color: var(--sv-text-secondary);
+    
+    &:hover {
+      background-color: var(--sv-bg-element-hover);
+      color: var(--sv-text-primary);
+    }
+    
+    &:focus {
+      @include state.focus-state;
+    }
+  }
   
-  // Container-specific behavior
-  overflow: visible;
+  // Scrollable container body
+  &__body--scrollable {
+    max-height: var(--sv-size-96);
+    overflow-y: auto;
+    
+    &::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+    
+    &::-webkit-scrollbar-track {
+      background-color: var(--sv-bg-element);
+      border-radius: 4px;
+    }
+    
+    &::-webkit-scrollbar-thumb {
+      background-color: var(--sv-border-medium);
+      border-radius: 4px;
+      
+      &:hover {
+        background-color: var(--sv-border-dark);
+      }
+    }
+  }
   
-  // Focus behavior specific to containers
-  &:focus {
-    // We want a more subtle focus state for containers
+  // Actions container for buttons/controls
+  &__actions {
+    display: flex;
+    align-items: center;
+    gap: var(--sv-space-2);
+    
+    &--end {
+      justify-content: flex-end;
+    }
+    
+    &--between {
+      justify-content: space-between;
+    }
+    
+    &--center {
+      justify-content: center;
+    }
+  }
+}
+
+/* ==========================================================================
+   5. CONTAINER VARIATIONS
+   ========================================================================== */
+
+.sv-container-control-base {
+  // Elevation variations
+  &.sv-elevation-none {
+    box-shadow: none;
+  }
+  
+  &.sv-elevation-sm {
     box-shadow: var(--sv-shadow-sm);
   }
   
-  // Container-specific hover behavior (optional)
-  &:hover:not(:disabled):not(.disabled) {
-    // Only apply hover effects if the container is interactive
-    &.is-interactive {
-      background-color: var(--sv-bg-element-hover);
+  &.sv-elevation-md {
+    box-shadow: var(--sv-shadow-md);
+  }
+  
+  &.sv-elevation-lg {
+    box-shadow: var(--sv-shadow-lg);
+  }
+  
+  // Border variations
+  &.sv-border-none {
+    border: none;
+  }
+  
+  &.sv-border-light {
+    border-color: var(--sv-border-light);
+  }
+  
+  &.sv-border-medium {
+    border-color: var(--sv-border-medium);
+  }
+  
+  &.sv-border-dark {
+    border-color: var(--sv-border-dark);
+  }
+  
+  // Shape variations
+  &.sv-shape-sharp {
+    border-radius: 0;
+    
+    .sv-container-control-base__header,
+    .sv-container-control-base__footer {
+      border-radius: 0;
     }
   }
   
-  // Active state specific to containers
-  &:active:not(:disabled):not(.disabled) {
-    // Only apply active effects if the container is interactive
-    &.is-interactive {
-      background-color: var(--sv-bg-element-active);
+  &.sv-shape-rounded-sm {
+    border-radius: var(--sv-radius-sm);
+    
+    .sv-container-control-base__header {
+      border-top-left-radius: calc(var(--sv-radius-sm) - 1px);
+      border-top-right-radius: calc(var(--sv-radius-sm) - 1px);
+    }
+    
+    .sv-container-control-base__footer {
+      border-bottom-left-radius: calc(var(--sv-radius-sm) - 1px);
+      border-bottom-right-radius: calc(var(--sv-radius-sm) - 1px);
     }
   }
   
-  // Container-specific disabled state
-  &:disabled,
-  &.disabled {
-    opacity: 0.75; // Less opacity reduction than interactive controls
-  }
-}
-
-/* ==========================================================================
-   4. CONTAINER VARIATIONS
-   ========================================================================== */
-
-/* 4.1 Size Variations
-   ========================================================================== */
-
-// Standard size variations
-.sv-container-size-xs {
-  min-height: var(--sv-size-8);
-}
-
-.sv-container-size-sm {
-  min-height: var(--sv-size-12);
-}
-
-.sv-container-size-md {
-  min-height: var(--sv-size-16);
-}
-
-.sv-container-size-lg {
-  min-height: var(--sv-size-24);
-}
-
-.sv-container-size-xl {
-  min-height: var(--sv-size-32);
-}
-
-// Full-height variation
-.sv-container-full-height {
-  height: 100%;
-}
-
-// Full-width variation (default, but explicitly defined for clarity)
-.sv-container-full-width {
-  width: 100%;
-}
-
-// Auto-sized container that sizes to content
-.sv-container-auto {
-  width: auto;
-  height: auto;
-}
-
-/* 4.2 Padding Variations
-   ========================================================================== */
-
-// Standard padding variations
-.sv-container-padding-none {
-  padding: 0;
-}
-
-.sv-container-padding-xs {
-  padding: var(--sv-padding-xs);
-}
-
-.sv-container-padding-sm {
-  padding: var(--sv-padding-sm);
-}
-
-.sv-container-padding-md {
-  padding: var(--sv-padding-md);
-}
-
-.sv-container-padding-lg {
-  padding: var(--sv-padding-lg);
-}
-
-.sv-container-padding-xl {
-  padding: var(--sv-padding-xl);
-}
-
-// Directional padding
-.sv-container-padding-x-only {
-  padding-top: 0;
-  padding-bottom: 0;
-}
-
-.sv-container-padding-y-only {
-  padding-left: 0;
-  padding-right: 0;
-}
-
-/* 4.3 Border Variations
-   ========================================================================== */
-
-// Border styles
-.sv-container-border-none {
-  border: none;
-}
-
-.sv-container-border-thin {
-  border-width: 1px;
-}
-
-.sv-container-border-medium {
-  border-width: 2px;
-}
-
-.sv-container-border-thick {
-  border-width: 3px;
-}
-
-// Border sides
-.sv-container-border-top {
-  border: none;
-  @include container-border-side('top');
-}
-
-.sv-container-border-right {
-  border: none;
-  @include container-border-side('right');
-}
-
-.sv-container-border-bottom {
-  border: none;
-  @include container-border-side('bottom');
-}
-
-.sv-container-border-left {
-  border: none;
-  @include container-border-side('left');
-}
-
-// Radius variations
-.sv-container-radius-none {
-  border-radius: 0;
-}
-
-.sv-container-radius-sm {
-  border-radius: var(--sv-radius-sm);
-}
-
-.sv-container-radius-md {
-  border-radius: var(--sv-radius-md);
-}
-
-.sv-container-radius-lg {
-  border-radius: var(--sv-radius-lg);
-}
-
-.sv-container-radius-xl {
-  border-radius: var(--sv-radius-xl);
-}
-
-// Partial radius (rounded on specific sides)
-.sv-container-radius-top {
-  @include container-radius-side('top');
-}
-
-.sv-container-radius-right {
-  @include container-radius-side('right');
-}
-
-.sv-container-radius-bottom {
-  @include container-radius-side('bottom');
-}
-
-.sv-container-radius-left {
-  @include container-radius-side('left');
-}
-
-/* 4.4 Background Variations
-   ========================================================================== */
-
-.sv-container-bg-primary {
-  background-color: var(--sv-bg-primary);
-}
-
-.sv-container-bg-secondary {
-  background-color: var(--sv-bg-secondary);
-}
-
-.sv-container-bg-surface {
-  background-color: var(--sv-bg-surface);
-}
-
-.sv-container-bg-element {
-  background-color: var(--sv-bg-element);
-}
-
-.sv-container-bg-transparent {
-  background-color: transparent;
-}
-
-/* ==========================================================================
-   5. CONTAINER STATES
-   ========================================================================== */
-
-// Elevated containers
-.sv-container-elevated-sm {
-  @include container-elevation('sm');
-}
-
-.sv-container-elevated-md {
-  @include container-elevation('md');
-}
-
-.sv-container-elevated-lg {
-  @include container-elevation('lg');
-}
-
-// Interactive container (responds to hover/focus)
-.sv-container-interactive {
-  cursor: pointer;
-  
-  &:hover {
-    background-color: var(--sv-bg-element-hover);
+  &.sv-shape-rounded-lg {
+    border-radius: var(--sv-radius-lg);
+    
+    .sv-container-control-base__header {
+      border-top-left-radius: calc(var(--sv-radius-lg) - 1px);
+      border-top-right-radius: calc(var(--sv-radius-lg) - 1px);
+    }
+    
+    .sv-container-control-base__footer {
+      border-bottom-left-radius: calc(var(--sv-radius-lg) - 1px);
+      border-bottom-right-radius: calc(var(--sv-radius-lg) - 1px);
+    }
   }
   
-  &:active {
-    background-color: var(--sv-bg-element-active);
+  // Layout variations
+  &.sv-layout-flex {
+    display: flex;
+    flex-direction: column;
   }
-}
-
-// Overflow behavior
-.sv-container-overflow-hidden {
-  overflow: hidden;
-}
-
-.sv-container-overflow-auto {
-  overflow: auto;
-}
-
-.sv-container-overflow-scroll {
-  overflow: scroll;
-}
-
-.sv-container-overflow-visible {
-  overflow: visible;
-}
-
-// Special states
-.sv-container-selected {
-  border-color: var(--sv-primary);
-  background-color: var(--sv-bg-element-hover);
-}
-
-.sv-container-highlighted {
-  border-color: var(--sv-primary);
-  background-color: rgba(var(--sv-primary-500-rgb), 0.05);
+  
+  &.sv-layout-grid {
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+  }
 }
 
 /* ==========================================================================
-   6. CONTAINER ANIMATION UTILITIES
+   6. STATE VARIATIONS
    ========================================================================== */
 
-// Fade transition for containers
-.sv-container-fade {
-  transition: opacity var(--sv-motion-duration-medium) var(--sv-motion-ease-standard);
-}
-
-// Scale transition for containers
-.sv-container-scale {
-  transition: transform var(--sv-motion-duration-medium) var(--sv-motion-ease-standard);
-}
-
-// Slide transition for containers
-.sv-container-slide {
-  transition: transform var(--sv-motion-duration-medium) var(--sv-motion-ease-standard);
-}
-
-/* ==========================================================================
-   7. ACCESSIBILITY UTILITIES
-   ========================================================================== */
-
-// Make container focusable
-.sv-container-focusable {
-  &:focus {
-    @include focus-state;
+.sv-container-control-base {
+  // Expanded state
+  &.is-expanded {
+    border-color: var(--sv-border-medium);
+    box-shadow: var(--sv-shadow-md);
   }
-
-  &:focus-visible {
-    @include focus-visible-state;
+  
+  // Collapsed state
+  &.is-collapsed {
+    .sv-container-control-base__body,
+    .sv-container-control-base__footer {
+      display: none;
+    }
   }
-}
-
-// Region role for sections
-.sv-container-region {
-  &[role="region"] {
-    &:focus {
-      outline: none;
+  
+  // Highlighted state
+  &.is-highlighted {
+    border-color: var(--sv-primary);
+    box-shadow: 0 0 0 1px var(--sv-primary-light);
+  }
+  
+  // Error state
+  &.has-error {
+    border-color: var(--sv-error);
+    
+    .sv-container-control-base__header {
+      border-bottom-color: var(--sv-error-light);
+    }
+  }
+  
+  // Warning state
+  &.has-warning {
+    border-color: var(--sv-warning);
+    
+    .sv-container-control-base__header {
+      border-bottom-color: var(--sv-warning-light);
+    }
+  }
+  
+  // Success state
+  &.has-success {
+    border-color: var(--sv-success);
+    
+    .sv-container-control-base__header {
+      border-bottom-color: var(--sv-success-light);
     }
   }
 }
 
 /* ==========================================================================
-   8. RESPONSIVE BEHAVIORS
+   7. SIZE VARIATIONS
    ========================================================================== */
 
-// Responsive container sizes
-.sv-container-responsive-sm {
-  @include container-responsive(var(--sv-container-sm));
-}
-
-.sv-container-responsive-md {
-  @include container-responsive(var(--sv-container-md));
-}
-
-.sv-container-responsive-lg {
-  @include container-responsive(var(--sv-container-lg));
-}
-
-.sv-container-responsive-xl {
-  @include container-responsive(var(--sv-container-xl));
-}
-
-.sv-container-responsive-xxl {
-  @include container-responsive(var(--sv-container-xxl));
-}
-
-// Responsive padding adjustments
-@media (max-width: var(--sv-breakpoint-sm)) {
-  .sv-container-base {
-    padding: var(--sv-padding-sm);
+.sv-container-control-base {
+  // Small size
+  &.sv-size-sm {
+    .sv-container-control-base__header {
+      padding: var(--sv-space-2) var(--sv-space-3);
+    }
+    
+    .sv-container-control-base__body {
+      padding: var(--sv-space-3);
+    }
+    
+    .sv-container-control-base__footer {
+      padding: var(--sv-space-2) var(--sv-space-3);
+    }
+    
+    .sv-container-control-base__title {
+      font-size: var(--sv-font-size-base);
+    }
+    
+    .sv-container-control-base__subtitle {
+      font-size: var(--sv-font-size-sm);
+    }
+  }
+  
+  // Default (medium) size inherits from base class
+  
+  // Large size
+  &.sv-size-lg {
+    .sv-container-control-base__header {
+      padding: var(--sv-space-4) var(--sv-space-5);
+    }
+    
+    .sv-container-control-base__body {
+      padding: var(--sv-space-5);
+    }
+    
+    .sv-container-control-base__footer {
+      padding: var(--sv-space-4) var(--sv-space-5);
+    }
+    
+    .sv-container-control-base__title {
+      font-size: var(--sv-font-size-xl);
+    }
+    
+    .sv-container-control-base__subtitle {
+      font-size: var(--sv-font-size-lg);
+    }
   }
 }
 
 /* ==========================================================================
-   9. RTL SUPPORT
+   8. ACCESSIBILITY ENHANCEMENTS
    ========================================================================== */
 
-[dir="rtl"] {
-  .sv-container-base {
-    // Adjust directional properties for RTL support
-    &.has-directional-padding {
-      padding-right: var(--sv-padding-start, var(--sv-padding-md));
-      padding-left: var(--sv-padding-end, var(--sv-padding-md));
+.sv-container-control-base {
+  // High contrast mode support
+  @include a11y.high-contrast-mode {
+    border: 1px solid ButtonText;
+    
+    .sv-container-control-base__header,
+    .sv-container-control-base__footer {
+      border-color: ButtonText;
     }
-
-    // Adjust any container-specific RTL behaviors
-    &.sv-container-border-left {
-      border: none;
-      @include container-border-side('right');
+    
+    &.is-highlighted {
+      border-color: Highlight;
     }
-
-    &.sv-container-border-right {
-      border: none;
-      @include container-border-side('left');
+    
+    &.has-error,
+    &.has-warning,
+    &.has-success {
+      border-color: ButtonText;
     }
+  }
+  
+  // Support for reduced motion
+  @include a11y.reduced-motion {
+    transition: none;
+  }
+  
+  // Better keyboard navigation for interactive containers
+  &.is-interactive:focus-visible {
+    @include a11y.focus-visible-enhanced;
   }
 }

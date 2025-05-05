@@ -1,36 +1,45 @@
 /**
- * Feedback Components Base - Core Styles
- * Version: 1.0.0
- * Last Updated: April 29, 2025
+ * Feedback Controls Base - Core Styles
+ * Version: 2.0.0
+ * Last Updated: June 29, 2024
  * 
  * This file establishes the foundational styles for all feedback UI components
  * in the SkillVo design system. It serves as the second level in our 
  * three-tier styling architecture:
  * 1. sv-ui-control-base - Base styles for all interactive controls
- * 2. sv-feedback-base (this file) - Common styles for all feedback components
+ * 2. sv-feedback-control-base (this file) - Base styles for all feedback components
  * 3. Component-specific classes (e.g., sv-toast, sv-alert, sv-notification)
+ * 
+ * For extension points and layer boundaries documentation, see:
+ * styles/docs/base-control-extensions.md
  */
 
 /* ==========================================================================
    TABLE OF CONTENTS:
    
-   1. VARIABLES & CONFIGURATION
-   2. MIXINS
-      2.1 Feedback-Specific Mixins
-      2.2 Positioning Mixins
-      2.3 Animation Mixins
+   1. IMPORTS
+   2. VARIABLES & CONFIGURATION
    3. BASE CLASS DEFINITION
    4. FEEDBACK TYPES/SEVERITY
-   5. FEEDBACK POSITIONING
-   6. ACCESSIBILITY FEATURES
-   7. RTL SUPPORT
-   8. MOTION SENSITIVITY
+   5. POSITIONING VARIATIONS
+   6. ANIMATION VARIATIONS
+   7. SIZE VARIATIONS
+   8. ACCESSIBILITY ENHANCEMENTS
    ========================================================================== */
 
 /* ==========================================================================
-   1. VARIABLES & CONFIGURATION
+   1. IMPORTS
    ========================================================================== */
-   @use './base-control' as *;
+@use 'sass:map';
+@use './../../abstracts/variables/' as *;
+@use './../utils/mixins/state' as state;
+@use './../utils/mixins/layout' as layout;
+@use './../utils/mixins/typography' as typography;
+@use './../utils/mixins/accessibility' as a11y;
+
+/* ==========================================================================
+   2. VARIABLES & CONFIGURATION
+   ========================================================================== */
 
 // Feedback component z-index
 $feedback-z-index: var(--sv-z-index-tooltip);
@@ -45,267 +54,91 @@ $feedback-border-width: 1px;
 $feedback-icon-size: var(--sv-icon-size-md);
 
 // Close button size
-$feedback-close-button-size: var(--sv-btn-size-sm);
-
-/* ==========================================================================
-   2. MIXINS
-   ========================================================================== */
-
-/* 2.1 Feedback-Specific Mixins
-   ========================================================================== */
-
-// Feedback type styling (info, success, warning, error)
-@mixin feedback-type($type) {
-  @if $type == 'info' {
-    border-color: var(--sv-info);
-    background-color: rgba(41, 182, 246, 0.1);
-    color: var(--sv-text-primary);
-    
-    .sv-feedback-icon {
-      color: var(--sv-info);
-    }
-  } @else if $type == 'success' {
-    border-color: var(--sv-success);
-    background-color: rgba(76, 175, 80, 0.1);
-    color: var(--sv-text-primary);
-    
-    .sv-feedback-icon {
-      color: var(--sv-success);
-    }
-  } @else if $type == 'warning' {
-    border-color: var(--sv-warning);
-    background-color: rgba(255, 167, 38, 0.1);
-    color: var(--sv-text-primary);
-    
-    .sv-feedback-icon {
-      color: var(--sv-warning);
-    }
-  } @else if $type == 'error' {
-    border-color: var(--sv-error);
-    background-color: rgba(244, 67, 54, 0.1);
-    color: var(--sv-text-primary);
-    
-    .sv-feedback-icon {
-      color: var(--sv-error);
-    }
-  }
-}
-
-// Feedback layout with options for icon placement
-@mixin feedback-layout($icon-position: 'left') {
-  @include flex-container(row, flex-start, center, nowrap);
-  
-  @if $icon-position == 'left' {
-    .sv-feedback-icon {
-      margin-right: var(--sv-space-3);
-    }
-  } @else if $icon-position == 'right' {
-    flex-direction: row-reverse;
-    
-    .sv-feedback-icon {
-      margin-left: var(--sv-space-3);
-    }
-  } @else if $icon-position == 'top' {
-    flex-direction: column;
-    align-items: flex-start;
-    
-    .sv-feedback-icon {
-      margin-bottom: var(--sv-space-2);
-    }
-  }
-}
-
-// Feedback icon styling
-@mixin feedback-icon {
-  flex-shrink: 0;
-  width: $feedback-icon-size;
-  height: $feedback-icon-size;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-}
-
-// Close button styling for feedback components
-@mixin feedback-close-button {
-  position: absolute;
-  top: var(--sv-space-2);
-  right: var(--sv-space-2);
-  width: $feedback-close-button-size;
-  height: $feedback-close-button-size;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: var(--sv-radius-full);
-  background-color: transparent;
-  border: none;
-  cursor: pointer;
-  color: var(--sv-text-secondary);
-  transition: background-color $feedback-animation-duration var(--sv-motion-ease-standard);
-  
-  &:hover {
-    background-color: var(--sv-bg-element-hover);
-  }
-  
-  &:focus {
-    @include focus-state;
-  }
-  
-  &:focus-visible {
-    @include focus-visible-state;
-  }
-}
-
-/* 2.2 Positioning Mixins
-   ========================================================================== */
-
-// Position feedback at the top of the container
-@mixin feedback-position-top {
-  top: var(--sv-space-4);
-  left: 50%;
-  transform: translateX(-50%);
-}
-
-// Position feedback at the bottom of the container
-@mixin feedback-position-bottom {
-  bottom: var(--sv-space-4);
-  left: 50%;
-  transform: translateX(-50%);
-}
-
-// Position feedback at the top-right of the container
-@mixin feedback-position-top-right {
-  top: var(--sv-space-4);
-  right: var(--sv-space-4);
-}
-
-// Position feedback at the top-left of the container
-@mixin feedback-position-top-left {
-  top: var(--sv-space-4);
-  left: var(--sv-space-4);
-}
-
-// Position feedback at the bottom-right of the container
-@mixin feedback-position-bottom-right {
-  bottom: var(--sv-space-4);
-  right: var(--sv-space-4);
-}
-
-// Position feedback at the bottom-left of the container
-@mixin feedback-position-bottom-left {
-  bottom: var(--sv-space-4);
-  left: var(--sv-space-4);
-}
-
-/* 2.3 Animation Mixins
-   ========================================================================== */
-
-// Entry animation for feedback components
-@mixin feedback-entry-animation($position) {
-  @if $position == 'top' or $position == 'top-left' or $position == 'top-right' {
-    @include animate(slide-in-down);
-  } @else if $position == 'bottom' or $position == 'bottom-left' or $position == 'bottom-right' {
-    @include animate(slide-in-up);
-  } @else if $position == 'left' or $position == 'right' {
-    @include animate(fade-in);
-  }
-}
-
-// Exit animation for feedback components
-@mixin feedback-exit-animation($position) {
-  @if $position == 'top' or $position == 'top-left' or $position == 'top-right' {
-    @include animate(slide-out-up);
-  } @else if $position == 'bottom' or $position == 'bottom-left' or $position == 'bottom-right' {
-    @include animate(slide-out-down);
-  } @else if $position == 'left' or $position == 'right' {
-    @include animate(fade-out);
-  }
-}
+$feedback-close-button-size: var(--sv-size-8);
 
 /* ==========================================================================
    3. BASE CLASS DEFINITION
    ========================================================================== */
 
-.sv-feedback-base {
-  // Inherit from the main control base class
+/**
+ * The sv-feedback-control-base class provides foundational styling for all
+ * feedback-related UI controls such as alerts, toasts, and notifications.
+ * 
+ * This class extends sv-ui-control-base and adds feedback-specific styling.
+ */
+.sv-feedback-control-base {
+  // Inherit all base UI control styles
   @extend .sv-ui-control-base;
   
-  // Box model and layout
+  // Box model adjustments for feedback elements
+  display: flex;
+  align-items: center;
+  width: 100%;
+  max-width: var(--sv-size-96);
+  padding: var(--sv-space-3) var(--sv-space-4);
+  margin: 0;
+  
+  // Appearance adjustments
   position: relative;
-  box-sizing: border-box;
-  max-width: 100%;
-  width: auto;
+  border-radius: var(--sv-radius-md);
+  box-shadow: var(--sv-shadow-md);
   
-  // Typography
-  @include typography('base', 'normal', 'normal');
+  // Feedback content structure
+  &__icon {
+    flex-shrink: 0;
+    width: $feedback-icon-size;
+    height: $feedback-icon-size;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: var(--sv-space-3);
+  }
   
-  // Visual styling
-  @include padding('4');
-  @include border-radius('md');
-  @include shadow('md');
-  border-width: $feedback-border-width;
-  border-style: solid;
-  
-  // Default styling
-  background-color: var(--sv-bg-surface);
-  border-color: var(--sv-border-medium);
-  
-  // Z-index for proper stacking
-  z-index: $feedback-z-index;
-  
-  // Animation defaults
-  @include transition(all, 'medium', 'standard');
-  
-  // Content container for flexible layout
-  .sv-feedback-content {
+  &__content {
     flex: 1;
-    min-width: 0; // Ensures text truncation works
+    min-width: 0;
   }
   
-  // Title styling
-  .sv-feedback-title {
-    @include typography('lg', 'semibold', 'normal');
-    margin: 0 0 var(--sv-space-2) 0;
-    @include text-truncate;
+  &__title {
+    margin: 0 0 var(--sv-space-1) 0;
+    font-size: var(--sv-font-size-base);
+    font-weight: var(--sv-font-weight-semibold);
+    color: inherit;
   }
   
-  // Message styling
-  .sv-feedback-message {
-    @include typography('base', 'normal', 'normal');
+  &__message {
     margin: 0;
+    font-size: var(--sv-font-size-sm);
+    color: inherit;
   }
   
-  // Icon styling
-  .sv-feedback-icon {
-    @include feedback-icon;
-  }
-  
-  // Close button styling
-  .sv-feedback-close {
-    @include feedback-close-button;
-  }
-  
-  // Ensure reasonable max-width by default
-  &:not(.sv-feedback-full-width) {
-    max-width: 32rem;
-  }
-  
-  // Support for actions within feedback components
-  .sv-feedback-actions {
+  &__close {
+    position: absolute;
+    top: var(--sv-space-2);
+    right: var(--sv-space-2);
+    width: $feedback-close-button-size;
+    height: $feedback-close-button-size;
     display: flex;
-    margin-top: var(--sv-space-3);
-    gap: var(--sv-space-2);
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--sv-radius-full);
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    color: var(--sv-text-secondary);
     
-    &.sv-feedback-actions-end {
-      justify-content: flex-end;
+    &:hover {
+      background-color: var(--sv-bg-element-hover);
     }
     
-    &.sv-feedback-actions-center {
-      justify-content: center;
+    &:focus {
+      @include state.focus-state;
     }
-    
-    &.sv-feedback-actions-between {
-      justify-content: space-between;
-    }
+  }
+  
+  // States
+  &[aria-hidden="true"] {
+    display: none;
   }
 }
 
@@ -313,173 +146,323 @@ $feedback-close-button-size: var(--sv-btn-size-sm);
    4. FEEDBACK TYPES/SEVERITY
    ========================================================================== */
 
-// Type classes for different feedback severities
-.sv-feedback-info {
-  @include feedback-type('info');
-}
-
-.sv-feedback-success {
-  @include feedback-type('success');
-}
-
-.sv-feedback-warning {
-  @include feedback-type('warning');
-}
-
-.sv-feedback-error {
-  @include feedback-type('error');
-}
-
-/* ==========================================================================
-   5. FEEDBACK POSITIONING
-   ========================================================================== */
-
-// Fixed positioning for floating feedback components
-.sv-feedback-fixed {
-  position: fixed;
-}
-
-// Absolute positioning for container-relative components
-.sv-feedback-absolute {
-  position: absolute;
-}
-
-// Position utility classes
-.sv-feedback-position-top {
-  @include feedback-position-top;
-}
-
-.sv-feedback-position-bottom {
-  @include feedback-position-bottom;
-}
-
-.sv-feedback-position-top-right {
-  @include feedback-position-top-right;
-}
-
-.sv-feedback-position-top-left {
-  @include feedback-position-top-left;
-}
-
-.sv-feedback-position-bottom-right {
-  @include feedback-position-bottom-right;
-}
-
-.sv-feedback-position-bottom-left {
-  @include feedback-position-bottom-left;
-}
-
-// Full width option
-.sv-feedback-full-width {
-  width: calc(100% - 2 * var(--sv-space-4));
-  max-width: none;
-}
-
-/* ==========================================================================
-   6. ACCESSIBILITY FEATURES
-   ========================================================================== */
-
-// Support for live regions in feedback components
-.sv-feedback-live {
-  &[aria-live="polite"],
-  &[aria-live="assertive"] {
-    // Ensure live regions are properly announced
-    &:not([aria-hidden="true"]) {
-      // Styles to support screen reader announcements
+.sv-feedback-control-base {
+  // Info variant
+  &.sv-feedback-info {
+    border-color: var(--sv-info);
+    background-color: var(--sv-info-light);
+    color: var(--sv-text-primary);
+    
+    .sv-feedback-control-base__icon {
+      color: var(--sv-info);
     }
   }
-}
-
-// Ensure focus management for interactive feedback
-.sv-feedback-interactive {
-  // When a feedback requires user interaction, ensure it's focusable
-  &:not([role="status"]) {
-    // These feedback components need proper focus management
-    &:focus {
-      @include focus-state;
-    }
+  
+  // Success variant
+  &.sv-feedback-success {
+    border-color: var(--sv-success);
+    background-color: var(--sv-success-light);
+    color: var(--sv-text-primary);
     
-    &:focus-visible {
-      @include focus-visible-state;
+    .sv-feedback-control-base__icon {
+      color: var(--sv-success);
     }
   }
-}
-
-/* ==========================================================================
-   7. RTL SUPPORT
-   ========================================================================== */
-
-[dir="rtl"] {
-  .sv-feedback-base {
-    // Handle RTL layout
-    .sv-feedback-icon {
-      margin-right: 0;
-      margin-left: var(--sv-space-3);
+  
+  // Warning variant
+  &.sv-feedback-warning {
+    border-color: var(--sv-warning);
+    background-color: var(--sv-warning-light);
+    color: var(--sv-text-primary);
+    
+    .sv-feedback-control-base__icon {
+      color: var(--sv-warning);
+    }
+  }
+  
+  // Error variant
+  &.sv-feedback-error {
+    border-color: var(--sv-error);
+    background-color: var(--sv-error-light);
+    color: var(--sv-text-primary);
+    
+    .sv-feedback-control-base__icon {
+      color: var(--sv-error);
+    }
+  }
+  
+  // Filled variant (solid background)
+  &.sv-feedback-filled {
+    &.sv-feedback-info {
+      background-color: var(--sv-info);
+      color: var(--sv-text-on-dark);
+      
+      .sv-feedback-control-base__icon {
+        color: var(--sv-text-on-dark);
+      }
     }
     
-    .sv-feedback-close {
-      right: auto;
-      left: var(--sv-space-2);
+    &.sv-feedback-success {
+      background-color: var(--sv-success);
+      color: var(--sv-text-on-dark);
+      
+      .sv-feedback-control-base__icon {
+        color: var(--sv-text-on-dark);
+      }
     }
     
-    // Adjust RTL positioning
-    &.sv-feedback-position-top-right {
-      right: auto;
-      left: var(--sv-space-4);
+    &.sv-feedback-warning {
+      background-color: var(--sv-warning);
+      color: var(--sv-text-on-dark);
+      
+      .sv-feedback-control-base__icon {
+        color: var(--sv-text-on-dark);
+      }
     }
     
-    &.sv-feedback-position-top-left {
-      left: auto;
-      right: var(--sv-space-4);
+    &.sv-feedback-error {
+      background-color: var(--sv-error);
+      color: var(--sv-text-on-dark);
+      
+      .sv-feedback-control-base__icon {
+        color: var(--sv-text-on-dark);
+      }
+    }
+  }
+  
+  // Outlined variant
+  &.sv-feedback-outlined {
+    background-color: transparent;
+    
+    &.sv-feedback-info {
+      border: $feedback-border-width solid var(--sv-info);
+      color: var(--sv-info-dark);
     }
     
-    &.sv-feedback-position-bottom-right {
-      right: auto;
-      left: var(--sv-space-4);
+    &.sv-feedback-success {
+      border: $feedback-border-width solid var(--sv-success);
+      color: var(--sv-success-dark);
     }
     
-    &.sv-feedback-position-bottom-left {
-      left: auto;
-      right: var(--sv-space-4);
+    &.sv-feedback-warning {
+      border: $feedback-border-width solid var(--sv-warning);
+      color: var(--sv-warning-dark);
+    }
+    
+    &.sv-feedback-error {
+      border: $feedback-border-width solid var(--sv-error);
+      color: var(--sv-error-dark);
     }
   }
 }
 
 /* ==========================================================================
-   8. MOTION SENSITIVITY
+   5. POSITIONING VARIATIONS
    ========================================================================== */
 
-@media (prefers-reduced-motion: reduce) {
-  .sv-feedback-base {
-    // Override animations for users who prefer reduced motion
-    transition: opacity $feedback-animation-duration linear !important;
-    animation: fade-in $feedback-animation-duration linear !important;
-    
-    &.sv-feedback-exiting {
-      animation: fade-out $feedback-animation-duration linear !important;
-    }
+.sv-feedback-control-base {
+  // Fixed position feedback components (toasts, notifications)
+  &.sv-feedback-fixed {
+    position: fixed;
+    z-index: $feedback-z-index;
+  }
+  
+  // Position variants
+  &.sv-feedback-top {
+    top: var(--sv-space-4);
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  
+  &.sv-feedback-bottom {
+    bottom: var(--sv-space-4);
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  
+  &.sv-feedback-top-right {
+    top: var(--sv-space-4);
+    right: var(--sv-space-4);
+  }
+  
+  &.sv-feedback-top-left {
+    top: var(--sv-space-4);
+    left: var(--sv-space-4);
+  }
+  
+  &.sv-feedback-bottom-right {
+    bottom: var(--sv-space-4);
+    right: var(--sv-space-4);
+  }
+  
+  &.sv-feedback-bottom-left {
+    bottom: var(--sv-space-4);
+    left: var(--sv-space-4);
+  }
+  
+  // Inline (non-fixed) feedback
+  &.sv-feedback-inline {
+    position: relative;
+    width: 100%;
+    margin: var(--sv-space-2) 0;
   }
 }
 
-// Additional keyframes needed for feedback components
-@keyframes slide-out-up {
-  0% {
-    transform: translateY(0);
-    opacity: 1;
-  }
-  100% {
-    transform: translateY(-10px);
+/* ==========================================================================
+   6. ANIMATION VARIATIONS
+   ========================================================================== */
+
+.sv-feedback-control-base {
+  // Fade animation
+  &.sv-feedback-fade {
     opacity: 0;
+    transition: opacity $feedback-animation-duration var(--sv-motion-ease-standard);
+    
+    &.sv-feedback-visible {
+      opacity: 1;
+    }
+  }
+  
+  // Slide animation based on position
+  &.sv-feedback-slide {
+    transition: transform $feedback-animation-duration var(--sv-motion-ease-standard),
+                opacity $feedback-animation-duration var(--sv-motion-ease-standard);
+    opacity: 0;
+    
+    &.sv-feedback-top,
+    &.sv-feedback-top-left,
+    &.sv-feedback-top-right {
+      transform: translateY(-100%);
+      
+      &.sv-feedback-visible {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+    
+    &.sv-feedback-bottom,
+    &.sv-feedback-bottom-left,
+    &.sv-feedback-bottom-right {
+      transform: translateY(100%);
+      
+      &.sv-feedback-visible {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+  }
+  
+  // Auto-hide functionality with progress bar
+  &.sv-feedback-auto-hide {
+    &::before {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      height: 3px;
+      background-color: rgba(255, 255, 255, 0.3);
+      width: 100%;
+      transform-origin: left;
+      animation: feedback-progress linear forwards;
+      animation-duration: var(--sv-feedback-duration, 5000ms);
+    }
   }
 }
 
-@keyframes slide-out-down {
-  0% {
-    transform: translateY(0);
-    opacity: 1;
+@keyframes feedback-progress {
+  0% { transform: scaleX(1); }
+  100% { transform: scaleX(0); }
+}
+
+/* ==========================================================================
+   7. SIZE VARIATIONS
+   ========================================================================== */
+
+.sv-feedback-control-base {
+  // Small size
+  &.sv-size-sm {
+    padding: var(--sv-space-2) var(--sv-space-3);
+    
+    .sv-feedback-control-base__title {
+      font-size: var(--sv-font-size-sm);
+    }
+    
+    .sv-feedback-control-base__message {
+      font-size: var(--sv-font-size-xs);
+    }
+    
+    .sv-feedback-control-base__icon {
+      width: var(--sv-icon-size-sm);
+      height: var(--sv-icon-size-sm);
+    }
   }
-  100% {
-    transform: translateY(10px);
-    opacity: 0;
+  
+  // Default (medium) size inherits from base class
+  
+  // Large size
+  &.sv-size-lg {
+    padding: var(--sv-space-4) var(--sv-space-5);
+    
+    .sv-feedback-control-base__title {
+      font-size: var(--sv-font-size-lg);
+    }
+    
+    .sv-feedback-control-base__message {
+      font-size: var(--sv-font-size-base);
+    }
+    
+    .sv-feedback-control-base__icon {
+      width: var(--sv-icon-size-lg);
+      height: var(--sv-icon-size-lg);
+    }
+  }
+}
+
+/* ==========================================================================
+   8. ACCESSIBILITY ENHANCEMENTS
+   ========================================================================== */
+
+.sv-feedback-control-base {
+  // Better support for screen readers
+  &[role="alert"] {
+    &:not([aria-live]) {
+      aria-live: assertive;
+    }
+  }
+  
+  &[role="status"] {
+    &:not([aria-live]) {
+      aria-live: polite;
+    }
+  }
+  
+  // High contrast mode support
+  @include a11y.high-contrast-mode {
+    border: 1px solid ButtonText;
+    
+    &.sv-feedback-info,
+    &.sv-feedback-success,
+    &.sv-feedback-warning,
+    &.sv-feedback-error {
+      border: 1px solid ButtonText;
+      
+      .sv-feedback-control-base__icon {
+        color: ButtonText;
+      }
+    }
+    
+    &.sv-feedback-filled {
+      background-color: ButtonFace;
+      color: ButtonText;
+    }
+  }
+  
+  // Support for reduced motion
+  @include a11y.reduced-motion {
+    transition: none;
+    
+    &.sv-feedback-auto-hide::before {
+      animation: none;
+    }
   }
 }

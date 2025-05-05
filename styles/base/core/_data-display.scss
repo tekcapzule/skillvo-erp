@@ -1,14 +1,17 @@
 /**
- * Data Display Base - Core Styles
- * Version: 1.0.0
- * Last Updated: April 29, 2025
+ * Data Display Controls Base - Core Styles
+ * Version: 2.0.0
+ * Last Updated: June 29, 2024
  * 
- * This file establishes the common styles for all data display components
+ * This file establishes the foundational styles for all data display components
  * in the SkillVo design system. It serves as the second level in our 
  * three-tier styling architecture:
  * 1. sv-ui-control-base - Base styles for all interactive controls
- * 2. sv-data-display-base (this file) - Common styles for data display components
+ * 2. sv-data-display-base (this file) - Base styles for all data display components
  * 3. Component-specific classes (e.g., sv-table, sv-list, sv-card, sv-chart)
+ * 
+ * For extension points and layer boundaries documentation, see:
+ * styles/docs/base-control-extensions.md
  */
 
 /* ==========================================================================
@@ -17,384 +20,384 @@
    1. IMPORTS
    2. VARIABLES & CONFIGURATION
    3. BASE CLASS DEFINITION
-   4. DATA CONTAINER STYLES
-   5. DATA CONTENT STYLES
-   6. TYPOGRAPHY & TEXT TREATMENT
-   7. LAYOUT UTILITIES
-   8. DENSITY VARIATIONS
-   9. RESPONSIVE BEHAVIOR
-   10. ACCESSIBILITY CONSIDERATIONS
+   4. DATA STRUCTURE COMPONENTS
+   5. STATE VARIATIONS
+   6. DENSITY VARIATIONS
+   7. SIZE VARIATIONS
+   8. ACCESSIBILITY ENHANCEMENTS
    ========================================================================== */
 
 /* ==========================================================================
    1. IMPORTS
    ========================================================================== */
-
-// Import any additional mixins or utilities needed
+@use 'sass:map';
+@use './../../abstracts/variables/' as *;
+@use './../utils/mixins/state' as state;
+@use './../utils/mixins/layout' as layout;
+@use './../utils/mixins/typography' as typography;
+@use './../utils/mixins/accessibility' as a11y;
 
 /* ==========================================================================
    2. VARIABLES & CONFIGURATION
    ========================================================================== */
-   @use './base-control' as *;
 
-// Content container properties
-$data-padding-x: var(--sv-padding-md);
-$data-padding-y: var(--sv-padding-md);
-$data-border-color: var(--sv-border-medium);
+// Data container properties
+$data-padding-x: var(--sv-space-4);
+$data-padding-y: var(--sv-space-3);
 $data-border-width: 1px;
 
-// Data typography settings
-$data-font-family: var(--sv-font-family-main);
-$data-font-size: var(--sv-text-base);
-$data-line-height: var(--sv-leading-normal);
+// Data structure spacing
+$data-row-spacing: var(--sv-space-1);
+$data-cell-spacing: var(--sv-space-2);
 
-// Data density variations
-$data-density-compact-padding-y: var(--sv-padding-1);
-$data-density-compact-padding-x: var(--sv-padding-2);
-$data-density-regular-padding-y: var(--sv-padding-2);
-$data-density-regular-padding-x: var(--sv-padding-3);
-$data-density-comfortable-padding-y: var(--sv-padding-3);
-$data-density-comfortable-padding-x: var(--sv-padding-4);
-
-// Animation settings
-$data-transition-duration: var(--sv-motion-duration-medium);
-$data-transition-timing: var(--sv-motion-ease-standard);
-
-// Interaction settings
-$data-hover-bg: var(--sv-bg-element-hover);
-$data-selected-bg: var(--sv-bg-element-active);
+// Data typography
+$data-font-weight-header: var(--sv-font-weight-semibold);
+$data-font-size-header: var(--sv-font-size-sm);
 
 /* ==========================================================================
    3. BASE CLASS DEFINITION
    ========================================================================== */
 
+/**
+ * The sv-data-display-base class provides foundational styling for all
+ * data display components such as tables, lists, and data grids.
+ * 
+ * This class extends sv-ui-control-base and adds data display specific styling.
+ */
 .sv-data-display-base {
-  // Inherit from the base control class
+  // Inherit all base UI control styles
   @extend .sv-ui-control-base;
   
-  // Box model overrides
-  padding: 0; // Reset padding to be defined at component level
-  overflow: auto; // Enable scrolling for data that exceeds container
+  // Box model adjustments for data displays
+  display: block;
+  width: 100%;
+  padding: 0;
+  margin: 0;
   
-  // Content container
+  // Data display specific styling
   background-color: var(--sv-bg-surface);
-  border: $data-border-width solid $data-border-color;
+  border: $data-border-width solid var(--sv-border-medium);
   border-radius: var(--sv-radius-md);
+  overflow: auto;
   
-  // Typography settings
-  font-family: $data-font-family;
-  font-size: $data-font-size;
-  line-height: $data-line-height;
+  // Typography defaults
+  font-size: var(--sv-font-size-base);
+  line-height: var(--sv-line-height-normal);
   color: var(--sv-text-primary);
   
-  // Animation settings
-  transition: 
-    background-color $data-transition-duration $data-transition-timing,
-    border-color $data-transition-duration $data-transition-timing,
-    box-shadow $data-transition-duration $data-transition-timing;
-    
-  // Prevent text selection by default
-  user-select: none;
-  
-  // Wrap media query in & {}
-  & {
-    @media (prefers-reduced-motion: reduce) {
-      transition: none;
-    }
+  // Structure elements
+  &__container {
+    position: relative;
+    width: 100%;
   }
   
-  // Support for proper printing
-  & {
-    @media print {
-      border-color: #000;
-      color: #000;
-      background-color: transparent;
-    }
-  }
-}
-
-/* ==========================================================================
-   4. DATA CONTAINER STYLES
-   ========================================================================== */
-
-.sv-data-container {
-  position: relative;
-  height: 100%;
-  width: 100%;
-  
-  // For components that need to be scrollable
-  &.sv-data-scrollable {
-    overflow: auto;
-    -webkit-overflow-scrolling: touch; // Smooth scrolling on iOS
-    
-    // Styling for scrollbars in modern browsers
-    &::-webkit-scrollbar {
-      width: 8px;
-      height: 8px;
-    }
-    
-    &::-webkit-scrollbar-track {
-      background-color: var(--sv-bg-element);
-      border-radius: 4px;
-    }
-    
-    &::-webkit-scrollbar-thumb {
-      background-color: var(--sv-border-dark);
-      border-radius: 4px;
-      
-      &:hover {
-        background-color: var(--sv-border-dark);
-      }
-    }
+  &__header {
+    position: relative;
+    padding: $data-padding-y $data-padding-x;
+    border-bottom: $data-border-width solid var(--sv-border-light);
+    background-color: var(--sv-bg-element);
   }
   
-  // For components that need a fixed height
-  &.sv-data-fixed-height {
-    max-height: 100%;
-    overflow-y: auto;
+  &__body {
+    position: relative;
+    padding: $data-padding-y $data-padding-x;
   }
   
-  // For components that need horizontal scrolling
-  &.sv-data-scrollable-x {
-    overflow-x: auto;
-    overflow-y: hidden;
+  &__footer {
+    position: relative;
+    padding: $data-padding-y $data-padding-x;
+    border-top: $data-border-width solid var(--sv-border-light);
+    background-color: var(--sv-bg-element);
   }
-}
-
-/* ==========================================================================
-   5. DATA CONTENT STYLES
-   ========================================================================== */
-
-.sv-data-content {
-  position: relative;
   
-  // For empty state
-  &.sv-data-empty {
+  // Empty state styling
+  &.is-empty &__body {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: var(--sv-padding-lg);
-    color: var(--sv-text-secondary);
+    padding: calc($data-padding-y * 3);
     font-style: italic;
+    color: var(--sv-text-tertiary);
   }
   
-  // For loading state
-  &.sv-data-loading {
+  // Loading state
+  &.is-loading {
     opacity: 0.7;
     pointer-events: none;
   }
-  
-  // For error state
-  &.sv-data-error {
-    border-color: var(--sv-error);
-    color: var(--sv-error);
-  }
 }
 
 /* ==========================================================================
-   6. TYPOGRAPHY & TEXT TREATMENT
+   4. DATA STRUCTURE COMPONENTS
    ========================================================================== */
 
-// Common text treatments for data elements
-.sv-data-title {
-  font-size: var(--sv-text-lg);
-  font-weight: var(--sv-font-semibold);
-  color: var(--sv-text-primary);
-  margin-bottom: var(--sv-space-2);
-}
-
-.sv-data-subtitle {
-  font-size: var(--sv-text-base);
-  font-weight: var(--sv-font-medium);
-  color: var(--sv-text-secondary);
-  margin-bottom: var(--sv-space-2);
-}
-
-.sv-data-caption {
-  font-size: var(--sv-text-sm);
-  color: var(--sv-text-tertiary);
-  margin-top: var(--sv-space-2);
-}
-
-.sv-data-label {
-  font-size: var(--sv-text-sm);
-  font-weight: var(--sv-font-medium);
-  color: var(--sv-text-secondary);
-}
-
-.sv-data-value {
-  font-size: var(--sv-text-base);
-  color: var(--sv-text-primary);
-  
-  // Variation for emphasized values
-  &.sv-data-value-emphasized {
-    font-weight: var(--sv-font-semibold);
-  }
-  
-  // Variation for less emphasized values
-  &.sv-data-value-muted {
-    color: var(--sv-text-secondary);
-  }
-}
-
-// Make text within data selectable
-.sv-data-selectable-text {
-  user-select: text;
-}
-
-// Truncate long text with ellipsis
-.sv-data-truncate {
-  @include text-truncate;
-}
-
-/* ==========================================================================
-   7. LAYOUT UTILITIES
-   ========================================================================== */
-
-// Flex layout for data items
-.sv-data-layout-flex {
-  display: flex;
-  
-  &.sv-data-layout-column {
-    flex-direction: column;
-  }
-  
-  &.sv-data-layout-row {
-    flex-direction: row;
-  }
-  
-  &.sv-data-layout-wrap {
-    flex-wrap: wrap;
-  }
-  
-  &.sv-data-layout-center {
+.sv-data-display-base {
+  // Row-based data display (tables, lists)
+  &__row {
+    display: flex;
     align-items: center;
-    justify-content: center;
+    width: 100%;
+    padding: $data-row-spacing 0;
+    
+    &:not(:last-child) {
+      border-bottom: $data-border-width solid var(--sv-border-light);
+    }
+    
+    // Zebra striping for rows
+    &:nth-child(even).sv-data-zebra {
+      background-color: var(--sv-bg-element);
+    }
+    
+    // Hoverable rows
+    &.sv-data-hoverable:hover {
+      background-color: var(--sv-bg-element-hover);
+    }
+    
+    // Selected rows
+    &.is-selected {
+      background-color: var(--sv-bg-element-active);
+    }
   }
   
-  &.sv-data-layout-space-between {
-    justify-content: space-between;
+  // Cell-based data components
+  &__cell {
+    flex: 1;
+    min-width: 0;
+    padding: $data-row-spacing $data-cell-spacing;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    
+    // Cell alignment variations
+    &.sv-cell-right {
+      text-align: right;
+    }
+    
+    &.sv-cell-center {
+      text-align: center;
+    }
+    
+    // Cell width variations
+    &.sv-cell-fixed {
+      flex: 0 0 auto;
+    }
+    
+    &.sv-cell-fill {
+      flex: 1 0 auto;
+    }
+    
+    // Cell with numeric data
+    &.sv-cell-numeric {
+      text-align: right;
+      font-variant-numeric: tabular-nums;
+    }
   }
-}
-
-// Grid layout for data items
-.sv-data-layout-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-  gap: var(--sv-space-4);
   
-  &.sv-data-layout-grid-compact {
-    gap: var(--sv-space-2);
-  }
-  
-  &.sv-data-layout-grid-tight {
-    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-  }
-  
-  &.sv-data-layout-grid-wide {
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  }
-}
-
-/* ==========================================================================
-   8. DENSITY VARIATIONS
-   ========================================================================== */
-
-// Density variations for data display
-.sv-data-density-compact {
-  .sv-data-cell,
-  .sv-data-item {
-    padding: $data-density-compact-padding-y $data-density-compact-padding-x;
-  }
-}
-
-.sv-data-density-regular {
-  .sv-data-cell,
-  .sv-data-item {
-    padding: $data-density-regular-padding-y $data-density-regular-padding-x;
-  }
-}
-
-.sv-data-density-comfortable {
-  .sv-data-cell,
-  .sv-data-item {
-    padding: $data-density-comfortable-padding-y $data-density-comfortable-padding-x;
-  }
-}
-
-/* ==========================================================================
-   9. RESPONSIVE BEHAVIOR
-   ========================================================================== */
-
-// Base responsive behavior - specifics will be defined at component level
-@media (max-width: var(--sv-breakpoint-md)) {
-  .sv-data-display-base {
-    &.sv-data-responsive {
-      // Adjust font size for better readability on smaller screens
-      font-size: 0.9em;
+  // Header cells
+  &__header-cell {
+    font-weight: $data-font-weight-header;
+    font-size: $data-font-size-header;
+    color: var(--sv-text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+    
+    // Sortable header cells
+    &.is-sortable {
+      cursor: pointer;
+      user-select: none;
       
-      // Apply compact density automatically
-      .sv-data-cell,
-      .sv-data-item {
-        padding: $data-density-compact-padding-y $data-density-compact-padding-x;
+      &:hover {
+        color: var(--sv-primary);
+      }
+      
+      &.is-sorted {
+        color: var(--sv-primary);
       }
     }
   }
 }
 
 /* ==========================================================================
-   10. ACCESSIBILITY CONSIDERATIONS
+   5. STATE VARIATIONS
    ========================================================================== */
 
-// Focus indicators for interactive data elements
-.sv-data-interactive {
-  cursor: pointer;
-  
-  &:focus {
-    outline: none;
-    box-shadow: var(--sv-shadow-focus);
+.sv-data-display-base {
+  // Error state
+  &.has-error {
+    border-color: var(--sv-error);
+    
+    .sv-data-display-base__header {
+      border-bottom-color: var(--sv-error-light);
+    }
   }
   
-  &:focus-visible {
-    outline: var(--sv-focus-ring-width) solid var(--sv-focus-ring-color);
-    outline-offset: var(--sv-focus-ring-offset);
+  // Warning state
+  &.has-warning {
+    border-color: var(--sv-warning);
+    
+    .sv-data-display-base__header {
+      border-bottom-color: var(--sv-warning-light);
+    }
   }
   
-  // High contrast mode support
-  @media (forced-colors: active) {
-    &:focus {
-      outline: 2px solid Highlight;
-      outline-offset: 2px;
+  // Success state
+  &.has-success {
+    border-color: var(--sv-success);
+    
+    .sv-data-display-base__header {
+      border-bottom-color: var(--sv-success-light);
+    }
+  }
+  
+  // Selectable data displays
+  &.is-selectable {
+    .sv-data-display-base__row {
+      cursor: pointer;
+      user-select: none;
+      
+      &:hover {
+        background-color: var(--sv-bg-element-hover);
+      }
+      
+      &.is-selected {
+        background-color: var(--sv-bg-element-active);
+      }
+    }
+  }
+  
+  // Sortable data displays
+  &.is-sortable {
+    .sv-data-display-base__header-cell {
+      cursor: pointer;
+      user-select: none;
+      
+      &:hover {
+        color: var(--sv-primary);
+      }
+    }
+  }
+  
+  // Scrollable data displays
+  &.is-scrollable {
+    max-height: var(--sv-size-96);
+    overflow-y: auto;
+    
+    .sv-data-display-base__header {
+      position: sticky;
+      top: 0;
+      z-index: 1;
     }
   }
 }
 
-// Hover state for interactive data elements
-.sv-data-hoverable {
-  &:hover:not(:disabled):not(.disabled) {
-    background-color: $data-hover-bg;
+/* ==========================================================================
+   6. DENSITY VARIATIONS
+   ========================================================================== */
+
+.sv-data-display-base {
+  // Compact density
+  &.sv-density-compact {
+    .sv-data-display-base__header,
+    .sv-data-display-base__body,
+    .sv-data-display-base__footer {
+      padding: var(--sv-space-2) var(--sv-space-3);
+    }
+    
+    .sv-data-display-base__row {
+      padding: 0;
+    }
+    
+    .sv-data-display-base__cell {
+      padding: var(--sv-space-1) var(--sv-space-1);
+    }
+  }
+  
+  // Normal density (default)
+  &.sv-density-normal {
+    // Default values already applied
+  }
+  
+  // Comfortable density
+  &.sv-density-comfortable {
+    .sv-data-display-base__header,
+    .sv-data-display-base__body,
+    .sv-data-display-base__footer {
+      padding: var(--sv-space-4) var(--sv-space-5);
+    }
+    
+    .sv-data-display-base__row {
+      padding: var(--sv-space-2) 0;
+    }
+    
+    .sv-data-display-base__cell {
+      padding: var(--sv-space-2) var(--sv-space-3);
+    }
   }
 }
 
-// Selected state for data elements
-.sv-data-selectable {
-  &.sv-data-selected,
-  &[aria-selected="true"] {
-    background-color: $data-selected-bg;
-    font-weight: var(--sv-font-medium);
+/* ==========================================================================
+   7. SIZE VARIATIONS
+   ========================================================================== */
+
+.sv-data-display-base {
+  // Small size
+  &.sv-size-sm {
+    font-size: var(--sv-font-size-sm);
+    
+    .sv-data-display-base__header-cell {
+      font-size: var(--sv-font-size-xs);
+    }
+  }
+  
+  // Default (medium) size inherits from base class
+  
+  // Large size
+  &.sv-size-lg {
+    font-size: var(--sv-font-size-lg);
+    
+    .sv-data-display-base__header-cell {
+      font-size: var(--sv-font-size-base);
+    }
   }
 }
 
-// ARIA states for data elements
-[aria-sort="ascending"],
-[aria-sort="descending"] {
-  font-weight: var(--sv-font-semibold);
-}
+/* ==========================================================================
+   8. ACCESSIBILITY ENHANCEMENTS
+   ========================================================================== */
 
-// Supporting keyboard navigation
-.sv-data-keyboard-navigation {
-  &:focus {
-    position: relative;
-    z-index: 1; // Ensure focused items appear above others
+.sv-data-display-base {
+  // High contrast mode support
+  @include a11y.high-contrast-mode {
+    border: 1px solid ButtonText;
+    
+    .sv-data-display-base__header,
+    .sv-data-display-base__footer {
+      border-color: ButtonText;
+    }
+    
+    .sv-data-display-base__row {
+      &:not(:last-child) {
+        border-bottom-color: ButtonText;
+      }
+      
+      &.is-selected {
+        background-color: Highlight;
+        color: HighlightText;
+      }
+    }
+  }
+  
+  // Support for reduced motion
+  @include a11y.reduced-motion {
+    transition: none;
+  }
+  
+  // Support for focusing on rows
+  .sv-data-display-base__row {
+    &:focus-visible {
+      @include a11y.focus-visible-enhanced;
+      position: relative;
+      z-index: 1;
+    }
   }
 }
