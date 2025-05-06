@@ -26,7 +26,7 @@
 /* ==========================================================================
    1. IMPORTS
    ========================================================================== */
-@use './../../abstracts/variables/' as *;
+@use './../../abstracts' as *;
 @use './../../base/utils/mixins/state' as state;
 @use './../../base/utils/mixins/layout' as layout;
 @use './../../base/utils/mixins/typography' as typography;
@@ -55,7 +55,7 @@ $alert-padding-y: var(--sv-space-3);
 
 .sv-alert {
   // Extend the feedback control base to inherit all shared properties
-  @extend .sv-feedback-control-base;
+  @extend .sv-feedback-control-base !optional;
   
   // Alert-specific layout and spacing
   padding: $alert-padding-y $alert-padding-x;
@@ -331,7 +331,7 @@ $alert-padding-y: var(--sv-space-3);
    7. RESPONSIVE ADAPTATIONS
    ========================================================================== */
 
-@include responsive.media-breakpoint-down(sm) {
+@include responsive.breakpoint-down(sm) {
   .sv-alert {
     flex-direction: column;
     

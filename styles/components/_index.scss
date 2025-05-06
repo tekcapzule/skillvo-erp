@@ -5,12 +5,12 @@
 // @use '../components'; instead of multiple imports
 
 // Forward component categories
-@forward './input';
-@forward './selection';
-@forward './action';
-@forward './navigation';
-@forward './information';
-@forward './containers';
-@forward './feedback';
-@forward './data'; 
-@forward './widgets';
+@forward './input' as input-*;
+@forward './selection' as selection-*;
+@forward './action' as action-*;
+@forward './navigation' as navigation-*;
+@forward './information' as information-*;
+@forward './containers' as containers-*;
+@forward './feedback' as feedback-*;
+@forward './data' as data-*;
+@forward './widgets' as widgets-*;

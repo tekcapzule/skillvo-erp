@@ -30,7 +30,7 @@
    ========================================================================== */
 
 // Import necessary mixins
-@use './../../abstracts/variables/' as *;
+@use './../../abstracts' as *;
 @use './../../base/utils/mixins/state' as state;
 @use './../../base/utils/mixins/layout' as layout;
 @use './../../base/utils/mixins/responsive' as responsive;
@@ -63,7 +63,7 @@ $card-media-aspect-ratio: math.div(16, 9);
  */
 .sv-card {
   // Extend the container control base class
-  @extend .sv-container-control-base;
+  @extend .sv-container-control-base !optional;
   
   // Card-specific overrides - only add what's different from the base
   border-radius: $card-default-radius;
@@ -145,7 +145,7 @@ $card-media-aspect-ratio: math.div(16, 9);
       &::before {
         content: "";
         display: block;
-        padding-top: percentage(1 / $card-media-aspect-ratio);
+        padding-top: calc(100% / $card-media-aspect-ratio);
       }
       
       img, picture, video {
@@ -166,12 +166,12 @@ $card-media-aspect-ratio: math.div(16, 9);
     
     // 4:3 aspect ratio
     &--4-3::before {
-      padding-top: percentage(3 / 4);
+      padding-top: calc(100% * 3 / 4);
     }
     
     // 21:9 widescreen aspect ratio
     &--21-9::before {
-      padding-top: percentage(9 / 21);
+      padding-top: calc(100% * 9 / 21);
     }
     
     // Custom height media (no aspect ratio enforcement)
@@ -489,7 +489,7 @@ $card-media-aspect-ratio: math.div(16, 9);
   
   // Default aspect ratio
   &:not(.sv-card-media-free) {
-    padding-top: calc(100% / $card-media-aspect-ratio); // Default 16:9
+    padding-top: calc(100% / $card-media-aspect-ratio);
   }
   
   img, picture, video {
@@ -552,15 +552,15 @@ $card-media-aspect-ratio: math.div(16, 9);
 }
 
 .sv-card-media-4x3 {
-  padding-top: calc(100% * 3/4);
+  padding-top: calc(100% * 3 / 4);
 }
 
 .sv-card-media-16x9 {
-  padding-top: calc(100% * 9/16);
+  padding-top: calc(100% * 9 / 16);
 }
 
 .sv-card-media-21x9 {
-  padding-top: calc(100% * 9/21);
+  padding-top: calc(100% * 9 / 21);
 }
 
 // Free aspect ratio (determined by content)
@@ -643,7 +643,7 @@ $card-media-aspect-ratio: math.div(16, 9);
    ========================================================================== */
 
 // Responsive adjustments for small screens
-@include breakpoint-down(sm) {
+@include responsive.breakpoint-down(sm) {
   .sv-card {
     .sv-card-header,
     .sv-card-body,
@@ -688,7 +688,7 @@ $card-media-aspect-ratio: math.div(16, 9);
 }
 
 // Medium screens adjustments for horizontal cards
-@include breakpoint-between(md, lg) {
+@include responsive.breakpoint-between(md, lg) {
   .sv-card-horizontal {
     .sv-card-media {
       width: 40%;

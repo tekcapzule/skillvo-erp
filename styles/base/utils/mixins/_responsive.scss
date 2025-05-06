@@ -8,7 +8,7 @@
  */
 
 @use 'sass:map';
-@use './../../abstracts/variables/breakpoints' as *;  // Import the breakpoints file
+@use './../../../abstracts/variables/breakpoints' as *;  // Import the breakpoints file
 
 /* Min-width breakpoint (from this size and up) */
 @mixin breakpoint-up($breakpoint) {
@@ -84,19 +84,19 @@
   #{$property}: $mobile;
   
   @if $tablet {
-    @include breakpoint-up('md') {
+    @include responsive.breakpoint-up('md') {
       #{$property}: $tablet;
     }
   }
   
   @if $desktop {
-    @include breakpoint-up('lg') {
+    @include responsive.breakpoint-up('lg') {
       #{$property}: $desktop;
     }
   }
   
   @if $large {
-    @include breakpoint-up('xl') {
+    @include responsive.breakpoint-up('xl') {
       #{$property}: $large;
     }
   }
@@ -107,19 +107,19 @@
   #{$property}: $mobile;
   
   @if $tablet {
-    @include breakpoint-up('md') {
+    @include responsive.breakpoint-up('md') {
       #{$property}: $tablet;
     }
   }
   
   @if $desktop {
-    @include breakpoint-up('lg') {
+    @include responsive.breakpoint-up('lg') {
       #{$property}: $desktop;
     }
   }
   
   @if $large {
-    @include breakpoint-up('xl') {
+    @include responsive.breakpoint-up('xl') {
       #{$property}: $large;
     }
   }
@@ -128,11 +128,11 @@
 /* Hide content based on viewport */
 @mixin hide-on($breakpoint, $direction: 'down') {
   @if $direction == 'down' {
-    @include breakpoint-down($breakpoint) {
+    @include responsive.breakpoint-down($breakpoint) {
       display: none !important;
     }
   } @else if $direction == 'up' {
-    @include breakpoint-up($breakpoint) {
+    @include responsive.breakpoint-up($breakpoint) {
       display: none !important;
     }
   } @else {

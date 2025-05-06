@@ -19,7 +19,7 @@
    7. RESPONSIVE ADJUSTMENTS
    ========================================================================== */
 
-@use './../../abstracts/variables/' as *;
+@use './../../abstracts' as *;
 @use './../../base/core/selection-controls' as selection;
 @use './../../base/utils/mixins/state' as state;
 @use './../../base/utils/mixins/typography' as typography;
@@ -46,7 +46,7 @@ $toggle-track-color-on: var(--sv-primary);
 
 .sv-toggle {
   // Extend the base selection control class
-  @extend .sv-selection-control-base;
+  @extend .sv-selection-control-base !optional;
   display: inline-flex;
   align-items: center;
   

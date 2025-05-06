@@ -32,9 +32,10 @@
    1. VARIABLES & CONFIGURATION
    ========================================================================== */
 
-// Import necessary mixins
+// Import necessary mixins and variables
 @use './../../abstracts/' as *;
 @use './../../base/' as *;
+@use './../../base/utils/mixins/responsive' as responsive;
 // Sidebar-specific variables
 $sidebar-width-sm: 220px;
 $sidebar-width-md: 280px;
@@ -59,7 +60,7 @@ $sidebar-animation-timing: var(--sv-motion-ease-standard);
 
 .sv-sidebar {
   // Extend the container base class
-  @extend .sv-container-control-base;
+  @extend .sv-container-control-base !optional;
   
   // Sidebar-specific overrides
   display: flex;
@@ -672,7 +673,7 @@ $sidebar-animation-timing: var(--sv-motion-ease-standard);
    ========================================================================== */
 
 // Mobile sidebar behavior
-@include breakpoint-down(md) {
+@include responsive.breakpoint-down(md) {
   .sv-sidebar {
     // Default to fixed positioning on mobile
     position: fixed;
@@ -721,7 +722,7 @@ $sidebar-animation-timing: var(--sv-motion-ease-standard);
 }
 
 // Medium screens - collapsed sidebar
-@include breakpoint-between(md, lg) {
+@include responsive.breakpoint-between(md, lg) {
   .sv-sidebar-auto-collapse {
     width: $sidebar-width-collapsed;
     

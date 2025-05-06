@@ -24,7 +24,7 @@
 /* ==========================================================================
    1. IMPORTS
    ========================================================================== */
-@use './../../abstracts/variables/' as *;
+@use './../../abstracts' as *;
 @use './../../base/utils/mixins/state' as state;
 @use './../../base/utils/mixins/layout' as layout;
 @use './../../base/utils/mixins/responsive' as responsive;
@@ -52,7 +52,7 @@ $text-transition-timing: var(--sv-motion-ease-standard);
 
 .sv-text {
   // Extend the information display base class
-  @extend .sv-information-display-base;
+  @extend .sv-information-display-base !optional;
   
   // Override and add text-specific styles
   display: block;
@@ -439,7 +439,7 @@ $text-transition-timing: var(--sv-motion-ease-standard);
    8. RESPONSIVE ADAPTATIONS
    ========================================================================== */
 
-@include responsive.media-breakpoint-down(lg) {
+@include responsive.breakpoint-down(lg) {
   .sv-text-heading {
     &--1 {
       font-size: calc(var(--sv-font-size-3xl) * 0.9);
@@ -459,7 +459,7 @@ $text-transition-timing: var(--sv-motion-ease-standard);
   }
 }
 
-@include responsive.media-breakpoint-down(md) {
+@include responsive.breakpoint-down(md) {
   .sv-text {
     &--3xl {
       font-size: var(--sv-font-size-2xl);
@@ -492,7 +492,7 @@ $text-transition-timing: var(--sv-motion-ease-standard);
   }
 }
 
-@include responsive.media-breakpoint-down(sm) {
+@include responsive.breakpoint-down(sm) {
   .sv-text {
     // Smaller margin on mobile
     margin-bottom: calc($text-margin-bottom * 0.75);

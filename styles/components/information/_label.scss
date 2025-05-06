@@ -23,7 +23,7 @@
 /* ==========================================================================
    1. IMPORTS
    ========================================================================== */
-@use './../../abstracts/variables/' as *;
+@use './../../abstracts' as *;
 @use './../../base/utils/mixins/state' as state;
 @use './../../base/utils/mixins/layout' as layout;
 @use './../../base/utils/mixins/responsive' as responsive;
@@ -53,7 +53,7 @@ $label-icon-margin: var(--sv-space-1);
 
 .sv-label {
   // Extend the information display base class
-  @extend .sv-information-display-base;
+  @extend .sv-information-display-base !optional;
   
   // Override and add label-specific styles
   display: inline-block;
@@ -256,7 +256,7 @@ $label-icon-margin: var(--sv-space-1);
    7. RESPONSIVE ADAPTATIONS
    ========================================================================== */
 
-@include responsive.media-breakpoint-down(sm) {
+@include responsive.breakpoint-down(sm) {
   .sv-label {
     font-size: calc($label-font-size * 0.95);
     

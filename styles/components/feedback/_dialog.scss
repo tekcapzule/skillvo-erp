@@ -29,7 +29,7 @@
 /* ==========================================================================
    1. IMPORTS
    ========================================================================== */
-@use './../../abstracts/variables/' as *;
+@use './../../abstracts' as *;
 @use './../../base/utils/mixins/state' as state;
 @use './../../base/utils/mixins/layout' as layout;
 @use './../../base/utils/mixins/typography' as typography;
@@ -69,7 +69,7 @@ $dialog-backdrop-z-index: calc(#{$dialog-z-index} - 1);
 
 .sv-dialog {
   // Extend the feedback control base to inherit all shared properties
-  @extend .sv-feedback-control-base;
+  @extend .sv-feedback-control-base !optional;
   
   // Dialog-specific layout and spacing
   padding: 0; // Padding managed by child elements
@@ -459,7 +459,7 @@ $dialog-backdrop-z-index: calc(#{$dialog-z-index} - 1);
    9. RESPONSIVE ADAPTATIONS
    ========================================================================== */
 
-@include responsive.media-breakpoint-down(sm) {
+@include responsive.breakpoint-down(sm) {
   .sv-dialog {
     width: calc(100vw - var(--sv-space-4));
     max-width: none;

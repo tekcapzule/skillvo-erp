@@ -32,7 +32,7 @@
 /* ==========================================================================
    1. IMPORTS
    ========================================================================== */
-@use './../../abstracts/variables/' as *;
+@use './../../abstracts' as *;
 @use './../../base/utils/mixins/state' as state;
 @use './../../base/utils/mixins/layout' as layout;
 @use './../../base/utils/mixins/typography' as typography;
@@ -77,7 +77,7 @@ $loader-overlay-z-index: var(--sv-z-index-overlay);
 
 .sv-loading {
   // Extend the feedback control base to inherit all shared properties
-  @extend .sv-feedback-control-base;
+  @extend .sv-feedback-control-base !optional;
   
   // Reset padding and borders from feedback-base
   padding: 0;
@@ -516,7 +516,7 @@ $loader-overlay-z-index: var(--sv-z-index-overlay);
    8. RESPONSIVE ADAPTATIONS
    ========================================================================== */
 
-@include responsive.media-breakpoint-down(sm) {
+@include responsive.breakpoint-down(sm) {
   .sv-loading-overlay {
     &--mobile-fullscreen {
       position: fixed;

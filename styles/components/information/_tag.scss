@@ -24,7 +24,7 @@
 /* ==========================================================================
    1. IMPORTS
    ========================================================================== */
-@use './../../abstracts/variables/' as *;
+@use './../../abstracts' as *;
 @use './../../base/utils/mixins/state' as state;
 @use './../../base/utils/mixins/layout' as layout;
 @use './../../base/utils/mixins/responsive' as responsive;
@@ -65,7 +65,7 @@ $tag-transition-timing: var(--sv-motion-ease-standard);
 
 .sv-tag {
   // Extend the information display base class
-  @extend .sv-information-display-base;
+  @extend .sv-information-display-base !optional;
   
   // Override and add tag-specific styles
   display: inline-flex;
@@ -429,7 +429,7 @@ $tag-transition-timing: var(--sv-motion-ease-standard);
    8. RESPONSIVE ADAPTATIONS
    ========================================================================== */
 
-@include responsive.media-breakpoint-down(sm) {
+@include responsive.breakpoint-down(sm) {
   .sv-tag {
     // Smaller text and padding on mobile
     font-size: calc($tag-font-size * 0.9);

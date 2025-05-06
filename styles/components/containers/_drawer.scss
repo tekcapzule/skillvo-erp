@@ -31,9 +31,10 @@
    1. VARIABLES & CONFIGURATION
    ========================================================================== */
 
-// Import necessary mixins
+// Import necessary mixins and variables
 @use './../../abstracts/' as *;
 @use './../../base/' as *;
+@use './../../base/utils/mixins/responsive' as responsive;
 // Drawer-specific variables
 $drawer-overlay-bg: rgba(0, 0, 0, 0.5);
 $drawer-bg: var(--sv-bg-surface);
@@ -102,7 +103,7 @@ $drawer-animation-timing: var(--sv-motion-ease-standard);
 
 .sv-drawer {
   // Extend the container base class
-  @extend .sv-container-control-base;
+  @extend .sv-container-control-base !optional;
   
   // Drawer-specific overrides
   position: fixed;
@@ -544,7 +545,7 @@ $drawer-animation-timing: var(--sv-motion-ease-standard);
    ========================================================================== */
 
 // Small screens
-@include breakpoint-down(sm) {
+@include responsive.breakpoint-down(sm) {
   // Make side drawers wider on mobile
   .sv-drawer-left,
   .sv-drawer-right {
@@ -594,7 +595,7 @@ $drawer-animation-timing: var(--sv-motion-ease-standard);
 }
 
 // Medium screens
-@include breakpoint-between(md, lg) {
+@include responsive.breakpoint-between(md, lg) {
   // Adjust drawer sizes for medium screens
   .sv-drawer-lg {
     width: 360px;

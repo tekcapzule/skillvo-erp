@@ -28,7 +28,7 @@
 /* ==========================================================================
    1. IMPORTS
    ========================================================================== */
-@use './../../abstracts/variables/' as *;
+@use './../../abstracts' as *;
 @use './../../base/utils/mixins/state' as state;
 @use './../../base/utils/mixins/layout' as layout;
 @use './../../base/utils/mixins/responsive' as responsive;
@@ -91,7 +91,7 @@ $split-button-font-size-lg: var(--sv-text-lg);
 .sv-split-button {
   // Main action button
   .sv-split-button-action {
-    @extend .sv-action-control-base;
+    @extend .sv-action-control-base !optional;
     min-width: auto;
     
     // Prevent jumping on active state
@@ -102,7 +102,7 @@ $split-button-font-size-lg: var(--sv-text-lg);
   
   // Toggle button (dropdown)
   .sv-split-button-toggle {
-    @extend .sv-action-control-base;
+    @extend .sv-action-control-base !optional;
     padding: $split-button-toggle-padding;
     min-width: auto;
     
@@ -134,7 +134,7 @@ $split-button-font-size-lg: var(--sv-text-lg);
   &.sv-split-button-primary {
     .sv-split-button-action,
     .sv-split-button-toggle {
-      @extend .sv-action-primary;
+      @extend .sv-action-primary !optional;
     }
     
     // Border between the parts
@@ -147,7 +147,7 @@ $split-button-font-size-lg: var(--sv-text-lg);
   &.sv-split-button-secondary {
     .sv-split-button-action,
     .sv-split-button-toggle {
-      @extend .sv-action-secondary;
+      @extend .sv-action-secondary !optional;
     }
   }
   
@@ -155,7 +155,7 @@ $split-button-font-size-lg: var(--sv-text-lg);
   &.sv-split-button-tertiary {
     .sv-split-button-action,
     .sv-split-button-toggle {
-      @extend .sv-action-tertiary;
+      @extend .sv-action-tertiary !optional;
     }
   }
   
@@ -163,7 +163,7 @@ $split-button-font-size-lg: var(--sv-text-lg);
   &.sv-split-button-destructive {
     .sv-split-button-action,
     .sv-split-button-toggle {
-      @extend .sv-action-destructive;
+      @extend .sv-action-destructive !optional;
     }
     
     // Border between the parts

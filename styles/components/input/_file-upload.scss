@@ -23,7 +23,7 @@
 /* ==========================================================================
    1. IMPORTS & VARIABLES
    ========================================================================== */
-@use './../../abstracts/variables/' as *;
+@use './../../abstracts' as *;
 @use './../../base/utils/mixins/state' as state;
 @use './../../base/utils/mixins/layout' as layout;
 @use './../../base/utils/mixins/responsive' as responsive;
@@ -31,13 +31,13 @@
 @use './../../base/utils/mixins/typography' as typography;
 
 // Component-specific variables
-$file-upload-transition-duration: var(--sv-motion-duration-medium);
-$file-upload-transition-timing: var(--sv-motion-ease-standard);
-$file-upload-min-height: var(--sv-size-24);
-$file-upload-preview-size: var(--sv-size-12);
-$file-upload-icon-size: var(--sv-icon-size-md);
-$file-upload-progress-height: var(--sv-size-2);
-$file-upload-action-button-size: var(--sv-size-8);
+$file-upload-transition-duration: 0.3s;
+$file-upload-transition-timing: ease;
+$file-upload-min-height: 6rem;
+$file-upload-preview-size: 3rem;
+$file-upload-icon-size: 1.5rem;
+$file-upload-progress-height: 0.5rem;
+$file-upload-action-button-size: 2rem;
 
 /* ==========================================================================
    2. FILE UPLOAD BASE
@@ -45,7 +45,7 @@ $file-upload-action-button-size: var(--sv-size-8);
 
 .sv-file-upload {
   // Extend the input control base styles
-  @extend .sv-input-control-base;
+  @extend .sv-input-control-base !optional;
   
   // Reset height for file inputs
   height: auto;

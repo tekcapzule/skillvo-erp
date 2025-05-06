@@ -60,7 +60,7 @@ $table-body-font-size: var(--sv-text-base);
 
 .sv-table {
   // Extend base data display class
-  @extend .sv-data-display-control-base;
+  @extend .sv-data-display-control-base !optional;
   
   // Set display and layout properties
   width: 100%;

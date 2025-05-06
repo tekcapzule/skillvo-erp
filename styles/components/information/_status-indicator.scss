@@ -23,7 +23,7 @@
 /* ==========================================================================
    1. IMPORTS
    ========================================================================== */
-@use './../../abstracts/variables/' as *;
+@use './../../abstracts' as *;
 @use './../../base/utils/mixins/state' as state;
 @use './../../base/utils/mixins/layout' as layout;
 @use './../../base/utils/mixins/responsive' as responsive;
@@ -66,7 +66,7 @@ $status-pulse-duration: 2s;
 
 .sv-status {
   // Extend the information display base class
-  @extend .sv-information-display-base;
+  @extend .sv-information-display-base !optional;
   
   // Override and add status indicator-specific styles
   display: inline-flex;
@@ -242,36 +242,36 @@ $status-pulse-duration: 2s;
     }
     
     &.sv-status--online .sv-status__dot {
-      box-shadow: 0 0 0 0 rgba(var(--sv-success-rgb), 0.4);
+      box-shadow: 0 0 0 0 transparent;
     }
     
     &.sv-status--offline .sv-status__dot {
-      box-shadow: 0 0 0 0 rgba(var(--sv-error-rgb), 0.4);
+      box-shadow: 0 0 0 0 transparent;
     }
     
     &.sv-status--away .sv-status__dot {
-      box-shadow: 0 0 0 0 rgba(var(--sv-warning-rgb), 0.4);
+      box-shadow: 0 0 0 0 transparent;
     }
     
     &.sv-status--busy .sv-status__dot {
-      box-shadow: 0 0 0 0 rgba(var(--sv-error-rgb), 0.4);
+      box-shadow: 0 0 0 0 transparent;
     }
     
     &.sv-status--processing .sv-status__dot {
-      box-shadow: 0 0 0 0 rgba(var(--sv-info-rgb), 0.4);
+      box-shadow: 0 0 0 0 transparent;
     }
   }
 }
 
 @keyframes status-pulse {
   0% {
-    box-shadow: 0 0 0 0 rgba(currentColor, 0.4);
+    box-shadow: 0 0 0 0 transparent;
   }
   70% {
-    box-shadow: 0 0 0 6px rgba(currentColor, 0);
+    box-shadow: 0 0 0 6px transparent;
   }
   100% {
-    box-shadow: 0 0 0 0 rgba(currentColor, 0);
+    box-shadow: 0 0 0 0 transparent;
   }
 }
 
@@ -321,7 +321,7 @@ $status-pulse-duration: 2s;
    7. RESPONSIVE ADAPTATIONS
    ========================================================================== */
 
-@include responsive.media-breakpoint-down(sm) {
+@include responsive.breakpoint-down(sm) {
   .sv-status {
     // Smaller text on mobile
     font-size: calc($status-font-size * 0.9);

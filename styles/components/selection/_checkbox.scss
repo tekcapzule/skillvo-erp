@@ -19,7 +19,7 @@
    7. RESPONSIVE ADJUSTMENTS
    ========================================================================== */
 
-@use './../../abstracts/variables/' as *;
+@use './../../abstracts' as *;
 @use './../../base/core/selection-controls' as selection;
 @use './../../base/utils/mixins/state' as state;
 @use './../../base/utils/mixins/typography' as typography;
@@ -44,7 +44,7 @@ $checkbox-indeterminate-width: 50%;
 
 .sv-checkbox {
   // Extend the base selection control class
-  @extend .sv-selection-control-base;
+  @extend .sv-selection-control-base !optional;
   
   // Checkbox-specific control styles
   &__control {

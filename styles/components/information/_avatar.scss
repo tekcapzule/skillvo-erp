@@ -24,7 +24,7 @@
 /* ==========================================================================
    1. IMPORTS
    ========================================================================== */
-@use './../../abstracts/variables/' as *;
+@use './../../abstracts' as *;
 @use './../../base/utils/mixins/state' as state;
 @use './../../base/utils/mixins/layout' as layout;
 @use './../../base/utils/mixins/responsive' as responsive;
@@ -80,7 +80,7 @@ $avatar-transition-timing: var(--sv-motion-ease-standard);
 
 .sv-avatar {
   // Extend the information display base class
-  @extend .sv-information-display-base;
+  @extend .sv-information-display-base !optional;
   
   // Override and add avatar-specific styles
   position: relative;
@@ -475,7 +475,7 @@ $avatar-transition-timing: var(--sv-motion-ease-standard);
    8. RESPONSIVE ADAPTATIONS
    ========================================================================== */
 
-@include responsive.media-breakpoint-down(sm) {
+@include responsive.breakpoint-down(sm) {
   .sv-avatar {
     // Slightly smaller on mobile
     &--lg {

@@ -30,7 +30,7 @@
    ========================================================================== */
 
 // Import necessary mixins
-@use './../../abstracts/variables/' as *;
+@use './../../abstracts' as *;
 @use './../../base/utils/mixins/state' as state;
 @use './../../base/utils/mixins/layout' as layout;
 @use './../../base/utils/mixins/responsive' as responsive;
@@ -61,7 +61,7 @@ $panel-subtitle-color: var(--sv-text-secondary);
  */
 .sv-panel {
   // Extend the container control base class
-  @extend .sv-container-control-base;
+  @extend .sv-container-control-base !optional;
   
   // Panel-specific overrides - only add what's different from the base
   border-radius: $panel-default-radius;
@@ -606,7 +606,7 @@ $panel-subtitle-color: var(--sv-text-secondary);
    ========================================================================== */
 
 // Responsive adjustments for small screens
-@include breakpoint-down(sm) {
+@include responsive.breakpoint-down(sm) {
   .sv-panel {
     .sv-panel-header,
     .sv-panel-body,
@@ -658,7 +658,7 @@ $panel-subtitle-color: var(--sv-text-secondary);
 }
 
 // Medium screens adjustments
-@include breakpoint-between(md, lg) {
+@include responsive.breakpoint-between(md, lg) {
   .sv-panel {
     .sv-panel-header {
       .sv-panel-header-right {

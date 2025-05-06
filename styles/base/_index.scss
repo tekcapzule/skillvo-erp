@@ -2,24 +2,6 @@
 // Base Utilities Index
 // ========================================
 
-@forward './utils/reset';
-@forward './utils/typography';
-@forward './utils/colors';
-@forward './utils/layout';
-@forward './utils/icons';
-@forward './utils/shadows';
-@forward './utils/border-radius';
-@forward './utils/spacing';
-@forward './utils/sizes';
-@forward './utils/accessibility';
-@forward './utils/animations';
+@forward './utils';
 
-@forward './core/_base-control';
-@forward './core/_action-controls';
-@forward './core/_containers';
-@forward './core/_data-display';
-@forward './core/_feedback-controls';
-@forward './core/_information-display';
-@forward './core/_input-controls';
-@forward './core/_navigation-controls';
-@forward './core/_selection-controls';
+@forward './core';

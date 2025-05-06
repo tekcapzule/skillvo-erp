@@ -27,7 +27,7 @@
    1. IMPORTS
    ========================================================================== */
 @use 'sass:map';
-@use './../../abstracts/variables/' as *;
+@use './../../abstracts/' as *;
 @use './../utils/mixins/state' as state;
 @use './../utils/mixins/layout' as layout;
 @use './../utils/mixins/typography' as typography;

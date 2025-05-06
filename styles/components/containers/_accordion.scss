@@ -30,9 +30,10 @@
    1. VARIABLES & CONFIGURATION
    ========================================================================== */
 
-// Import necessary mixins
+// Import necessary mixins and variables
 @use './../../abstracts/' as *;
 @use './../../base/' as *;
+@use './../../base/utils/mixins/responsive' as responsive;
 // Accordion-specific variables
 $accordion-border-color: var(--sv-border-light);
 $accordion-border-radius: var(--sv-radius-md);
@@ -54,7 +55,7 @@ $accordion-animation-timing: var(--sv-motion-ease-standard);
 
 .sv-accordion {
   // Extend the container base class
-  @extend .sv-container-control-base;
+  @extend .sv-container-control-base !optional;
   
   // Accordion container specific overrides
   display: flex;
@@ -534,7 +535,7 @@ $accordion-animation-timing: var(--sv-motion-ease-standard);
    ========================================================================== */
 
 // Small screens
-@include breakpoint-down(sm) {
+@include responsive.breakpoint-down(sm) {
   .sv-accordion-header {
     padding: var(--sv-padding-sm);
     font-size: var(--sv-text-sm);
@@ -577,7 +578,7 @@ $accordion-animation-timing: var(--sv-motion-ease-standard);
 }
 
 // Medium screens
-@include breakpoint-between(md, lg) {
+@include responsive.breakpoint-between(md, lg) {
   // Adjust spacing between items
   .sv-accordion-comfortable {
     > .sv-accordion-item:not(:last-child) {

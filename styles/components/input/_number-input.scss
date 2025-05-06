@@ -21,7 +21,7 @@
 /* ==========================================================================
    1. IMPORTS & VARIABLES
    ========================================================================== */
-@use './../../abstracts/variables/' as *;
+@use './../../abstracts' as *;
 @use './../../base/utils/mixins/state' as state;
 @use './../../base/utils/mixins/layout' as layout;
 @use './../../base/utils/mixins/responsive' as responsive;
@@ -45,7 +45,7 @@ $number-input-stepper-icon-size: var(--sv-size-4);
 
 .sv-number-input {
   // Extend the input control base styles
-  @extend .sv-input-control-base;
+  @extend .sv-input-control-base !optional;
   
   // Unique properties for number input field
   position: relative;
@@ -64,7 +64,7 @@ $number-input-stepper-icon-size: var(--sv-size-4);
   }
   
   &__input {
-    @extend .sv-input-control-base__field;
+    @extend .sv-input-control-base__field !optional;
     -moz-appearance: textfield; // Remove Firefox spinners
     text-align: center;
     
@@ -77,11 +77,11 @@ $number-input-stepper-icon-size: var(--sv-size-4);
   }
   
   &__label {
-    @extend .sv-input-control-base__label;
+    @extend .sv-input-control-base__label !optional;
   }
   
   &__helper-text {
-    @extend .sv-input-control-base__helper-text;
+    @extend .sv-input-control-base__helper-text !optional;
   }
   
   // Enhanced focus behavior

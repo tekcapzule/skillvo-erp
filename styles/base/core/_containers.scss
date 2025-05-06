@@ -31,7 +31,7 @@
    1. IMPORTS
    ========================================================================== */
 @use 'sass:map';
-@use './../../abstracts/variables/' as *;
+@use './../../abstracts' as *;
 @use './../utils/mixins/state' as state;
 @use './../utils/mixins/layout' as layout;
 @use './../utils/mixins/typography' as typography;
@@ -60,7 +60,7 @@ $container-footer-padding: var(--sv-space-3) var(--sv-space-4);
  */
 .sv-container-control-base {
   // Inherit all base UI control styles
-  @extend .sv-ui-control-base;
+  @extend .sv-ui-control-base !optional;
   
   // Box model adjustments for containers
   display: block;
@@ -432,7 +432,8 @@ $container-footer-padding: var(--sv-space-3) var(--sv-space-4);
   
   // Support for reduced motion
   @include a11y.reduced-motion {
-    transition: none;
+    transition: none !important;
+    animation: none !important;
   }
   
   // Better keyboard navigation for interactive containers

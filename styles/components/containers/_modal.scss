@@ -34,6 +34,7 @@
 // Import necessary mixins
 @use './../../abstracts/' as *;
 @use './../../base/' as *;
+@use './../../base/utils/mixins/responsive' as responsive;
 // Modal-specific variables
 $modal-overlay-bg: rgba(0, 0, 0, 0.5);
 $modal-default-radius: var(--sv-radius-md);
@@ -115,7 +116,7 @@ $modal-animation-timing: var(--sv-motion-ease-standard);
 
 .sv-modal {
   // Extend the container base class
-  @extend .sv-container-control-base;
+  @extend .sv-container-control-base !optional;
   
   // Modal-specific overrides
   position: relative;
@@ -601,7 +602,7 @@ $modal-animation-timing: var(--sv-motion-ease-standard);
    ========================================================================== */
 
 // Small screens
-@include breakpoint-down(sm) {
+@include responsive.breakpoint-down(sm) {
   .sv-modal {
     width: 100%;
     margin: var(--sv-margin-xs);
@@ -656,7 +657,7 @@ $modal-animation-timing: var(--sv-motion-ease-standard);
 }
 
 // Medium screens
-@include breakpoint-between(md, lg) {
+@include responsive.breakpoint-between(md, lg) {
   .sv-modal-lg, .sv-modal-xl {
     width: 90%;
     max-width: 90%;

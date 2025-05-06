@@ -28,7 +28,7 @@
 /* ==========================================================================
    1. IMPORTS
    ========================================================================== */
-@use './../../abstracts/variables/' as *;
+@use './../../abstracts' as *;
 @use './../../base/utils/mixins/state' as state;
 @use './../../base/utils/mixins/layout' as layout;
 @use './../../base/utils/mixins/responsive' as responsive;
@@ -75,7 +75,7 @@ $menu-divider-margin: var(--sv-space-1) 0;
 
 .sv-menu-button {
   // Extend the action control base to inherit all shared properties
-  @extend .sv-action-control-base;
+  @extend .sv-action-control-base !optional;
   
   // Menu button specific properties
   position: relative;
@@ -110,17 +110,17 @@ $menu-divider-margin: var(--sv-space-1) 0;
 .sv-menu-button {
   // Primary menu button
   &.sv-menu-button-primary {
-    @extend .sv-action-primary;
+    @extend .sv-action-primary !optional;
   }
   
   // Secondary menu button
   &.sv-menu-button-secondary {
-    @extend .sv-action-secondary;
+    @extend .sv-action-secondary !optional;
   }
   
   // Tertiary menu button (ghost/text)
   &.sv-menu-button-tertiary {
-    @extend .sv-action-tertiary;
+    @extend .sv-action-tertiary !optional;
   }
   
   // Minimal menu button (text only, no background)

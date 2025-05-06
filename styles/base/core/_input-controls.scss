@@ -34,7 +34,7 @@
    1. IMPORTS
    ========================================================================== */
 @use 'sass:map';
-@use './../../abstracts/variables/' as *;
+@use './../../abstracts' as *;
 @use './../utils/mixins/state' as state;
 @use './../utils/mixins/layout' as layout;
 @use './../utils/mixins/typography' as typography;
@@ -68,7 +68,7 @@ $input-border-width: 1px;
  */
 .sv-input-control-base {
   // Inherit all base UI control styles
-  @extend .sv-ui-control-base;
+  @extend .sv-ui-control-base !optional;
   
   // Input-specific resets and base styles
   position: relative;
@@ -86,7 +86,7 @@ $input-border-width: 1px;
   white-space: nowrap;
   
   // Input structure components
-  &__field {
+  .sv-input-control-base__field {
     width: 100%;
     appearance: none;
     background-color: var(--sv-bg-surface);
@@ -107,7 +107,7 @@ $input-border-width: 1px;
   }
   
   // Label styling
-  &__label {
+  .sv-input-control-base__label {
     display: block;
     margin-bottom: var(--sv-space-2);
     font-size: var(--sv-font-size-sm);
@@ -116,7 +116,7 @@ $input-border-width: 1px;
   }
   
   // Helper text styling
-  &__helper-text {
+  .sv-input-control-base__helper-text {
     display: block;
     margin-top: var(--sv-space-1);
     font-size: var(--sv-font-size-xs);
@@ -124,14 +124,14 @@ $input-border-width: 1px;
   }
   
   // Input groups and connected elements
-  &__group {
+  .sv-input-control-base__group {
     position: relative;
     display: flex;
     align-items: center;
     width: 100%;
   }
   
-  &__addon {
+  .sv-input-control-base__addon {
     display: flex;
     align-items: center;
     padding: 0 var(--sv-space-2);
@@ -141,7 +141,7 @@ $input-border-width: 1px;
     font-size: var(--sv-font-size-sm);
   }
   
-  &__icon {
+  .sv-input-control-base__icon {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
@@ -156,9 +156,9 @@ $input-border-width: 1px;
   }
   
   // Required input indicator
-  &.required &__label::after,
-  &[required] &__label::after,
-  &[aria-required="true"] &__label::after {
+  &.required .sv-input-control-base__label::after,
+  &[required] .sv-input-control-base__label::after,
+  &[aria-required="true"] .sv-input-control-base__label::after {
     content: "*";
     color: var(--sv-error);
     margin-left: var(--sv-space-1);
@@ -172,13 +172,13 @@ $input-border-width: 1px;
 // Specific field type styling
 .sv-input-control-base {
   // Password field styling
-  &.sv-input-password &__field {
+  &.sv-input-password .sv-input-control-base__field {
     font-family: var(--sv-font-family-mono);
     letter-spacing: 0.125em;
   }
   
   // Number input styling - remove spinners
-  &.sv-input-number &__field {
+  &.sv-input-number .sv-input-control-base__field {
     -moz-appearance: textfield;
     
     &::-webkit-outer-spin-button,
@@ -189,7 +189,7 @@ $input-border-width: 1px;
   }
   
   // Search input specific styling
-  &.sv-input-search &__field {
+  &.sv-input-search .sv-input-control-base__field {
     &::-webkit-search-decoration,
     &::-webkit-search-cancel-button,
     &::-webkit-search-results-button,
@@ -199,9 +199,9 @@ $input-border-width: 1px;
   }
   
   // Date input specific styling
-  &.sv-input-date &__field,
-  &.sv-input-time &__field,
-  &.sv-input-datetime &__field {
+  &.sv-input-date .sv-input-control-base__field,
+  &.sv-input-time .sv-input-control-base__field,
+  &.sv-input-datetime .sv-input-control-base__field {
     &::-webkit-calendar-picker-indicator {
       opacity: 0.6;
       cursor: pointer;
@@ -216,7 +216,7 @@ $input-border-width: 1px;
   &.sv-textarea {
     height: auto;
     
-    &__field {
+    .sv-input-control-base__field {
       resize: vertical;
       min-height: calc($input-height * 2);
       white-space: normal;
@@ -240,7 +240,7 @@ $input-border-width: 1px;
       pointer-events: none;
     }
     
-    &__field {
+    .sv-input-control-base__field {
       appearance: none;
       padding-right: calc(var(--sv-space-3) * 2);
     }
@@ -257,7 +257,7 @@ $input-border-width: 1px;
   &.sv-input-floating-label {
     padding-top: var(--sv-space-5);
     
-    &__label {
+    .sv-input-control-base__label {
       position: absolute;
       top: $input-padding-y;
       left: $input-padding-x;
@@ -267,14 +267,14 @@ $input-border-width: 1px;
       transform-origin: left top;
     }
     
-    &__field:focus ~ &__label,
-    &.has-value &__label {
+    .sv-input-control-base__field:focus ~ .sv-input-control-base__label,
+    &.has-value .sv-input-control-base__label {
       transform: translateY(-$input-padding-y) scale(0.85);
     }
   }
   
   // Counter text for character limits
-  &__counter {
+  .sv-input-control-base__counter {
     display: block;
     margin-top: var(--sv-space-1);
     font-size: var(--sv-font-size-xs);
@@ -312,36 +312,60 @@ $input-border-width: 1px;
   }
   
   // Readonly state
-  &[readonly],
   &.readonly {
     @include state.readonly-state;
     cursor: default;
     
-    &__field {
+    .sv-input-control-base__field {
+      background-color: var(--sv-bg-muted);
+    }
+  }
+  
+  &[readonly] {
+    @include state.readonly-state;
+    cursor: default;
+    
+    .sv-input-control-base__field {
       background-color: var(--sv-bg-muted);
     }
   }
   
   // Error state
   &.has-error,
-  &.error,
+  &.error {
+    border-color: var(--sv-error);
+    
+    .sv-input-control-base__helper-text,
+    .sv-input-control-base__validation-message {
+      color: var(--sv-error);
+    }
+  }
+  
   &[aria-invalid="true"] {
     border-color: var(--sv-error);
     
-    &__helper-text,
-    &__validation-message {
+    .sv-input-control-base__helper-text,
+    .sv-input-control-base__validation-message {
       color: var(--sv-error);
     }
   }
   
   // Success state
   &.has-success,
-  &.success,
+  &.success {
+    border-color: var(--sv-success);
+    
+    .sv-input-control-base__helper-text,
+    .sv-input-control-base__validation-message {
+      color: var(--sv-success);
+    }
+  }
+  
   &[aria-invalid="false"] {
     border-color: var(--sv-success);
     
-    &__helper-text,
-    &__validation-message {
+    .sv-input-control-base__helper-text,
+    .sv-input-control-base__validation-message {
       color: var(--sv-success);
     }
   }
@@ -358,8 +382,8 @@ $input-border-width: 1px;
     padding: var(--sv-space-1) var(--sv-space-2);
     font-size: var(--sv-font-size-sm);
     
-    &__label,
-    &__helper-text {
+    .sv-input-control-base__label,
+    .sv-input-control-base__helper-text {
       font-size: var(--sv-font-size-xs);
     }
   }
@@ -372,11 +396,11 @@ $input-border-width: 1px;
     padding: var(--sv-space-2) var(--sv-space-4);
     font-size: var(--sv-font-size-lg);
     
-    &__label {
+    .sv-input-control-base__label {
       font-size: var(--sv-font-size-base);
     }
     
-    &__helper-text {
+    .sv-input-control-base__helper-text {
       font-size: var(--sv-font-size-sm);
     }
   }

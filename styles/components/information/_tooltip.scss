@@ -24,7 +24,7 @@
 /* ==========================================================================
    1. IMPORTS
    ========================================================================== */
-@use './../../abstracts/variables/' as *;
+@use './../../abstracts' as *;
 @use './../../base/utils/mixins/state' as state;
 @use './../../base/utils/mixins/layout' as layout;
 @use './../../base/utils/mixins/responsive' as responsive;
@@ -67,7 +67,7 @@ $tooltip-offset: $tooltip-arrow-size;
 
 .sv-tooltip {
   // Extend the information display base class
-  @extend .sv-information-display-base;
+  @extend .sv-information-display-base !optional;
   
   // Override and add tooltip-specific styles
   position: absolute;
@@ -337,7 +337,7 @@ $tooltip-offset: $tooltip-arrow-size;
    8. RESPONSIVE ADAPTATIONS
    ========================================================================== */
 
-@include responsive.media-breakpoint-down(sm) {
+@include responsive.breakpoint-down(sm) {
   .sv-tooltip {
     // Smaller text on mobile
     font-size: calc($tooltip-font-size * 0.9);

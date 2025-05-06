@@ -82,6 +82,11 @@
   white-space: nowrap;
 }
 
+/* Truncate text with ellipsis (alias) */
+@mixin truncate {
+  @include text-truncate;
+}
+
 /* Multi-line ellipsis */
 @mixin text-truncate-multiline($lines: 2) {
   display: -webkit-box;

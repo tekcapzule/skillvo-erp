@@ -27,7 +27,7 @@
 /* ==========================================================================
    1. IMPORTS
    ========================================================================== */
-@use './../../abstracts/variables/' as *;
+@use './../../abstracts' as *;
 @use './../../base/utils/mixins/state' as state;
 @use './../../base/utils/mixins/layout' as layout;
 @use './../../base/utils/mixins/responsive' as responsive;
@@ -55,7 +55,7 @@ $button-pulse-shadow-color: rgba(var(--sv-primary-rgb), 0.7);
 
 .sv-button {
   // Extend the action control base to inherit all shared properties
-  @extend .sv-action-control-base;
+  @extend .sv-action-control-base !optional;
   
   // Button-specific properties not covered by action control base
   font-weight: $button-font-weight;
@@ -79,23 +79,23 @@ $button-pulse-shadow-color: rgba(var(--sv-primary-rgb), 0.7);
 .sv-button {
   // Primary button (already styled in action controls, add only button-specific properties)
   &.sv-button-primary {
-    @extend .sv-action-primary;
+    @extend .sv-action-primary !optional;
     font-weight: $button-font-weight-bold;
   }
   
   // Secondary button
   &.sv-button-secondary {
-    @extend .sv-action-secondary;
+    @extend .sv-action-secondary !optional;
   }
   
   // Tertiary button (text/ghost)
   &.sv-button-tertiary {
-    @extend .sv-action-tertiary;
+    @extend .sv-action-tertiary !optional;
   }
   
   // Destructive button
   &.sv-button-destructive {
-    @extend .sv-action-destructive;
+    @extend .sv-action-destructive !optional;
   }
   
   // Outline button (not defined in action controls)

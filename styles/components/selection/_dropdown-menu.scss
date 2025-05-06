@@ -20,7 +20,7 @@
    7. RESPONSIVE ADJUSTMENTS
    ========================================================================== */
 
-@use './../../abstracts/variables/' as *;
+@use './../../abstracts' as *;
 @use './../../base/core/selection-controls' as selection;
 @use './../../base/utils/mixins/state' as state;
 @use './../../base/utils/mixins/typography' as typography;
@@ -47,7 +47,7 @@ $dropdown-bg-color: var(--sv-bg-surface);
 
 .sv-dropdown {
   // Extend the base selection control class
-  @extend .sv-selection-control-base;
+  @extend .sv-selection-control-base !optional;
   position: relative;
   display: block;
   width: 100%;

@@ -26,7 +26,7 @@
 /* ==========================================================================
    1. IMPORTS
    ========================================================================== */
-@use './../../abstracts/variables/' as *;
+@use './../../abstracts' as *;
 @use './../../base/utils/mixins/state' as state;
 @use './../../base/utils/mixins/layout' as layout;
 @use './../../base/utils/mixins/responsive' as responsive;
@@ -58,7 +58,7 @@ $icon-button-tooltip-font-size: var(--sv-text-xs);
 
 .sv-icon-button {
   // Extend the action control base to inherit all shared properties
-  @extend .sv-action-control-base;
+  @extend .sv-action-control-base !optional;
   
   // Make icon buttons square by default
   aspect-ratio: 1/1;
@@ -89,19 +89,19 @@ $icon-button-tooltip-font-size: var(--sv-text-xs);
 .sv-icon-button {
   // Apply the same variant styles as regular buttons
   &.sv-icon-button-primary {
-    @extend .sv-action-primary;
+    @extend .sv-action-primary !optional;
   }
   
   &.sv-icon-button-secondary {
-    @extend .sv-action-secondary;
+    @extend .sv-action-secondary !optional;
   }
   
   &.sv-icon-button-tertiary {
-    @extend .sv-action-tertiary;
+    @extend .sv-action-tertiary !optional;
   }
   
   &.sv-icon-button-destructive {
-    @extend .sv-action-destructive;
+    @extend .sv-action-destructive !optional;
   }
   
   // Ghost icon button (transparent background)

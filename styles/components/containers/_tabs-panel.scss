@@ -31,9 +31,10 @@
    1. VARIABLES & CONFIGURATION
    ========================================================================== */
 
-// Import necessary mixins
+// Import necessary mixins and variables
 @use './../../abstracts/' as *;
 @use './../../base/' as *;
+@use './../../base/utils/mixins/responsive' as responsive;
 // Tabs-specific variables
 $tabs-border-color: var(--sv-border-light);
 $tabs-border-radius: var(--sv-radius-md);
@@ -57,7 +58,7 @@ $tabs-indicator-size: 2px;
 
 .sv-tabs {
   // Extend the container base class
-  @extend .sv-container-control-base;
+  @extend .sv-container-control-base !optional;
   
   // Tabs-specific overrides
   display: flex;
@@ -591,7 +592,7 @@ $tabs-indicator-size: 2px;
    ========================================================================== */
 
 // Small screens - convert tabs to more mobile-friendly layouts
-@include breakpoint-down(sm) {
+@include responsive.breakpoint-down(sm) {
   // Vertical tabs become horizontal on small screens
   .sv-tabs-vertical {
     flex-direction: column;
@@ -659,7 +660,7 @@ $tabs-indicator-size: 2px;
 }
 
 // Medium screens
-@include breakpoint-between(md, lg) {
+@include responsive.breakpoint-between(md, lg) {
   // Ensure tabs don't get too crowded on medium screens
   .sv-tab-item {
     padding: var(--sv-padding-sm) var(--sv-padding-md);
@@ -681,7 +682,7 @@ $tabs-indicator-size: 2px;
 
 .sv-tabs-panel {
   // Extend the container base class
-  @extend .sv-container-control-base;
+  @extend .sv-container-control-base !optional;
   
   // Tabs panel-specific overrides
   // ... existing code ...

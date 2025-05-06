@@ -31,7 +31,7 @@
    1. IMPORTS
    ========================================================================== */
 @use 'sass:map';
-@use './../../abstracts/variables/' as *;
+@use './../../abstracts' as *;
 @use './../utils/mixins/state' as state;
 @use './../utils/mixins/layout' as layout;
 @use './../utils/mixins/typography' as typography;
@@ -66,7 +66,7 @@ $data-font-size-header: var(--sv-font-size-sm);
  */
 .sv-data-display-base {
   // Inherit all base UI control styles
-  @extend .sv-ui-control-base;
+  @extend .sv-ui-control-base !optional;
   
   // Box model adjustments for data displays
   display: block;
