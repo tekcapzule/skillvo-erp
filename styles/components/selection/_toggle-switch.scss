@@ -1,7 +1,7 @@
 /**
  * Toggle Switch Component Styles
- * Version: 1.0.0
- * Last Updated: April 29, 2025
+ * Version: 2.0.0
+ * Last Updated: July 20, 2024
  * 
  * This file contains styles specific to the toggle switch component,
  * extending the selection-control-base class.
@@ -11,15 +11,21 @@
    TABLE OF CONTENTS:
    
    1. VARIABLES & CONFIGURATION
-   2. TOGGLE SWITCH SPECIFIC STYLES
+   2. TOGGLE SWITCH BASE STYLES
    3. TOGGLE SWITCH VARIATIONS
    4. TOGGLE SWITCH STATES
    5. TOGGLE SWITCH ANIMATIONS
    6. ACCESSIBILITY ENHANCEMENTS
    7. RESPONSIVE ADJUSTMENTS
    ========================================================================== */
-   @use './../../abstracts/' as *;
-   @use './../../base/' as *;
+
+@use './../../abstracts/variables/' as *;
+@use './../../base/core/selection-controls' as selection;
+@use './../../base/utils/mixins/state' as state;
+@use './../../base/utils/mixins/typography' as typography;
+@use './../../base/utils/mixins/accessibility' as a11y;
+@use './../../base/utils/mixins/responsive' as responsive;
+
 /* ==========================================================================
    1. VARIABLES & CONFIGURATION
    ========================================================================== */
@@ -30,9 +36,12 @@ $toggle-height: var(--sv-size-4);
 $toggle-thumb-size: calc(var(--sv-size-4) * 0.8);
 $toggle-thumb-offset: calc((var(--sv-size-4) - $toggle-thumb-size) / 2);
 $toggle-transition: all var(--sv-motion-duration-short) var(--sv-motion-ease-standard);
+$toggle-thumb-color: var(--sv-text-on-dark);
+$toggle-track-color-off: var(--sv-border-medium);
+$toggle-track-color-on: var(--sv-primary);
 
 /* ==========================================================================
-   2. TOGGLE SWITCH SPECIFIC STYLES
+   2. TOGGLE SWITCH BASE STYLES
    ========================================================================== */
 
 .sv-toggle {
@@ -41,16 +50,20 @@ $toggle-transition: all var(--sv-motion-duration-short) var(--sv-motion-ease-sta
   display: inline-flex;
   align-items: center;
   
-  // Hide the native checkbox
+  // Input handling
   &__input {
-    @include visually-hidden;
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+    margin: 0;
     
     &:focus-visible ~ .sv-toggle__control {
       box-shadow: 0 0 0 2px var(--sv-focus-ring-color);
     }
     
     &:checked ~ .sv-toggle__control {
-      background-color: var(--sv-primary);
+      background-color: $toggle-track-color-on;
       
       &::after {
         transform: translateX(calc($toggle-width - $toggle-thumb-size - ($toggle-thumb-offset * 2)));
@@ -76,7 +89,7 @@ $toggle-transition: all var(--sv-motion-duration-short) var(--sv-motion-ease-sta
     width: $toggle-width;
     height: $toggle-height;
     border-radius: var(--sv-radius-full);
-    background-color: var(--sv-border-medium);
+    background-color: $toggle-track-color-off;
     transition: $toggle-transition;
     cursor: pointer;
     
@@ -89,7 +102,7 @@ $toggle-transition: all var(--sv-motion-duration-short) var(--sv-motion-ease-sta
       width: $toggle-thumb-size;
       height: $toggle-thumb-size;
       border-radius: var(--sv-radius-full);
-      background-color: var(--sv-text-on-dark);
+      background-color: $toggle-thumb-color;
       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
       transition: $toggle-transition;
     }
@@ -107,7 +120,7 @@ $toggle-transition: all var(--sv-motion-duration-short) var(--sv-motion-ease-sta
     display: block;
     margin-top: var(--sv-space-1);
     margin-left: calc($toggle-width + var(--sv-space-3));
-    font-size: var(--sv-text-sm);
+    font-size: var(--sv-font-size-sm);
     color: var(--sv-text-secondary);
   }
   
@@ -154,7 +167,7 @@ $toggle-transition: all var(--sv-motion-duration-short) var(--sv-motion-ease-sta
    ========================================================================== */
 
 // Small toggle
-.sv-toggle.sv-ui-size-sm {
+.sv-toggle--small {
   $sm-toggle-width: calc(var(--sv-size-3) * 1.75);
   $sm-toggle-height: var(--sv-size-3);
   $sm-toggle-thumb-size: calc(var(--sv-size-3) * 0.8);
@@ -177,11 +190,11 @@ $toggle-transition: all var(--sv-motion-duration-short) var(--sv-motion-ease-sta
   }
   
   .sv-toggle__label {
-    font-size: var(--sv-text-sm);
+    font-size: var(--sv-font-size-sm);
   }
   
   .sv-toggle__description {
-    font-size: var(--sv-text-xs);
+    font-size: var(--sv-font-size-xs);
     margin-left: calc($sm-toggle-width + var(--sv-space-3));
   }
   
@@ -193,7 +206,7 @@ $toggle-transition: all var(--sv-motion-duration-short) var(--sv-motion-ease-sta
 }
 
 // Large toggle
-.sv-toggle.sv-ui-size-lg {
+.sv-toggle--large {
   $lg-toggle-width: calc(var(--sv-size-5) * 1.75);
   $lg-toggle-height: var(--sv-size-5);
   $lg-toggle-thumb-size: calc(var(--sv-size-5) * 0.8);
@@ -216,11 +229,11 @@ $toggle-transition: all var(--sv-motion-duration-short) var(--sv-motion-ease-sta
   }
   
   .sv-toggle__label {
-    font-size: var(--sv-text-lg);
+    font-size: var(--sv-font-size-lg);
   }
   
   .sv-toggle__description {
-    font-size: var(--sv-text-base);
+    font-size: var(--sv-font-size-base);
     margin-left: calc($lg-toggle-width + var(--sv-space-3));
   }
   
@@ -232,7 +245,7 @@ $toggle-transition: all var(--sv-motion-duration-short) var(--sv-motion-ease-sta
 }
 
 // Square toggle
-.sv-toggle.sv-toggle-square {
+.sv-toggle--square {
   .sv-toggle__control {
     border-radius: var(--sv-radius-md);
     
@@ -243,24 +256,9 @@ $toggle-transition: all var(--sv-motion-duration-short) var(--sv-motion-ease-sta
 }
 
 // Toggle with icons for yes/no, on/off
-.sv-toggle.sv-toggle-with-icons {
+.sv-toggle--with-icons {
   .sv-toggle__control {
-    &::before {
-      content: "";
-      position: absolute;
-      top: 50%;
-      left: calc($toggle-width - 1.2 * $toggle-thumb-offset);
-      transform: translateY(-50%);
-      width: $toggle-thumb-offset;
-      height: $toggle-thumb-offset;
-      background-color: var(--sv-text-on-dark);
-      opacity: 0.5;
-      border-radius: 50%;
-    }
-  }
-  
-  .sv-toggle__input:checked ~ .sv-toggle__control::before {
-    left: $toggle-thumb-offset;
+    padding: 0 $toggle-thumb-offset;
   }
 }
 
@@ -269,16 +267,32 @@ $toggle-transition: all var(--sv-motion-duration-short) var(--sv-motion-ease-sta
    ========================================================================== */
 
 .sv-toggle {
-  // Error state
-  &.error,
-  &.has-error,
-  &[aria-invalid="true"] {
+  // Read-only state - distinct from disabled
+  &.is-readonly {
+    cursor: default;
+    
     .sv-toggle__control {
-      background-color: var(--sv-error-light, rgba(244, 67, 54, 0.3));
+      opacity: 0.65;
+      background-color: var(--sv-bg-element);
+      pointer-events: none;
     }
     
-    .sv-toggle__input:checked ~ .sv-toggle__control {
-      background-color: var(--sv-error);
+    .sv-toggle__label {
+      color: var(--sv-text-secondary);
+    }
+  }
+  
+  // Required indicator
+  &.is-required .sv-toggle__label::after {
+    content: "*";
+    color: var(--sv-error);
+    margin-left: var(--sv-space-1);
+  }
+  
+  // Invalid state
+  &.is-invalid {
+    .sv-toggle__control {
+      box-shadow: 0 0 0 1px var(--sv-error);
     }
     
     .sv-toggle__description {
@@ -286,37 +300,10 @@ $toggle-transition: all var(--sv-motion-duration-short) var(--sv-motion-ease-sta
     }
   }
   
-  // Success state
-  &.success,
-  &.has-success,
-  &[aria-invalid="false"] {
-    .sv-toggle__input:checked ~ .sv-toggle__control {
-      background-color: var(--sv-success);
-    }
-    
+  // Valid state
+  &.is-valid {
     .sv-toggle__description {
       color: var(--sv-success);
-    }
-  }
-  
-  // Required state
-  &.required .sv-toggle__label::after {
-    content: "*";
-    color: var(--sv-error);
-    margin-left: var(--sv-space-1);
-  }
-  
-  // Read-only state
-  &.readonly {
-    pointer-events: none;
-    
-    .sv-toggle__control {
-      opacity: 0.7;
-      background-color: var(--sv-bg-element);
-    }
-    
-    .sv-toggle__label {
-      color: var(--sv-text-secondary);
     }
   }
 }
@@ -325,21 +312,21 @@ $toggle-transition: all var(--sv-motion-duration-short) var(--sv-motion-ease-sta
    5. TOGGLE SWITCH ANIMATIONS
    ========================================================================== */
 
-@keyframes toggle-slide {
+@keyframes sv-toggle-slide {
   0% {
-    transform: translateX(0);
+    transform: translateX($toggle-thumb-offset);
   }
   50% {
-    transform: translateX(calc($toggle-width - $toggle-thumb-size - ($toggle-thumb-offset * 2) + 2px));
+    transform: translateX(calc(($toggle-width - $toggle-thumb-size) / 2));
   }
   100% {
-    transform: translateX(calc($toggle-width - $toggle-thumb-size - ($toggle-thumb-offset * 2)));
+    transform: translateX(calc($toggle-width - $toggle-thumb-size - $toggle-thumb-offset));
   }
 }
 
-.sv-toggle.sv-toggle-animate {
+.sv-toggle--animate {
   .sv-toggle__input:checked ~ .sv-toggle__control::after {
-    animation: toggle-slide var(--sv-motion-duration-medium) var(--sv-motion-ease-standard);
+    animation: sv-toggle-slide var(--sv-motion-duration-standard) var(--sv-motion-ease-standard);
   }
   
   // Respect user preferences
@@ -359,11 +346,10 @@ $toggle-transition: all var(--sv-motion-duration-short) var(--sv-motion-ease-sta
   .sv-toggle {
     &__control {
       border: 1px solid CanvasText;
-      background-color: Canvas;
       
       &::after {
         background-color: CanvasText;
-        border: 1px solid CanvasText;
+        border: 1px solid Canvas;
       }
     }
     
@@ -372,17 +358,12 @@ $toggle-transition: all var(--sv-motion-duration-short) var(--sv-motion-ease-sta
       
       &::after {
         background-color: Canvas;
-        border-color: Canvas;
+        border-color: Highlight;
       }
     }
     
-    &__input:focus-visible ~ .sv-toggle__control {
-      outline: 2px solid Highlight;
-      outline-offset: 2px;
-    }
-    
-    &.error .sv-toggle__control {
-      border-color: Mark;
+    &.is-invalid .sv-toggle__control {
+      border: 2px solid Mark;
     }
   }
 }
@@ -391,26 +372,25 @@ $toggle-transition: all var(--sv-motion-duration-short) var(--sv-motion-ease-sta
    7. RESPONSIVE ADJUSTMENTS
    ========================================================================== */
 
-@include breakpoint-down(sm) {
+@include responsive.breakpoint-down(sm) {
   .sv-toggle {
-    // Ensure proper spacing on small screens
-    margin-bottom: var(--sv-space-3);
-    
-    // Adjust label positioning for small screens
-    &__label {
-      font-size: var(--sv-text-sm);
+    &__control {
+      // Slightly larger touch target on mobile
+      height: calc($toggle-height * 1.1);
+      width: calc($toggle-width * 1.1);
     }
     
-    // Ensure description is properly aligned and sized
+    &__label {
+      font-size: var(--sv-font-size-sm);
+    }
+    
     &__description {
-      font-size: var(--sv-text-xs);
+      font-size: var(--sv-font-size-xs);
     }
   }
   
-  // For toggles in groups, ensure proper spacing
-  .sv-toggle-group {
-    .sv-toggle {
-      margin-bottom: var(--sv-space-2);
-    }
+  // Stack toggles vertically with proper spacing
+  .sv-toggle + .sv-toggle {
+    margin-top: var(--sv-space-4);
   }
 }

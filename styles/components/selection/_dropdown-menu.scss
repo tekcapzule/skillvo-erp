@@ -1,7 +1,7 @@
 /**
  * Dropdown Menu Component Styles
- * Version: 1.0.0
- * Last Updated: April 29, 2025
+ * Version: 2.0.0
+ * Last Updated: July 20, 2024
  * 
  * This file contains styles specific to the dropdown menu component,
  * extending the selection-control-base class. The dropdown menu allows
@@ -12,15 +12,21 @@
    TABLE OF CONTENTS:
    
    1. VARIABLES & CONFIGURATION
-   2. DROPDOWN SPECIFIC STYLES
+   2. DROPDOWN BASE STYLES
    3. DROPDOWN VARIATIONS
    4. DROPDOWN STATES
    5. DROPDOWN ANIMATIONS
    6. ACCESSIBILITY ENHANCEMENTS
    7. RESPONSIVE ADJUSTMENTS
    ========================================================================== */
-   @use './../../abstracts/' as *;
-   @use './../../base/' as *;
+
+@use './../../abstracts/variables/' as *;
+@use './../../base/core/selection-controls' as selection;
+@use './../../base/utils/mixins/state' as state;
+@use './../../base/utils/mixins/typography' as typography;
+@use './../../base/utils/mixins/accessibility' as a11y;
+@use './../../base/utils/mixins/responsive' as responsive;
+
 /* ==========================================================================
    1. VARIABLES & CONFIGURATION
    ========================================================================== */
@@ -31,9 +37,12 @@ $dropdown-z-index: var(--sv-z-index-dropdown);
 $dropdown-item-height: var(--sv-size-10);
 $dropdown-transition: all var(--sv-motion-duration-short) var(--sv-motion-ease-standard);
 $dropdown-shadow: var(--sv-shadow-lg);
+$dropdown-border-radius: var(--sv-radius-md);
+$dropdown-border-color: var(--sv-border-medium);
+$dropdown-bg-color: var(--sv-bg-surface);
 
 /* ==========================================================================
-   2. DROPDOWN SPECIFIC STYLES
+   2. DROPDOWN BASE STYLES
    ========================================================================== */
 
 .sv-dropdown {
@@ -51,9 +60,9 @@ $dropdown-shadow: var(--sv-shadow-lg);
     justify-content: space-between;
     width: 100%;
     padding: var(--sv-padding-2) var(--sv-padding-3);
-    background-color: var(--sv-bg-surface);
-    border: 1px solid var(--sv-border-medium);
-    border-radius: var(--sv-radius-md);
+    background-color: $dropdown-bg-color;
+    border: 1px solid $dropdown-border-color;
+    border-radius: $dropdown-border-radius;
     cursor: pointer;
     transition: $dropdown-transition;
     text-align: left;
@@ -72,11 +81,12 @@ $dropdown-shadow: var(--sv-shadow-lg);
     
     // Selected value text
     &-text {
-      @include text-truncate;
+      @include typography.text-truncate;
       flex: 1;
     }
     
     // Rotate arrow when open
+    &.is-expanded::after,
     &[aria-expanded="true"]::after {
       transform: rotate(180deg);
     }
@@ -89,7 +99,7 @@ $dropdown-shadow: var(--sv-shadow-lg);
     
     // Focus state
     &:focus-visible {
-      @include focus-visible-state;
+      @include state.focus-visible-state;
     }
   }
   
@@ -101,9 +111,9 @@ $dropdown-shadow: var(--sv-shadow-lg);
     width: 100%;
     max-height: $dropdown-max-height;
     overflow-y: auto;
-    background-color: var(--sv-bg-surface);
-    border: 1px solid var(--sv-border-medium);
-    border-radius: var(--sv-radius-md);
+    background-color: $dropdown-bg-color;
+    border: 1px solid $dropdown-border-color;
+    border-radius: $dropdown-border-radius;
     box-shadow: $dropdown-shadow;
     z-index: $dropdown-z-index;
     margin-top: var(--sv-space-1);
@@ -111,7 +121,7 @@ $dropdown-shadow: var(--sv-shadow-lg);
     display: none;
     
     // When the dropdown is open
-    &.open {
+    &.is-open {
       display: block;
     }
   }
@@ -131,7 +141,7 @@ $dropdown-shadow: var(--sv-shadow-lg);
     }
     
     // Selected state
-    &.selected {
+    &.is-selected {
       background-color: var(--sv-bg-element-active);
       color: var(--sv-text-accent);
       font-weight: var(--sv-font-medium);
@@ -149,7 +159,7 @@ $dropdown-shadow: var(--sv-shadow-lg);
     }
     
     // Disabled state
-    &.disabled {
+    &.is-disabled {
       opacity: 0.65;
       cursor: not-allowed;
       color: var(--sv-text-tertiary);
@@ -168,7 +178,7 @@ $dropdown-shadow: var(--sv-shadow-lg);
   &__group-label {
     display: block;
     padding: var(--sv-padding-1) var(--sv-padding-3);
-    font-size: var(--sv-text-sm);
+    font-size: var(--sv-font-size-sm);
     color: var(--sv-text-secondary);
     font-weight: var(--sv-font-medium);
     text-transform: uppercase;
@@ -192,13 +202,17 @@ $dropdown-shadow: var(--sv-shadow-lg);
   // Helper text below the dropdown
   &__helper-text {
     margin-top: var(--sv-space-1);
-    font-size: var(--sv-text-sm);
+    font-size: var(--sv-font-size-sm);
     color: var(--sv-text-secondary);
   }
   
   // Native select (for progressive enhancement/fallback)
   &__native-select {
-    @include visually-hidden;
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+    margin: 0;
   }
 }
 
@@ -207,23 +221,23 @@ $dropdown-shadow: var(--sv-shadow-lg);
    ========================================================================== */
 
 // Dropdown with a search input
-.sv-dropdown.sv-dropdown-searchable {
+.sv-dropdown--searchable {
   .sv-dropdown__search {
     position: sticky;
     top: 0;
     padding: var(--sv-padding-2);
-    background-color: var(--sv-bg-surface);
+    background-color: $dropdown-bg-color;
     border-bottom: 1px solid var(--sv-border-light);
     z-index: 1;
     
     &-input {
       width: 100%;
       padding: var(--sv-padding-1) var(--sv-padding-2);
-      border: 1px solid var(--sv-border-medium);
+      border: 1px solid $dropdown-border-color;
       border-radius: var(--sv-radius-sm);
       
       &:focus {
-        @include focus-state;
+        @include state.focus-state;
       }
     }
   }
@@ -236,8 +250,8 @@ $dropdown-shadow: var(--sv-shadow-lg);
 }
 
 // Multi-level dropdown
-.sv-dropdown.sv-dropdown-multilevel {
-  .sv-dropdown__item-with-children {
+.sv-dropdown--multilevel {
+  .sv-dropdown__item--with-children {
     position: relative;
     
     &::after {
@@ -250,72 +264,66 @@ $dropdown-shadow: var(--sv-shadow-lg);
       margin-left: auto;
     }
     
-    // Submenu
+    // Submenu styling
     .sv-dropdown__submenu {
       position: absolute;
       top: 0;
       left: 100%;
-      min-width: 100%;
-      background-color: var(--sv-bg-surface);
-      border: 1px solid var(--sv-border-medium);
-      border-radius: var(--sv-radius-md);
+      width: 100%;
+      background-color: $dropdown-bg-color;
+      border: 1px solid $dropdown-border-color;
+      border-radius: $dropdown-border-radius;
       box-shadow: $dropdown-shadow;
       display: none;
-      padding: var(--sv-padding-1) 0;
       z-index: $dropdown-z-index;
+      
+      &.is-open {
+        display: block;
+      }
     }
     
-    &:hover .sv-dropdown__submenu {
+    &:hover > .sv-dropdown__submenu,
+    &.is-expanded > .sv-dropdown__submenu {
       display: block;
     }
   }
 }
 
-// Icon dropdown (trigger has only an icon)
-.sv-dropdown.sv-dropdown-icon {
-  width: auto;
-  
-  .sv-dropdown__trigger {
-    width: auto;
-    padding: var(--sv-padding-1);
-    justify-content: center;
-    
-    &::after {
-      display: none;
-    }
-  }
-  
-  .sv-dropdown__menu {
-    min-width: 160px;
-    right: 0;
-    left: auto;
-  }
-}
-
-// Dropdown sizes
-.sv-dropdown.sv-ui-size-sm {
+// Small dropdown
+.sv-dropdown--small {
   .sv-dropdown__trigger {
     padding: var(--sv-padding-1) var(--sv-padding-2);
-    font-size: var(--sv-text-sm);
+    font-size: var(--sv-font-size-sm);
   }
   
   .sv-dropdown__item {
     padding: var(--sv-padding-1) var(--sv-padding-2);
     min-height: calc($dropdown-item-height * 0.8);
-    font-size: var(--sv-text-sm);
+    font-size: var(--sv-font-size-sm);
+  }
+  
+  .sv-dropdown__group-label {
+    padding: var(--sv-padding-1) var(--sv-padding-2);
+    font-size: var(--sv-font-size-xs);
   }
 }
 
-.sv-dropdown.sv-ui-size-lg {
+// Large dropdown
+.sv-dropdown--large {
   .sv-dropdown__trigger {
     padding: var(--sv-padding-3) var(--sv-padding-4);
-    font-size: var(--sv-text-lg);
+    font-size: var(--sv-font-size-lg);
   }
   
   .sv-dropdown__item {
     padding: var(--sv-padding-3) var(--sv-padding-4);
     min-height: calc($dropdown-item-height * 1.2);
-    font-size: var(--sv-text-lg);
+    font-size: var(--sv-font-size-lg);
+  }
+  
+  .sv-dropdown__group-label {
+    padding: var(--sv-padding-2) var(--sv-padding-4);
+    font-size: var(--sv-font-size-base);
   }
 }
 
@@ -324,10 +332,23 @@ $dropdown-shadow: var(--sv-shadow-lg);
    ========================================================================== */
 
 .sv-dropdown {
+  // Disabled state
+  &.is-disabled {
+    .sv-dropdown__trigger {
+      opacity: 0.65;
+      cursor: not-allowed;
+      background-color: var(--sv-bg-element);
+      color: var(--sv-text-tertiary);
+      pointer-events: none;
+    }
+    
+    .sv-dropdown__helper-text {
+      color: var(--sv-text-tertiary);
+    }
+  }
+  
   // Error state
-  &.error,
-  &.has-error,
-  &[aria-invalid="true"] {
+  &.is-invalid {
     .sv-dropdown__trigger {
       border-color: var(--sv-error);
     }
@@ -337,10 +358,8 @@ $dropdown-shadow: var(--sv-shadow-lg);
     }
   }
   
-  // Success state
-  &.success,
-  &.has-success,
-  &[aria-invalid="false"] {
+  // Valid state
+  &.is-valid {
     .sv-dropdown__trigger {
       border-color: var(--sv-success);
     }
@@ -350,43 +369,8 @@ $dropdown-shadow: var(--sv-shadow-lg);
     }
   }
   
-  // Disabled state
-  &.disabled,
-  &[aria-disabled="true"] {
-    .sv-dropdown__trigger {
-      opacity: 0.65;
-      cursor: not-allowed;
-      background-color: var(--sv-bg-element);
-      border-color: var(--sv-border-light);
-      color: var(--sv-text-tertiary);
-      pointer-events: none;
-    }
-  }
-  
-  // Loading state
-  &.loading {
-    .sv-dropdown__trigger {
-      color: transparent;
-      pointer-events: none;
-      
-      &::after {
-        content: "";
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        width: 16px;
-        height: 16px;
-        margin: -8px 0 0 -8px;
-        border-radius: 50%;
-        border: 2px solid rgba(var(--sv-primary-500-rgb), 0.3);
-        border-top-color: var(--sv-primary);
-        animation: spin var(--sv-motion-duration-medium) linear infinite;
-      }
-    }
-  }
-  
-  // Required state
-  &.required .sv-dropdown__label::after {
+  // Required indicator
+  &.is-required .sv-dropdown__label::after {
     content: "*";
     color: var(--sv-error);
     margin-left: var(--sv-space-1);
@@ -397,10 +381,10 @@ $dropdown-shadow: var(--sv-shadow-lg);
    5. DROPDOWN ANIMATIONS
    ========================================================================== */
 
-@keyframes dropdown-fade-in {
+@keyframes sv-dropdown-fade-in {
   from {
     opacity: 0;
-    transform: translateY(-5px);
+    transform: translateY(-10px);
   }
   to {
     opacity: 1;
@@ -408,31 +392,25 @@ $dropdown-shadow: var(--sv-shadow-lg);
   }
 }
 
-@keyframes dropdown-fade-out {
+@keyframes sv-dropdown-fade-out {
   from {
     opacity: 1;
     transform: translateY(0);
   }
   to {
     opacity: 0;
-    transform: translateY(-5px);
+    transform: translateY(-10px);
   }
 }
 
-// Add animations to dropdown menu
-.sv-dropdown.sv-dropdown-animate {
-  .sv-dropdown__menu.open {
-    animation: dropdown-fade-in var(--sv-motion-duration-short) var(--sv-motion-ease-standard) forwards;
-  }
-  
-  .sv-dropdown__menu.closing {
-    animation: dropdown-fade-out var(--sv-motion-duration-short) var(--sv-motion-ease-standard) forwards;
+.sv-dropdown--animate {
+  .sv-dropdown__menu.is-open {
+    animation: sv-dropdown-fade-in var(--sv-motion-duration-short) var(--sv-motion-ease-decelerate);
   }
   
   // Respect user preferences
   @media (prefers-reduced-motion: reduce) {
-    .sv-dropdown__menu.open,
-    .sv-dropdown__menu.closing {
+    .sv-dropdown__menu.is-open {
       animation: none;
     }
   }
@@ -447,7 +425,6 @@ $dropdown-shadow: var(--sv-shadow-lg);
   .sv-dropdown {
     &__trigger {
       border: 1px solid CanvasText;
-      background-color: Canvas;
       
       &::after {
         border-top-color: CanvasText;
@@ -456,10 +433,9 @@ $dropdown-shadow: var(--sv-shadow-lg);
     
     &__menu {
       border: 1px solid CanvasText;
-      background-color: Canvas;
     }
     
-    &__item.selected {
+    &__item.is-selected {
       background-color: Highlight;
       color: Canvas;
       
@@ -468,8 +444,8 @@ $dropdown-shadow: var(--sv-shadow-lg);
       }
     }
     
-    &__divider {
-      background-color: CanvasText;
+    &.is-invalid .sv-dropdown__trigger {
+      border: 2px solid Mark;
     }
   }
 }
@@ -478,37 +454,43 @@ $dropdown-shadow: var(--sv-shadow-lg);
    7. RESPONSIVE ADJUSTMENTS
    ========================================================================== */
 
-@include breakpoint-down(sm) {
+@include responsive.breakpoint-down(sm) {
   .sv-dropdown {
-    // Make dropdown more touch-friendly on small screens
     &__trigger {
-      min-height: var(--sv-min-touch-target);
-      padding: var(--sv-padding-2) var(--sv-padding-3);
+      padding: var(--sv-padding-2);
     }
     
-    // Increase item height for better touch targets
     &__item {
-      min-height: var(--sv-min-touch-target);
+      padding: var(--sv-padding-3) var(--sv-padding-2);
+      min-height: var(--sv-min-touch-target, 44px); // Ensure touch-friendly size
     }
     
-    // Full-width menu on small screens (for multi-level dropdowns)
-    &.sv-dropdown-multilevel {
-      .sv-dropdown__item-with-children {
-        .sv-dropdown__submenu {
-          position: static;
-          border: none;
-          box-shadow: none;
-          margin-left: var(--sv-space-4);
-          margin-top: var(--sv-space-1);
-          border-left: 1px solid var(--sv-border-light);
-        }
+    &__label,
+    &__helper-text {
+      font-size: var(--sv-font-size-sm);
+    }
+  }
+  
+  // Make dropdowns stack nicely on mobile
+  .sv-dropdown + .sv-dropdown {
+    margin-top: var(--sv-space-4);
+  }
+  
+  // For multilevel dropdowns on mobile
+  .sv-dropdown--multilevel {
+    .sv-dropdown__item--with-children {
+      .sv-dropdown__submenu {
+        position: static;
+        margin-left: var(--sv-space-4);
+        width: auto;
+        border: none;
+        box-shadow: none;
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height var(--sv-motion-duration-standard) var(--sv-motion-ease-standard);
         
-        &::after {
-          transform: rotate(90deg);
-        }
-        
-        &[aria-expanded="true"]::after {
-          transform: rotate(-90deg);
+        &.is-open {
+          max-height: 500px;
         }
       }
     }

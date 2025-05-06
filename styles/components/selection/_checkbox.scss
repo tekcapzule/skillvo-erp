@@ -1,7 +1,7 @@
 /**
  * Checkbox Component Styles
- * Version: 1.0.0
- * Last Updated: April 29, 2025
+ * Version: 2.0.0
+ * Last Updated: July 20, 2024
  * 
  * This file contains styles specific to the checkbox component,
  * extending the selection-control-base class.
@@ -10,373 +10,289 @@
 /* ==========================================================================
    TABLE OF CONTENTS:
    
-   1. CHECKBOX SPECIFIC STYLES
-   2. CHECKBOX VARIATIONS
-   3. CHECKBOX STATES
-   4. CHECKBOX ANIMATIONS
-   5. ACCESSIBILITY ENHANCEMENTS
+   1. VARIABLES & CONFIGURATION
+   2. CHECKBOX BASE STYLES
+   3. CHECKBOX VARIATIONS
+   4. CHECKBOX STATES
+   5. CHECKBOX ANIMATIONS
+   6. ACCESSIBILITY ENHANCEMENTS
+   7. RESPONSIVE ADJUSTMENTS
    ========================================================================== */
 
-   @use './../../abstracts/' as *;
-   @use './../../base/' as *;
+@use './../../abstracts/variables/' as *;
+@use './../../base/core/selection-controls' as selection;
+@use './../../base/utils/mixins/state' as state;
+@use './../../base/utils/mixins/typography' as typography;
+@use './../../base/utils/mixins/accessibility' as a11y;
+@use './../../base/utils/mixins/responsive' as responsive;
 
 /* ==========================================================================
-   1. CHECKBOX SPECIFIC STYLES
+   1. VARIABLES & CONFIGURATION
    ========================================================================== */
 
-   .sv-checkbox {
-    // Extend the base selection control class
-    @extend .sv-selection-control-base;
+// Checkbox specific variables
+$checkbox-border-radius: var(--sv-radius-sm);
+$checkbox-indicator-color: var(--sv-text-on-dark);
+$checkbox-animation-duration: var(--sv-motion-duration-short);
+$checkbox-animation-easing: var(--sv-motion-ease-standard);
+$checkbox-indeterminate-height: 2px;
+$checkbox-indeterminate-width: 50%;
+
+/* ==========================================================================
+   2. CHECKBOX BASE STYLES
+   ========================================================================== */
+
+.sv-checkbox {
+  // Extend the base selection control class
+  @extend .sv-selection-control-base;
+  
+  // Checkbox-specific control styles
+  &__control {
+    border-radius: $checkbox-border-radius;
     
-    // Checkbox-specific control styles
-    &__control {
-      border-radius: var(--sv-radius-sm);
-      
-      // Checkbox-specific indicator (checkmark)
-      &::after {
-        @include checkbox-indicator;
-      }
-    }
-    
-    // Indeterminate state styling
-    input:indeterminate + .sv-checkbox__control::after {
-      transform: translate(-50%, -50%) scale(1);
-      width: 50%;
-      height: 2px;
-      border: none;
-      background-color: var(--sv-text-on-dark);
-    }
-    
-    // Apply transitions for smooth state changes
-    input:checked + .sv-checkbox__control::after {
-      transform: translate(-50%, -70%) rotate(-45deg) scale(1);
-      transition: transform var(--sv-motion-duration-short) var(--sv-motion-ease-decelerate);
+    // Checkbox-specific indicator (checkmark)
+    &::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 40%;
+      height: 20%;
+      border-left: 2px solid $checkbox-indicator-color;
+      border-bottom: 2px solid $checkbox-indicator-color;
+      transform: translate(-50%, -70%) rotate(-45deg) scale(0);
+      transition: transform $checkbox-animation-duration $checkbox-animation-easing;
     }
   }
   
-  /* ==========================================================================
-     2. CHECKBOX VARIATIONS
-     ========================================================================== */
-  
-  // Tile checkbox - a larger checkbox with more padding and optional description
-  .sv-checkbox-tile {
-    @extend .sv-checkbox;
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    border: 1px solid var(--sv-border-medium);
-    border-radius: var(--sv-radius-md);
-    padding: var(--sv-padding-3);
-    transition: border-color var(--sv-motion-duration-short) var(--sv-motion-ease-standard),
-                background-color var(--sv-motion-duration-short) var(--sv-motion-ease-standard);
-    
-    &:hover {
-      border-color: var(--sv-border-dark);
-      background-color: var(--sv-bg-element-hover);
+  // Input handling
+  &__input {
+    // Indeterminate state styling
+    &:indeterminate + .sv-checkbox__control::after {
+      transform: translate(-50%, -50%) scale(1);
+      width: $checkbox-indeterminate-width;
+      height: $checkbox-indeterminate-height;
+      border: none;
+      background-color: $checkbox-indicator-color;
     }
     
+    // Checked state styling
+    &:checked + .sv-checkbox__control::after {
+      transform: translate(-50%, -70%) rotate(-45deg) scale(1);
+      transition: transform $checkbox-animation-duration $checkbox-animation-easing;
+    }
+  }
+  
+  // Description text
+  &__description {
+    display: block;
+    margin-top: var(--sv-space-1);
+    margin-left: calc(var(--sv-size-4) + var(--sv-space-3));
+    font-size: var(--sv-font-size-sm);
+    color: var(--sv-text-secondary);
+  }
+}
+
+/* ==========================================================================
+   3. CHECKBOX VARIATIONS
+   ========================================================================== */
+
+// Tile checkbox - a larger checkbox with more padding and optional description
+.sv-checkbox--tile {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  border: 1px solid var(--sv-border-medium);
+  border-radius: var(--sv-radius-md);
+  padding: var(--sv-padding-3);
+  transition: border-color $checkbox-animation-duration $checkbox-animation-easing,
+              background-color $checkbox-animation-duration $checkbox-animation-easing;
+  
+  &:hover {
+    border-color: var(--sv-border-dark);
+    background-color: var(--sv-bg-element-hover);
+  }
+  
+  .sv-checkbox__control {
+    margin-right: var(--sv-space-3);
+  }
+  
+  .sv-checkbox__label {
+    font-weight: var(--sv-font-medium);
+  }
+  
+  &.is-selected,
+  .sv-checkbox__input:checked ~ & {
+    border-color: var(--sv-primary);
+    background-color: var(--sv-bg-element-active);
+  }
+}
+
+// Image checkbox - checkbox with an image
+.sv-checkbox--image {
+  position: relative;
+  
+  &__img-container {
+    position: relative;
+    margin-bottom: var(--sv-space-2);
+    border-radius: var(--sv-radius-md);
+    overflow: hidden;
+    
+    img {
+      display: block;
+      width: 100%;
+      transition: opacity $checkbox-animation-duration $checkbox-animation-easing;
+    }
+  }
+  
+  .sv-checkbox__control {
+    position: absolute;
+    top: var(--sv-space-2);
+    right: var(--sv-space-2);
+    background-color: var(--sv-bg-surface);
+    border-color: var(--sv-border-medium);
+  }
+  
+  .sv-checkbox__input:checked ~ .sv-checkbox--image__img-container {
+    box-shadow: 0 0 0 2px var(--sv-primary);
+  }
+  
+  &:hover .sv-checkbox--image__img-container img {
+    opacity: 0.9;
+  }
+}
+
+/* ==========================================================================
+   4. CHECKBOX STATES
+   ========================================================================== */
+
+// Custom states beyond what's inherited from selection-control-base
+.sv-checkbox {
+  // Read-only state - distinct from disabled
+  &.is-readonly {
+    cursor: default;
+    
     .sv-checkbox__control {
-      margin-right: var(--sv-space-3);
+      background-color: var(--sv-bg-element);
+      border-color: var(--sv-border-light);
     }
     
     .sv-checkbox__label {
-      font-weight: var(--sv-font-medium);
-    }
-    
-    &.selected,
-    input:checked ~ & {
-      border-color: var(--sv-primary);
-      background-color: var(--sv-bg-element-active);
-    }
-    
-    // Responsive adjustments
-    @include breakpoint-down(sm) {
-      padding: var(--sv-padding-2);
-      
-      .sv-checkbox__label {
-        font-size: var(--sv-text-sm);
-      }
+      color: var(--sv-text-secondary);
     }
   }
   
-  // Image checkbox - checkbox with an image
-  .sv-checkbox-image {
-    @extend .sv-checkbox;
-    position: relative;
-    
-    &__img-container {
-      position: relative;
-      margin-bottom: var(--sv-space-2);
-      border-radius: var(--sv-radius-md);
-      overflow: hidden;
-      
-      img {
-        display: block;
-        width: 100%;
-        transition: opacity var(--sv-motion-duration-short) var(--sv-motion-ease-standard);
-      }
-    }
-    
-    .sv-checkbox__control {
-      position: absolute;
-      top: var(--sv-space-2);
-      right: var(--sv-space-2);
-      background-color: var(--sv-bg-surface);
-      border-color: var(--sv-border-medium);
-    }
-    
-    input:checked ~ .sv-checkbox-image__img-container {
-      box-shadow: 0 0 0 2px var(--sv-primary);
-    }
-    
-    &:hover .sv-checkbox-image__img-container img {
-      opacity: 0.9;
-    }
+  // Required indicator
+  &.is-required .sv-checkbox__label::after {
+    content: "*";
+    color: var(--sv-error);
+    margin-left: var(--sv-space-1);
   }
   
-  /* ==========================================================================
-     3. CHECKBOX STATES
-     ========================================================================== */
-  
-  // Custom states beyond what's inherited from selection-control-base
-  .sv-checkbox {
-    // Read-only state - distinct from disabled
-    &.readonly {
-      cursor: default;
-      
-      .sv-checkbox__control {
-        background-color: var(--sv-bg-element);
-        border-color: var(--sv-border-light);
-      }
-      
-      .sv-checkbox__label {
-        color: var(--sv-text-secondary);
-      }
-    }
-    
-    // Required indicator
-    &.required .sv-checkbox__label::after {
-      content: "*";
-      color: var(--sv-error);
-      margin-left: var(--sv-space-1);
-    }
-    
-    // Custom invalid/valid states (beyond what's in the base)
-    &.invalid .sv-checkbox__description {
-      color: var(--sv-error);
-    }
-    
-    &.valid .sv-checkbox__description {
-      color: var(--sv-success);
-    }
+  // Custom invalid/valid states (beyond what's in the base)
+  &.is-invalid .sv-checkbox__description {
+    color: var(--sv-error);
   }
   
-  /* ==========================================================================
-     4. CHECKBOX ANIMATIONS
-     ========================================================================== */
-  
-  // Animation for checkbox when checked
-  @keyframes checkbox-check {
-    0% {
-      transform: translate(-50%, -70%) rotate(-45deg) scale(0);
-    }
-    50% {
-      transform: translate(-50%, -70%) rotate(-45deg) scale(1.2);
-    }
-    100% {
-      transform: translate(-50%, -70%) rotate(-45deg) scale(1);
-    }
+  &.is-valid .sv-checkbox__description {
+    color: var(--sv-success);
   }
-  
-  // Apply animation class
-  .sv-checkbox.sv-checkbox-animate {
-    input:checked + .sv-checkbox__control::after {
-      animation: checkbox-check var(--sv-motion-duration-short) var(--sv-motion-ease-standard);
-    }
-    
-    // Respect user preferences
-    @media (prefers-reduced-motion: reduce) {
-      input:checked + .sv-checkbox__control::after {
-        animation: none;
-      }
-    }
-  }
-  
-  /* ==========================================================================
-     5. ACCESSIBILITY ENHANCEMENTS
-     ========================================================================== */
-  
-  // High contrast mode adjustments
-  @media (forced-colors: active) {
-    .sv-checkbox {
-      &__control {
-        border: 2px solid CanvasText;
-        
-        &::after {
-          border-color: Canvas;
-        }
-      }
-      
-      input:checked + .sv-checkbox__control {
-        background-color: Highlight;
-        border-color: Highlight;
-        
-        &::after {
-          border-color: Canvas;
-        }
-      }
-      
-      &.invalid .sv-checkbox__control {
-        border-color: Mark;
-      }
-    }
-    
-    .sv-checkbox-tile {
-      border: 1px solid CanvasText;
-      
-      &.selected,
-      input:checked ~ & {
-        border: 2px solid Highlight;
-      }
-    }
-    
-    .sv-checkbox-image {
-      input:checked ~ .sv-checkbox-image__img-container {
-        outline: 2px solid Highlight;
-        outline-offset: 2px;
-      }
-    }
-  }
-  /* ==========================================================================
-   6. RESPONSIVE ADJUSTMENTS
+}
+
+/* ==========================================================================
+   5. CHECKBOX ANIMATIONS
    ========================================================================== */
 
-@include breakpoint-down(sm) {
+// Animation for checkbox when checked
+@keyframes sv-checkbox-check {
+  0% {
+    transform: translate(-50%, -70%) rotate(-45deg) scale(0);
+  }
+  50% {
+    transform: translate(-50%, -70%) rotate(-45deg) scale(1.2);
+  }
+  100% {
+    transform: translate(-50%, -70%) rotate(-45deg) scale(1);
+  }
+}
+
+// Apply animation class
+.sv-checkbox--animate {
+  .sv-checkbox__input:checked + .sv-checkbox__control::after {
+    animation: sv-checkbox-check $checkbox-animation-duration $checkbox-animation-easing;
+  }
+  
+  // Respect user preferences
+  @media (prefers-reduced-motion: reduce) {
+    .sv-checkbox__input:checked + .sv-checkbox__control::after {
+      animation: none;
+    }
+  }
+}
+
+/* ==========================================================================
+   6. ACCESSIBILITY ENHANCEMENTS
+   ========================================================================== */
+
+// High contrast mode adjustments
+@media (forced-colors: active) {
   .sv-checkbox {
-    // Increase touch target size for mobile
     &__control {
-      width: calc(var(--sv-size-4) * 1.2);
-      height: calc(var(--sv-size-4) * 1.2);
-      min-width: calc(var(--sv-size-4) * 1.2);
-      min-height: calc(var(--sv-size-4) * 1.2);
+      border: 2px solid CanvasText;
+      
+      &::after {
+        border-color: Canvas;
+      }
     }
     
-    // Adjust spacing for mobile views
-    & + & {
-      margin-top: var(--sv-space-4);
+    &__input:checked + .sv-checkbox__control {
+      background-color: Highlight;
+      border-color: Highlight;
+      
+      &::after {
+        border-color: Canvas;
+      }
     }
     
-    // Adjust label font size for better readability
-    &__label {
+    &.is-invalid .sv-checkbox__control {
+      border-color: Mark;
+    }
+  }
+  
+  .sv-checkbox--tile {
+    border: 1px solid CanvasText;
+    
+    &.is-selected,
+    .sv-checkbox__input:checked ~ & {
+      border: 2px solid Highlight;
+    }
+  }
+  
+  .sv-checkbox--image {
+    .sv-checkbox__input:checked ~ .sv-checkbox--image__img-container {
+      outline: 2px solid Highlight;
+      outline-offset: 2px;
+    }
+  }
+}
+
+/* ==========================================================================
+   7. RESPONSIVE ADJUSTMENTS
+   ========================================================================== */
+
+@include responsive.breakpoint-down(sm) {
+  .sv-checkbox--tile {
+    padding: var(--sv-padding-2);
+    
+    .sv-checkbox__label {
       font-size: var(--sv-text-sm);
     }
-    
-    // Ensure description is clearly readable
-    &__description {
-      font-size: var(--sv-text-xs);
-      margin-top: var(--sv-space-2);
-    }
-    
-    // Update checkbox indicator size for larger control
-    input:checked + .sv-checkbox__control::after {
-      width: calc(var(--sv-size-4) * 0.6 * 0.5);
-      height: calc(var(--sv-size-4) * 0.6 * 0.25);
-      border-width: 3px;
-    }
   }
   
-  // Stack checkbox items vertically with proper spacing
-  .sv-checkbox-tile {
-    margin-bottom: var(--sv-space-3);
-    padding: var(--sv-padding-3) var(--sv-padding-2);
-    
-    // When stacked in a group, add spacing
-    & + .sv-checkbox-tile {
-      margin-top: var(--sv-space-2);
-    }
-  }
-  
-  // Make image checkboxes more mobile-friendly
-  .sv-checkbox-image {
-    // Full width on mobile
-    max-width: 100%;
-    
-    &__img-container {
-      // Maintain aspect ratio but don't make images too tall
-      img {
-        max-height: 200px;
-        object-fit: cover;
-      }
-    }
-    
-    // Make the checkbox control more visible on images
+  .sv-checkbox--image {
     .sv-checkbox__control {
-      width: calc(var(--sv-size-4) * 1.4);
-      height: calc(var(--sv-size-4) * 1.4);
-      // Add subtle background to ensure visibility on any image
-      box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.8);
-    }
-  }
-  
-  // Adjust checkbox group layouts
-  .sv-checkbox-group {
-    &.horizontal {
-      // Stack items on mobile
-      flex-direction: column;
-      
-      .sv-checkbox {
-        margin-right: 0;
-        margin-bottom: var(--sv-space-3);
-      }
-    }
-    
-    // Improve touch targets for inline checkbox groups
-    &.inline .sv-checkbox {
-      margin-right: var(--sv-space-4);
-      margin-bottom: var(--sv-space-3);
-    }
-  }
-}
-
-// Tablet-specific adjustments
-@include breakpoint-between(sm, md) {
-  .sv-checkbox-group.horizontal {
-    .sv-checkbox {
-      flex: 0 0 calc(50% - var(--sv-space-2)); // 2 per row on tablets
-    }
-  }
-  
-  // Create grid layout for image checkboxes on tablets
-  .sv-checkbox-image-group {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: var(--sv-space-3);
-    
-    .sv-checkbox-image {
-      margin: 0;
-    }
-  }
-}
-
-// Larger screen optimizations
-@include breakpoint-up(lg) {
-  // Grid layout for image checkboxes on desktop
-  .sv-checkbox-image-group {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: var(--sv-space-4);
-  }
-  
-  // Smooth hover effects only on devices with hover capability
-  @media (hover: hover) {
-    .sv-checkbox-tile:hover {
-      transform: translateY(-2px);
-      box-shadow: var(--sv-shadow-sm);
-    }
-    
-    .sv-checkbox-image:hover .sv-checkbox-image__img-container {
-      transform: scale(1.02);
-      transition: transform var(--sv-motion-duration-short) var(--sv-motion-ease-standard);
+      top: var(--sv-space-1);
+      right: var(--sv-space-1);
     }
   }
 }

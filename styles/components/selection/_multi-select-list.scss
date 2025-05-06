@@ -1,7 +1,7 @@
 /**
  * Multi-Select Component Styles
- * Version: 1.0.0
- * Last Updated: April 29, 2025
+ * Version: 2.0.0
+ * Last Updated: July 20, 2024
  * 
  * This file contains styles specific to the multi-select component,
  * extending the selection-control-base class. The multi-select allows
@@ -12,7 +12,7 @@
    TABLE OF CONTENTS:
    
    1. VARIABLES & CONFIGURATION
-   2. MULTI-SELECT SPECIFIC STYLES
+   2. MULTI-SELECT BASE STYLES
    3. MULTI-SELECT VARIATIONS
    4. MULTI-SELECT STATES
    5. MULTI-SELECT ANIMATIONS
@@ -23,8 +23,14 @@
 /* ==========================================================================
    1. VARIABLES & CONFIGURATION
    ========================================================================== */
-   @use './../../abstracts/' as *;
-   @use './../../base/' as *;
+
+@use './../../abstracts/variables/' as *;
+@use './../../base/core/selection-controls' as selection;
+@use './../../base/utils/mixins/state' as state;
+@use './../../base/utils/mixins/typography' as typography;
+@use './../../base/utils/mixins/accessibility' as a11y;
+@use './../../base/utils/mixins/responsive' as responsive;
+
 // Multi-select specific variables
 $multiselect-max-height: var(--sv-size-64);
 $multiselect-z-index: var(--sv-z-index-dropdown);
@@ -33,9 +39,12 @@ $multiselect-transition: all var(--sv-motion-duration-short) var(--sv-motion-eas
 $multiselect-shadow: var(--sv-shadow-lg);
 $multiselect-tag-height: var(--sv-size-6);
 $multiselect-tag-border-radius: var(--sv-radius-full);
+$multiselect-border-radius: var(--sv-radius-md);
+$multiselect-border-color: var(--sv-border-medium);
+$multiselect-bg-color: var(--sv-bg-surface);
 
 /* ==========================================================================
-   2. MULTI-SELECT SPECIFIC STYLES
+   2. MULTI-SELECT BASE STYLES
    ========================================================================== */
 
 .sv-multiselect {
@@ -53,9 +62,9 @@ $multiselect-tag-border-radius: var(--sv-radius-full);
     align-items: center;
     min-height: calc($multiselect-item-height);
     padding: var(--sv-padding-1) var(--sv-padding-2);
-    background-color: var(--sv-bg-surface);
-    border: 1px solid var(--sv-border-medium);
-    border-radius: var(--sv-radius-md);
+    background-color: $multiselect-bg-color;
+    border: 1px solid $multiselect-border-color;
+    border-radius: $multiselect-border-radius;
     cursor: text;
     transition: $multiselect-transition;
     
@@ -76,6 +85,7 @@ $multiselect-tag-border-radius: var(--sv-radius-full);
     }
     
     // Rotate arrow when open
+    &.is-expanded::after, 
     &[aria-expanded="true"]::after {
       transform: translateY(-50%) rotate(180deg);
     }
@@ -87,7 +97,7 @@ $multiselect-tag-border-radius: var(--sv-radius-full);
     
     // Focus state
     &:focus-within {
-      @include focus-state;
+      @include state.focus-state;
     }
   }
   
@@ -121,14 +131,14 @@ $multiselect-tag-border-radius: var(--sv-radius-full);
     margin: var(--sv-space-1);
     padding: 0 var(--sv-padding-2);
     background-color: var(--sv-bg-element);
-    border: 1px solid var(--sv-border-medium);
+    border: 1px solid $multiselect-border-color;
     border-radius: $multiselect-tag-border-radius;
-    font-size: var(--sv-text-sm);
+    font-size: var(--sv-font-size-sm);
     transition: $multiselect-transition;
     max-width: calc(100% - var(--sv-space-2));
     
     &-text {
-      @include text-truncate;
+      @include typography.text-truncate;
       max-width: 200px;
     }
     
@@ -171,7 +181,7 @@ $multiselect-tag-border-radius: var(--sv-radius-full);
   &__clear {
     margin-left: auto;
     margin-right: var(--sv-space-2);
-    font-size: var(--sv-text-sm);
+    font-size: var(--sv-font-size-sm);
     color: var(--sv-text-secondary);
     background: none;
     border: none;
@@ -191,9 +201,9 @@ $multiselect-tag-border-radius: var(--sv-radius-full);
     width: 100%;
     max-height: $multiselect-max-height;
     overflow-y: auto;
-    background-color: var(--sv-bg-surface);
-    border: 1px solid var(--sv-border-medium);
-    border-radius: var(--sv-radius-md);
+    background-color: $multiselect-bg-color;
+    border: 1px solid $multiselect-border-color;
+    border-radius: $multiselect-border-radius;
     box-shadow: $multiselect-shadow;
     z-index: $multiselect-z-index;
     margin-top: var(--sv-space-1);
@@ -201,7 +211,7 @@ $multiselect-tag-border-radius: var(--sv-radius-full);
     display: none;
     
     // When the dropdown is open
-    &.open {
+    &.is-open {
       display: block;
     }
   }
@@ -221,7 +231,7 @@ $multiselect-tag-border-radius: var(--sv-radius-full);
     }
     
     // Selected state
-    &.selected {
+    &.is-selected {
       background-color: var(--sv-bg-element-active);
       
       // Checkbox for selected items
@@ -236,7 +246,7 @@ $multiselect-tag-border-radius: var(--sv-radius-full);
     }
     
     // Disabled state
-    &.disabled {
+    &.is-disabled {
       opacity: 0.65;
       cursor: not-allowed;
       color: var(--sv-text-tertiary);
@@ -250,77 +260,45 @@ $multiselect-tag-border-radius: var(--sv-radius-full);
     }
   }
   
-  // Group label for grouped items
+  // Group label for grouped options
   &__group-label {
     display: block;
     padding: var(--sv-padding-1) var(--sv-padding-3);
-    font-size: var(--sv-text-sm);
+    font-size: var(--sv-font-size-sm);
     color: var(--sv-text-secondary);
     font-weight: var(--sv-font-medium);
     text-transform: uppercase;
     letter-spacing: var(--sv-tracking-wide);
   }
   
-  // Divider between dropdown items or groups
+  // Divider between groups
   &__divider {
     height: 1px;
     margin: var(--sv-space-1) 0;
     background-color: var(--sv-border-light);
   }
   
-  // "No results" message
-  &__no-results {
-    padding: var(--sv-padding-3);
-    text-align: center;
-    color: var(--sv-text-secondary);
-  }
-  
-  // Label for the multiselect
+  // Label for the multi-select
   &__label {
     display: block;
     margin-bottom: var(--sv-space-1);
     font-weight: var(--sv-font-medium);
   }
   
-  // Helper text below the multiselect
+  // Helper text below the multi-select
   &__helper-text {
     margin-top: var(--sv-space-1);
-    font-size: var(--sv-text-sm);
+    font-size: var(--sv-font-size-sm);
     color: var(--sv-text-secondary);
   }
   
-  // Counter for selected items
-  &__counter {
-    font-size: var(--sv-text-sm);
-    color: var(--sv-text-secondary);
-    margin-left: var(--sv-space-2);
-  }
-  
-  // Native select (for progressive enhancement/fallback)
+  // Native multiple select (for progressive enhancement/fallback)
   &__native-select {
-    @include visually-hidden;
-  }
-  
-  // Search input in dropdown
-  &__search {
-    position: sticky;
-    top: 0;
-    padding: var(--sv-padding-2);
-    background-color: var(--sv-bg-surface);
-    border-bottom: 1px solid var(--sv-border-light);
-    z-index: 1;
-    
-    &-input {
-      width: 100%;
-      padding: var(--sv-padding-1) var(--sv-padding-2);
-      border: 1px solid var(--sv-border-medium);
-      border-radius: var(--sv-radius-sm);
-      font-size: var(--sv-text-sm);
-      
-      &:focus {
-        @include focus-state;
-      }
-    }
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+    margin: 0;
   }
 }
 
@@ -328,176 +306,79 @@ $multiselect-tag-border-radius: var(--sv-radius-full);
    3. MULTI-SELECT VARIATIONS
    ========================================================================== */
 
-// Multi-select with chips/tags that can be toggled directly
-.sv-multiselect.sv-multiselect-chips {
-  .sv-multiselect__dropdown {
-    display: none !important; // Always hide dropdown
-  }
-  
-  .sv-multiselect__field {
-    flex-wrap: wrap;
-    cursor: default;
-    
-    &::after {
-      display: none; // Remove dropdown arrow
-    }
-  }
-  
-  .sv-multiselect__chip {
-    display: inline-flex;
-    align-items: center;
-    margin: var(--sv-space-1);
-    padding: var(--sv-padding-1) var(--sv-padding-2);
-    background-color: var(--sv-bg-element);
-    border: 1px solid var(--sv-border-medium);
+// Chip style - for more compact tag appearance
+.sv-multiselect--chip {
+  .sv-multiselect__tag {
+    height: calc($multiselect-tag-height * 0.8);
+    padding: 0 var(--sv-padding-1);
     border-radius: $multiselect-tag-border-radius;
-    transition: $multiselect-transition;
-    cursor: pointer;
+    font-size: var(--sv-font-size-xs);
     
-    &:hover {
-      background-color: var(--sv-bg-element-hover);
-    }
-    
-    &.selected {
-      background-color: var(--sv-primary);
-      border-color: var(--sv-primary);
-      color: var(--sv-text-on-dark);
+    &-remove {
+      width: 14px;
+      height: 14px;
+      
+      &::before,
+      &::after {
+        width: 6px;
+      }
     }
   }
 }
 
-// Compact multi-select
-.sv-multiselect.sv-multiselect-compact {
+// Small size
+.sv-multiselect--small {
   .sv-multiselect__field {
-    min-height: calc($multiselect-item-height * 0.7);
+    min-height: calc($multiselect-item-height * 0.8);
     padding: var(--sv-padding-1);
   }
   
   .sv-multiselect__tag {
     height: calc($multiselect-tag-height * 0.8);
-    font-size: var(--sv-text-xs);
-    padding: 0 var(--sv-padding-1);
-    margin: calc(var(--sv-space-1) / 2);
-  }
-  
-  .sv-multiselect__option {
-    min-height: calc($multiselect-item-height * 0.8);
-    padding: var(--sv-padding-1) var(--sv-padding-2);
-  }
-  
-  .sv-multiselect__clear {
-    font-size: var(--sv-text-xs);
-  }
-}
-
-// Multi-select with checkboxes always visible
-.sv-multiselect.sv-multiselect-checkbox-list {
-  .sv-multiselect__field {
-    display: none; // Hide the field/trigger
-  }
-  
-  .sv-multiselect__dropdown {
-    position: static;
-    display: block;
-    max-height: none;
-    box-shadow: none;
-    border: 1px solid var(--sv-border-medium);
-    border-radius: var(--sv-radius-md);
-    padding: var(--sv-padding-2);
-    margin-top: 0;
+    font-size: var(--sv-font-size-xs);
   }
   
   .sv-multiselect__option {
     padding: var(--sv-padding-1) var(--sv-padding-2);
     min-height: calc($multiselect-item-height * 0.8);
+    font-size: var(--sv-font-size-sm);
+  }
+  
+  .sv-multiselect__input {
+    font-size: var(--sv-font-size-sm);
   }
 }
 
-// Multi-select with color options
-.sv-multiselect.sv-multiselect-colors {
-  .sv-multiselect__option {
-    .sv-multiselect__color-swatch {
-      width: 24px;
-      height: 24px;
-      border-radius: 50%;
-      margin-right: var(--sv-space-2);
-      border: 1px solid var(--sv-border-light);
-    }
-    
-    &.selected .sv-multiselect__color-swatch {
-      box-shadow: 0 0 0 2px var(--sv-bg-surface), 0 0 0 4px var(--sv-primary);
-    }
-  }
-  
-  .sv-multiselect__tag {
-    .sv-multiselect__color-swatch {
-      width: 12px;
-      height: 12px;
-      border-radius: 50%;
-      margin-right: var(--sv-space-1);
-      border: 1px solid var(--sv-border-light);
-    }
-  }
-}
-
-// Multi-select with image thumbnails
-.sv-multiselect.sv-multiselect-images {
-  .sv-multiselect__option {
-    .sv-multiselect__image {
-      width: 32px;
-      height: 32px;
-      border-radius: var(--sv-radius-sm);
-      margin-right: var(--sv-space-2);
-      object-fit: cover;
-      border: 1px solid var(--sv-border-light);
-    }
-  }
-  
-  .sv-multiselect__tag {
-    .sv-multiselect__image {
-      width: 16px;
-      height: 16px;
-      border-radius: 50%;
-      margin-right: var(--sv-space-1);
-      object-fit: cover;
-    }
-  }
-}
-
-// Multi-select sizes
-.sv-multiselect.sv-ui-size-sm {
-  .sv-multiselect__field {
-    min-height: calc($multiselect-item-height * 0.7);
-    font-size: var(--sv-text-sm);
-  }
-  
-  .sv-multiselect__tag {
-    height: calc($multiselect-tag-height * 0.8);
-    font-size: var(--sv-text-xs);
-  }
-  
-  .sv-multiselect__option {
-    min-height: calc($multiselect-item-height * 0.8);
-    padding: var(--sv-padding-1) var(--sv-padding-2);
-    font-size: var(--sv-text-sm);
-  }
-}
-
-.sv-multiselect.sv-ui-size-lg {
+// Large size
+.sv-multiselect--large {
   .sv-multiselect__field {
     min-height: calc($multiselect-item-height * 1.2);
-    font-size: var(--sv-text-lg);
+    padding: var(--sv-padding-2) var(--sv-padding-3);
   }
   
   .sv-multiselect__tag {
     height: calc($multiselect-tag-height * 1.2);
-    font-size: var(--sv-text-base);
+    font-size: var(--sv-font-size-base);
+    
+    &-remove {
+      width: 18px;
+      height: 18px;
+      
+      &::before,
+      &::after {
+        width: 10px;
+      }
+    }
   }
   
   .sv-multiselect__option {
-    min-height: calc($multiselect-item-height * 1.2);
     padding: var(--sv-padding-3) var(--sv-padding-4);
-    font-size: var(--sv-text-lg);
+    min-height: calc($multiselect-item-height * 1.2);
+    font-size: var(--sv-font-size-lg);
+  }
+  
+  .sv-multiselect__input {
+    font-size: var(--sv-font-size-lg);
   }
 }
 
@@ -506,10 +387,27 @@ $multiselect-tag-border-radius: var(--sv-radius-full);
    ========================================================================== */
 
 .sv-multiselect {
+  // Disabled state
+  &.is-disabled {
+    .sv-multiselect__field {
+      opacity: 0.65;
+      cursor: not-allowed;
+      background-color: var(--sv-bg-element);
+      color: var(--sv-text-tertiary);
+      pointer-events: none;
+    }
+    
+    .sv-multiselect__helper-text {
+      color: var(--sv-text-tertiary);
+    }
+    
+    .sv-multiselect__tag {
+      opacity: 0.7;
+    }
+  }
+  
   // Error state
-  &.error,
-  &.has-error,
-  &[aria-invalid="true"] {
+  &.is-invalid {
     .sv-multiselect__field {
       border-color: var(--sv-error);
     }
@@ -519,10 +417,8 @@ $multiselect-tag-border-radius: var(--sv-radius-full);
     }
   }
   
-  // Success state
-  &.success,
-  &.has-success,
-  &[aria-invalid="false"] {
+  // Valid state
+  &.is-valid {
     .sv-multiselect__field {
       border-color: var(--sv-success);
     }
@@ -532,77 +428,11 @@ $multiselect-tag-border-radius: var(--sv-radius-full);
     }
   }
   
-  // Disabled state
-  &.disabled,
-  &[aria-disabled="true"] {
-    .sv-multiselect__field {
-      opacity: 0.65;
-      cursor: not-allowed;
-      background-color: var(--sv-bg-element);
-      border-color: var(--sv-border-light);
-      color: var(--sv-text-tertiary);
-      pointer-events: none;
-    }
-    
-    .sv-multiselect__tag {
-      opacity: 0.7;
-      background-color: var(--sv-bg-element);
-    }
-    
-    .sv-multiselect__dropdown {
-      opacity: 0.65;
-      pointer-events: none;
-    }
-  }
-  
-  // Loading state
-  &.loading {
-    .sv-multiselect__field {
-      position: relative;
-      pointer-events: none;
-      
-      &::before {
-        content: "";
-        position: absolute;
-        top: 50%;
-        right: var(--sv-space-3);
-        width: 16px;
-        height: 16px;
-        margin-top: -8px;
-        border-radius: 50%;
-        border: 2px solid rgba(var(--sv-primary-500-rgb), 0.3);
-        border-top-color: var(--sv-primary);
-        animation: spin var(--sv-motion-duration-medium) linear infinite;
-      }
-      
-      &::after {
-        display: none; // Hide dropdown arrow when loading
-      }
-    }
-  }
-  
-  // Required state
-  &.required .sv-multiselect__label::after {
+  // Required indicator
+  &.is-required .sv-multiselect__label::after {
     content: "*";
     color: var(--sv-error);
     margin-left: var(--sv-space-1);
-  }
-  
-  // Readonly state
-  &.readonly {
-    .sv-multiselect__field {
-      background-color: var(--sv-bg-element);
-      cursor: default;
-      pointer-events: none;
-    }
-    
-    .sv-multiselect__tag-remove {
-      display: none;
-    }
-    
-    .sv-multiselect__clear {
-      display: none;
-    }
   }
 }
 
@@ -610,10 +440,10 @@ $multiselect-tag-border-radius: var(--sv-radius-full);
    5. MULTI-SELECT ANIMATIONS
    ========================================================================== */
 
-@keyframes multiselect-fade-in {
+@keyframes sv-multiselect-fade-in {
   from {
     opacity: 0;
-    transform: translateY(-5px);
+    transform: translateY(-10px);
   }
   to {
     opacity: 1;
@@ -621,63 +451,46 @@ $multiselect-tag-border-radius: var(--sv-radius-full);
   }
 }
 
-@keyframes multiselect-fade-out {
-  from {
-    opacity: 1;
-    transform: translateY(0);
-  }
-  to {
-    opacity: 0;
-    transform: translateY(-5px);
-  }
-}
-
-@keyframes tag-appear {
+@keyframes sv-multiselect-tag-appear {
   from {
     opacity: 0;
-    transform: scale(0.8);
+    transform: translateY(-5px) scale(0.9);
   }
   to {
     opacity: 1;
-    transform: scale(1);
+    transform: translateY(0) scale(1);
   }
 }
 
-@keyframes tag-remove {
+@keyframes sv-multiselect-tag-remove {
   from {
     opacity: 1;
-    transform: scale(1);
+    transform: translateY(0) scale(1);
   }
   to {
     opacity: 0;
-    transform: scale(0.8);
+    transform: translateY(-5px) scale(0.9);
   }
 }
 
-// Add animations to multiselect elements
-.sv-multiselect.sv-multiselect-animate {
-  .sv-multiselect__dropdown.open {
-    animation: multiselect-fade-in var(--sv-motion-duration-short) var(--sv-motion-ease-standard) forwards;
+.sv-multiselect--animate {
+  .sv-multiselect__dropdown.is-open {
+    animation: sv-multiselect-fade-in var(--sv-motion-duration-short) var(--sv-motion-ease-decelerate);
   }
   
-  .sv-multiselect__dropdown.closing {
-    animation: multiselect-fade-out var(--sv-motion-duration-short) var(--sv-motion-ease-standard) forwards;
+  .sv-multiselect__tag {
+    animation: sv-multiselect-tag-appear var(--sv-motion-duration-short) var(--sv-motion-ease-standard);
   }
   
-  .sv-multiselect__tag.entering {
-    animation: tag-appear var(--sv-motion-duration-short) var(--sv-motion-ease-standard) forwards;
-  }
-  
-  .sv-multiselect__tag.removing {
-    animation: tag-remove var(--sv-motion-duration-short) var(--sv-motion-ease-standard) forwards;
+  .sv-multiselect__tag.is-removing {
+    animation: sv-multiselect-tag-remove var(--sv-motion-duration-short) var(--sv-motion-ease-standard) forwards;
   }
   
   // Respect user preferences
   @media (prefers-reduced-motion: reduce) {
-    .sv-multiselect__dropdown.open,
-    .sv-multiselect__dropdown.closing,
-    .sv-multiselect__tag.entering,
-    .sv-multiselect__tag.removing {
+    .sv-multiselect__dropdown.is-open,
+    .sv-multiselect__tag,
+    .sv-multiselect__tag.is-removing {
       animation: none;
     }
   }
@@ -692,68 +505,37 @@ $multiselect-tag-border-radius: var(--sv-radius-full);
   .sv-multiselect {
     &__field {
       border: 1px solid CanvasText;
-      background-color: Canvas;
       
       &::after {
         border-top-color: CanvasText;
       }
     }
     
+    &__dropdown {
+      border: 1px solid CanvasText;
+    }
+    
     &__tag {
       border: 1px solid CanvasText;
-      background-color: Canvas;
       
-      &-remove {
-        &::before,
-        &::after {
-          background-color: CanvasText;
-        }
+      &-remove::before,
+      &-remove::after {
+        background-color: CanvasText;
       }
     }
     
-    &__dropdown {
-      border: 1px solid CanvasText;
-      background-color: Canvas;
-    }
-    
-    &__option.selected {
+    &__option.is-selected {
       background-color: Highlight;
       color: Canvas;
       
       .sv-checkbox__control {
         background-color: Highlight;
         border-color: Canvas;
-        
-        &::after {
-          border-color: Canvas;
-        }
       }
     }
     
-    &__divider {
-      background-color: CanvasText;
-    }
-    
-    &__search-input {
-      border: 1px solid CanvasText;
-    }
-  }
-  
-  .sv-multiselect.sv-multiselect-colors {
-    .sv-multiselect__color-swatch {
-      forced-color-adjust: none;
-      border: 1px solid CanvasText;
-    }
-    
-    .sv-multiselect__option.selected .sv-multiselect__color-swatch {
-      box-shadow: 0 0 0 2px Canvas, 0 0 0 4px Highlight;
-    }
-  }
-  
-  .sv-multiselect.sv-multiselect-chips {
-    .sv-multiselect__chip.selected {
-      background-color: Highlight;
-      color: Canvas;
+    &.is-invalid .sv-multiselect__field {
+      border: 2px solid Mark;
     }
   }
 }
@@ -762,54 +544,33 @@ $multiselect-tag-border-radius: var(--sv-radius-full);
    7. RESPONSIVE ADJUSTMENTS
    ========================================================================== */
 
-@include breakpoint-down(sm) {
+@include responsive.breakpoint-down(sm) {
   .sv-multiselect {
-    // Make multiselect more touch-friendly on small screens
     &__field {
-      min-height: var(--sv-min-touch-target);
       padding: var(--sv-padding-2);
     }
     
-    // Increase option height for better touch targets
-    &__option {
-      min-height: var(--sv-min-touch-target);
-      padding: var(--sv-padding-2) var(--sv-padding-3);
-    }
-    
-    // Limit tag width on small screens
     &__tag {
+      max-width: 150px;
+      
       &-text {
         max-width: 120px;
       }
     }
     
-    // Make remove button larger for touch
-    &__tag-remove {
-      width: 20px;
-      height: 20px;
+    &__option {
+      padding: var(--sv-padding-3) var(--sv-padding-2);
+      min-height: var(--sv-min-touch-target, 44px); // Ensure touch-friendly size
     }
     
-    // Adjust group labels
-    &__group-label {
-      padding: var(--sv-padding-2) var(--sv-padding-3);
+    &__label,
+    &__helper-text {
+      font-size: var(--sv-font-size-sm);
     }
-    
-    // Full-width chips in chip variant
-    &.sv-multiselect-chips {
-      .sv-multiselect__chip {
-        flex: 1 0 calc(50% - var(--sv-space-2));
-        justify-content: center;
-      }
-    }
-    
-    // Adjust search input for touch
-    &__search {
-      padding: var(--sv-padding-2);
-      
-      &-input {
-        padding: var(--sv-padding-2);
-        height: var(--sv-min-touch-target);
-      }
-    }
+  }
+  
+  // Make multiselects stack nicely on mobile
+  .sv-multiselect + .sv-multiselect {
+    margin-top: var(--sv-space-4);
   }
 }
