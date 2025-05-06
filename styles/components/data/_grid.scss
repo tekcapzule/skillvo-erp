@@ -1,10 +1,10 @@
 /**
  * Data Grid Component
- * Version: 1.0.0
- * Last Updated: April 29, 2025
+ * Version: 1.1.0
+ * Last Updated: June 30, 2024
  * 
  * This file provides styles for the data grid component in the SkillVo design system.
- * It extends the sv-data-display-base class and adds grid-specific styling.
+ * It extends the sv-data-display-control-base class and adds grid-specific styling.
  * The data grid is designed for displaying data in a flexible grid layout with cards.
  */
 
@@ -25,8 +25,9 @@
 /* ==========================================================================
    1. VARIABLES & CONFIGURATION
    ========================================================================== */
-   @use './../../abstracts/' as *;
-   @use './../../base/' as *;
+@use './../../abstracts/' as *;
+@use './../../base/' as *;
+
 // Grid-specific variables
 $grid-gap: var(--sv-space-4);
 $grid-item-border-width: 1px;
@@ -71,7 +72,7 @@ $grid-item-fixed-height: 150px;
 
 .sv-grid {
   // Extend base data display class
-  @extend .sv-data-display-base;
+  @extend .sv-data-display-control-base;
   
   // Set display and layout properties
   display: grid;
@@ -86,12 +87,12 @@ $grid-item-fixed-height: 150px;
   background-color: var(--sv-bg-secondary);
   
   // Prevent text selection unless explicitly enabled
-  &:not(.sv-grid-selectable-text) {
+  &:not(.sv-grid--selectable-text) {
     user-select: none;
   }
   
   // Grid header
-  &-header {
+  &__header {
     grid-column: 1 / -1;
     display: flex;
     align-items: center;
@@ -120,7 +121,7 @@ $grid-item-fixed-height: 150px;
   }
   
   // Grid footer
-  &-footer {
+  &__footer {
     grid-column: 1 / -1;
     display: flex;
     align-items: center;
@@ -148,13 +149,13 @@ $grid-item-fixed-height: 150px;
   }
   
   // Count display
-  &-count {
+  &__count {
     font-size: var(--sv-text-sm);
     color: var(--sv-text-secondary);
   }
   
   // For scrollable grid container
-  &.sv-grid-scrollable {
+  &--scrollable {
     max-height: 600px; // Default max height, can be overridden
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
@@ -198,187 +199,99 @@ $grid-item-fixed-height: 150px;
     background-color $grid-transition-duration $grid-transition-timing;
   
   // Item with shadow
-  &.sv-grid-item-elevated {
+  &--shadowed {
+    border: none;
     box-shadow: var(--sv-shadow-sm);
+    
+    &:hover {
+      box-shadow: var(--sv-shadow-md);
+    }
   }
   
-  // Item header
-  &-header {
+  // Item with elevation
+  &--elevated {
+    transform: translateY(0);
+    
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--sv-shadow-md);
+    }
+  }
+  
+  // Item content areas
+  &__header {
     display: flex;
     align-items: center;
-    justify-content: space-between;
     margin-bottom: var(--sv-space-3);
     
-    // Item title
-    &-title {
-      font-weight: var(--sv-font-semibold);
-      color: var(--sv-text-primary);
-      font-size: var(--sv-text-lg);
+    &-icon {
+      margin-right: var(--sv-space-3);
+      color: var(--sv-text-secondary);
     }
     
-    // Menu or actions in the header
-    &-actions {
-      display: flex;
-      align-items: center;
+    &-title {
+      font-size: $grid-title-font-size;
+      font-weight: $grid-title-font-weight;
+      color: var(--sv-text-primary);
+      margin: 0;
+    }
+  }
+  
+  &__content {
+    flex: 1 1 auto;
+    overflow: hidden;
+    
+    // For text truncation
+    p {
+      margin: 0 0 var(--sv-space-2);
+      line-height: var(--sv-line-height-normal);
       
-      // Overflow menu button
-      .sv-action-overflow {
-        opacity: 0;
-        transition: opacity $grid-transition-duration $grid-transition-timing;
+      &:last-child {
+        margin-bottom: 0;
       }
     }
   }
   
-  // Item content
-  &-content {
-    flex: 1;
+  &__footer {
     display: flex;
-    flex-direction: column;
-    
-    // Item main text
-    &-main {
-      color: var(--sv-text-primary);
-      margin-bottom: var(--sv-space-2);
-    }
-    
-    // Item supporting text
-    &-secondary {
-      color: var(--sv-text-secondary);
-      font-size: var(--sv-text-sm);
-    }
+    align-items: center;
+    justify-content: space-between;
+    margin-top: var(--sv-space-3);
+    padding-top: var(--sv-space-3);
+    border-top: $grid-item-border-width solid $grid-item-border-color;
   }
   
-  // Item media (images, etc.)
-  &-media {
-    margin: -$grid-item-padding;
-    margin-bottom: var(--sv-space-3);
-    border-top-left-radius: var(--sv-radius-md);
-    border-top-right-radius: var(--sv-radius-md);
+  // For media content
+  &__media {
+    margin: calc(-1 * $grid-item-padding) calc(-1 * $grid-item-padding) var(--sv-space-3);
     overflow: hidden;
-    position: relative;
     
-    img, video {
+    img {
       width: 100%;
       height: auto;
       display: block;
+      object-fit: cover;
     }
     
-    // Overlay for media items
-    &-overlay {
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(0,0,0,0.5));
-      display: flex;
-      align-items: flex-end;
-      padding: var(--sv-padding-3);
-      
-      // Overlay text
-      &-text {
-        color: var(--sv-text-on-dark);
-        font-weight: var(--sv-font-semibold);
-      }
-    }
-    
-    // Media aspect ratio options
-    &.sv-media-1x1 {
-      aspect-ratio: 1 / 1;
-      
-      img {
-        height: 100%;
-        object-fit: cover;
-      }
-    }
-    
-    &.sv-media-16x9 {
-      aspect-ratio: 16 / 9;
-      
-      img {
-        height: 100%;
-        object-fit: cover;
-      }
-    }
-    
-    &.sv-media-4x3 {
-      aspect-ratio: 4 / 3;
-      
-      img {
-        height: 100%;
-        object-fit: cover;
-      }
+    // Top rounded corners only if it's the first child
+    &:first-child img {
+      border-top-left-radius: calc(var(--sv-radius-md) - 1px);
+      border-top-right-radius: calc(var(--sv-radius-md) - 1px);
     }
   }
   
-  // Item footer
-  &-footer {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-top: var(--sv-space-4);
-    padding-top: var(--sv-space-3);
-    border-top: $grid-item-border-width solid $grid-item-border-color;
-    
-    // Metadata section
-    &-meta {
-      display: flex;
-      align-items: center;
-      color: var(--sv-text-tertiary);
-      font-size: var(--sv-text-sm);
-      
-      // Icon in metadata
-      &-icon {
-        margin-right: var(--sv-space-1);
-      }
-      
-      // Space between metadata items
-      & + .sv-grid-item-footer-meta {
-        margin-left: var(--sv-space-3);
-      }
-    }
-    
-    // Actions section
-    &-actions {
-      display: flex;
-      align-items: center;
-      gap: var(--sv-space-2);
-    }
-  }
-  
-  // Item badge
-  &-badge {
+  // For badge or status indicator
+  &__badge {
     position: absolute;
-    top: var(--sv-space-3);
-    right: var(--sv-space-3);
-    padding: var(--sv-padding-1) var(--sv-padding-2);
-    background-color: var(--sv-bg-element);
-    color: var(--sv-text-secondary);
-    font-size: var(--sv-text-xs);
-    font-weight: var(--sv-font-medium);
-    border-radius: var(--sv-radius-full);
+    top: var(--sv-space-2);
+    right: var(--sv-space-2);
     z-index: 1;
-    
-    // Badge variants
-    &.sv-badge-primary {
-      background-color: var(--sv-primary);
-      color: var(--sv-text-on-dark);
-    }
-    
-    &.sv-badge-success {
-      background-color: var(--sv-success);
-      color: var(--sv-text-on-dark);
-    }
-    
-    &.sv-badge-warning {
-      background-color: var(--sv-warning);
-      color: var(--sv-text-on-dark);
-    }
-    
-    &.sv-badge-error {
-      background-color: var(--sv-error);
-      color: var(--sv-text-on-dark);
-    }
+    padding: var(--sv-space-1) var(--sv-space-2);
+    font-size: var(--sv-text-xs);
+    font-weight: var(--sv-font-semibold);
+    color: var(--sv-text-on-primary);
+    background-color: var(--sv-primary);
+    border-radius: var(--sv-radius-full);
   }
 }
 
@@ -386,118 +299,49 @@ $grid-item-fixed-height: 150px;
    4. GRID ITEM VARIATIONS
    ========================================================================== */
 
-// Horizontal grid item
-.sv-grid-item-horizontal {
-  display: flex;
-  flex-direction: row;
-  
-  // Adjust media for horizontal layout
-  .sv-grid-item-media {
-    width: 120px;
-    margin: -$grid-item-padding;
-    margin-right: var(--sv-space-4);
-    border-top-right-radius: 0;
-    border-bottom-left-radius: var(--sv-radius-md);
-    
-    img {
-      height: 100%;
-      object-fit: cover;
-    }
+// Size variations
+.sv-grid-item {
+  &--compact {
+    padding: $grid-item-compact-padding;
   }
   
-  // Content wrapper for horizontal layout
-  .sv-grid-item-wrapper {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
+  &--comfortable {
+    padding: $grid-item-comfortable-padding;
+  }
+  
+  &--square {
+    aspect-ratio: 1 / 1;
+  }
+  
+  &--fixed-width {
+    width: $grid-item-fixed-width;
+  }
+  
+  &--fixed-height {
+    height: $grid-item-fixed-height;
   }
 }
 
-// Feature grid item (larger and more prominent)
-.sv-grid-item-feature {
-  grid-column: span 2;
-  grid-row: span 2;
-  
-  // Larger typography for feature items
-  .sv-grid-item-header-title {
-    font-size: var(--sv-text-xl);
+// Grid layout variations for different screen sizes
+.sv-grid {
+  &--xs {
+    grid-template-columns: repeat($grid-columns-xs, 1fr);
   }
   
-  .sv-grid-item-content-main {
-    font-size: var(--sv-text-lg);
-  }
-}
-
-// Compact grid item
-.sv-grid-item-compact {
-  padding: $grid-item-compact-padding;
-  
-  .sv-grid-item-header {
-    margin-bottom: var(--sv-space-2);
+  &--sm {
+    grid-template-columns: repeat($grid-columns-sm, 1fr);
   }
   
-  .sv-grid-item-footer {
-    margin-top: var(--sv-space-3);
-    padding-top: var(--sv-space-2);
+  &--md {
+    grid-template-columns: repeat($grid-columns-md, 1fr);
   }
   
-  .sv-grid-item-media {
-    margin: -$grid-item-compact-padding;
-    margin-bottom: var(--sv-space-2);
-  }
-}
-
-// Data-focused grid item with fields
-.sv-grid-item-data {
-  .sv-grid-item-field {
-    margin-bottom: var(--sv-space-3);
-    
-    &-label {
-      font-size: var(--sv-text-xs);
-      color: var(--sv-text-tertiary);
-      margin-bottom: var(--sv-space-1);
-    }
-    
-    &-value {
-      font-size: var(--sv-text-base);
-      color: var(--sv-text-primary);
-      font-weight: var(--sv-font-medium);
-    }
+  &--lg {
+    grid-template-columns: repeat($grid-columns-lg, 1fr);
   }
   
-  // Field layout options
-  &.sv-fields-horizontal {
-    .sv-grid-item-fields {
-      display: flex;
-      flex-wrap: wrap;
-      margin: calc(-1 * var(--sv-space-2));
-      
-      .sv-grid-item-field {
-        flex: 1 0 calc(50% - var(--sv-space-4));
-        margin: var(--sv-space-2);
-      }
-    }
-  }
-}
-
-// Placeholder item (for loading states or empty slots)
-.sv-grid-item-placeholder {
-  background-color: var(--sv-bg-element);
-  border: $grid-item-border-width dashed $grid-item-border-color;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--sv-text-tertiary);
-  min-height: $grid-item-min-height;
-  
-  .sv-placeholder-icon {
-    margin-bottom: var(--sv-space-2);
-    opacity: 0.5;
-  }
-  
-  .sv-placeholder-text {
-    font-size: var(--sv-text-sm);
-    text-align: center;
+  &--xl {
+    grid-template-columns: repeat($grid-columns-xl, 1fr);
   }
 }
 
@@ -505,107 +349,68 @@ $grid-item-fixed-height: 150px;
    5. GRID ITEM STATES & INTERACTIONS
    ========================================================================== */
 
-// Interactive grid
-.sv-grid-interactive {
-  .sv-grid-item {
-    cursor: pointer;
-    
-    &:hover {
-      background-color: $grid-item-hover-bg;
-      transform: translateY(-2px);
-      box-shadow: var(--sv-shadow-md);
-      
-      // Show overflow actions on hover
-      .sv-action-overflow {
-        opacity: 1;
-      }
-      
-      // Optional hover effect for elevated items
-      &.sv-grid-item-elevated {
-        box-shadow: var(--sv-shadow-lg);
-      }
-    }
-    
-    &:active {
-      background-color: $grid-item-active-bg;
-      transform: translateY(0);
-    }
-    
-    // Focus state
-    &:focus {
-      outline: none;
-      box-shadow: var(--sv-shadow-focus);
-      z-index: 1; // Ensure focused items appear above others
-    }
-    
-    &:focus-visible {
-      outline: var(--sv-focus-ring-width) solid var(--sv-focus-ring-color);
-      outline-offset: 2px;
-    }
-  }
-}
-
-// Selected state
 .sv-grid-item {
-  &.sv-grid-item-selected,
-  &[aria-selected="true"] {
+  // Hover state
+  &:hover {
+    background-color: $grid-item-hover-bg;
+  }
+  
+  // Active state
+  &:active,
+  &.is-active {
+    background-color: $grid-item-active-bg;
+  }
+  
+  // Selected state
+  &.is-selected {
     background-color: $grid-item-selected-bg;
     border-color: var(--sv-primary);
-    
-    // Indicator for selected state
-    &::before {
-      content: "";
-      position: absolute;
-      top: var(--sv-space-2);
-      left: var(--sv-space-2);
-      width: 20px;
-      height: 20px;
-      border-radius: 50%;
-      background-color: var(--sv-primary);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: var(--sv-text-on-dark);
-      z-index: 2;
-      
-      // Checkmark in the selected indicator
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E");
-      background-repeat: no-repeat;
-      background-position: center;
-    }
   }
-}
-
-// Disabled state
-.sv-grid-item {
-  &.sv-grid-item-disabled {
-    opacity: 0.65;
+  
+  // Disabled state
+  &.is-disabled {
+    opacity: 0.5;
     pointer-events: none;
-    background-color: var(--sv-bg-element);
+    cursor: not-allowed;
+  }
+  
+  // Interactive items
+  &--interactive {
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
     
-    .sv-grid-item-header-title,
-    .sv-grid-item-content-main {
-      color: var(--sv-text-tertiary);
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--sv-shadow-md);
+    }
+    
+    &:active,
+    &.is-active {
+      transform: translateY(0);
+      box-shadow: var(--sv-shadow-sm);
     }
   }
-}
-
-// Item with a status indicator
-.sv-grid-item {
-  &.sv-grid-item-success {
-    border-top: 3px solid var(--sv-success);
-  }
   
-  &.sv-grid-item-error {
-    border-top: 3px solid var(--sv-error);
-  }
-  
-  &.sv-grid-item-warning {
-    border-top: 3px solid var(--sv-warning);
-  }
-  
-  &.sv-grid-item-info {
-    border-top: 3px solid var(--sv-info);
+  // Loading state
+  &.is-loading {
+    position: relative;
+    overflow: hidden;
+    
+    &::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 50%;
+      height: 100%;
+      background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.2),
+        transparent
+      );
+      animation: loading-shine 1.5s infinite;
+    }
   }
 }
 
@@ -613,93 +418,63 @@ $grid-item-fixed-height: 150px;
    6. GRID LAYOUTS
    ========================================================================== */
 
-// Fixed column grid layouts
-.sv-grid-columns-1 {
-  grid-template-columns: repeat(1, 1fr);
-}
-
-.sv-grid-columns-2 {
-  grid-template-columns: repeat(2, 1fr);
-}
-
-.sv-grid-columns-3 {
-  grid-template-columns: repeat(3, 1fr);
-}
-
-.sv-grid-columns-4 {
-  grid-template-columns: repeat(4, 1fr);
-}
-
-.sv-grid-columns-5 {
-  grid-template-columns: repeat(5, 1fr);
-}
-
-.sv-grid-columns-6 {
-  grid-template-columns: repeat(6, 1fr);
-}
-
-// Masonry-style grid (items of different heights)
-.sv-grid-masonry {
-  grid-auto-rows: 0;
-  grid-auto-flow: dense;
-  
-  .sv-grid-item {
-    // Default to one row
-    grid-row-end: span 1;
+.sv-grid {
+  // Masonry layout
+  &--masonry {
+    display: block;
+    column-count: $grid-columns-md;
+    column-gap: $grid-gap;
     
-    // Items that span multiple rows
-    &.sv-grid-row-span-2 {
-      grid-row-end: span 2;
+    .sv-grid-item {
+      display: inline-block;
+      width: 100%;
+      margin-bottom: $grid-gap;
+      break-inside: avoid;
     }
     
-    &.sv-grid-row-span-3 {
-      grid-row-end: span 3;
+    @media (max-width: 991px) {
+      column-count: $grid-columns-sm;
+    }
+    
+    @media (max-width: 767px) {
+      column-count: $grid-columns-xs;
     }
   }
-}
-
-// Auto-flow grid (browser determines placement)
-.sv-grid-auto-flow {
-  grid-auto-flow: dense;
   
-  // Items that span columns
-  .sv-grid-item-span-2 {
-    grid-column: span 2;
-  }
-  
-  .sv-grid-item-span-3 {
-    grid-column: span 3;
-  }
-}
-
-// Fixed size grid items
-.sv-grid-fixed-size {
-  grid-template-columns: repeat(auto-fill, $grid-item-fixed-width);
-  justify-content: center;
-  
-  .sv-grid-item {
-    width: $grid-item-fixed-width;
-    height: $grid-item-fixed-height;
-    overflow: hidden;
-  }
-}
-
-// Density variations
-.sv-grid-compact {
-  gap: var(--sv-space-2);
-  padding: var(--sv-padding-3);
-  
-  .sv-grid-item {
-    padding: $grid-item-compact-padding;
-  }
-}
-
-.sv-grid-comfortable {
-  gap: var(--sv-space-6);
-  padding: var(--sv-padding-5);
-  
-  .sv-grid-item {
-    padding: $grid-item-comfortable-padding;
+  // Horizontal scroll layout for carousel-like grids
+  &--horizontal-scroll {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding-bottom: var(--sv-space-3); // For scrollbar
+    
+    .sv-grid-item {
+      flex: 0 0 auto;
+      width: $grid-item-fixed-width;
+      margin-right: $grid-gap;
+      
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+    
+    &::-webkit-scrollbar {
+      height: 6px;
+    }
+    
+    &::-webkit-scrollbar-track {
+      background-color: var(--sv-bg-element);
+      border-radius: 3px;
+    }
+    
+    &::-webkit-scrollbar-thumb {
+      background-color: var(--sv-border-dark);
+      border-radius: 3px;
+      
+      &:hover {
+        background-color: var(--sv-text-tertiary);
+      }
+    }
   }
 }
 
@@ -707,122 +482,40 @@ $grid-item-fixed-height: 150px;
    7. GRID FILTERING & SORTING
    ========================================================================== */
 
-// Filter bar for grid
-.sv-grid-filter-bar {
-  grid-column: 1 / -1;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  padding: var(--sv-padding-3);
-  margin-bottom: var(--sv-space-4);
-  background-color: var(--sv-bg-surface);
-  border: $grid-item-border-width solid $grid-item-border-color;
-  border-radius: var(--sv-radius-md);
-  
-  // Filter controls
-  .sv-filter-control {
-    margin-right: var(--sv-space-3);
-    margin-bottom: var(--sv-space-2);
-    
-    &:last-child {
-      margin-right: 0;
+.sv-grid {
+  // Filtered grid
+  &--filtered {
+    .sv-grid-item.is-hidden {
+      display: none;
     }
   }
   
-  // Filter group
-  .sv-filter-group {
+  // Filter controls
+  &__filter-controls {
+    margin-bottom: var(--sv-space-4);
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--sv-space-2);
+  }
+  
+  // Sort controls
+  &__sort-controls {
     display: flex;
     align-items: center;
-    margin-right: var(--sv-space-4);
+    margin-bottom: var(--sv-space-4);
     
-    .sv-filter-label {
+    label {
       margin-right: var(--sv-space-2);
       font-size: var(--sv-text-sm);
       color: var(--sv-text-secondary);
     }
-  }
-  
-  // Active filters display
-  .sv-active-filters {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    margin-top: var(--sv-space-2);
     
-    .sv-filter-tag {
-      display: flex;
-      align-items: center;
-      background-color: var(--sv-bg-element);
-      padding: var(--sv-padding-1) var(--sv-padding-2);
-      border-radius: var(--sv-radius-full);
-      font-size: var(--sv-text-xs);
-      margin-right: var(--sv-space-2);
-      margin-bottom: var(--sv-space-2);
-      
-      .sv-filter-tag-label {
-        margin-right: var(--sv-space-1);
-      }
-      
-      .sv-filter-tag-remove {
-        cursor: pointer;
-        opacity: 0.7;
-        
-        &:hover {
-          opacity: 1;
-        }
-      }
+    select {
+      padding: var(--sv-space-1) var(--sv-space-2);
+      border: 1px solid var(--sv-border-medium);
+      border-radius: var(--sv-radius-sm);
+      font-size: var(--sv-text-sm);
     }
-    
-    .sv-clear-filters {
-      font-size: var(--sv-text-xs);
-      color: var(--sv-text-secondary);
-      cursor: pointer;
-      margin-left: var(--sv-space-2);
-      
-      &:hover {
-        color: var(--sv-text-primary);
-        text-decoration: underline;
-      }
-    }
-  }
-}
-
-// Sort control for grid
-.sv-grid-sort {
-  display: flex;
-  align-items: center;
-  
-  .sv-sort-label {
-    margin-right: var(--sv-space-2);
-    font-size: var(--sv-text-sm);
-    color: var(--sv-text-secondary);
-  }
-}
-
-// Empty state with filter applied
-.sv-grid-empty-filtered {
-  grid-column: 1 / -1;
-  text-align: center;
-  padding: var(--sv-padding-lg);
-  color: var(--sv-text-secondary);
-  
-  .sv-empty-icon {
-    margin-bottom: var(--sv-space-3);
-    opacity: 0.5;
-  }
-  
-  .sv-empty-title {
-    font-size: var(--sv-text-lg);
-    font-weight: var(--sv-font-medium);
-    margin-bottom: var(--sv-space-2);
-  }
-  
-  .sv-empty-message {
-    margin-bottom: var(--sv-space-4);
-  }
-  
-  .sv-empty-action {
-    margin-top: var(--sv-space-3);
   }
 }
 
@@ -830,97 +523,53 @@ $grid-item-fixed-height: 150px;
    8. UTILITY CLASSES
    ========================================================================== */
 
-// Loading state for grid
-.sv-grid-loading {
-  position: relative;
-  min-height: 200px;
-  
-  &::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(var(--sv-bg-primary), 0.5);
-    z-index: var(--sv-z-index-overlay);
-    border-radius: var(--sv-radius-md);
+// Text utilities
+.sv-grid-item {
+  &__title {
+    font-size: $grid-title-font-size;
+    font-weight: $grid-title-font-weight;
+    color: var(--sv-text-primary);
+    margin: 0 0 var(--sv-space-2);
   }
   
-  &::after {
-    content: "";
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 32px;
-    height: 32px;
-    margin: -16px 0 0 -16px;
-    border-radius: 50%;
-    border: 3px solid rgba(var(--sv-primary-500-rgb), 0.3);
-    border-top-color: var(--sv-primary);
-    z-index: var(--sv-z-index-overlay);
-    animation: spin 1s linear infinite;
-  }
-  
-  // Loading items placeholders
-  .sv-grid-item {
-    background-color: var(--sv-bg-element);
-    animation: pulse 1.5s ease-in-out infinite;
-    
-    // Hide content while loading
-    .sv-grid-item-header,
-    .sv-grid-item-content,
-    .sv-grid-item-footer {
-      visibility: hidden;
-    }
-  }
-}
-
-// Grid empty state
-.sv-grid-empty {
-  grid-column: 1 / -1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  padding: var(--sv-padding-lg);
-  min-height: 200px;
-  
-  .sv-empty-icon {
-    margin-bottom: var(--sv-space-3);
-    opacity: 0.5;
-  }
-  
-  .sv-empty-message {
+  &__subtitle {
+    font-size: $grid-subtitle-font-size;
     color: var(--sv-text-secondary);
-    margin-bottom: var(--sv-space-4);
+    margin: 0 0 var(--sv-space-3);
+  }
+  
+  &__caption {
+    font-size: $grid-caption-font-size;
+    color: var(--sv-text-tertiary);
+    margin: 0;
   }
 }
 
-// Load more interaction
-.sv-grid-load-more {
-  grid-column: 1 / -1;
-  display: flex;
-  justify-content: center;
-  padding: var(--sv-padding-3);
-  margin-top: var(--sv-space-2);
-}
-
-// Automatic infinite scroll indicator
-.sv-grid-infinite-scroll-indicator {
-  grid-column: 1 / -1;
-  display: flex;
-  justify-content: center;
-  padding: var(--sv-padding-3);
+// Truncation utilities
+.sv-grid-item {
+  &__text-truncate {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
   
-  .sv-spinner {
-    width: 24px;
-    height: 24px;
-    border: 2px solid rgba(var(--sv-primary-500-rgb), 0.3);
-    border-top-color: var(--sv-primary);
-    border-radius: 50%;
-    animation: spin 1s linear infinite;
+  &__text-clamp {
+    display: -webkit-box;
+    -webkit-line-clamp: 2; // Default to 2 lines
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    
+    &--1 {
+      -webkit-line-clamp: 1;
+    }
+    
+    &--3 {
+      -webkit-line-clamp: 3;
+    }
+    
+    &--4 {
+      -webkit-line-clamp: 4;
+    }
   }
 }
 
@@ -928,137 +577,54 @@ $grid-item-fixed-height: 150px;
    9. RESPONSIVE BEHAVIOR
    ========================================================================== */
 
-// Mobile layout
-@include breakpoint-down(sm) {
-  .sv-grid {
-    grid-template-columns: repeat($grid-columns-xs, 1fr);
-    gap: var(--sv-space-3);
-    padding: var(--sv-padding-3);
+// Default responsive behavior
+@media (max-width: 1199px) {
+  .sv-grid:not([class*="sv-grid--"]) {
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  }
+}
+
+@media (max-width: 991px) {
+  .sv-grid:not([class*="sv-grid--"]) {
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  }
+}
+
+@media (max-width: 767px) {
+  .sv-grid:not([class*="sv-grid--"]) {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  }
+  
+  .sv-grid__header,
+  .sv-grid__footer {
+    flex-direction: column;
+    align-items: flex-start;
     
-    // Adjust header and footer on mobile
-    &-header,
-    &-footer {
-      flex-direction: column;
-      align-items: flex-start;
-      
-      &-actions,
-      &-pagination {
-        margin-top: var(--sv-space-3);
-        width: 100%;
-        justify-content: space-between;
-      }
-    }
-    
-    // Force feature items to single column
-    .sv-grid-item-feature {
-      grid-column: 1 / -1;
-      grid-row: auto;
-    }
-    
-    // Convert horizontal items to vertical on mobile
-    .sv-grid-item-horizontal {
-      flex-direction: column;
-      
-      .sv-grid-item-media {
-        width: auto;
-        margin: -$grid-item-padding;
-        margin-bottom: var(--sv-space-3);
-        border-bottom-left-radius: 0;
-        border-top-right-radius: var(--sv-radius-md);
-      }
-    }
-    
-    // Adjust filter bar for mobile
-    .sv-grid-filter-bar {
-      flex-direction: column;
-      align-items: flex-start;
-      
-      .sv-filter-control,
-      .sv-filter-group {
-        width: 100%;
-        margin-right: 0;
-        margin-bottom: var(--sv-space-3);
-      }
-      
-      // Stack sort controls
-      .sv-grid-sort {
-        width: 100%;
-        margin-top: var(--sv-space-2);
-      }
-    }
-    
-    // Hide non-essential elements on mobile
-    .sv-hide-mobile {
-      display: none;
+    &-actions,
+    &-pagination {
+      margin-top: var(--sv-space-2);
+      width: 100%;
+      justify-content: flex-end;
     }
   }
 }
 
-// Small tablet layout
-@include breakpoint-between(sm, md) {
-  .sv-grid {
-    grid-template-columns: repeat($grid-columns-sm, 1fr);
-    
-    // Adjust feature items on small tablets
-    .sv-grid-item-feature {
-      grid-column: span 2;
-      grid-row: span 1;
-    }
-    
-    // Hide certain elements on small tablets
-    .sv-hide-sm-tablet {
-      display: none;
-    }
+@media (max-width: 575px) {
+  .sv-grid:not([class*="sv-grid--"]) {
+    grid-template-columns: 1fr;
+  }
+  
+  .sv-grid-item--fixed-width {
+    width: 100%;
   }
 }
 
-// Tablet layout
-@include breakpoint-between(md, lg) {
-  .sv-grid {
-    grid-template-columns: repeat($grid-columns-md, 1fr);
-    
-    // Feature items on tablets
-    .sv-grid-item-feature {
-      grid-column: span 2;
-      grid-row: span 2;
-    }
+// Keyframes for loading animation
+@keyframes loading-shine {
+  0% {
+    left: -100%;
   }
-}
-
-// Desktop layout
-@include breakpoint-between(lg, xl) {
-  .sv-grid {
-    grid-template-columns: repeat($grid-columns-lg, 1fr);
-  }
-}
-
-// Large desktop layout
-@include breakpoint-up(xl) {
-  .sv-grid {
-    grid-template-columns: repeat($grid-columns-xl, 1fr);
-  }
-}
-
-// Handle print styles
-@media print {
-  .sv-grid {
-    display: block;
-    border: none;
-    
-    &-header-actions,
-    &-footer,
-    &-filter-bar {
-      display: none;
-    }
-    
-    .sv-grid-item {
-      page-break-inside: avoid;
-      border: 1px solid #000;
-      margin-bottom: 1rem;
-      
-      &-footer-actions {
-        display: none;
-      }
-    }
+  100% {
+    left: 100%;
   }
 }

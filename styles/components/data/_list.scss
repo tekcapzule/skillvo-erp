@@ -1,10 +1,10 @@
 /**
  * Data List Component
- * Version: 1.0.0
- * Last Updated: April 29, 2025
+ * Version: 1.1.0
+ * Last Updated: June 30, 2024
  * 
  * This file provides styles for the data list component in the SkillVo design system.
- * It extends the sv-data-display-base class and adds list-specific styling.
+ * It extends the sv-data-display-control-base class and adds list-specific styling.
  */
 
 /* ==========================================================================
@@ -24,8 +24,9 @@
 /* ==========================================================================
    1. VARIABLES & CONFIGURATION
    ========================================================================== */
-   @use './../../abstracts/' as *;
-   @use './../../base/' as *;
+@use './../../abstracts/' as *;
+@use './../../base/' as *;
+
 // List-specific variables
 $list-border-width: 1px;
 $list-border-color: var(--sv-border-light);
@@ -65,7 +66,7 @@ $list-transition-timing: var(--sv-motion-ease-standard);
 
 .sv-list {
   // Extend base data display class
-  @extend .sv-data-display-base;
+  @extend .sv-data-display-control-base;
   
   // Reset list styles
   list-style: none;
@@ -79,7 +80,7 @@ $list-transition-timing: var(--sv-motion-ease-standard);
   overflow: hidden;
   
   // Prevent text selection unless explicitly enabled
-  &:not(.sv-list-selectable-text) {
+  &:not(.sv-list--selectable-text) {
     user-select: none;
   }
   
@@ -87,7 +88,7 @@ $list-transition-timing: var(--sv-motion-ease-standard);
   font-size: $list-item-font-size;
   
   // For scrollable lists
-  &.sv-list-scrollable {
+  &--scrollable {
     max-height: 400px; // Default max height, can be overridden
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
@@ -113,7 +114,7 @@ $list-transition-timing: var(--sv-motion-ease-standard);
   }
   
   // List header
-  &-header {
+  &__header {
     padding: $list-item-padding-y $list-item-padding-x;
     background-color: var(--sv-bg-secondary);
     font-weight: var(--sv-font-semibold);
@@ -121,7 +122,7 @@ $list-transition-timing: var(--sv-motion-ease-standard);
   }
   
   // List footer
-  &-footer {
+  &__footer {
     padding: $list-item-padding-y $list-item-padding-x;
     background-color: var(--sv-bg-secondary);
     color: var(--sv-text-secondary);
@@ -152,13 +153,13 @@ $list-transition-timing: var(--sv-motion-ease-standard);
   }
   
   // List item content wrapper
-  &-content {
+  &__content {
     flex: 1;
     min-width: 0; // Needed for text truncation to work
   }
   
   // Main item content
-  &-primary {
+  &__primary {
     display: block;
     font-size: $list-item-font-size;
     color: var(--sv-text-primary);
@@ -171,14 +172,14 @@ $list-transition-timing: var(--sv-motion-ease-standard);
   }
   
   // Secondary item content
-  &-secondary {
+  &__secondary {
     display: block;
     font-size: $list-caption-font-size;
     color: var(--sv-text-secondary);
   }
   
   // Icon in list item
-  &-icon {
+  &__icon {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -187,82 +188,92 @@ $list-transition-timing: var(--sv-motion-ease-standard);
     color: var(--sv-text-secondary);
     
     // Icon size variations
-    &.sv-icon-sm {
+    &--sm {
       width: $list-icon-size-sm;
       height: $list-icon-size-sm;
     }
     
-    &.sv-icon-md {
+    &--md {
       width: $list-icon-size-md;
       height: $list-icon-size-md;
     }
     
-    &.sv-icon-lg {
+    &--lg {
       width: $list-icon-size-lg;
       height: $list-icon-size-lg;
     }
   }
   
-  // Action area (buttons, toggles, etc.)
-  &-action {
+  // Actions container (e.g., buttons, menu)
+  &__actions {
     display: flex;
     align-items: center;
-    margin-left: var(--sv-space-3);
+    margin-left: var(--sv-space-2);
     flex-shrink: 0;
-    
-    // Multiple actions
-    & + .sv-list-item-action {
-      margin-left: var(--sv-space-2);
-    }
-    
-    // Hide overflow actions until item is hovered
-    &.sv-action-overflow {
-      opacity: 0;
-      transition: opacity $list-transition-duration $list-transition-timing;
-    }
+    gap: var(--sv-space-2);
   }
   
   // Avatar in list item
-  &-avatar {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
+  &__avatar {
     margin-right: $list-icon-margin;
     flex-shrink: 0;
-    background-color: var(--sv-bg-element);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: var(--sv-font-medium);
-    color: var(--sv-text-secondary);
     
-    // Size variations
-    &.sv-avatar-sm {
-      width: 32px;
-      height: 32px;
-      font-size: var(--sv-text-sm);
+    // Avatar size variations
+    &--sm {
+      width: var(--sv-avatar-sm);
+      height: var(--sv-avatar-sm);
     }
     
-    &.sv-avatar-lg {
-      width: 48px;
-      height: 48px;
-      font-size: var(--sv-text-lg);
+    &--md {
+      width: var(--sv-avatar-md);
+      height: var(--sv-avatar-md);
     }
     
-    // Container for avatar image
-    img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      border-radius: 50%;
+    &--lg {
+      width: var(--sv-avatar-lg);
+      height: var(--sv-avatar-lg);
     }
   }
   
-  // Checkbox or radio in list item
-  &-selection {
+  // For status indicator
+  &__status {
     display: flex;
     align-items: center;
-    margin-right: $list-icon-margin;
+    justify-content: center;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    margin-right: var(--sv-space-3);
+    
+    &--success {
+      background-color: var(--sv-success);
+    }
+    
+    &--warning {
+      background-color: var(--sv-warning);
+    }
+    
+    &--error {
+      background-color: var(--sv-error);
+    }
+    
+    &--info {
+      background-color: var(--sv-info);
+    }
+  }
+  
+  // For checkboxes in selectable lists
+  &__checkbox {
+    margin-right: var(--sv-space-3);
+    flex-shrink: 0;
+  }
+  
+  // For metadata (small text that appears at the end)
+  &__meta {
+    font-size: var(--sv-text-xs);
+    color: var(--sv-text-tertiary);
+    margin-left: var(--sv-space-2);
     flex-shrink: 0;
   }
 }
@@ -271,140 +282,131 @@ $list-transition-timing: var(--sv-motion-ease-standard);
    4. LIST ITEM VARIATIONS
    ========================================================================== */
 
-// List item with primary and secondary content in columns
-.sv-list-item-two-line {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  min-height: 60px;
+// Density variations
+.sv-list-item {
+  &--compact {
+    padding: $list-item-compact-padding-y $list-item-compact-padding-x;
+  }
   
-  .sv-list-item-primary {
-    font-weight: var(--sv-font-medium);
+  &--comfortable {
+    padding: $list-item-comfortable-padding-y $list-item-comfortable-padding-x;
   }
 }
 
-// List item with primary, secondary, and tertiary content in columns
-.sv-list-item-three-line {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  min-height: 80px;
-  
-  .sv-list-item-tertiary {
-    display: block;
-    font-size: var(--sv-text-xs);
-    color: var(--sv-text-tertiary);
-    margin-top: var(--sv-space-1);
+// Layout variations
+.sv-list-item {
+  // Two-line list item with primary and secondary text
+  &--two-line {
+    min-height: 64px;
   }
-}
-
-// List item with horizontal layout for data
-.sv-list-item-horizontal {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
   
-  // Data field with label and value
-  .sv-list-item-field {
-    display: flex;
-    flex-direction: column;
-    margin-right: var(--sv-space-4);
+  // Three-line list item
+  &--three-line {
+    min-height: 88px;
     
-    &:last-child {
-      margin-right: 0;
+    .sv-list-item__content {
+      padding: var(--sv-space-1) 0;
     }
     
-    // Field label
-    .sv-field-label {
-      font-size: var(--sv-text-xs);
-      color: var(--sv-text-tertiary);
-      margin-bottom: var(--sv-space-1);
-    }
-    
-    // Field value
-    .sv-field-value {
-      font-size: var(--sv-text-base);
-      color: var(--sv-text-primary);
-      font-weight: var(--sv-font-medium);
+    .sv-list-item__secondary {
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
     }
   }
-}
-
-// List item with badge
-.sv-list-item-badge {
-  position: relative;
   
-  // Badge
-  .sv-badge {
-    display: inline-block;
-    padding: var(--sv-padding-1) var(--sv-padding-2);
-    border-radius: var(--sv-radius-full);
-    font-size: var(--sv-text-xs);
-    font-weight: var(--sv-font-medium);
-    text-align: center;
-    margin-left: var(--sv-space-2);
-    background-color: var(--sv-bg-element);
+  // List item with divider
+  &--divider {
+    border-bottom: $list-border-width solid $list-item-border-color;
+  }
+  
+  // List item that's a header/separator
+  &--header {
+    padding: calc($list-item-padding-y / 2) $list-item-padding-x;
+    background-color: var(--sv-bg-secondary);
     color: var(--sv-text-secondary);
-    
-    // Badge variants
-    &.sv-badge-primary {
-      background-color: var(--sv-primary);
-      color: var(--sv-text-on-dark);
-    }
-    
-    &.sv-badge-success {
-      background-color: var(--sv-success);
-      color: var(--sv-text-on-dark);
-    }
-    
-    &.sv-badge-warning {
-      background-color: var(--sv-warning);
-      color: var(--sv-text-on-dark);
-    }
-    
-    &.sv-badge-error {
-      background-color: var(--sv-error);
-      color: var(--sv-text-on-dark);
-    }
-    
-    &.sv-badge-info {
-      background-color: var(--sv-info);
-      color: var(--sv-text-on-dark);
-    }
+    font-size: var(--sv-text-sm);
+    font-weight: var(--sv-font-semibold);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
   }
 }
 
-// List item with status indicator
-.sv-list-item-status {
-  // Status indicator
-  .sv-status {
-    position: relative;
-    display: flex;
-    align-items: center;
-    
-    &::before {
-      content: "";
-      display: inline-block;
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      margin-right: var(--sv-space-2);
+// List variations
+.sv-list {
+  // Dense list with smaller padding
+  &--dense {
+    .sv-list-item {
+      padding: $list-item-compact-padding-y $list-item-compact-padding-x;
+      
+      &__primary {
+        font-size: var(--sv-text-sm);
+      }
+      
+      &__secondary {
+        font-size: var(--sv-text-xs);
+      }
     }
-    
-    &.sv-status-online::before {
-      background-color: var(--sv-success);
+  }
+  
+  // Bordered list with visible borders between items
+  &--bordered {
+    .sv-list-item {
+      border-bottom: $list-border-width solid $list-item-border-color;
+      
+      &:last-child {
+        border-bottom: none;
+      }
     }
-    
-    &.sv-status-offline::before {
-      background-color: var(--sv-error);
+  }
+  
+  // List with zebra striping
+  &--striped {
+    .sv-list-item:nth-child(even) {
+      background-color: var(--sv-bg-element);
     }
-    
-    &.sv-status-away::before {
-      background-color: var(--sv-warning);
+  }
+  
+  // List for navigation
+  &--nav {
+    .sv-list-item {
+      cursor: pointer;
+      
+      &:hover {
+        background-color: $list-item-hover-bg;
+      }
+      
+      &.is-active {
+        background-color: $list-item-active-bg;
+        font-weight: var(--sv-font-semibold);
+      }
     }
-    
-    &.sv-status-busy::before {
-      background-color: var(--sv-error);
+  }
+  
+  // List for selection (checkboxes, radio buttons)
+  &--selectable {
+    .sv-list-item {
+      cursor: pointer;
+      
+      &:hover {
+        background-color: $list-item-hover-bg;
+      }
+      
+      &.is-selected {
+        background-color: $list-item-selected-bg;
+      }
+    }
+  }
+  
+  // List with dividers between all items
+  &--divided {
+    .sv-list-item {
+      border-bottom: $list-border-width solid $list-item-border-color;
+      
+      &:last-child {
+        border-bottom: none;
+      }
     }
   }
 }
@@ -413,102 +415,75 @@ $list-transition-timing: var(--sv-motion-ease-standard);
    5. LIST ITEM STATES & INTERACTIONS
    ========================================================================== */
 
-// Interactive list
-.sv-list-interactive {
-  .sv-list-item {
-    cursor: pointer;
-    
-    &:hover {
+.sv-list-item {
+  // Hover state
+  &:hover {
+    &.is-interactive {
       background-color: $list-item-hover-bg;
-      
-      // Show overflow actions on hover
-      .sv-action-overflow {
-        opacity: 1;
-      }
     }
-    
-    &:active {
+  }
+  
+  // Active/pressed state
+  &:active,
+  &.is-active {
+    &.is-interactive {
       background-color: $list-item-active-bg;
     }
-    
-    // Focus state
-    &:focus {
-      outline: none;
-      box-shadow: var(--sv-shadow-focus);
-      z-index: 1; // Ensure focused items appear above others
-    }
-    
-    &:focus-visible {
-      outline: var(--sv-focus-ring-width) solid var(--sv-focus-ring-color);
-      outline-offset: -1px;
-    }
   }
-}
-
-// Selected state
-.sv-list-item {
-  &.sv-list-item-selected,
-  &[aria-selected="true"] {
+  
+  // Selected state
+  &.is-selected {
     background-color: $list-item-selected-bg;
     
-    .sv-list-item-primary {
-      font-weight: var(--sv-font-medium);
-    }
-    
-    // Selected item with checkbox
-    .sv-list-item-selection {
-      input[type="checkbox"],
-      input[type="radio"] {
-        &:checked {
-          + .sv-checkbox-indicator,
-          + .sv-radio-indicator {
-            background-color: var(--sv-primary);
-            border-color: var(--sv-primary);
-          }
-        }
-      }
+    &::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 4px;
+      background-color: var(--sv-primary);
     }
   }
-}
-
-// Disabled state
-.sv-list-item {
-  &.sv-list-item-disabled {
-    opacity: 0.65;
+  
+  // Disabled state
+  &.is-disabled {
+    opacity: 0.5;
     pointer-events: none;
     
-    .sv-list-item-primary,
-    .sv-list-item-secondary {
-      color: var(--sv-text-tertiary);
+    .sv-list-item__primary,
+    .sv-list-item__secondary {
+      color: var(--sv-text-disabled);
     }
+  }
+  
+  // Interactive item (clickable)
+  &.is-interactive {
+    cursor: pointer;
+  }
+  
+  // Item with right chevron for navigation
+  &.is-navigable {
+    padding-right: calc($list-item-padding-x + 20px);
     
-    .sv-list-item-icon {
-      opacity: 0.5;
+    &::after {
+      content: '';
+      position: absolute;
+      right: $list-item-padding-x;
+      width: 8px;
+      height: 8px;
+      border-top: 2px solid var(--sv-border-medium);
+      border-right: 2px solid var(--sv-border-medium);
+      transform: rotate(45deg);
     }
   }
-}
-
-// Success state
-.sv-list-item {
-  &.sv-list-item-success {
-    border-left: 3px solid var(--sv-success);
-    padding-left: calc($list-item-padding-x - 3px);
-  }
-}
-
-// Error state
-.sv-list-item {
-  &.sv-list-item-error {
-    border-left: 3px solid var(--sv-error);
-    padding-left: calc($list-item-padding-x - 3px);
-  }
-}
-
-// Warning state
-.sv-list-item {
-  &.sv-list-item-warning {
-    border-left: 3px solid var(--sv-warning);
-    padding-left: calc($list-item-padding-x - 3px);
+  
+  // Focused state for keyboard navigation
+  &:focus-visible {
+    outline: none;
+    box-shadow: var(--sv-focus-ring);
+    position: relative;
+    z-index: 1;
   }
 }
 
@@ -516,91 +491,89 @@ $list-transition-timing: var(--sv-motion-ease-standard);
    6. LIST VARIANTS
    ========================================================================== */
 
-// Bordered variant (each item fully bordered)
-.sv-list-bordered {
-  .sv-list-item {
-    border: $list-border-width solid $list-item-border-color;
-    border-radius: var(--sv-radius-sm);
-    margin: var(--sv-space-2);
-    
-    &:last-child {
-      border-bottom: $list-border-width solid $list-item-border-color;
-    }
-  }
+// Simple list (flat, no borders)
+.sv-list--simple {
+  border: none;
+  background-color: transparent;
   
-  // Adjust the container to account for item margins
-  padding: var(--sv-space-1);
+  .sv-list-item {
+    background-color: transparent;
+    border: none;
+    padding: calc($list-item-padding-y / 2) 0;
+  }
 }
 
-// Borderless variant
-.sv-list-borderless {
+// Card-style list (with shadow)
+.sv-list--card {
   border: none;
+  box-shadow: var(--sv-shadow-md);
   
-  .sv-list-item {
-    border-bottom: none;
-    
-    & + .sv-list-item {
-      margin-top: var(--sv-space-1);
-    }
-  }
-  
-  .sv-list-header,
-  .sv-list-footer {
+  .sv-list__header {
+    background-color: var(--sv-primary);
+    color: var(--sv-text-on-primary);
     border: none;
   }
 }
 
-// Density variations
-.sv-list-compact {
-  font-size: var(--sv-text-sm);
+// Inline list (horizontal)
+.sv-list--inline {
+  display: flex;
+  flex-wrap: wrap;
   
   .sv-list-item {
-    padding: $list-item-compact-padding-y $list-item-compact-padding-x;
-  }
-  
-  .sv-list-header,
-  .sv-list-footer {
-    padding: $list-item-compact-padding-y $list-item-compact-padding-x;
-  }
-}
-
-.sv-list-comfortable {
-  .sv-list-item {
-    padding: $list-item-comfortable-padding-y $list-item-comfortable-padding-x;
-  }
-  
-  .sv-list-header,
-  .sv-list-footer {
-    padding: $list-item-comfortable-padding-y $list-item-comfortable-padding-x;
-  }
-}
-
-// Grid list
-.sv-list-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: var(--sv-space-3);
-  padding: var(--sv-padding-3);
-  
-  .sv-list-item {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    border: $list-border-width solid $list-item-border-color;
-    border-radius: var(--sv-radius-md);
+    border: none;
+    border-right: $list-border-width solid $list-border-color;
     
-    // Grid item content layout
-    .sv-list-item-content {
-      display: flex;
-      flex-direction: column;
-      flex: 1;
+    &:last-child {
+      border-right: none;
     }
+  }
+}
+
+// Contextual list variants
+.sv-list {
+  &--primary {
+    border-color: var(--sv-primary);
     
-    // Move actions to bottom
-    .sv-list-item-action {
-      margin-top: var(--sv-space-3);
-      margin-left: 0;
-      justify-content: flex-end;
+    .sv-list__header {
+      background-color: var(--sv-primary);
+      color: var(--sv-text-on-primary);
+    }
+  }
+  
+  &--secondary {
+    border-color: var(--sv-secondary);
+    
+    .sv-list__header {
+      background-color: var(--sv-secondary);
+      color: var(--sv-text-on-secondary);
+    }
+  }
+  
+  &--success {
+    border-color: var(--sv-success);
+    
+    .sv-list__header {
+      background-color: var(--sv-success);
+      color: var(--sv-text-on-success);
+    }
+  }
+  
+  &--warning {
+    border-color: var(--sv-warning);
+    
+    .sv-list__header {
+      background-color: var(--sv-warning);
+      color: var(--sv-text-on-warning);
+    }
+  }
+  
+  &--error {
+    border-color: var(--sv-error);
+    
+    .sv-list__header {
+      background-color: var(--sv-error);
+      color: var(--sv-text-on-error);
     }
   }
 }
@@ -609,67 +582,90 @@ $list-transition-timing: var(--sv-motion-ease-standard);
    7. UTILITY CLASSES
    ========================================================================== */
 
-// Empty state for list
-.sv-list-empty {
-  .sv-list-empty-message {
-    padding: var(--sv-padding-lg);
-    text-align: center;
-    color: var(--sv-text-secondary);
-    font-style: italic;
+// Text utilities
+.sv-list-item {
+  &__text-truncate {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+  }
+  
+  &__text-wrap {
+    white-space: normal;
+    word-break: break-word;
   }
 }
 
-// Loading state for list
-.sv-list-loading {
-  position: relative;
+// Empty list state
+.sv-list--empty {
+  padding: var(--sv-padding-5);
+  text-align: center;
+  color: var(--sv-text-secondary);
   
-  &::before {
-    content: "";
+  .sv-list__empty-icon {
+    margin-bottom: var(--sv-space-3);
+    opacity: 0.5;
+  }
+  
+  .sv-list__empty-message {
+    font-size: $list-caption-font-size;
+  }
+}
+
+// Loading state
+.sv-list--loading {
+  position: relative;
+  min-height: 100px;
+  
+  &::after {
+    content: '';
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgba(var(--sv-bg-primary), 0.5);
-    z-index: var(--sv-z-index-overlay);
-    border-radius: var(--sv-radius-md);
+    background-color: rgba(255, 255, 255, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+// Badge utilities
+.sv-list-item__badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 20px;
+  height: 20px;
+  border-radius: var(--sv-radius-full);
+  background-color: var(--sv-bg-element);
+  color: var(--sv-text-secondary);
+  font-size: var(--sv-text-xs);
+  padding: 0 var(--sv-space-1);
+  margin-left: var(--sv-space-2);
+  font-weight: var(--sv-font-semibold);
+  flex-shrink: 0;
+  
+  &--primary {
+    background-color: var(--sv-primary);
+    color: var(--sv-text-on-primary);
   }
   
-  &::after {
-    content: "";
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 24px;
-    height: 24px;
-    margin: -12px 0 0 -12px;
-    border-radius: 50%;
-    border: 2px solid rgba(var(--sv-primary-500-rgb), 0.3);
-    border-top-color: var(--sv-primary);
-    z-index: var(--sv-z-index-overlay);
-    animation: spin 1s linear infinite;
+  &--success {
+    background-color: var(--sv-success);
+    color: var(--sv-text-on-success);
   }
-}
-
-// Truncate text in list items
-.sv-list-item-truncate {
-  .sv-list-item-primary,
-  .sv-list-item-secondary,
-  .sv-list-item-tertiary {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+  
+  &--warning {
+    background-color: var(--sv-warning);
+    color: var(--sv-text-on-warning);
   }
-}
-
-// List with dividers between items
-.sv-list-dividers {
-  .sv-list-item {
-    border-bottom: $list-border-width solid $list-item-border-color;
-    
-    &:last-child {
-      border-bottom: none;
-    }
+  
+  &--error {
+    background-color: var(--sv-error);
+    color: var(--sv-text-on-error);
   }
 }
 
@@ -677,58 +673,49 @@ $list-transition-timing: var(--sv-motion-ease-standard);
    8. NESTED LISTS
    ========================================================================== */
 
-// Support for nested lists/tree view
-.sv-list-nested {
-  .sv-list-item-expandable {
-    position: relative;
+// For hierarchical data display
+.sv-list-item__children {
+  width: 100%;
+  margin-top: var(--sv-space-2);
+  padding-left: calc($list-icon-margin + 20px); // Indentation for nested items
+  
+  .sv-list-item {
+    border-left: 1px dashed var(--sv-border-light);
     
-    // Expand/collapse control
-    .sv-expand-control {
-      position: absolute;
-      left: var(--sv-space-2);
-      width: 20px;
-      height: 20px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      transition: transform $list-transition-duration $list-transition-timing;
-      
-      &::before {
-        content: "";
-        border: solid var(--sv-text-secondary);
-        border-width: 0 2px 2px 0;
-        display: inline-block;
-        padding: 2px;
-        transform: rotate(45deg);
-      }
-      
-      &[aria-expanded="true"]::before {
-        transform: rotate(-135deg);
-      }
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+}
+
+// Collapsible nested list
+.sv-list-item {
+  &.is-expandable {
+    display: flex;
+    flex-wrap: wrap;
+    
+    &::before {
+      content: '';
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      margin-right: var(--sv-space-2);
+      border-bottom: 2px solid var(--sv-border-medium);
+      border-right: 2px solid var(--sv-border-medium);
+      transform: rotate(-45deg);
+      transition: transform 0.2s ease;
     }
     
-    // Adjust padding for expandable items
-    padding-left: calc($list-item-padding-x + 20px);
-  }
-  
-  // Nested list container
-  .sv-nested-list {
-    margin-left: var(--sv-space-8);
-    border: none;
+    &.is-expanded::before {
+      transform: rotate(45deg);
+    }
     
-    .sv-list-item {
-      border-left: 1px solid $list-item-border-color;
-      border-radius: 0;
-      
-      &:last-child {
-        border-bottom: none;
-      }
+    &.is-expanded .sv-list-item__children {
+      display: block;
     }
   }
   
-  // Collapsed state
-  .sv-nested-list-collapsed {
+  &__children {
     display: none;
   }
 }
@@ -737,86 +724,85 @@ $list-transition-timing: var(--sv-motion-ease-standard);
    9. RESPONSIVE BEHAVIOR
    ========================================================================== */
 
-// Mobile adaptations
-@include breakpoint-down(md) {
-  .sv-list {
-    // Adjust padding for mobile
-    .sv-list-item {
-      padding: $list-item-compact-padding-y $list-item-compact-padding-x;
+@media (max-width: 767px) {
+  .sv-list-item {
+    flex-direction: column;
+    align-items: flex-start;
+    
+    &__actions {
+      margin-left: 0;
+      margin-top: var(--sv-space-2);
+      width: 100%;
+      justify-content: flex-end;
     }
     
-    // Stack horizontal items on mobile
-    .sv-list-item-horizontal {
-      flex-direction: column;
-      align-items: flex-start;
+    &__icon,
+    &__avatar {
+      margin-bottom: var(--sv-space-2);
+      margin-right: 0;
+      align-self: center;
+    }
+    
+    &__meta {
+      margin-left: 0;
+      margin-top: var(--sv-space-1);
+      width: 100%;
+      text-align: right;
+    }
+    
+    // Exception for simple list items - keep horizontal
+    &.sv-list-item--simple {
+      flex-direction: row;
+      align-items: center;
       
-      .sv-list-item-field {
-        margin-right: 0;
-        margin-bottom: var(--sv-space-3);
-        width: 100%;
-      }
-    }
-    
-    // Adjust grid list for mobile
-    &.sv-list-grid {
-      grid-template-columns: 1fr;
-    }
-    
-    // Hide certain elements on mobile
-    .sv-hide-mobile {
-      display: none;
-    }
-    
-    // Make actions more accessible on mobile
-    .sv-list-item-action {
-      &.sv-action-overflow {
-        opacity: 1; // Always show actions on mobile
+      .sv-list-item__icon,
+      .sv-list-item__avatar {
+        margin-bottom: 0;
+        margin-right: $list-icon-margin;
       }
     }
   }
   
-  // Adjust nested lists for mobile
-  .sv-list-nested {
-    .sv-nested-list {
-      margin-left: var(--sv-space-4);
-    }
-  }
-}
-
-// Tablet adaptations
-@include breakpoint-between(md, lg) {
-  .sv-list {
-    // Adjust grid list for tablet
-    &.sv-list-grid {
-      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-    }
-    
-    // Hide certain elements on tablet
-    .sv-hide-tablet {
-      display: none;
-    }
-  }
-}
-
-// Handle print styles
-@media print {
-  .sv-list {
-    border: 1px solid #000;
+  // Adjust inline lists on mobile
+  .sv-list--inline {
+    flex-direction: column;
     
     .sv-list-item {
-      border-bottom: 1px solid #000;
-      page-break-inside: avoid;
+      border-right: none;
+      border-bottom: $list-border-width solid $list-border-color;
+      
+      &:last-child {
+        border-bottom: none;
+      }
     }
-    
-    .sv-list-item-action {
-      display: none;
-    }
-    
-    // Ensure text is visible in print
-    .sv-list-item-primary,
-    .sv-list-item-secondary,
-    .sv-list-item-tertiary {
-      color: #000 !important;
+  }
+}
+
+// Only apply complex layout if screen is large enough
+@media (min-width: 768px) {
+  .sv-list-item {
+    &--complex {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      grid-gap: var(--sv-space-3);
+      align-items: center;
+      
+      .sv-list-item__icon,
+      .sv-list-item__avatar,
+      .sv-list-item__checkbox {
+        grid-column: 1;
+        margin-right: 0;
+      }
+      
+      .sv-list-item__content {
+        grid-column: 2;
+      }
+      
+      .sv-list-item__actions,
+      .sv-list-item__meta {
+        grid-column: 3;
+        margin-left: 0;
+      }
     }
   }
 }

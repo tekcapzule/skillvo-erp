@@ -1,10 +1,10 @@
 /**
  * Data Table Component
- * Version: 1.0.0
- * Last Updated: April 29, 2025
+ * Version: 1.1.0
+ * Last Updated: June 30, 2024
  * 
  * This file provides styles for the data table component in the SkillVo design system.
- * It extends the sv-data-display-base class and adds table-specific styling.
+ * It extends the sv-data-display-control-base class and adds table-specific styling.
  */
 
 /* ==========================================================================
@@ -24,8 +24,9 @@
 /* ==========================================================================
    1. VARIABLES & CONFIGURATION
    ========================================================================== */
-   @use './../../abstracts/' as *;
-   @use './../../base/' as *;
+@use './../../abstracts/' as *;
+@use './../../base/' as *;
+
 // Table-specific variables
 $table-border-width: 1px;
 $table-border-color: var(--sv-border-light);
@@ -59,7 +60,7 @@ $table-body-font-size: var(--sv-text-base);
 
 .sv-table {
   // Extend base data display class
-  @extend .sv-data-display-base;
+  @extend .sv-data-display-control-base;
   
   // Set display and layout properties
   width: 100%;
@@ -72,7 +73,7 @@ $table-body-font-size: var(--sv-text-base);
   border-radius: var(--sv-radius-md);
   
   // Prevent text selection unless explicitly enabled
-  &:not(.sv-table-selectable-text) {
+  &:not(.sv-table--selectable-text) {
     user-select: none;
   }
   
@@ -81,21 +82,22 @@ $table-body-font-size: var(--sv-text-base);
   
   // Default caption styling
   caption {
-    @extend .sv-data-caption;
     caption-side: bottom;
     text-align: left;
     padding: var(--sv-padding-2);
+    color: var(--sv-text-secondary);
+    font-size: var(--sv-text-sm);
   }
   
   // Container for when the table needs to be scrollable
-  &-container {
+  &__container {
     position: relative;
     width: 100%;
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
     
     // For tables that are too wide for their container
-    &.sv-table-responsive {
+    &--responsive {
       margin-bottom: var(--sv-space-4);
       
       // Style scrollbars for better visibility
@@ -150,7 +152,7 @@ $table-body-font-size: var(--sv-text-base);
       }
       
       // Sticky header support
-      &.sv-table-sticky-header {
+      &.is-sticky {
         position: sticky;
         top: 0;
         z-index: var(--sv-z-index-default);
@@ -158,7 +160,7 @@ $table-body-font-size: var(--sv-text-base);
       }
       
       // Sortable header styles
-      &.sv-table-sortable {
+      &.is-sortable {
         cursor: pointer;
         user-select: none;
         
@@ -198,39 +200,38 @@ $table-body-font-size: var(--sv-text-base);
 
 .sv-table {
   tbody {
-    // Basic body cell styling
-    td {
-      padding: $table-cell-padding-y $table-cell-padding-x;
-      text-align: left;
-      vertical-align: middle;
-      border-bottom: $table-border-width solid $table-border-color;
+    tr {
+      // Standard row styling
+      background-color: var(--sv-bg-surface);
       
-      // Overflow handling for cells with long content
-      &.sv-table-cell-truncate {
-        max-width: 200px;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
+      // Bottom border for rows except the last
+      &:not(:last-child) {
+        border-bottom: $table-border-width solid $table-border-color;
       }
       
-      // Allow multiline text in cells
-      &.sv-table-cell-wrap {
-        white-space: normal;
-        word-break: break-word;
-      }
-    }
-    
-    // Remove border from last row
-    tr:last-child td {
-      border-bottom: none;
-      
-      // Last row's first and last cells should have rounded corners
-      &:first-child {
-        border-bottom-left-radius: calc(var(--sv-radius-md) - 1px);
-      }
-      
+      // Last row should have rounded bottom corners
       &:last-child {
-        border-bottom-right-radius: calc(var(--sv-radius-md) - 1px);
+        td {
+          &:first-child {
+            border-bottom-left-radius: calc(var(--sv-radius-md) - 1px);
+          }
+          
+          &:last-child {
+            border-bottom-right-radius: calc(var(--sv-radius-md) - 1px);
+          }
+        }
+      }
+      
+      // Cell styling
+      td {
+        padding: $table-cell-padding-y $table-cell-padding-x;
+        vertical-align: middle;
+        border-right: $table-border-width solid $table-border-color;
+        
+        // Remove right border from last cell
+        &:last-child {
+          border-right: none;
+        }
       }
     }
   }
@@ -241,77 +242,140 @@ $table-body-font-size: var(--sv-text-base);
    ========================================================================== */
 
 .sv-table {
-  // Numeric cell alignment
-  .sv-table-cell-numeric {
+  // Cell alignment variations
+  .sv-cell--left {
+    text-align: left;
+  }
+  
+  .sv-cell--center {
+    text-align: center;
+  }
+  
+  .sv-cell--right {
     text-align: right;
   }
   
   // Cell width variations
-  .sv-table-cell-auto {
-    width: auto;
-  }
-  
-  .sv-table-cell-fit {
+  .sv-cell--shrink {
     width: 1%;
     white-space: nowrap;
   }
   
-  .sv-table-cell-expand {
+  .sv-cell--auto {
+    width: auto;
+  }
+  
+  .sv-cell--fill {
     width: 100%;
   }
   
-  // Cell with fixed width
-  .sv-table-cell-fixed {
-    width: 150px; // Default fixed width
+  // Fixed width cells
+  .sv-cell--xs {
+    width: 80px;
   }
   
-  // Status cell styles
-  .sv-table-cell-status {
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    
-    &::before {
-      content: "";
-      display: inline-block;
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      margin-right: var(--sv-space-2);
-    }
-    
-    &.sv-status-success::before {
-      background-color: var(--sv-success);
-    }
-    
-    &.sv-status-error::before {
-      background-color: var(--sv-error);
-    }
-    
-    &.sv-status-warning::before {
-      background-color: var(--sv-warning);
-    }
-    
-    &.sv-status-info::before {
-      background-color: var(--sv-info);
-    }
+  .sv-cell--sm {
+    width: 120px;
   }
   
-  // Cell with actions (buttons, toggles, etc.)
-  .sv-table-cell-actions {
-    white-space: nowrap;
+  .sv-cell--md {
+    width: 180px;
+  }
+  
+  .sv-cell--lg {
+    width: 240px;
+  }
+  
+  .sv-cell--xl {
+    width: 320px;
+  }
+  
+  // Cell content variations
+  .sv-cell--numeric {
+    font-variant-numeric: tabular-nums;
     text-align: right;
+  }
+  
+  .sv-cell--truncate {
+    max-width: 200px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  
+  .sv-cell--wrap {
+    white-space: normal;
+    word-break: break-word;
+  }
+  
+  // Cell with icon
+  .sv-cell--icon {
+    padding: calc($table-cell-padding-y / 2);
+    text-align: center;
     
-    // Buttons within action cells
-    button, 
-    .sv-btn {
-      margin-left: var(--sv-space-1);
-      
-      // Hide overflow buttons until row is hovered
-      &.sv-action-overflow {
-        opacity: 0;
-        transition: opacity $data-transition-duration $data-transition-timing;
-      }
+    .sv-icon {
+      vertical-align: middle;
+    }
+  }
+  
+  // Cell with ellipsis menu
+  .sv-cell--actions {
+    width: 1%;
+    white-space: nowrap;
+    padding: calc($table-cell-padding-y / 2);
+    
+    .sv-actions {
+      display: flex;
+      align-items: center;
+      gap: var(--sv-space-1);
+    }
+  }
+  
+  // Cell states
+  .sv-cell--success {
+    color: var(--sv-success);
+  }
+  
+  .sv-cell--warning {
+    color: var(--sv-warning);
+  }
+  
+  .sv-cell--error {
+    color: var(--sv-error);
+  }
+  
+  .sv-cell--info {
+    color: var(--sv-info);
+  }
+  
+  // Cell with badge
+  .sv-cell__badge {
+    display: inline-block;
+    padding: var(--sv-space-1) var(--sv-space-2);
+    border-radius: var(--sv-radius-full);
+    font-size: var(--sv-text-xs);
+    font-weight: var(--sv-font-semibold);
+    background-color: var(--sv-bg-element);
+    color: var(--sv-text-secondary);
+    
+    &--primary {
+      background-color: var(--sv-primary);
+      color: var(--sv-text-on-primary);
+    }
+    
+    &--success {
+      background-color: var(--sv-success);
+      color: var(--sv-text-on-success);
+    }
+    
+    &--warning {
+      background-color: var(--sv-warning);
+      color: var(--sv-text-on-warning);
+    }
+    
+    &--error {
+      background-color: var(--sv-error);
+      color: var(--sv-text-on-error);
     }
   }
 }
@@ -321,66 +385,107 @@ $table-body-font-size: var(--sv-text-base);
    ========================================================================== */
 
 .sv-table {
-  // Interactive rows
-  &.sv-table-interactive {
+  // Table with hover effect
+  &--hoverable {
+    tbody tr {
+      &:hover {
+        background-color: $table-hover-bg;
+      }
+    }
+  }
+  
+  // Table with selectable rows
+  &--selectable {
     tbody tr {
       cursor: pointer;
       
       &:hover {
         background-color: $table-hover-bg;
-        
-        // Show overflow actions on hover
-        .sv-table-cell-actions .sv-action-overflow {
-          opacity: 1;
-        }
       }
       
-      &:active {
-        background-color: $table-active-bg;
+      &.is-selected {
+        background-color: $table-selected-bg;
+        
+        &::before {
+          content: '';
+          position: absolute;
+          left: 0;
+          top: 0;
+          bottom: 0;
+          width: 3px;
+          background-color: var(--sv-primary);
+        }
       }
     }
   }
   
-  // Selected row state
+  // Row states
   tbody tr {
-    &.sv-table-row-selected,
-    &[aria-selected="true"] {
+    // Selected row
+    &.is-selected {
       background-color: $table-selected-bg;
       font-weight: var(--sv-font-medium);
     }
-  }
-  
-  // Row with error state
-  tbody tr.sv-table-row-error {
-    background-color: rgba(var(--sv-error), 0.1);
     
-    td {
-      color: var(--sv-error);
+    // Active row
+    &.is-active {
+      background-color: $table-active-bg;
+    }
+    
+    // Disabled row
+    &.is-disabled {
+      opacity: 0.5;
+      pointer-events: none;
+      
+      td {
+        color: var(--sv-text-disabled);
+      }
+    }
+    
+    // Expanded row for detail view
+    &.is-expanded {
+      border-bottom: none;
+      
+      & + tr.sv-row-detail {
+        background-color: var(--sv-bg-element);
+      }
+    }
+    
+    // Success state
+    &.is-success {
+      background-color: var(--sv-success-light);
+    }
+    
+    // Warning state
+    &.is-warning {
+      background-color: var(--sv-warning-light);
+    }
+    
+    // Error state
+    &.is-error {
+      background-color: var(--sv-error-light);
+    }
+    
+    // Info state
+    &.is-info {
+      background-color: var(--sv-info-light);
     }
   }
   
-  // Row with success state
-  tbody tr.sv-table-row-success {
-    background-color: rgba(var(--sv-success), 0.1);
-    
+  // Row detail component for expandable rows
+  .sv-row-detail {
     td {
-      color: var(--sv-success);
+      padding: var(--sv-padding-4);
+      border-bottom: $table-border-width solid $table-border-color;
+      background-color: var(--sv-bg-element);
     }
-  }
-  
-  // Disabled row state
-  tbody tr.sv-table-row-disabled {
-    opacity: 0.65;
-    pointer-events: none;
     
-    td {
-      color: var(--sv-text-tertiary);
+    &__content {
+      padding: var(--sv-padding-3);
+      background-color: var(--sv-bg-surface);
+      border-radius: var(--sv-radius-sm);
+      border: $table-border-width solid $table-border-color;
     }
-  }
-  
-  // Row with highlighted status
-  tbody tr.sv-table-row-highlight {
-    background-color: rgba(var(--sv-primary), 0.1);
   }
 }
 
@@ -388,44 +493,65 @@ $table-body-font-size: var(--sv-text-base);
    7. TABLE VARIANTS
    ========================================================================== */
 
-// Striped table variant
-.sv-table-striped {
-  tbody tr:nth-child(even) {
-    background-color: $table-striped-bg;
-  }
-}
-
-// Bordered table variant (all cells have borders)
-.sv-table-bordered {
-  td, th {
-    border: $table-border-width solid $table-border-color;
-  }
-}
-
-// Borderless table variant
-.sv-table-borderless {
-  border: none;
-  
-  td, th {
-    border-bottom: none;
+.sv-table {
+  // Striped table
+  &--striped {
+    tbody tr {
+      &:nth-child(even) {
+        background-color: $table-striped-bg;
+      }
+    }
   }
   
-  thead {
-    border-bottom: none;
+  // Bordered table with borders for all cells
+  &--bordered {
+    border-collapse: collapse;
+    
+    th, td {
+      border: $table-border-width solid $table-border-color;
+    }
   }
-}
-
-// Density variations
-.sv-table-compact {
-  th, td {
-    padding: $table-compact-cell-padding-y $table-compact-cell-padding-x;
-    font-size: var(--sv-text-sm);
+  
+  // Compact table with smaller cell padding
+  &--compact {
+    th, td {
+      padding: $table-compact-cell-padding-y $table-compact-cell-padding-x;
+    }
   }
-}
-
-.sv-table-comfortable {
-  th, td {
-    padding: $table-comfortable-cell-padding-y $table-comfortable-cell-padding-x;
+  
+  // Comfortable table with larger cell padding
+  &--comfortable {
+    th, td {
+      padding: $table-comfortable-cell-padding-y $table-comfortable-cell-padding-x;
+    }
+  }
+  
+  // Table without borders
+  &--borderless {
+    border: none;
+    
+    th, td {
+      border: none;
+    }
+    
+    thead {
+      border-bottom: $table-border-width solid $table-border-color;
+    }
+  }
+  
+  // Table with fixed layout
+  &--fixed {
+    table-layout: fixed;
+  }
+  
+  // Table with sticky header
+  &--sticky-header {
+    thead th {
+      position: sticky;
+      top: 0;
+      z-index: var(--sv-z-index-default);
+      box-shadow: 0 1px 0 $table-border-color;
+    }
   }
 }
 
@@ -433,65 +559,84 @@ $table-body-font-size: var(--sv-text-base);
    8. UTILITY CLASSES
    ========================================================================== */
 
-// Empty state for table
-.sv-table-empty {
-  .sv-table-empty-message {
-    padding: var(--sv-padding-md);
+// Empty table state
+.sv-table--empty {
+  .sv-table__empty-message {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: var(--sv-padding-5);
     text-align: center;
     color: var(--sv-text-secondary);
-    font-style: italic;
+    
+    .sv-table__empty-icon {
+      margin-bottom: var(--sv-space-3);
+      opacity: 0.5;
+    }
+    
+    .sv-table__empty-text {
+      font-size: var(--sv-text-sm);
+    }
   }
 }
 
-// Loading state for table
-.sv-table-loading {
+// Loading state
+.sv-table--loading {
   position: relative;
+  min-height: 100px;
   
-  &::before {
-    content: "";
+  &::after {
+    content: '';
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgba(var(--sv-bg-primary), 0.5);
-    z-index: var(--sv-z-index-overlay);
-    border-radius: var(--sv-radius-md);
-  }
-  
-  &::after {
-    content: "";
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 24px;
-    height: 24px;
-    margin: -12px 0 0 -12px;
-    border-radius: 50%;
-    border: 2px solid rgba(var(--sv-primary-500-rgb), 0.3);
-    border-top-color: var(--sv-primary);
-    z-index: var(--sv-z-index-overlay);
-    animation: spin 1s linear infinite;
+    background-color: rgba(255, 255, 255, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 }
 
-// Footer with pagination or table summary
-.sv-table-footer {
+// Table pagination
+.sv-table__pagination {
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: var(--sv-padding-3);
   border-top: $table-border-width solid $table-border-color;
-  background-color: var(--sv-bg-secondary);
-  font-size: var(--sv-text-sm);
-  color: var(--sv-text-secondary);
   
-  // Round corners for footer
-  border-bottom-left-radius: var(--sv-radius-md);
-  border-bottom-right-radius: var(--sv-radius-md);
+  &-info {
+    color: var(--sv-text-secondary);
+    font-size: var(--sv-text-sm);
+  }
   
-  .sv-table-summary {
-    margin-right: var(--sv-space-2);
+  &-controls {
+    display: flex;
+    align-items: center;
+    gap: var(--sv-space-2);
+  }
+}
+
+// Table toolbar
+.sv-table__toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--sv-space-3);
+  
+  &-actions {
+    display: flex;
+    align-items: center;
+    gap: var(--sv-space-2);
+  }
+  
+  &-filters {
+    display: flex;
+    align-items: center;
+    gap: var(--sv-space-2);
   }
 }
 
@@ -499,74 +644,102 @@ $table-body-font-size: var(--sv-text-base);
    9. RESPONSIVE BEHAVIOR
    ========================================================================== */
 
-// Stack table on mobile
-@include breakpoint-down(md) {
-  .sv-table-stack {
+// Responsive table styles
+@media screen and (max-width: 767px) {
+  // For mobile, we transform the table layout
+  .sv-table--responsive {
+    display: block;
+    
+    // Hide table headers on small screens
     thead {
       display: none;
     }
     
-    tbody, tr, td {
+    // Convert rows to blocks
+    tbody {
       display: block;
+      
+      tr {
+        display: block;
+        margin-bottom: var(--sv-space-4);
+        border: $table-border-width solid $table-border-color;
+        border-radius: var(--sv-radius-md);
+        
+        &:last-child {
+          margin-bottom: 0;
+        }
+      }
+      
+      // Display cells as rows
+      td {
+        display: flex;
+        padding: var(--sv-padding-2);
+        border-right: none;
+        border-bottom: $table-border-width solid $table-border-color;
+        text-align: right;
+        
+        &:before {
+          content: attr(data-label);
+          float: left;
+          font-weight: $table-header-font-weight;
+          color: $table-header-color;
+          padding-right: var(--sv-space-3);
+        }
+        
+        &:last-child {
+          border-bottom: none;
+        }
+      }
+    }
+    
+    // Custom styles for certain cell types
+    .sv-cell--numeric {
+      text-align: right; // Keep numeric cells right-aligned
+    }
+    
+    .sv-cell--actions {
+      justify-content: flex-end;
+    }
+  }
+  
+  // Stack toolbar components on mobile
+  .sv-table__toolbar {
+    flex-direction: column;
+    align-items: flex-start;
+    
+    &-filters {
+      margin-top: var(--sv-space-2);
       width: 100%;
     }
+  }
+  
+  // Stack pagination components on mobile
+  .sv-table__pagination {
+    flex-direction: column;
+    align-items: flex-start;
     
-    tr {
-      margin-bottom: var(--sv-space-4);
-      border: $table-border-width solid $table-border-color;
-      border-radius: var(--sv-radius-md);
+    &-info {
+      margin-bottom: var(--sv-space-2);
     }
     
-    td {
-      display: flex;
-      text-align: right;
+    &-controls {
+      width: 100%;
       justify-content: space-between;
-      border-bottom: $table-border-width solid $table-border-color;
-      
-      &:last-child {
-        border-bottom: none;
-      }
-      
-      // Add data attribute for headers in mobile view
-      &::before {
-        content: attr(data-label);
-        font-weight: $table-header-font-weight;
-        color: $table-header-color;
-        margin-right: var(--sv-space-2);
-      }
     }
-  }
-  
-  // Hide certain columns on mobile
-  .sv-table:not(.sv-table-stack) {
-    .sv-table-hide-mobile {
-      display: none;
-    }
-  }
-  
-  // Adjust cell padding for better mobile experience
-  .sv-table:not(.sv-table-compact) {
-    th, td {
-      padding: $table-compact-cell-padding-y $table-compact-cell-padding-x;
-    }
-  }
-  
-  // Always make tables scrollable on small screens
-  .sv-table-container {
-    overflow-x: auto;
   }
 }
 
-// Medium screen adjustments
-@include breakpoint-between(md, lg) {
+// For larger mobile devices and small tablets
+@media screen and (min-width: 768px) and (max-width: 991px) {
+  // Hide less important columns on medium screens
   .sv-table {
-    .sv-table-hide-tablet {
+    .sv-cell--hidden-md {
       display: none;
     }
   }
 }
 
-// Handle print styles
+// For print
 @media print {
   .sv-table {
     border-collapse: collapse;
@@ -574,16 +747,16 @@ $table-body-font-size: var(--sv-text-base);
     th, td {
       background-color: transparent !important;
       color: #000 !important;
-      border: 1px solid #000 !important;
+      border: 1px solid #000;
     }
     
-    tr.sv-table-row-selected {
-      font-weight: bold;
-      background-color: transparent !important;
-    }
-    
-    .sv-table-actions {
+    .sv-cell--actions {
       display: none;
+    }
+    
+    // Ensure proper page breaks
+    tr {
+      page-break-inside: avoid;
     }
   }
 }
