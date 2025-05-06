@@ -71,7 +71,7 @@ $text-field-min-width: var(--sv-size-40);
     font-size: var(--sv-text-sm);
     
     // Adjust padding for smaller screens
-    padding: var(--sv-padding-2) var(--sv-padding-2);
+    padding: var(--sv-space-2) var(--sv-space-2);
     
     // Full width on mobile
     width: 100%;
@@ -86,6 +86,6 @@ $text-field-min-width: var(--sv-size-40);
 // For very small screens, reduce padding further
 @include breakpoint-down(xs) {
   .sv-text-field {
-    padding: var(--sv-padding-1) var(--sv-padding-2);
+    padding: var(--sv-space-1) var(--sv-space-2);
   }
 }

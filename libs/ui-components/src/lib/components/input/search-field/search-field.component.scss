@@ -1,12 +1,13 @@
 @use './../../../../../../../styles/abstracts/' as *;
 @use './../../../../../../../styles/base/' as *;
+@import '../../../../../styles/base/utils/mixins/state';
 
 // Component-specific variables
 $search-icon-size: var(--sv-icon-size-sm);
 $search-clear-button-size: var(--sv-size-6);
 $search-dropdown-z-index: var(--sv-z-index-dropdown);
 $search-dropdown-max-height: var(--sv-size-64);
-$search-results-padding: var(--sv-padding-2);
+$search-results-padding: var(--sv-space-2);
 
 .sv-search-field {
   // Extend the input base styles
@@ -28,7 +29,7 @@ $search-results-padding: var(--sv-padding-2);
   // Search icon
   &-icon {
     position: absolute;
-    left: var(--sv-padding-3);
+    left: var(--sv-space-3);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -43,51 +44,45 @@ $search-results-padding: var(--sv-padding-2);
   // Actual input field
   &-input {
     width: 100%;
-    padding-left: calc(var(--sv-padding-3) * 2 + $search-icon-size);
-    padding-right: calc(var(--sv-padding-3) + $search-clear-button-size);
+    padding-left: calc(var(--sv-space-3) * 2 + $search-icon-size);
+    padding-right: calc(var(--sv-space-3) + $search-clear-button-size);
     
     &:focus {
-      border-color: var(--sv-primary);
-      box-shadow: var(--sv-shadow-focus);
+      @include focus-state;
     }
     
     &::placeholder {
       color: var(--sv-text-tertiary);
+    }
+    
+    &:hover {
+      @include hover-state;
+    }
+    
+    &:disabled {
+      @include disabled-state;
     }
   }
   
   // Clear button
   &-clear {
     position: absolute;
-    right: var(--sv-padding-3);
+    right: var(--sv-space-3);
     display: flex;
     align-items: center;
     justify-content: center;
     width: $search-clear-button-size;
     height: $search-clear-button-size;
-    border: none;
-    border-radius: 50%;
-    background-color: var(--sv-bg-element);
-    color: var(--sv-text-secondary);
     cursor: pointer;
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity var(--sv-motion-duration-short) var(--sv-motion-ease-standard),
-                visibility var(--sv-motion-duration-short) var(--sv-motion-ease-standard);
-    
-    &.visible {
-      opacity: 1;
-      visibility: visible;
-    }
+    color: var(--sv-text-secondary);
     
     &:hover {
-      background-color: var(--sv-bg-element-hover);
+      @include hover-state;
       color: var(--sv-text-primary);
     }
     
     &:focus {
-      outline: none;
-      box-shadow: var(--sv-shadow-focus);
+      @include focus-state;
     }
     
     &-icon {
@@ -99,7 +94,7 @@ $search-results-padding: var(--sv-padding-2);
   // Loading state spinner
   &-loading {
     position: absolute;
-    right: var(--sv-padding-3);
+    right: var(--sv-space-3);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -124,19 +119,19 @@ $search-results-padding: var(--sv-padding-2);
   
   .sv-search-field {
     &-icon {
-      left: var(--sv-padding-2);
+      left: var(--sv-space-2);
     }
     
     &-input {
-      padding: var(--sv-padding-1) var(--sv-padding-2);
-      padding-left: calc(var(--sv-padding-2) * 2 + calc($search-icon-size * 0.9));
-      padding-right: calc(var(--sv-padding-2) + calc($search-clear-button-size * 0.9));
+      padding: var(--sv-space-1) var(--sv-space-2);
+      padding-left: calc(var(--sv-space-2) * 2 + calc($search-icon-size * 0.9));
+      padding-right: calc(var(--sv-space-2) + calc($search-clear-button-size * 0.9));
       font-size: var(--sv-text-sm);
     }
     
     &-clear,
     &-loading {
-      right: var(--sv-padding-2);
+      right: var(--sv-space-2);
       width: calc($search-clear-button-size * 0.9);
       height: calc($search-clear-button-size * 0.9);
     }
@@ -149,13 +144,13 @@ $search-results-padding: var(--sv-padding-2);
   
   .sv-search-field {
     &-input {
-      padding-top: var(--sv-padding-3);
-      padding-bottom: var(--sv-padding-3);
+      padding-top: var(--sv-space-3);
+      padding-bottom: var(--sv-space-3);
       font-size: var(--sv-text-lg);
     }
     
     &-icon {
-      left: var(--sv-padding-4);
+      left: var(--sv-space-4);
       
       &-svg {
         width: calc($search-icon-size * 1.2);
@@ -164,13 +159,13 @@ $search-results-padding: var(--sv-padding-2);
     }
     
     &-input {
-      padding-left: calc(var(--sv-padding-4) * 2 + calc($search-icon-size * 1.2));
-      padding-right: calc(var(--sv-padding-4) + calc($search-clear-button-size * 1.2));
+      padding-left: calc(var(--sv-space-4) * 2 + calc($search-icon-size * 1.2));
+      padding-right: calc(var(--sv-space-4) + calc($search-clear-button-size * 1.2));
     }
     
     &-clear,
     &-loading {
-      right: var(--sv-padding-4);
+      right: var(--sv-space-4);
       width: calc($search-clear-button-size * 1.2);
       height: calc($search-clear-button-size * 1.2);
     }
@@ -203,12 +198,10 @@ $search-results-padding: var(--sv-padding-2);
   
   // Search submit button
   &-button {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0 var(--sv-padding-4);
+    padding: 0 var(--sv-space-4);
     background-color: var(--sv-primary);
     color: var(--sv-text-on-dark);
+    height: 100%;
     border: none;
     border-top-right-radius: var(--sv-radius-md);
     border-bottom-right-radius: var(--sv-radius-md);
@@ -218,9 +211,16 @@ $search-results-padding: var(--sv-padding-2);
       background-color: var(--sv-primary-dark);
     }
     
+    &:active {
+      background-color: var(--sv-primary-darker);
+    }
+    
     &:focus {
-      outline: none;
-      box-shadow: var(--sv-shadow-focus);
+      @include focus-state;
+    }
+    
+    &:disabled {
+      @include disabled-state;
     }
     
     &-icon {
@@ -257,17 +257,22 @@ $search-results-padding: var(--sv-padding-2);
   
   // Individual result item
   &-item {
-    padding: $search-results-padding;
+    display: flex;
+    align-items: center;
     cursor: pointer;
-    transition: background-color var(--sv-motion-duration-short) var(--sv-motion-ease-standard);
+    font-size: var(--sv-text-sm);
+    padding: var(--sv-space-1) var(--sv-space-3);
     
     &:hover {
-      background-color: var(--sv-bg-element-hover);
+      @include hover-state;
     }
     
-    &.active,
+    &:focus {
+      @include focus-state;
+    }
+    
     &.selected {
-      background-color: var(--sv-bg-element-active);
+      @include selected-state;
     }
     
     // Search result with icon and content structure
@@ -322,7 +327,7 @@ $search-results-padding: var(--sv-padding-2);
   // Group header for categorized results
   &-group {
     &-header {
-      padding: var(--sv-padding-1) $search-results-padding;
+      padding: var(--sv-space-1) $search-results-padding;
       font-size: var(--sv-text-xs);
       font-weight: var(--sv-font-semibold);
       color: var(--sv-text-secondary);
@@ -375,7 +380,7 @@ $search-results-padding: var(--sv-padding-2);
       color: var(--sv-primary);
       cursor: pointer;
       font-size: var(--sv-text-sm);
-      padding: var(--sv-padding-1) var(--sv-padding-3);
+      padding: var(--sv-space-1) var(--sv-space-3);
       
       &:hover {
         text-decoration: underline;
@@ -398,7 +403,7 @@ $search-results-padding: var(--sv-padding-2);
 @include breakpoint-down(md) {
   .sv-search-field-with-button {
     &-button {
-      padding: 0 var(--sv-padding-3);
+      padding: 0 var(--sv-space-3);
       
       &-text {
         display: none;
@@ -417,8 +422,8 @@ $search-results-padding: var(--sv-padding-2);
     font-size: var(--sv-text-sm);
     
     &-input {
-      padding-top: var(--sv-padding-1);
-      padding-bottom: var(--sv-padding-1);
+      padding-top: var(--sv-space-1);
+      padding-bottom: var(--sv-space-1);
     }
   }
   
@@ -457,18 +462,18 @@ $search-results-padding: var(--sv-padding-2);
   .sv-search-field {
     &-icon {
       left: auto;
-      right: var(--sv-padding-3);
+      right: var(--sv-space-3);
     }
     
     &-input {
-      padding-left: calc(var(--sv-padding-3) + $search-clear-button-size);
-      padding-right: calc(var(--sv-padding-3) * 2 + $search-icon-size);
+      padding-left: calc(var(--sv-space-3) + $search-clear-button-size);
+      padding-right: calc(var(--sv-space-3) * 2 + $search-icon-size);
     }
     
     &-clear,
     &-loading {
       right: auto;
-      left: var(--sv-padding-3);
+      left: var(--sv-space-3);
     }
   }
   
@@ -476,18 +481,18 @@ $search-results-padding: var(--sv-padding-2);
     .sv-search-field {
       &-icon {
         left: auto;
-        right: var(--sv-padding-2);
+        right: var(--sv-space-2);
       }
       
       &-input {
-        padding-left: calc(var(--sv-padding-2) + calc($search-clear-button-size * 0.9));
-        padding-right: calc(var(--sv-padding-2) * 2 + calc($search-icon-size * 0.9));
+        padding-left: calc(var(--sv-space-2) + calc($search-clear-button-size * 0.9));
+        padding-right: calc(var(--sv-space-2) * 2 + calc($search-icon-size * 0.9));
       }
       
       &-clear,
       &-loading {
         right: auto;
-        left: var(--sv-padding-2);
+        left: var(--sv-space-2);
       }
     }
   }
@@ -496,18 +501,18 @@ $search-results-padding: var(--sv-padding-2);
     .sv-search-field {
       &-icon {
         left: auto;
-        right: var(--sv-padding-4);
+        right: var(--sv-space-4);
       }
       
       &-input {
-        padding-left: calc(var(--sv-padding-4) + calc($search-clear-button-size * 1.2));
-        padding-right: calc(var(--sv-padding-4) * 2 + calc($search-icon-size * 1.2));
+        padding-left: calc(var(--sv-space-4) + calc($search-clear-button-size * 1.2));
+        padding-right: calc(var(--sv-space-4) * 2 + calc($search-icon-size * 1.2));
       }
       
       &-clear,
       &-loading {
         right: auto;
-        left: var(--sv-padding-4);
+        left: var(--sv-space-4);
       }
     }
   }

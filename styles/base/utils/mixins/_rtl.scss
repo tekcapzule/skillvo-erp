@@ -136,8 +136,8 @@
 [dir="rtl"] {
   .sv-ui-control-base {
     &.has-directional-padding {
-      padding-right: var(--sv-padding-start, var(--sv-padding-3));
-      padding-left: var(--sv-padding-end, var(--sv-padding-3));
+      padding-right: var(--sv-padding-start, var(--sv-space-3));
+      padding-left: var(--sv-padding-end, var(--sv-space-3));
     }
   }
   

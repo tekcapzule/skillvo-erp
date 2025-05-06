@@ -1,4 +1,5 @@
 @use './../../../../../../../styles/base/utils/mixins/responsive' as responsive;
+@import '../../../../../styles/base/utils/mixins/state';
 
 // The component will extend styles from sv-input-base class,
 // so we only need to add color-picker specific styling here.
@@ -18,7 +19,7 @@
     align-items: center;
     width: 100%;
     height: var(--sv-size-10);
-    padding: var(--sv-padding-2) var(--sv-padding-3);
+    padding: var(--sv-space-2) var(--sv-space-3);
     border: 1px solid var(--sv-border-medium);
     border-radius: var(--sv-radius-md);
     background-color: var(--sv-bg-surface);
@@ -154,7 +155,7 @@
     border: 1px solid var(--sv-border-medium);
     border-radius: var(--sv-radius-md);
     box-shadow: var(--sv-shadow-lg);
-    padding: var(--sv-padding-3);
+    padding: var(--sv-space-3);
     
     // Sections
     &-section {
@@ -227,7 +228,7 @@
       
       &-btn {
         flex: 1;
-        padding: var(--sv-padding-1) 0;
+        padding: var(--sv-space-1) 0;
         border: none;
         background-color: var(--sv-bg-element);
         cursor: pointer;
@@ -235,12 +236,15 @@
         color: var(--sv-text-secondary);
         
         &:hover {
-          background-color: var(--sv-bg-element-hover);
+          @include hover-state;
+        }
+        
+        &:focus {
+          @include focus-state;
         }
         
         &.active {
-          background-color: var(--sv-primary);
-          color: var(--sv-text-on-dark);
+          @include selected-state;
         }
       }
     }
@@ -264,7 +268,7 @@
         }
         
         &-input {
-          padding: var(--sv-padding-1) var(--sv-padding-2);
+          padding: var(--sv-space-1) var(--sv-space-2);
           border: 1px solid var(--sv-border-medium);
           border-radius: var(--sv-radius-sm);
           font-size: var(--sv-text-sm);
@@ -272,8 +276,15 @@
           background-color: var(--sv-bg-element);
           
           &:focus {
-            outline: none;
-            border-color: var(--sv-primary);
+            @include focus-state;
+          }
+          
+          &:hover {
+            @include hover-state;
+          }
+          
+          &:disabled {
+            @include disabled-state;
           }
         }
       }
@@ -290,19 +301,27 @@
       justify-content: space-between;
       
       &-btn {
-        padding: var(--sv-padding-1) var(--sv-padding-3);
+        padding: var(--sv-space-1) var(--sv-space-3);
         border: none;
         border-radius: var(--sv-radius-sm);
         font-size: var(--sv-text-sm);
         cursor: pointer;
+        
+        &:focus {
+          @include focus-state;
+        }
         
         &-clear {
           background-color: transparent;
           color: var(--sv-text-secondary);
           
           &:hover {
-            background-color: var(--sv-bg-element-hover);
+            @include hover-state;
             color: var(--sv-text-primary);
+          }
+          
+          &:active {
+            @include active-state;
           }
         }
         
@@ -312,6 +331,14 @@
           
           &:hover {
             background-color: var(--sv-primary-dark);
+          }
+          
+          &:active {
+            background-color: var(--sv-primary-darker);
+          }
+          
+          &:disabled {
+            @include disabled-state;
           }
         }
       }

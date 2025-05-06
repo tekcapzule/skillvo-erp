@@ -14,7 +14,7 @@
     display: inline-flex;
     justify-content: center;
     align-items: center;
-    padding: var(--sv-padding-2);
+    padding: var(--sv-space-2);
     aspect-ratio: 1;
     border-radius: var(--sv-radius-md);
     width: 100%;
@@ -57,7 +57,7 @@
     &:hover, &:focus-within {
       button {
         width: auto;
-        padding-right: var(--sv-padding-4);
+        padding-right: var(--sv-space-4);
         
         .sv-icon-text {
           opacity: 1;

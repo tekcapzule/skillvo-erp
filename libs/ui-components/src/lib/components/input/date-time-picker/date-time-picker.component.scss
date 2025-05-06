@@ -6,7 +6,7 @@ $calendar-width: var(--sv-size-64);
 $calendar-cell-size: var(--sv-size-10);
 $calendar-header-height: var(--sv-size-12);
 $calendar-z-index: var(--sv-z-index-dropdown);
-$input-padding-x: var(--sv-padding-3);
+$input-padding-x: var(--sv-space-3);
 $input-height: var(--sv-size-10);
 
 // Use the BEM methodology for class naming
@@ -30,7 +30,7 @@ $input-height: var(--sv-size-10);
   flex: 1;
   width: 100%;
   height: $input-height;
-  padding: var(--sv-padding-2) $input-padding-x;
+  padding: var(--sv-space-2) $input-padding-x;
   border: 1px solid var(--sv-border-medium);
   border-right: none;
   border-top-left-radius: var(--sv-radius-md);
@@ -121,7 +121,7 @@ $input-height: var(--sv-size-10);
     align-items: center;
     justify-content: space-between;
     height: $calendar-header-height;
-    padding: var(--sv-padding-2) var(--sv-padding-3);
+    padding: var(--sv-space-2) var(--sv-space-3);
     border-bottom: 1px solid var(--sv-border-light);
     
     &-title {
@@ -134,7 +134,7 @@ $input-height: var(--sv-size-10);
       &-btn {
         background: none;
         border: none;
-        padding: var(--sv-padding-1) var(--sv-padding-2);
+        padding: var(--sv-space-1) var(--sv-space-2);
         font-size: var(--sv-text-sm);
         font-weight: var(--sv-font-medium);
         color: var(--sv-text-primary);
@@ -191,7 +191,7 @@ $input-height: var(--sv-size-10);
     display: grid;
     grid-template-columns: repeat(7, 1fr);
     gap: 2px;
-    padding: var(--sv-padding-2);
+    padding: var(--sv-space-2);
     
     // Day of week headers
     &-header {
@@ -275,18 +275,18 @@ $input-height: var(--sv-size-10);
   &-months-grid,
   &-years-grid {
     grid-template-columns: repeat(4, 1fr);
-    padding: var(--sv-padding-4);
+    padding: var(--sv-space-4);
   }
   
   // Footer with action buttons
   &-footer {
     display: flex;
     justify-content: space-between;
-    padding: var(--sv-padding-2) var(--sv-padding-3);
+    padding: var(--sv-space-2) var(--sv-space-3);
     border-top: 1px solid var(--sv-border-light);
     
     &-btn {
-      padding: var(--sv-padding-1) var(--sv-padding-3);
+      padding: var(--sv-space-1) var(--sv-space-3);
       border: none;
       border-radius: var(--sv-radius-sm);
       font-size: var(--sv-text-sm);
@@ -328,7 +328,7 @@ $input-height: var(--sv-size-10);
 // Time selector styling
 .sv-time-selector {
   width: calc($calendar-width / 2);
-  padding: var(--sv-padding-3);
+  padding: var(--sv-space-3);
   
   &-container {
     display: flex;
@@ -394,7 +394,7 @@ $input-height: var(--sv-size-10);
       }
       
       &-value {
-        padding: var(--sv-padding-2) 0;
+        padding: var(--sv-space-2) 0;
         font-size: var(--sv-text-lg);
         font-weight: var(--sv-font-medium);
         color: var(--sv-text-primary);
@@ -421,7 +421,7 @@ $input-height: var(--sv-size-10);
     
     &-btn {
       flex: 1;
-      padding: var(--sv-padding-1) var(--sv-padding-3);
+      padding: var(--sv-space-1) var(--sv-space-3);
       border: none;
       background-color: var(--sv-bg-element);
       cursor: pointer;
@@ -461,7 +461,7 @@ $input-height: var(--sv-size-10);
     
     &-grid {
       gap: 1px;
-      padding: var(--sv-padding-1);
+      padding: var(--sv-space-1);
       
       &-cell {
         height: calc($calendar-cell-size * 0.9);
@@ -471,7 +471,7 @@ $input-height: var(--sv-size-10);
     
     &-months-grid,
     &-years-grid {
-      padding: var(--sv-padding-2);
+      padding: var(--sv-space-2);
     }
   }
   
