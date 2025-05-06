@@ -1,440 +1,527 @@
 /**
- * Navigation Menu Component Styles
- * Version: 1.0.0
- * Last Updated: April 29, 2025
+ * Navigation Bar Component Styles
+ * Version: 2.0.0
+ * Last Updated: July 19, 2024
  * 
- * This file contains styles for the navigation menu component in the SkillVo design system.
+ * This file contains styles for the navigation bar component in the SkillVo design system.
  * It's the component-specific layer that extends the base sv-nav-control-base class.
  */
 
- @use './../../abstracts/' as *;
- @use './../../base/' as *;
- /* ==========================================================================
-    TABLE OF CONTENTS:
+/* ==========================================================================
+   TABLE OF CONTENTS:
+   
+   1. IMPORTS
+   2. VARIABLES & CONFIGURATION
+   3. NAV BAR BASE
+   4. NAV BAR VARIANTS
+   5. NAV ITEM STYLES
+   6. DROPDOWN MENUS
+   7. RESPONSIVE BEHAVIOR
+   8. ACCESSIBILITY ENHANCEMENTS
+   ========================================================================== */
+
+/* ==========================================================================
+   1. IMPORTS
+   ========================================================================== */
+@use './../../abstracts/variables/' as *;
+@use './../../base/utils/mixins/state' as state;
+@use './../../base/utils/mixins/layout' as layout;
+@use './../../base/utils/mixins/responsive' as responsive;
+@use './../../base/utils/mixins/accessibility' as a11y;
+
+/* ==========================================================================
+   2. VARIABLES & CONFIGURATION
+   ========================================================================== */
+
+// Nav bar specific variables
+$nav-bar-padding-y: var(--sv-space-2);
+$nav-bar-padding-x: var(--sv-space-4);
+$nav-bar-item-padding-y: var(--sv-space-2);
+$nav-bar-item-padding-x: var(--sv-space-3);
+$nav-bar-font-weight: var(--sv-font-weight-medium);
+$nav-bar-indicator-height: 2px;
+$nav-bar-transition-duration: var(--sv-motion-duration-short);
+$nav-bar-transition-timing: var(--sv-motion-ease-standard);
+$nav-bar-dropdown-arrow-size: 0.5em;
+$nav-bar-dropdown-min-width: 200px;
+$nav-bar-compact-padding-y: var(--sv-space-1);
+$nav-bar-compact-padding-x: var(--sv-space-2);
+$nav-bar-badge-min-width: 1.5em;
+$nav-bar-badge-height: 1.5em;
+$nav-bar-icon-spacing: var(--sv-space-2);
+
+/* ==========================================================================
+   3. NAV BAR BASE
+   ========================================================================== */
+
+.sv-nav-bar {
+  // Extend the navigation control base class
+  @extend .sv-nav-control-base;
+  
+  // Nav bar specific styles
+  width: 100%; // Full width by default
+  padding: $nav-bar-padding-y $nav-bar-padding-x;
+  background-color: var(--sv-bg-surface);
+  display: flex;
+  align-items: center;
+  
+  // Apply subtle shadow for elevated navigation
+  box-shadow: var(--sv-shadow-sm);
+  
+  // Remove default bullet points and spacing
+  list-style: none;
+  margin: 0;
+  
+  &__item {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+  
+  &__link {
+    display: inline-flex;
+    align-items: center;
+    padding: $nav-bar-item-padding-y $nav-bar-item-padding-x;
+    color: var(--sv-text-primary);
+    font-size: var(--sv-font-size-base);
+    font-weight: $nav-bar-font-weight;
+    line-height: var(--sv-line-height-normal);
+    text-decoration: none;
+    position: relative;
     
-    1. CORE MENU STYLES
-    2. MENU VARIANTS
-    3. MENU ITEM STYLES
-    4. DROPDOWN MENUS
-    5. MOBILE NAVIGATION
-    6. ACCESSIBILITY ENHANCEMENTS
-    ========================================================================== */
- 
- /* ==========================================================================
-    1. CORE MENU STYLES
-    ========================================================================== */
- 
- .sv-nav-menu {
-   // Extend the navigation control base class
-   @extend .sv-nav-control-base;
-   
-   // Default horizontal layout for menus
-   @include nav-container-horizontal;
-   
-   // Core menu styles
-   width: 100%; // Full width by default
-   padding: var(--sv-padding-2) var(--sv-padding-4);
-   background-color: var(--sv-bg-surface);
-   
-   // Apply subtle shadow for elevated navigation
-   @include shadow('sm');
-   
-   // Remove default bullet points and spacing
-   list-style: none;
-   margin: 0;
- }
- 
- /* ==========================================================================
-    2. MENU VARIANTS
-    ========================================================================== */
- 
- // Primary navigation - more prominent
- .sv-nav-menu--primary {
-   background-color: var(--sv-primary);
-   
-   .sv-nav-menu__item > .sv-nav-menu__link {
-     color: var(--sv-text-on-dark);
-     font-weight: var(--sv-font-medium);
-     
-     &:hover,
-     &:focus {
-       color: var(--sv-text-on-dark);
-       background-color: rgba(255, 255, 255, 0.1);
-     }
-     
-     &.active,
-     &[aria-current="page"] {
-       color: var(--sv-text-on-dark);
-       
-       &::after {
-         background-color: var(--sv-text-on-dark);
-       }
-     }
-   }
- }
- 
- // Secondary navigation - less prominent
- .sv-nav-menu--secondary {
-   background-color: var(--sv-bg-secondary);
-   border-bottom: 1px solid var(--sv-border-light);
-   box-shadow: none;
-   
-   .sv-nav-menu__item > .sv-nav-menu__link {
-     font-weight: var(--sv-font-normal);
-     
-     &.active,
-     &[aria-current="page"] {
-       color: var(--sv-primary);
-       
-       &::after {
-         background-color: var(--sv-primary);
-       }
-     }
-   }
- }
- 
- // Transparent navigation - for hero sections
- .sv-nav-menu--transparent {
-   background-color: transparent;
-   box-shadow: none;
- }
- 
- // Compact navigation - less padding
- .sv-nav-menu--compact {
-   padding: var(--sv-padding-1) var(--sv-padding-2);
-   gap: var(--sv-space-2);
- }
- 
- // Centered navigation
- .sv-nav-menu--centered {
-   justify-content: center;
- }
- 
- /* ==========================================================================
-    3. MENU ITEM STYLES
-    ========================================================================== */
- 
- .sv-nav-menu__item {
-   position: relative;
-   display: flex;
-   align-items: center;
- }
- 
- .sv-nav-menu__link {
-   display: inline-flex;
-   align-items: center;
-   padding: var(--sv-padding-2) var(--sv-padding-3);
-   color: var(--sv-text-primary);
-   @include typography('base', 'medium', 'normal');
-   text-decoration: none;
-   position: relative;
-   
-   // Transition for hover/focus effects
-   @include transition((color, background-color), 'short', 'standard');
-   
-   // Active state styles with indicator line
-   &.active,
-   &[aria-current="page"] {
-     color: var(--sv-primary);
-     font-weight: var(--sv-font-semibold);
-     
-     &::after {
-       content: "";
-       position: absolute;
-       left: 0;
-       bottom: -2px;
-       width: 100%;
-       height: 2px;
-       background-color: var(--sv-primary);
-     }
-   }
-   
-   &:hover:not(:disabled):not(.disabled) {
-     color: var(--sv-primary);
-     background-color: var(--sv-bg-element-hover);
-     @include border-radius('md');
-   }
-   
-   &:focus-visible {
-     @include focus-visible-state;
-     text-decoration: none;
-   }
-   
-   // Add spacing for icons
-   .sv-nav-menu__icon {
-     margin-right: var(--sv-space-2);
-     font-size: var(--sv-icon-size-sm);
-   }
- }
- 
- // Badge for navigation items (notifications, etc.)
- .sv-nav-menu__badge {
-   display: inline-flex;
-   align-items: center;
-   justify-content: center;
-   min-width: 1.5em;
-   height: 1.5em;
-   padding: 0 var(--sv-padding-1);
-   margin-left: var(--sv-space-2);
-   background-color: var(--sv-primary);
-   color: var(--sv-text-on-dark);
-   font-size: var(--sv-text-xs);
-   font-weight: var(--sv-font-semibold);
-   @include border-radius('full');
- }
- 
- /* ==========================================================================
-    4. DROPDOWN MENUS
-    ========================================================================== */
- 
- .sv-nav-menu__dropdown {
-   position: relative;
-   
-   // Dropdown toggle
-   .sv-nav-menu__dropdown-toggle {
-     display: inline-flex;
-     align-items: center;
-     cursor: pointer;
-     
-     // Dropdown indicator
-     &::after {
-       content: "";
-       display: inline-block;
-       margin-left: var(--sv-space-1);
-       width: 0.5em;
-       height: 0.5em;
-       border-right: 2px solid currentColor;
-       border-bottom: 2px solid currentColor;
-       transform: rotate(45deg);
-       transition: transform var(--sv-motion-duration-short) var(--sv-motion-ease-standard);
-     }
-     
-     // Rotate arrow when expanded
-     &[aria-expanded="true"]::after {
-       transform: rotate(-135deg);
-     }
-   }
-   
-   // Dropdown menu
-   .sv-nav-menu__dropdown-menu {
-     position: absolute;
-     top: 100%;
-     left: 0;
-     z-index: var(--sv-z-index-dropdown);
-     min-width: 200px;
-     padding: var(--sv-padding-2) 0;
-     margin-top: var(--sv-space-1);
-     background-color: var(--sv-bg-surface);
-     border: 1px solid var(--sv-border-light);
-     @include border-radius('md');
-     @include shadow('md');
-     
-     // Hide by default, show when dropdown is active
-     display: none;
-     
-     &[aria-hidden="false"] {
-       display: block;
-       @include animate(slide-in-up, 'short');
-     }
-     
-     .sv-nav-menu__item {
-       width: 100%;
-     }
-     
-     .sv-nav-menu__link {
-       width: 100%;
-       padding: var(--sv-padding-2) var(--sv-padding-4);
-       
-       &.active::after,
-       &[aria-current="page"]::after {
-         display: none; // Remove underline indicator in dropdown
-       }
-       
-       &.active,
-       &[aria-current="page"] {
-         background-color: var(--sv-bg-element-active);
-       }
-     }
-   }
- }
- 
- /* ==========================================================================
-    5. MOBILE NAVIGATION
-    ========================================================================== */
- 
- // Mobile menu toggle button
- .sv-nav-menu-toggle {
-   display: none; // Hidden by default on desktop
-   align-items: center;
-   justify-content: center;
-   width: var(--sv-btn-size-md);
-   height: var(--sv-btn-size-md);
-   padding: 0;
-   background-color: transparent;
-   border: none;
-   cursor: pointer;
-   
-   &:focus-visible {
-     @include focus-visible-state;
-   }
-   
-   // Hamburger icon with transitions
-   .sv-nav-menu-toggle__icon {
-     position: relative;
-     width: 24px;
-     height: 20px;
-     
-     span {
-       position: absolute;
-       left: 0;
-       width: 100%;
-       height: 2px;
-       background-color: currentColor;
-       transition: all var(--sv-motion-duration-short) var(--sv-motion-ease-standard);
-       
-       &:nth-child(1) {
-         top: 0;
-       }
-       
-       &:nth-child(2) {
-         top: 9px;
-       }
-       
-       &:nth-child(3) {
-         bottom: 0;
-       }
-     }
-   }
-   
-   // Hamburger to X animation
-   &[aria-expanded="true"] {
-     .sv-nav-menu-toggle__icon {
-       span:nth-child(1) {
-         transform: translateY(9px) rotate(45deg);
-       }
-       
-       span:nth-child(2) {
-         opacity: 0;
-       }
-       
-       span:nth-child(3) {
-         transform: translateY(-9px) rotate(-45deg);
-       }
-     }
-   }
- }
- 
- // Responsive navigation
- @include breakpoint-down('md') {
-   .sv-nav-menu {
-     // Stack items vertically on mobile
-     @include nav-container-vertical;
-     padding: var(--sv-padding-2);
-     
-     // For collapsible mobile menus
-     &.sv-nav-menu--collapsible {
-       display: none;
-       
-       &.is-active {
-         display: flex;
-         @include animate(slide-in-down, 'medium');
-       }
-     }
-   }
-   
-   // Show hamburger menu toggle
-   .sv-nav-menu-toggle {
-     display: flex;
-   }
-   
-   // Mobile navigation container
-   .sv-nav-menu-container {
-     display: flex;
-     flex-direction: column;
-     width: 100%;
-   }
-   
-   // Adjust top navigation bar on mobile
-   .sv-nav-menu-toolbar {
-     display: flex;
-     align-items: center;
-     justify-content: space-between;
-     padding: var(--sv-padding-2) var(--sv-padding-4);
-     border-bottom: 1px solid var(--sv-border-light);
-   }
-   
-   // Full width menu items on mobile
-   .sv-nav-menu__item {
-     width: 100%;
-     
-     .sv-nav-menu__link {
-       width: 100%;
-       justify-content: flex-start;
-       
-       // Remove the underline indicator on mobile
-       &.active::after,
-       &[aria-current="page"]::after {
-         display: none;
-       }
-       
-       // Use background color to indicate active state on mobile
-       &.active,
-       &[aria-current="page"] {
-         background-color: var(--sv-bg-element-active);
-         @include border-radius('md');
-       }
-     }
-   }
-   
-   // Adjust dropdowns for mobile
-   .sv-nav-menu__dropdown {
-     width: 100%;
-     
-     .sv-nav-menu__dropdown-toggle {
-       width: 100%;
-       justify-content: space-between;
-     }
-     
-     .sv-nav-menu__dropdown-menu {
-       position: static;
-       width: 100%;
-       margin-top: 0;
-       padding: 0;
-       border: none;
-       box-shadow: none;
-       background-color: var(--sv-bg-element);
-       
-       .sv-nav-menu__link {
-         padding-left: var(--sv-padding-6); // Indent dropdown items
-       }
-     }
-   }
- }
- 
- /* ==========================================================================
-    6. ACCESSIBILITY ENHANCEMENTS
-    ========================================================================== */
- 
- // Skip link for keyboard navigation
- .sv-nav-menu__skip-link {
-   @include sr-only-focusable;
-   padding: var(--sv-padding-2) var(--sv-padding-4);
-   background-color: var(--sv-bg-primary);
-   color: var(--sv-text-primary);
-   z-index: var(--sv-z-index-skip-link);
-   text-decoration: none;
- }
- 
- // Ensure ARIA states are properly styled
- .sv-nav-menu__link {
-   &[aria-current="page"] {
-     color: var(--sv-primary);
-     font-weight: var(--sv-font-semibold);
-   }
-   
-   &[aria-disabled="true"] {
-     opacity: 0.65;
-     cursor: not-allowed;
-     color: var(--sv-text-tertiary);
-   }
- }
+    // Transition for hover/focus effects
+    transition: 
+      color $nav-bar-transition-duration $nav-bar-transition-timing,
+      background-color $nav-bar-transition-duration $nav-bar-transition-timing;
+    
+    &:hover:not(:disabled):not(.is-disabled) {
+      color: var(--sv-primary);
+      background-color: var(--sv-bg-element-hover);
+      border-radius: var(--sv-radius-md);
+    }
+    
+    &:focus-visible {
+      outline: var(--sv-focus-ring-width) solid var(--sv-focus-ring-color);
+      outline-offset: var(--sv-focus-ring-offset);
+      text-decoration: none;
+    }
+    
+    // Active state styles with indicator line
+    &.is-active,
+    &[aria-current="page"] {
+      color: var(--sv-primary);
+      font-weight: var(--sv-font-weight-semibold);
+      
+      &::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: -2px;
+        width: 100%;
+        height: $nav-bar-indicator-height;
+        background-color: var(--sv-primary);
+      }
+    }
+    
+    // Disabled state
+    &.is-disabled,
+    &:disabled,
+    &[aria-disabled="true"] {
+      opacity: 0.65;
+      cursor: not-allowed;
+      color: var(--sv-text-tertiary);
+      pointer-events: none;
+    }
+  }
+  
+  &__icon {
+    margin-right: $nav-bar-icon-spacing;
+    font-size: var(--sv-icon-size-sm);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  &__badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: $nav-bar-badge-min-width;
+    height: $nav-bar-badge-height;
+    padding: 0 var(--sv-space-1);
+    margin-left: var(--sv-space-2);
+    background-color: var(--sv-primary);
+    color: var(--sv-text-on-dark);
+    font-size: var(--sv-font-size-xs);
+    font-weight: var(--sv-font-weight-semibold);
+    border-radius: var(--sv-radius-full);
+  }
+}
+
+/* ==========================================================================
+   4. NAV BAR VARIANTS
+   ========================================================================== */
+
+// Primary navigation - more prominent
+.sv-nav-bar--primary {
+  background-color: var(--sv-primary);
+  
+  .sv-nav-bar__link {
+    color: var(--sv-text-on-dark);
+    
+    &:hover:not(:disabled):not(.is-disabled) {
+      color: var(--sv-text-on-dark);
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+    
+    &.is-active,
+    &[aria-current="page"] {
+      color: var(--sv-text-on-dark);
+      
+      &::after {
+        background-color: var(--sv-text-on-dark);
+      }
+    }
+  }
+}
+
+// Secondary navigation - less prominent
+.sv-nav-bar--secondary {
+  background-color: var(--sv-bg-secondary);
+  border-bottom: 1px solid var(--sv-border-light);
+  box-shadow: none;
+  
+  .sv-nav-bar__link {
+    font-weight: var(--sv-font-weight-normal);
+    
+    &.is-active,
+    &[aria-current="page"] {
+      color: var(--sv-primary);
+      
+      &::after {
+        background-color: var(--sv-primary);
+      }
+    }
+  }
+}
+
+// Transparent navigation - for hero sections
+.sv-nav-bar--transparent {
+  background-color: transparent;
+  box-shadow: none;
+}
+
+// Compact navigation - less padding
+.sv-nav-bar--compact {
+  padding: $nav-bar-compact-padding-y $nav-bar-compact-padding-x;
+  
+  .sv-nav-bar__link {
+    padding: var(--sv-space-1) var(--sv-space-2);
+  }
+}
+
+// Centered navigation
+.sv-nav-bar--centered {
+  justify-content: center;
+}
+
+// Fixed top navigation
+.sv-nav-bar--fixed-top {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: var(--sv-z-index-header);
+}
+
+// Fixed bottom navigation
+.sv-nav-bar--fixed-bottom {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: var(--sv-z-index-header);
+}
+
+/* ==========================================================================
+   5. NAV ITEM STYLES
+   ========================================================================== */
+
+.sv-nav-bar {
+  &__brand {
+    display: flex;
+    align-items: center;
+    margin-right: var(--sv-space-4);
+    
+    img, svg {
+      max-height: 40px;
+      width: auto;
+    }
+  }
+  
+  &__section {
+    display: flex;
+    align-items: center;
+    
+    &--left {
+      margin-right: auto;
+    }
+    
+    &--center {
+      margin: 0 auto;
+    }
+    
+    &--right {
+      margin-left: auto;
+    }
+  }
+}
+
+/* ==========================================================================
+   6. DROPDOWN MENUS
+   ========================================================================== */
+
+.sv-nav-bar {
+  &__dropdown {
+    position: relative;
+    
+    // Dropdown toggle
+    &-toggle {
+      display: inline-flex;
+      align-items: center;
+      cursor: pointer;
+      
+      // Dropdown indicator
+      &::after {
+        content: "";
+        display: inline-block;
+        margin-left: var(--sv-space-1);
+        width: $nav-bar-dropdown-arrow-size;
+        height: $nav-bar-dropdown-arrow-size;
+        border-right: 2px solid currentColor;
+        border-bottom: 2px solid currentColor;
+        transform: rotate(45deg);
+        transition: transform $nav-bar-transition-duration $nav-bar-transition-timing;
+      }
+      
+      // Rotate arrow when expanded
+      &[aria-expanded="true"]::after,
+      &.is-expanded::after {
+        transform: rotate(-135deg);
+      }
+    }
+    
+    // Dropdown menu
+    &-menu {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      z-index: var(--sv-z-index-dropdown);
+      min-width: $nav-bar-dropdown-min-width;
+      padding: var(--sv-space-2) 0;
+      margin-top: var(--sv-space-1);
+      background-color: var(--sv-bg-surface);
+      border: 1px solid var(--sv-border-light);
+      border-radius: var(--sv-radius-md);
+      box-shadow: var(--sv-shadow-md);
+      
+      // Hide by default, show when dropdown is active
+      display: none;
+      
+      &.is-visible,
+      &[aria-hidden="false"] {
+        display: block;
+        animation: sv-dropdown-slide-in var(--sv-motion-duration-short) var(--sv-motion-ease-standard);
+      }
+      
+      .sv-nav-bar__item {
+        width: 100%;
+      }
+      
+      .sv-nav-bar__link {
+        width: 100%;
+        padding: var(--sv-space-2) var(--sv-space-4);
+        
+        &.is-active::after,
+        &[aria-current="page"]::after {
+          display: none; // Remove underline indicator in dropdown
+        }
+        
+        &:hover:not(:disabled):not(.is-disabled) {
+          border-radius: 0;
+        }
+        
+        &.is-active,
+        &[aria-current="page"] {
+          background-color: var(--sv-bg-element-selected);
+        }
+      }
+    }
+    
+    &-divider {
+      height: 1px;
+      margin: var(--sv-space-2) 0;
+      background-color: var(--sv-border-light);
+    }
+  }
+}
+
+/* ==========================================================================
+   7. RESPONSIVE BEHAVIOR
+   ========================================================================== */
+
+.sv-nav-bar {
+  &__toggle {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    
+    &:focus-visible {
+      outline: var(--sv-focus-ring-width) solid var(--sv-focus-ring-color);
+      outline-offset: var(--sv-focus-ring-offset);
+    }
+    
+    // Hamburger icon
+    span {
+      position: relative;
+      width: 24px;
+      height: 2px;
+      background-color: currentColor;
+      transition: background-color 0.2s ease;
+      
+      &::before,
+      &::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background-color: currentColor;
+        transition: transform 0.2s ease;
+      }
+      
+      &::before {
+        top: -8px;
+      }
+      
+      &::after {
+        bottom: -8px;
+      }
+    }
+    
+    &.is-active {
+      span {
+        background-color: transparent;
+        
+        &::before {
+          transform: translateY(8px) rotate(45deg);
+        }
+        
+        &::after {
+          transform: translateY(-8px) rotate(-45deg);
+        }
+      }
+    }
+  }
+  
+  @media (max-width: 767px) {
+    &__toggle {
+      display: flex;
+      margin-left: auto;
+    }
+    
+    &__section--main {
+      position: fixed;
+      top: 60px; // Adjust based on header height
+      left: 0;
+      right: 0;
+      height: calc(100vh - 60px);
+      flex-direction: column;
+      background-color: var(--sv-bg-surface);
+      box-shadow: var(--sv-shadow-lg);
+      padding: var(--sv-space-4);
+      z-index: var(--sv-z-index-modal);
+      transform: translateX(-100%);
+      transition: transform 0.3s ease;
+      
+      &.is-visible {
+        transform: translateX(0);
+      }
+    }
+    
+    &__item {
+      width: 100%;
+    }
+    
+    &__link {
+      width: 100%;
+      padding: var(--sv-space-3) var(--sv-space-4);
+    }
+    
+    &__dropdown {
+      width: 100%;
+      
+      &-toggle::after {
+        margin-left: auto;
+      }
+      
+      &-menu {
+        position: static;
+        width: 100%;
+        box-shadow: none;
+        border: none;
+        border-radius: 0;
+        padding-left: var(--sv-space-4);
+      }
+    }
+  }
+}
+
+/* ==========================================================================
+   8. ACCESSIBILITY ENHANCEMENTS
+   ========================================================================== */
+
+.sv-nav-bar {
+  &__link {
+    // Enhance keyboard focus visibility for navigation links
+    &:focus:not(:focus-visible) {
+      outline: none;
+    }
+  }
+  
+  // Skip to content link
+  &__skip-link {
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+    padding: var(--sv-space-2) var(--sv-space-4);
+    background-color: var(--sv-bg-surface);
+    color: var(--sv-primary);
+    z-index: var(--sv-z-index-modal);
+    text-decoration: none;
+    
+    &:focus {
+      top: var(--sv-space-4);
+      left: var(--sv-space-4);
+      outline: var(--sv-focus-ring-width) solid var(--sv-focus-ring-color);
+    }
+  }
+}
+
+// Animation for dropdown menus
+@keyframes sv-dropdown-slide-in {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

@@ -1,302 +1,334 @@
 /**
  * Pagination Component Styles
- * Version: 1.0.0
- * Last Updated: April 29, 2025
+ * Version: 2.0.0
+ * Last Updated: July 19, 2024
  * 
  * This file contains styles for the pagination navigation component in the SkillVo design system.
- * It extends the sv-nav-control-base class to create consistent pagination controls.
+ * It's the component-specific layer that extends the base sv-nav-control-base class.
  */
 
- @use './../../abstracts/' as *;
- @use './../../base/' as *;
- /* ==========================================================================
-    TABLE OF CONTENTS:
+/* ==========================================================================
+   TABLE OF CONTENTS:
+   
+   1. IMPORTS
+   2. VARIABLES & CONFIGURATION
+   3. PAGINATION BASE
+   4. PAGINATION ITEM STYLES
+   5. PAGINATION VARIANTS
+   6. RESPONSIVE BEHAVIOR
+   7. ACCESSIBILITY ENHANCEMENTS
+   ========================================================================== */
+
+/* ==========================================================================
+   1. IMPORTS
+   ========================================================================== */
+@use './../../abstracts/variables/' as *;
+@use './../../base/utils/mixins/state' as state;
+@use './../../base/utils/mixins/layout' as layout;
+@use './../../base/utils/mixins/responsive' as responsive;
+@use './../../base/utils/mixins/accessibility' as a11y;
+
+/* ==========================================================================
+   2. VARIABLES & CONFIGURATION
+   ========================================================================== */
+
+// Pagination specific variables
+$pagination-item-size: 2.5rem;
+$pagination-compact-item-size: 2rem;
+$pagination-mobile-item-size: 2.25rem;
+$pagination-item-spacing: var(--sv-space-1);
+$pagination-font-size: var(--sv-font-size-sm);
+$pagination-compact-font-size: var(--sv-font-size-xs);
+$pagination-border-width: 1px;
+$pagination-margin-y: var(--sv-space-4);
+$pagination-margin-y-mobile: var(--sv-space-3);
+$pagination-transition-duration: var(--sv-motion-duration-short);
+$pagination-transition-timing: var(--sv-motion-ease-standard);
+$pagination-icon-size: var(--sv-icon-size-sm);
+
+/* ==========================================================================
+   3. PAGINATION BASE
+   ========================================================================== */
+
+.sv-pagination {
+  // Extend the navigation control base class
+  @extend .sv-nav-control-base;
+  
+  // Container styles
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center; // Center pagination by default
+  margin: $pagination-margin-y 0;
+  padding: 0;
+  list-style: none;
+  
+  // Spacing between items
+  gap: $pagination-item-spacing;
+}
+
+/* ==========================================================================
+   4. PAGINATION ITEM STYLES
+   ========================================================================== */
+
+.sv-pagination {
+  &__item {
+    display: flex;
+    margin: 0;
+  }
+  
+  &__link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: $pagination-item-size;
+    height: $pagination-item-size;
+    padding: 0 var(--sv-space-2);
+    color: var(--sv-text-primary);
+    background-color: var(--sv-bg-surface);
+    border: $pagination-border-width solid var(--sv-border-medium);
+    border-radius: var(--sv-radius-md);
+    font-size: $pagination-font-size;
+    font-weight: var(--sv-font-weight-normal);
+    line-height: var(--sv-line-height-normal);
+    text-decoration: none;
+    transition: 
+      color $pagination-transition-duration $pagination-transition-timing,
+      background-color $pagination-transition-duration $pagination-transition-timing,
+      border-color $pagination-transition-duration $pagination-transition-timing;
     
-    1. CORE PAGINATION STYLES
-    2. PAGINATION ITEM STYLES
-    3. PAGINATION VARIANTS
-    4. RESPONSIVE BEHAVIOR
-    5. ACCESSIBILITY ENHANCEMENTS
-    ========================================================================== */
- 
- /* ==========================================================================
-    1. CORE PAGINATION STYLES
-    ========================================================================== */
- 
- .sv-pagination {
-   // Extend the navigation control base class
-   @extend .sv-nav-control-base;
-   
-   // Container styles
-   display: flex;
-   flex-wrap: wrap;
-   align-items: center;
-   justify-content: center; // Center pagination by default
-   margin: var(--sv-space-4) 0;
-   padding: 0;
-   list-style: none;
-   
-   // Spacing between items
-   gap: var(--sv-space-1);
- }
- 
- /* ==========================================================================
-    2. PAGINATION ITEM STYLES
-    ========================================================================== */
- 
- .sv-pagination__item {
-   display: flex;
-   margin: 0;
- }
- 
- .sv-pagination__link {
-   display: flex;
-   align-items: center;
-   justify-content: center;
-   min-width: 2.5rem;
-   height: 2.5rem;
-   padding: 0 var(--sv-padding-2);
-   color: var(--sv-text-primary);
-   background-color: var(--sv-bg-surface);
-   border: 1px solid var(--sv-border-medium);
-   @include border-radius('md');
-   @include typography('sm', 'normal', 'normal');
-   text-decoration: none;
-   @include transition((color, background-color, border-color), 'short', 'standard');
-   
-   // Hover state
-   &:hover:not(:disabled):not(.disabled) {
-     background-color: var(--sv-bg-element-hover);
-     color: var(--sv-primary);
-     z-index: 1; // Ensure hover effect is visible when items are close together
-   }
-   
-   // Focus state
-   &:focus-visible {
-     outline: var(--sv-focus-ring-width) solid var(--sv-focus-ring-color);
-     outline-offset: var(--sv-focus-ring-offset);
-     z-index: 2; // Ensure focus ring is visible
-   }
-   
-   // Active/current page
-   &.active,
-   &[aria-current="page"] {
-     background-color: var(--sv-primary);
-     border-color: var(--sv-primary);
-     color: var(--sv-text-on-dark);
-     font-weight: var(--sv-font-medium);
-     z-index: 1; // Ensure the active item is above others
-   }
-   
-   // Disabled state
-   &:disabled,
-   &.disabled,
-   &[aria-disabled="true"] {
-     opacity: 0.65;
-     cursor: not-allowed;
-     background-color: var(--sv-bg-element);
-     color: var(--sv-text-tertiary);
-     pointer-events: none;
-   }
-   
-   // Icons for prev/next links
-   .sv-pagination__icon {
-     font-size: var(--sv-icon-size-sm);
-   }
- }
- 
- // Specialized navigation buttons (prev/next)
- .sv-pagination__prev,
- .sv-pagination__next {
-   position: relative;
-   
-   // Hover state
-   &:hover:not(:disabled):not(.disabled) {
-     background-color: var(--sv-bg-element-hover);
-     border-color: var(--sv-border-dark);
-   }
- }
- 
- // Ellipsis for skipped pages
- .sv-pagination__ellipsis {
-   display: flex;
-   align-items: center;
-   justify-content: center;
-   min-width: 2.5rem;
-   height: 2.5rem;
-   margin: 0;
-   color: var(--sv-text-secondary);
-   cursor: default;
-   user-select: none;
- }
- 
- /* ==========================================================================
-    3. PAGINATION VARIANTS
-    ========================================================================== */
- 
- // Rounded pagination
- .sv-pagination--rounded {
-   .sv-pagination__link {
-     @include border-radius('full');
-   }
- }
- 
- // Borderless pagination
- .sv-pagination--borderless {
-   .sv-pagination__link {
-     border: none;
-     background-color: transparent;
-     
-     &:hover:not(:disabled):not(.disabled) {
-       background-color: var(--sv-bg-element-hover);
-     }
-     
-     &.active,
-     &[aria-current="page"] {
-       background-color: var(--sv-primary);
-       color: var(--sv-text-on-dark);
-     }
-   }
- }
- 
- // Compact pagination
- .sv-pagination--compact {
-   gap: 0;
-   
-   .sv-pagination__link {
-     min-width: 2rem;
-     height: 2rem;
-     @include typography('xs', 'normal', 'normal');
-     @include border-radius('sm');
-     margin-right: -1px; // Overlap borders
-   }
-   
-   // First and last items need proper border radius
-   .sv-pagination__item:first-child .sv-pagination__link {
-     border-radius: var(--sv-radius-sm) 0 0 var(--sv-radius-sm);
-   }
-   
-   .sv-pagination__item:last-child .sv-pagination__link {
-     border-radius: 0 var(--sv-radius-sm) var(--sv-radius-sm) 0;
-   }
- }
- 
- // Simple pagination - just prev/next buttons
- .sv-pagination--simple {
-   .sv-pagination__item:not(.sv-pagination__prev):not(.sv-pagination__next):not(.sv-pagination__item--active) {
-     display: none;
-   }
-   
-   .sv-pagination__prev,
-   .sv-pagination__next {
-     flex: 1;
-     min-width: 5rem;
-     
-     .sv-pagination__link {
-       width: 100%;
-       justify-content: space-between;
-       padding: 0 var(--sv-padding-3);
-     }
-   }
-   
-   // Space between prev and next
-   gap: var(--sv-space-4);
- }
- 
- // Show full text labels for prev/next
- .sv-pagination--with-labels {
-   .sv-pagination__prev .sv-pagination__link::before {
-     content: "Previous";
-     margin-right: var(--sv-space-2);
-   }
-   
-   .sv-pagination__next .sv-pagination__link::after {
-     content: "Next";
-     margin-left: var(--sv-space-2);
-   }
- }
- 
- /* ==========================================================================
-    4. RESPONSIVE BEHAVIOR
-    ========================================================================== */
- 
- @include breakpoint-down('sm') {
-   // Simplify pagination on small screens by hiding some page numbers
-   .sv-pagination--responsive {
-     .sv-pagination__item:not(.sv-pagination__prev):not(.sv-pagination__next):not(.sv-pagination__item--active):not(.sv-pagination__ellipsis) {
-       display: none;
-       
-       // Only show immediate neighbors of current page
-       &.sv-pagination__item--adjacent {
-         display: flex;
-       }
-     }
-     
-     // Ensure ellipsis is shown
-     .sv-pagination__ellipsis {
-       display: flex;
-     }
-   }
-   
-   // Smaller touch targets on mobile
-   .sv-pagination {
-     margin: var(--sv-space-3) 0;
-     
-     .sv-pagination__link {
-       min-width: 2.25rem;
-       height: 2.25rem;
-       @include typography('xs', 'normal', 'normal');
-     }
-   }
-   
-   // Convert to simple prev/next on very small screens
-   .sv-pagination--collapse-mobile {
-     .sv-pagination__item:not(.sv-pagination__prev):not(.sv-pagination__next) {
-       display: none;
-     }
-     
-     .sv-pagination__prev,
-     .sv-pagination__next {
-       flex: 1;
-       
-       .sv-pagination__link {
-         width: 100%;
-         justify-content: center;
-       }
-     }
-   }
- }
- 
- /* ==========================================================================
-    5. ACCESSIBILITY ENHANCEMENTS
-    ========================================================================== */
- 
- // Visually hidden text for screen readers
- .sv-pagination__sr-text {
-   @include visually-hidden;
- }
- 
- // Enhanced focus states
- .sv-pagination__link:focus-visible {
-   outline: var(--sv-focus-ring-width) solid var(--sv-focus-ring-color);
-   outline-offset: var(--sv-focus-ring-offset);
-   z-index: 2; // Ensure focus ring is visible
- }
- 
- // Use aria attributes correctly
- .sv-pagination__link {
-   &[aria-current="page"] {
-     background-color: var(--sv-primary);
-     border-color: var(--sv-primary);
-     color: var(--sv-text-on-dark);
-     font-weight: var(--sv-font-medium);
-   }
-   
-   &[aria-disabled="true"] {
-     opacity: 0.65;
-     cursor: not-allowed;
-     background-color: var(--sv-bg-element);
-     color: var(--sv-text-tertiary);
-     pointer-events: none;
-   }
- }
+    // Hover state
+    &:hover:not(:disabled):not(.is-disabled) {
+      background-color: var(--sv-bg-element-hover);
+      color: var(--sv-primary);
+      z-index: 1; // Ensure hover effect is visible when items are close together
+    }
+    
+    // Focus state
+    &:focus-visible {
+      outline: var(--sv-focus-ring-width) solid var(--sv-focus-ring-color);
+      outline-offset: var(--sv-focus-ring-offset);
+      z-index: 2; // Ensure focus ring is visible
+    }
+    
+    // Active/current page
+    &.is-active,
+    &[aria-current="page"] {
+      background-color: var(--sv-primary);
+      border-color: var(--sv-primary);
+      color: var(--sv-text-on-dark);
+      font-weight: var(--sv-font-weight-medium);
+      z-index: 1; // Ensure the active item is above others
+    }
+    
+    // Disabled state
+    &.is-disabled,
+    &:disabled,
+    &[aria-disabled="true"] {
+      opacity: 0.65;
+      cursor: not-allowed;
+      background-color: var(--sv-bg-element);
+      color: var(--sv-text-tertiary);
+      pointer-events: none;
+    }
+  }
+  
+  &__icon {
+    font-size: $pagination-icon-size;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  // Specialized navigation buttons (prev/next)
+  &__prev,
+  &__next {
+    position: relative;
+    
+    .sv-pagination__link {
+      // Hover state specific to prev/next
+      &:hover:not(:disabled):not(.is-disabled) {
+        background-color: var(--sv-bg-element-hover);
+        border-color: var(--sv-border-dark);
+      }
+    }
+  }
+  
+  // Ellipsis for skipped pages
+  &__ellipsis {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: $pagination-item-size;
+    height: $pagination-item-size;
+    margin: 0;
+    color: var(--sv-text-secondary);
+    cursor: default;
+    user-select: none;
+  }
+}
+
+/* ==========================================================================
+   5. PAGINATION VARIANTS
+   ========================================================================== */
+
+// Rounded pagination
+.sv-pagination--rounded {
+  .sv-pagination__link {
+    border-radius: var(--sv-radius-full);
+  }
+}
+
+// Borderless pagination
+.sv-pagination--borderless {
+  .sv-pagination__link {
+    border: none;
+    background-color: transparent;
+    
+    &:hover:not(:disabled):not(.is-disabled) {
+      background-color: var(--sv-bg-element-hover);
+    }
+    
+    &.is-active,
+    &[aria-current="page"] {
+      background-color: var(--sv-primary);
+      color: var(--sv-text-on-dark);
+    }
+  }
+}
+
+// Compact pagination
+.sv-pagination--compact {
+  gap: 0;
+  
+  .sv-pagination__link {
+    min-width: $pagination-compact-item-size;
+    height: $pagination-compact-item-size;
+    font-size: $pagination-compact-font-size;
+    border-radius: var(--sv-radius-sm);
+    margin-right: -1px; // Overlap borders
+  }
+  
+  // First and last items need proper border radius
+  .sv-pagination__item:first-child .sv-pagination__link {
+    border-radius: var(--sv-radius-sm) 0 0 var(--sv-radius-sm);
+  }
+  
+  .sv-pagination__item:last-child .sv-pagination__link {
+    border-radius: 0 var(--sv-radius-sm) var(--sv-radius-sm) 0;
+  }
+}
+
+// Simple pagination - just prev/next buttons
+.sv-pagination--simple {
+  .sv-pagination__item:not(.sv-pagination__prev):not(.sv-pagination__next):not(.sv-pagination__item--active) {
+    display: none;
+  }
+  
+  .sv-pagination__prev,
+  .sv-pagination__next {
+    flex: 1;
+    min-width: 5rem;
+    
+    .sv-pagination__link {
+      width: 100%;
+      justify-content: space-between;
+      padding: 0 var(--sv-space-3);
+    }
+  }
+  
+  // Space between prev and next
+  gap: var(--sv-space-4);
+}
+
+// Show full text labels for prev/next
+.sv-pagination--with-labels {
+  .sv-pagination__prev .sv-pagination__link::before {
+    content: "Previous";
+    margin-right: var(--sv-space-2);
+  }
+  
+  .sv-pagination__next .sv-pagination__link::after {
+    content: "Next";
+    margin-left: var(--sv-space-2);
+  }
+}
+
+// Alignment variants
+.sv-pagination--left {
+  justify-content: flex-start;
+}
+
+.sv-pagination--right {
+  justify-content: flex-end;
+}
+
+/* ==========================================================================
+   6. RESPONSIVE BEHAVIOR
+   ========================================================================== */
+
+.sv-pagination {
+  @media (max-width: 767px) {
+    // Smaller touch targets and spacing on mobile
+    margin: $pagination-margin-y-mobile 0;
+    
+    &__link {
+      min-width: $pagination-mobile-item-size;
+      height: $pagination-mobile-item-size;
+      font-size: $pagination-compact-font-size;
+    }
+    
+    // Simplify pagination on small screens by hiding some page numbers
+    &--responsive {
+      .sv-pagination__item:not(.sv-pagination__prev):not(.sv-pagination__next):not(.sv-pagination__item--active):not(.sv-pagination__ellipsis) {
+        display: none;
+        
+        // Only show immediate neighbors of current page
+        &.sv-pagination__item--adjacent {
+          display: flex;
+        }
+      }
+      
+      // Ensure ellipsis is shown
+      .sv-pagination__ellipsis {
+        display: flex;
+      }
+    }
+  }
+}
+
+/* ==========================================================================
+   7. ACCESSIBILITY ENHANCEMENTS
+   ========================================================================== */
+
+.sv-pagination {
+  // Proper ARIA role for navigation
+  &[role="navigation"] {
+    // These attributes are needed for proper screen reader announcement
+  }
+  
+  // Enhance focus management
+  &__link {
+    &:focus:not(:focus-visible) {
+      outline: none;
+    }
+  }
+  
+  // Enhance high contrast mode
+  @media (forced-colors: active) {
+    &__link {
+      border: $pagination-border-width solid CanvasText;
+      
+      &.is-active,
+      &[aria-current="page"] {
+        background-color: Highlight;
+        border-color: Highlight;
+        color: HighlightText;
+      }
+      
+      &:hover:not(:disabled):not(.is-disabled) {
+        border-color: Highlight;
+      }
+    }
+  }
+}

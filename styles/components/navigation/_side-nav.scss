@@ -1,434 +1,512 @@
 /**
  * Step Navigation Component Styles
- * Version: 1.0.0
- * Last Updated: April 29, 2025
+ * Version: 2.0.0
+ * Last Updated: July 19, 2024
  * 
  * This file contains styles for the step navigation/progress component in the SkillVo design system.
- * It extends the sv-nav-control-base class to create consistent step indicators for multi-step processes.
+ * It's the component-specific layer that extends the base sv-nav-control-base class.
  */
 
- @use './../../abstracts/' as *;
- @use './../../base/' as *;
- /* ==========================================================================
-    TABLE OF CONTENTS:
+/* ==========================================================================
+   TABLE OF CONTENTS:
+   
+   1. IMPORTS
+   2. VARIABLES & CONFIGURATION
+   3. STEP NAVIGATION BASE
+   4. STEP ITEM STYLES
+   5. STEP NAVIGATION VARIANTS
+   6. RESPONSIVE BEHAVIOR
+   7. ANIMATIONS & TRANSITIONS
+   8. ACCESSIBILITY ENHANCEMENTS
+   ========================================================================== */
+
+/* ==========================================================================
+   1. IMPORTS
+   ========================================================================== */
+@use './../../abstracts/variables/' as *;
+@use './../../base/utils/mixins/state' as state;
+@use './../../base/utils/mixins/layout' as layout;
+@use './../../base/utils/mixins/responsive' as responsive;
+@use './../../base/utils/mixins/accessibility' as a11y;
+
+/* ==========================================================================
+   2. VARIABLES & CONFIGURATION
+   ========================================================================== */
+
+// Step Navigation specific variables
+$step-indicator-size: var(--sv-size-8);
+$step-indicator-border-width: 2px;
+$step-connection-height: 2px;
+$step-indicator-spacing: var(--sv-space-2);
+$step-vertical-spacing: var(--sv-space-6);
+$step-label-font-size: var(--sv-font-size-sm);
+$step-description-font-size: var(--sv-font-size-xs);
+$step-description-max-width: 120px;
+$step-transition-duration: var(--sv-motion-duration-short);
+$step-transition-timing: var(--sv-motion-ease-standard);
+$step-progress-height: var(--sv-size-3);
+$step-progress-marker-size: var(--sv-size-4);
+$step-line-indicator-size: var(--sv-size-3);
+
+/* ==========================================================================
+   3. STEP NAVIGATION BASE
+   ========================================================================== */
+
+.sv-step-nav {
+  // Extend the navigation control base class
+  @extend .sv-nav-control-base;
+  
+  // Container styles
+  display: flex;
+  width: 100%;
+  margin: $step-vertical-spacing 0;
+  padding: 0;
+  list-style: none;
+  
+  // Default horizontal layout
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* ==========================================================================
+   4. STEP ITEM STYLES
+   ========================================================================== */
+
+.sv-step-nav {
+  &__item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    flex: 1;
     
-    1. CORE STEP NAVIGATION STYLES
-    2. STEP ITEM STYLES
-    3. STEP VARIANTS
-    4. RESPONSIVE BEHAVIOR
-    5. ANIMATION & TRANSITIONS
-    6. ACCESSIBILITY ENHANCEMENTS
-    ========================================================================== */
- 
- /* ==========================================================================
-    1. CORE STEP NAVIGATION STYLES
-    ========================================================================== */
- 
- .sv-step-nav {
-   // Extend the navigation control base class
-   @extend .sv-nav-control-base;
-   
-   // Container styles
-   display: flex;
-   width: 100%;
-   margin: var(--sv-space-6) 0;
-   padding: 0;
-   list-style: none;
-   
-   // Default horizontal layout
-   flex-direction: row;
-   align-items: center;
-   justify-content: space-between;
- }
- 
- /* ==========================================================================
-    2. STEP ITEM STYLES
-    ========================================================================== */
- 
- .sv-step-nav__item {
-   display: flex;
-   flex-direction: column;
-   align-items: center;
-   position: relative;
-   flex: 1;
-   
-   // Connection line between steps
-   &:not(:last-child)::after {
-     content: "";
-     position: absolute;
-     top: calc(var(--sv-size-8) / 2);
-     left: 50%;
-     right: -50%;
-     height: 2px;
-     background-color: var(--sv-border-medium);
-     z-index: 1;
-   }
-   
-   // Completed steps should have a completed line
-   &.completed:not(:last-child)::after {
-     background-color: var(--sv-primary);
-   }
-   
-   // Step states
-   &.active {
-     .sv-step-nav__indicator {
-       border-color: var(--sv-primary);
-       background-color: var(--sv-primary);
-       color: var(--sv-text-on-dark);
-     }
-     
-     .sv-step-nav__label {
-       color: var(--sv-text-primary);
-       font-weight: var(--sv-font-semibold);
-     }
-   }
-   
-   &.completed {
-     .sv-step-nav__indicator {
-       border-color: var(--sv-primary);
-       background-color: var(--sv-primary);
-       color: var(--sv-text-on-dark);
-     }
-   }
-   
-   &.disabled {
-     .sv-step-nav__indicator {
-       background-color: var(--sv-bg-element);
-       border-color: var(--sv-border-light);
-       color: var(--sv-text-tertiary);
-     }
-     
-     .sv-step-nav__label {
-       color: var(--sv-text-tertiary);
-     }
-   }
- }
- 
- .sv-step-nav__indicator {
-   display: flex;
-   align-items: center;
-   justify-content: center;
-   width: var(--sv-size-8);
-   height: var(--sv-size-8);
-   margin-bottom: var(--sv-space-2);
-   background-color: var(--sv-bg-surface);
-   border: 2px solid var(--sv-border-medium);
-   border-radius: 50%;
-   color: var(--sv-text-primary);
-   font-weight: var(--sv-font-semibold);
-   position: relative;
-   z-index: 2;
-   @include transition((background-color, border-color, color), 'short', 'standard');
-   
-   // Check icon for completed steps
-   .sv-step-nav__icon {
-     font-size: var(--sv-icon-size-sm);
-   }
- }
- 
- .sv-step-nav__label {
-   font-size: var(--sv-text-sm);
-   color: var(--sv-text-secondary);
-   text-align: center;
-   margin-top: var(--sv-space-2);
-   @include transition(color, 'short', 'standard');
- }
- 
- .sv-step-nav__description {
-   font-size: var(--sv-text-xs);
-   color: var(--sv-text-tertiary);
-   text-align: center;
-   margin-top: var(--sv-space-1);
-   max-width: 120px; // Limit width to avoid layout issues
- }
- 
- /* ==========================================================================
-    3. STEP VARIANTS
-    ========================================================================== */
- 
- // Numbered steps
- .sv-step-nav--numbered {
-   .sv-step-nav__indicator {
-     // Display step number inside indicator
-   }
-   
-   .sv-step-nav__item.completed {
-     .sv-step-nav__indicator::before {
-       content: "✓"; // Checkmark symbol
-     }
-   }
- }
- 
- // Simple line variant - minimalist design
- .sv-step-nav--line {
-   .sv-step-nav__indicator {
-     width: var(--sv-size-3);
-     height: var(--sv-size-3);
-     margin-bottom: var(--sv-space-3);
-   }
-   
-   .sv-step-nav__item:not(:last-child)::after {
-     top: calc(var(--sv-size-3) / 2);
-   }
- }
- 
- // Vertical step navigation
- .sv-step-nav--vertical {
-   flex-direction: column;
-   align-items: flex-start;
-   
-   .sv-step-nav__item {
-     flex-direction: row;
-     align-items: flex-start;
-     width: 100%;
-     margin-bottom: var(--sv-space-6);
-     
-     &:last-child {
-       margin-bottom: 0;
-     }
-     
-     // Vertical connection line
-     &:not(:last-child)::after {
-       top: var(--sv-size-8);
-       left: calc(var(--sv-size-8) / 2);
-       width: 2px;
-       height: calc(100% - var(--sv-size-8));
-       right: auto;
-     }
-   }
-   
-   .sv-step-nav__content {
-     margin-left: var(--sv-space-4);
-     margin-top: calc(var(--sv-size-8) / 4);
-   }
-   
-   .sv-step-nav__label {
-     text-align: left;
-     margin-top: 0;
-     margin-bottom: var(--sv-space-1);
-   }
-   
-   .sv-step-nav__description {
-     text-align: left;
-     max-width: none;
-   }
- }
- 
- // Progress bar variant
- .sv-step-nav--progress {
-   background-color: var(--sv-bg-element);
-   height: var(--sv-size-3);
-   border-radius: var(--sv-radius-full);
-   padding: 0;
-   position: relative;
-   overflow: hidden;
-   
-   .sv-step-nav__progress {
-     position: absolute;
-     top: 0;
-     left: 0;
-     height: 100%;
-     background-color: var(--sv-primary);
-     transition: width var(--sv-motion-duration-medium) var(--sv-motion-ease-standard);
-     border-radius: var(--sv-radius-full);
-   }
-   
-   .sv-step-nav__item {
-     display: none; // Hide individual steps in progress bar variant
-   }
-   
-   // Optional step markers on progress bar
-   &.sv-step-nav--with-markers {
-     .sv-step-nav__marker {
-       position: absolute;
-       top: 50%;
-       transform: translateY(-50%);
-       width: var(--sv-size-4);
-       height: var(--sv-size-4);
-       background-color: var(--sv-bg-surface);
-       border: 2px solid var(--sv-border-medium);
-       border-radius: 50%;
-       z-index: 2;
-       
-       &.completed {
-         background-color: var(--sv-primary);
-         border-color: var(--sv-primary);
-       }
-       
-       &.active {
-         border-color: var(--sv-primary);
-         border-width: 3px;
-       }
-     }
-   }
- }
- 
- /* ==========================================================================
-    4. RESPONSIVE BEHAVIOR
-    ========================================================================== */
- 
- @include breakpoint-down('md') {
-   // Stack horizontal steps
-   .sv-step-nav--responsive {
-     flex-direction: column;
-     align-items: flex-start;
-     
-     .sv-step-nav__item {
-       flex-direction: row;
-       align-items: flex-start;
-       width: 100%;
-       margin-bottom: var(--sv-space-4);
-       
-       &:last-child {
-         margin-bottom: 0;
-       }
-       
-       // Adjust connection line for vertical layout
-       &:not(:last-child)::after {
-         top: var(--sv-size-8);
-         left: calc(var(--sv-size-8) / 2);
-         width: 2px;
-         height: calc(100% + var(--sv-space-4) - var(--sv-size-8));
-         right: auto;
-       }
-     }
-     
-     .sv-step-nav__content {
-       margin-left: var(--sv-space-3);
-       margin-top: calc(var(--sv-size-8) / 4);
-     }
-     
-     .sv-step-nav__label {
-       text-align: left;
-       margin-top: 0;
-     }
-     
-     .sv-step-nav__description {
-       text-align: left;
-       max-width: none;
-     }
-   }
-   
-   // Simplified step indicator on small screens
-   .sv-step-nav:not(.sv-step-nav--responsive):not(.sv-step-nav--progress) {
-     .sv-step-nav__description {
-       display: none;
-     }
-     
-     .sv-step-nav__label {
-       font-size: var(--sv-text-xs);
-     }
-     
-     .sv-step-nav__indicator {
-       width: var(--sv-size-6);
-       height: var(--sv-size-6);
-     }
-     
-     .sv-step-nav__item:not(:last-child)::after {
-       top: calc(var(--sv-size-6) / 2);
-     }
-   }
- }
- 
- @include breakpoint-down('sm') {
-   // Very minimal on small screens
-   .sv-step-nav:not(.sv-step-nav--responsive):not(.sv-step-nav--progress) {
-     .sv-step-nav__label {
-       display: none;
-     }
-     
-     .sv-step-nav__item.active {
-       .sv-step-nav__label {
-         display: block;
-         position: absolute;
-         bottom: -20px;
-         width: 100%;
-         text-align: center;
-       }
-     }
-   }
- }
- 
- /* ==========================================================================
-    5. ANIMATION & TRANSITIONS
-    ========================================================================== */
- 
- // Step transition animation
- @keyframes step-complete {
-   0% {
-     transform: scale(1);
-   }
-   50% {
-     transform: scale(1.2);
-   }
-   100% {
-     transform: scale(1);
-   }
- }
- 
- .sv-step-nav__item.completed {
-   .sv-step-nav__indicator {
-     // Apply animation when a step is completed
-     &.sv-animate-complete {
-       animation: step-complete var(--sv-motion-duration-medium) var(--sv-motion-ease-standard);
-     }
-   }
- }
- 
- // Progress bar animation
- .sv-step-nav--progress {
-   .sv-step-nav__progress {
-     transition: width var(--sv-motion-duration-medium) var(--sv-motion-ease-decelerate);
-   }
- }
- 
- /* ==========================================================================
-    6. ACCESSIBILITY ENHANCEMENTS
-    ========================================================================== */
- 
- // Enhanced focus states
- .sv-step-nav__item:focus-within {
-   .sv-step-nav__indicator {
-     outline: var(--sv-focus-ring-width) solid var(--sv-focus-ring-color);
-     outline-offset: var(--sv-focus-ring-offset);
-   }
- }
- 
- // Ensure proper ARIA attributes
- .sv-step-nav[role="navigation"] {
-   [aria-current="step"] {
-     .sv-step-nav__indicator {
-       border-color: var(--sv-primary);
-       background-color: var(--sv-primary);
-       color: var(--sv-text-on-dark);
-     }
-     
-     .sv-step-nav__label {
-       color: var(--sv-text-primary);
-       font-weight: var(--sv-font-semibold);
-     }
-   }
- }
- 
- // Visually hidden text for screen readers
- .sv-step-nav__sr-text {
-   @include visually-hidden;
- }
- 
- // Support for Windows high contrast mode
- @media (forced-colors: active) {
-   .sv-step-nav__item:not(:last-child)::after {
-     background-color: CanvasText;
-   }
-   
-   .sv-step-nav__indicator {
-     border: 2px solid CanvasText;
-   }
-   
-   .sv-step-nav__item.completed:not(:last-child)::after,
-   .sv-step-nav__item.completed .sv-step-nav__indicator,
-   .sv-step-nav__item.active .sv-step-nav__indicator {
-     border-color: Highlight;
-     background-color: Highlight;
-   }
- }
+    // Connection line between steps
+    &:not(:last-child)::after {
+      content: "";
+      position: absolute;
+      top: calc($step-indicator-size / 2);
+      left: 50%;
+      right: -50%;
+      height: $step-connection-height;
+      background-color: var(--sv-border-medium);
+      z-index: 1;
+    }
+    
+    // Completed steps should have a completed line
+    &.is-completed:not(:last-child)::after {
+      background-color: var(--sv-primary);
+    }
+    
+    // Step states
+    &.is-active {
+      .sv-step-nav__indicator {
+        border-color: var(--sv-primary);
+        background-color: var(--sv-primary);
+        color: var(--sv-text-on-dark);
+      }
+      
+      .sv-step-nav__label {
+        color: var(--sv-text-primary);
+        font-weight: var(--sv-font-weight-semibold);
+      }
+    }
+    
+    &.is-completed {
+      .sv-step-nav__indicator {
+        border-color: var(--sv-primary);
+        background-color: var(--sv-primary);
+        color: var(--sv-text-on-dark);
+      }
+    }
+    
+    &.is-disabled {
+      .sv-step-nav__indicator {
+        background-color: var(--sv-bg-element);
+        border-color: var(--sv-border-light);
+        color: var(--sv-text-tertiary);
+      }
+      
+      .sv-step-nav__label {
+        color: var(--sv-text-tertiary);
+      }
+    }
+  }
+  
+  &__indicator {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: $step-indicator-size;
+    height: $step-indicator-size;
+    margin-bottom: $step-indicator-spacing;
+    background-color: var(--sv-bg-surface);
+    border: $step-indicator-border-width solid var(--sv-border-medium);
+    border-radius: 50%;
+    color: var(--sv-text-primary);
+    font-weight: var(--sv-font-weight-semibold);
+    position: relative;
+    z-index: 2;
+    transition: 
+      background-color $step-transition-duration $step-transition-timing,
+      border-color $step-transition-duration $step-transition-timing,
+      color $step-transition-duration $step-transition-timing;
+  }
+  
+  &__icon {
+    font-size: var(--sv-icon-size-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  &__label {
+    font-size: $step-label-font-size;
+    color: var(--sv-text-secondary);
+    text-align: center;
+    margin-top: $step-indicator-spacing;
+    transition: color $step-transition-duration $step-transition-timing;
+  }
+  
+  &__description {
+    font-size: $step-description-font-size;
+    color: var(--sv-text-tertiary);
+    text-align: center;
+    margin-top: var(--sv-space-1);
+    max-width: $step-description-max-width; // Limit width to avoid layout issues
+  }
+  
+  &__content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+/* ==========================================================================
+   5. STEP NAVIGATION VARIANTS
+   ========================================================================== */
+
+// Numbered steps
+.sv-step-nav--numbered {
+  .sv-step-nav__indicator {
+    // Display step number inside indicator
+  }
+  
+  .sv-step-nav__item.is-completed {
+    .sv-step-nav__indicator::before {
+      content: "✓"; // Checkmark symbol
+    }
+  }
+}
+
+// Simple line variant - minimalist design
+.sv-step-nav--line {
+  .sv-step-nav__indicator {
+    width: $step-line-indicator-size;
+    height: $step-line-indicator-size;
+    margin-bottom: var(--sv-space-3);
+  }
+  
+  .sv-step-nav__item:not(:last-child)::after {
+    top: calc($step-line-indicator-size / 2);
+  }
+}
+
+// Vertical step navigation
+.sv-step-nav--vertical {
+  flex-direction: column;
+  align-items: flex-start;
+  
+  .sv-step-nav__item {
+    flex-direction: row;
+    align-items: flex-start;
+    width: 100%;
+    margin-bottom: $step-vertical-spacing;
+    
+    &:last-child {
+      margin-bottom: 0;
+    }
+    
+    // Vertical connection line
+    &:not(:last-child)::after {
+      top: $step-indicator-size;
+      left: calc($step-indicator-size / 2);
+      width: $step-connection-height;
+      height: calc(100% - $step-indicator-size);
+      right: auto;
+    }
+  }
+  
+  .sv-step-nav__content {
+    margin-left: var(--sv-space-4);
+    margin-top: calc($step-indicator-size / 4);
+  }
+  
+  .sv-step-nav__label {
+    text-align: left;
+    margin-top: 0;
+    margin-bottom: var(--sv-space-1);
+  }
+  
+  .sv-step-nav__description {
+    text-align: left;
+    max-width: none;
+  }
+}
+
+// Progress bar variant
+.sv-step-nav--progress {
+  background-color: var(--sv-bg-element);
+  height: $step-progress-height;
+  border-radius: var(--sv-radius-full);
+  padding: 0;
+  position: relative;
+  overflow: hidden;
+  
+  &__progress {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    background-color: var(--sv-primary);
+    transition: width $step-transition-duration $step-transition-timing;
+    border-radius: var(--sv-radius-full);
+  }
+  
+  .sv-step-nav__item {
+    display: none; // Hide individual steps in progress bar variant
+  }
+  
+  // Optional step markers on progress bar
+  &.sv-step-nav--with-markers {
+    .sv-step-nav__marker {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: $step-progress-marker-size;
+      height: $step-progress-marker-size;
+      background-color: var(--sv-bg-surface);
+      border: $step-indicator-border-width solid var(--sv-border-medium);
+      border-radius: 50%;
+      z-index: 2;
+      
+      &.is-active {
+        border-color: var(--sv-primary);
+        background-color: var(--sv-primary);
+      }
+      
+      &.is-completed {
+        border-color: var(--sv-primary);
+        background-color: var(--sv-primary);
+      }
+    }
+  }
+}
+
+// Interactive step navigation
+.sv-step-nav--interactive {
+  .sv-step-nav__item {
+    cursor: pointer;
+    
+    &:not(.is-disabled):hover {
+      .sv-step-nav__indicator {
+        border-color: var(--sv-primary-light);
+        background-color: var(--sv-primary-light);
+        color: var(--sv-text-on-dark);
+      }
+      
+      .sv-step-nav__label {
+        color: var(--sv-primary);
+      }
+    }
+    
+    &.is-disabled {
+      cursor: not-allowed;
+    }
+  }
+}
+
+// Step navigation with labels at top
+.sv-step-nav--labels-top {
+  flex-direction: column;
+  
+  .sv-step-nav__labels {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: var(--sv-space-4);
+  }
+  
+  .sv-step-nav__label {
+    margin-top: 0;
+    padding: 0 var(--sv-space-2);
+  }
+  
+  .sv-step-nav__indicators {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+  }
+}
+
+/* ==========================================================================
+   6. RESPONSIVE BEHAVIOR
+   ========================================================================== */
+
+.sv-step-nav {
+  @media (max-width: 767px) {
+    // Stack vertically on mobile for better readability
+    &:not(.sv-step-nav--progress):not(.sv-step-nav--vertical) {
+      flex-direction: column;
+      align-items: flex-start;
+      
+      .sv-step-nav__item {
+        flex-direction: row;
+        align-items: flex-start;
+        width: 100%;
+        margin-bottom: var(--sv-space-4);
+        
+        &:last-child {
+          margin-bottom: 0;
+        }
+        
+        // Vertical connection line on mobile
+        &:not(:last-child)::after {
+          top: $step-indicator-size;
+          left: calc($step-indicator-size / 2);
+          width: $step-connection-height;
+          height: calc(100% - var(--sv-size-6));
+          right: auto;
+        }
+      }
+      
+      .sv-step-nav__content {
+        margin-left: var(--sv-space-4);
+        margin-top: 0;
+      }
+      
+      .sv-step-nav__label {
+        text-align: left;
+        margin-top: 0;
+      }
+      
+      .sv-step-nav__description {
+        text-align: left;
+        max-width: none;
+      }
+    }
+    
+    // Compact mode for mobile
+    &--compact {
+      .sv-step-nav__indicator {
+        width: var(--sv-size-6);
+        height: var(--sv-size-6);
+      }
+      
+      .sv-step-nav__label {
+        font-size: var(--sv-font-size-xs);
+      }
+      
+      .sv-step-nav__description {
+        display: none;
+      }
+    }
+  }
+}
+
+/* ==========================================================================
+   7. ANIMATIONS & TRANSITIONS
+   ========================================================================== */
+
+// Fade in animation for step indicators
+@keyframes sv-step-indicator-appear {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+// Progress animation for connections
+@keyframes sv-step-connection-progress {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+// Apply animations
+.sv-step-nav--animated {
+  .sv-step-nav__indicator {
+    animation: sv-step-indicator-appear 0.3s $step-transition-timing forwards;
+  }
+  
+  .sv-step-nav__item.is-completed:not(:last-child)::after {
+    transform-origin: left;
+    animation: sv-step-connection-progress 0.5s $step-transition-timing forwards;
+  }
+  
+  // Stagger animations for multiple steps
+  @for $i from 1 through 10 {
+    .sv-step-nav__item:nth-child(#{$i}) .sv-step-nav__indicator {
+      animation-delay: #{$i * 0.1}s;
+    }
+    
+    .sv-step-nav__item:nth-child(#{$i}):not(:last-child)::after {
+      animation-delay: #{($i * 0.1) + 0.2}s;
+    }
+  }
+}
+
+/* ==========================================================================
+   8. ACCESSIBILITY ENHANCEMENTS
+   ========================================================================== */
+
+.sv-step-nav {
+  // Properly mark current step for screen readers
+  &__item {
+    &.is-active {
+      [aria-current="step"] {
+        // Specific styling for current step
+      }
+    }
+    
+    // Focus styling for interactive steps
+    &:focus-visible {
+      outline: none;
+      
+      .sv-step-nav__indicator {
+        outline: var(--sv-focus-ring-width) solid var(--sv-focus-ring-color);
+        outline-offset: var(--sv-focus-ring-offset);
+      }
+    }
+  }
+  
+  // Enhance high contrast mode
+  @media (forced-colors: active) {
+    .sv-step-nav__indicator {
+      border: 2px solid CanvasText;
+    }
+    
+    .sv-step-nav__item.is-active .sv-step-nav__indicator,
+    .sv-step-nav__item.is-completed .sv-step-nav__indicator {
+      background-color: Highlight;
+      border-color: Highlight;
+      color: HighlightText;
+    }
+    
+    .sv-step-nav__item:not(:last-child)::after {
+      background-color: CanvasText;
+    }
+    
+    .sv-step-nav__item.is-completed:not(:last-child)::after {
+      background-color: Highlight;
+    }
+  }
+}
