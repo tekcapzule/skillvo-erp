@@ -1,10 +1,10 @@
 /**
- * Color Picker Component
- * Version: 2.0.0
- * Last Updated: April 29, 2025
+ * Color Picker Component - Component-level Styles
+ * Version: 2.1.0
+ * Last Updated: July 27, 2024
  * 
- * This file contains styles specific to the color picker input component.
- * It extends the sv-input-base class and adds color picker-specific functionality.
+ * This file defines styles for the Color Picker component in the SkillVo design system.
+ * It extends the input-control-base class and provides color picker-specific styling.
  */
 
 /* ==========================================================================
@@ -15,461 +15,619 @@
    3. COLOR DROPDOWN PANEL
    4. COLOR PALETTES
    5. COLOR SLIDERS
-   6. RESPONSIVE ADJUSTMENTS
+   6. COMPONENT-SPECIFIC STATES
+   7. ACCESSIBILITY ENHANCEMENTS
+   8. RESPONSIVE ADJUSTMENTS
    ========================================================================== */
 
 /* ==========================================================================
    1. IMPORTS & VARIABLES
    ========================================================================== */
-   @use './../../abstracts/' as *;
-   @use './../../base/' as *;
-   
-   // Component-specific variables
-   $color-picker-width: var(--sv-size-8);
-   $color-picker-height: $input-height;
-   $color-panel-width: var(--sv-size-64);
-   $color-swatch-size: var(--sv-size-6);
-   $color-slider-height: var(--sv-size-4);
-   $color-panel-z-index: var(--sv-z-index-dropdown);
-   
-   /* ==========================================================================
-      2. COLOR PICKER BASE
-      ========================================================================== */
-   
-   .sv-color-picker {
-     // Extend the input base styles
-     @extend .sv-input-base;
-     
-     &-container {
-       position: relative;
-       display: flex;
-       width: 100%;
-     }
-     
-     // Input field with color preview
-     &-field {
-       flex: 1;
-       display: flex;
-       align-items: center;
-       width: 100%;
-       
-       // Color preview swatch
-       &-preview {
-         width: $color-picker-width;
-         height: calc($color-picker-height - 2px); // Adjust for border
-         margin-right: var(--sv-space-2);
-         border-radius: var(--sv-radius-sm);
-         border: 1px solid var(--sv-border-medium);
-         box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.1);
-         
-         // Checkered background for transparency
-         background-image: linear-gradient(45deg, #ccc 25%, transparent 25%),
-                           linear-gradient(-45deg, #ccc 25%, transparent 25%),
-                           linear-gradient(45deg, transparent 75%, #ccc 75%),
-                           linear-gradient(-45deg, transparent 75%, #ccc 75%);
-         background-size: 10px 10px;
-         background-position: 0 0, 0 5px, 5px -5px, -5px 0;
-         
-         &-color {
-           width: 100%;
-           height: 100%;
-           border-radius: inherit;
-         }
-       }
-       
-       // Text input for hex/rgba value
-       &-input {
-         flex: 1;
-         border: none;
-         background: transparent;
-         color: var(--sv-text-primary);
-         font-family: var(--sv-font-family-mono);
-         
-         &:focus {
-           outline: none;
-         }
-       }
-     }
-     
-     // Toggle button for dropdown panel
-     &-toggle {
-       display: flex;
-       align-items: center;
-       justify-content: center;
-       margin-left: var(--sv-space-2);
-       width: var(--sv-size-8);
-       background: none;
-       border: none;
-       cursor: pointer;
-       color: var(--sv-text-secondary);
-       
-       &:hover {
-         color: var(--sv-text-primary);
-       }
-       
-       &:focus {
-         outline: none;
-         color: var(--sv-primary);
-       }
-       
-       &-icon {
-         width: var(--sv-icon-size-sm);
-         height: var(--sv-icon-size-sm);
-       }
-     }
-   }
-   
-   /* ==========================================================================
-      3. COLOR DROPDOWN PANEL
-      ========================================================================== */
-   
-   .sv-color-panel {
-     position: absolute;
-     top: calc(100% + var(--sv-space-2));
-     left: 0;
-     z-index: $color-panel-z-index;
-     width: $color-panel-width;
-     background-color: var(--sv-bg-surface);
-     border: 1px solid var(--sv-border-medium);
-     border-radius: var(--sv-radius-md);
-     box-shadow: var(--sv-shadow-lg);
-     padding: var(--sv-padding-3);
-     
-     // Sections
-     &-section {
-       margin-bottom: var(--sv-space-4);
-       
-       &:last-child {
-         margin-bottom: 0;
-       }
-       
-       &-title {
-         font-size: var(--sv-text-xs);
-         font-weight: var(--sv-font-medium);
-         color: var(--sv-text-secondary);
-         margin-bottom: var(--sv-space-2);
-         text-transform: uppercase;
-       }
-     }
-     
-     // Main color area (hue/saturation)
-     &-color-area {
-       position: relative;
-       width: 100%;
-       height: var(--sv-size-40);
-       margin-bottom: var(--sv-space-3);
-       border-radius: var(--sv-radius-md);
-       cursor: crosshair;
-       
-       // Saturation gradient overlay
-       &-saturation {
-         position: absolute;
-         top: 0;
-         left: 0;
-         right: 0;
-         bottom: 0;
-         background: linear-gradient(to right, #fff, rgba(255, 255, 255, 0));
-         border-radius: inherit;
-       }
-       
-       // Brightness gradient overlay
-       &-brightness {
-         position: absolute;
-         top: 0;
-         left: 0;
-         right: 0;
-         bottom: 0;
-         background: linear-gradient(to bottom, rgba(0, 0, 0, 0), #000);
-         border-radius: inherit;
-       }
-       
-       // Color picker handle
-       &-handle {
-         position: absolute;
-         width: var(--sv-size-4);
-         height: var(--sv-size-4);
-         border-radius: 50%;
-         border: 2px solid white;
-         box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.3);
-         transform: translate(-50%, -50%);
-         pointer-events: none;
-       }
-     }
-     
-     // Input type switcher (HEX/RGB/HSL)
-     &-format-switch {
-       display: flex;
-       margin-bottom: var(--sv-space-2);
-       border: 1px solid var(--sv-border-medium);
-       border-radius: var(--sv-radius-md);
-       overflow: hidden;
-       
-       &-btn {
-         flex: 1;
-         padding: var(--sv-padding-1) 0;
-         border: none;
-         background-color: var(--sv-bg-element);
-         cursor: pointer;
-         font-size: var(--sv-text-xs);
-         color: var(--sv-text-secondary);
-         
-         &:hover {
-           background-color: var(--sv-bg-element-hover);
-         }
-         
-         &.active {
-           background-color: var(--sv-primary);
-           color: var(--sv-text-on-dark);
-         }
-       }
-     }
-     
-     // Color value inputs
-     &-inputs {
-       display: flex;
-       gap: var(--sv-space-2);
-       margin-bottom: var(--sv-space-3);
-       
-       &-group {
-         display: flex;
-         flex-direction: column;
-         flex: 1;
-         
-         &-label {
-           font-size: var(--sv-text-xs);
-           color: var(--sv-text-secondary);
-           margin-bottom: var(--sv-space-1);
-           text-transform: uppercase;
-         }
-         
-         &-input {
-           padding: var(--sv-padding-1) var(--sv-padding-2);
-           border: 1px solid var(--sv-border-medium);
-           border-radius: var(--sv-radius-sm);
-           font-size: var(--sv-text-sm);
-           color: var(--sv-text-primary);
-           background-color: var(--sv-bg-element);
-           
-           &:focus {
-             outline: none;
-             border-color: var(--sv-primary);
-           }
-         }
-       }
-       
-       // Hex input is wider
-       &-hex {
-         flex: 2;
-       }
-     }
-     
-     // Footer with action buttons
-     &-footer {
-       display: flex;
-       justify-content: space-between;
-       
-       &-btn {
-         padding: var(--sv-padding-1) var(--sv-padding-3);
-         border: none;
-         border-radius: var(--sv-radius-sm);
-         font-size: var(--sv-text-sm);
-         cursor: pointer;
-         
-         &-clear {
-           background-color: transparent;
-           color: var(--sv-text-secondary);
-           
-           &:hover {
-             background-color: var(--sv-bg-element-hover);
-             color: var(--sv-text-primary);
-           }
-         }
-         
-         &-apply {
-           background-color: var(--sv-primary);
-           color: var(--sv-text-on-dark);
-           
-           &:hover {
-             background-color: var(--sv-primary-dark);
-           }
-         }
-       }
-     }
-   }
-   
-   /* ==========================================================================
-      4. COLOR PALETTES
-      ========================================================================== */
-   
-   .sv-color-palette {
-     display: grid;
-     grid-template-columns: repeat(8, 1fr);
-     gap: var(--sv-space-1);
-     margin-bottom: var(--sv-space-3);
-     
-     &-swatch {
-       width: $color-swatch-size;
-       height: $color-swatch-size;
-       border-radius: var(--sv-radius-sm);
-       cursor: pointer;
-       box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.1);
-       
-       &:hover {
-         transform: scale(1.1);
-         box-shadow: 0 0 0 1px var(--sv-border-dark);
-       }
-       
-       &.selected {
-         box-shadow: 0 0 0 2px var(--sv-primary);
-       }
-       
-       // Transparent swatch
-       &-transparent {
-         background-image: linear-gradient(45deg, #ccc 25%, transparent 25%),
-                           linear-gradient(-45deg, #ccc 25%, transparent 25%),
-                           linear-gradient(45deg, transparent 75%, #ccc 75%),
-                           linear-gradient(-45deg, transparent 75%, #ccc 75%);
-         background-size: 6px 6px;
-         background-position: 0 0, 0 3px, 3px -3px, -3px 0;
-       }
-     }
-     
-     // Recent colors section
-     &-recent {
-       display: flex;
-       gap: var(--sv-space-1);
-       flex-wrap: wrap;
-       
-       .sv-color-palette-swatch {
-         width: calc($color-swatch-size * 1.2);
-         height: calc($color-swatch-size * 1.2);
-       }
-     }
-   }
-   
-   /* ==========================================================================
-      5. COLOR SLIDERS
-      ========================================================================== */
-   
-   .sv-color-slider {
-     position: relative;
-     width: 100%;
-     height: $color-slider-height;
-     margin-bottom: var(--sv-space-3);
-     border-radius: calc($color-slider-height / 2);
-     cursor: pointer;
-     
-     // Hue slider
-     &-hue {
-       background: linear-gradient(
-         to right,
-         #f00, #ff0, #0f0, #0ff, #00f, #f0f, #f00
-       );
-     }
-     
-     // Alpha slider with checkered background
-     &-alpha {
-       background-image: linear-gradient(45deg, #ccc 25%, transparent 25%),
-                         linear-gradient(-45deg, #ccc 25%, transparent 25%),
-                         linear-gradient(45deg, transparent 75%, #ccc 75%),
-                         linear-gradient(-45deg, transparent 75%, #ccc 75%);
-       background-size: 8px 8px;
-       background-position: 0 0, 0 4px, 4px -4px, -4px 0;
-       
-       &-gradient {
-         position: absolute;
-         top: 0;
-         left: 0;
-         right: 0;
-         bottom: 0;
-         border-radius: inherit;
-       }
-     }
-     
-     // Slider handle
-     &-handle {
-       position: absolute;
-       width: var(--sv-size-4);
-       height: var(--sv-size-6);
-       border-radius: var(--sv-radius-sm);
-       background-color: white;
-       border: 1px solid rgba(0, 0, 0, 0.3);
-       box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
-       top: 50%;
-       transform: translate(-50%, -50%);
-       pointer-events: none;
-     }
-   }
-   
-   /* ==========================================================================
-      6. RESPONSIVE ADJUSTMENTS
-      ========================================================================== */
-   
-   @include breakpoint-down(md) {
-     .sv-color-panel {
-       width: calc($color-panel-width * 0.9);
-     }
-   }
-   
-   @include breakpoint-down(sm) {
-     .sv-color-picker {
-       width: 100%;
-       
-       &-field {
-         &-preview {
-           width: calc($color-picker-width * 0.9);
-         }
-         
-         &-input {
-           font-size: var(--sv-text-sm);
-         }
-       }
-     }
-     
-     .sv-color-panel {
-       width: calc($color-panel-width * 0.8);
-       
-       &-color-area {
-         height: var(--sv-size-32);
-       }
-       
-       &-inputs {
-         flex-wrap: wrap;
-         
-         &-group {
-           min-width: calc(33% - var(--sv-space-2));
-         }
-         
-         &-hex {
-           flex: 1 0 100%;
-           margin-bottom: var(--sv-space-2);
-         }
-       }
-     }
-     
-     .sv-color-palette {
-       grid-template-columns: repeat(6, 1fr);
-     }
-   }
-   
-   // RTL support
-   [dir="rtl"] {
-     .sv-color-picker {
-       &-field {
-         &-preview {
-           margin-right: 0;
-           margin-left: var(--sv-space-2);
-         }
-       }
-       
-       &-toggle {
-         margin-left: 0;
-         margin-right: var(--sv-space-2);
-       }
-     }
-     
-     .sv-color-panel {
-       left: auto;
-       right: 0;
-     }
-   }
+@use './../../abstracts/variables/' as *;
+@use './../../base/utils/mixins/state' as state;
+@use './../../base/utils/mixins/layout' as layout;
+@use './../../base/utils/mixins/responsive' as responsive;
+@use './../../base/utils/mixins/accessibility' as a11y;
+
+// Component-specific variables
+$color-picker-preview-size: var(--sv-size-8);
+$color-picker-panel-width: var(--sv-size-64);
+$color-picker-panel-padding: var(--sv-space-3);
+$color-picker-swatch-size: var(--sv-size-6);
+$color-picker-slider-height: var(--sv-size-4);
+$color-picker-area-height: var(--sv-size-40);
+$color-picker-transition-duration: var(--sv-motion-duration-short);
+$color-picker-transition-timing: var(--sv-motion-ease-standard);
+$color-picker-z-index: var(--sv-z-index-dropdown);
+
+/* ==========================================================================
+   2. COLOR PICKER BASE
+   ========================================================================== */
+
+.sv-color-picker {
+  // Extend the input control base styles
+  @extend .sv-input-control-base;
+  
+  // Add consistent transitions
+  transition: border-color $color-picker-transition-duration $color-picker-transition-timing,
+              box-shadow $color-picker-transition-duration $color-picker-transition-timing,
+              background-color $color-picker-transition-duration $color-picker-transition-timing;
+  
+  // BEM-style elements
+  &__wrapper {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+  
+  &__container {
+    position: relative;
+    display: flex;
+    width: 100%;
+  }
+  
+  &__field {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    width: 100%;
+  }
+  
+  &__preview {
+    width: $color-picker-preview-size;
+    height: calc(var(--sv-control-height-md) - 2px); // Adjust for border
+    margin-right: var(--sv-space-2);
+    border-radius: var(--sv-radius-sm);
+    border: 1px solid var(--sv-border-medium);
+    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.1);
+    
+    // Checkered background for transparency
+    background-image: linear-gradient(45deg, #ccc 25%, transparent 25%),
+                      linear-gradient(-45deg, #ccc 25%, transparent 25%),
+                      linear-gradient(45deg, transparent 75%, #ccc 75%),
+                      linear-gradient(-45deg, transparent 75%, #ccc 75%);
+    background-size: 10px 10px;
+    background-position: 0 0, 0 5px, 5px -5px, -5px 0;
+    
+    &-color {
+      width: 100%;
+      height: 100%;
+      border-radius: inherit;
+    }
+  }
+  
+  &__input {
+    @extend .sv-input-control-base__field;
+    font-family: var(--sv-font-family-mono);
+  }
+  
+  &__label {
+    @extend .sv-input-control-base__label;
+  }
+  
+  &__helper-text {
+    @extend .sv-input-control-base__helper-text;
+  }
+  
+  &__toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: var(--sv-space-2);
+    width: var(--sv-size-8);
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--sv-text-secondary);
+    transition: color $color-picker-transition-duration $color-picker-transition-timing;
+    
+    &:hover {
+      color: var(--sv-text-primary);
+    }
+    
+    &:focus-visible {
+      outline: none;
+      color: var(--sv-primary);
+      box-shadow: 0 0 0 var(--sv-focus-ring-width) rgba(var(--sv-primary-rgb), 0.25);
+      border-radius: var(--sv-radius-sm);
+    }
+    
+    &-icon {
+      width: var(--sv-icon-size-sm);
+      height: var(--sv-icon-size-sm);
+    }
+  }
+  
+  // Enhanced focus behavior
+  &:focus-within {
+    border-color: var(--sv-primary);
+    box-shadow: var(--sv-shadow-focus);
+  }
+}
+
+/* ==========================================================================
+   3. COLOR DROPDOWN PANEL
+   ========================================================================== */
+
+.sv-color-panel {
+  position: absolute;
+  top: calc(100% + var(--sv-space-2));
+  left: 0;
+  z-index: $color-picker-z-index;
+  width: $color-picker-panel-width;
+  background-color: var(--sv-bg-surface);
+  border: 1px solid var(--sv-border-medium);
+  border-radius: var(--sv-radius-md);
+  box-shadow: var(--sv-shadow-lg);
+  padding: $color-picker-panel-padding;
+  
+  // Sections
+  &__section {
+    margin-bottom: var(--sv-space-4);
+    
+    &:last-child {
+      margin-bottom: 0;
+    }
+    
+    &-title {
+      font-size: var(--sv-font-size-xs);
+      font-weight: var(--sv-font-weight-medium);
+      color: var(--sv-text-secondary);
+      margin-bottom: var(--sv-space-2);
+      text-transform: uppercase;
+    }
+  }
+  
+  // Main color area (hue/saturation)
+  &__color-area {
+    position: relative;
+    width: 100%;
+    height: $color-picker-area-height;
+    margin-bottom: var(--sv-space-3);
+    border-radius: var(--sv-radius-md);
+    cursor: crosshair;
+    
+    // Saturation gradient overlay
+    &-saturation {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(to right, #fff, rgba(255, 255, 255, 0));
+      border-radius: inherit;
+    }
+    
+    // Brightness gradient overlay
+    &-brightness {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(to bottom, rgba(0, 0, 0, 0), #000);
+      border-radius: inherit;
+    }
+    
+    // Color picker handle
+    &-handle {
+      position: absolute;
+      width: var(--sv-size-4);
+      height: var(--sv-size-4);
+      border-radius: 50%;
+      border: 2px solid white;
+      box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.3);
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+    }
+  }
+  
+  // Input type switcher (HEX/RGB/HSL)
+  &__format-switch {
+    display: flex;
+    margin-bottom: var(--sv-space-2);
+    border: 1px solid var(--sv-border-medium);
+    border-radius: var(--sv-radius-md);
+    overflow: hidden;
+    
+    &-btn {
+      flex: 1;
+      padding: var(--sv-space-1) 0;
+      border: none;
+      background-color: var(--sv-bg-element);
+      cursor: pointer;
+      font-size: var(--sv-font-size-xs);
+      color: var(--sv-text-secondary);
+      transition: background-color $color-picker-transition-duration $color-picker-transition-timing,
+                  color $color-picker-transition-duration $color-picker-transition-timing;
+      
+      &:hover {
+        background-color: var(--sv-bg-element-hover);
+      }
+      
+      &:focus-visible {
+        outline: none;
+        box-shadow: inset 0 0 0 var(--sv-focus-ring-width) rgba(var(--sv-primary-rgb), 0.25);
+      }
+      
+      &.is-active {
+        background-color: var(--sv-primary);
+        color: var(--sv-text-on-dark);
+      }
+    }
+  }
+  
+  // Color value inputs
+  &__inputs {
+    display: flex;
+    gap: var(--sv-space-2);
+    margin-bottom: var(--sv-space-3);
+    
+    &-group {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      
+      &-label {
+        font-size: var(--sv-font-size-xs);
+        color: var(--sv-text-secondary);
+        margin-bottom: var(--sv-space-1);
+        text-transform: uppercase;
+      }
+      
+      &-input {
+        padding: var(--sv-space-1) var(--sv-space-2);
+        border: 1px solid var(--sv-border-medium);
+        border-radius: var(--sv-radius-sm);
+        font-size: var(--sv-font-size-sm);
+        color: var(--sv-text-primary);
+        transition: border-color $color-picker-transition-duration $color-picker-transition-timing,
+                    box-shadow $color-picker-transition-duration $color-picker-transition-timing;
+        
+        &:focus {
+          outline: none;
+          border-color: var(--sv-primary);
+          box-shadow: 0 0 0 var(--sv-focus-ring-width) rgba(var(--sv-primary-rgb), 0.25);
+        }
+      }
+    }
+  }
+}
+
+/* ==========================================================================
+   4. COLOR PALETTES
+   ========================================================================== */
+
+.sv-color-panel {
+  &__palettes {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sv-space-2);
+  }
+  
+  &__palette {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--sv-space-1);
+    
+    &-swatch {
+      width: $color-picker-swatch-size;
+      height: $color-picker-swatch-size;
+      border-radius: var(--sv-radius-sm);
+      border: 1px solid var(--sv-border-light);
+      cursor: pointer;
+      transition: transform $color-picker-transition-duration $color-picker-transition-timing,
+                  box-shadow $color-picker-transition-duration $color-picker-transition-timing;
+      
+      &:hover {
+        transform: scale(1.1);
+        box-shadow: var(--sv-shadow-sm);
+        z-index: 1;
+      }
+      
+      &:focus-visible {
+        outline: none;
+        box-shadow: 0 0 0 var(--sv-focus-ring-width) rgba(var(--sv-primary-rgb), 0.25);
+        transform: scale(1.1);
+        z-index: 1;
+      }
+      
+      &.is-selected {
+        box-shadow: 0 0 0 2px var(--sv-primary);
+        z-index: 1;
+      }
+    }
+  }
+  
+  &__recent-colors {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--sv-space-1);
+  }
+}
+
+/* ==========================================================================
+   5. COLOR SLIDERS
+   ========================================================================== */
+
+.sv-color-panel {
+  &__sliders {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sv-space-2);
+  }
+  
+  &__slider {
+    position: relative;
+    width: 100%;
+    height: $color-picker-slider-height;
+    margin: var(--sv-space-2) 0;
+    border-radius: var(--sv-radius-pill);
+    overflow: hidden;
+    
+    &-track {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      border-radius: inherit;
+      
+      // Hue slider gradient
+      &--hue {
+        background: linear-gradient(
+          to right,
+          #f00 0%,
+          #ff0 17%,
+          #0f0 33%,
+          #0ff 50%,
+          #00f 67%,
+          #f0f 83%,
+          #f00 100%
+        );
+      }
+      
+      // Alpha slider checkerboard pattern
+      &--alpha {
+        background-image: linear-gradient(45deg, #ccc 25%, transparent 25%),
+                          linear-gradient(-45deg, #ccc 25%, transparent 25%),
+                          linear-gradient(45deg, transparent 75%, #ccc 75%),
+                          linear-gradient(-45deg, transparent 75%, #ccc 75%);
+        background-size: 10px 10px;
+        background-position: 0 0, 0 5px, 5px -5px, -5px 0;
+      }
+    }
+    
+    // Slider handle
+    &-handle {
+      position: absolute;
+      top: 50%;
+      width: var(--sv-size-3);
+      height: calc($color-picker-slider-height + var(--sv-size-2));
+      border-radius: var(--sv-radius-sm);
+      background: white;
+      box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.2);
+      transform: translate(-50%, -50%);
+      cursor: pointer;
+      
+      &:focus-visible {
+        outline: none;
+        box-shadow: 0 0 0 var(--sv-focus-ring-width) rgba(var(--sv-primary-rgb), 0.25);
+      }
+    }
+  }
+}
+
+/* ==========================================================================
+   6. COMPONENT-SPECIFIC STATES
+   ========================================================================== */
+
+.sv-color-picker {
+  // Valid state
+  &.is-valid {
+    border-color: var(--sv-success);
+    
+    &:focus-within {
+      box-shadow: 0 0 0 var(--sv-focus-ring-width) rgba(var(--sv-success-rgb), 0.25);
+    }
+    
+    .sv-color-picker__helper-text {
+      color: var(--sv-success);
+    }
+  }
+  
+  // Invalid state
+  &.is-invalid {
+    border-color: var(--sv-error);
+    
+    &:focus-within {
+      box-shadow: 0 0 0 var(--sv-focus-ring-width) rgba(var(--sv-error-rgb), 0.25);
+    }
+    
+    .sv-color-picker__helper-text {
+      color: var(--sv-error);
+    }
+  }
+  
+  // Readonly state
+  &.is-readonly,
+  &[readonly] {
+    background-color: var(--sv-bg-element-disabled);
+    border-color: var(--sv-border-light);
+    cursor: default;
+    
+    &:focus-within {
+      box-shadow: none;
+    }
+    
+    .sv-color-picker__toggle {
+      opacity: 0.6;
+      cursor: default;
+      pointer-events: none;
+    }
+  }
+  
+  // Disabled state extensions
+  &.is-disabled,
+  &:disabled {
+    .sv-color-picker__preview,
+    .sv-color-picker__toggle {
+      opacity: 0.6;
+    }
+  }
+  
+  // Open/dropdown state
+  &.is-open {
+    border-color: var(--sv-primary);
+    box-shadow: var(--sv-shadow-focus);
+    
+    .sv-color-picker__toggle {
+      color: var(--sv-primary);
+    }
+  }
+}
+
+// Panel specific states
+.sv-color-panel {
+  &.is-visible {
+    animation: sv-color-panel-show $color-picker-transition-duration $color-picker-transition-timing forwards;
+  }
+  
+  &.is-hidden {
+    animation: sv-color-panel-hide $color-picker-transition-duration $color-picker-transition-timing forwards;
+  }
+}
+
+// Animations
+@keyframes sv-color-panel-show {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes sv-color-panel-hide {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+}
+
+/* ==========================================================================
+   7. ACCESSIBILITY ENHANCEMENTS
+   ========================================================================== */
+
+.sv-color-picker {
+  // Screen reader only label (for when no visible label is provided)
+  &__sr-label {
+    @include a11y.sr-only;
+  }
+  
+  // High contrast mode adjustments
+  @include a11y.high-contrast-mode {
+    .sv-color-picker__preview {
+      outline: 1px solid currentColor;
+    }
+    
+    .sv-color-picker__toggle {
+      border: 1px solid currentColor;
+      
+      &:focus-visible {
+        outline: 2px solid currentColor;
+        outline-offset: 2px;
+      }
+    }
+  }
+}
+
+.sv-color-panel {
+  @include a11y.high-contrast-mode {
+    border: 1px solid currentColor;
+    
+    &__palette-swatch {
+      outline: 1px solid currentColor;
+      
+      &.is-selected {
+        outline-width: 2px;
+      }
+    }
+    
+    &__slider-handle {
+      outline: 1px solid currentColor;
+    }
+  }
+}
+
+/* ==========================================================================
+   8. RESPONSIVE ADJUSTMENTS
+   ========================================================================== */
+
+@include responsive.breakpoint-down(md) {
+  .sv-color-panel {
+    width: calc($color-picker-panel-width * 0.9);
+    padding: var(--sv-space-2);
+    
+    &__color-area {
+      height: var(--sv-size-32);
+    }
+    
+    &__section {
+      margin-bottom: var(--sv-space-3);
+    }
+  }
+}
+
+@include responsive.breakpoint-down(sm) {
+  .sv-color-picker {
+    // Full width on mobile
+    width: 100%;
+    max-width: 100%;
+  }
+  
+  .sv-color-panel {
+    width: 100%;
+    left: 0;
+    right: 0;
+    max-width: 100%;
+    
+    &__inputs {
+      flex-direction: column;
+      gap: var(--sv-space-2);
+    }
+    
+    &__format-switch {
+      &-btn {
+        padding: var(--sv-space-2) 0;
+      }
+    }
+    
+    &__palette-swatch {
+      width: calc($color-picker-swatch-size - var(--sv-space-1));
+      height: calc($color-picker-swatch-size - var(--sv-space-1));
+    }
+  }
+}
+
+// For very small screens
+@include responsive.breakpoint-down(xs) {
+  .sv-color-picker {
+    &__preview {
+      width: var(--sv-size-6);
+      height: calc(var(--sv-control-height-sm) - 2px);
+    }
+  }
+  
+  .sv-color-panel {
+    &__color-area {
+      height: var(--sv-size-24);
+    }
+  }
+}

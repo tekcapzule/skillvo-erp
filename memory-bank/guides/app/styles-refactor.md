@@ -297,7 +297,7 @@ Before proceeding with component implementation cleanup, address the following n
 
 ### Phase 3: Component Implementation Cleanup
 - Started: June 30, 2024
-- Completed: July 26, 2024 (Selection Components Refactoring Completed)
+- Completed: July 27, 2024 (Input Controls Refactoring In Progress)
 - Notes:
   - Refactored all action components to properly extend their category base class:
     - `_button.scss`: Simplified and removed duplicated properties, better organization
@@ -371,6 +371,37 @@ Before proceeding with component implementation cleanup, address the following n
     - `_password-field.scss`: Implemented consistent class naming with BEM, enhanced states and interactions
     - `_number-input.scss`: Restructured with proper BEM naming and improved accessibility
     - `_search-field.scss`: Converted to BEM naming and improved component organization
+    - `_color-picker.scss`: Updated from `.sv-input-base` to `.sv-input-control-base`, applied BEM naming conventions
+      - Implemented consistent state classes (`.is-valid`, `.is-invalid`, `.is-open`, etc.)
+      - Enhanced accessibility with focus states and keyboard navigation
+      - Restructured with proper layering (picker base, panel, palettes, sliders)
+      - Standardized animation with named keyframes using the `sv-` prefix
+      - Added high contrast mode support for better accessibility
+      - Improved responsive behavior with appropriate breakpoint handling
+    - `_date-time-picker.scss`: Refactored to follow established component patterns
+      - Updated from `.sv-input-base` to `.sv-input-control-base`
+      - Implemented BEM naming conventions consistently for all elements
+      - Added proper state classes (`.is-open`, `.is-selected`, `.is-in-range`, `.is-disabled`)
+      - Enhanced keyboard accessibility with improved focus management
+      - Added high contrast mode support for screen readers and assistive technologies
+      - Organized component sections into logical groups: base, calendar, time selector, range picker
+      - Standardized transition properties with consistent timing variables
+      - Improved responsive design with breakpoint mixins and mobile adaptations
+      - Created proper variations with BEM modifier classes (`--sm`, `--lg`, `--inline`)
+      - Enhanced documentation with comprehensive headers and inline comments
+      - Added explicit accessibility section with focus management techniques
+    - `_file-upload.scss`: Refactored to follow established component patterns
+      - Updated from `.sv-input-base` to `.sv-input-control-base`
+      - Implemented BEM naming conventions consistently (e.g., `.sv-file-upload__label`, `.sv-file-list__item`)
+      - Standardized state classes with `.is-` prefix (`.is-drag-over`, `.is-error`, `.is-success`, `.is-active`)
+      - Added component-specific variables with consistent naming ($file-upload-*)
+      - Enhanced accessibility with focus-visible, screen reader support, and high contrast mode
+      - Added explicit state section for all component variants (file list, progress, dropzone)
+      - Improved transitions with consistent timing variables
+      - Enhanced responsive design with proper breakpoint mixins
+      - Ensured proper RTL language support
+      - Consolidated related styles and improved organization
+      - Added comprehensive documentation headers and inline comments
     - Applied consistent patterns across input components:
       - Added component-specific variables at the top of each file referencing design tokens
       - Updated class names from `.sv-input-base` to `.sv-input-control-base`
