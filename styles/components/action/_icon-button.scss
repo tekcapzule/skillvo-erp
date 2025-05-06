@@ -15,21 +15,45 @@
    TABLE OF CONTENTS:
    
    1. IMPORTS
-   2. ICON BUTTON BASE
-   3. ICON BUTTON VARIANTS
-   4. ICON BUTTON SIZES
-   5. ICON BUTTON WITH BADGE/INDICATOR
-   6. ACCESSIBILITY ENHANCEMENTS
+   2. VARIABLES & CONFIGURATION
+   3. ICON BUTTON BASE
+   4. ICON BUTTON VARIANTS
+   5. ICON BUTTON SIZES
+   6. ICON BUTTON WITH BADGE/INDICATOR
+   7. ACCESSIBILITY ENHANCEMENTS
    ========================================================================== */
 
 /* ==========================================================================
    1. IMPORTS
    ========================================================================== */
-@use './../../abstracts/' as *;
-@use './../../base/' as *;
+@use './../../abstracts/variables/' as *;
+@use './../../base/utils/mixins/state' as state;
+@use './../../base/utils/mixins/layout' as layout;
+@use './../../base/utils/mixins/responsive' as responsive;
 
 /* ==========================================================================
-   2. ICON BUTTON BASE
+   2. VARIABLES & CONFIGURATION
+   ========================================================================== */
+
+// Icon button-specific variables
+$icon-button-padding: var(--sv-space-2);
+$icon-button-padding-sm: var(--sv-space-1);
+$icon-button-padding-lg: var(--sv-space-3);
+$icon-button-icon-size: var(--sv-icon-size-md);
+$icon-button-icon-size-sm: var(--sv-icon-size-sm);
+$icon-button-icon-size-lg: var(--sv-icon-size-lg);
+$icon-button-hover-scale: 1.05;
+$icon-button-active-scale: 0.95;
+$icon-button-status-size: var(--sv-size-2);
+$icon-button-status-position: var(--sv-space-1);
+$icon-button-focus-outline-width: var(--sv-focus-ring-width);
+$icon-button-focus-outline-color: var(--sv-focus-ring-color);
+$icon-button-focus-outline-offset: var(--sv-focus-ring-offset);
+$icon-button-tooltip-padding: var(--sv-space-1) var(--sv-space-2);
+$icon-button-tooltip-font-size: var(--sv-text-xs);
+
+/* ==========================================================================
+   3. ICON BUTTON BASE
    ========================================================================== */
 
 .sv-icon-button {
@@ -38,28 +62,28 @@
   
   // Make icon buttons square by default
   aspect-ratio: 1/1;
-  padding: var(--sv-space-2);
+  padding: $icon-button-padding;
   
   // Special styling for icons within the button
   > .sv-icon {
     flex-shrink: 0;
-    width: var(--sv-icon-size-md);
-    height: var(--sv-icon-size-md);
+    width: $icon-button-icon-size;
+    height: $icon-button-icon-size;
   }
   
   // Override the base control's hover state
   &:hover:not(:disabled):not(.disabled) {
-    transform: scale(1.05);
+    transform: scale($icon-button-hover-scale);
   }
   
   // Override the base control's active state
   &:active:not(:disabled):not(.disabled) {
-    transform: scale(0.95);
+    transform: scale($icon-button-active-scale);
   }
 }
 
 /* ==========================================================================
-   3. ICON BUTTON VARIANTS
+   4. ICON BUTTON VARIANTS
    ========================================================================== */
 
 .sv-icon-button {
@@ -115,33 +139,33 @@
 }
 
 /* ==========================================================================
-   4. ICON BUTTON SIZES
+   5. ICON BUTTON SIZES
    ========================================================================== */
 
 .sv-icon-button {
   // Small size icon button
   &.sv-size-sm {
-    padding: var(--sv-space-1);
+    padding: $icon-button-padding-sm;
     
     > .sv-icon {
-      width: var(--sv-icon-size-sm);
-      height: var(--sv-icon-size-sm);
+      width: $icon-button-icon-size-sm;
+      height: $icon-button-icon-size-sm;
     }
   }
   
   // Large size icon button
   &.sv-size-lg {
-    padding: var(--sv-space-3);
+    padding: $icon-button-padding-lg;
     
     > .sv-icon {
-      width: var(--sv-icon-size-lg);
-      height: var(--sv-icon-size-lg);
+      width: $icon-button-icon-size-lg;
+      height: $icon-button-icon-size-lg;
     }
   }
 }
 
 /* ==========================================================================
-   5. ICON BUTTON WITH BADGE/INDICATOR
+   6. ICON BUTTON WITH BADGE/INDICATOR
    ========================================================================== */
 
 .sv-icon-button {
@@ -165,12 +189,12 @@
     &::after {
       content: "";
       position: absolute;
-      width: var(--sv-size-2);
-      height: var(--sv-size-2);
+      width: $icon-button-status-size;
+      height: $icon-button-status-size;
       border-radius: var(--sv-radius-full);
       background-color: currentColor;
-      top: var(--sv-space-1);
-      right: var(--sv-space-1);
+      top: $icon-button-status-position;
+      right: $icon-button-status-position;
     }
     
     &.sv-status-success::after {
@@ -192,19 +216,19 @@
 }
 
 /* ==========================================================================
-   6. ACCESSIBILITY ENHANCEMENTS
+   7. ACCESSIBILITY ENHANCEMENTS
    ========================================================================== */
 
 .sv-icon-button {
   // Ensure proper focus visibility for icon buttons
   &:focus-visible {
-    outline: var(--sv-focus-ring-width) solid var(--sv-focus-ring-color);
-    outline-offset: var(--sv-focus-ring-offset);
+    outline: $icon-button-focus-outline-width solid $icon-button-focus-outline-color;
+    outline-offset: $icon-button-focus-outline-offset;
   }
   
   // Enhanced keyboard focus indication
   &.sv-focus-enhanced:focus-visible {
-    box-shadow: 0 0 0 var(--sv-focus-ring-width) var(--sv-focus-ring-color);
+    box-shadow: 0 0 0 $icon-button-focus-outline-width $icon-button-focus-outline-color;
   }
   
   // Include text label for screen readers when needed
@@ -234,11 +258,11 @@
       bottom: 100%;
       left: 50%;
       transform: translateX(-50%);
-      padding: var(--sv-space-1) var(--sv-space-2);
+      padding: $icon-button-tooltip-padding;
       background-color: var(--sv-bg-tooltip);
       color: var(--sv-text-on-dark);
       border-radius: var(--sv-radius-sm);
-      font-size: var(--sv-text-xs);
+      font-size: $icon-button-tooltip-font-size;
       white-space: nowrap;
       pointer-events: none;
       opacity: 0;

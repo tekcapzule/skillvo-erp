@@ -15,23 +15,48 @@
    TABLE OF CONTENTS:
    
    1. IMPORTS
-   2. SPLIT BUTTON CONTAINER
-   3. SPLIT BUTTON PARTS
-   4. SPLIT BUTTON VARIANTS
-   5. SPLIT BUTTON STATES
-   6. SPLIT BUTTON DROPDOWN
-   7. SPLIT BUTTON SIZES
-   8. SPLIT BUTTON ANIMATIONS
+   2. VARIABLES & CONFIGURATION
+   3. SPLIT BUTTON CONTAINER
+   4. SPLIT BUTTON PARTS
+   5. SPLIT BUTTON VARIANTS
+   6. SPLIT BUTTON STATES
+   7. SPLIT BUTTON DROPDOWN
+   8. SPLIT BUTTON SIZES
+   9. SPLIT BUTTON ANIMATIONS
    ========================================================================== */
 
 /* ==========================================================================
    1. IMPORTS
    ========================================================================== */
-@use './../../abstracts/' as *;
-@use './../../base/' as *;
+@use './../../abstracts/variables/' as *;
+@use './../../base/utils/mixins/state' as state;
+@use './../../base/utils/mixins/layout' as layout;
+@use './../../base/utils/mixins/responsive' as responsive;
 
 /* ==========================================================================
-   2. SPLIT BUTTON CONTAINER
+   2. VARIABLES & CONFIGURATION
+   ========================================================================== */
+
+// Split button-specific variables
+$split-button-border-collapse: -1px;
+$split-button-toggle-padding: var(--sv-space-1) var(--sv-space-2);
+$split-button-toggle-padding-sm: var(--sv-space-1) var(--sv-space-1);
+$split-button-toggle-padding-lg: var(--sv-space-2) var(--sv-space-3);
+$split-button-action-padding-sm: var(--sv-space-1) var(--sv-space-2);
+$split-button-action-padding-lg: var(--sv-space-3) var(--sv-space-4);
+$split-button-indicator-size: 0.5em;
+$split-button-indicator-size-sm: 0.4em;
+$split-button-indicator-size-lg: 0.6em;
+$split-button-indicator-border-width: 0.1em;
+$split-button-transition-duration: var(--sv-motion-duration-short);
+$split-button-transition-timing: var(--sv-motion-ease-standard);
+$split-button-separator-color-light: rgba(255, 255, 255, 0.2);
+$split-button-menu-margin-top: var(--sv-space-1);
+$split-button-font-size-sm: var(--sv-text-sm);
+$split-button-font-size-lg: var(--sv-text-lg);
+
+/* ==========================================================================
+   3. SPLIT BUTTON CONTAINER
    ========================================================================== */
 
 .sv-split-button {
@@ -50,7 +75,7 @@
   .sv-split-button-action {
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
-    margin-right: -1px; // Border collapse
+    margin-right: $split-button-border-collapse; // Border collapse
   }
   
   .sv-split-button-toggle {
@@ -60,7 +85,7 @@
 }
 
 /* ==========================================================================
-   3. SPLIT BUTTON PARTS
+   4. SPLIT BUTTON PARTS
    ========================================================================== */
 
 .sv-split-button {
@@ -78,19 +103,19 @@
   // Toggle button (dropdown)
   .sv-split-button-toggle {
     @extend .sv-action-control-base;
-    padding: var(--sv-space-1) var(--sv-space-2);
+    padding: $split-button-toggle-padding;
     min-width: auto;
     
     // Chevron indicator
     &::after {
       content: "";
       display: inline-block;
-      width: 0.5em;
-      height: 0.5em;
+      width: $split-button-indicator-size;
+      height: $split-button-indicator-size;
       border-style: solid;
-      border-width: 0 0.1em 0.1em 0;
+      border-width: 0 $split-button-indicator-border-width $split-button-indicator-border-width 0;
       transform: rotate(45deg) translateY(-0.15em);
-      transition: transform var(--sv-motion-duration-short) var(--sv-motion-ease-standard);
+      transition: transform $split-button-transition-duration $split-button-transition-timing;
     }
     
     // Prevent jumping on active state
@@ -101,7 +126,7 @@
 }
 
 /* ==========================================================================
-   4. SPLIT BUTTON VARIANTS
+   5. SPLIT BUTTON VARIANTS
    ========================================================================== */
 
 .sv-split-button {
@@ -114,7 +139,7 @@
     
     // Border between the parts
     .sv-split-button-toggle {
-      border-left-color: rgba(255, 255, 255, 0.2);
+      border-left-color: $split-button-separator-color-light;
     }
   }
   
@@ -143,7 +168,7 @@
     
     // Border between the parts
     .sv-split-button-toggle {
-      border-left-color: rgba(255, 255, 255, 0.2);
+      border-left-color: $split-button-separator-color-light;
     }
   }
   
@@ -156,18 +181,18 @@
       color: var(--sv-primary);
       
       &:hover:not(:disabled):not(.disabled) {
-        background-color: rgba(var(--sv-primary-500-rgb), 0.05);
+        background-color: rgba(var(--sv-primary-rgb), 0.05);
       }
       
       &:active:not(:disabled):not(.disabled) {
-        background-color: rgba(var(--sv-primary-500-rgb), 0.1);
+        background-color: rgba(var(--sv-primary-rgb), 0.1);
       }
     }
   }
 }
 
 /* ==========================================================================
-   5. SPLIT BUTTON STATES
+   6. SPLIT BUTTON STATES
    ========================================================================== */
 
 .sv-split-button {
@@ -205,7 +230,7 @@
 }
 
 /* ==========================================================================
-   6. SPLIT BUTTON DROPDOWN
+   7. SPLIT BUTTON DROPDOWN
    ========================================================================== */
 
 .sv-split-button {
@@ -214,7 +239,7 @@
     min-width: 100%;
     top: 100%;
     right: 0;
-    margin-top: var(--sv-space-1);
+    margin-top: $split-button-menu-margin-top;
     
     // Full width if menu should match the button width
     &.sv-menu-full-width {
@@ -224,23 +249,23 @@
 }
 
 /* ==========================================================================
-   7. SPLIT BUTTON SIZES
+   8. SPLIT BUTTON SIZES
    ========================================================================== */
 
 .sv-split-button {
   // Small size
   &.sv-size-sm {
     .sv-split-button-action {
-      padding: var(--sv-space-1) var(--sv-space-2);
-      font-size: var(--sv-text-sm);
+      padding: $split-button-action-padding-sm;
+      font-size: $split-button-font-size-sm;
     }
     
     .sv-split-button-toggle {
-      padding: var(--sv-space-1) var(--sv-space-1);
+      padding: $split-button-toggle-padding-sm;
       
       &::after {
-        width: 0.4em;
-        height: 0.4em;
+        width: $split-button-indicator-size-sm;
+        height: $split-button-indicator-size-sm;
       }
     }
   }
@@ -248,23 +273,23 @@
   // Large size
   &.sv-size-lg {
     .sv-split-button-action {
-      padding: var(--sv-space-3) var(--sv-space-4);
-      font-size: var(--sv-text-lg);
+      padding: $split-button-action-padding-lg;
+      font-size: $split-button-font-size-lg;
     }
     
     .sv-split-button-toggle {
-      padding: var(--sv-space-3) var(--sv-space-3);
+      padding: $split-button-toggle-padding-lg;
       
       &::after {
-        width: 0.6em;
-        height: 0.6em;
+        width: $split-button-indicator-size-lg;
+        height: $split-button-indicator-size-lg;
       }
     }
   }
 }
 
 /* ==========================================================================
-   8. SPLIT BUTTON ANIMATIONS
+   9. SPLIT BUTTON ANIMATIONS
    ========================================================================== */
 
 .sv-split-button {

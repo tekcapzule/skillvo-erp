@@ -1,10 +1,10 @@
 /**
  * Card Component - Component-level Styles
- * Version: 1.0.0
- * Last Updated: April 29, 2025
+ * Version: 1.1.0
+ * Last Updated: June 30, 2024
  * 
  * This file defines styles for the Card component in the SkillVo design system.
- * It extends the container base class and provides card-specific styling.
+ * It extends the container-control-base class and provides card-specific styling.
  */
 
 /* ==========================================================================
@@ -30,24 +30,26 @@
    ========================================================================== */
 
 // Import necessary mixins
-@use './../../abstracts/' as *;
-@use './../../base/' as *;
+@use './../../abstracts/variables/' as *;
+@use './../../base/utils/mixins/state' as state;
+@use './../../base/utils/mixins/layout' as layout;
+@use './../../base/utils/mixins/responsive' as responsive;
 @use 'sass:math';
 
 // Card-specific variables
+$card-border-width: 1px;
 $card-default-radius: var(--sv-radius-md);
 $card-default-shadow: var(--sv-shadow-md);
-$card-default-padding: var(--sv-padding-md);
-$card-header-padding: var(--sv-padding-md);
-$card-body-padding: var(--sv-padding-md);
-$card-footer-padding: var(--sv-padding-md);
+$card-header-padding: var(--sv-space-4);
+$card-body-padding: var(--sv-space-4);
+$card-footer-padding: var(--sv-space-4);
 $card-border-color: var(--sv-border-light);
 $card-header-border-color: var(--sv-border-light);
 $card-footer-border-color: var(--sv-border-light);
-$card-title-font-size: var(--sv-text-heading-md);
-$card-title-font-weight: var(--sv-font-semibold);
-$card-subtitle-font-size: var(--sv-text-body-md);
-$card-subtitle-font-weight: var(--sv-font-normal);
+$card-title-font-size: var(--sv-font-size-lg);
+$card-title-font-weight: var(--sv-font-weight-semibold);
+$card-subtitle-font-size: var(--sv-font-size-base);
+$card-subtitle-font-weight: var(--sv-font-weight-normal);
 $card-subtitle-color: var(--sv-text-secondary);
 $card-media-aspect-ratio: math.div(16, 9);
 
@@ -55,34 +57,139 @@ $card-media-aspect-ratio: math.div(16, 9);
    2. CARD BASE CLASS
    ========================================================================== */
 
+/**
+ * The sv-card class extends sv-container-control-base and represents a container
+ * with content, often used to group related information in a visual unit.
+ */
 .sv-card {
-  // Extend the container base class
-  @extend .sv-container-base;
+  // Extend the container control base class
+  @extend .sv-container-control-base;
   
-  // Card-specific overrides
+  // Card-specific overrides - only add what's different from the base
   border-radius: $card-default-radius;
   box-shadow: $card-default-shadow;
-  padding: 0; // Override the default container padding
-  background-color: var(--sv-bg-surface);
   display: flex;
   flex-direction: column;
   overflow: hidden; // Ensures media content doesn't overflow rounded corners
   height: auto; // Cards naturally size to content
   
   // Enhanced hover effect for interactive cards
-  &.sv-card-interactive {
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  &.is-interactive {
+    transition: transform var(--sv-motion-duration-short) var(--sv-motion-ease-standard),
+                box-shadow var(--sv-motion-duration-short) var(--sv-motion-ease-standard);
     cursor: pointer;
     
-    &:hover {
+    &:hover:not(:disabled):not(.disabled) {
       transform: translateY(-4px);
       box-shadow: var(--sv-shadow-lg);
     }
     
-    &:active {
+    &:active:not(:disabled):not(.disabled) {
       transform: translateY(-2px);
-      box-shadow: var(--sv-shadow-md);
     }
+  }
+  
+  // Use BEM-style naming for card elements to match container-control-base pattern
+  &__header {
+    padding: $card-header-padding;
+    display: flex;
+    flex-direction: column;
+    border-bottom: $card-border-width solid $card-header-border-color;
+    
+    // Alignment variations
+    &--row {
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+    }
+    
+    &--no-border {
+      border-bottom: none;
+    }
+  }
+  
+  &__body {
+    padding: $card-body-padding;
+    flex: 1 1 auto;
+  }
+  
+  &__footer {
+    padding: $card-footer-padding;
+    border-top: $card-border-width solid $card-footer-border-color;
+    
+    &--no-border {
+      border-top: none;
+    }
+  }
+  
+  &__title {
+    margin: 0;
+    font-size: $card-title-font-size;
+    font-weight: $card-title-font-weight;
+    color: var(--sv-text-primary);
+  }
+  
+  &__subtitle {
+    margin: var(--sv-space-1) 0 0;
+    font-size: $card-subtitle-font-size;
+    font-weight: $card-subtitle-font-weight;
+    color: $card-subtitle-color;
+  }
+  
+  &__media {
+    position: relative;
+    width: 100%;
+    
+    // Default 16:9 aspect ratio
+    &:not(.sv-card__media--custom-ratio) {
+      &::before {
+        content: "";
+        display: block;
+        padding-top: percentage(1 / $card-media-aspect-ratio);
+      }
+      
+      img, picture, video {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+      }
+    }
+    
+    // Square aspect ratio
+    &--square::before {
+      padding-top: 100%;
+    }
+    
+    // 4:3 aspect ratio
+    &--4-3::before {
+      padding-top: percentage(3 / 4);
+    }
+    
+    // 21:9 widescreen aspect ratio
+    &--21-9::before {
+      padding-top: percentage(9 / 21);
+    }
+    
+    // Custom height media (no aspect ratio enforcement)
+    &--custom-ratio {
+      height: auto;
+      
+      img, picture, video {
+        width: 100%;
+        display: block;
+      }
+    }
+  }
+  
+  // Content wrapper for better organization
+  &__content {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
   }
 }
 
@@ -93,60 +200,62 @@ $card-media-aspect-ratio: math.div(16, 9);
 /* 3.1 Card Types
    ========================================================================== */
 
-// Basic card with minimal styling
-.sv-card-basic {
-  box-shadow: none;
-  border: 1px solid $card-border-color;
-}
-
-// Elevated card with prominent shadow
-.sv-card-elevated {
-  box-shadow: var(--sv-shadow-lg);
-}
-
-// Outlined card with no shadow
-.sv-card-outlined {
-  box-shadow: none;
-  border: 1px solid $card-border-color;
-}
-
-// Card with no border or shadow
-.sv-card-flat {
-  box-shadow: none;
-  border: none;
-  background-color: var(--sv-bg-element);
-}
-
-// Card optimized for horizontal layout
-.sv-card-horizontal {
-  flex-direction: row;
+.sv-card {
+  // Basic card with minimal styling
+  &--basic {
+    box-shadow: none;
+    border: $card-border-width solid $card-border-color;
+  }
   
-  // Media behavior in horizontal card
-  .sv-card-media {
-    width: 33.333%;
-    height: auto;
+  // Elevated card with prominent shadow
+  &--elevated {
+    box-shadow: var(--sv-shadow-lg);
+  }
+  
+  // Outlined card with no shadow
+  &--outlined {
+    box-shadow: none;
+    border: $card-border-width solid $card-border-color;
+  }
+  
+  // Card with no border or shadow
+  &--flat {
+    box-shadow: none;
+    border: none;
+    background-color: var(--sv-bg-element);
+  }
+  
+  // Card optimized for horizontal layout
+  &--horizontal {
+    flex-direction: row;
     
-    img, picture {
-      height: 100%;
-      object-fit: cover;
-      object-position: center;
+    .sv-card__media {
+      width: 33.333%;
+      height: auto;
+      
+      &::before {
+        content: none;
+      }
+      
+      img, picture, video {
+        position: static;
+        height: 100%;
+        object-fit: cover;
+      }
     }
-  }
-  
-  // Content adjustment in horizontal card
-  .sv-card-content {
-    width: 66.666%;
-    display: flex;
-    flex-direction: column;
-  }
-  
-  // Media queries for responsive behavior
-  @include breakpoint-down(md) {
-    flex-direction: column;
     
-    .sv-card-media,
-    .sv-card-content {
-      width: 100%;
+    .sv-card__content {
+      width: 66.666%;
+    }
+    
+    // Media queries for responsive behavior
+    @include responsive.breakpoint-down(md) {
+      flex-direction: column;
+      
+      .sv-card__media,
+      .sv-card__content {
+        width: 100%;
+      }
     }
   }
 }
@@ -154,72 +263,82 @@ $card-media-aspect-ratio: math.div(16, 9);
 /* 3.2 Card Sizes
    ========================================================================== */
 
-// Compact card with smaller padding
-.sv-card-compact {
-  .sv-card-header,
-  .sv-card-body,
-  .sv-card-footer {
-    padding: var(--sv-padding-sm);
+.sv-card {
+  // Compact card with smaller padding
+  &--compact {
+    .sv-card__header,
+    .sv-card__body,
+    .sv-card__footer {
+      padding: var(--sv-space-2);
+    }
   }
-}
-
-// Comfortable card with larger padding
-.sv-card-comfortable {
-  .sv-card-header,
-  .sv-card-body,
-  .sv-card-footer {
-    padding: var(--sv-padding-lg);
+  
+  // Comfortable card with larger padding
+  &--comfortable {
+    .sv-card__header,
+    .sv-card__body,
+    .sv-card__footer {
+      padding: var(--sv-space-6);
+    }
   }
 }
 
 /* 3.3 Card Visual Styles
    ========================================================================== */
 
-// Card with rounded corners
-.sv-card-rounded {
-  border-radius: var(--sv-radius-lg);
-}
-
-// Card with more square corners
-.sv-card-square {
-  border-radius: var(--sv-radius-sm);
-}
-
-// Card with highlighted border
-.sv-card-highlighted {
-  border-color: var(--sv-primary);
-  border-width: 2px;
-}
-
-// Card with accent color strip
-.sv-card-accent {
-  position: relative;
-  
-  &::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 4px;
-    background-color: var(--sv-primary);
+.sv-card {
+  // Card with rounded corners
+  &--rounded {
+    border-radius: var(--sv-radius-lg);
   }
   
-  &.sv-card-accent-left::before {
-    width: 4px;
-    height: 100%;
+  // Card with more square corners
+  &--square {
+    border-radius: var(--sv-radius-sm);
   }
   
-  &.sv-card-accent-right::before {
-    width: 4px;
-    height: 100%;
-    left: auto;
-    right: 0;
+  // Card with highlighted border
+  &--highlighted {
+    border-color: var(--sv-primary);
+    border-width: 2px;
   }
   
-  &.sv-card-accent-bottom::before {
-    top: auto;
-    bottom: 0;
+  // Card with accent color strip
+  &--accent {
+    position: relative;
+    
+    &::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background-color: var(--sv-primary);
+    }
+  }
+  
+  &--accent-left {
+    &::before {
+      width: 4px;
+      height: 100%;
+    }
+  }
+  
+  &--accent-right {
+    &::before {
+      width: 4px;
+      height: 100%;
+      left: auto;
+      right: 0;
+    }
+  }
+  
+  &--accent-bottom {
+    &::before {
+      top: auto;
+      bottom: 0;
+    }
   }
 }
 

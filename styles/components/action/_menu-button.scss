@@ -15,23 +15,62 @@
    TABLE OF CONTENTS:
    
    1. IMPORTS
-   2. MENU BUTTON BASE
-   3. MENU BUTTON VARIANTS
-   4. MENU BUTTON INDICATORS
-   5. MENU BUTTON STATES
-   6. MENU CONTAINER
-   7. MENU ITEMS
-   8. MENU ANIMATIONS
+   2. VARIABLES & CONFIGURATION
+   3. MENU BUTTON BASE
+   4. MENU BUTTON VARIANTS
+   5. MENU BUTTON INDICATORS
+   6. MENU BUTTON STATES
+   7. MENU CONTAINER
+   8. MENU ITEMS
+   9. MENU ANIMATIONS
    ========================================================================== */
 
 /* ==========================================================================
    1. IMPORTS
    ========================================================================== */
-@use './../../abstracts/' as *;
-@use './../../base/' as *;
+@use './../../abstracts/variables/' as *;
+@use './../../base/utils/mixins/state' as state;
+@use './../../base/utils/mixins/layout' as layout;
+@use './../../base/utils/mixins/responsive' as responsive;
 
 /* ==========================================================================
-   2. MENU BUTTON BASE
+   2. VARIABLES & CONFIGURATION
+   ========================================================================== */
+
+// Menu button-specific variables
+$menu-button-padding: var(--sv-space-2) var(--sv-space-3);
+$menu-button-padding-minimal: var(--sv-space-1) var(--sv-space-2);
+$menu-button-padding-icon: var(--sv-space-2);
+$menu-button-min-width: var(--sv-min-touch-target);
+$menu-button-gap: var(--sv-space-2);
+$menu-button-indicator-margin: var(--sv-space-1);
+$menu-button-indicator-size: 0.5em;
+$menu-button-indicator-border-width: 0.1em;
+$menu-button-indicator-font-size: 0.75em;
+$menu-button-transition-duration: var(--sv-motion-duration-short);
+$menu-button-transition-timing: var(--sv-motion-ease-standard);
+
+// Menu container variables
+$menu-z-index: var(--sv-z-index-dropdown);
+$menu-bg-color: var(--sv-bg-surface);
+$menu-border: 1px solid var(--sv-border-medium);
+$menu-border-radius: var(--sv-radius-md);
+$menu-box-shadow: var(--sv-shadow-md);
+$menu-padding-y: var(--sv-space-1);
+$menu-padding-x: 0;
+$menu-margin-top: var(--sv-space-1);
+$menu-max-height: calc(var(--sv-size-10) * 4);
+$menu-section-padding: var(--sv-space-1) var(--sv-space-3);
+$menu-section-font-size: var(--sv-text-xs);
+$menu-section-font-weight: var(--sv-font-weight-semibold);
+$menu-section-color: var(--sv-text-secondary);
+$menu-section-margin-top: var(--sv-space-2);
+$menu-divider-height: 1px;
+$menu-divider-color: var(--sv-border-light);
+$menu-divider-margin: var(--sv-space-1) 0;
+
+/* ==========================================================================
+   3. MENU BUTTON BASE
    ========================================================================== */
 
 .sv-menu-button {
@@ -42,30 +81,30 @@
   position: relative;
   
   // Customize spacing and layout
-  padding: var(--sv-space-2) var(--sv-space-3);
+  padding: $menu-button-padding;
   
   // Display flex for proper alignment of text and icon
   display: inline-flex;
   align-items: center;
   justify-content: space-between;
-  gap: var(--sv-space-2);
+  gap: $menu-button-gap;
   
   // Default indicator (chevron down)
   &::after {
     content: "";
     display: inline-block;
-    width: 0.5em;
-    height: 0.5em;
+    width: $menu-button-indicator-size;
+    height: $menu-button-indicator-size;
     border-style: solid;
-    border-width: 0 0.1em 0.1em 0;
+    border-width: 0 $menu-button-indicator-border-width $menu-button-indicator-border-width 0;
     transform: rotate(45deg) translateY(-0.15em);
-    transition: transform var(--sv-motion-duration-short) var(--sv-motion-ease-standard);
-    margin-left: var(--sv-space-1);
+    transition: transform $menu-button-transition-duration $menu-button-transition-timing;
+    margin-left: $menu-button-indicator-margin;
   }
 }
 
 /* ==========================================================================
-   3. MENU BUTTON VARIANTS
+   4. MENU BUTTON VARIANTS
    ========================================================================== */
 
 .sv-menu-button {
@@ -89,7 +128,7 @@
     background-color: transparent;
     border-color: transparent;
     color: var(--sv-text-primary);
-    padding: var(--sv-space-1) var(--sv-space-2);
+    padding: $menu-button-padding-minimal;
     min-width: auto;
     
     &:hover:not(:disabled):not(.disabled) {
@@ -106,8 +145,8 @@
   // Icon-only menu button
   &.sv-menu-button-icon {
     aspect-ratio: 1/1;
-    padding: var(--sv-space-2);
-    min-width: var(--sv-min-touch-target);
+    padding: $menu-button-padding-icon;
+    min-width: $menu-button-min-width;
     
     &::after {
       display: none;
@@ -120,7 +159,7 @@
 }
 
 /* ==========================================================================
-   4. MENU BUTTON INDICATORS
+   5. MENU BUTTON INDICATORS
    ========================================================================== */
 
 .sv-menu-button {
@@ -132,9 +171,9 @@
     
     // Style for indicator icon
     .sv-menu-button-indicator {
-      margin-left: var(--sv-space-1);
-      font-size: 0.75em;
-      transition: transform var(--sv-motion-duration-short) var(--sv-motion-ease-standard);
+      margin-left: $menu-button-indicator-margin;
+      font-size: $menu-button-indicator-font-size;
+      transition: transform $menu-button-transition-duration $menu-button-transition-timing;
     }
   }
   
@@ -147,7 +186,7 @@
 }
 
 /* ==========================================================================
-   5. MENU BUTTON STATES
+   6. MENU BUTTON STATES
    ========================================================================== */
 
 .sv-menu-button {
@@ -164,7 +203,7 @@
     }
     
     // Style changes in open state
-    z-index: calc(var(--sv-z-index-dropdown) + 1);
+    z-index: calc($menu-z-index + 1);
     
     // Specific to button variants
     &.sv-menu-button-minimal {
@@ -174,35 +213,35 @@
 }
 
 /* ==========================================================================
-   6. MENU CONTAINER
+   7. MENU CONTAINER
    ========================================================================== */
 
 .sv-menu {
   position: absolute;
-  z-index: var(--sv-z-index-dropdown);
+  z-index: $menu-z-index;
   min-width: 100%;
-  background-color: var(--sv-bg-surface);
-  border: 1px solid var(--sv-border-medium);
-  border-radius: var(--sv-radius-md);
-  box-shadow: var(--sv-shadow-md);
-  padding: var(--sv-space-1) 0;
+  background-color: $menu-bg-color;
+  border: $menu-border;
+  border-radius: $menu-border-radius;
+  box-shadow: $menu-box-shadow;
+  padding: $menu-padding-y $menu-padding-x;
   margin: 0;
   list-style: none;
   overflow: hidden;
-  max-height: calc(var(--sv-size-10) * 4);
+  max-height: $menu-max-height;
   overflow-y: auto;
   
   // Default position (bottom)
   top: 100%;
   left: 0;
-  margin-top: var(--sv-space-1);
+  margin-top: $menu-margin-top;
   
   // Top position
   &.sv-menu-top {
     top: auto;
     bottom: 100%;
     margin-top: 0;
-    margin-bottom: var(--sv-space-1);
+    margin-bottom: $menu-margin-top;
   }
   
   // Right position (menu opens to the right)
@@ -229,13 +268,13 @@
   
   // Menu with section headers
   .sv-menu-section {
-    padding: var(--sv-space-1) var(--sv-space-3);
-    font-size: var(--sv-text-xs);
-    font-weight: var(--sv-font-semibold);
-    color: var(--sv-text-secondary);
+    padding: $menu-section-padding;
+    font-size: $menu-section-font-size;
+    font-weight: $menu-section-font-weight;
+    color: $menu-section-color;
     text-transform: uppercase;
     letter-spacing: 0.5px;
-    margin-top: var(--sv-space-2);
+    margin-top: $menu-section-margin-top;
     
     &:first-child {
       margin-top: 0;
@@ -244,14 +283,14 @@
   
   // Menu divider
   .sv-menu-divider {
-    height: 1px;
-    background-color: var(--sv-border-light);
-    margin: var(--sv-space-1) 0;
+    height: $menu-divider-height;
+    background-color: $menu-divider-color;
+    margin: $menu-divider-margin;
   }
 }
 
 /* ==========================================================================
-   7. MENU ITEMS
+   8. MENU ITEMS
    ========================================================================== */
 
 .sv-menu-item {
@@ -345,7 +384,7 @@
 }
 
 /* ==========================================================================
-   8. MENU ANIMATIONS
+   9. MENU ANIMATIONS
    ========================================================================== */
 
 // Menu animation options

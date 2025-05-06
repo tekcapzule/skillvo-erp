@@ -15,22 +15,42 @@
    TABLE OF CONTENTS:
    
    1. IMPORTS
-   2. BUTTON BASE
-   3. BUTTON VARIANTS
-   4. BUTTON STATES
-   5. BUTTON WITH BADGES
-   6. BUTTON ANIMATIONS
-   7. RESPONSIVE ADJUSTMENTS
+   2. VARIABLES & CONFIGURATION
+   3. BUTTON BASE
+   4. BUTTON VARIANTS
+   5. BUTTON STATES
+   6. BUTTON WITH BADGES
+   7. BUTTON ANIMATIONS
+   8. RESPONSIVE ADJUSTMENTS
    ========================================================================== */
 
 /* ==========================================================================
    1. IMPORTS
    ========================================================================== */
-@use './../../abstracts/' as *;
-@use './../../base/' as *;
+@use './../../abstracts/variables/' as *;
+@use './../../base/utils/mixins/state' as state;
+@use './../../base/utils/mixins/layout' as layout;
+@use './../../base/utils/mixins/responsive' as responsive;
 
 /* ==========================================================================
-   2. BUTTON BASE
+   2. VARIABLES & CONFIGURATION
+   ========================================================================== */
+
+// Button-specific variables
+$button-font-weight: var(--sv-font-weight-medium);
+$button-font-weight-bold: var(--sv-font-weight-semibold);
+$button-transition-duration: var(--sv-motion-duration-short);
+$button-transition-timing: var(--sv-motion-ease-standard);
+$button-focus-outline-width: var(--sv-focus-ring-width);
+$button-focus-outline-color: var(--sv-focus-ring-color);
+$button-badge-margin: var(--sv-space-2);
+$button-status-badge-size: var(--sv-size-2);
+$button-status-badge-border-width: 2px;
+$button-link-padding-x: var(--sv-space-2);
+$button-pulse-shadow-color: rgba(var(--sv-primary-rgb), 0.7);
+
+/* ==========================================================================
+   3. BUTTON BASE
    ========================================================================== */
 
 .sv-button {
@@ -38,29 +58,29 @@
   @extend .sv-action-control-base;
   
   // Button-specific properties not covered by action control base
-  font-weight: var(--sv-font-medium);
-  transition: background-color var(--sv-motion-duration-short) var(--sv-motion-ease-standard),
-              border-color var(--sv-motion-duration-short) var(--sv-motion-ease-standard),
-              color var(--sv-motion-duration-short) var(--sv-motion-ease-standard),
-              box-shadow var(--sv-motion-duration-short) var(--sv-motion-ease-standard),
-              transform var(--sv-motion-duration-short) var(--sv-motion-ease-accelerate);
+  font-weight: $button-font-weight;
+  transition: background-color $button-transition-duration $button-transition-timing,
+              border-color $button-transition-duration $button-transition-timing,
+              color $button-transition-duration $button-transition-timing,
+              box-shadow $button-transition-duration $button-transition-timing,
+              transform $button-transition-duration var(--sv-motion-ease-accelerate);
               
   // Button-specific focus enhancement
   &:focus-visible {
-    outline-width: var(--sv-focus-ring-width);
-    outline-color: var(--sv-focus-ring-color);
+    outline-width: $button-focus-outline-width;
+    outline-color: $button-focus-outline-color;
   }
 }
 
 /* ==========================================================================
-   3. BUTTON VARIANTS
+   4. BUTTON VARIANTS
    ========================================================================== */
 
 .sv-button {
   // Primary button (already styled in action controls, add only button-specific properties)
   &.sv-button-primary {
     @extend .sv-action-primary;
-    font-weight: var(--sv-font-semibold);
+    font-weight: $button-font-weight-bold;
   }
   
   // Secondary button
@@ -85,11 +105,11 @@
     color: var(--sv-primary);
     
     &:hover:not(:disabled):not(.disabled) {
-      background-color: rgba(var(--sv-primary-500-rgb), 0.05);
+      background-color: rgba(var(--sv-primary-rgb), 0.05);
     }
     
     &:active:not(:disabled):not(.disabled) {
-      background-color: rgba(var(--sv-primary-500-rgb), 0.1);
+      background-color: rgba(var(--sv-primary-rgb), 0.1);
     }
   }
   
@@ -98,8 +118,8 @@
     background-color: transparent;
     border-color: transparent;
     color: var(--sv-primary);
-    padding-left: var(--sv-space-2);
-    padding-right: var(--sv-space-2);
+    padding-left: $button-link-padding-x;
+    padding-right: $button-link-padding-x;
     min-width: auto;
     text-decoration: none;
     
@@ -118,7 +138,7 @@
   &.sv-button-social {
     // Reset some properties to allow for brand colors
     border-width: 0;
-    font-weight: var(--sv-font-semibold);
+    font-weight: $button-font-weight-bold;
     
     // Common social button styles
     &:focus {
@@ -128,7 +148,7 @@
 }
 
 /* ==========================================================================
-   4. BUTTON STATES
+   5. BUTTON STATES
    ========================================================================== */
 
 .sv-button {
@@ -161,7 +181,7 @@
 }
 
 /* ==========================================================================
-   5. BUTTON WITH BADGES
+   6. BUTTON WITH BADGES
    ========================================================================== */
 
 .sv-button {
@@ -169,7 +189,7 @@
   .sv-badge {
     position: relative;
     top: -1px;
-    margin-left: var(--sv-space-2);
+    margin-left: $button-badge-margin;
   }
   
   // Status badges positioned in corners
@@ -178,16 +198,16 @@
     
     .sv-status-badge {
       position: absolute;
-      top: calc(-1 * var(--sv-size-2));
-      right: calc(-1 * var(--sv-size-2));
-      border: 2px solid var(--sv-bg-primary);
+      top: calc(-1 * $button-status-badge-size);
+      right: calc(-1 * $button-status-badge-size);
+      border: $button-status-badge-border-width solid var(--sv-bg-primary);
       z-index: 1;
     }
   }
 }
 
 /* ==========================================================================
-   6. BUTTON ANIMATIONS
+   7. BUTTON ANIMATIONS
    ========================================================================== */
 
 .sv-button {
@@ -226,13 +246,13 @@
     
     @keyframes button-pulse {
       0% {
-        box-shadow: 0 0 0 0 rgba(var(--sv-primary-500-rgb), 0.7);
+        box-shadow: 0 0 0 0 $button-pulse-shadow-color;
       }
       70% {
-        box-shadow: 0 0 0 10px rgba(var(--sv-primary-500-rgb), 0);
+        box-shadow: 0 0 0 10px rgba(var(--sv-primary-rgb), 0);
       }
       100% {
-        box-shadow: 0 0 0 0 rgba(var(--sv-primary-500-rgb), 0);
+        box-shadow: 0 0 0 0 rgba(var(--sv-primary-rgb), 0);
       }
     }
     
@@ -244,7 +264,7 @@
 }
 
 /* ==========================================================================
-   7. RESPONSIVE ADJUSTMENTS
+   8. RESPONSIVE ADJUSTMENTS
    ========================================================================== */
 
 .sv-button {

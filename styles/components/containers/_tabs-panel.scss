@@ -57,7 +57,7 @@ $tabs-indicator-size: 2px;
 
 .sv-tabs {
   // Extend the container base class
-  @extend .sv-container-base;
+  @extend .sv-container-control-base;
   
   // Tabs-specific overrides
   display: flex;
@@ -677,4 +677,12 @@ $tabs-indicator-size: 2px;
       }
     }
   }
+}
+
+.sv-tabs-panel {
+  // Extend the container base class
+  @extend .sv-container-control-base;
+  
+  // Tabs panel-specific overrides
+  // ... existing code ...
 }

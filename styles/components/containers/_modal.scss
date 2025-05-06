@@ -115,7 +115,7 @@ $modal-animation-timing: var(--sv-motion-ease-standard);
 
 .sv-modal {
   // Extend the container base class
-  @extend .sv-container-base;
+  @extend .sv-container-control-base;
   
   // Modal-specific overrides
   position: relative;

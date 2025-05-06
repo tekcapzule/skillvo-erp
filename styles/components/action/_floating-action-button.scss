@@ -15,23 +15,46 @@
    TABLE OF CONTENTS:
    
    1. IMPORTS
-   2. FLOATING ACTION BUTTON BASE
-   3. FAB VARIANTS
-   4. FAB SIZES
-   5. FAB POSITIONS
-   6. FAB ANIMATIONS
-   7. FAB ACCESSIBILITY
-   8. EXTENDED FAB (WITH TEXT)
+   2. VARIABLES & CONFIGURATION
+   3. FLOATING ACTION BUTTON BASE
+   4. FAB VARIANTS
+   5. FAB SIZES
+   6. FAB POSITIONS
+   7. FAB ANIMATIONS
+   8. FAB ACCESSIBILITY
+   9. EXTENDED FAB (WITH TEXT)
    ========================================================================== */
 
 /* ==========================================================================
    1. IMPORTS
    ========================================================================== */
-@use './../../abstracts/' as *;
-@use './../../base/' as *;
+@use './../../abstracts/variables/' as *;
+@use './../../base/utils/mixins/state' as state;
+@use './../../base/utils/mixins/layout' as layout;
+@use './../../base/utils/mixins/responsive' as responsive;
 
 /* ==========================================================================
-   2. FLOATING ACTION BUTTON BASE
+   2. VARIABLES & CONFIGURATION
+   ========================================================================== */
+
+// FAB-specific variables
+$fab-z-index: var(--sv-z-index-fab);
+$fab-border-radius: var(--sv-radius-full);
+$fab-box-shadow: var(--sv-shadow-lg);
+$fab-box-shadow-hover: var(--sv-shadow-xl);
+$fab-box-shadow-active: var(--sv-shadow-md);
+$fab-padding: var(--sv-space-3);
+$fab-padding-sm: var(--sv-space-2);
+$fab-padding-lg: var(--sv-space-4);
+$fab-icon-size: var(--sv-icon-size-lg);
+$fab-icon-size-md: var(--sv-icon-size-md);
+$fab-icon-size-xl: var(--sv-icon-size-xl);
+$fab-position-offset: var(--sv-space-4);
+$fab-hover-offset: -4px;
+$fab-pulse-shadow-color: rgba(var(--sv-primary-rgb), 0.7);
+
+/* ==========================================================================
+   3. FLOATING ACTION BUTTON BASE
    ========================================================================== */
 
 .sv-fab {
@@ -40,37 +63,37 @@
   
   // FAB-specific properties
   position: fixed;
-  z-index: var(--sv-z-index-fab);
-  border-radius: var(--sv-radius-full);
-  box-shadow: var(--sv-shadow-lg);
+  z-index: $fab-z-index;
+  border-radius: $fab-border-radius;
+  box-shadow: $fab-box-shadow;
   aspect-ratio: 1/1;
-  padding: var(--sv-space-3);
+  padding: $fab-padding;
   
   // Sizing for icons within FAB
   > .sv-icon {
-    width: var(--sv-icon-size-lg);
-    height: var(--sv-icon-size-lg);
+    width: $fab-icon-size;
+    height: $fab-icon-size;
   }
   
   // Default positioning (bottom right)
-  bottom: var(--sv-space-4);
-  right: var(--sv-space-4);
+  bottom: $fab-position-offset;
+  right: $fab-position-offset;
   
   // Custom hover effect
   &:hover:not(:disabled):not(.disabled) {
-    transform: translateY(-4px);
-    box-shadow: var(--sv-shadow-xl);
+    transform: translateY($fab-hover-offset);
+    box-shadow: $fab-box-shadow-hover;
   }
   
   // Custom active effect
   &:active:not(:disabled):not(.disabled) {
     transform: translateY(0);
-    box-shadow: var(--sv-shadow-md);
+    box-shadow: $fab-box-shadow-active;
   }
 }
 
 /* ==========================================================================
-   3. FAB VARIANTS
+   4. FAB VARIANTS
    ========================================================================== */
 
 .sv-fab {
@@ -110,68 +133,68 @@
 }
 
 /* ==========================================================================
-   4. FAB SIZES
+   5. FAB SIZES
    ========================================================================== */
 
 .sv-fab {
   // Small FAB
   &.sv-size-sm {
-    padding: var(--sv-space-2);
+    padding: $fab-padding-sm;
     
     > .sv-icon {
-      width: var(--sv-icon-size-md);
-      height: var(--sv-icon-size-md);
+      width: $fab-icon-size-md;
+      height: $fab-icon-size-md;
     }
   }
   
   // Large FAB
   &.sv-size-lg {
-    padding: var(--sv-space-4);
+    padding: $fab-padding-lg;
     
     > .sv-icon {
-      width: var(--sv-icon-size-xl);
-      height: var(--sv-icon-size-xl);
+      width: $fab-icon-size-xl;
+      height: $fab-icon-size-xl;
     }
   }
 }
 
 /* ==========================================================================
-   5. FAB POSITIONS
+   6. FAB POSITIONS
    ========================================================================== */
 
 .sv-fab {
   // Position variants
   &.sv-fab-bottom-right {
-    bottom: var(--sv-space-4);
-    right: var(--sv-space-4);
+    bottom: $fab-position-offset;
+    right: $fab-position-offset;
   }
   
   &.sv-fab-bottom-left {
-    bottom: var(--sv-space-4);
-    left: var(--sv-space-4);
+    bottom: $fab-position-offset;
+    left: $fab-position-offset;
   }
   
   &.sv-fab-top-right {
-    top: var(--sv-space-4);
-    right: var(--sv-space-4);
+    top: $fab-position-offset;
+    right: $fab-position-offset;
     bottom: auto;
   }
   
   &.sv-fab-top-left {
-    top: var(--sv-space-4);
-    left: var(--sv-space-4);
+    top: $fab-position-offset;
+    left: $fab-position-offset;
     bottom: auto;
     right: auto;
   }
   
   &.sv-fab-center-right {
     top: 50%;
-    right: var(--sv-space-4);
+    right: $fab-position-offset;
     bottom: auto;
     transform: translateY(-50%);
     
     &:hover:not(:disabled):not(.disabled) {
-      transform: translate(-4px, -50%);
+      transform: translate($fab-hover-offset, -50%);
     }
     
     &:active:not(:disabled):not(.disabled) {
@@ -181,7 +204,7 @@
   
   &.sv-fab-center-left {
     top: 50%;
-    left: var(--sv-space-4);
+    left: $fab-position-offset;
     bottom: auto;
     right: auto;
     transform: translateY(-50%);
@@ -205,7 +228,7 @@
 }
 
 /* ==========================================================================
-   6. FAB ANIMATIONS
+   7. FAB ANIMATIONS
    ========================================================================== */
 
 .sv-fab {
@@ -231,13 +254,13 @@
     
     @keyframes fab-pulse {
       0% {
-        box-shadow: 0 0 0 0 rgba(var(--sv-primary-500-rgb), 0.7);
+        box-shadow: 0 0 0 0 $fab-pulse-shadow-color;
       }
       70% {
-        box-shadow: 0 0 0 15px rgba(var(--sv-primary-500-rgb), 0);
+        box-shadow: 0 0 0 15px rgba(var(--sv-primary-rgb), 0);
       }
       100% {
-        box-shadow: 0 0 0 0 rgba(var(--sv-primary-500-rgb), 0);
+        box-shadow: 0 0 0 0 rgba(var(--sv-primary-rgb), 0);
       }
     }
   }
@@ -251,7 +274,7 @@
 }
 
 /* ==========================================================================
-   7. FAB ACCESSIBILITY
+   8. FAB ACCESSIBILITY
    ========================================================================== */
 
 .sv-fab {
@@ -276,7 +299,7 @@
 }
 
 /* ==========================================================================
-   8. EXTENDED FAB (WITH TEXT)
+   9. EXTENDED FAB (WITH TEXT)
    ========================================================================== */
 
 .sv-fab {

@@ -54,7 +54,7 @@ $accordion-animation-timing: var(--sv-motion-ease-standard);
 
 .sv-accordion {
   // Extend the container base class
-  @extend .sv-container-base;
+  @extend .sv-container-control-base;
   
   // Accordion container specific overrides
   display: flex;
