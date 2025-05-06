@@ -1,551 +1,549 @@
 /**
- * Avatar Component - UI Component Styles
- * Version: 1.0.0
- * Last Updated: April 29, 2025
+ * Avatar Component - Component-level Styles
+ * Version: 1.1.0
+ * Last Updated: July 15, 2024
  * 
- * This file provides the styling for the sv-avatar component,
- * which extends the sv-info-display-base class.
- * Avatars represent users or entities with images, initials, or icons.
+ * This file defines styles for the Avatar component in the SkillVo design system.
+ * It extends the information-display-base class and provides avatar-specific styling.
  */
 
 /* ==========================================================================
    TABLE OF CONTENTS:
    
-   1. VARIABLES & CONFIGURATION
-   2. BASE AVATAR STYLES
-   3. AVATAR TYPES
+   1. IMPORTS
+   2. VARIABLES & CONFIGURATION
+   3. AVATAR BASE CLASS
    4. AVATAR VARIATIONS
-   5. AVATAR STATES
-   6. RESPONSIVE ADAPTATIONS
-   7. ACCESSIBILITY ENHANCEMENTS
+   5. AVATAR TYPES
+   6. AVATAR STATES
+   7. AVATAR GROUP
+   8. RESPONSIVE ADAPTATIONS
+   9. ACCESSIBILITY ENHANCEMENTS
    ========================================================================== */
 
-   @use './../../abstracts/' as *;
-   @use './../../base/' as *;
-   
-   /* ==========================================================================
-      1. VARIABLES & CONFIGURATION
-      ========================================================================== */
-   
-   // Avatar sizes
-   $avatar-size-xs: 24px;
-   $avatar-size-sm: 32px;
-   $avatar-size-md: 40px;
-   $avatar-size-lg: 48px;
-   $avatar-size-xl: 64px;
-   $avatar-size-xxl: 80px;
-   
-   // Font sizes for initials
-   $avatar-font-size-xs: var(--sv-text-xs);
-   $avatar-font-size-sm: var(--sv-text-sm);
-   $avatar-font-size-md: var(--sv-text-base);
-   $avatar-font-size-lg: var(--sv-text-lg);
-   $avatar-font-size-xl: var(--sv-text-xl);
-   $avatar-font-size-xxl: var(--sv-text-2xl);
-   
-   // Avatar colors
-   $avatar-bg-default: var(--sv-bg-element);
-   $avatar-text-default: var(--sv-text-primary);
-   $avatar-bg-primary: var(--sv-primary);
-   $avatar-text-primary: var(--sv-text-on-dark);
-   $avatar-bg-secondary: var(--sv-secondary);
-   $avatar-text-secondary: var(--sv-text-on-dark);
-   
-   // Avatar border and status
-   $avatar-border-width: 2px;
-   $avatar-border-color: var(--sv-bg-surface);
-   $avatar-status-size-xs: 8px;
-   $avatar-status-size-sm: 10px;
-   $avatar-status-size-md: 12px;
-   $avatar-status-size-lg: 14px;
-   $avatar-status-size-xl: 16px;
-   $avatar-status-border-width: 2px;
-   
-   // Group avatars
-   $avatar-group-spacing: -8px;
-   
-   /* ==========================================================================
-      2. BASE AVATAR STYLES
-      ========================================================================== */
-   
-   .sv-avatar {
-     // Extend the information display base class
-     @extend .sv-info-display-base;
-     
-     // Override and add avatar-specific styles
-     position: relative;
-     display: inline-flex;
-     align-items: center;
-     justify-content: center;
-     overflow: hidden;
-     border-radius: 50%; // Default circular shape
-     
-     // Default sizing
-     width: $avatar-size-md;
-     height: $avatar-size-md;
-     
-     // Default colors
-     background-color: $avatar-bg-default;
-     color: $avatar-text-default;
-     
-     // Prevent text selection
-     user-select: none;
-     
-     // Text styling (for initial avatars)
-     font-size: $avatar-font-size-md;
-     font-weight: var(--sv-font-medium);
-     text-transform: uppercase;
-     
-     // Image styling
-     img {
-       width: 100%;
-       height: 100%;
-       object-fit: cover;
-       object-position: center;
-     }
-     
-     // Icon styling
-     .sv-avatar-icon {
-       width: 60%;
-       height: 60%;
-       display: flex;
-       align-items: center;
-       justify-content: center;
-     }
-   }
-   
-   // Avatar wrapper (for status indicators, etc.)
-   .sv-avatar-wrapper {
-     position: relative;
-     display: inline-block;
-   }
-   
-   /* ==========================================================================
-      3. AVATAR TYPES
-      ========================================================================== */
-   
-   // Initials avatar (text-based)
-   .sv-avatar-initials {
-     text-align: center;
-     line-height: 1;
-   }
-   
-   // Image avatar
-   .sv-avatar-image {
-     background-color: transparent;
-   }
-   
-   // Icon avatar
-   .sv-avatar-with-icon {
-     .sv-avatar-icon {
-       color: currentColor;
-     }
-   }
-   
-   // Avatar with status indicator
-   .sv-avatar-with-status {
-     .sv-avatar-status {
-       position: absolute;
-       bottom: 0;
-       right: 0;
-       width: $avatar-status-size-md;
-       height: $avatar-status-size-md;
-       border-radius: 50%;
-       background-color: $avatar-bg-default;
-       border: $avatar-status-border-width solid $avatar-border-color;
-       
-       // Status types
-       &.sv-avatar-status-success {
-         background-color: var(--sv-success);
-       }
-       
-       &.sv-avatar-status-warning {
-         background-color: var(--sv-warning);
-       }
-       
-       &.sv-avatar-status-error {
-         background-color: var(--sv-error);
-       }
-       
-       &.sv-avatar-status-info {
-         background-color: var(--sv-info);
-       }
-       
-       &.sv-avatar-status-neutral {
-         background-color: var(--sv-text-secondary);
-       }
-       
-       &.sv-avatar-status-offline {
-         background-color: var(--sv-text-tertiary);
-       }
-     }
-   }
-   
-   // Avatar with badge
-   .sv-avatar-with-badge {
-     .sv-avatar-badge {
-       position: absolute;
-       top: 0;
-       right: 0;
-       transform: translate(25%, -25%);
-       z-index: 1;
-     }
-   }
-   
-   // Avatar group
-   .sv-avatar-group {
-     display: inline-flex;
-     
-     .sv-avatar {
-       border: $avatar-border-width solid $avatar-border-color;
-       
-       &:not(:first-child) {
-         margin-left: $avatar-group-spacing;
-       }
-     }
-     
-     // Stack variants
-     &.sv-avatar-group-stacked {
-       .sv-avatar {
-         box-shadow: var(--sv-shadow-sm);
-       }
-     }
-     
-     // Counter indicator for additional avatars
-     .sv-avatar-counter {
-       background-color: var(--sv-bg-element);
-       color: var(--sv-text-secondary);
-       font-size: $avatar-font-size-sm;
-       display: inline-flex;
-       align-items: center;
-       justify-content: center;
-     }
-   }
-   
-   /* ==========================================================================
-      4. AVATAR VARIATIONS
-      ========================================================================== */
-   
-   // Size variations
-   .sv-avatar-xs {
-     width: $avatar-size-xs;
-     height: $avatar-size-xs;
-     font-size: $avatar-font-size-xs;
-     
-     &.sv-avatar-with-status {
-       .sv-avatar-status {
-         width: $avatar-status-size-xs;
-         height: $avatar-status-size-xs;
-       }
-     }
-   }
-   
-   .sv-avatar-sm {
-     width: $avatar-size-sm;
-     height: $avatar-size-sm;
-     font-size: $avatar-font-size-sm;
-     
-     &.sv-avatar-with-status {
-       .sv-avatar-status {
-         width: $avatar-status-size-sm;
-         height: $avatar-status-size-sm;
-       }
-     }
-   }
-   
-   .sv-avatar-md {
-     width: $avatar-size-md;
-     height: $avatar-size-md;
-     font-size: $avatar-font-size-md;
-     
-     &.sv-avatar-with-status {
-       .sv-avatar-status {
-         width: $avatar-status-size-md;
-         height: $avatar-status-size-md;
-       }
-     }
-   }
-   
-   .sv-avatar-lg {
-     width: $avatar-size-lg;
-     height: $avatar-size-lg;
-     font-size: $avatar-font-size-lg;
-     
-     &.sv-avatar-with-status {
-       .sv-avatar-status {
-         width: $avatar-status-size-lg;
-         height: $avatar-status-size-lg;
-       }
-     }
-   }
-   
-   .sv-avatar-xl {
-     width: $avatar-size-xl;
-     height: $avatar-size-xl;
-     font-size: $avatar-font-size-xl;
-     
-     &.sv-avatar-with-status {
-       .sv-avatar-status {
-         width: $avatar-status-size-xl;
-         height: $avatar-status-size-xl;
-       }
-     }
-   }
-   
-   .sv-avatar-xxl {
-     width: $avatar-size-xxl;
-     height: $avatar-size-xxl;
-     font-size: $avatar-font-size-xxl;
-     
-     &.sv-avatar-with-status {
-       .sv-avatar-status {
-         width: $avatar-status-size-xl;
-         height: $avatar-status-size-xl;
-       }
-     }
-   }
-   
-   // Shape variations
-   .sv-avatar-square {
-     border-radius: var(--sv-radius-md);
-   }
-   
-   .sv-avatar-rounded {
-     border-radius: var(--sv-radius-lg);
-   }
-   
-   // Color variations
-   .sv-avatar-primary {
-     background-color: $avatar-bg-primary;
-     color: $avatar-text-primary;
-   }
-   
-   .sv-avatar-secondary {
-     background-color: $avatar-bg-secondary;
-     color: $avatar-text-secondary;
-   }
-   
-   // Avatar with border
-   .sv-avatar-bordered {
-     border: $avatar-border-width solid var(--sv-border-medium);
-     
-     &.sv-avatar-primary {
-       border-color: $avatar-bg-primary;
-     }
-     
-     &.sv-avatar-secondary {
-       border-color: $avatar-bg-secondary;
-     }
-   }
-   
-   // Avatar with shadow
-   .sv-avatar-shadow {
-     box-shadow: var(--sv-shadow-sm);
-   }
-   
-   // Avatar with gradient background
-   .sv-avatar-gradient {
-     background: linear-gradient(45deg, var(--sv-primary) 0%, var(--sv-info) 100%);
-     color: var(--sv-text-on-dark);
-   }
-   
-   /* ==========================================================================
-      5. AVATAR STATES
-      ========================================================================== */
-   
-   // Interactive avatar
-   .sv-avatar-interactive {
-     cursor: pointer;
-     transition: transform 0.2s ease, box-shadow 0.2s ease;
-     
-     &:hover {
-       transform: scale(1.05);
-       box-shadow: var(--sv-shadow-md);
-     }
-     
-     &:active {
-       transform: scale(0.95);
-     }
-   }
-   
-   // Avatar with overlay on hover
-   .sv-avatar-with-overlay {
-     &:hover::after {
-       content: "";
-       position: absolute;
-       top: 0;
-       left: 0;
-       width: 100%;
-       height: 100%;
-       background-color: rgba(0, 0, 0, 0.3);
-       display: flex;
-       align-items: center;
-       justify-content: center;
-     }
-     
-     &.sv-avatar-editable {
-       &:hover::after {
-         content: "Edit";
-         color: var(--sv-text-on-dark);
-         font-size: 0.75em;
-       }
-     }
-   }
-   
-   // Loading state
-   .sv-avatar-loading {
-     position: relative;
-     overflow: hidden;
-     
-     &::before {
-       content: "";
-       position: absolute;
-       top: 0;
-       left: -100%;
-       width: 50%;
-       height: 100%;
-       background: linear-gradient(
-         90deg,
-         transparent,
-         rgba(255, 255, 255, 0.3),
-         transparent
-       );
-       animation: sv-avatar-loading 1.5s infinite;
-     }
-   }
-   
-   @keyframes sv-avatar-loading {
-     from {
-       left: -100%;
-     }
-     to {
-       left: 100%;
-     }
-   }
-   
-   // Disabled state
-   .sv-avatar-disabled {
-     opacity: 0.5;
-     filter: grayscale(100%);
-     pointer-events: none;
-   }
-   
-   /* ==========================================================================
-      6. RESPONSIVE ADAPTATIONS
-      ========================================================================== */
-   
-   @include breakpoint-down('md') {
-     // Adjust group spacing on medium screens
-     .sv-avatar-group {
-       .sv-avatar:not(:first-child) {
-         margin-left: calc($avatar-group-spacing * 1.5);
-       }
-     }
-   }
-   
-   @include breakpoint-down('sm') {
-     // Size adjustments for small screens
-     .sv-avatar-responsive {
-       &.sv-avatar-xl {
-         width: $avatar-size-lg;
-         height: $avatar-size-lg;
-         font-size: $avatar-font-size-lg;
-       }
-       
-       &.sv-avatar-xxl {
-         width: $avatar-size-xl;
-         height: $avatar-size-xl;
-         font-size: $avatar-font-size-xl;
-       }
-     }
-     
-     // Compact avatar groups on small screens
-     .sv-avatar-group {
-       .sv-avatar:not(:first-child) {
-         margin-left: calc($avatar-group-spacing * 2);
-       }
-       
-       // Vertical stacking option for small screens if needed
-       &.sv-avatar-group-stack-sm {
-         flex-direction: column;
-         align-items: flex-start;
-         
-         .sv-avatar {
-           margin-left: 0 !important;
-           margin-bottom: var(--sv-space-1);
-         }
-       }
-     }
-   }
-   
-   /* ==========================================================================
-      7. ACCESSIBILITY ENHANCEMENTS
-      ========================================================================== */
-   
-   // Focus visible for interactive avatars
-   button.sv-avatar,
-   a.sv-avatar,
-   .sv-avatar-interactive {
-     &:focus-visible {
-       outline: $focus-ring-width solid $focus-ring-color;
-       outline-offset: $focus-ring-offset;
-     }
-   }
-   
-   // Screen reader text
-   .sv-avatar-sr-text {
-     @include visually-hidden;
-   }
-   
-   // High contrast mode support
-   @media (forced-colors: active) {
-     .sv-avatar {
-       border: 1px solid CanvasText;
-       
-       &.sv-avatar-primary,
-       &.sv-avatar-secondary,
-       &.sv-avatar-gradient {
-         background-color: Highlight;
-         color: HighlightText;
-       }
-     }
-     
-     .sv-avatar-with-status {
-       .sv-avatar-status {
-         border: 1px solid CanvasText;
-         
-         &.sv-avatar-status-success,
-         &.sv-avatar-status-warning,
-         &.sv-avatar-status-error,
-         &.sv-avatar-status-info {
-           background-color: Highlight;
-         }
-       }
-     }
-     
-     .sv-avatar-group {
-       .sv-avatar {
-         border: 1px solid CanvasText;
-       }
-     }
-     
-     .sv-avatar-bordered {
-       border: 2px solid CanvasText;
-     }
-   }
-   
-   // Reduced motion preference
-   @media (prefers-reduced-motion: reduce) {
-     .sv-avatar-loading::before {
-       animation: none;
-     }
-     
-     .sv-avatar-interactive {
-       transition: none;
-       
-       &:hover,
-       &:active {
-         transform: none;
-       }
-     }
-   }
+/* ==========================================================================
+   1. IMPORTS
+   ========================================================================== */
+@use './../../abstracts/variables/' as *;
+@use './../../base/utils/mixins/state' as state;
+@use './../../base/utils/mixins/layout' as layout;
+@use './../../base/utils/mixins/responsive' as responsive;
+
+/* ==========================================================================
+   2. VARIABLES & CONFIGURATION
+   ========================================================================== */
+
+// Avatar-specific variables
+$avatar-size-xs: var(--sv-size-6);
+$avatar-size-sm: var(--sv-size-8);
+$avatar-size-md: var(--sv-size-10);
+$avatar-size-lg: var(--sv-size-12);
+$avatar-size-xl: var(--sv-size-16);
+$avatar-size-xxl: var(--sv-size-20);
+
+// Font sizes for initials
+$avatar-font-size-xs: var(--sv-font-size-xs);
+$avatar-font-size-sm: var(--sv-font-size-sm);
+$avatar-font-size-md: var(--sv-font-size-base);
+$avatar-font-size-lg: var(--sv-font-size-lg);
+$avatar-font-size-xl: var(--sv-font-size-xl);
+$avatar-font-size-xxl: var(--sv-font-size-2xl);
+
+// Avatar colors
+$avatar-bg-default: var(--sv-bg-element);
+$avatar-text-default: var(--sv-text-primary);
+$avatar-bg-primary: var(--sv-primary);
+$avatar-text-primary: var(--sv-text-on-dark);
+$avatar-bg-secondary: var(--sv-secondary);
+$avatar-text-secondary: var(--sv-text-on-dark);
+
+// Avatar border and status
+$avatar-border-width: 2px;
+$avatar-border-color: var(--sv-bg-surface);
+$avatar-status-size-xs: var(--sv-size-2);
+$avatar-status-size-sm: var(--sv-size-2-5);
+$avatar-status-size-md: var(--sv-size-3);
+$avatar-status-size-lg: var(--sv-size-3-5);
+$avatar-status-size-xl: var(--sv-size-4);
+$avatar-status-border-width: 2px;
+
+// Group avatars
+$avatar-group-spacing: calc(var(--sv-space-2) * -1);
+
+// Transitions
+$avatar-transition-duration: var(--sv-motion-duration-short);
+$avatar-transition-timing: var(--sv-motion-ease-standard);
+
+/* ==========================================================================
+   3. AVATAR BASE CLASS
+   ========================================================================== */
+
+.sv-avatar {
+  // Extend the information display base class
+  @extend .sv-information-display-base;
+  
+  // Override and add avatar-specific styles
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border-radius: 50%; // Default circular shape
+  
+  // Default sizing
+  width: $avatar-size-md;
+  height: $avatar-size-md;
+  
+  // Default colors
+  background-color: $avatar-bg-default;
+  color: $avatar-text-default;
+  
+  // Prevent text selection
+  user-select: none;
+  
+  // Text styling (for initial avatars)
+  font-size: $avatar-font-size-md;
+  font-weight: var(--sv-font-weight-medium);
+  text-transform: uppercase;
+  
+  // Transitions for smooth state changes
+  transition: opacity $avatar-transition-duration $avatar-transition-timing,
+              transform $avatar-transition-duration $avatar-transition-timing,
+              box-shadow $avatar-transition-duration $avatar-transition-timing;
+  
+  // BEM pattern for avatar parts
+  &__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+  
+  &__icon {
+    width: 60%;
+    height: 60%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  &__initials {
+    text-align: center;
+    line-height: 1;
+  }
+  
+  &__status {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: $avatar-status-size-md;
+    height: $avatar-status-size-md;
+    border-radius: 50%;
+    background-color: $avatar-bg-default;
+    border: $avatar-status-border-width solid $avatar-border-color;
+  }
+  
+  &__badge {
+    position: absolute;
+    top: 0;
+    right: 0;
+    transform: translate(25%, -25%);
+    z-index: 1;
+  }
+}
+
+// Avatar wrapper (for status indicators, etc.)
+.sv-avatar-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+/* ==========================================================================
+   4. AVATAR VARIATIONS
+   ========================================================================== */
+
+.sv-avatar {
+  // Size variations
+  &--xs {
+    width: $avatar-size-xs;
+    height: $avatar-size-xs;
+    font-size: $avatar-font-size-xs;
+    
+    .sv-avatar__status {
+      width: $avatar-status-size-xs;
+      height: $avatar-status-size-xs;
+    }
+  }
+  
+  &--sm {
+    width: $avatar-size-sm;
+    height: $avatar-size-sm;
+    font-size: $avatar-font-size-sm;
+    
+    .sv-avatar__status {
+      width: $avatar-status-size-sm;
+      height: $avatar-status-size-sm;
+    }
+  }
+  
+  &--md {
+    width: $avatar-size-md;
+    height: $avatar-size-md;
+    font-size: $avatar-font-size-md;
+    
+    .sv-avatar__status {
+      width: $avatar-status-size-md;
+      height: $avatar-status-size-md;
+    }
+  }
+  
+  &--lg {
+    width: $avatar-size-lg;
+    height: $avatar-size-lg;
+    font-size: $avatar-font-size-lg;
+    
+    .sv-avatar__status {
+      width: $avatar-status-size-lg;
+      height: $avatar-status-size-lg;
+    }
+  }
+  
+  &--xl {
+    width: $avatar-size-xl;
+    height: $avatar-size-xl;
+    font-size: $avatar-font-size-xl;
+    
+    .sv-avatar__status {
+      width: $avatar-status-size-xl;
+      height: $avatar-status-size-xl;
+    }
+  }
+  
+  &--xxl {
+    width: $avatar-size-xxl;
+    height: $avatar-size-xxl;
+    font-size: $avatar-font-size-xxl;
+    
+    .sv-avatar__status {
+      width: $avatar-status-size-xl;
+      height: $avatar-status-size-xl;
+    }
+  }
+  
+  // Shape variations
+  &--rounded {
+    border-radius: var(--sv-radius-md);
+  }
+  
+  &--square {
+    border-radius: var(--sv-radius-sm);
+  }
+  
+  // Color variations
+  &--primary {
+    background-color: $avatar-bg-primary;
+    color: $avatar-text-primary;
+  }
+  
+  &--secondary {
+    background-color: $avatar-bg-secondary;
+    color: $avatar-text-secondary;
+  }
+  
+  &--success {
+    background-color: var(--sv-success);
+    color: var(--sv-text-on-dark);
+  }
+  
+  &--warning {
+    background-color: var(--sv-warning);
+    color: var(--sv-text-on-dark);
+  }
+  
+  &--error {
+    background-color: var(--sv-error);
+    color: var(--sv-text-on-dark);
+  }
+  
+  &--info {
+    background-color: var(--sv-info);
+    color: var(--sv-text-on-dark);
+  }
+  
+  // Border variations
+  &--bordered {
+    border: $avatar-border-width solid $avatar-border-color;
+    
+    &.sv-avatar--primary {
+      border-color: var(--sv-primary);
+    }
+    
+    &.sv-avatar--secondary {
+      border-color: var(--sv-secondary);
+    }
+    
+    &.sv-avatar--success {
+      border-color: var(--sv-success);
+    }
+    
+    &.sv-avatar--warning {
+      border-color: var(--sv-warning);
+    }
+    
+    &.sv-avatar--error {
+      border-color: var(--sv-error);
+    }
+    
+    &.sv-avatar--info {
+      border-color: var(--sv-info);
+    }
+  }
+}
+
+/* ==========================================================================
+   5. AVATAR TYPES
+   ========================================================================== */
+
+.sv-avatar {
+  // Status types
+  &__status {
+    &--online {
+      background-color: var(--sv-success);
+    }
+    
+    &--offline {
+      background-color: var(--sv-text-tertiary);
+    }
+    
+    &--away {
+      background-color: var(--sv-warning);
+    }
+    
+    &--busy {
+      background-color: var(--sv-error);
+    }
+    
+    &--dnd {
+      background-color: var(--sv-error);
+    }
+  }
+  
+  // Avatar with image
+  &--with-image {
+    background-color: transparent;
+  }
+  
+  // Avatar with fallback
+  &--with-fallback {
+    position: relative;
+    
+    .sv-avatar__fallback {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      
+      &.is-active {
+        opacity: 1;
+      }
+    }
+  }
+}
+
+/* ==========================================================================
+   6. AVATAR STATES
+   ========================================================================== */
+
+.sv-avatar {
+  // Interactive avatar
+  &.is-interactive {
+    cursor: pointer;
+    
+    &:hover:not(:disabled):not(.disabled) {
+      transform: scale(1.05);
+      box-shadow: var(--sv-shadow-sm);
+    }
+    
+    &:active:not(:disabled):not(.disabled) {
+      transform: scale(0.95);
+    }
+    
+    &:focus-visible {
+      @include state.focus-visible-state;
+    }
+  }
+  
+  // Disabled state
+  &.is-disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+  
+  // Loading state
+  &.is-loading {
+    background-color: var(--sv-bg-element);
+    color: transparent;
+    
+    &::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(
+        90deg,
+        rgba(var(--sv-border-light-rgb), 0.2) 25%,
+        rgba(var(--sv-border-light-rgb), 0.4) 50%,
+        rgba(var(--sv-border-light-rgb), 0.2) 75%
+      );
+      background-size: 200% 100%;
+      animation: avatar-skeleton-loading 1.5s infinite;
+    }
+  }
+}
+
+@keyframes avatar-skeleton-loading {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* ==========================================================================
+   7. AVATAR GROUP
+   ========================================================================== */
+
+.sv-avatar-group {
+  display: inline-flex;
+  
+  // BEM pattern for avatar group
+  &__item {
+    position: relative;
+    
+    &:not(:first-child) {
+      margin-left: $avatar-group-spacing;
+    }
+  }
+  
+  // Stacked avatars
+  &--stacked {
+    .sv-avatar {
+      border: $avatar-border-width solid $avatar-border-color;
+      
+      &:hover {
+        transform: translateY(-4px);
+      }
+    }
+  }
+  
+  // Overlap variations
+  &--overlap-sm {
+    .sv-avatar-group__item:not(:first-child) {
+      margin-left: calc($avatar-group-spacing * 0.5);
+    }
+  }
+  
+  &--overlap-lg {
+    .sv-avatar-group__item:not(:first-child) {
+      margin-left: calc($avatar-group-spacing * 1.5);
+    }
+  }
+  
+  // Count indicator
+  &__count {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: $avatar-size-md;
+    height: $avatar-size-md;
+    background-color: var(--sv-bg-element);
+    color: var(--sv-text-secondary);
+    border-radius: 50%;
+    font-size: $avatar-font-size-sm;
+    border: $avatar-border-width solid $avatar-border-color;
+    padding: 0 var(--sv-space-2);
+    margin-left: $avatar-group-spacing;
+  }
+}
+
+/* ==========================================================================
+   8. RESPONSIVE ADAPTATIONS
+   ========================================================================== */
+
+@include responsive.media-breakpoint-down(sm) {
+  .sv-avatar {
+    // Slightly smaller on mobile
+    &--lg {
+      width: $avatar-size-md;
+      height: $avatar-size-md;
+      font-size: $avatar-font-size-md;
+    }
+    
+    &--xl {
+      width: $avatar-size-lg;
+      height: $avatar-size-lg;
+      font-size: $avatar-font-size-lg;
+    }
+    
+    &--xxl {
+      width: $avatar-size-xl;
+      height: $avatar-size-xl;
+      font-size: $avatar-font-size-xl;
+    }
+  }
+  
+  .sv-avatar-group {
+    // Limit the number of visible avatars on small screens
+    &__item:nth-child(n+5) {
+      display: none;
+    }
+    
+    // Show count earlier
+    &__count {
+      display: inline-flex;
+    }
+  }
+}
+
+/* ==========================================================================
+   9. ACCESSIBILITY ENHANCEMENTS
+   ========================================================================== */
+
+// Improve focus visibility
+.sv-avatar:focus-visible {
+  outline: var(--sv-focus-ring-width) solid var(--sv-focus-ring-color);
+  outline-offset: var(--sv-focus-ring-offset);
+}
+
+// High contrast mode enhancements
+@media (forced-colors: active) {
+  .sv-avatar {
+    border: 1px solid CanvasText;
+    forced-color-adjust: none;
+    
+    &__status {
+      border: 1px solid Canvas;
+      
+      &--online {
+        background-color: Highlight;
+      }
+      
+      &--offline {
+        background-color: GrayText;
+      }
+      
+      &--away, &--busy, &--dnd {
+        border: 1px solid CanvasText;
+      }
+    }
+  }
+  
+  .sv-avatar-group .sv-avatar {
+    border: 2px solid Canvas;
+  }
+}

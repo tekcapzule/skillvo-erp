@@ -1,0 +1,567 @@
+/**
+ * Text Component - Component-level Styles
+ * Version: 1.1.0
+ * Last Updated: July 15, 2024
+ * 
+ * This file defines styles for the Text component in the SkillVo design system.
+ * It extends the information-display-base class and provides text-specific styling.
+ */
+
+/* ==========================================================================
+   TABLE OF CONTENTS:
+   
+   1. IMPORTS
+   2. VARIABLES & CONFIGURATION
+   3. TEXT BASE CLASS
+   4. TEXT VARIATIONS
+   5. TEXT MODIFIERS
+   6. TEXT STATES
+   7. TEXT HELPERS
+   8. RESPONSIVE ADAPTATIONS
+   9. ACCESSIBILITY ENHANCEMENTS
+   ========================================================================== */
+
+/* ==========================================================================
+   1. IMPORTS
+   ========================================================================== */
+@use './../../abstracts/variables/' as *;
+@use './../../base/utils/mixins/state' as state;
+@use './../../base/utils/mixins/layout' as layout;
+@use './../../base/utils/mixins/responsive' as responsive;
+@use './../../base/utils/mixins/typography' as typography;
+
+/* ==========================================================================
+   2. VARIABLES & CONFIGURATION
+   ========================================================================== */
+
+// Text-specific variables
+$text-font-family: var(--sv-font-family-base);
+$text-font-size-base: var(--sv-font-size-base);
+$text-line-height: var(--sv-line-height-base);
+$text-color: var(--sv-text-primary);
+$text-secondary-color: var(--sv-text-secondary);
+$text-tertiary-color: var(--sv-text-tertiary);
+$text-disabled-color: var(--sv-text-disabled);
+$text-margin-bottom: var(--sv-space-3);
+$text-transition-duration: var(--sv-motion-duration-short);
+$text-transition-timing: var(--sv-motion-ease-standard);
+
+/* ==========================================================================
+   3. TEXT BASE CLASS
+   ========================================================================== */
+
+.sv-text {
+  // Extend the information display base class
+  @extend .sv-information-display-base;
+  
+  // Override and add text-specific styles
+  display: block;
+  font-family: $text-font-family;
+  font-size: $text-font-size-base;
+  line-height: $text-line-height;
+  color: $text-color;
+  margin: 0 0 $text-margin-bottom 0;
+  
+  // Transitions for state changes
+  transition: color $text-transition-duration $text-transition-timing,
+              opacity $text-transition-duration $text-transition-timing;
+}
+
+/* ==========================================================================
+   4. TEXT VARIATIONS
+   ========================================================================== */
+
+.sv-text {
+  // Size variations
+  &--xs {
+    font-size: var(--sv-font-size-xs);
+  }
+  
+  &--sm {
+    font-size: var(--sv-font-size-sm);
+  }
+  
+  &--base {
+    font-size: var(--sv-font-size-base);
+  }
+  
+  &--lg {
+    font-size: var(--sv-font-size-lg);
+  }
+  
+  &--xl {
+    font-size: var(--sv-font-size-xl);
+  }
+  
+  &--2xl {
+    font-size: var(--sv-font-size-2xl);
+  }
+  
+  &--3xl {
+    font-size: var(--sv-font-size-3xl);
+  }
+  
+  // Weight variations
+  &--light {
+    font-weight: var(--sv-font-weight-light);
+  }
+  
+  &--normal {
+    font-weight: var(--sv-font-weight-normal);
+  }
+  
+  &--medium {
+    font-weight: var(--sv-font-weight-medium);
+  }
+  
+  &--semibold {
+    font-weight: var(--sv-font-weight-semibold);
+  }
+  
+  &--bold {
+    font-weight: var(--sv-font-weight-bold);
+  }
+  
+  // Color variations
+  &--primary {
+    color: var(--sv-text-primary);
+  }
+  
+  &--secondary {
+    color: var(--sv-text-secondary);
+  }
+  
+  &--tertiary {
+    color: var(--sv-text-tertiary);
+  }
+  
+  &--on-dark {
+    color: var(--sv-text-on-dark);
+  }
+  
+  &--on-light {
+    color: var(--sv-text-on-light);
+  }
+  
+  &--brand {
+    color: var(--sv-primary);
+  }
+  
+  &--success {
+    color: var(--sv-success);
+  }
+  
+  &--warning {
+    color: var(--sv-warning);
+  }
+  
+  &--error {
+    color: var(--sv-error);
+  }
+  
+  &--info {
+    color: var(--sv-info);
+  }
+  
+  // Line height variations
+  &--tight {
+    line-height: var(--sv-line-height-tight);
+  }
+  
+  &--normal {
+    line-height: var(--sv-line-height-normal);
+  }
+  
+  &--loose {
+    line-height: var(--sv-line-height-loose);
+  }
+}
+
+/* ==========================================================================
+   5. TEXT MODIFIERS
+   ========================================================================== */
+
+.sv-text {
+  // Text alignment
+  &--left {
+    text-align: left;
+  }
+  
+  &--center {
+    text-align: center;
+  }
+  
+  &--right {
+    text-align: right;
+  }
+  
+  &--justify {
+    text-align: justify;
+  }
+  
+  // Text transformation
+  &--uppercase {
+    text-transform: uppercase;
+  }
+  
+  &--lowercase {
+    text-transform: lowercase;
+  }
+  
+  &--capitalize {
+    text-transform: capitalize;
+  }
+  
+  // Text decoration
+  &--underline {
+    text-decoration: underline;
+  }
+  
+  &--line-through {
+    text-decoration: line-through;
+  }
+  
+  &--no-decoration {
+    text-decoration: none;
+  }
+  
+  // Font style
+  &--italic {
+    font-style: italic;
+  }
+  
+  &--normal-style {
+    font-style: normal;
+  }
+  
+  // Text wrapping
+  &--nowrap {
+    white-space: nowrap;
+  }
+  
+  &--wrap {
+    white-space: normal;
+    word-wrap: break-word;
+  }
+  
+  &--truncate {
+    @include typography.truncate;
+  }
+  
+  // Letter spacing
+  &--tracked {
+    letter-spacing: 0.05em;
+  }
+  
+  &--tight-tracked {
+    letter-spacing: -0.05em;
+  }
+  
+  // Paragraph spacing
+  &--spaced {
+    margin-bottom: calc($text-margin-bottom * 1.5);
+  }
+  
+  &--compact {
+    margin-bottom: calc($text-margin-bottom * 0.5);
+  }
+  
+  &--no-margin {
+    margin-bottom: 0;
+  }
+  
+  // Font family variations
+  &--monospace {
+    font-family: var(--sv-font-family-mono);
+  }
+  
+  &--serif {
+    font-family: var(--sv-font-family-serif);
+  }
+}
+
+/* ==========================================================================
+   6. TEXT STATES
+   ========================================================================== */
+
+.sv-text {
+  // Disabled state
+  &.is-disabled {
+    opacity: 0.6;
+    color: $text-disabled-color;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+  
+  // Interactive text
+  &.is-interactive {
+    cursor: pointer;
+    
+    &:hover:not(:disabled):not(.disabled) {
+      color: var(--sv-primary);
+    }
+    
+    &:focus-visible {
+      @include state.focus-visible-state;
+    }
+  }
+  
+  // Loading/skeleton state
+  &.is-loading {
+    position: relative;
+    color: transparent;
+    overflow: hidden;
+    
+    &::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(
+        90deg,
+        rgba(var(--sv-border-light-rgb), 0.2) 25%,
+        rgba(var(--sv-border-light-rgb), 0.4) 50%,
+        rgba(var(--sv-border-light-rgb), 0.2) 75%
+      );
+      background-size: 200% 100%;
+      animation: text-skeleton-loading 1.5s infinite;
+      border-radius: var(--sv-radius-sm);
+    }
+  }
+  
+  // Highlighted/emphasized text
+  &.is-highlighted {
+    background-color: rgba(var(--sv-warning-rgb), 0.2);
+    padding: 0 var(--sv-space-1);
+    border-radius: var(--sv-radius-sm);
+  }
+}
+
+@keyframes text-skeleton-loading {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* ==========================================================================
+   7. TEXT HELPERS
+   ========================================================================== */
+
+// Helper classes for common text patterns
+.sv-text-heading {
+  font-weight: var(--sv-font-weight-bold);
+  line-height: var(--sv-line-height-tight);
+  color: var(--sv-text-primary);
+  
+  &--1 {
+    font-size: var(--sv-font-size-3xl);
+    margin-bottom: var(--sv-space-6);
+  }
+  
+  &--2 {
+    font-size: var(--sv-font-size-2xl);
+    margin-bottom: var(--sv-space-5);
+  }
+  
+  &--3 {
+    font-size: var(--sv-font-size-xl);
+    margin-bottom: var(--sv-space-4);
+  }
+  
+  &--4 {
+    font-size: var(--sv-font-size-lg);
+    margin-bottom: var(--sv-space-3);
+  }
+  
+  &--5 {
+    font-size: var(--sv-font-size-base);
+    margin-bottom: var(--sv-space-2);
+  }
+  
+  &--6 {
+    font-size: var(--sv-font-size-sm);
+    margin-bottom: var(--sv-space-2);
+  }
+}
+
+.sv-text-caption {
+  font-size: var(--sv-font-size-xs);
+  color: var(--sv-text-secondary);
+  margin-bottom: var(--sv-space-2);
+}
+
+.sv-text-lead {
+  font-size: var(--sv-font-size-lg);
+  line-height: var(--sv-line-height-normal);
+  margin-bottom: var(--sv-space-4);
+}
+
+.sv-text-small {
+  font-size: var(--sv-font-size-sm);
+  line-height: var(--sv-line-height-normal);
+}
+
+.sv-text-meta {
+  font-size: var(--sv-font-size-xs);
+  color: var(--sv-text-tertiary);
+  font-style: italic;
+}
+
+.sv-text-link {
+  color: var(--sv-primary);
+  text-decoration: none;
+  cursor: pointer;
+  transition: color $text-transition-duration $text-transition-timing;
+  
+  &:hover {
+    text-decoration: underline;
+  }
+  
+  &:focus-visible {
+    @include state.focus-visible-state;
+  }
+  
+  &.sv-text-link--subtle {
+    color: var(--sv-text-secondary);
+    
+    &:hover {
+      color: var(--sv-primary);
+    }
+  }
+}
+
+/* ==========================================================================
+   8. RESPONSIVE ADAPTATIONS
+   ========================================================================== */
+
+@include responsive.media-breakpoint-down(lg) {
+  .sv-text-heading {
+    &--1 {
+      font-size: calc(var(--sv-font-size-3xl) * 0.9);
+    }
+    
+    &--2 {
+      font-size: calc(var(--sv-font-size-2xl) * 0.9);
+    }
+    
+    &--3 {
+      font-size: calc(var(--sv-font-size-xl) * 0.9);
+    }
+  }
+  
+  .sv-text-lead {
+    font-size: calc(var(--sv-font-size-lg) * 0.9);
+  }
+}
+
+@include responsive.media-breakpoint-down(md) {
+  .sv-text {
+    &--3xl {
+      font-size: var(--sv-font-size-2xl);
+    }
+    
+    &--2xl {
+      font-size: var(--sv-font-size-xl);
+    }
+    
+    &--xl {
+      font-size: var(--sv-font-size-lg);
+    }
+  }
+  
+  .sv-text-heading {
+    &--1 {
+      font-size: calc(var(--sv-font-size-2xl) * 1.1);
+      margin-bottom: var(--sv-space-5);
+    }
+    
+    &--2 {
+      font-size: var(--sv-font-size-xl);
+      margin-bottom: var(--sv-space-4);
+    }
+    
+    &--3 {
+      font-size: var(--sv-font-size-lg);
+      margin-bottom: var(--sv-space-3);
+    }
+  }
+}
+
+@include responsive.media-breakpoint-down(sm) {
+  .sv-text {
+    // Smaller margin on mobile
+    margin-bottom: calc($text-margin-bottom * 0.75);
+    
+    // Size adjustments
+    &--lg {
+      font-size: var(--sv-font-size-base);
+    }
+  }
+  
+  .sv-text-heading {
+    &--1 {
+      font-size: var(--sv-font-size-xl);
+      margin-bottom: var(--sv-space-4);
+    }
+    
+    &--2 {
+      font-size: var(--sv-font-size-lg);
+      margin-bottom: var(--sv-space-3);
+    }
+  }
+  
+  .sv-text-lead {
+    font-size: var(--sv-font-size-base);
+    margin-bottom: var(--sv-space-3);
+  }
+}
+
+/* ==========================================================================
+   9. ACCESSIBILITY ENHANCEMENTS
+   ========================================================================== */
+
+// High contrast mode support
+@media (forced-colors: active) {
+  .sv-text {
+    // Ensure text color contrasts with background
+    &--primary, &--secondary, &--tertiary {
+      color: CanvasText;
+    }
+    
+    &--brand, &--success, &--warning, &--error, &--info {
+      color: CanvasText;
+    }
+    
+    &.is-highlighted {
+      border: 1px solid CanvasText;
+    }
+  }
+  
+  .sv-text-link {
+    color: LinkText;
+    text-decoration: underline;
+    
+    &.sv-text-link--subtle {
+      color: LinkText;
+    }
+  }
+}
+
+// Increased text size for users who need larger text
+@media (prefers-reduced-motion: reduce) {
+  .sv-text {
+    &.is-loading::after {
+      animation: none;
+    }
+  }
+}
+
+// Screen reader text
+.sv-text-sr-only {
+  @include layout.hide-visually();
+} 

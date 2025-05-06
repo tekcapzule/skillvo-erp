@@ -1,501 +1,435 @@
 /**
- * Badge Component - UI Component Styles
- * Version: 1.0.0
- * Last Updated: April 29, 2025
+ * Badge Component - Component-level Styles
+ * Version: 1.1.0
+ * Last Updated: July 15, 2024
  * 
- * This file provides the styling for the sv-badge component,
- * which extends the sv-info-display-base class.
- * Badges are small visual indicators used to highlight items, 
- * display counts, or indicate status.
+ * This file defines styles for the Badge component in the SkillVo design system.
+ * It extends the information-display-base class and provides badge-specific styling.
  */
 
 /* ==========================================================================
    TABLE OF CONTENTS:
    
-   1. VARIABLES & CONFIGURATION
-   2. BASE BADGE STYLES
-   3. BADGE TYPES
-   4. BADGE POSITIONS
-   5. BADGE VARIANTS
-   6. BADGE STATES
-   7. RESPONSIVE ADAPTATIONS
-   8. ACCESSIBILITY ENHANCEMENTS
+   1. IMPORTS
+   2. VARIABLES & CONFIGURATION
+   3. BADGE BASE CLASS
+   4. BADGE TYPES
+   5. BADGE POSITIONS
+   6. BADGE VARIANTS
+   7. BADGE STATES
+   8. RESPONSIVE ADAPTATIONS
+   9. ACCESSIBILITY ENHANCEMENTS
    ========================================================================== */
 
-   @use './../../abstracts/' as *;
-   @use './../../base/' as *;
-   
-   /* ==========================================================================
-      1. VARIABLES & CONFIGURATION
-      ========================================================================== */
-   
-   // Badge-specific variables
-   $badge-font-size: var(--sv-text-xs);
-   $badge-font-weight: var(--sv-font-medium);
-   $badge-padding-x: var(--sv-padding-2);
-   $badge-padding-y: var(--sv-padding-1);
-   $badge-border-radius: var(--sv-radius-md);
-   $badge-min-width: 20px;
-   $badge-height: 20px;
-   
-   // Counter/dot badge
-   $badge-dot-size: 8px;
-   $badge-counter-size: 20px;
-   
-   // Badge colors
-   $badge-bg-default: var(--sv-bg-element);
-   $badge-text-default: var(--sv-text-primary);
-   $badge-bg-primary: var(--sv-primary);
-   $badge-text-primary: var(--sv-text-on-dark);
-   $badge-bg-secondary: var(--sv-secondary);
-   $badge-text-secondary: var(--sv-text-on-dark);
-   $badge-bg-success: var(--sv-success);
-   $badge-text-success: var(--sv-text-on-dark);
-   $badge-bg-warning: var(--sv-warning);
-   $badge-text-warning: var(--sv-text-on-dark);
-   $badge-bg-error: var(--sv-error);
-   $badge-text-error: var(--sv-text-on-dark);
-   $badge-bg-info: var(--sv-info);
-   $badge-text-info: var(--sv-text-on-dark);
-   
-   // Badge position offsets
-   $badge-offset: var(--sv-space-1);
-   
-   /* ==========================================================================
-      2. BASE BADGE STYLES
-      ========================================================================== */
-   
-   .sv-badge {
-     // Extend the information display base class
-     @extend .sv-info-display-base;
-     
-     // Override and add badge-specific styles
-     display: inline-flex;
-     align-items: center;
-     justify-content: center;
-     font-size: $badge-font-size;
-     font-weight: $badge-font-weight;
-     padding: $badge-padding-y $badge-padding-x;
-     border-radius: $badge-border-radius;
-     min-width: $badge-min-width;
-     height: $badge-height;
-     line-height: 1;
-     
-     // Default styling
-     background-color: $badge-bg-default;
-     color: $badge-text-default;
-     
-     // Ensure text is centered and doesn't wrap
-     text-align: center;
-     white-space: nowrap;
-     vertical-align: middle;
-   
-     // Prevent badges from being selected
-     user-select: none;
-   }
-   
-   // Badge wrapper (for positioned badges)
-   .sv-badge-wrapper {
-     position: relative;
-     display: inline-block;
-     vertical-align: middle;
-   }
-   
-   /* ==========================================================================
-      3. BADGE TYPES
-      ========================================================================== */
-   
-   // Counter badge (numeric)
-   .sv-badge-counter {
-     min-width: $badge-counter-size;
-     height: $badge-counter-size;
-     
-     // Truncate if the number becomes too large
-     &.sv-badge-truncate {
-       &[data-count="99+"],
-       &[data-count="999+"] {
-         &::after {
-           content: "99+";
-         }
-       }
-     }
-   }
-   
-   // Dot badge (no content, just a colored circle)
-   .sv-badge-dot {
-     min-width: $badge-dot-size;
-     height: $badge-dot-size;
-     border-radius: 50%;
-     padding: 0;
-   }
-   
-   // Pill badge (fully rounded ends)
-   .sv-badge-pill {
-     border-radius: var(--sv-radius-full);
-     padding-left: var(--sv-padding-3);
-     padding-right: var(--sv-padding-3);
-   }
-   
-   // Status badge (for system states)
-   .sv-badge-status {
-     &::before {
-       content: "";
-       display: inline-block;
-       width: 6px;
-       height: 6px;
-       border-radius: 50%;
-       margin-right: var(--sv-space-1);
-       background-color: currentColor;
-     }
-   }
-   
-   /* ==========================================================================
-      4. BADGE POSITIONS
-      ========================================================================== */
-   
-   // Position badges within a wrapper element
-   .sv-badge-wrapper {
-     .sv-badge-top-right {
-       position: absolute;
-       top: $badge-offset;
-       right: $badge-offset;
-       transform: translate(50%, -50%);
-     }
-     
-     .sv-badge-top-left {
-       position: absolute;
-       top: $badge-offset;
-       left: $badge-offset;
-       transform: translate(-50%, -50%);
-     }
-     
-     .sv-badge-bottom-right {
-       position: absolute;
-       bottom: $badge-offset;
-       right: $badge-offset;
-       transform: translate(50%, 50%);
-     }
-     
-     .sv-badge-bottom-left {
-       position: absolute;
-       bottom: $badge-offset;
-       left: $badge-offset;
-       transform: translate(-50%, 50%);
-     }
-     
-     // Special positioning for dot badges
-     .sv-badge-dot {
-       &.sv-badge-top-right {
-         top: 0;
-         right: 0;
-       }
-       
-       &.sv-badge-top-left {
-         top: 0;
-         left: 0;
-       }
-       
-       &.sv-badge-bottom-right {
-         bottom: 0;
-         right: 0;
-       }
-       
-       &.sv-badge-bottom-left {
-         bottom: 0;
-         left: 0;
-       }
-     }
-   }
-   
-   /* ==========================================================================
-      5. BADGE VARIANTS
-      ========================================================================== */
-   
-   // Color variants
-   .sv-badge-primary {
-     background-color: $badge-bg-primary;
-     color: $badge-text-primary;
-   }
-   
-   .sv-badge-secondary {
-     background-color: $badge-bg-secondary;
-     color: $badge-text-secondary;
-   }
-   
-   .sv-badge-success {
-     background-color: $badge-bg-success;
-     color: $badge-text-success;
-   }
-   
-   .sv-badge-warning {
-     background-color: $badge-bg-warning;
-     color: $badge-text-warning;
-   }
-   
-   .sv-badge-error {
-     background-color: $badge-bg-error;
-     color: $badge-text-error;
-   }
-   
-   .sv-badge-info {
-     background-color: $badge-bg-info;
-     color: $badge-text-info;
-   }
-   
-   // Outlined variants
-   .sv-badge-outlined {
-     background-color: transparent;
-     border: 1px solid currentColor;
-     
-     &.sv-badge-primary {
-       color: $badge-bg-primary;
-     }
-     
-     &.sv-badge-secondary {
-       color: $badge-bg-secondary;
-     }
-     
-     &.sv-badge-success {
-       color: $badge-bg-success;
-     }
-     
-     &.sv-badge-warning {
-       color: $badge-bg-warning;
-     }
-     
-     &.sv-badge-error {
-       color: $badge-bg-error;
-     }
-     
-     &.sv-badge-info {
-       color: $badge-bg-info;
-     }
-   }
-   
-   // Size variants
-   .sv-badge-xs {
-     min-width: 16px;
-     height: 16px;
-     font-size: calc($badge-font-size * 0.8);
-     padding: calc($badge-padding-y * 0.5) calc($badge-padding-x * 0.5);
-   }
-   
-   .sv-badge-sm {
-     min-width: 18px;
-     height: 18px;
-     font-size: $badge-font-size;
-     padding: calc($badge-padding-y * 0.8) calc($badge-padding-x * 0.8);
-   }
-   
-   .sv-badge-lg {
-     min-width: 24px;
-     height: 24px;
-     font-size: var(--sv-text-sm);
-     padding: calc($badge-padding-y * 1.2) calc($badge-padding-x * 1.2);
-   }
-   
-   // Subtle/ghost variants
-   .sv-badge-subtle {
-     background-color: transparent;
-     
-     &.sv-badge-primary {
-       color: $badge-bg-primary;
-       background-color: rgba(var(--sv-primary-500-rgb), 0.15);
-     }
-     
-     &.sv-badge-secondary {
-       color: $badge-bg-secondary;
-       background-color: rgba(var(--sv-secondary-500-rgb, 54, 76, 94), 0.15);
-     }
-     
-     &.sv-badge-success {
-       color: $badge-bg-success;
-       background-color: rgba(76, 175, 80, 0.15);
-     }
-     
-     &.sv-badge-warning {
-       color: $badge-bg-warning;
-       background-color: rgba(255, 167, 38, 0.15);
-     }
-     
-     &.sv-badge-error {
-       color: $badge-bg-error;
-       background-color: rgba(244, 67, 54, 0.15);
-     }
-     
-     &.sv-badge-info {
-       color: $badge-bg-info;
-       background-color: rgba(41, 182, 246, 0.15);
-     }
-   }
-   
-   /* ==========================================================================
-      6. BADGE STATES
-      ========================================================================== */
-   
-   // Interactive badges
-   .sv-badge-interactive {
-     cursor: pointer;
-     transition: transform var(--sv-motion-duration-short) var(--sv-motion-ease-standard);
-     
-     &:hover {
-       transform: scale(1.1);
-     }
-     
-     &:active {
-       transform: scale(0.95);
-     }
-   }
-   
-   // Removable badge
-   .sv-badge-removable {
-     padding-right: var(--sv-padding-3);
-     
-     .sv-badge-remove {
-       margin-left: var(--sv-space-1);
-       width: 12px;
-       height: 12px;
-       border-radius: 50%;
-       background-color: rgba(0, 0, 0, 0.2);
-       display: inline-flex;
-       align-items: center;
-       justify-content: center;
-       cursor: pointer;
-       
-       &::before,
-       &::after {
-         content: "";
-         position: absolute;
-         width: 6px;
-         height: 1px;
-         background-color: currentColor;
-       }
-       
-       &::before {
-         transform: rotate(45deg);
-       }
-       
-       &::after {
-         transform: rotate(-45deg);
-       }
-     }
-   }
-   
-   // Pulsing badge (for attention)
-   .sv-badge-pulse {
-     animation: sv-badge-pulse 2s infinite;
-   }
-   
-   @keyframes sv-badge-pulse {
-     0% {
-       box-shadow: 0 0 0 0 rgba(var(--sv-primary-500-rgb), 0.4);
-     }
-     70% {
-       box-shadow: 0 0 0 6px rgba(var(--sv-primary-500-rgb), 0);
-     }
-     100% {
-       box-shadow: 0 0 0 0 rgba(var(--sv-primary-500-rgb), 0);
-     }
-   }
-   
-   /* ==========================================================================
-      7. RESPONSIVE ADAPTATIONS
-      ========================================================================== */
-   
-   @include breakpoint-down('md') {
-     .sv-badge-wrapper {
-       .sv-badge {
-         transform: scale(0.9);
-       }
-     }
-     
-     .sv-badge-lg {
-       min-width: 22px;
-       height: 22px;
-     }
-   }
-   
-   @include breakpoint-down('sm') {
-     .sv-badge {
-       font-size: calc($badge-font-size * 0.9);
-     }
-     
-     .sv-badge-counter.sv-badge-truncate {
-       &[data-count="9+"] {
-         &::after {
-           content: "9+";
-         }
-       }
-     }
-     
-     // Smaller badges on very small screens
-     .sv-badge-wrapper {
-       .sv-badge-top-right,
-       .sv-badge-top-left,
-       .sv-badge-bottom-right,
-       .sv-badge-bottom-left {
-         transform: scale(0.85);
-       }
-     }
-   }
-   
-   /* ==========================================================================
-      8. ACCESSIBILITY ENHANCEMENTS
-      ========================================================================== */
-   
-   // For screen readers
-   .sv-badge-wrapper {
-     .sv-badge-sr-text {
-       @include visually-hidden;
-     }
-   }
-   
-   // High contrast mode support
-   @media (forced-colors: active) {
-     .sv-badge {
-       border: 1px solid transparent;
-       
-       &.sv-badge-primary,
-       &.sv-badge-secondary,
-       &.sv-badge-success,
-       &.sv-badge-warning,
-       &.sv-badge-error,
-       &.sv-badge-info {
-         background-color: Highlight;
-         color: HighlightText;
-       }
-       
-       &.sv-badge-outlined {
-         background-color: Canvas;
-         color: CanvasText;
-         border-color: CanvasText;
-       }
-       
-       &.sv-badge-subtle {
-         background-color: Canvas;
-         color: CanvasText;
-         border: 1px dashed CanvasText;
-       }
-     }
-     
-     // Ensure visibility of dot badges
-     .sv-badge-dot {
-       min-width: $badge-dot-size;
-       min-height: $badge-dot-size;
-       border: 1px solid CanvasText;
-     }
-   }
-   
-   // Reduced motion preference
-   @media (prefers-reduced-motion: reduce) {
-     .sv-badge-pulse {
-       animation: none;
-     }
-     
-     .sv-badge-interactive {
-       &:hover,
-       &:active {
-         transform: none;
-       }
-     }
-   }
+/* ==========================================================================
+   1. IMPORTS
+   ========================================================================== */
+@use './../../abstracts/variables/' as *;
+@use './../../base/utils/mixins/state' as state;
+@use './../../base/utils/mixins/layout' as layout;
+@use './../../base/utils/mixins/responsive' as responsive;
+
+/* ==========================================================================
+   2. VARIABLES & CONFIGURATION
+   ========================================================================== */
+
+// Badge-specific variables
+$badge-font-size: var(--sv-font-size-xs);
+$badge-font-weight: var(--sv-font-weight-medium);
+$badge-padding-x: var(--sv-space-2);
+$badge-padding-y: var(--sv-space-1);
+$badge-border-radius: var(--sv-radius-md);
+$badge-min-width: var(--sv-size-5);
+$badge-height: var(--sv-size-5);
+
+// Counter/dot badge
+$badge-dot-size: var(--sv-size-2);
+$badge-counter-size: var(--sv-size-5);
+
+// Badge colors
+$badge-bg-default: var(--sv-bg-element);
+$badge-text-default: var(--sv-text-primary);
+$badge-bg-primary: var(--sv-primary);
+$badge-text-primary: var(--sv-text-on-dark);
+$badge-bg-secondary: var(--sv-secondary);
+$badge-text-secondary: var(--sv-text-on-dark);
+$badge-bg-success: var(--sv-success);
+$badge-text-success: var(--sv-text-on-dark);
+$badge-bg-warning: var(--sv-warning);
+$badge-text-warning: var(--sv-text-on-dark);
+$badge-bg-error: var(--sv-error);
+$badge-text-error: var(--sv-text-on-dark);
+$badge-bg-info: var(--sv-info);
+$badge-text-info: var(--sv-text-on-dark);
+
+// Badge animation
+$badge-transition-duration: var(--sv-motion-duration-short);
+$badge-transition-timing: var(--sv-motion-ease-standard);
+
+// Badge position offsets
+$badge-offset: var(--sv-space-1);
+
+/* ==========================================================================
+   3. BADGE BASE CLASS
+   ========================================================================== */
+
+.sv-badge {
+  // Extend the information display base class
+  @extend .sv-information-display-base;
+  
+  // Override and add badge-specific styles
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: $badge-font-size;
+  font-weight: $badge-font-weight;
+  padding: $badge-padding-y $badge-padding-x;
+  border-radius: $badge-border-radius;
+  min-width: $badge-min-width;
+  height: $badge-height;
+  line-height: 1;
+  
+  // Default styling
+  background-color: $badge-bg-default;
+  color: $badge-text-default;
+  
+  // Ensure text is centered and doesn't wrap
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+
+  // Prevent badges from being selected
+  user-select: none;
+  
+  // Transitions for smooth state changes
+  transition: background-color $badge-transition-duration $badge-transition-timing,
+              color $badge-transition-duration $badge-transition-timing,
+              transform $badge-transition-duration $badge-transition-timing;
+}
+
+// Badge wrapper (for positioned badges)
+.sv-badge-wrapper {
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+/* ==========================================================================
+   4. BADGE TYPES
+   ========================================================================== */
+
+.sv-badge {
+  // Counter badge (numeric)
+  &--counter {
+    min-width: $badge-counter-size;
+    height: $badge-counter-size;
+    
+    // Truncate if the number becomes too large
+    &.sv-badge--truncate {
+      &[data-count="99+"],
+      &[data-count="999+"] {
+        &::after {
+          content: "99+";
+        }
+      }
+    }
+  }
+  
+  // Dot badge (no content, just a colored circle)
+  &--dot {
+    min-width: $badge-dot-size;
+    height: $badge-dot-size;
+    border-radius: 50%;
+    padding: 0;
+  }
+  
+  // Pill badge (fully rounded ends)
+  &--pill {
+    border-radius: var(--sv-radius-full);
+    padding-left: var(--sv-space-3);
+    padding-right: var(--sv-space-3);
+  }
+  
+  // Status badge (for system states)
+  &--status {
+    &::before {
+      content: "";
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      margin-right: var(--sv-space-1);
+      background-color: currentColor;
+    }
+  }
+}
+
+/* ==========================================================================
+   5. BADGE POSITIONS
+   ========================================================================== */
+
+// Position badges within a wrapper element
+.sv-badge-wrapper {
+  .sv-badge {
+    &--top-right {
+      position: absolute;
+      top: $badge-offset;
+      right: $badge-offset;
+      transform: translate(50%, -50%);
+    }
+    
+    &--top-left {
+      position: absolute;
+      top: $badge-offset;
+      left: $badge-offset;
+      transform: translate(-50%, -50%);
+    }
+    
+    &--bottom-right {
+      position: absolute;
+      bottom: $badge-offset;
+      right: $badge-offset;
+      transform: translate(50%, 50%);
+    }
+    
+    &--bottom-left {
+      position: absolute;
+      bottom: $badge-offset;
+      left: $badge-offset;
+      transform: translate(-50%, 50%);
+    }
+    
+    // Special positioning for dot badges
+    &--dot {
+      &.sv-badge--top-right {
+        top: 0;
+        right: 0;
+      }
+      
+      &.sv-badge--top-left {
+        top: 0;
+        left: 0;
+      }
+      
+      &.sv-badge--bottom-right {
+        bottom: 0;
+        right: 0;
+      }
+      
+      &.sv-badge--bottom-left {
+        bottom: 0;
+        left: 0;
+      }
+    }
+  }
+}
+
+/* ==========================================================================
+   6. BADGE VARIANTS
+   ========================================================================== */
+
+.sv-badge {
+  // Color variants
+  &--primary {
+    background-color: $badge-bg-primary;
+    color: $badge-text-primary;
+  }
+  
+  &--secondary {
+    background-color: $badge-bg-secondary;
+    color: $badge-text-secondary;
+  }
+  
+  &--success {
+    background-color: $badge-bg-success;
+    color: $badge-text-success;
+  }
+  
+  &--warning {
+    background-color: $badge-bg-warning;
+    color: $badge-text-warning;
+  }
+  
+  &--error {
+    background-color: $badge-bg-error;
+    color: $badge-text-error;
+  }
+  
+  &--info {
+    background-color: $badge-bg-info;
+    color: $badge-text-info;
+  }
+  
+  // Outlined variants
+  &--outlined {
+    background-color: transparent;
+    border: 1px solid currentColor;
+    
+    &.sv-badge--primary {
+      color: $badge-bg-primary;
+    }
+    
+    &.sv-badge--secondary {
+      color: $badge-bg-secondary;
+    }
+    
+    &.sv-badge--success {
+      color: $badge-bg-success;
+    }
+    
+    &.sv-badge--warning {
+      color: $badge-bg-warning;
+    }
+    
+    &.sv-badge--error {
+      color: $badge-bg-error;
+    }
+    
+    &.sv-badge--info {
+      color: $badge-bg-info;
+    }
+  }
+  
+  // Light variants
+  &--light {
+    font-weight: var(--sv-font-weight-normal);
+    
+    &.sv-badge--primary {
+      background-color: rgba(var(--sv-primary-rgb), 0.15);
+      color: var(--sv-primary-dark);
+    }
+    
+    &.sv-badge--secondary {
+      background-color: rgba(var(--sv-secondary-rgb), 0.15);
+      color: var(--sv-secondary-dark);
+    }
+    
+    &.sv-badge--success {
+      background-color: rgba(var(--sv-success-rgb), 0.15);
+      color: var(--sv-success-dark);
+    }
+    
+    &.sv-badge--warning {
+      background-color: rgba(var(--sv-warning-rgb), 0.15);
+      color: var(--sv-warning-dark);
+    }
+    
+    &.sv-badge--error {
+      background-color: rgba(var(--sv-error-rgb), 0.15);
+      color: var(--sv-error-dark);
+    }
+    
+    &.sv-badge--info {
+      background-color: rgba(var(--sv-info-rgb), 0.15);
+      color: var(--sv-info-dark);
+    }
+  }
+}
+
+/* ==========================================================================
+   7. BADGE STATES
+   ========================================================================== */
+
+.sv-badge {
+  // Interactive badges
+  &.is-interactive {
+    cursor: pointer;
+    
+    &:hover:not(:disabled):not(.disabled) {
+      filter: brightness(0.9);
+    }
+    
+    &:active:not(:disabled):not(.disabled) {
+      transform: scale(0.95);
+    }
+    
+    &:focus-visible {
+      @include state.focus-visible-state;
+    }
+  }
+  
+  // Disabled state
+  &.is-disabled, &:disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+  
+  // Animated entrance effect
+  &.is-animating {
+    animation: badge-entrance 0.3s $badge-transition-timing;
+    
+    @keyframes badge-entrance {
+      from {
+        transform: scale(0);
+        opacity: 0;
+      }
+      to {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+  }
+  
+  // Pulsing effect for notification badges
+  &.is-pulsing {
+    animation: badge-pulse 2s infinite;
+    
+    @keyframes badge-pulse {
+      0% {
+        box-shadow: 0 0 0 0 rgba(var(--sv-primary-rgb), 0.4);
+      }
+      70% {
+        box-shadow: 0 0 0 6px rgba(var(--sv-primary-rgb), 0);
+      }
+      100% {
+        box-shadow: 0 0 0 0 rgba(var(--sv-primary-rgb), 0);
+      }
+    }
+  }
+}
+
+/* ==========================================================================
+   8. RESPONSIVE ADAPTATIONS
+   ========================================================================== */
+
+@include responsive.media-breakpoint-down(sm) {
+  .sv-badge {
+    // Slightly smaller on mobile
+    font-size: calc($badge-font-size * 0.9);
+    padding: calc($badge-padding-y * 0.9) calc($badge-padding-x * 0.9);
+    
+    // Adjust minimum width for mobile
+    &--counter {
+      min-width: calc($badge-counter-size * 0.9);
+      height: calc($badge-counter-size * 0.9);
+    }
+    
+    // Hide verbose badges on small screens
+    &--verbose {
+      @include layout.hide-visually();
+    }
+  }
+}
+
+/* ==========================================================================
+   9. ACCESSIBILITY ENHANCEMENTS
+   ========================================================================== */
+
+// High contrast mode enhancements
+@media (forced-colors: active) {
+  .sv-badge {
+    border: 1px solid currentColor;
+    
+    // Ensure visibility in high contrast mode
+    &--primary, &--secondary, &--success, &--warning, &--error, &--info {
+      border: 1px solid CanvasText;
+      color: CanvasText;
+    }
+    
+    // Dot badges need solid fill in high contrast
+    &--dot {
+      background-color: CanvasText;
+    }
+  }
+}
