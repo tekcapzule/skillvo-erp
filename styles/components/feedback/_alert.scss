@@ -1,383 +1,361 @@
 /**
- * Alert Component - SkillVo Design System
- * Version: 1.0.0
- * Last Updated: April 29, 2025
+ * Alert Component - Specific Styles
+ * Version: 2.0.0
+ * Last Updated: July 3, 2024
  * 
- * This file defines the specific styles for the Alert component,
- * extending the sv-feedback-base class. Alerts are used to display
- * important messages that require user attention.
+ * This file establishes the specific styles for the alert component
+ * in the SkillVo design system. This serves as the third level in our 
+ * three-tier styling architecture:
+ * 1. sv-ui-control-base - Base styles for all interactive controls
+ * 2. sv-feedback-control-base - Base styles for feedback controls
+ * 3. sv-alert (this file) - Component-specific styles for alerts
  */
 
 /* ==========================================================================
    TABLE OF CONTENTS:
    
-   1. VARIABLES & CONFIGURATION
-   2. COMPONENT-SPECIFIC MIXINS
-   3. ALERT BASE CLASS
+   1. IMPORTS
+   2. VARIABLES & CONFIGURATION
+   3. ALERT BASE
    4. ALERT VARIANTS
    5. ALERT SIZES
    6. ALERT STATES & MODIFIERS
    7. RESPONSIVE ADAPTATIONS
    ========================================================================== */
 
-   @use './../../abstracts/' as *;
-   @use './../../base/' as *;
-   
-   /* ==========================================================================
-      1. VARIABLES & CONFIGURATION
-      ========================================================================== */
-   
-   // Alert-specific dimensions
-   $alert-icon-size: var(--sv-icon-size-md);
-   $alert-close-size: var(--sv-icon-size-sm);
-   $alert-border-width: 1px;
-   $alert-border-left-width: 4px;
-   
-   // Alert-specific spacing
-   $alert-padding-x: var(--sv-padding-4);
-   $alert-padding-y: var(--sv-padding-3);
-   
-   /* ==========================================================================
-      2. COMPONENT-SPECIFIC MIXINS
-      ========================================================================== */
-   
-   // Alert variant styling with left border accent
-   @mixin alert-variant($type) {
-     @include feedback-type($type);
-     border-left-width: $alert-border-left-width;
-     border-left-style: solid;
-     
-     @if $type == 'info' {
-       border-left-color: var(--sv-info);
-     } @else if $type == 'success' {
-       border-left-color: var(--sv-success);
-     } @else if $type == 'warning' {
-       border-left-color: var(--sv-warning);
-     } @else if $type == 'error' {
-       border-left-color: var(--sv-error);
-     }
-   }
-   
-   /* ==========================================================================
-      3. ALERT BASE CLASS
-      ========================================================================== */
-   
-   .sv-alert {
-     // Extend the feedback base class
-     @extend .sv-feedback-base;
-     
-     // Alert-specific layout and spacing
-     padding: $alert-padding-y $alert-padding-x;
-     margin-bottom: var(--sv-space-4);
-     
-     // Structural styles
-     border-width: $alert-border-width;
-     border-style: solid;
-     display: flex;
-     align-items: flex-start;
-     width: 100%;
-     
-     // Default alert is info type
-     @include alert-variant('info');
-     
-     // Alert icon styling
-     .sv-alert-icon {
-       flex-shrink: 0;
-       margin-right: var(--sv-space-3);
-       width: $alert-icon-size;
-       height: $alert-icon-size;
-     }
-     
-     // Alert content wrapper
-     .sv-alert-content {
-       flex: 1;
-       min-width: 0; // Ensures text truncation works
-     }
-     
-     // Alert title
-     .sv-alert-title {
-       @include typography('lg', 'semibold', 'normal');
-       margin-top: 0;
-       margin-bottom: var(--sv-space-2);
-     }
-     
-     // Alert message
-     .sv-alert-message {
-       @include typography('base', 'normal', 'normal');
-       margin: 0;
-     }
-     
-     // Alert close button
-     .sv-alert-close {
-       flex-shrink: 0;
-       margin-left: var(--sv-space-3);
-       width: $alert-close-size;
-       height: $alert-close-size;
-       background: transparent;
-       border: none;
-       cursor: pointer;
-       padding: 0;
-       display: inline-flex;
-       align-items: center;
-       justify-content: center;
-       color: var(--sv-text-secondary);
-       @include transition(color);
-       
-       &:hover {
-         color: var(--sv-text-primary);
-       }
-       
-       &:focus {
-         @include focus-state;
-       }
-       
-       &:focus-visible {
-         @include focus-visible-state;
-       }
-     }
-     
-     // Alert actions area
-     .sv-alert-actions {
-       margin-top: var(--sv-space-3);
-       display: flex;
-       gap: var(--sv-space-2);
-     }
-   }
-   
-   /* ==========================================================================
-      4. ALERT VARIANTS
-      ========================================================================== */
-   
-   // Alert type variants
-   .sv-alert-info {
-     @include alert-variant('info');
-   }
-   
-   .sv-alert-success {
-     @include alert-variant('success');
-   }
-   
-   .sv-alert-warning {
-     @include alert-variant('warning');
-   }
-   
-   .sv-alert-error {
-     @include alert-variant('error');
-   }
-   
-   /* ==========================================================================
-      5. ALERT SIZES
-      ========================================================================== */
-   
-   // Compact alert size
-   .sv-alert-compact {
-     padding: var(--sv-padding-2) var(--sv-padding-3);
-     
-     .sv-alert-title {
-       @include typography('base', 'semibold', 'normal');
-     }
-     
-     .sv-alert-message {
-       @include typography('sm', 'normal', 'normal');
-     }
-     
-     .sv-alert-icon {
-       width: var(--sv-icon-size-sm);
-       height: var(--sv-icon-size-sm);
-     }
-   }
-   
-   // Large alert size
-   .sv-alert-large {
-     padding: var(--sv-padding-4) var(--sv-padding-5);
-     
-     .sv-alert-title {
-       @include typography('xl', 'semibold', 'normal');
-     }
-     
-     .sv-alert-message {
-       @include typography('lg', 'normal', 'normal');
-     }
-     
-     .sv-alert-icon {
-       width: var(--sv-icon-size-lg);
-       height: var(--sv-icon-size-lg);
-     }
-   }
-   
-   /* ==========================================================================
-      6. ALERT STATES & MODIFIERS
-      ========================================================================== */
-   
-   // Subtle alert style (less prominent)
-   .sv-alert-subtle {
-     background-color: transparent;
-     border-width: 0;
-     border-left-width: $alert-border-left-width;
-     box-shadow: none;
-   }
-   
-   // Outlined alert style
-   .sv-alert-outlined {
-     background-color: transparent;
-     
-     &.sv-alert-info {
-       color: var(--sv-info);
-     }
-     
-     &.sv-alert-success {
-       color: var(--sv-success);
-     }
-     
-     &.sv-alert-warning {
-       color: var(--sv-warning);
-     }
-     
-     &.sv-alert-error {
-       color: var(--sv-error);
-     }
-   }
-   
-   // Filled alert style
-   .sv-alert-filled {
-     &.sv-alert-info {
-       background-color: var(--sv-info);
-       color: var(--sv-text-on-dark);
-       border-color: var(--sv-info);
-       
-       .sv-alert-icon,
-       .sv-alert-close {
-         color: var(--sv-text-on-dark);
-       }
-     }
-     
-     &.sv-alert-success {
-       background-color: var(--sv-success);
-       color: var(--sv-text-on-dark);
-       border-color: var(--sv-success);
-       
-       .sv-alert-icon,
-       .sv-alert-close {
-         color: var(--sv-text-on-dark);
-       }
-     }
-     
-     &.sv-alert-warning {
-       background-color: var(--sv-warning);
-       color: var(--sv-text-on-dark);
-       border-color: var(--sv-warning);
-       
-       .sv-alert-icon,
-       .sv-alert-close {
-         color: var(--sv-text-on-dark);
-       }
-     }
-     
-     &.sv-alert-error {
-       background-color: var(--sv-error);
-       color: var(--sv-text-on-dark);
-       border-color: var(--sv-error);
-       
-       .sv-alert-icon,
-       .sv-alert-close {
-         color: var(--sv-text-on-dark);
-       }
-     }
-   }
-   
-   // Alert with no close button
-   .sv-alert-no-close {
-     .sv-alert-close {
-       display: none;
-     }
-   }
-   
-   // Alert with no icon
-   .sv-alert-no-icon {
-     .sv-alert-icon {
-       display: none;
-     }
-   }
-   
-   // Dismissible alert animation
-   .sv-alert-dismissible {
-     @include animate(fade-in);
-     
-     &.sv-alert-exiting {
-       @include animate(fade-out);
-     }
-   }
-   
-   /* ==========================================================================
-      7. RESPONSIVE ADAPTATIONS
-      ========================================================================== */
-   
-   // Small screens
-   @include breakpoint-down('sm') {
-     .sv-alert {
-       flex-direction: column;
-       
-       .sv-alert-icon {
-         margin-right: 0;
-         margin-bottom: var(--sv-space-2);
-       }
-       
-       .sv-alert-close {
-         position: absolute;
-         top: var(--sv-space-3);
-         right: var(--sv-space-3);
-         margin-left: 0;
-       }
-       
-       &.sv-alert-has-icon {
-         padding-right: calc(#{$alert-close-size} + var(--sv-space-5));
-       }
-       
-       .sv-alert-actions {
-         flex-direction: column;
-         width: 100%;
-         
-         button, a {
-           width: 100%;
-           margin-right: 0;
-         }
-       }
-     }
-     
-     // Preserve horizontal layout for compact alerts
-     .sv-alert-compact {
-       flex-direction: row;
-       
-       .sv-alert-icon {
-         margin-right: var(--sv-space-2);
-         margin-bottom: 0;
-       }
-     }
-   }
-   
-   // Fix for RTL support
-   [dir="rtl"] {
-     .sv-alert {
-       .sv-alert-icon {
-         margin-right: 0;
-         margin-left: var(--sv-space-3);
-       }
-       
-       .sv-alert-close {
-         margin-left: 0;
-         margin-right: var(--sv-space-3);
-       }
-       
-       @include breakpoint-down('sm') {
-         .sv-alert-close {
-           right: auto;
-           left: var(--sv-space-3);
-         }
-         
-         &.sv-alert-has-icon {
-           padding-right: $alert-padding-x;
-           padding-left: calc(#{$alert-close-size} + var(--sv-space-5));
-         }
-       }
-     }
-   }
+/* ==========================================================================
+   1. IMPORTS
+   ========================================================================== */
+@use './../../abstracts/variables/' as *;
+@use './../../base/utils/mixins/state' as state;
+@use './../../base/utils/mixins/layout' as layout;
+@use './../../base/utils/mixins/typography' as typography;
+@use './../../base/utils/mixins/responsive' as responsive;
+@use './../../base/utils/mixins/accessibility' as a11y;
+
+/* ==========================================================================
+   2. VARIABLES & CONFIGURATION
+   ========================================================================== */
+
+// Alert-specific dimensions
+$alert-icon-size: var(--sv-icon-size-md);
+$alert-close-size: var(--sv-icon-size-sm);
+$alert-border-width: 1px;
+$alert-border-left-width: 4px;
+$alert-transition-duration: var(--sv-motion-duration-short);
+$alert-transition-timing: var(--sv-motion-ease-standard);
+
+// Alert-specific spacing
+$alert-padding-x: var(--sv-space-4);
+$alert-padding-y: var(--sv-space-3);
+
+/* ==========================================================================
+   3. ALERT BASE
+   ========================================================================== */
+
+.sv-alert {
+  // Extend the feedback control base to inherit all shared properties
+  @extend .sv-feedback-control-base;
+  
+  // Alert-specific layout and spacing
+  padding: $alert-padding-y $alert-padding-x;
+  margin-bottom: var(--sv-space-4);
+  
+  // Structural styles specific to alerts
+  border-width: $alert-border-width;
+  border-style: solid;
+  display: flex;
+  align-items: flex-start;
+  width: 100%;
+  
+  // Unique alert characteristics
+  border-left-width: $alert-border-left-width;
+  
+  // Transitions for alerts
+  transition: background-color $alert-transition-duration $alert-transition-timing,
+              border-color $alert-transition-duration $alert-transition-timing,
+              box-shadow $alert-transition-duration $alert-transition-timing,
+              opacity $alert-transition-duration $alert-transition-timing;
+  
+  // BEM pattern for alert elements
+  &__icon {
+    flex-shrink: 0;
+    margin-right: var(--sv-space-3);
+    width: $alert-icon-size;
+    height: $alert-icon-size;
+  }
+  
+  &__content {
+    flex: 1;
+    min-width: 0; // Ensures text truncation works
+  }
+  
+  &__title {
+    font-size: var(--sv-font-size-lg);
+    font-weight: var(--sv-font-weight-semibold);
+    line-height: var(--sv-line-height-normal);
+    margin-top: 0;
+    margin-bottom: var(--sv-space-2);
+  }
+  
+  &__message {
+    font-size: var(--sv-font-size-base);
+    font-weight: var(--sv-font-weight-normal);
+    line-height: var(--sv-line-height-normal);
+    margin: 0;
+  }
+  
+  &__close {
+    flex-shrink: 0;
+    margin-left: var(--sv-space-3);
+    width: $alert-close-size;
+    height: $alert-close-size;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--sv-text-secondary);
+    transition: color $alert-transition-duration $alert-transition-timing;
+    
+    &:hover {
+      color: var(--sv-text-primary);
+    }
+    
+    &:focus-visible {
+      @include state.focus-visible-state;
+    }
+  }
+  
+  &__actions {
+    margin-top: var(--sv-space-3);
+    display: flex;
+    gap: var(--sv-space-2);
+  }
+}
+
+/* ==========================================================================
+   4. ALERT VARIANTS
+   ========================================================================== */
+
+.sv-alert {
+  // Info variant (default)
+  &--info {
+    background-color: var(--sv-info-light);
+    border-color: var(--sv-info-light);
+    border-left-color: var(--sv-info);
+    
+    .sv-alert__icon {
+      color: var(--sv-info);
+    }
+  }
+  
+  // Success variant
+  &--success {
+    background-color: var(--sv-success-light);
+    border-color: var(--sv-success-light);
+    border-left-color: var(--sv-success);
+    
+    .sv-alert__icon {
+      color: var(--sv-success);
+    }
+  }
+  
+  // Warning variant
+  &--warning {
+    background-color: var(--sv-warning-light);
+    border-color: var(--sv-warning-light);
+    border-left-color: var(--sv-warning);
+    
+    .sv-alert__icon {
+      color: var(--sv-warning);
+    }
+  }
+  
+  // Error variant
+  &--error {
+    background-color: var(--sv-error-light);
+    border-color: var(--sv-error-light);
+    border-left-color: var(--sv-error);
+    
+    .sv-alert__icon {
+      color: var(--sv-error);
+    }
+  }
+}
+
+/* ==========================================================================
+   5. ALERT SIZES
+   ========================================================================== */
+
+.sv-alert {
+  // Compact alert size
+  &--compact {
+    padding: var(--sv-space-2) var(--sv-space-3);
+    
+    .sv-alert__title {
+      font-size: var(--sv-font-size-base);
+    }
+    
+    .sv-alert__message {
+      font-size: var(--sv-font-size-sm);
+    }
+    
+    .sv-alert__icon {
+      width: var(--sv-icon-size-sm);
+      height: var(--sv-icon-size-sm);
+    }
+  }
+  
+  // Large alert size
+  &--large {
+    padding: var(--sv-space-4) var(--sv-space-5);
+    
+    .sv-alert__title {
+      font-size: var(--sv-font-size-xl);
+    }
+    
+    .sv-alert__message {
+      font-size: var(--sv-font-size-lg);
+    }
+    
+    .sv-alert__icon {
+      width: var(--sv-icon-size-lg);
+      height: var(--sv-icon-size-lg);
+    }
+  }
+}
+
+/* ==========================================================================
+   6. ALERT STATES & MODIFIERS
+   ========================================================================== */
+
+.sv-alert {
+  // Subtle alert style (less prominent)
+  &--subtle {
+    background-color: transparent;
+    border-width: 0;
+    border-left-width: $alert-border-left-width;
+    box-shadow: none;
+  }
+  
+  // Outlined alert style
+  &--outlined {
+    background-color: transparent;
+    
+    &.sv-alert--info {
+      color: var(--sv-info);
+      border-color: var(--sv-info);
+    }
+    
+    &.sv-alert--success {
+      color: var(--sv-success);
+      border-color: var(--sv-success);
+    }
+    
+    &.sv-alert--warning {
+      color: var(--sv-warning);
+      border-color: var(--sv-warning);
+    }
+    
+    &.sv-alert--error {
+      color: var(--sv-error);
+      border-color: var(--sv-error);
+    }
+  }
+  
+  // Filled alert style
+  &--filled {
+    &.sv-alert--info {
+      background-color: var(--sv-info);
+      color: var(--sv-text-on-dark);
+      border-color: var(--sv-info);
+      
+      .sv-alert__icon,
+      .sv-alert__close {
+        color: var(--sv-text-on-dark);
+      }
+    }
+    
+    &.sv-alert--success {
+      background-color: var(--sv-success);
+      color: var(--sv-text-on-dark);
+      border-color: var(--sv-success);
+      
+      .sv-alert__icon,
+      .sv-alert__close {
+        color: var(--sv-text-on-dark);
+      }
+    }
+    
+    &.sv-alert--warning {
+      background-color: var(--sv-warning);
+      color: var(--sv-text-on-dark);
+      border-color: var(--sv-warning);
+      
+      .sv-alert__icon,
+      .sv-alert__close {
+        color: var(--sv-text-on-dark);
+      }
+    }
+    
+    &.sv-alert--error {
+      background-color: var(--sv-error);
+      color: var(--sv-text-on-dark);
+      border-color: var(--sv-error);
+      
+      .sv-alert__icon,
+      .sv-alert__close {
+        color: var(--sv-text-on-dark);
+      }
+    }
+  }
+  
+  // Common states
+  &.is-dismissible {
+    padding-right: calc($alert-padding-x + $alert-close-size + var(--sv-space-3));
+  }
+  
+  &.is-hidden {
+    display: none;
+  }
+  
+  &.is-animating {
+    animation: sv-alert-fade-in 0.3s ease-in-out;
+  }
+}
+
+/* ==========================================================================
+   7. RESPONSIVE ADAPTATIONS
+   ========================================================================== */
+
+@include responsive.media-breakpoint-down(sm) {
+  .sv-alert {
+    flex-direction: column;
+    
+    &__icon {
+      margin-right: 0;
+      margin-bottom: var(--sv-space-2);
+    }
+    
+    &__close {
+      position: absolute;
+      top: var(--sv-space-2);
+      right: var(--sv-space-2);
+      margin-left: 0;
+    }
+  }
+}
+
+@keyframes sv-alert-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

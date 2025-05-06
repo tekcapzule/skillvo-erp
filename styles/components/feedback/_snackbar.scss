@@ -1,429 +1,445 @@
 /**
- * Snackbar Component - SkillVo Design System
- * Version: 1.0.0
- * Last Updated: April 29, 2025
+ * Snackbar Component - Specific Styles
+ * Version: 2.0.0
+ * Last Updated: July 3, 2024
  * 
- * This file defines the specific styles for the Snackbar component,
- * extending the sv-feedback-base class. Snackbars provide brief messages
- * about app processes at the bottom of the screen with optional actions.
+ * This file establishes the specific styles for the snackbar component
+ * in the SkillVo design system. This serves as the third level in our 
+ * three-tier styling architecture:
+ * 1. sv-ui-control-base - Base styles for all interactive controls
+ * 2. sv-feedback-control-base - Base styles for feedback controls
+ * 3. sv-snackbar (this file) - Component-specific styles for snackbars
  */
 
 /* ==========================================================================
    TABLE OF CONTENTS:
    
-   1. VARIABLES & CONFIGURATION
-   2. COMPONENT-SPECIFIC MIXINS
-   3. SNACKBAR BASE CLASS
+   1. IMPORTS
+   2. VARIABLES & CONFIGURATION
+   3. SNACKBAR BASE
    4. SNACKBAR VARIANTS
    5. SNACKBAR POSITIONS
    6. SNACKBAR ANIMATIONS
    7. RESPONSIVE ADAPTATIONS
    ========================================================================== */
 
-   @use './../../abstracts/' as *;
-   @use './../../base/' as *;
-   
-   /* ==========================================================================
-      1. VARIABLES & CONFIGURATION
-      ========================================================================== */
-   
-   // Snackbar-specific dimensions
-   $snackbar-min-width: 344px;
-   $snackbar-max-width: 672px;
-   $snackbar-height: 48px;
-   $snackbar-border-radius: var(--sv-radius-md);
-   
-   // Snackbar-specific spacing
-   $snackbar-padding-x: var(--sv-padding-4);
-   $snackbar-padding-y: var(--sv-padding-3);
-   $snackbar-action-margin: var(--sv-space-2);
-   
-   // Snackbar-specific colors
-   $snackbar-bg-color: var(--sv-bg-element);
-   $snackbar-text-color: var(--sv-text-primary);
-   $snackbar-action-color: var(--sv-primary);
-   
-   // Snackbar-specific animation
-   $snackbar-animation-duration: var(--sv-motion-duration-medium);
-   $snackbar-transition-timing: var(--sv-motion-ease-standard);
-   
-   // Snackbar z-index
-   $snackbar-z-index: var(--sv-z-index-tooltip);
-   
-   /* ==========================================================================
-      2. COMPONENT-SPECIFIC MIXINS
-      ========================================================================== */
-   
-   // Snackbar action button styling
-   @mixin snackbar-action-button {
-     display: inline-flex;
-     align-items: center;
-     justify-content: center;
-     margin-left: $snackbar-action-margin;
-     padding: var(--sv-padding-1) var(--sv-padding-3);
-     border: none;
-     background: transparent;
-     color: $snackbar-action-color;
-     font-weight: var(--sv-font-medium);
-     text-transform: uppercase;
-     cursor: pointer;
-     @include transition(background-color, 'short');
-     
-     &:focus {
-       @include focus-state;
-     }
-     
-     &:focus-visible {
-       @include focus-visible-state;
-     }
-     
-     &:hover {
-       background-color: rgba(var(--sv-primary-500-rgb), 0.05);
-     }
-   }
-   
-   /* ==========================================================================
-      3. SNACKBAR BASE CLASS
-      ========================================================================== */
-   
-   .sv-snackbar {
-     // Extend the feedback base class
-     @extend .sv-feedback-base;
-     
-     // Snackbar-specific layout and spacing
-     min-width: $snackbar-min-width;
-     max-width: $snackbar-max-width;
-     min-height: $snackbar-height;
-     padding: $snackbar-padding-y $snackbar-padding-x;
-     
-     // Structural styles
-     position: fixed;
-     z-index: $snackbar-z-index;
-     display: flex;
-     align-items: center;
-     justify-content: space-between;
-     border-radius: $snackbar-border-radius;
-     
-     // Visual styling
-     background-color: $snackbar-bg-color;
-     color: $snackbar-text-color;
-     @include shadow('md');
-     
-     // Default position (bottom center)
-     bottom: var(--sv-space-4);
-     left: 50%;
-     transform: translateX(-50%);
-     
-     // Content layout
-     .sv-snackbar-content {
-       flex: 1;
-       min-width: 0; // Ensures text truncation works
-       @include typography('sm', 'normal', 'normal');
-       @include text-truncate;
-     }
-     
-     // Action section
-     .sv-snackbar-actions {
-       display: flex;
-       align-items: center;
-       flex-shrink: 0;
-       
-       .sv-snackbar-action {
-         @include snackbar-action-button;
-       }
-       
-       .sv-snackbar-close {
-         display: inline-flex;
-         align-items: center;
-         justify-content: center;
-         margin-left: var(--sv-space-2);
-         background: transparent;
-         border: none;
-         padding: 0;
-         width: var(--sv-icon-size-sm);
-         height: var(--sv-icon-size-sm);
-         color: var(--sv-text-secondary);
-         cursor: pointer;
-         
-         &:focus {
-           @include focus-state;
-         }
-         
-         &:focus-visible {
-           @include focus-visible-state;
-         }
-         
-         &:hover {
-           color: var(--sv-text-primary);
-         }
-       }
-     }
-     
-     // Progress indicator for auto-dismiss
-     .sv-snackbar-progress {
-       position: absolute;
-       bottom: 0;
-       left: 0;
-       height: 2px;
-       width: 100%;
-       background-color: transparent;
-       
-       &::before {
-         content: "";
-         position: absolute;
-         height: 100%;
-         background-color: var(--sv-primary);
-         transition: width linear;
-         width: 0;
-       }
-       
-       &.sv-snackbar-progress-active::before {
-         width: 100%;
-       }
-     }
-   }
-   
-   /* ==========================================================================
-      4. SNACKBAR VARIANTS
-      ========================================================================== */
-   
-   // Dark variant (default for snackbars in material design)
-   .sv-snackbar-dark {
-     background-color: var(--sv-secondary);
-     color: var(--sv-text-on-dark);
-     
-     .sv-snackbar-actions {
-       .sv-snackbar-action {
-         color: var(--sv-primary-light);
-       }
-       
-       .sv-snackbar-close {
-         color: var(--sv-text-on-dark);
-       }
-     }
-     
-     .sv-snackbar-progress::before {
-       background-color: var(--sv-primary-light);
-     }
-   }
-   
-   // Success variant
-   .sv-snackbar-success {
-     border-left: 3px solid var(--sv-success);
-     
-     .sv-snackbar-progress::before {
-       background-color: var(--sv-success);
-     }
-   }
-   
-   // Error variant
-   .sv-snackbar-error {
-     border-left: 3px solid var(--sv-error);
-     
-     .sv-snackbar-progress::before {
-       background-color: var(--sv-error);
-     }
-   }
-   
-   // Warning variant
-   .sv-snackbar-warning {
-     border-left: 3px solid var(--sv-warning);
-     
-     .sv-snackbar-progress::before {
-       background-color: var(--sv-warning);
-     }
-   }
-   
-   // Info variant
-   .sv-snackbar-info {
-     border-left: 3px solid var(--sv-info);
-     
-     .sv-snackbar-progress::before {
-       background-color: var(--sv-info);
-     }
-   }
-   
-   // Leading variant (with icon)
-   .sv-snackbar-leading {
-     &::before {
-       content: "";
-       display: inline-block;
-       width: var(--sv-icon-size-md);
-       height: var(--sv-icon-size-md);
-       margin-right: var(--sv-space-3);
-       background-size: contain;
-       background-repeat: no-repeat;
-       background-position: center;
-     }
-     
-     &.sv-snackbar-success::before {
-       //background-image: url("path/to/success-icon.svg");
-     }
-     
-     &.sv-snackbar-error::before {
-       //background-image: url("path/to/error-icon.svg");
-     }
-     
-     &.sv-snackbar-warning::before {
-       //background-image: url("path/to/warning-icon.svg");
-     }
-     
-     &.sv-snackbar-info::before {
-       //background-image: url("path/to/info-icon.svg");
-     }
-   }
-   
-   /* ==========================================================================
-      5. SNACKBAR POSITIONS
-      ========================================================================== */
-   
-   // Bottom position (default)
-   .sv-snackbar-position-bottom {
-     bottom: var(--sv-space-4);
-     left: 50%;
-     transform: translateX(-50%);
-   }
-   
-   // Top position
-   .sv-snackbar-position-top {
-     top: var(--sv-space-4);
-     bottom: auto;
-     left: 50%;
-     transform: translateX(-50%);
-   }
-   
-   // Bottom-left position
-   .sv-snackbar-position-bottom-left {
-     bottom: var(--sv-space-4);
-     left: var(--sv-space-4);
-     transform: none;
-   }
-   
-   // Bottom-right position
-   .sv-snackbar-position-bottom-right {
-     bottom: var(--sv-space-4);
-     right: var(--sv-space-4);
-     left: auto;
-     transform: none;
-   }
-   
-   // Top-left position
-   .sv-snackbar-position-top-left {
-     top: var(--sv-space-4);
-     left: var(--sv-space-4);
-     bottom: auto;
-     transform: none;
-   }
-   
-   // Top-right position
-   .sv-snackbar-position-top-right {
-     top: var(--sv-space-4);
-     right: var(--sv-space-4);
-     bottom: auto;
-     left: auto;
-     transform: none;
-   }
-   
-   /* ==========================================================================
-      6. SNACKBAR ANIMATIONS
-      ========================================================================== */
-   
-   // Entry animation
-   .sv-snackbar-entering {
-     @include animate(scale-in, 'medium', 0s, 'decelerate');
-   }
-   
-   // Exit animation
-   .sv-snackbar-exiting {
-     @include animate(scale-out, 'medium', 0s, 'accelerate');
-   }
-   
-   // Stacked snackbars animation
-   .sv-snackbar-stacked {
-     transition: transform $snackbar-animation-duration $snackbar-transition-timing;
-   }
-   
-   /* ==========================================================================
-      7. RESPONSIVE ADAPTATIONS
-      ========================================================================== */
-   
-   // Small screens
-   @include breakpoint-down('sm') {
-     .sv-snackbar {
-       min-width: auto;
-       max-width: calc(100% - var(--sv-space-4) * 2);
-       width: calc(100% - var(--sv-space-4) * 2);
-       flex-direction: column;
-       align-items: stretch;
-       padding: var(--sv-padding-2) var(--sv-padding-3);
-       
-       .sv-snackbar-content {
-         margin-bottom: var(--sv-space-2);
-       }
-       
-       .sv-snackbar-actions {
-         justify-content: flex-end;
-       }
-       
-       // Adjust positioned snackbars on mobile
-       &.sv-snackbar-position-bottom-left,
-       &.sv-snackbar-position-bottom-right,
-       &.sv-snackbar-position-bottom {
-         left: 50%;
-         right: auto;
-         transform: translateX(-50%);
-       }
-       
-       &.sv-snackbar-position-top-left,
-       &.sv-snackbar-position-top-right,
-       &.sv-snackbar-position-top {
-         left: 50%;
-         right: auto;
-         transform: translateX(-50%);
-       }
-       
-       // Keep horizontal layout for simple messages with single action
-       &.sv-snackbar-simple {
-         flex-direction: row;
-         
-         .sv-snackbar-content {
-           margin-bottom: 0;
-         }
-       }
-     }
-   }
-   
-   // Fix for RTL support
-   [dir="rtl"] {
-     .sv-snackbar {
-       .sv-snackbar-actions {
-         .sv-snackbar-action {
-           margin-left: 0;
-           margin-right: $snackbar-action-margin;
-         }
-         
-         .sv-snackbar-close {
-           margin-left: 0;
-           margin-right: var(--sv-space-2);
-         }
-       }
-       
-       &.sv-snackbar-leading::before {
-         margin-right: 0;
-         margin-left: var(--sv-space-3);
-       }
-       
-       .sv-snackbar-progress::before {
-         left: auto;
-         right: 0;
-       }
-       
-       &.sv-snackbar-success,
-       &.sv-snackbar-error,
-       &.sv-snackbar-warning,
-       &.sv-snackbar-info {
-         border-left: none;
-         border-right: 3px solid;
-       }
-     }
-   }
+/* ==========================================================================
+   1. IMPORTS
+   ========================================================================== */
+@use './../../abstracts/variables/' as *;
+@use './../../base/utils/mixins/state' as state;
+@use './../../base/utils/mixins/layout' as layout;
+@use './../../base/utils/mixins/typography' as typography;
+@use './../../base/utils/mixins/responsive' as responsive;
+
+/* ==========================================================================
+   2. VARIABLES & CONFIGURATION
+   ========================================================================== */
+
+// Snackbar-specific dimensions
+$snackbar-min-width: 344px;
+$snackbar-max-width: 672px;
+$snackbar-height: 48px;
+$snackbar-border-radius: var(--sv-radius-md);
+
+// Snackbar-specific spacing
+$snackbar-padding-x: var(--sv-space-4);
+$snackbar-padding-y: var(--sv-space-3);
+$snackbar-action-margin: var(--sv-space-2);
+
+// Snackbar-specific colors
+$snackbar-bg-color: var(--sv-bg-element);
+$snackbar-text-color: var(--sv-text-primary);
+$snackbar-action-color: var(--sv-primary);
+
+// Snackbar-specific animation
+$snackbar-animation-duration: var(--sv-motion-duration-medium);
+$snackbar-transition-timing: var(--sv-motion-ease-standard);
+
+// Snackbar z-index
+$snackbar-z-index: var(--sv-z-index-tooltip);
+
+/* ==========================================================================
+   3. SNACKBAR BASE
+   ========================================================================== */
+
+.sv-snackbar {
+  // Extend the feedback control base to inherit all shared properties
+  @extend .sv-feedback-control-base;
+  
+  // Snackbar-specific layout and spacing
+  min-width: $snackbar-min-width;
+  max-width: $snackbar-max-width;
+  min-height: $snackbar-height;
+  padding: $snackbar-padding-y $snackbar-padding-x;
+  
+  // Structural styles
+  position: fixed;
+  z-index: $snackbar-z-index;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: $snackbar-border-radius;
+  
+  // Visual styling
+  background-color: $snackbar-bg-color;
+  color: $snackbar-text-color;
+  box-shadow: var(--sv-shadow-md);
+  
+  // Default position (bottom center)
+  bottom: var(--sv-space-4);
+  left: 50%;
+  transform: translateX(-50%);
+  
+  // Transitions
+  transition: transform $snackbar-animation-duration $snackbar-transition-timing,
+              opacity $snackbar-animation-duration $snackbar-transition-timing;
+  
+  // BEM pattern for snackbar elements
+  &__content {
+    flex: 1;
+    min-width: 0; // Ensures text truncation works
+    font-size: var(--sv-font-size-sm);
+    font-weight: var(--sv-font-weight-normal);
+    line-height: var(--sv-line-height-normal);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  
+  &__actions {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+  }
+  
+  &__action {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: $snackbar-action-margin;
+    padding: var(--sv-space-1) var(--sv-space-3);
+    border: none;
+    background: transparent;
+    color: $snackbar-action-color;
+    font-weight: var(--sv-font-weight-medium);
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background-color var(--sv-motion-duration-short) $snackbar-transition-timing;
+    
+    &:hover {
+      background-color: rgba(var(--sv-primary-rgb), 0.05);
+    }
+    
+    &:focus-visible {
+      @include state.focus-visible-state;
+    }
+  }
+  
+  &__close {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: var(--sv-space-2);
+    background: transparent;
+    border: none;
+    padding: 0;
+    width: var(--sv-icon-size-sm);
+    height: var(--sv-icon-size-sm);
+    color: var(--sv-text-secondary);
+    cursor: pointer;
+    
+    &:hover {
+      color: var(--sv-text-primary);
+    }
+    
+    &:focus-visible {
+      @include state.focus-visible-state;
+    }
+  }
+  
+  &__progress {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 2px;
+    width: 100%;
+    background-color: transparent;
+    
+    &::before {
+      content: "";
+      position: absolute;
+      height: 100%;
+      background-color: var(--sv-primary);
+      transition: width linear;
+      width: 0;
+    }
+    
+    &.is-active::before {
+      width: 100%;
+    }
+  }
+  
+  &__icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: var(--sv-space-3);
+    width: var(--sv-icon-size-md);
+    height: var(--sv-icon-size-md);
+    flex-shrink: 0;
+  }
+}
+
+/* ==========================================================================
+   4. SNACKBAR VARIANTS
+   ========================================================================== */
+
+.sv-snackbar {
+  // Dark variant (default for snackbars in material design)
+  &--dark {
+    background-color: var(--sv-secondary);
+    color: var(--sv-text-on-dark);
+    
+    .sv-snackbar__action {
+      color: var(--sv-primary-light);
+    }
+    
+    .sv-snackbar__close {
+      color: var(--sv-text-on-dark);
+    }
+    
+    .sv-snackbar__progress::before {
+      background-color: var(--sv-primary-light);
+    }
+  }
+  
+  // Success variant
+  &--success {
+    border-left: 3px solid var(--sv-success);
+    
+    .sv-snackbar__progress::before {
+      background-color: var(--sv-success);
+    }
+    
+    .sv-snackbar__icon {
+      color: var(--sv-success);
+    }
+  }
+  
+  // Error variant
+  &--error {
+    border-left: 3px solid var(--sv-error);
+    
+    .sv-snackbar__progress::before {
+      background-color: var(--sv-error);
+    }
+    
+    .sv-snackbar__icon {
+      color: var(--sv-error);
+    }
+  }
+  
+  // Warning variant
+  &--warning {
+    border-left: 3px solid var(--sv-warning);
+    
+    .sv-snackbar__progress::before {
+      background-color: var(--sv-warning);
+    }
+    
+    .sv-snackbar__icon {
+      color: var(--sv-warning);
+    }
+  }
+  
+  // Info variant
+  &--info {
+    border-left: 3px solid var(--sv-info);
+    
+    .sv-snackbar__progress::before {
+      background-color: var(--sv-info);
+    }
+    
+    .sv-snackbar__icon {
+      color: var(--sv-info);
+    }
+  }
+  
+  // Leading variant (with icon)
+  &--leading {
+    padding-left: $snackbar-padding-y;
+    
+    .sv-snackbar__content {
+      margin-left: var(--sv-space-3);
+    }
+  }
+  
+  // Simple variant (more compact)
+  &--simple {
+    min-height: auto;
+    padding: var(--sv-space-2) var(--sv-space-3);
+    
+    .sv-snackbar__action {
+      padding: var(--sv-space-1) var(--sv-space-2);
+      font-size: var(--sv-font-size-xs);
+    }
+  }
+}
+
+/* ==========================================================================
+   5. SNACKBAR POSITIONS
+   ========================================================================== */
+
+.sv-snackbar {
+  // Default position is bottom center (set in base)
+  
+  // Top position
+  &--position-top {
+    top: var(--sv-space-4);
+    bottom: auto;
+  }
+  
+  // Top-left position
+  &--position-top-left {
+    top: var(--sv-space-4);
+    bottom: auto;
+    left: var(--sv-space-4);
+    transform: none;
+  }
+  
+  // Top-right position
+  &--position-top-right {
+    top: var(--sv-space-4);
+    bottom: auto;
+    left: auto;
+    right: var(--sv-space-4);
+    transform: none;
+  }
+  
+  // Bottom-left position
+  &--position-bottom-left {
+    bottom: var(--sv-space-4);
+    top: auto;
+    left: var(--sv-space-4);
+    transform: none;
+  }
+  
+  // Bottom-right position
+  &--position-bottom-right {
+    bottom: var(--sv-space-4);
+    top: auto;
+    left: auto;
+    right: var(--sv-space-4);
+    transform: none;
+  }
+}
+
+/* ==========================================================================
+   6. SNACKBAR ANIMATIONS
+   ========================================================================== */
+
+@keyframes sv-snackbar-slide-in {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes sv-snackbar-slide-out {
+  from {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+}
+
+@keyframes sv-snackbar-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes sv-snackbar-fade-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+.sv-snackbar {
+  &.is-entering {
+    &:not(.sv-snackbar--position-top):not(.sv-snackbar--position-top-left):not(.sv-snackbar--position-top-right) {
+      animation: sv-snackbar-slide-in $snackbar-animation-duration $snackbar-transition-timing;
+    }
+    
+    &.sv-snackbar--position-top,
+    &.sv-snackbar--position-top-left,
+    &.sv-snackbar--position-top-right {
+      animation: sv-snackbar-fade-in $snackbar-animation-duration $snackbar-transition-timing;
+    }
+  }
+  
+  &.is-exiting {
+    &:not(.sv-snackbar--position-top):not(.sv-snackbar--position-top-left):not(.sv-snackbar--position-top-right) {
+      animation: sv-snackbar-slide-out $snackbar-animation-duration $snackbar-transition-timing;
+    }
+    
+    &.sv-snackbar--position-top,
+    &.sv-snackbar--position-top-left,
+    &.sv-snackbar--position-top-right {
+      animation: sv-snackbar-fade-out $snackbar-animation-duration $snackbar-transition-timing;
+    }
+  }
+}
+
+/* ==========================================================================
+   7. RESPONSIVE ADAPTATIONS
+   ========================================================================== */
+
+@include responsive.media-breakpoint-down(sm) {
+  .sv-snackbar {
+    min-width: auto;
+    max-width: calc(100% - var(--sv-space-4));
+    width: calc(100% - var(--sv-space-4));
+    flex-direction: column;
+    align-items: flex-start;
+    
+    &__content {
+      margin-bottom: var(--sv-space-2);
+      width: 100%;
+    }
+    
+    &__actions {
+      width: 100%;
+      justify-content: flex-end;
+    }
+    
+    // Keep horizontal layout for simple variant
+    &--simple {
+      flex-direction: row;
+      align-items: center;
+      
+      .sv-snackbar__content {
+        margin-bottom: 0;
+        width: auto;
+      }
+      
+      .sv-snackbar__actions {
+        width: auto;
+      }
+    }
+  }
+}

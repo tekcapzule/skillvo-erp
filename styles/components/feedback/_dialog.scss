@@ -1,20 +1,22 @@
 /**
- * Dialog Component - SkillVo Design System
- * Version: 1.0.0
- * Last Updated: April 29, 2025
+ * Dialog Component - Specific Styles
+ * Version: 2.0.0
+ * Last Updated: July 3, 2024
  * 
- * This file defines the specific styles for the Dialog component,
- * extending the sv-feedback-base class. Dialogs are modal windows that
- * appear in front of app content to provide critical information or
- * request a decision from the user.
+ * This file establishes the specific styles for the dialog component
+ * in the SkillVo design system. This serves as the third level in our 
+ * three-tier styling architecture:
+ * 1. sv-ui-control-base - Base styles for all interactive controls
+ * 2. sv-feedback-control-base - Base styles for feedback controls
+ * 3. sv-dialog (this file) - Component-specific styles for dialogs
  */
 
 /* ==========================================================================
    TABLE OF CONTENTS:
    
-   1. VARIABLES & CONFIGURATION
-   2. COMPONENT-SPECIFIC MIXINS
-   3. DIALOG BASE CLASS
+   1. IMPORTS
+   2. VARIABLES & CONFIGURATION
+   3. DIALOG BASE
    4. DIALOG PARTS (HEADER, BODY, FOOTER)
    5. DIALOG SIZES
    6. DIALOG VARIANTS 
@@ -24,616 +26,489 @@
    10. ACCESSIBILITY ENHANCEMENTS
    ========================================================================== */
 
-   @use './../../abstracts/' as *;
-   @use './../../base/' as *;
-   
-   /* ==========================================================================
-      1. VARIABLES & CONFIGURATION
-      ========================================================================== */
-   
-   // Dialog-specific dimensions
-   $dialog-sm-width: 400px;
-   $dialog-md-width: 600px;
-   $dialog-lg-width: 800px;
-   $dialog-xl-width: 1000px;
-   $dialog-border-width: 1px;
-   $dialog-border-radius: var(--sv-radius-md);
-   
-   // Dialog-specific spacing
-   $dialog-padding-x: var(--sv-padding-6);
-   $dialog-padding-y: var(--sv-padding-5);
-   $dialog-header-padding-y: var(--sv-padding-4);
-   $dialog-footer-padding-y: var(--sv-padding-4);
-   $dialog-body-padding-y: var(--sv-padding-5);
-   
-   // Dialog-specific animation
-   $dialog-animation-duration: var(--sv-motion-duration-medium);
-   $dialog-transition-timing: var(--sv-motion-ease-standard);
-   
-   // Dialog z-index (should be higher than other components)
-   $dialog-z-index: var(--sv-z-index-modal);
-   $dialog-backdrop-z-index: calc(#{$dialog-z-index} - 1);
-   
-   /* ==========================================================================
-      2. COMPONENT-SPECIFIC MIXINS
-      ========================================================================== */
-   
-   // Dialog size variations
-   @mixin dialog-size($size) {
-     @if $size == 'sm' {
-       width: $dialog-sm-width;
-       max-width: calc(100vw - var(--sv-space-6));
-     } @else if $size == 'md' {
-       width: $dialog-md-width;
-       max-width: calc(100vw - var(--sv-space-6));
-     } @else if $size == 'lg' {
-       width: $dialog-lg-width;
-       max-width: calc(100vw - var(--sv-space-6));
-     } @else if $size == 'xl' {
-       width: $dialog-xl-width;
-       max-width: calc(100vw - var(--sv-space-6));
-     } @else if $size == 'full' {
-       width: calc(100vw - var(--sv-space-6));
-       height: calc(100vh - var(--sv-space-6));
-     }
-   }
-   
-   // Dialog variant styling
-   @mixin dialog-variant($type) {
-     @if $type == 'info' {
-       .sv-dialog-header {
-         background-color: rgba(41, 182, 246, 0.1);
-         color: var(--sv-info);
-         border-bottom-color: var(--sv-info);
-       }
-     } @else if $type == 'success' {
-       .sv-dialog-header {
-         background-color: rgba(76, 175, 80, 0.1);
-         color: var(--sv-success);
-         border-bottom-color: var(--sv-success);
-       }
-     } @else if $type == 'warning' {
-       .sv-dialog-header {
-         background-color: rgba(255, 167, 38, 0.1);
-         color: var(--sv-warning);
-         border-bottom-color: var(--sv-warning);
-       }
-     } @else if $type == 'error' {
-       .sv-dialog-header {
-         background-color: rgba(244, 67, 54, 0.1);
-         color: var(--sv-error);
-         border-bottom-color: var(--sv-error);
-       }
-     }
-   }
-   
-   /* ==========================================================================
-      3. DIALOG BASE CLASS
-      ========================================================================== */
-   
-   .sv-dialog {
-     // Extend the feedback base class
-     @extend .sv-feedback-base;
-     
-     // Dialog-specific layout and spacing
-     padding: 0; // Padding managed by child elements
-     
-     // Structural styles
-     position: fixed;
-     z-index: $dialog-z-index;
-     top: 50%;
-     left: 50%;
-     transform: translate(-50%, -50%);
-     display: none;
-     border-width: $dialog-border-width;
-     border-style: solid;
-     border-radius: $dialog-border-radius;
-     box-sizing: border-box;
-     overflow: hidden;
-     
-     // Default size
-     @include dialog-size('md');
-     
-     // Visual styling
-     background-color: var(--sv-bg-surface);
-     border-color: var(--sv-border-medium);
-     @include shadow('xl');
-     
-     // Focus handling
-     &:focus {
-       outline: none;
-     }
-     
-     &:focus-visible {
-       @include focus-visible-state;
-     }
-     
-     // Visibility
-     &.sv-dialog-visible {
-       display: block;
-     }
-     
-     // Dialog with overflowing content
-     &.sv-dialog-scrollable {
-       .sv-dialog-body {
-         max-height: 60vh;
-         overflow-y: auto;
-       }
-     }
-   }
-   
-   /* ==========================================================================
-      4. DIALOG PARTS (HEADER, BODY, FOOTER)
-      ========================================================================== */
-   
-   // Dialog header
-   .sv-dialog-header {
-     padding: $dialog-header-padding-y $dialog-padding-x;
-     border-bottom: $dialog-border-width solid var(--sv-border-light);
-     position: relative;
-     
-     // Title
-     .sv-dialog-title {
-       @include typography('xl', 'semibold', 'normal');
-       margin: 0;
-     }
-     
-     // Subtitle
-     .sv-dialog-subtitle {
-       @include typography('base', 'normal', 'normal');
-       color: var(--sv-text-secondary);
-       margin: var(--sv-space-2) 0 0 0;
-     }
-     
-     // Close button
-     .sv-dialog-close {
-       position: absolute;
-       top: $dialog-header-padding-y;
-       right: $dialog-padding-x;
-       background: transparent;
-       border: none;
-       padding: 0;
-       margin: 0;
-       cursor: pointer;
-       width: var(--sv-icon-size-md);
-       height: var(--sv-icon-size-md);
-       display: inline-flex;
-       align-items: center;
-       justify-content: center;
-       color: var(--sv-text-secondary);
-       @include transition(color);
-       &{
-        border-radius: var(--sv-radius-sm);
-       }
-       &:hover {
-         color: var(--sv-text-primary);
-         background-color: var(--sv-bg-element-hover);
-       }
-       
-       &:focus {
-         @include focus-state;
-       }
-       
-       &:focus-visible {
-         @include focus-visible-state;
-       }
-     }
-   }
-   
-   // Dialog body
-   .sv-dialog-body {
-     padding: $dialog-body-padding-y $dialog-padding-x;
-     @include typography('base', 'normal', 'normal');
-   }
-   
-   // Dialog footer
-   .sv-dialog-footer {
-     padding: $dialog-footer-padding-y $dialog-padding-x;
-     border-top: $dialog-border-width solid var(--sv-border-light);
-     
-     // Actions container
-     .sv-dialog-actions {
-       display: flex;
-       justify-content: flex-end;
-       gap: var(--sv-space-3);
-       
-       &.sv-dialog-actions-center {
-         justify-content: center;
-       }
-       
-       &.sv-dialog-actions-between {
-         justify-content: space-between;
-       }
-       
-       &.sv-dialog-actions-start {
-         justify-content: flex-start;
-       }
-       
-       // For stacked actions on mobile
-       &.sv-dialog-actions-stack {
-         @include breakpoint-down('sm') {
-           flex-direction: column;
-           
-           button, a {
-             width: 100%;
-           }
-         }
-       }
-     }
-   }
-   
-   /* ==========================================================================
-      5. DIALOG SIZES
-      ========================================================================== */
-   
-   // Small dialog
-   .sv-dialog-sm {
-     @include dialog-size('sm');
-   }
-   
-   // Medium dialog (default)
-   .sv-dialog-md {
-     @include dialog-size('md');
-   }
-   
-   // Large dialog
-   .sv-dialog-lg {
-     @include dialog-size('lg');
-   }
-   
-   // Extra large dialog
-   .sv-dialog-xl {
-     @include dialog-size('xl');
-   }
-   
-   // Full-screen dialog
-   .sv-dialog-full {
-     @include dialog-size('full');
-     border-radius: 0;
-   }
-   
-   /* ==========================================================================
-      6. DIALOG VARIANTS
-      ========================================================================== */
-   
-   // Dialog type variants
-   .sv-dialog-info {
-     @include dialog-variant('info');
-   }
-   
-   .sv-dialog-success {
-     @include dialog-variant('success');
-   }
-   
-   .sv-dialog-warning {
-     @include dialog-variant('warning');
-   }
-   
-   .sv-dialog-error {
-     @include dialog-variant('error');
-   }
-   
-   // Destructive action dialog
-   .sv-dialog-destructive {
-     .sv-dialog-header {
-       background-color: rgba(244, 67, 54, 0.1);
-       color: var(--sv-error);
-       border-bottom-color: var(--sv-error);
-     }
-     
-     .sv-dialog-actions {
-       button[data-destructive="true"] {
-         background-color: var(--sv-error);
-         color: var(--sv-text-on-dark);
-         border-color: var(--sv-error);
-         
-         &:hover {
-           background-color: rgba(244, 67, 54, 0.8);
-         }
-       }
-     }
-   }
-   
-   // Simple dialog (compact, less padding)
-   .sv-dialog-simple {
-     .sv-dialog-header {
-       padding: var(--sv-padding-3) $dialog-padding-x;
-       
-       .sv-dialog-title {
-         @include typography('lg', 'semibold', 'normal');
-       }
-     }
-     
-     .sv-dialog-body {
-       padding: var(--sv-padding-4) $dialog-padding-x;
-     }
-     
-     .sv-dialog-footer {
-       padding: var(--sv-padding-3) $dialog-padding-x;
-     }
-   }
-   
-   // Side drawer dialog
-   .sv-dialog-drawer {
-     top: 0;
-     right: 0;
-     bottom: 0;
-     transform: none;
-     left: auto;
-     height: 100vh;
-     max-width: 90%;
-     border-radius: 0;
-     display: flex;
-     flex-direction: column;
-     
-     &.sv-dialog-drawer-left {
-       left: 0;
-       right: auto;
-     }
-     
-     .sv-dialog-body {
-       flex: 1;
-       overflow-y: auto;
-     }
-     
-     &.sv-dialog-entering {
-       animation: drawer-slide-in $dialog-animation-duration $dialog-transition-timing both;
-       
-       &.sv-dialog-drawer-left {
-         animation-name: drawer-slide-in-left;
-       }
-     }
-     
-     &.sv-dialog-exiting {
-       animation: drawer-slide-out $dialog-animation-duration $dialog-transition-timing both;
-       
-       &.sv-dialog-drawer-left {
-         animation-name: drawer-slide-out-left;
-       }
-     }
-   }
-   
-   /* ==========================================================================
-      7. DIALOG ANIMATIONS
-      ========================================================================== */
-   
-   // Standard dialog animations
-   .sv-dialog {
-     &.sv-dialog-entering {
-       animation: dialog-fade-in $dialog-animation-duration $dialog-transition-timing both;
-     }
-     
-     &.sv-dialog-exiting {
-       animation: dialog-fade-out $dialog-animation-duration $dialog-transition-timing both;
-     }
-   }
-   
-   // Dialog animation keyframes
-   @keyframes dialog-fade-in {
-     from { 
-       opacity: 0; 
-       transform: translate(-50%, -48%) scale(0.96);
-     }
-     to { 
-       opacity: 1;
-       transform: translate(-50%, -50%) scale(1);
-     }
-   }
-   
-   @keyframes dialog-fade-out {
-     from { 
-       opacity: 1;
-       transform: translate(-50%, -50%) scale(1);
-     }
-     to { 
-       opacity: 0; 
-       transform: translate(-50%, -48%) scale(0.96);
-     }
-   }
-   
-   // Drawer animation keyframes
-   @keyframes drawer-slide-in {
-     from { 
-       transform: translateX(100%);
-     }
-     to { 
-       transform: translateX(0);
-     }
-   }
-   
-   @keyframes drawer-slide-out {
-     from { 
-       transform: translateX(0);
-     }
-     to { 
-       transform: translateX(100%);
-     }
-   }
-   
-   @keyframes drawer-slide-in-left {
-     from { 
-       transform: translateX(-100%);
-     }
-     to { 
-       transform: translateX(0);
-     }
-   }
-   
-   @keyframes drawer-slide-out-left {
-     from { 
-       transform: translateX(0);
-     }
-     to { 
-       transform: translateX(-100%);
-     }
-   }
-   
-   // Disable animations for users who prefer reduced motion
-   @media (prefers-reduced-motion: reduce) {
-     .sv-dialog {
-       &.sv-dialog-entering,
-       &.sv-dialog-exiting {
-         animation: none;
-       }
-     }
-   }
-   
-   /* ==========================================================================
-      8. DIALOG BACKDROP
-      ========================================================================== */
-   
-   .sv-dialog-backdrop {
-     position: fixed;
-     top: 0;
-     left: 0;
-     right: 0;
-     bottom: 0;
-     background-color: rgba(0, 0, 0, 0.5);
-     z-index: $dialog-backdrop-z-index;
-     display: none;
-     
-     &.sv-dialog-backdrop-visible {
-       display: block;
-     }
-     
-     &.sv-dialog-backdrop-entering {
-       animation: backdrop-fade-in $dialog-animation-duration ease-in both;
-     }
-     
-     &.sv-dialog-backdrop-exiting {
-       animation: backdrop-fade-out $dialog-animation-duration ease-out both;
-     }
-     
-     // Backdrop animation keyframes
-     @keyframes backdrop-fade-in {
-       from { opacity: 0; }
-       to { opacity: 1; }
-     }
-     
-     @keyframes backdrop-fade-out {
-       from { opacity: 1; }
-       to { opacity: 0; }
-     }
-     
-     // Disable animations for users who prefer reduced motion
-     @media (prefers-reduced-motion: reduce) {
-       &.sv-dialog-backdrop-entering,
-       &.sv-dialog-backdrop-exiting {
-         animation: none;
-       }
-     }
-   }
-   
-   /* ==========================================================================
-      9. RESPONSIVE ADAPTATIONS
-      ========================================================================== */
-   
-   // Small screens
-   @include breakpoint-down('sm') {
-     .sv-dialog {
-       // Full width on mobile, except for drawer
-       &:not(.sv-dialog-drawer) {
-         width: calc(100vw - var(--sv-space-4));
-         height: auto;
-         max-height: calc(100vh - var(--sv-space-4) * 2);
-         
-         // Reduced padding on mobile
-         .sv-dialog-header {
-           padding: var(--sv-padding-3) var(--sv-padding-4);
-         }
-         
-         .sv-dialog-body {
-           padding: var(--sv-padding-4);
-         }
-         
-         .sv-dialog-footer {
-           padding: var(--sv-padding-3) var(--sv-padding-4);
-         }
-       }
-       
-       // Drawer takes more space on mobile
-       &.sv-dialog-drawer {
-         width: 85%;
-         max-width: none;
-       }
-       
-       // Center action buttons on mobile by default
-       .sv-dialog-actions:not(.sv-dialog-actions-stack):not(.sv-dialog-actions-start):not(.sv-dialog-actions-between):not(.sv-dialog-actions-center) {
-         justify-content: center;
-       }
-     }
-   }
-   
-   /* ==========================================================================
-      10. ACCESSIBILITY ENHANCEMENTS
-      ========================================================================== */
-   
-   // Keyboard navigation trap for modal dialogs
-   .sv-dialog[role="dialog"][aria-modal="true"] {
-     // Ensure content that overflows is accessible
-     .sv-dialog-body {
-       -webkit-overflow-scrolling: touch; // Better scrolling on iOS
-       scroll-behavior: smooth;
-       
-       &:focus {
-         outline: none;
-       }
-     }
-   }
-   
-   // Focus ring for interactive elements within the dialog
-   .sv-dialog-interactive-element {
-     &:focus {
-       @include focus-state;
-     }
-     
-     &:focus-visible {
-       @include focus-visible-state;
-     }
-   }
-   
-   // RTL support
-   [dir="rtl"] {
-     .sv-dialog-header {
-       .sv-dialog-close {
-         right: auto;
-         left: $dialog-padding-x;
-       }
-     }
-     
-     .sv-dialog-footer {
-       .sv-dialog-actions {
-         flex-direction: row-reverse;
-         
-         &.sv-dialog-actions-between {
-           flex-direction: row;
-         }
-       }
-     }
-     
-     .sv-dialog-drawer {
-       right: auto;
-       left: 0;
-       
-       &.sv-dialog-drawer-left {
-         left: auto;
-         right: 0;
-       }
-       
-       &.sv-dialog-entering {
-         animation-name: drawer-slide-in-left;
-         
-         &.sv-dialog-drawer-left {
-           animation-name: drawer-slide-in;
-         }
-       }
-       
-       &.sv-dialog-exiting {
-         animation-name: drawer-slide-out-left;
-         
-         &.sv-dialog-drawer-left {
-           animation-name: drawer-slide-out;
-         }
-       }
-     }
-   }
+/* ==========================================================================
+   1. IMPORTS
+   ========================================================================== */
+@use './../../abstracts/variables/' as *;
+@use './../../base/utils/mixins/state' as state;
+@use './../../base/utils/mixins/layout' as layout;
+@use './../../base/utils/mixins/typography' as typography;
+@use './../../base/utils/mixins/responsive' as responsive;
+@use './../../base/utils/mixins/accessibility' as a11y;
+
+/* ==========================================================================
+   2. VARIABLES & CONFIGURATION
+   ========================================================================== */
+
+// Dialog-specific dimensions
+$dialog-sm-width: 400px;
+$dialog-md-width: 600px;
+$dialog-lg-width: 800px;
+$dialog-xl-width: 1000px;
+$dialog-border-width: 1px;
+$dialog-border-radius: var(--sv-radius-md);
+
+// Dialog-specific spacing
+$dialog-padding-x: var(--sv-space-6);
+$dialog-padding-y: var(--sv-space-5);
+$dialog-header-padding-y: var(--sv-space-4);
+$dialog-footer-padding-y: var(--sv-space-4);
+$dialog-body-padding-y: var(--sv-space-5);
+
+// Dialog-specific animation
+$dialog-animation-duration: var(--sv-motion-duration-medium);
+$dialog-transition-timing: var(--sv-motion-ease-standard);
+
+// Dialog z-index (should be higher than other components)
+$dialog-z-index: var(--sv-z-index-modal);
+$dialog-backdrop-z-index: calc(#{$dialog-z-index} - 1);
+
+/* ==========================================================================
+   3. DIALOG BASE
+   ========================================================================== */
+
+.sv-dialog {
+  // Extend the feedback control base to inherit all shared properties
+  @extend .sv-feedback-control-base;
+  
+  // Dialog-specific layout and spacing
+  padding: 0; // Padding managed by child elements
+  
+  // Structural styles
+  position: fixed;
+  z-index: $dialog-z-index;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: none;
+  border-width: $dialog-border-width;
+  border-style: solid;
+  border-radius: $dialog-border-radius;
+  box-sizing: border-box;
+  overflow: hidden;
+  
+  // Default size
+  width: $dialog-md-width;
+  max-width: calc(100vw - var(--sv-space-6));
+  
+  // Visual styling
+  background-color: var(--sv-bg-surface);
+  border-color: var(--sv-border-medium);
+  box-shadow: var(--sv-shadow-xl);
+  
+  // Focus handling
+  &:focus {
+    outline: none;
+  }
+  
+  &:focus-visible {
+    @include state.focus-visible-state;
+  }
+  
+  // Transitions
+  transition: transform $dialog-animation-duration $dialog-transition-timing,
+              opacity $dialog-animation-duration $dialog-transition-timing;
+}
+
+/* ==========================================================================
+   4. DIALOG PARTS (HEADER, BODY, FOOTER)
+   ========================================================================== */
+
+.sv-dialog {
+  // Dialog header
+  &__header {
+    padding: $dialog-header-padding-y $dialog-padding-x;
+    border-bottom: $dialog-border-width solid var(--sv-border-light);
+    position: relative;
+  }
+  
+  // Dialog title
+  &__title {
+    font-size: var(--sv-font-size-xl);
+    font-weight: var(--sv-font-weight-semibold);
+    line-height: var(--sv-line-height-normal);
+    margin: 0;
+  }
+  
+  // Dialog subtitle
+  &__subtitle {
+    font-size: var(--sv-font-size-base);
+    font-weight: var(--sv-font-weight-normal);
+    line-height: var(--sv-line-height-normal);
+    color: var(--sv-text-secondary);
+    margin: var(--sv-space-2) 0 0 0;
+  }
+  
+  // Close button
+  &__close {
+    position: absolute;
+    top: $dialog-header-padding-y;
+    right: $dialog-padding-x;
+    background: transparent;
+    border: none;
+    padding: 0;
+    margin: 0;
+    cursor: pointer;
+    width: var(--sv-icon-size-md);
+    height: var(--sv-icon-size-md);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--sv-text-secondary);
+    transition: color var(--sv-motion-duration-short) $dialog-transition-timing,
+                background-color var(--sv-motion-duration-short) $dialog-transition-timing;
+    border-radius: var(--sv-radius-sm);
+    
+    &:hover {
+      color: var(--sv-text-primary);
+      background-color: var(--sv-bg-element-hover);
+    }
+    
+    &:focus-visible {
+      @include state.focus-visible-state;
+    }
+  }
+  
+  // Dialog body
+  &__body {
+    padding: $dialog-body-padding-y $dialog-padding-x;
+    font-size: var(--sv-font-size-base);
+    font-weight: var(--sv-font-weight-normal);
+    line-height: var(--sv-line-height-normal);
+  }
+  
+  // Dialog footer
+  &__footer {
+    padding: $dialog-footer-padding-y $dialog-padding-x;
+    border-top: $dialog-border-width solid var(--sv-border-light);
+  }
+  
+  // Actions container
+  &__actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: var(--sv-space-3);
+    
+    &--center {
+      justify-content: center;
+    }
+    
+    &--between {
+      justify-content: space-between;
+    }
+    
+    &--start {
+      justify-content: flex-start;
+    }
+  }
+}
+
+/* ==========================================================================
+   5. DIALOG SIZES
+   ========================================================================== */
+
+.sv-dialog {
+  // Small dialog
+  &--sm {
+    width: $dialog-sm-width;
+    max-width: calc(100vw - var(--sv-space-6));
+  }
+  
+  // Medium dialog (default)
+  &--md {
+    width: $dialog-md-width;
+    max-width: calc(100vw - var(--sv-space-6));
+  }
+  
+  // Large dialog
+  &--lg {
+    width: $dialog-lg-width;
+    max-width: calc(100vw - var(--sv-space-6));
+  }
+  
+  // Extra large dialog
+  &--xl {
+    width: $dialog-xl-width;
+    max-width: calc(100vw - var(--sv-space-6));
+  }
+  
+  // Full-screen dialog
+  &--full {
+    width: calc(100vw - var(--sv-space-6));
+    height: calc(100vh - var(--sv-space-6));
+  }
+}
+
+/* ==========================================================================
+   6. DIALOG VARIANTS 
+   ========================================================================== */
+
+.sv-dialog {
+  // Info variant
+  &--info {
+    .sv-dialog__header {
+      background-color: rgba(var(--sv-info-rgb), 0.1);
+      color: var(--sv-info);
+      border-bottom-color: var(--sv-info);
+    }
+  }
+  
+  // Success variant
+  &--success {
+    .sv-dialog__header {
+      background-color: rgba(var(--sv-success-rgb), 0.1);
+      color: var(--sv-success);
+      border-bottom-color: var(--sv-success);
+    }
+  }
+  
+  // Warning variant
+  &--warning {
+    .sv-dialog__header {
+      background-color: rgba(var(--sv-warning-rgb), 0.1);
+      color: var(--sv-warning);
+      border-bottom-color: var(--sv-warning);
+    }
+  }
+  
+  // Error variant
+  &--error {
+    .sv-dialog__header {
+      background-color: rgba(var(--sv-error-rgb), 0.1);
+      color: var(--sv-error);
+      border-bottom-color: var(--sv-error);
+    }
+  }
+  
+  // Primary variant
+  &--primary {
+    .sv-dialog__header {
+      background-color: var(--sv-primary);
+      color: var(--sv-text-on-dark);
+      border-bottom-color: var(--sv-primary);
+      
+      .sv-dialog__close {
+        color: var(--sv-text-on-dark);
+        
+        &:hover {
+          background-color: rgba(255, 255, 255, 0.1);
+        }
+      }
+      
+      .sv-dialog__subtitle {
+        color: rgba(255, 255, 255, 0.8);
+      }
+    }
+  }
+  
+  // Borderless variant
+  &--borderless {
+    border: none;
+    
+    .sv-dialog__header {
+      border-bottom: none;
+    }
+    
+    .sv-dialog__footer {
+      border-top: none;
+    }
+  }
+}
+
+/* ==========================================================================
+   7. DIALOG ANIMATIONS
+   ========================================================================== */
+
+@keyframes sv-dialog-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes sv-dialog-fade-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes sv-dialog-slide-in {
+  from {
+    transform: translate(-50%, -60%);
+    opacity: 0;
+  }
+  to {
+    transform: translate(-50%, -50%);
+    opacity: 1;
+  }
+}
+
+@keyframes sv-dialog-slide-out {
+  from {
+    transform: translate(-50%, -50%);
+    opacity: 1;
+  }
+  to {
+    transform: translate(-50%, -60%);
+    opacity: 0;
+  }
+}
+
+.sv-dialog {
+  &.is-entering {
+    animation: sv-dialog-slide-in $dialog-animation-duration $dialog-transition-timing;
+    display: block;
+  }
+  
+  &.is-exiting {
+    animation: sv-dialog-slide-out $dialog-animation-duration $dialog-transition-timing;
+    display: block;
+  }
+  
+  &.is-visible {
+    display: block;
+  }
+  
+  // Side entry animation
+  &--side-entry {
+    &.is-entering {
+      animation: sv-dialog-side-entry $dialog-animation-duration $dialog-transition-timing;
+    }
+    
+    &.is-exiting {
+      animation: sv-dialog-side-exit $dialog-animation-duration $dialog-transition-timing;
+    }
+  }
+}
+
+@keyframes sv-dialog-side-entry {
+  from {
+    transform: translate(100%, -50%);
+    opacity: 0;
+  }
+  to {
+    transform: translate(-50%, -50%);
+    opacity: 1;
+  }
+}
+
+@keyframes sv-dialog-side-exit {
+  from {
+    transform: translate(-50%, -50%);
+    opacity: 1;
+  }
+  to {
+    transform: translate(100%, -50%);
+    opacity: 0;
+  }
+}
+
+/* ==========================================================================
+   8. DIALOG BACKDROP
+   ========================================================================== */
+
+.sv-dialog-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: $dialog-backdrop-z-index;
+  display: none;
+  
+  &.is-visible {
+    display: block;
+  }
+  
+  &.is-entering {
+    animation: sv-dialog-backdrop-fade-in 0.2s ease-out;
+    display: block;
+  }
+  
+  &.is-exiting {
+    animation: sv-dialog-backdrop-fade-out 0.2s ease-in;
+    display: block;
+  }
+}
+
+@keyframes sv-dialog-backdrop-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes sv-dialog-backdrop-fade-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+/* ==========================================================================
+   9. RESPONSIVE ADAPTATIONS
+   ========================================================================== */
+
+@include responsive.media-breakpoint-down(sm) {
+  .sv-dialog {
+    width: calc(100vw - var(--sv-space-4));
+    max-width: none;
+    max-height: calc(100vh - var(--sv-space-4));
+    
+    &__header {
+      padding: var(--sv-space-3) var(--sv-space-4);
+    }
+    
+    &__body {
+      padding: var(--sv-space-4);
+      max-height: 70vh;
+      overflow-y: auto;
+    }
+    
+    &__footer {
+      padding: var(--sv-space-3) var(--sv-space-4);
+    }
+    
+    &__actions {
+      flex-direction: column;
+      gap: var(--sv-space-2);
+      
+      .sv-button {
+        width: 100%;
+      }
+    }
+  }
+}
+
+/* ==========================================================================
+   10. ACCESSIBILITY ENHANCEMENTS
+   ========================================================================== */
+
+.sv-dialog {
+  &.is-scrollable {
+    .sv-dialog__body {
+      max-height: 60vh;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+  }
+  
+  // For screen reader only content
+  &__sr-description {
+    @include a11y.visually-hidden;
+  }
+  
+  &:focus {
+    outline: none;
+  }
+}

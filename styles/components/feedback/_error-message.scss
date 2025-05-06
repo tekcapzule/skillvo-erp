@@ -1,382 +1,342 @@
 /**
- * Error Message Component - SkillVo Design System
- * Version: 1.0.0
- * Last Updated: April 29, 2025
+ * Error Message Component - Specific Styles
+ * Version: 2.0.0
+ * Last Updated: July 3, 2024
  * 
- * This file defines the specific styles for the Error Message component,
- * extending the sv-feedback-base class. Error messages provide feedback
- * to users about problems with their input or system errors.
+ * This file establishes the specific styles for the error message component
+ * in the SkillVo design system. This serves as the third level in our 
+ * three-tier styling architecture:
+ * 1. sv-ui-control-base - Base styles for all interactive controls
+ * 2. sv-feedback-control-base - Base styles for feedback controls
+ * 3. sv-error (this file) - Component-specific styles for error messages
  */
 
 /* ==========================================================================
    TABLE OF CONTENTS:
    
-   1. VARIABLES & CONFIGURATION
-   2. COMPONENT-SPECIFIC MIXINS
-   3. ERROR MESSAGE BASE CLASS
+   1. IMPORTS
+   2. VARIABLES & CONFIGURATION
+   3. ERROR MESSAGE BASE
    4. ERROR MESSAGE VARIANTS
    5. ERROR MESSAGE ANIMATIONS
    6. FORM FIELD ERROR INTEGRATION
    7. RESPONSIVE ADAPTATIONS
    ========================================================================== */
 
-   @use './../../abstracts/' as *;
-   @use './../../base/' as *;
-   
-   /* ==========================================================================
-      1. VARIABLES & CONFIGURATION
-      ========================================================================== */
-   
-   // Error message specific dimensions
-   $error-icon-size: var(--sv-icon-size-sm);
-   $error-message-border-width: 1px;
-   $error-message-border-radius: var(--sv-radius-sm);
-   
-   // Error message specific spacing
-   $error-message-padding-x: var(--sv-padding-3);
-   $error-message-padding-y: var(--sv-padding-2);
-   $error-message-margin-top: var(--sv-space-1);
-   
-   // Error message specific colors
-   $error-color: var(--sv-error);
-   $error-bg-color: rgba(244, 67, 54, 0.05);
-   $error-border-color: var(--sv-error);
-   
-   // Error message animation duration
-   $error-animation-duration: var(--sv-motion-duration-medium);
-   
-   /* ==========================================================================
-      2. COMPONENT-SPECIFIC MIXINS
-      ========================================================================== */
-   
-   // Error message variant styling
-   @mixin error-message-variant($variant) {
-     @if $variant == 'subtle' {
-       background-color: transparent;
-       border: none;
-       padding: var(--sv-padding-1) 0;
-     } @else if $variant == 'filled' {
-       background-color: $error-color;
-       border-color: $error-color;
-       color: var(--sv-text-on-dark);
-       
-       .sv-error-message-icon {
-         color: var(--sv-text-on-dark);
-       }
-     } @else if $variant == 'outlined' {
-       background-color: transparent;
-       border-color: $error-color;
-       color: $error-color;
-     }
-   }
-   
-   /* ==========================================================================
-      3. ERROR MESSAGE BASE CLASS
-      ========================================================================== */
-   
-   .sv-error-message {
-     // Extend the feedback base class
-     @extend .sv-feedback-base;
-     
-     // Error message specific layout and spacing
-     display: flex;
-     align-items: flex-start;
-     padding: $error-message-padding-y $error-message-padding-x;
-     margin-top: $error-message-margin-top;
-     
-     // Structural styles
-     position: relative;
-     box-sizing: border-box;
-     border-width: $error-message-border-width;
-     border-style: solid;
-     border-radius: $error-message-border-radius;
-     
-     // Visual styling
-     background-color: $error-bg-color;
-     border-color: $error-border-color;
-     color: $error-color;
-     
-     // Make sure shadow is subtle for error messages
-     box-shadow: none;
-     
-     // Accessibility
-     &[role="alert"] {
-       // Properly styled for alert role
-     }
-     
-     // Error icon
-     .sv-error-message-icon {
-       flex-shrink: 0;
-       margin-right: var(--sv-space-2);
-       color: $error-color;
-       width: $error-icon-size;
-       height: $error-icon-size;
-       margin-top: 2px;
-     }
-     
-     // Error content
-     .sv-error-message-content {
-       flex: 1;
-       min-width: 0; // Ensures text truncation works
-       @include typography('sm', 'normal', 'normal');
-     }
-     
-     // Multiple error list
-     .sv-error-message-list {
-       margin: 0;
-       padding-left: var(--sv-space-4);
-       
-       li {
-         margin-bottom: var(--sv-space-1);
-         
-         &:last-child {
-           margin-bottom: 0;
-         }
-       }
-     }
-   }
-   
-   /* ==========================================================================
-      4. ERROR MESSAGE VARIANTS
-      ========================================================================== */
-   
-   // Subtle variant (minimalistic, for inline errors)
-   .sv-error-message-subtle {
-     @include error-message-variant('subtle');
-   }
-   
-   // Filled variant (high emphasis)
-   .sv-error-message-filled {
-     @include error-message-variant('filled');
-   }
-   
-   // Outlined variant
-   .sv-error-message-outlined {
-     @include error-message-variant('outlined');
-   }
-   
-   // Severity levels
-   .sv-error-message-critical {
-     border-left-width: 4px;
-   }
-   
-   // Toast-like error message
-   .sv-error-message-toast {
-     position: fixed;
-     bottom: var(--sv-space-4);
-     right: var(--sv-space-4);
-     @include shadow('md');
-     min-width: 280px;
-     max-width: 400px;
-     z-index: var(--sv-z-index-tooltip);
-     
-     // Animated entry
-     &.sv-error-message-entering {
-       animation: error-toast-enter $error-animation-duration var(--sv-motion-ease-standard) both;
-     }
-     
-     // Animated exit
-     &.sv-error-message-exiting {
-       animation: error-toast-exit $error-animation-duration var(--sv-motion-ease-standard) both;
-     }
-   }
-   
-   // System error message (for server errors, etc.)
-   .sv-error-message-system {
-     background-color: #FEF3F2; // Slightly different error background for system errors
-     border-color: #FEE4E2; // Lighter border for system errors
-     padding: var(--sv-padding-4);
-     margin-bottom: var(--sv-space-4);
-     
-     .sv-error-message-title {
-       @include typography('base', 'medium', 'normal');
-       margin-bottom: var(--sv-space-2);
-     }
-     
-     .sv-error-message-content {
-       font-size: var(--sv-text-sm);
-     }
-     
-     .sv-error-message-code {
-       display: inline-block;
-       padding: var(--sv-padding-1) var(--sv-padding-2);
-       background-color: rgba(244, 67, 54, 0.1);
-       border-radius: var(--sv-radius-sm);
-       font-family: var(--sv-font-family-mono);
-       font-size: var(--sv-text-xs);
-       margin-top: var(--sv-space-2);
-     }
-     
-     .sv-error-message-action {
-       margin-top: var(--sv-space-3);
-       display: inline-flex;
-       align-items: center;
-       
-       button {
-         margin-right: var(--sv-space-2);
-       }
-     }
-   }
-   
-   // Inline error (for form fields)
-   .sv-error-message-inline {
-     border: none;
-     background: transparent;
-     padding: var(--sv-padding-1) 0;
-     margin-top: var(--sv-space-1);
-     font-size: var(--sv-text-xs);
-   }
-   
-   /* ==========================================================================
-      5. ERROR MESSAGE ANIMATIONS
-      ========================================================================== */
-   
-   // Animation keyframes for error message
-   @keyframes error-shake {
-     0%, 100% { 
-       transform: translateX(0); 
-     }
-     20%, 60% { 
-       transform: translateX(-5px); 
-     }
-     40%, 80% { 
-       transform: translateX(5px); 
-     }
-   }
-   
-   @keyframes error-toast-enter {
-     from { 
-       opacity: 0;
-       transform: translateY(20px);
-     }
-     to { 
-       opacity: 1;
-       transform: translateY(0);
-     }
-   }
-   
-   @keyframes error-toast-exit {
-     from { 
-       opacity: 1;
-       transform: translateY(0);
-     }
-     to { 
-       opacity: 0;
-       transform: translateY(20px);
-     }
-   }
-   
-   // Animated error message
-   .sv-error-message-animated {
-     animation: error-shake 0.6s ease-in-out;
-   }
-   
-   // Disable animations for users who prefer reduced motion
-   @media (prefers-reduced-motion: reduce) {
-     .sv-error-message-animated {
-       animation: none;
-     }
-     
-     .sv-error-message-toast {
-       &.sv-error-message-entering,
-       &.sv-error-message-exiting {
-         animation: none;
-       }
-     }
-   }
-   
-   /* ==========================================================================
-      6. FORM FIELD ERROR INTEGRATION
-      ========================================================================== */
-   
-   // Connection between form fields and error messages
-   .sv-form-field {
-     &.has-error {
-       .sv-form-input {
-         border-color: $error-color;
-         
-         &:focus {
-           box-shadow: 0 0 0 3px rgba(244, 67, 54, 0.1);
-         }
-       }
-       
-       .sv-form-label {
-         color: $error-color;
-       }
-       
-       // Connected error message
-       + .sv-error-message {
-         // Styling for errors that are directly after form fields
-       }
-     }
-   }
-   
-   // Field validation error
-   .sv-field-validation-error {
-     @extend .sv-error-message;
-     @extend .sv-error-message-inline;
-     display: none;
-     
-     &.active {
-       display: flex;
-     }
-   }
-   
-   /* ==========================================================================
-      7. RESPONSIVE ADAPTATIONS
-      ========================================================================== */
-   
-   // Small screens
-   @include breakpoint-down('sm') {
-     // Toast-like error messages need to be full width on mobile
-     .sv-error-message-toast {
-       left: var(--sv-space-4);
-       right: var(--sv-space-4);
-       bottom: var(--sv-space-4);
-       max-width: none;
-       width: auto;
-     }
-     
-     // System errors should stack elements on mobile
-     .sv-error-message-system {
-       .sv-error-message-action {
-         flex-direction: column;
-         align-items: flex-start;
-         
-         button {
-           margin-right: 0;
-           margin-bottom: var(--sv-space-2);
-           width: 100%;
-         }
-       }
-     }
-   }
-   
-   // RTL support
-   [dir="rtl"] {
-     .sv-error-message {
-       .sv-error-message-icon {
-         margin-right: 0;
-         margin-left: var(--sv-space-2);
-       }
-       
-       .sv-error-message-list {
-         padding-left: 0;
-         padding-right: var(--sv-space-4);
-       }
-     }
-     
-     .sv-error-message-toast {
-       right: auto;
-       left: var(--sv-space-4);
-     }
-     
-     .sv-error-message-system {
-       .sv-error-message-action {
-         button {
-           margin-right: 0;
-           margin-left: var(--sv-space-2);
-         }
-       }
-     }
-   }
+/* ==========================================================================
+   1. IMPORTS
+   ========================================================================== */
+@use './../../abstracts/variables/' as *;
+@use './../../base/utils/mixins/state' as state;
+@use './../../base/utils/mixins/layout' as layout;
+@use './../../base/utils/mixins/typography' as typography;
+@use './../../base/utils/mixins/responsive' as responsive;
+@use './../../base/utils/mixins/accessibility' as a11y;
+
+/* ==========================================================================
+   2. VARIABLES & CONFIGURATION
+   ========================================================================== */
+
+// Error message specific dimensions
+$error-icon-size: var(--sv-icon-size-sm);
+$error-border-width: 1px;
+$error-border-radius: var(--sv-radius-sm);
+
+// Error message specific spacing
+$error-padding-x: var(--sv-space-3);
+$error-padding-y: var(--sv-space-2);
+$error-margin-top: var(--sv-space-1);
+
+// Error message specific colors
+$error-color: var(--sv-error);
+$error-bg-color: var(--sv-error-light);
+$error-border-color: var(--sv-error);
+
+// Error message animation duration
+$error-animation-duration: var(--sv-motion-duration-medium);
+$error-transition-timing: var(--sv-motion-ease-standard);
+
+/* ==========================================================================
+   3. ERROR MESSAGE BASE
+   ========================================================================== */
+
+.sv-error {
+  // Extend the feedback control base to inherit all shared properties
+  @extend .sv-feedback-control-base;
+  
+  // Error message specific layout and spacing
+  display: flex;
+  align-items: flex-start;
+  padding: $error-padding-y $error-padding-x;
+  margin-top: $error-margin-top;
+  
+  // Structural styles
+  position: relative;
+  box-sizing: border-box;
+  border-width: $error-border-width;
+  border-style: solid;
+  border-radius: $error-border-radius;
+  
+  // Visual styling
+  background-color: $error-bg-color;
+  border-color: $error-border-color;
+  color: $error-color;
+  
+  // Make sure shadow is subtle for error messages
+  box-shadow: none;
+  
+  // Transitions for animations
+  transition: opacity $error-animation-duration $error-transition-timing,
+              transform $error-animation-duration $error-transition-timing;
+  
+  // BEM pattern for error message elements
+  &__icon {
+    flex-shrink: 0;
+    margin-right: var(--sv-space-2);
+    color: $error-color;
+    width: $error-icon-size;
+    height: $error-icon-size;
+    margin-top: 2px;
+  }
+  
+  &__content {
+    flex: 1;
+    min-width: 0; // Ensures text truncation works
+    font-size: var(--sv-font-size-sm);
+    font-weight: var(--sv-font-weight-normal);
+    line-height: var(--sv-line-height-normal);
+  }
+  
+  &__title {
+    font-size: var(--sv-font-size-base);
+    font-weight: var(--sv-font-weight-medium);
+    line-height: var(--sv-line-height-normal);
+    margin-bottom: var(--sv-space-2);
+    margin-top: 0;
+  }
+  
+  &__list {
+    margin: 0;
+    padding-left: var(--sv-space-4);
+    
+    li {
+      margin-bottom: var(--sv-space-1);
+      
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+  
+  &__code {
+    display: inline-block;
+    padding: var(--sv-space-1) var(--sv-space-2);
+    background-color: rgba(var(--sv-error-rgb), 0.1);
+    border-radius: var(--sv-radius-sm);
+    font-family: var(--sv-font-family-mono);
+    font-size: var(--sv-font-size-xs);
+    margin-top: var(--sv-space-2);
+  }
+  
+  &__action {
+    margin-top: var(--sv-space-3);
+    display: inline-flex;
+    align-items: center;
+    
+    .sv-button {
+      margin-right: var(--sv-space-2);
+    }
+  }
+}
+
+/* ==========================================================================
+   4. ERROR MESSAGE VARIANTS
+   ========================================================================== */
+
+.sv-error {
+  // Subtle variant (minimalistic, for inline errors)
+  &--subtle {
+    background-color: transparent;
+    border: none;
+    padding: var(--sv-space-1) 0;
+  }
+  
+  // Filled variant (high emphasis)
+  &--filled {
+    background-color: $error-color;
+    border-color: $error-color;
+    color: var(--sv-text-on-dark);
+    
+    .sv-error__icon {
+      color: var(--sv-text-on-dark);
+    }
+  }
+  
+  // Outlined variant
+  &--outlined {
+    background-color: transparent;
+    border-color: $error-color;
+    color: $error-color;
+  }
+  
+  // Critical severity level
+  &--critical {
+    border-left-width: 4px;
+  }
+  
+  // Toast-like error message
+  &--toast {
+    position: fixed;
+    bottom: var(--sv-space-4);
+    right: var(--sv-space-4);
+    box-shadow: var(--sv-shadow-md);
+    min-width: 280px;
+    max-width: 400px;
+    z-index: var(--sv-z-index-tooltip);
+  }
+  
+  // System error message (for server errors, etc.)
+  &--system {
+    background-color: var(--sv-error-light);
+    border-color: var(--sv-error);
+    padding: var(--sv-space-4);
+    margin-bottom: var(--sv-space-4);
+  }
+  
+  // Inline error (for form fields)
+  &--inline {
+    border: none;
+    background: transparent;
+    padding: var(--sv-space-1) 0;
+    margin-top: var(--sv-space-1);
+    font-size: var(--sv-font-size-xs);
+  }
+}
+
+/* ==========================================================================
+   5. ERROR MESSAGE ANIMATIONS
+   ========================================================================== */
+
+// Animation states
+.sv-error {
+  &.is-entering {
+    animation: sv-error-fade-in $error-animation-duration $error-transition-timing;
+  }
+  
+  &.is-exiting {
+    animation: sv-error-fade-out $error-animation-duration $error-transition-timing;
+  }
+  
+  &.is-shaking {
+    animation: sv-error-shake 0.5s $error-transition-timing;
+  }
+  
+  // Toast animations
+  &--toast {
+    &.is-entering {
+      animation: sv-error-toast-enter $error-animation-duration $error-transition-timing;
+    }
+    
+    &.is-exiting {
+      animation: sv-error-toast-exit $error-animation-duration $error-transition-timing;
+    }
+  }
+}
+
+// Animation keyframes
+@keyframes sv-error-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes sv-error-fade-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes sv-error-shake {
+  0%, 100% { 
+    transform: translateX(0); 
+  }
+  20%, 60% { 
+    transform: translateX(-5px); 
+  }
+  40%, 80% { 
+    transform: translateX(5px); 
+  }
+}
+
+@keyframes sv-error-toast-enter {
+  from { 
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to { 
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes sv-error-toast-exit {
+  from { 
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to { 
+    opacity: 0;
+    transform: translateY(20px);
+  }
+}
+
+/* ==========================================================================
+   6. FORM FIELD ERROR INTEGRATION
+   ========================================================================== */
+
+// Integration with form fields
+.sv-form-field {
+  &.is-invalid {
+    .sv-input,
+    .sv-select,
+    .sv-textarea {
+      border-color: var(--sv-error);
+      
+      &:focus {
+        box-shadow: 0 0 0 2px rgba(var(--sv-error-rgb), 0.2);
+      }
+    }
+    
+    .sv-form-label {
+      color: var(--sv-error);
+    }
+    
+    .sv-error--inline {
+      margin-top: var(--sv-space-1);
+    }
+  }
+}
+
+/* ==========================================================================
+   7. RESPONSIVE ADAPTATIONS
+   ========================================================================== */
+
+@include responsive.media-breakpoint-down(sm) {
+  .sv-error {
+    &--toast {
+      left: var(--sv-space-4);
+      right: var(--sv-space-4);
+      max-width: none;
+    }
+    
+    &--system {
+      padding: var(--sv-space-3);
+    }
+  }
+}

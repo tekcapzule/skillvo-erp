@@ -1,19 +1,22 @@
 /**
- * Toast Component - SkillVo Design System
- * Version: 1.0.0
- * Last Updated: April 29, 2025
+ * Toast Component - Specific Styles
+ * Version: 2.0.0
+ * Last Updated: July 3, 2024
  * 
- * This file defines the specific styles for the Toast component,
- * extending the sv-feedback-base class. Toasts are brief messages that
- * appear temporarily on the screen to provide feedback to users.
+ * This file establishes the specific styles for the toast component
+ * in the SkillVo design system. This serves as the third level in our 
+ * three-tier styling architecture:
+ * 1. sv-ui-control-base - Base styles for all interactive controls
+ * 2. sv-feedback-control-base - Base styles for feedback controls
+ * 3. sv-toast (this file) - Component-specific styles for toasts
  */
 
 /* ==========================================================================
    TABLE OF CONTENTS:
    
-   1. VARIABLES & CONFIGURATION
-   2. COMPONENT-SPECIFIC MIXINS
-   3. TOAST BASE CLASS
+   1. IMPORTS
+   2. VARIABLES & CONFIGURATION
+   3. TOAST BASE
    4. TOAST VARIANTS
    5. TOAST POSITIONS
    6. TOAST ANIMATIONS
@@ -21,474 +24,478 @@
    8. RESPONSIVE ADAPTATIONS
    ========================================================================== */
 
-   @use './../../abstracts/' as *;
-   @use './../../base/' as *;
-   
-   /* ==========================================================================
-      1. VARIABLES & CONFIGURATION
-      ========================================================================== */
-   
-   // Toast-specific dimensions
-   $toast-min-width: 300px;
-   $toast-max-width: 600px;
-   $toast-icon-size: var(--sv-icon-size-md);
-   $toast-border-width: 1px;
-   $toast-border-radius: var(--sv-radius-md);
-   
-   // Toast-specific spacing
-   $toast-padding-x: var(--sv-padding-4);
-   $toast-padding-y: var(--sv-padding-3);
-   $toast-spacing: var(--sv-space-3);
-   
-   // Toast-specific animation
-   $toast-animation-duration: var(--sv-motion-duration-medium);
-   $toast-transition-timing: var(--sv-motion-ease-standard);
-   
-   // Toast z-index (should be higher than most components)
-   $toast-z-index: var(--sv-z-index-tooltip);
-   
-   /* ==========================================================================
-      2. COMPONENT-SPECIFIC MIXINS
-      ========================================================================== */
-   
-   // Toast entry animation based on position
-   @mixin toast-entry-animation($position) {
-     @if $position == 'top' or $position == 'top-left' or $position == 'top-right' {
-       @include animate(slide-in-down);
-     } @else if $position == 'bottom' or $position == 'bottom-left' or $position == 'bottom-right' {
-       @include animate(slide-in-up);
-     }
-   }
-   
-   // Toast exit animation based on position
-   @mixin toast-exit-animation($position) {
-     @if $position == 'top' or $position == 'top-left' or $position == 'top-right' {
-       @include animate(slide-out-up);
-     } @else if $position == 'bottom' or $position == 'bottom-left' or $position == 'bottom-right' {
-       @include animate(slide-out-down);
-     }
-   }
-   
-   /* ==========================================================================
-      3. TOAST BASE CLASS
-      ========================================================================== */
-   
-   .sv-toast {
-     // Extend the feedback base class
-     @extend .sv-feedback-base;
-     
-     // Toast-specific layout and spacing
-     padding: $toast-padding-y $toast-padding-x;
-     min-width: $toast-min-width;
-     max-width: $toast-max-width;
-     width: auto;
-     margin-bottom: $toast-spacing;
-     
-     // Structural styles
-     position: fixed;
-     z-index: $toast-z-index;
-     border-width: $toast-border-width;
-     border-style: solid;
-     border-radius: $toast-border-radius;
-     
-     // Shadow for better visibility
-     @include shadow('md');
-     
-     // Basic layout
-     display: flex;
-     align-items: center;
-     pointer-events: auto;
-     
-     // Default position (bottom-right)
-     bottom: var(--sv-space-4);
-     right: var(--sv-space-4);
-     
-     // Default type (info)
-     @include feedback-type('info');
-     
-     // Toast icon styling
-     .sv-toast-icon {
-       flex-shrink: 0;
-       margin-right: var(--sv-space-3);
-       width: $toast-icon-size;
-       height: $toast-icon-size;
-     }
-     
-     // Toast content wrapper
-     .sv-toast-content {
-       flex: 1;
-       min-width: 0; // Ensures text truncation works
-     }
-     
-     // Toast title
-     .sv-toast-title {
-       @include typography('base', 'semibold', 'normal');
-       margin: 0 0 var(--sv-space-1) 0;
-       @include text-truncate;
-     }
-     
-     // Toast message
-     .sv-toast-message {
-       @include typography('sm', 'normal', 'normal');
-       margin: 0;
-       color: var(--sv-text-secondary);
-     }
-     
-     // Toast close button
-     .sv-toast-close {
-       flex-shrink: 0;
-       margin-left: var(--sv-space-3);
-       background: transparent;
-       border: none;
-       cursor: pointer;
-       padding: 0;
-       width: var(--sv-icon-size-sm);
-       height: var(--sv-icon-size-sm);
-       display: inline-flex;
-       align-items: center;
-       justify-content: center;
-       color: var(--sv-text-secondary);
-       @include transition(color);
-       
-       &:hover {
-         color: var(--sv-text-primary);
-       }
-       
-       &:focus {
-         @include focus-state;
-       }
-       
-       &:focus-visible {
-         @include focus-visible-state;
-       }
-     }
-     
-     // Progress bar for auto-dismiss
-     .sv-toast-progress {
-       position: absolute;
-       bottom: 0;
-       left: 0;
-       height: 3px;
-       background-color: rgba(255, 255, 255, 0.3);
-       transition: width linear;
-     }
-   }
-   
-   /* ==========================================================================
-      4. TOAST VARIANTS
-      ========================================================================== */
-   
-   // Toast type variants
-   .sv-toast-info {
-     @include feedback-type('info');
-     
-     .sv-toast-progress {
-       background-color: var(--sv-info);
-     }
-   }
-   
-   .sv-toast-success {
-     @include feedback-type('success');
-     
-     .sv-toast-progress {
-       background-color: var(--sv-success);
-     }
-   }
-   
-   .sv-toast-warning {
-     @include feedback-type('warning');
-     
-     .sv-toast-progress {
-       background-color: var(--sv-warning);
-     }
-   }
-   
-   .sv-toast-error {
-     @include feedback-type('error');
-     
-     .sv-toast-progress {
-       background-color: var(--sv-error);
-     }
-   }
-   
-   // Filled toast style
-   .sv-toast-filled {
-     &.sv-toast-info {
-       background-color: var(--sv-info);
-       color: var(--sv-text-on-dark);
-       border-color: var(--sv-info);
-       
-       .sv-toast-icon,
-       .sv-toast-close,
-       .sv-toast-message {
-         color: var(--sv-text-on-dark);
-       }
-     }
-     
-     &.sv-toast-success {
-       background-color: var(--sv-success);
-       color: var(--sv-text-on-dark);
-       border-color: var(--sv-success);
-       
-       .sv-toast-icon,
-       .sv-toast-close,
-       .sv-toast-message {
-         color: var(--sv-text-on-dark);
-       }
-     }
-     
-     &.sv-toast-warning {
-       background-color: var(--sv-warning);
-       color: var(--sv-text-on-dark);
-       border-color: var(--sv-warning);
-       
-       .sv-toast-icon,
-       .sv-toast-close,
-       .sv-toast-message {
-         color: var(--sv-text-on-dark);
-       }
-     }
-     
-     &.sv-toast-error {
-       background-color: var(--sv-error);
-       color: var(--sv-text-on-dark);
-       border-color: var(--sv-error);
-       
-       .sv-toast-icon,
-       .sv-toast-close,
-       .sv-toast-message {
-         color: var(--sv-text-on-dark);
-       }
-     }
-   }
-   
-   // Simple toast style (no icon, simpler styling)
-   .sv-toast-simple {
-     padding: var(--sv-padding-2) var(--sv-padding-3);
-     
-     .sv-toast-icon {
-       display: none;
-     }
-     
-     .sv-toast-title {
-       @include typography('sm', 'medium', 'normal');
-     }
-     
-     .sv-toast-message {
-       @include typography('xs', 'normal', 'normal');
-     }
-   }
-   
-   /* ==========================================================================
-      5. TOAST POSITIONS
-      ========================================================================== */
-   
-   // Top position
-   .sv-toast-position-top {
-     @include feedback-position-top;
-     top: var(--sv-space-4);
-     bottom: auto;
-     right: auto;
-   }
-   
-   // Bottom position
-   .sv-toast-position-bottom {
-     @include feedback-position-bottom;
-     bottom: var(--sv-space-4);
-     top: auto;
-     right: auto;
-   }
-   
-   // Top-left position
-   .sv-toast-position-top-left {
-     @include feedback-position-top-left;
-     top: var(--sv-space-4);
-     left: var(--sv-space-4);
-     bottom: auto;
-     right: auto;
-   }
-   
-   // Top-right position
-   .sv-toast-position-top-right {
-     @include feedback-position-top-right;
-     top: var(--sv-space-4);
-     right: var(--sv-space-4);
-     bottom: auto;
-     left: auto;
-   }
-   
-   // Bottom-left position
-   .sv-toast-position-bottom-left {
-     @include feedback-position-bottom-left;
-     bottom: var(--sv-space-4);
-     left: var(--sv-space-4);
-     top: auto;
-     right: auto;
-   }
-   
-   // Bottom-right position (default, defined in base class)
-   .sv-toast-position-bottom-right {
-     @include feedback-position-bottom-right;
-     // This is the default position, included for completeness
-   }
-   
-   /* ==========================================================================
-      6. TOAST ANIMATIONS
-      ========================================================================== */
-   
-   // Entry animations
-   .sv-toast-entering {
-     &.sv-toast-position-top,
-     &.sv-toast-position-top-left,
-     &.sv-toast-position-top-right {
-       @include toast-entry-animation('top');
-     }
-     
-     &.sv-toast-position-bottom,
-     &.sv-toast-position-bottom-left,
-     &.sv-toast-position-bottom-right {
-       @include toast-entry-animation('bottom');
-     }
-   }
-   
-   // Exit animations
-   .sv-toast-exiting {
-     &.sv-toast-position-top,
-     &.sv-toast-position-top-left,
-     &.sv-toast-position-top-right {
-       @include toast-exit-animation('top');
-     }
-     
-     &.sv-toast-position-bottom,
-     &.sv-toast-position-bottom-left,
-     &.sv-toast-position-bottom-right {
-       @include toast-exit-animation('bottom');
-     }
-   }
-   
-   /* ==========================================================================
-      7. TOAST CONTAINER
-      ========================================================================== */
-   
-   // Container for grouping toasts
-   .sv-toast-container {
-     position: fixed;
-     z-index: $toast-z-index;
-     display: flex;
-     flex-direction: column;
-     pointer-events: none;
-     max-width: $toast-max-width;
-     width: auto;
-     
-     // Top position
-     &.sv-toast-container-top {
-       top: var(--sv-space-4);
-       left: 50%;
-       transform: translateX(-50%);
-     }
-     
-     // Bottom position
-     &.sv-toast-container-bottom {
-       bottom: var(--sv-space-4);
-       left: 50%;
-       transform: translateX(-50%);
-     }
-     
-     // Top-left position
-     &.sv-toast-container-top-left {
-       top: var(--sv-space-4);
-       left: var(--sv-space-4);
-     }
-     
-     // Top-right position
-     &.sv-toast-container-top-right {
-       top: var(--sv-space-4);
-       right: var(--sv-space-4);
-     }
-     
-     // Bottom-left position
-     &.sv-toast-container-bottom-left {
-       bottom: var(--sv-space-4);
-       left: var(--sv-space-4);
-     }
-     
-     // Bottom-right position
-     &.sv-toast-container-bottom-right {
-       bottom: var(--sv-space-4);
-       right: var(--sv-space-4);
-     }
-   }
-   
-   /* ==========================================================================
-      8. RESPONSIVE ADAPTATIONS
-      ========================================================================== */
-   
-   // Small screens
-   @include breakpoint-down('sm') {
-     // Adjust toast size on mobile
-     .sv-toast {
-       min-width: auto;
-       max-width: calc(100vw - var(--sv-space-4) * 2);
-       width: calc(100vw - var(--sv-space-4) * 2);
-       
-       // Center on mobile (override positions)
-       &.sv-toast-position-top-left,
-       &.sv-toast-position-top-right,
-       &.sv-toast-position-top {
-         left: 50%;
-         right: auto;
-         transform: translateX(-50%);
-       }
-       
-       &.sv-toast-position-bottom-left,
-       &.sv-toast-position-bottom-right,
-       &.sv-toast-position-bottom {
-         left: 50%;
-         right: auto;
-         transform: translateX(-50%);
-       }
-     }
-     
-     // Adjust container on mobile
-     .sv-toast-container {
-       max-width: calc(100vw - var(--sv-space-4) * 2);
-       width: calc(100vw - var(--sv-space-4) * 2);
-       
-       // Center all containers on mobile
-       &.sv-toast-container-top-left,
-       &.sv-toast-container-top-right,
-       &.sv-toast-container-top {
-         left: 50%;
-         right: auto;
-         transform: translateX(-50%);
-       }
-       
-       &.sv-toast-container-bottom-left,
-       &.sv-toast-container-bottom-right,
-       &.sv-toast-container-bottom {
-         left: 50%;
-         right: auto;
-         transform: translateX(-50%);
-       }
-     }
-   }
-   
-   // Fix for RTL support
-   [dir="rtl"] {
-     .sv-toast {
-       .sv-toast-icon {
-         margin-right: 0;
-         margin-left: var(--sv-space-3);
-       }
-       
-       .sv-toast-close {
-         margin-left: 0;
-         margin-right: var(--sv-space-3);
-       }
-       
-       .sv-toast-progress {
-         left: auto;
-         right: 0;
-       }
-     }
-   }
+/* ==========================================================================
+   1. IMPORTS
+   ========================================================================== */
+@use './../../abstracts/variables/' as *;
+@use './../../base/utils/mixins/state' as state;
+@use './../../base/utils/mixins/layout' as layout;
+@use './../../base/utils/mixins/typography' as typography;
+@use './../../base/utils/mixins/responsive' as responsive;
+
+/* ==========================================================================
+   2. VARIABLES & CONFIGURATION
+   ========================================================================== */
+
+// Toast-specific dimensions
+$toast-min-width: 300px;
+$toast-max-width: 600px;
+$toast-icon-size: var(--sv-icon-size-md);
+$toast-border-width: 1px;
+$toast-border-radius: var(--sv-radius-md);
+
+// Toast-specific spacing
+$toast-padding-x: var(--sv-space-4);
+$toast-padding-y: var(--sv-space-3);
+$toast-spacing: var(--sv-space-3);
+
+// Toast-specific animation
+$toast-animation-duration: var(--sv-motion-duration-medium);
+$toast-transition-timing: var(--sv-motion-ease-standard);
+
+// Toast z-index (should be higher than most components)
+$toast-z-index: var(--sv-z-index-tooltip);
+
+/* ==========================================================================
+   3. TOAST BASE
+   ========================================================================== */
+
+.sv-toast {
+  // Extend the feedback control base to inherit all shared properties
+  @extend .sv-feedback-control-base;
+  
+  // Toast-specific layout and spacing
+  padding: $toast-padding-y $toast-padding-x;
+  min-width: $toast-min-width;
+  max-width: $toast-max-width;
+  width: auto;
+  margin-bottom: $toast-spacing;
+  
+  // Structural styles
+  position: fixed;
+  z-index: $toast-z-index;
+  border-width: $toast-border-width;
+  border-style: solid;
+  border-radius: $toast-border-radius;
+  
+  // Shadow for better visibility
+  box-shadow: var(--sv-shadow-md);
+  
+  // Basic layout
+  display: flex;
+  align-items: center;
+  pointer-events: auto;
+  
+  // Default position (bottom-right)
+  bottom: var(--sv-space-4);
+  right: var(--sv-space-4);
+  
+  // Transitions
+  transition: opacity $toast-animation-duration $toast-transition-timing,
+              transform $toast-animation-duration $toast-transition-timing;
+  
+  // BEM pattern for toast elements
+  &__icon {
+    flex-shrink: 0;
+    margin-right: var(--sv-space-3);
+    width: $toast-icon-size;
+    height: $toast-icon-size;
+  }
+  
+  &__content {
+    flex: 1;
+    min-width: 0; // Ensures text truncation works
+  }
+  
+  &__title {
+    font-size: var(--sv-font-size-base);
+    font-weight: var(--sv-font-weight-semibold);
+    line-height: var(--sv-line-height-normal);
+    margin: 0 0 var(--sv-space-1) 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  
+  &__message {
+    font-size: var(--sv-font-size-sm);
+    font-weight: var(--sv-font-weight-normal);
+    line-height: var(--sv-line-height-normal);
+    margin: 0;
+    color: var(--sv-text-secondary);
+  }
+  
+  &__close {
+    flex-shrink: 0;
+    margin-left: var(--sv-space-3);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    width: var(--sv-icon-size-sm);
+    height: var(--sv-icon-size-sm);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--sv-text-secondary);
+    transition: color $toast-animation-duration $toast-transition-timing;
+    
+    &:hover {
+      color: var(--sv-text-primary);
+    }
+    
+    &:focus-visible {
+      @include state.focus-visible-state;
+    }
+  }
+  
+  &__progress {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 3px;
+    background-color: rgba(255, 255, 255, 0.3);
+    transition: width linear;
+  }
+}
+
+/* ==========================================================================
+   4. TOAST VARIANTS
+   ========================================================================== */
+
+.sv-toast {
+  // Info variant (default)
+  &--info {
+    background-color: var(--sv-info-light);
+    border-color: var(--sv-info-light);
+    
+    .sv-toast__icon {
+      color: var(--sv-info);
+    }
+    
+    .sv-toast__progress {
+      background-color: var(--sv-info);
+    }
+  }
+  
+  // Success variant
+  &--success {
+    background-color: var(--sv-success-light);
+    border-color: var(--sv-success-light);
+    
+    .sv-toast__icon {
+      color: var(--sv-success);
+    }
+    
+    .sv-toast__progress {
+      background-color: var(--sv-success);
+    }
+  }
+  
+  // Warning variant
+  &--warning {
+    background-color: var(--sv-warning-light);
+    border-color: var(--sv-warning-light);
+    
+    .sv-toast__icon {
+      color: var(--sv-warning);
+    }
+    
+    .sv-toast__progress {
+      background-color: var(--sv-warning);
+    }
+  }
+  
+  // Error variant
+  &--error {
+    background-color: var(--sv-error-light);
+    border-color: var(--sv-error-light);
+    
+    .sv-toast__icon {
+      color: var(--sv-error);
+    }
+    
+    .sv-toast__progress {
+      background-color: var(--sv-error);
+    }
+  }
+  
+  // Filled toast style
+  &--filled {
+    &.sv-toast--info {
+      background-color: var(--sv-info);
+      color: var(--sv-text-on-dark);
+      border-color: var(--sv-info);
+      
+      .sv-toast__icon,
+      .sv-toast__close,
+      .sv-toast__message {
+        color: var(--sv-text-on-dark);
+      }
+    }
+    
+    &.sv-toast--success {
+      background-color: var(--sv-success);
+      color: var(--sv-text-on-dark);
+      border-color: var(--sv-success);
+      
+      .sv-toast__icon,
+      .sv-toast__close,
+      .sv-toast__message {
+        color: var(--sv-text-on-dark);
+      }
+    }
+    
+    &.sv-toast--warning {
+      background-color: var(--sv-warning);
+      color: var(--sv-text-on-dark);
+      border-color: var(--sv-warning);
+      
+      .sv-toast__icon,
+      .sv-toast__close,
+      .sv-toast__message {
+        color: var(--sv-text-on-dark);
+      }
+    }
+    
+    &.sv-toast--error {
+      background-color: var(--sv-error);
+      color: var(--sv-text-on-dark);
+      border-color: var(--sv-error);
+      
+      .sv-toast__icon,
+      .sv-toast__close,
+      .sv-toast__message {
+        color: var(--sv-text-on-dark);
+      }
+    }
+  }
+}
+
+/* ==========================================================================
+   5. TOAST POSITIONS
+   ========================================================================== */
+
+.sv-toast {
+  // Default position is bottom-right (set in base)
+  
+  // Top position
+  &--position-top {
+    top: var(--sv-space-4);
+    bottom: auto;
+    left: 50%;
+    right: auto;
+    transform: translateX(-50%);
+  }
+  
+  // Top-left position
+  &--position-top-left {
+    top: var(--sv-space-4);
+    bottom: auto;
+    left: var(--sv-space-4);
+    right: auto;
+  }
+  
+  // Top-right position
+  &--position-top-right {
+    top: var(--sv-space-4);
+    bottom: auto;
+    right: var(--sv-space-4);
+    left: auto;
+  }
+  
+  // Bottom position
+  &--position-bottom {
+    bottom: var(--sv-space-4);
+    top: auto;
+    left: 50%;
+    right: auto;
+    transform: translateX(-50%);
+  }
+  
+  // Bottom-left position
+  &--position-bottom-left {
+    bottom: var(--sv-space-4);
+    top: auto;
+    left: var(--sv-space-4);
+    right: auto;
+  }
+  
+  // Bottom-right position is the default
+}
+
+/* ==========================================================================
+   6. TOAST ANIMATIONS
+   ========================================================================== */
+
+// Entry animations
+@keyframes sv-toast-slide-in-down {
+  from {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes sv-toast-slide-in-up {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+// Exit animations
+@keyframes sv-toast-slide-out-up {
+  from {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+}
+
+@keyframes sv-toast-slide-out-down {
+  from {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+}
+
+.sv-toast {
+  // Entry animations based on position
+  &.is-entering {
+    &.sv-toast--position-top,
+    &.sv-toast--position-top-left,
+    &.sv-toast--position-top-right {
+      animation: sv-toast-slide-in-down $toast-animation-duration $toast-transition-timing;
+    }
+    
+    &.sv-toast--position-bottom,
+    &.sv-toast--position-bottom-left,
+    &.sv-toast--position-bottom-right {
+      animation: sv-toast-slide-in-up $toast-animation-duration $toast-transition-timing;
+    }
+  }
+  
+  // Exit animations based on position
+  &.is-exiting {
+    &.sv-toast--position-top,
+    &.sv-toast--position-top-left,
+    &.sv-toast--position-top-right {
+      animation: sv-toast-slide-out-up $toast-animation-duration $toast-transition-timing;
+    }
+    
+    &.sv-toast--position-bottom,
+    &.sv-toast--position-bottom-left,
+    &.sv-toast--position-bottom-right {
+      animation: sv-toast-slide-out-down $toast-animation-duration $toast-transition-timing;
+    }
+  }
+}
+
+/* ==========================================================================
+   7. TOAST CONTAINER
+   ========================================================================== */
+
+.sv-toast-container {
+  position: fixed;
+  z-index: $toast-z-index;
+  display: flex;
+  flex-direction: column;
+  pointer-events: none;
+  
+  // Default position (bottom right)
+  bottom: 0;
+  right: 0;
+  
+  // Container positions follow toast positions
+  &--top {
+    top: 0;
+    bottom: auto;
+    left: 50%;
+    right: auto;
+    transform: translateX(-50%);
+  }
+  
+  &--top-left {
+    top: 0;
+    bottom: auto;
+    left: 0;
+    right: auto;
+  }
+  
+  &--top-right {
+    top: 0;
+    bottom: auto;
+    right: 0;
+    left: auto;
+  }
+  
+  &--bottom {
+    bottom: 0;
+    top: auto;
+    left: 50%;
+    right: auto;
+    transform: translateX(-50%);
+  }
+  
+  &--bottom-left {
+    bottom: 0;
+    top: auto;
+    left: 0;
+    right: auto;
+  }
+  
+  &--bottom-right {
+    // Default
+  }
+}
+
+/* ==========================================================================
+   8. RESPONSIVE ADAPTATIONS
+   ========================================================================== */
+
+@include responsive.media-breakpoint-down(sm) {
+  .sv-toast {
+    min-width: auto;
+    max-width: 90vw;
+    left: var(--sv-space-2);
+    right: var(--sv-space-2);
+    
+    &--position-top,
+    &--position-bottom {
+      left: var(--sv-space-2);
+      right: var(--sv-space-2);
+      transform: none;
+    }
+    
+    &__content {
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+  
+  .sv-toast-container {
+    width: 100%;
+    
+    &--top,
+    &--bottom {
+      left: 0;
+      right: 0;
+      transform: none;
+    }
+  }
+}
