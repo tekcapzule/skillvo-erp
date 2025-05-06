@@ -6,7 +6,7 @@
 
 @use 'sass:map';
 @use '../abstracts/variables/colors' as *;
-@use '../abstracts/mixins' as *;
+@use '../base/utils/mixins/theme' as theme;
 
 // ========================================
 // Theme System Architecture
@@ -41,10 +41,10 @@
 // Root theme (light theme by default)
 :root {
   // Apply theme variables
-  @include generate-theme-vars($light-theme-map);
+  @include theme.generate-theme-vars($light-theme-map);
   
   // Apply transition for smooth theme switching
-  @include theme-transition();
+  @include theme.theme-transition();
   
   // Default color scheme
   color-scheme: light;
@@ -54,7 +54,7 @@
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
     // Apply dark theme variables
-    @include generate-theme-vars($dark-theme-map);
+    @include theme.generate-theme-vars($dark-theme-map);
     
     color-scheme: dark;
   }
@@ -63,7 +63,7 @@
 // Explicit light theme override
 [data-theme="light"] {
   // Apply light theme variables
-  @include generate-theme-vars($light-theme-map);
+  @include theme.generate-theme-vars($light-theme-map);
   
   
   color-scheme: light;
@@ -72,13 +72,13 @@
 // Explicit dark theme override
 [data-theme="dark"] {
   // Apply dark theme variables
-  @include generate-theme-vars($dark-theme-map);
+  @include theme.generate-theme-vars($dark-theme-map);
   
   color-scheme: dark;
 }
 
 // Generate theme utility classes
-@include generate-theme-utility-classes($theme-colors);
+@include theme.generate-theme-utility-classes($theme-colors);
 
 // Theme toggle transition
 html.color-scheme-transition,

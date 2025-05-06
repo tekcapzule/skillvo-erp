@@ -1,4 +1,4 @@
-@use './../../../../../../../styles/abstracts/mixins' as *;
+@use './../../../../../../../styles/base/utils/mixins/responsive' as responsive;
 
 // The component will extend styles from sv-input-base class,
 // so we only need to add color-picker specific styling here.
@@ -417,67 +417,36 @@
   }
   
   // Responsive adjustments
-  @include breakpoint-down(md) {
+  @include responsive.breakpoint-down(md) {
     .sv-color-panel {
-      width: calc(var(--sv-size-64) * 0.9);
+      width: 100%;
     }
   }
   
-  @include breakpoint-down(sm) {
-    .sv-color-picker {
-      width: 100%;
-      
-      &-field {
-        &-preview {
-          width: calc(var(--sv-size-8) * 0.9);
-        }
-        
-        &-input {
-          font-size: var(--sv-text-sm);
-        }
-      }
-    }
-    
+  @include responsive.breakpoint-down(sm) {
     .sv-color-panel {
-      width: calc(var(--sv-size-64) * 0.8);
-      
-      &-color-area {
-        height: var(--sv-size-32);
-      }
-      
-      &-inputs {
-        flex-wrap: wrap;
-        
-        &-group {
-          min-width: calc(33% - var(--sv-space-2));
-        }
-        
-        &-hex {
-          flex: 1 0 100%;
-          margin-bottom: var(--sv-space-2);
-        }
-      }
-    }
-    
-    .sv-color-palette {
-      grid-template-columns: repeat(6, 1fr);
+      position: fixed;
+      top: auto;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      width: 100%;
+      height: 80vh;
+      border-radius: var(--sv-radius-md) var(--sv-radius-md) 0 0;
+      z-index: var(--sv-z-index-modal);
     }
   }
   
   // RTL support
-  [dir="rtl"] {
-    .sv-color-picker {
-      &-field {
-        &-preview {
-          margin-right: 0;
-          margin-left: var(--sv-space-2);
-        }
-      }
-      
-      &-toggle {
-        margin-left: 0;
-        margin-right: var(--sv-space-2);
-      }
+  [dir="rtl"] & {
+    .sv-color-field-preview {
+      margin-right: 0;
+      margin-left: var(--sv-space-2);
+    }
+    
+    .sv-color-picker-toggle {
+      margin-left: 0;
+      margin-right: var(--sv-space-2);
     }
     
     .sv-color-panel {

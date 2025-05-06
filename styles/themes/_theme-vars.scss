@@ -5,16 +5,16 @@
 // These provide the base styling for the application themes.
 
 @use '../abstracts/variables/colors' as *;
-@use '../abstracts/mixins' as *;
+@use '../base/utils/mixins/theme' as theme;
 
 // Default light theme variables
 :root {
   // Apply core theme variables (colors, backgrounds, etc)
-  @include generate-theme-vars($light-theme-map);
+  @include theme.generate-theme-vars($light-theme-map);
 }
 
 // Dark theme variables applied via attribute selector
 [data-theme="dark"] {
   // Override with dark theme variables
-  @include generate-theme-vars($dark-theme-map);
+  @include theme.generate-theme-vars($dark-theme-map);
 } 

@@ -1,0 +1,36 @@
+/**
+ * Theme Mixins
+ * Version: 1.0.0
+ * Last Updated: 2024-07-29
+ * 
+ * This file contains mixins for theme management in the SkillVo design system.
+ */
+
+@use 'sass:map';
+
+/* Mixin to generate CSS custom properties for a given theme map */
+@mixin generate-theme-vars($theme-map) {
+  @each $name, $value in $theme-map {
+    --sv-#{$name}: #{$value};
+  }
+}
+
+/* Mixin to generate utility classes for theme colors */
+@mixin generate-theme-utility-classes($theme-map) {
+  @each $name, $color in $theme-map {
+    .text-#{$name} {
+      color: var(--sv-#{$name}) !important;
+    }
+    .bg-#{$name} {
+      background-color: var(--sv-#{$name}) !important;
+    }
+    .border-#{$name} {
+      border-color: var(--sv-#{$name}) !important;
+    }
+  }
+}
+
+/* Theme Transition Mixin */
+@mixin theme-transition($properties...) {
+  transition: $properties 0.3s ease-in-out;
+} 
