@@ -4,7 +4,7 @@
  * Last Updated: April 29, 2025
  * 
  * This file contains styles specific to the text input field component.
- * It extends the sv-input-base class which provides common styling for all input types.
+ * It extends the sv-input-control-base class which provides common styling for all input types.
  */
 
 /* ==========================================================================
@@ -32,8 +32,8 @@
       ========================================================================== */
    
    .sv-text-field {
-     // Extend the input base styles
-     @extend .sv-input-base;
+     // Extend the input control base styles
+     @extend .sv-input-control-base;
      
      // Unique properties for text input field
      max-width: $text-field-max-width;

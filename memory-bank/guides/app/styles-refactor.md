@@ -176,6 +176,42 @@ After refining each category base class:
 
 **Goal: Ensure component implementations properly extend their category base classes**
 
+### Phase 3 Pre-requisites
+
+Before proceeding with component implementation cleanup, address the following naming inconsistencies:
+
+1. **Input Controls Naming Fix**
+   - [ ] Rename component references from `.sv-input-base` to `.sv-input-control-base` in all input component files:
+     - `_text-field.scss`
+     - `_password-field.scss`
+     - `_number-input.scss`
+     - `_date-time-picker.scss`
+     - `_color-picker.scss`
+     - `_search-field.scss`
+     - `_file-upload.scss`
+
+2. **Feedback Controls Naming Fix**
+   - [ ] Rename component references from `.sv-feedback-base` to `.sv-feedback-control-base` in all feedback component files:
+     - `_alert.scss`
+     - `_toast.scss`
+     - `_snackbar.scss`
+     - `_dialog.scss`
+     - `_popover.scss`
+     - `_loading-indicator.scss`
+     - `_error-message.scss`
+
+3. **Container Controls Naming Fix**
+   - [ ] Rename component references from `.sv-container-base` to `.sv-container-control-base` in all container component files:
+     - `_card.scss`
+     - `_panel.scss`
+     - `_accordion.scss`
+     - `_modal.scss`
+     - `_drawer.scss`
+     - `_tabs-panel.scss`
+     - `_sidebar.scss`
+
+### Component Implementation Tasks
+
 1. **Action Components**
    - [ ] Button
    - [ ] Icon Button
@@ -191,7 +227,55 @@ After refining each category base class:
    - [ ] Dropdown Menu
    - [ ] Multi-select List
 
-3. **Continue for other component categories**
+3. **Input Components**
+   - [ ] Text Field
+   - [ ] Password Field
+   - [ ] Number Input
+   - [ ] Date/Time Picker
+   - [ ] Color Picker
+   - [ ] Search Field
+   - [ ] File Upload
+
+4. **Information Display Components**
+   - [ ] Badge
+   - [ ] Label
+   - [ ] Tooltip
+   - [ ] Tag
+   - [ ] Avatar
+   - [ ] Status Indicator
+   - [ ] Progress Indicator
+
+5. **Navigation Components**
+   - [ ] Tabs
+   - [ ] Side Navigation
+   - [ ] Navigation Bar
+   - [ ] Pagination
+   - [ ] Breadcrumbs
+
+6. **Feedback Components**
+   - [ ] Alert
+   - [ ] Toast
+   - [ ] Snackbar
+   - [ ] Dialog
+   - [ ] Popover
+   - [ ] Loading Indicator
+   - [ ] Error Message
+
+7. **Data Display Components**
+   - [ ] Table
+   - [ ] List
+   - [ ] Card
+   - [ ] Chart
+   - [ ] Timeline
+   - [ ] Data Grid
+
+8. **Container Components**
+   - [ ] Panel
+   - [ ] Accordion
+   - [ ] Modal
+   - [ ] Drawer
+   - [ ] Carousel
+   - [ ] Tabs Container
 
 ## Phase 4: Angular Component Integration ✅|❌
 
