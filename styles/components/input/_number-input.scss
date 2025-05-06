@@ -1,10 +1,10 @@
 /**
- * Number Input Component
- * Version: 2.0.0
- * Last Updated: April 29, 2025
+ * Number Input Component - Component-level Styles
+ * Version: 2.1.0
+ * Last Updated: July 15, 2024
  * 
- * This file contains styles specific to the number input field component.
- * It extends the sv-input-base class and adds number input-specific functionality.
+ * This file defines styles for the Number Input component in the SkillVo design system.
+ * It extends the input-control-base class and provides number input-specific styling.
  */
 
 /* ==========================================================================
@@ -12,306 +12,353 @@
    
    1. IMPORTS & VARIABLES
    2. NUMBER INPUT BASE
-   3. STEP BUTTONS
-   4. RANGE SLIDER INTEGRATION
-   5. RESPONSIVE ADJUSTMENTS
+   3. STEPPER CONTROLS
+   4. NUMBER INPUT VARIATIONS
+   5. COMPONENT-SPECIFIC STATES
+   6. RESPONSIVE ADJUSTMENTS
    ========================================================================== */
 
 /* ==========================================================================
    1. IMPORTS & VARIABLES
    ========================================================================== */
-   @use './../../abstracts/' as *;
-   @use './../../base/' as *;
-   
-   // Component-specific variables
-   $number-button-width: var(--sv-size-8);
-   $number-button-height: calc(var(--sv-size-10) / 2 - 1px);
-   $number-min-width: var(--sv-size-32);
-   
-   /* ==========================================================================
-      2. NUMBER INPUT BASE
-      ========================================================================== */
-   
-   .sv-number-input {
-     // Extend the input base styles
-     @extend .sv-input-base;
-     
-     // Container for number input and step buttons
-     &-container {
-       position: relative;
-       display: flex;
-       width: 100%;
-       min-width: $number-min-width;
-     }
-     
-     // Specific number input styling
-     &-field {
-       // Remove default browser number input arrows
-       -moz-appearance: textfield;
-       
-       &::-webkit-outer-spin-button,
-       &::-webkit-inner-spin-button {
-         -webkit-appearance: none;
-         margin: 0;
-       }
-       
-       // Add right padding to make room for step buttons
-       padding-right: calc($number-button-width + var(--sv-padding-2));
-       width: 100%;
-       text-align: left;
-     }
-     
-     // High precision number inputs can have smaller width numbers
-     &-precise {
-       font-feature-settings: "tnum";
-       font-family: var(--sv-font-family-mono);
-     }
-   }
-   
-   /* ==========================================================================
-      3. STEP BUTTONS
-      ========================================================================== */
-   
-   .sv-number-step-buttons {
-     position: absolute;
-     right: 0;
-     top: 0;
-     bottom: 0;
-     display: flex;
-     flex-direction: column;
-     width: $number-button-width;
-     height: 100%;
-     border-left: 1px solid var(--sv-border-light);
-     
-     // Individual step button
-     &-btn {
-       flex: 1;
-       display: flex;
-       align-items: center;
-       justify-content: center;
-       background-color: var(--sv-bg-element);
-       border: none;
-       cursor: pointer;
-       color: var(--sv-text-secondary);
-       padding: 0;
-       
-       // Remove browser default button styles
-       -webkit-appearance: none;
-       appearance: none;
-       
-       &:hover {
-         background-color: var(--sv-bg-element-hover);
-         color: var(--sv-text-primary);
-       }
-       
-       &:active {
-         background-color: var(--sv-bg-element-active);
-       }
-       
-       &:focus {
-         outline: none;
-         color: var(--sv-primary);
-       }
-       
-       &:disabled {
-         opacity: 0.5;
-         cursor: not-allowed;
-         background-color: var(--sv-bg-element);
-         color: var(--sv-text-tertiary);
-       }
-       
-       // Up button styling
-       &-up {
-         border-bottom: 1px solid var(--sv-border-light);
-         border-top-right-radius: calc(var(--sv-radius-md) - 1px);
-       }
-       
-       // Down button styling
-       &-down {
-         border-top: none;
-         border-bottom-right-radius: calc(var(--sv-radius-md) - 1px);
-       }
-       
-       // Icon styling
-       &-icon {
-         width: var(--sv-icon-size-xs);
-         height: var(--sv-icon-size-xs);
-       }
-     }
-   }
-   
-   /* ==========================================================================
-      4. RANGE SLIDER INTEGRATION
-      ========================================================================== */
-   
-   .sv-number-with-range {
-     margin-bottom: var(--sv-space-6);
-     
-     &-container {
-       display: flex;
-       flex-direction: column;
-       width: 100%;
-       gap: var(--sv-space-2);
-     }
-     
-     &-slider {
-       -webkit-appearance: none;
-       appearance: none;
-       width: 100%;
-       height: var(--sv-size-2);
-       background-color: var(--sv-bg-element);
-       border-radius: var(--sv-radius-full);
-       outline: none;
-       
-       // Track styles
-       &::-webkit-slider-runnable-track {
-         width: 100%;
-         height: var(--sv-size-2);
-         cursor: pointer;
-         background: var(--sv-bg-element);
-         border-radius: var(--sv-radius-full);
-       }
-       
-       &::-moz-range-track {
-         width: 100%;
-         height: var(--sv-size-2);
-         cursor: pointer;
-         background: var(--sv-bg-element);
-         border-radius: var(--sv-radius-full);
-       }
-       
-       // Thumb styles
-       &::-webkit-slider-thumb {
-         -webkit-appearance: none;
-         height: var(--sv-size-5);
-         width: var(--sv-size-5);
-         border-radius: 50%;
-         background: var(--sv-primary);
-         cursor: pointer;
-         margin-top: calc((var(--sv-size-5) - var(--sv-size-2)) / -2);
-         box-shadow: var(--sv-shadow-sm);
-         @include transition(all, 'short', 'standard');
-       }
-       
-       &::-moz-range-thumb {
-         height: var(--sv-size-5);
-         width: var(--sv-size-5);
-         border: none;
-         border-radius: 50%;
-         background: var(--sv-primary);
-         cursor: pointer;
-         box-shadow: var(--sv-shadow-sm);
-       }
-       
-       // Focus and hover states
-       &:focus,
-       &:hover {
-         &::-webkit-slider-thumb {
-           background-color: var(--sv-primary-light);
-           box-shadow: var(--sv-shadow-md);
-           transform: scale(1.1);
-         }
-         
-         &::-moz-range-thumb {
-           background-color: var(--sv-primary-light);
-           box-shadow: var(--sv-shadow-md);
-           transform: scale(1.1);
-         }
-       }
-     }
-     
-     // Range labels below slider
-     &-labels {
-       display: flex;
-       justify-content: space-between;
-       margin-top: var(--sv-space-1);
-       
-       &-min,
-       &-max {
-         font-size: var(--sv-text-xs);
-         color: var(--sv-text-secondary);
-       }
-     }
-   }
-   
-   /* ==========================================================================
-      5. RESPONSIVE ADJUSTMENTS
-      ========================================================================== */
-   
-   @include breakpoint-down(sm) {
-     .sv-number-input {
-       &-container {
-         min-width: 100%;
-       }
-       
-       &-field {
-         font-size: var(--sv-text-sm);
-       }
-     }
-     
-     .sv-number-step-buttons {
-       width: calc($number-button-width - var(--sv-size-1));
-       
-       &-btn {
-         &-icon {
-           width: var(--sv-icon-size-xs);
-           height: var(--sv-icon-size-xs);
-         }
-       }
-     }
-     
-     .sv-number-with-range {
-       &-slider {
-         height: var(--sv-size-3);
-         
-         &::-webkit-slider-runnable-track {
-           height: var(--sv-size-3);
-         }
-         
-         &::-moz-range-track {
-           height: var(--sv-size-3);
-         }
-         
-         &::-webkit-slider-thumb {
-           height: var(--sv-size-6);
-           width: var(--sv-size-6);
-           margin-top: calc((var(--sv-size-6) - var(--sv-size-3)) / -2);
-         }
-         
-         &::-moz-range-thumb {
-           height: var(--sv-size-6);
-           width: var(--sv-size-6);
-         }
-       }
-     }
-   }
-   
-   // RTL support
-   [dir="rtl"] {
-     .sv-number-input {
-       &-field {
-         padding-right: $input-padding-x;
-         padding-left: calc($number-button-width + var(--sv-padding-2));
-         text-align: right;
-       }
-     }
-     
-     .sv-number-step-buttons {
-       right: auto;
-       left: 0;
-       border-left: none;
-       border-right: 1px solid var(--sv-border-light);
-       
-       &-btn {
-         &-up {
-           border-top-right-radius: 0;
-           border-top-left-radius: calc(var(--sv-radius-md) - 1px);
-         }
-         
-         &-down {
-           border-bottom-right-radius: 0;
-           border-bottom-left-radius: calc(var(--sv-radius-md) - 1px);
-         }
-       }
-     }
-   }
+@use './../../abstracts/variables/' as *;
+@use './../../base/utils/mixins/state' as state;
+@use './../../base/utils/mixins/layout' as layout;
+@use './../../base/utils/mixins/responsive' as responsive;
+@use './../../base/utils/mixins/accessibility' as a11y;
+
+// Component-specific variables
+$number-input-max-width: var(--sv-size-40);
+$number-input-transition-duration: var(--sv-motion-duration-short);
+$number-input-transition-timing: var(--sv-motion-ease-standard);
+$number-input-stepper-width: var(--sv-size-8);
+$number-input-stepper-bg: var(--sv-bg-element);
+$number-input-stepper-hover-bg: var(--sv-bg-element-hover);
+$number-input-stepper-active-bg: var(--sv-bg-element-active);
+$number-input-stepper-border-color: var(--sv-border-light);
+$number-input-stepper-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
+$number-input-stepper-icon-size: var(--sv-size-4);
+
+/* ==========================================================================
+   2. NUMBER INPUT BASE
+   ========================================================================== */
+
+.sv-number-input {
+  // Extend the input control base styles
+  @extend .sv-input-control-base;
+  
+  // Unique properties for number input field
+  position: relative;
+  max-width: $number-input-max-width;
+  
+  // Add consistent transitions
+  transition: border-color $number-input-transition-duration $number-input-transition-timing,
+              box-shadow $number-input-transition-duration $number-input-transition-timing,
+              background-color $number-input-transition-duration $number-input-transition-timing;
+  
+  // BEM-style elements
+  &__wrapper {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+  
+  &__input {
+    @extend .sv-input-control-base__field;
+    -moz-appearance: textfield; // Remove Firefox spinners
+    text-align: center;
+    
+    // Remove browser spinners
+    &::-webkit-outer-spin-button,
+    &::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+  }
+  
+  &__label {
+    @extend .sv-input-control-base__label;
+  }
+  
+  &__helper-text {
+    @extend .sv-input-control-base__helper-text;
+  }
+  
+  // Enhanced focus behavior
+  &:focus-within {
+    border-color: var(--sv-primary);
+    box-shadow: var(--sv-shadow-focus);
+  }
+}
+
+/* ==========================================================================
+   3. STEPPER CONTROLS
+   ========================================================================== */
+
+.sv-number-input {
+  // Default style with steppers on right side
+  &--with-steppers {
+    padding-right: $number-input-stepper-width;
+  }
+  
+  // Stepper controls container
+  &__steppers {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: $number-input-stepper-width;
+    display: flex;
+    flex-direction: column;
+    border-left: 1px solid $number-input-stepper-border-color;
+    
+    // Individual stepper buttons
+    .sv-number-input__stepper {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: $number-input-stepper-bg;
+      border: none;
+      padding: 0;
+      margin: 0;
+      cursor: pointer;
+      box-shadow: $number-input-stepper-shadow;
+      color: var(--sv-text-secondary);
+      
+      &:hover:not(:disabled) {
+        background-color: $number-input-stepper-hover-bg;
+        color: var(--sv-text-primary);
+      }
+      
+      &:active:not(:disabled) {
+        background-color: $number-input-stepper-active-bg;
+      }
+      
+      &:focus {
+        outline: none;
+      }
+      
+      &:focus-visible {
+        outline: var(--sv-focus-ring-width) solid var(--sv-focus-ring-color);
+        outline-offset: -1px;
+      }
+      
+      &:disabled {
+        cursor: not-allowed;
+        opacity: 0.5;
+      }
+      
+      // Increment button (top)
+      &--increment {
+        border-bottom: 1px solid $number-input-stepper-border-color;
+        border-top-right-radius: var(--sv-radius-md);
+      }
+      
+      // Decrement button (bottom)
+      &--decrement {
+        border-bottom-right-radius: var(--sv-radius-md);
+      }
+      
+      // Stepper icons
+      &-icon {
+        width: $number-input-stepper-icon-size;
+        height: $number-input-stepper-icon-size;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+    }
+  }
+  
+  // Horizontal steppers layout (steppers on both sides)
+  &--horizontal-steppers {
+    padding-left: $number-input-stepper-width;
+    padding-right: $number-input-stepper-width;
+    
+    .sv-number-input__steppers {
+      flex-direction: row;
+      width: 100%;
+      height: 100%;
+      border-left: none;
+      
+      .sv-number-input__stepper {
+        width: $number-input-stepper-width;
+        height: 100%;
+        
+        &--increment {
+          position: absolute;
+          right: 0;
+          top: 0;
+          bottom: 0;
+          border-top-right-radius: var(--sv-radius-md);
+          border-bottom-right-radius: var(--sv-radius-md);
+          border-bottom: none;
+          border-left: 1px solid $number-input-stepper-border-color;
+        }
+        
+        &--decrement {
+          position: absolute;
+          left: 0;
+          top: 0;
+          bottom: 0;
+          border-top-left-radius: var(--sv-radius-md);
+          border-bottom-left-radius: var(--sv-radius-md);
+          border-right: 1px solid $number-input-stepper-border-color;
+        }
+      }
+    }
+  }
+}
+
+/* ==========================================================================
+   4. NUMBER INPUT VARIATIONS
+   ========================================================================== */
+
+.sv-number-input {
+  // Compact variation
+  &--compact {
+    height: var(--sv-control-height-sm);
+    font-size: var(--sv-font-size-sm);
+    
+    .sv-number-input__stepper-icon {
+      width: calc($number-input-stepper-icon-size * 0.75);
+      height: calc($number-input-stepper-icon-size * 0.75);
+    }
+  }
+  
+  // Large variation
+  &--large {
+    height: var(--sv-control-height-lg);
+    font-size: var(--sv-font-size-lg);
+    
+    .sv-number-input__stepper-icon {
+      width: calc($number-input-stepper-icon-size * 1.25);
+      height: calc($number-input-stepper-icon-size * 1.25);
+    }
+  }
+  
+  // Prefix and suffix variations
+  &--with-prefix,
+  &--with-suffix {
+    display: flex;
+    align-items: center;
+    
+    .sv-number-input__addon {
+      display: inline-flex;
+      align-items: center;
+      padding: 0 var(--sv-space-2);
+      background-color: var(--sv-bg-element);
+      color: var(--sv-text-secondary);
+      font-size: var(--sv-font-size-sm);
+      border-radius: 0;
+      height: 100%;
+    }
+    
+    &.sv-number-input--with-prefix {
+      .sv-number-input__addon {
+        border-right: 1px solid $number-input-stepper-border-color;
+      }
+    }
+    
+    &.sv-number-input--with-suffix {
+      .sv-number-input__addon {
+        border-left: 1px solid $number-input-stepper-border-color;
+      }
+    }
+  }
+}
+
+/* ==========================================================================
+   5. COMPONENT-SPECIFIC STATES
+   ========================================================================== */
+
+.sv-number-input {
+  // Valid state
+  &.is-valid {
+    border-color: var(--sv-success);
+    
+    &:focus-within {
+      box-shadow: 0 0 0 var(--sv-focus-ring-width) rgba(var(--sv-success-rgb), 0.25);
+    }
+    
+    .sv-number-input__helper-text {
+      color: var(--sv-success);
+    }
+  }
+  
+  // Invalid state
+  &.is-invalid {
+    border-color: var(--sv-error);
+    
+    &:focus-within {
+      box-shadow: 0 0 0 var(--sv-focus-ring-width) rgba(var(--sv-error-rgb), 0.25);
+    }
+    
+    .sv-number-input__helper-text {
+      color: var(--sv-error);
+    }
+  }
+  
+  // Readonly state
+  &.is-readonly,
+  &[readonly] {
+    background-color: var(--sv-bg-element-disabled);
+    border-color: var(--sv-border-light);
+    cursor: default;
+    
+    .sv-number-input__steppers {
+      display: none;
+    }
+    
+    &.sv-number-input--with-steppers {
+      padding-right: var(--sv-space-3);
+    }
+    
+    &.sv-number-input--horizontal-steppers {
+      padding-left: var(--sv-space-3);
+      padding-right: var(--sv-space-3);
+    }
+  }
+  
+  // Disabled state extensions (beyond base class handling)
+  &.is-disabled,
+  &:disabled {
+    .sv-number-input__stepper {
+      background-color: var(--sv-bg-element-disabled);
+      cursor: not-allowed;
+      opacity: 0.5;
+    }
+  }
+}
+
+/* ==========================================================================
+   6. RESPONSIVE ADJUSTMENTS
+   ========================================================================== */
+
+@include responsive.breakpoint-down(sm) {
+  .sv-number-input {
+    font-size: var(--sv-font-size-sm);
+    
+    // Full width on mobile
+    width: 100%;
+    max-width: 100%;
+    
+    // Larger touch targets for steppers on mobile
+    &__stepper {
+      min-height: calc(var(--sv-tap-target-size) / 2);
+    }
+  }
+}
+
+@include responsive.breakpoint-down(xs) {
+  .sv-number-input {
+    &--with-prefix,
+    &--with-suffix {
+      .sv-number-input__addon {
+        padding: 0 var(--sv-space-1);
+        font-size: var(--sv-font-size-xs);
+      }
+    }
+  }
+}

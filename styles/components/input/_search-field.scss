@@ -1,10 +1,10 @@
 /**
- * Search Field Component
- * Version: 2.0.0
- * Last Updated: April 29, 2025
+ * Search Field Component - Component-level Styles
+ * Version: 2.1.0
+ * Last Updated: July 15, 2024
  * 
- * This file contains styles specific to the search input field component.
- * It extends the sv-input-base class and adds search-specific functionality.
+ * This file defines styles for the Search Field component in the SkillVo design system.
+ * It extends the input-control-base class and provides search field-specific styling.
  */
 
 /* ==========================================================================
@@ -12,570 +12,372 @@
    
    1. IMPORTS & VARIABLES
    2. SEARCH FIELD BASE
-   3. SEARCH FIELD VARIATIONS
-   4. SEARCH RESULTS DROPDOWN
-   5. RESPONSIVE ADJUSTMENTS
+   3. SEARCH FIELD ELEMENTS
+   4. SEARCH FIELD VARIATIONS
+   5. COMPONENT-SPECIFIC STATES
+   6. SEARCH RESULTS
+   7. RESPONSIVE ADJUSTMENTS
    ========================================================================== */
 
 /* ==========================================================================
    1. IMPORTS & VARIABLES
    ========================================================================== */
-   @use './../../abstracts/' as *;
-   @use './../../base/' as *;
-   
-   // Component-specific variables
-   $search-icon-size: var(--sv-icon-size-sm);
-   $search-clear-button-size: var(--sv-size-6);
-   $search-dropdown-z-index: var(--sv-z-index-dropdown);
-   $search-dropdown-max-height: var(--sv-size-64);
-   $search-results-padding: var(--sv-padding-2);
-   
-   /* ==========================================================================
-      2. SEARCH FIELD BASE
-      ========================================================================== */
-   
-   .sv-search-field {
-     // Extend the input base styles
-     @extend .sv-input-base;
-     
-     &-container {
-       position: relative;
-       width: 100%;
-     }
-     
-     // Search input with icons
-     &-inner {
-       position: relative;
-       display: flex;
-       align-items: center;
-       width: 100%;
-     }
-     
-     // Search icon
-     &-icon {
-       position: absolute;
-       left: var(--sv-padding-3);
-       display: flex;
-       align-items: center;
-       justify-content: center;
-       color: var(--sv-text-secondary);
-       
-       &-svg {
-         width: $search-icon-size;
-         height: $search-icon-size;
-       }
-     }
-     
-     // Actual input field
-     &-input {
-       width: 100%;
-       padding-left: calc(var(--sv-padding-3) * 2 + $search-icon-size);
-       padding-right: calc(var(--sv-padding-3) + $search-clear-button-size);
-       
-       &:focus {
-         border-color: var(--sv-primary);
-         box-shadow: var(--sv-shadow-focus);
-       }
-       
-       &::placeholder {
-         color: var(--sv-text-tertiary);
-       }
-     }
-     
-     // Clear button
-     &-clear {
-       position: absolute;
-       right: var(--sv-padding-3);
-       display: flex;
-       align-items: center;
-       justify-content: center;
-       width: $search-clear-button-size;
-       height: $search-clear-button-size;
-       border: none;
-       border-radius: 50%;
-       background-color: var(--sv-bg-element);
-       color: var(--sv-text-secondary);
-       cursor: pointer;
-       opacity: 0;
-       visibility: hidden;
-       transition: opacity var(--sv-motion-duration-short) var(--sv-motion-ease-standard),
-                   visibility var(--sv-motion-duration-short) var(--sv-motion-ease-standard);
-       
-       &.visible {
-         opacity: 1;
-         visibility: visible;
-       }
-       
-       &:hover {
-         background-color: var(--sv-bg-element-hover);
-         color: var(--sv-text-primary);
-       }
-       
-       &:focus {
-         outline: none;
-         box-shadow: var(--sv-shadow-focus);
-       }
-       
-       &-icon {
-         width: calc($search-icon-size * 0.9);
-         height: calc($search-icon-size * 0.9);
-       }
-     }
-     
-     // Loading state spinner
-     &-loading {
-       position: absolute;
-       right: var(--sv-padding-3);
-       display: flex;
-       align-items: center;
-       justify-content: center;
-       width: $search-clear-button-size;
-       height: $search-clear-button-size;
-       color: var(--sv-primary);
-       
-       &-spinner {
-         width: calc($search-icon-size * 0.9);
-         height: calc($search-icon-size * 0.9);
-         border: 2px solid rgba(var(--sv-primary-500-rgb), 0.3);
-         border-top-color: var(--sv-primary);
-         border-radius: 50%;
-         animation: spin var(--sv-spinner-duration) linear infinite;
-       }
-     }
-   }
-   
-   /* ==========================================================================
-      3. SEARCH FIELD VARIATIONS
-      ========================================================================== */
-   
-   // Compact search field
-   .sv-search-field-compact {
-     height: var(--sv-size-8);
-     
-     .sv-search-field {
-       &-icon {
-         left: var(--sv-padding-2);
-       }
-       
-       &-input {
-         padding: var(--sv-padding-1) var(--sv-padding-2);
-         padding-left: calc(var(--sv-padding-2) * 2 + calc($search-icon-size * 0.9));
-         padding-right: calc(var(--sv-padding-2) + calc($search-clear-button-size * 0.9));
-         font-size: var(--sv-text-sm);
-       }
-       
-       &-clear,
-       &-loading {
-         right: var(--sv-padding-2);
-         width: calc($search-clear-button-size * 0.9);
-         height: calc($search-clear-button-size * 0.9);
-       }
-     }
-   }
-   
-   // Expanded search field (with larger hit area)
-   .sv-search-field-expanded {
-     height: var(--sv-size-12);
-     
-     .sv-search-field {
-       &-input {
-         padding-top: var(--sv-padding-3);
-         padding-bottom: var(--sv-padding-3);
-         font-size: var(--sv-text-lg);
-       }
-       
-       &-icon {
-         left: var(--sv-padding-4);
-         
-         &-svg {
-           width: calc($search-icon-size * 1.2);
-           height: calc($search-icon-size * 1.2);
-         }
-       }
-       
-       &-input {
-         padding-left: calc(var(--sv-padding-4) * 2 + calc($search-icon-size * 1.2));
-         padding-right: calc(var(--sv-padding-4) + calc($search-clear-button-size * 1.2));
-       }
-       
-       &-clear,
-       &-loading {
-         right: var(--sv-padding-4);
-         width: calc($search-clear-button-size * 1.2);
-         height: calc($search-clear-button-size * 1.2);
-       }
-     }
-   }
-   
-   // Rounded search field
-   .sv-search-field-rounded {
-     border-radius: var(--sv-radius-full);
-     
-     .sv-search-field-input {
-       border-radius: var(--sv-radius-full);
-     }
-   }
-   
-   // Search field with submit button
-   .sv-search-field-with-button {
-     display: flex;
-     width: 100%;
-     
-     .sv-search-field {
-       flex: 1;
-       
-       &-input {
-         border-top-right-radius: 0;
-         border-bottom-right-radius: 0;
-         border-right: none;
-       }
-     }
-     
-     // Search submit button
-     &-button {
-       display: flex;
-       align-items: center;
-       justify-content: center;
-       padding: 0 var(--sv-padding-4);
-       background-color: var(--sv-primary);
-       color: var(--sv-text-on-dark);
-       border: none;
-       border-top-right-radius: var(--sv-radius-md);
-       border-bottom-right-radius: var(--sv-radius-md);
-       cursor: pointer;
-       
-       &:hover {
-         background-color: var(--sv-primary-dark);
-       }
-       
-       &:focus {
-         outline: none;
-         box-shadow: var(--sv-shadow-focus);
-       }
-       
-       &-icon {
-         width: $search-icon-size;
-         height: $search-icon-size;
-       }
-       
-       &-text {
-         margin-left: var(--sv-space-2);
-       }
-     }
-   }
-   
-   /* ==========================================================================
-      4. SEARCH RESULTS DROPDOWN
-      ========================================================================== */
-   
-   .sv-search-results {
-     position: absolute;
-     top: calc(100% + var(--sv-space-1));
-     left: 0;
-     width: 100%;
-     max-height: $search-dropdown-max-height;
-     overflow-y: auto;
-     background-color: var(--sv-bg-surface);
-     border: 1px solid var(--sv-border-medium);
-     border-radius: var(--sv-radius-md);
-     box-shadow: var(--sv-shadow-lg);
-     z-index: $search-dropdown-z-index;
-     
-     // Results list
-     &-list {
-       list-style: none;
-       margin: 0;
-       padding: 0;
-     }
-     
-     // Individual result item
-     &-item {
-       padding: $search-results-padding;
-       cursor: pointer;
-       transition: background-color var(--sv-motion-duration-short) var(--sv-motion-ease-standard);
-       
-       &:hover {
-         background-color: var(--sv-bg-element-hover);
-       }
-       
-       &.active,
-       &.selected {
-         background-color: var(--sv-bg-element-active);
-       }
-       
-       // Search result with icon and content structure
-       &-content {
-         display: flex;
-         align-items: center;
-         
-         &-icon {
-           display: flex;
-           align-items: center;
-           justify-content: center;
-           width: var(--sv-size-8);
-           height: var(--sv-size-8);
-           margin-right: var(--sv-space-2);
-           
-           &-svg {
-             width: $search-icon-size;
-             height: $search-icon-size;
-             color: var(--sv-text-secondary);
-           }
-         }
-         
-         &-main {
-           flex: 1;
-           min-width: 0; // Ensures text truncation works
-           
-           &-title {
-             font-weight: var(--sv-font-medium);
-             color: var(--sv-text-primary);
-             margin-bottom: var(--sv-space-1);
-             @include text-truncate;
-             
-             // Highlight matched text
-             &-highlight {
-               font-weight: var(--sv-font-bold);
-               color: var(--sv-primary);
-               background-color: rgba(var(--sv-primary-500-rgb), 0.1);
-               padding: 0 2px;
-               border-radius: 2px;
-             }
-           }
-           
-           &-description {
-             font-size: var(--sv-text-xs);
-             color: var(--sv-text-secondary);
-             @include text-truncate;
-           }
-         }
-       }
-     }
-     
-     // Group header for categorized results
-     &-group {
-       &-header {
-         padding: var(--sv-padding-1) $search-results-padding;
-         font-size: var(--sv-text-xs);
-         font-weight: var(--sv-font-semibold);
-         color: var(--sv-text-secondary);
-         text-transform: uppercase;
-         letter-spacing: var(--sv-tracking-wide);
-         background-color: var(--sv-bg-element);
-       }
-     }
-     
-     // Empty state
-     &-empty {
-       padding: calc($search-results-padding * 2);
-       text-align: center;
-       color: var(--sv-text-secondary);
-       font-size: var(--sv-text-sm);
-     }
-     
-     // Loading state
-     &-loading {
-       padding: calc($search-results-padding * 2);
-       display: flex;
-       align-items: center;
-       justify-content: center;
-       
-       &-spinner {
-         width: $search-icon-size;
-         height: $search-icon-size;
-         border: 2px solid rgba(var(--sv-primary-500-rgb), 0.3);
-         border-top-color: var(--sv-primary);
-         border-radius: 50%;
-         animation: spin var(--sv-spinner-duration) linear infinite;
-         margin-right: var(--sv-space-2);
-       }
-       
-       &-text {
-         color: var(--sv-text-secondary);
-         font-size: var(--sv-text-sm);
-       }
-     }
-     
-     // Footer with "Show more" or pagination
-     &-footer {
-       padding: $search-results-padding;
-       border-top: 1px solid var(--sv-border-light);
-       text-align: center;
-       
-       &-btn {
-         background: none;
-         border: none;
-         color: var(--sv-primary);
-         cursor: pointer;
-         font-size: var(--sv-text-sm);
-         padding: var(--sv-padding-1) var(--sv-padding-3);
-         
-         &:hover {
-           text-decoration: underline;
-         }
-         
-         &:focus {
-           outline: none;
-           box-shadow: var(--sv-shadow-focus);
-         }
-       }
-     }
-   }
-   
-   /* ==========================================================================
-      5. RESPONSIVE ADJUSTMENTS
-      ========================================================================== */
-   
-   @include breakpoint-down(md) {
-     .sv-search-field-with-button {
-       .sv-search-field-with-button-button {
-         padding: 0 var(--sv-padding-3);
-         
-         &-text {
-           display: none;
-         }
-       }
-     }
-     
-     .sv-search-results {
-       max-height: calc($search-dropdown-max-height * 0.9);
-     }
-   }
-   
-   @include breakpoint-down(sm) {
-     .sv-search-field {
-       width: 100%;
-       font-size: var(--sv-text-sm);
-       
-       &-input {
-         padding-top: var(--sv-padding-1);
-         padding-bottom: var(--sv-padding-1);
-       }
-     }
-     
-     .sv-search-field-expanded {
-       height: var(--sv-size-10);
-       
-       .sv-search-field {
-         &-input {
-           font-size: var(--sv-text-base);
-         }
-       }
-     }
-     
-     .sv-search-results {
-       &-item {
-         padding: calc($search-results-padding - 2px);
-         
-         &-content {
-           &-icon {
-             width: var(--sv-size-6);
-             height: var(--sv-size-6);
-           }
-           
-           &-main {
-             &-description {
-               display: none;
-             }
-           }
-         }
-       }
-     }
-   }
-   
-   // RTL support
-   [dir="rtl"] {
-     .sv-search-field {
-       &-icon {
-         left: auto;
-         right: var(--sv-padding-3);
-       }
-       
-       &-input {
-         padding-left: calc(var(--sv-padding-3) + $search-clear-button-size);
-         padding-right: calc(var(--sv-padding-3) * 2 + $search-icon-size);
-       }
-       
-       &-clear,
-       &-loading {
-         right: auto;
-         left: var(--sv-padding-3);
-       }
-     }
-     
-     .sv-search-field-compact {
-       .sv-search-field {
-         &-icon {
-           left: auto;
-           right: var(--sv-padding-2);
-         }
-         
-         &-input {
-           padding-left: calc(var(--sv-padding-2) + calc($search-clear-button-size * 0.9));
-           padding-right: calc(var(--sv-padding-2) * 2 + calc($search-icon-size * 0.9));
-         }
-         
-         &-clear,
-         &-loading {
-           right: auto;
-           left: var(--sv-padding-2);
-         }
-       }
-     }
-     
-     .sv-search-field-expanded {
-       .sv-search-field {
-         &-icon {
-           left: auto;
-           right: var(--sv-padding-4);
-         }
-         
-         &-input {
-           padding-left: calc(var(--sv-padding-4) + calc($search-clear-button-size * 1.2));
-           padding-right: calc(var(--sv-padding-4) * 2 + calc($search-icon-size * 1.2));
-         }
-         
-         &-clear,
-         &-loading {
-           right: auto;
-           left: var(--sv-padding-4);
-         }
-       }
-     }
-     
-     .sv-search-field-with-button {
-       .sv-search-field {
-         &-input {
-           border-top-right-radius: var(--sv-radius-md);
-           border-bottom-right-radius: var(--sv-radius-md);
-           border-top-left-radius: 0;
-           border-bottom-left-radius: 0;
-           border-right: 1px solid var(--sv-border-medium);
-           border-left: none;
-         }
-       }
-       
-       &-button {
-         border-radius: 0;
-         border-top-left-radius: var(--sv-radius-md);
-         border-bottom-left-radius: var(--sv-radius-md);
-         
-         &-text {
-           margin-left: 0;
-           margin-right: var(--sv-space-2);
-         }
-       }
-     }
-     
-     .sv-search-results-item-content {
-       &-icon {
-         margin-right: 0;
-         margin-left: var(--sv-space-2);
-       }
-     }
-     
-     .sv-search-results-loading-spinner {
-       margin-right: 0;
-       margin-left: var(--sv-space-2);
-     }
-   }
+@use './../../abstracts/variables/' as *;
+@use './../../base/utils/mixins/state' as state;
+@use './../../base/utils/mixins/layout' as layout;
+@use './../../base/utils/mixins/responsive' as responsive;
+@use './../../base/utils/mixins/accessibility' as a11y;
+
+// Component-specific variables
+$search-field-max-width: var(--sv-size-96);
+$search-field-border-radius: var(--sv-radius-md);
+$search-field-transition-duration: var(--sv-motion-duration-short);
+$search-field-transition-timing: var(--sv-motion-ease-standard);
+$search-field-icon-size: var(--sv-size-4);
+$search-field-icon-color: var(--sv-text-secondary);
+$search-field-clear-button-size: var(--sv-size-5);
+$search-field-dropdown-max-height: var(--sv-size-64);
+$search-field-dropdown-shadow: var(--sv-shadow-md);
+
+/* ==========================================================================
+   2. SEARCH FIELD BASE
+   ========================================================================== */
+
+.sv-search-field {
+  // Extend the input control base styles
+  @extend .sv-input-control-base;
+  
+  // Unique properties for search field
+  position: relative;
+  max-width: $search-field-max-width;
+  border-radius: $search-field-border-radius;
+  
+  // Add consistent transitions
+  transition: border-color $search-field-transition-duration $search-field-transition-timing,
+              box-shadow $search-field-transition-duration $search-field-transition-timing,
+              background-color $search-field-transition-duration $search-field-transition-timing;
+  
+  // BEM-style elements
+  &__wrapper {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+  
+  &__input {
+    @extend .sv-input-control-base__field;
+    padding-left: calc($search-field-icon-size + var(--sv-space-5));
+    padding-right: calc($search-field-clear-button-size + var(--sv-space-3));
+    
+    // Remove browser search styling
+    &::-webkit-search-decoration,
+    &::-webkit-search-cancel-button,
+    &::-webkit-search-results-button,
+    &::-webkit-search-results-decoration {
+      -webkit-appearance: none;
+    }
+  }
+  
+  &__label {
+    @extend .sv-input-control-base__label;
+  }
+  
+  &__helper-text {
+    @extend .sv-input-control-base__helper-text;
+  }
+  
+  // Enhanced focus behavior
+  &:focus-within {
+    border-color: var(--sv-primary);
+    box-shadow: var(--sv-shadow-focus);
+  }
+}
+
+/* ==========================================================================
+   3. SEARCH FIELD ELEMENTS
+   ========================================================================== */
+
+.sv-search-field {
+  // Search icon
+  &__icon {
+    position: absolute;
+    left: var(--sv-space-3);
+    top: 50%;
+    transform: translateY(-50%);
+    width: $search-field-icon-size;
+    height: $search-field-icon-size;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: $search-field-icon-color;
+    pointer-events: none;
+  }
+  
+  // Clear button
+  &__clear {
+    position: absolute;
+    right: var(--sv-space-3);
+    top: 50%;
+    transform: translateY(-50%);
+    width: $search-field-clear-button-size;
+    height: $search-field-clear-button-size;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: none;
+    color: $search-field-icon-color;
+    cursor: pointer;
+    padding: 0;
+    opacity: 0;
+    transition: opacity $search-field-transition-duration $search-field-transition-timing;
+    
+    &:hover {
+      color: var(--sv-text-primary);
+    }
+    
+    &:focus {
+      outline: none;
+    }
+    
+    &:focus-visible {
+      outline: var(--sv-focus-ring-width) solid var(--sv-focus-ring-color);
+      outline-offset: var(--sv-focus-ring-offset);
+    }
+    
+    // Show when input has value
+    &.is-visible {
+      opacity: 1;
+    }
+  }
+}
+
+/* ==========================================================================
+   4. SEARCH FIELD VARIATIONS
+   ========================================================================== */
+
+.sv-search-field {
+  // Rounded search field (pill-shaped)
+  &--rounded {
+    border-radius: var(--sv-radius-pill);
+    
+    .sv-search-field__input {
+      border-radius: var(--sv-radius-pill);
+    }
+  }
+  
+  // Compact search field
+  &--compact {
+    height: var(--sv-control-height-sm);
+    font-size: var(--sv-font-size-sm);
+    
+    .sv-search-field__icon,
+    .sv-search-field__clear {
+      transform: translateY(-50%) scale(0.85);
+    }
+  }
+  
+  // Expanded search field
+  &--expanded {
+    height: var(--sv-control-height-lg);
+    font-size: var(--sv-font-size-lg);
+    
+    .sv-search-field__icon,
+    .sv-search-field__clear {
+      transform: translateY(-50%) scale(1.15);
+    }
+  }
+  
+  // Inline search field (no borders unless focused)
+  &--inline {
+    border-color: transparent;
+    background-color: transparent;
+    
+    &:hover:not(:disabled):not(.is-disabled):not(:focus-within) {
+      background-color: var(--sv-bg-element-hover);
+    }
+    
+    &:focus-within {
+      background-color: var(--sv-bg-surface);
+      border-color: var(--sv-primary);
+    }
+  }
+}
+
+/* ==========================================================================
+   5. COMPONENT-SPECIFIC STATES
+   ========================================================================== */
+
+.sv-search-field {
+  // Loading state
+  &.is-loading {
+    .sv-search-field__icon {
+      animation: search-spin 1s linear infinite;
+    }
+    
+    @keyframes search-spin {
+      from {
+        transform: translateY(-50%) rotate(0deg);
+      }
+      to {
+        transform: translateY(-50%) rotate(360deg);
+      }
+    }
+  }
+  
+  // Valid state
+  &.is-valid {
+    border-color: var(--sv-success);
+    
+    &:focus-within {
+      box-shadow: 0 0 0 var(--sv-focus-ring-width) rgba(var(--sv-success-rgb), 0.25);
+    }
+    
+    .sv-search-field__helper-text {
+      color: var(--sv-success);
+    }
+  }
+  
+  // Invalid state
+  &.is-invalid {
+    border-color: var(--sv-error);
+    
+    &:focus-within {
+      box-shadow: 0 0 0 var(--sv-focus-ring-width) rgba(var(--sv-error-rgb), 0.25);
+    }
+    
+    .sv-search-field__helper-text {
+      color: var(--sv-error);
+    }
+  }
+  
+  // Active state with results
+  &.is-active {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    border-bottom-color: var(--sv-border-light);
+    
+    &.sv-search-field--rounded {
+      border-radius: var(--sv-radius-pill);
+      border-bottom-left-radius: var(--sv-radius-md);
+      border-bottom-right-radius: var(--sv-radius-md);
+    }
+  }
+}
+
+/* ==========================================================================
+   6. SEARCH RESULTS
+   ========================================================================== */
+
+.sv-search-field {
+  &__results {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    z-index: var(--sv-z-index-dropdown);
+    background-color: var(--sv-bg-surface);
+    border: 1px solid var(--sv-border-medium);
+    border-top: 0;
+    border-bottom-left-radius: $search-field-border-radius;
+    border-bottom-right-radius: $search-field-border-radius;
+    box-shadow: $search-field-dropdown-shadow;
+    max-height: $search-field-dropdown-max-height;
+    overflow-y: auto;
+    
+    // Hide by default
+    display: none;
+    
+    // Show when active
+    &.is-visible {
+      display: block;
+    }
+    
+    // Results list
+    &-list {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+    
+    // Individual result item
+    &-item {
+      padding: var(--sv-space-2) var(--sv-space-3);
+      cursor: pointer;
+      transition: background-color $search-field-transition-duration $search-field-transition-timing;
+      
+      &:hover {
+        background-color: var(--sv-bg-element-hover);
+      }
+      
+      &.is-selected {
+        background-color: var(--sv-bg-element-active);
+      }
+      
+      &:focus {
+        outline: none;
+        background-color: var(--sv-bg-element-hover);
+      }
+      
+      &:focus-visible {
+        outline: var(--sv-focus-ring-width) solid var(--sv-focus-ring-color);
+        outline-offset: -2px;
+      }
+    }
+    
+    // Result group headings
+    &-group {
+      padding: var(--sv-space-1) var(--sv-space-3);
+      font-size: var(--sv-font-size-xs);
+      font-weight: var(--sv-font-weight-medium);
+      color: var(--sv-text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      background-color: var(--sv-bg-element);
+    }
+    
+    // Empty state
+    &-empty {
+      padding: var(--sv-space-3);
+      text-align: center;
+      color: var(--sv-text-secondary);
+      font-size: var(--sv-font-size-sm);
+    }
+    
+    // Highlight matched text
+    &-highlight {
+      font-weight: var(--sv-font-weight-medium);
+      color: var(--sv-primary);
+      background-color: rgba(var(--sv-primary-rgb), 0.1);
+    }
+  }
+}
+
+/* ==========================================================================
+   7. RESPONSIVE ADJUSTMENTS
+   ========================================================================== */
+
+@include responsive.breakpoint-down(md) {
+  .sv-search-field {
+    // Adjust for mobile touch targets
+    height: var(--sv-tap-target-size);
+    
+    &__results {
+      max-height: 50vh; // Limit height on mobile
+    }
+  }
+}
+
+@include responsive.breakpoint-down(sm) {
+  .sv-search-field {
+    font-size: var(--sv-font-size-sm);
+    
+    // Full width on mobile
+    width: 100%;
+    max-width: 100%;
+    
+    &__results-item {
+      padding: var(--sv-space-3); // Larger touch target for mobile
+    }
+  }
+}

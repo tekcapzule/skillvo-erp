@@ -1,10 +1,10 @@
 /**
- * Text Field Component
- * Version: 2.0.0
- * Last Updated: April 29, 2025
+ * Text Field Component - Component-level Styles
+ * Version: 2.1.0
+ * Last Updated: July 15, 2024
  * 
- * This file contains styles specific to the text input field component.
- * It extends the sv-input-control-base class which provides common styling for all input types.
+ * This file defines styles for the Text Field component in the SkillVo design system.
+ * It extends the input-control-base class and provides text field-specific styling.
  */
 
 /* ==========================================================================
@@ -20,144 +20,232 @@
 /* ==========================================================================
    1. IMPORTS & VARIABLES
    ========================================================================== */
-   @use './../../abstracts/' as *;
-   @use './../../base/' as *;
-   
-   // Component-specific variables
-   $text-field-max-width: var(--sv-size-64);
-   $text-field-min-width: var(--sv-size-40);
-   
-   /* ==========================================================================
-      2. TEXT FIELD BASE
-      ========================================================================== */
-   
-   .sv-text-field {
-     // Extend the input control base styles
-     @extend .sv-input-control-base;
-     
-     // Unique properties for text input field
-     max-width: $text-field-max-width;
-     
-     // Improve text readability
-     font-feature-settings: "kern", "liga", "calt";
-     
-     // Prefer width control with flex layout
-     &-wrapper {
-       display: flex;
-       flex-direction: column;
-       width: 100%;
-     }
-   }
-   
-   /* ==========================================================================
-      3. TEXT FIELD VARIATIONS
-      ========================================================================== */
-   
-   // Multiline text field
-   .sv-text-field-multiline {
-     height: auto;
-     min-height: calc($input-height * 2);
-     resize: vertical;
-     overflow-y: auto;
-     white-space: pre-wrap;
-     line-height: var(--sv-leading-normal);
-   }
-   
-   // Autocomplete text field
-   .sv-text-field-autocomplete {
-     position: relative;
-     
-     &-list {
-       position: absolute;
-       top: 100%;
-       left: 0;
-       width: 100%;
-       max-height: var(--sv-size-48);
-       overflow-y: auto;
-       background-color: var(--sv-bg-surface);
-       border: 1px solid var(--sv-border-medium);
-       border-top: none;
-       border-radius: 0 0 var(--sv-radius-md) var(--sv-radius-md);
-       z-index: var(--sv-z-index-dropdown);
-       box-shadow: var(--sv-shadow-md);
-       
-       &-item {
-         padding: var(--sv-padding-2) var(--sv-padding-3);
-         cursor: pointer;
-         
-         &:hover {
-           background-color: var(--sv-bg-element-hover);
-         }
-         
-         &.selected {
-           background-color: var(--sv-bg-element-active);
-           color: var(--sv-primary);
-         }
-       }
-     }
-   }
-   
-   // Text field with character limit
-   .sv-text-field-with-limit {
-     .sv-input-counter {
-       display: flex;
-       justify-content: flex-end;
-       margin-top: var(--sv-space-1);
-       font-size: var(--sv-text-xs);
-       color: var(--sv-text-tertiary);
-       
-       &.near-limit {
-         color: var(--sv-warning);
-       }
-       
-       &.at-limit {
-         color: var(--sv-error);
-       }
-     }
-   }
-   
-   /* ==========================================================================
-      4. COMPONENT-SPECIFIC STATES
-      ========================================================================== */
-   
-   // Specific to text field: highlighting when text is being edited
-   .sv-text-field {
-     &:focus-within {
-       border-color: var(--sv-primary);
-       box-shadow: var(--sv-shadow-focus);
-     }
-     
-     // Selection styling
-     &::selection {
-       background-color: var(--sv-primary-light);
-       color: var(--sv-text-on-dark);
-     }
-   }
-   
-   /* ==========================================================================
-      5. RESPONSIVE ADJUSTMENTS
-      ========================================================================== */
-   
-   @include breakpoint-down(sm) {
-     .sv-text-field {
-       font-size: var(--sv-text-sm);
-       
-       // Adjust padding for smaller screens
-       padding: var(--sv-padding-2) var(--sv-padding-2);
-       
-       // Full width on mobile
-       width: 100%;
-       max-width: 100%;
-     }
-     
-     .sv-text-field-multiline {
-       min-height: calc($input-height * 1.5);
-     }
-   }
-   
-   // For very small screens, reduce padding further
-   @include breakpoint-down(xs) {
-     .sv-text-field {
-       padding: var(--sv-padding-1) var(--sv-padding-2);
-     }
-   }
+@use './../../abstracts/variables/' as *;
+@use './../../base/utils/mixins/state' as state;
+@use './../../base/utils/mixins/layout' as layout;
+@use './../../base/utils/mixins/responsive' as responsive;
+@use './../../base/utils/mixins/accessibility' as a11y;
+
+// Component-specific variables
+$text-field-max-width: var(--sv-size-64);
+$text-field-min-width: var(--sv-size-40);
+$text-field-transition-duration: var(--sv-motion-duration-short);
+$text-field-transition-timing: var(--sv-motion-ease-standard);
+$text-field-selection-bg: rgba(var(--sv-primary-rgb), 0.2);
+$text-field-counter-margin-top: var(--sv-space-1);
+
+/* ==========================================================================
+   2. TEXT FIELD BASE
+   ========================================================================== */
+
+.sv-text-field {
+  // Extend the input control base styles
+  @extend .sv-input-control-base;
+  
+  // Unique properties for text input field
+  max-width: $text-field-max-width;
+  
+  // Improve text readability
+  font-feature-settings: "kern", "liga", "calt";
+  
+  // Add consistent transitions
+  transition: border-color $text-field-transition-duration $text-field-transition-timing,
+              box-shadow $text-field-transition-duration $text-field-transition-timing,
+              background-color $text-field-transition-duration $text-field-transition-timing;
+  
+  // BEM-style elements
+  &__wrapper {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+  
+  &__input {
+    @extend .sv-input-control-base__field;
+  }
+  
+  &__label {
+    @extend .sv-input-control-base__label;
+  }
+  
+  &__helper-text {
+    @extend .sv-input-control-base__helper-text;
+  }
+  
+  // Enhanced focus behavior
+  &:focus-within {
+    border-color: var(--sv-primary);
+    box-shadow: var(--sv-shadow-focus);
+  }
+  
+  // Selection styling
+  &__input::selection {
+    background-color: $text-field-selection-bg;
+    color: var(--sv-text-primary);
+  }
+}
+
+/* ==========================================================================
+   3. TEXT FIELD VARIATIONS
+   ========================================================================== */
+
+.sv-text-field {
+  // Multiline text field
+  &--multiline {
+    height: auto;
+    min-height: calc(var(--sv-control-height-md) * 2);
+    
+    .sv-text-field__input {
+      resize: vertical;
+      overflow-y: auto;
+      white-space: pre-wrap;
+      line-height: var(--sv-leading-normal);
+    }
+  }
+  
+  // Autocomplete text field
+  &--autocomplete {
+    position: relative;
+    
+    &-list {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      width: 100%;
+      max-height: var(--sv-size-48);
+      overflow-y: auto;
+      background-color: var(--sv-bg-surface);
+      border: 1px solid var(--sv-border-medium);
+      border-top: none;
+      border-radius: 0 0 var(--sv-radius-md) var(--sv-radius-md);
+      z-index: var(--sv-z-index-dropdown);
+      box-shadow: var(--sv-shadow-md);
+      
+      &-item {
+        padding: var(--sv-space-2) var(--sv-space-3);
+        cursor: pointer;
+        
+        &:hover {
+          background-color: var(--sv-bg-element-hover);
+        }
+        
+        &.is-selected {
+          background-color: var(--sv-bg-element-active);
+          color: var(--sv-primary);
+        }
+      }
+    }
+  }
+  
+  // Text field with character limit
+  &--with-limit {
+    .sv-text-field__counter {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: $text-field-counter-margin-top;
+      font-size: var(--sv-font-size-xs);
+      color: var(--sv-text-tertiary);
+      
+      &.is-near-limit {
+        color: var(--sv-warning);
+      }
+      
+      &.is-at-limit {
+        color: var(--sv-error);
+      }
+    }
+  }
+  
+  // Size variations
+  &--sm {
+    height: var(--sv-control-height-sm);
+    font-size: var(--sv-font-size-sm);
+    padding: var(--sv-space-1) var(--sv-space-2);
+  }
+  
+  &--lg {
+    height: var(--sv-control-height-lg);
+    font-size: var(--sv-font-size-lg);
+    padding: var(--sv-space-3) var(--sv-space-4);
+  }
+}
+
+/* ==========================================================================
+   4. COMPONENT-SPECIFIC STATES
+   ========================================================================== */
+
+.sv-text-field {
+  // Valid state
+  &.is-valid {
+    border-color: var(--sv-success);
+    
+    &:focus-within {
+      box-shadow: 0 0 0 var(--sv-focus-ring-width) rgba(var(--sv-success-rgb), 0.25);
+    }
+    
+    .sv-text-field__helper-text {
+      color: var(--sv-success);
+    }
+  }
+  
+  // Invalid state
+  &.is-invalid {
+    border-color: var(--sv-error);
+    
+    &:focus-within {
+      box-shadow: 0 0 0 var(--sv-focus-ring-width) rgba(var(--sv-error-rgb), 0.25);
+    }
+    
+    .sv-text-field__helper-text {
+      color: var(--sv-error);
+    }
+  }
+  
+  // Readonly state
+  &.is-readonly,
+  &[readonly] {
+    background-color: var(--sv-bg-element-disabled);
+    border-color: var(--sv-border-light);
+    cursor: default;
+    
+    &:focus-within {
+      box-shadow: none;
+    }
+  }
+  
+  // Disabled state extensions (beyond base class handling)
+  &.is-disabled,
+  &:disabled {
+    .sv-text-field__counter {
+      opacity: 0.6;
+    }
+  }
+}
+
+/* ==========================================================================
+   5. RESPONSIVE ADJUSTMENTS
+   ========================================================================== */
+
+@include responsive.breakpoint-down(sm) {
+  .sv-text-field {
+    font-size: var(--sv-font-size-sm);
+    
+    // Adjust padding for smaller screens
+    padding: var(--sv-space-2) var(--sv-space-2);
+    
+    // Full width on mobile
+    width: 100%;
+    max-width: 100%;
+    
+    &--multiline {
+      min-height: calc(var(--sv-control-height-md) * 1.5);
+    }
+  }
+}
+
+// For very small screens, reduce padding further
+@include responsive.breakpoint-down(xs) {
+  .sv-text-field {
+    padding: var(--sv-space-1) var(--sv-space-2);
+  }
+}
