@@ -4,8 +4,6 @@ This document outlines the refactoring of the SkillVo styling architecture, focu
 
 ## Architecture Layers
 
-![Styling Architecture](https://mermaid.ink/img/pako:eNp1kMFqwzAMhl_F6NRBHpBDL4FAYYFejuliYiUeiy3HkZ0Qsnz3OV1Hs63eJPRJ_y_0VnLWChOVXo3oDSdcIHgiPH-AngkzFJwctOMm11sOa_pTm6GHwMk-Nkt9h8PxDHaDFkixZwdmZRnb6Fy78f3RBVyhx6A3h5A-o1r5QU_o6_gRxRTtEhTsX34Z14WLVwdR6NmCCk5JiRrltRbGlDrTRhuRdwb-vSH6hYzEGdYFnMZoZRvGP8O42bEKi6i0dNpWpJl9kQfSyKK2XomrUjP7d9UfUW5pfA?type=png)
-
 ### 1. Base Level (`sv-ui-control-base`)
 - Universal foundation for all controls
 - Basic box model properties, typography, colors
