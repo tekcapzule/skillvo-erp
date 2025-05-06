@@ -1,61 +1,111 @@
-import { Component, Input, Output, EventEmitter, HostBinding, ViewEncapsulation } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-export type ButtonVariant = 'primary' | 'secondary' | 'tertiary' | 'outline' | 'link' | 'destructive';
-export type ButtonSize = 'sm' | 'md' | 'lg' | 'xl';
-export type ButtonType = 'button' | 'submit' | 'reset';
-
+/**
+ * Button component for the SkillVo design system
+ * 
+ * Provides a standard button control with various styling options
+ */
 @Component({
   selector: 'sv-button',
-  encapsulation: ViewEncapsulation.None,
+  templateUrl: './button.component.html',
+  styleUrls: ['./button.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [CommonModule],
-  templateUrl: './button.component.html',
-  styleUrls: ['./button.component.scss']
+  host: {
+    '[class]': 'hostClasses',
+    '[attr.disabled]': 'disabled || null',
+    '[attr.aria-disabled]': 'disabled || null',
+    '[attr.aria-busy]': 'loading || null',
+    '[attr.aria-pressed]': 'pressed || null',
+    '[type]': 'type'
+  }
 })
 export class ButtonComponent {
-  @Input() variant: ButtonVariant = 'primary';
-  @Input() size: ButtonSize = 'md';
-  @Input() type: ButtonType = 'button';
+  /**
+   * Button variant: primary, secondary, tertiary, destructive, outline, link
+   */
+  @Input() variant: 'primary' | 'secondary' | 'tertiary' | 'destructive' | 'outline' | 'link' = 'primary';
+  
+  /**
+   * Button size: default, sm, lg
+   */
+  @Input() size: 'default' | 'sm' | 'lg' = 'default';
+  
+  /**
+   * Whether the button is disabled
+   */
   @Input() disabled = false;
-  @Input() fullWidth = false;
-  @Input() icon: string | null = null;
-  @Input() iconPosition: 'left' | 'right' = 'left';
-  @Input() withRipple = false;
-  @Input() ariaLabel: string | null = null;
+  
+  /**
+   * Button type attribute
+   */
+  @Input() type: 'button' | 'submit' | 'reset' = 'button';
+  
+  /**
+   * Whether the button is in loading state
+   */
   @Input() loading = false;
-  @Input() responsive = false;
   
-  @Output() clicked = new EventEmitter<Event>();
+  /**
+   * Whether the button should show a ripple effect
+   */
+  @Input() ripple = false;
   
-  // Apply button variant classes
-  @HostBinding('class') get hostClasses(): string {
-    return [
-      // Add variant class based on input
-      `sv-button-${this.variant}`,
-      // Add size class based on input
-      `sv-ui-size-${this.size}`,
-      // Add additional feature classes as needed
-      this.fullWidth ? 'sv-button-responsive' : '',
-      this.withRipple ? 'sv-button-with-ripple' : '',
-      this.responsive ? 'sv-button-responsive' : ''
-    ].filter(Boolean).join(' ');
-  }
+  /**
+   * Whether the button should show a pulse animation
+   */
+  @Input() pulse = false;
   
-  @HostBinding('attr.disabled') get isDisabled(): string | null {
-    return this.disabled ? 'disabled' : null;
-  }
+  /**
+   * Whether the button is in pressed/selected state
+   */
+  @Input() pressed: boolean | null = null;
   
-  @HostBinding('attr.aria-disabled') get ariaDisabled(): string {
-    return this.disabled ? 'true' : 'false';
-  }
+  /**
+   * Whether to display the button with full width
+   */
+  @Input() fullWidth = false;
   
-  onClick(event: Event): void {
+  /**
+   * Whether this button has an icon only (no text)
+   */
+  @Input() iconOnly = false;
+  
+  /**
+   * Accessible label for the button (required for icon-only buttons)
+   */
+  @Input() ariaLabel?: string;
+  
+  /**
+   * Click event emitter
+   */
+  @Output() buttonClick = new EventEmitter<MouseEvent>();
+
+  /**
+   * Handles button click events
+   */
+  onClick(event: MouseEvent): void {
     if (!this.disabled && !this.loading) {
-      this.clicked.emit(event);
-    } else {
-      event.stopPropagation();
-      event.preventDefault();
+      this.buttonClick.emit(event);
     }
   }
-}
+
+  /**
+   * Computes classes for the host element
+   */
+  get hostClasses(): string {
+    return [
+      'sv-button',
+      `sv-button-${this.variant}`,
+      this.size !== 'default' ? `sv-size-${this.size}` : '',
+      this.iconOnly ? 'sv-action-icon-only' : '',
+      this.fullWidth ? 'sv-button-full-width' : '',
+      this.ripple ? 'sv-button-with-ripple' : '',
+      this.pulse ? 'sv-button-pulse' : '',
+      this.loading ? 'is-loading' : '',
+      this.disabled ? 'is-disabled' : ''
+    ].filter(Boolean).join(' ');
+  }
+} 

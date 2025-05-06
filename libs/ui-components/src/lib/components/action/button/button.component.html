@@ -1,32 +1,7 @@
 <button
-  [type]="type"
   class="sv-button"
-  [ngClass]="'sv-button-' + variant"
-  [attr.aria-label]="ariaLabel"
-  [attr.aria-disabled]="disabled ? 'true' : 'false'"
-  [disabled]="disabled || loading"
   (click)="onClick($event)"
+  [attr.aria-label]="iconOnly ? ariaLabel : null"
 >
-  <!-- Icon on left side -->
-  <span *ngIf="icon && iconPosition === 'left'" class="sv-button-icon sv-button-icon-left">
-    <i class="{{icon}}"></i>
-  </span>
-  
-  <!-- Loading spinner -->
-  <span *ngIf="loading" class="sv-button-loader">
-    <svg viewBox="0 0 24 24" class="sv-button-spinner">
-      <circle class="sv-button-spinner-track" cx="12" cy="12" r="10" stroke-width="3"></circle>
-      <circle class="sv-button-spinner-head" cx="12" cy="12" r="10" stroke-width="3"></circle>
-    </svg>
-  </span>
-  
-  <!-- Button content -->
-  <span class="sv-button-content" [class.sv-button-content-hidden]="loading">
-    <ng-content></ng-content>
-  </span>
-  
-  <!-- Icon on right side -->
-  <span *ngIf="icon && iconPosition === 'right'" class="sv-button-icon sv-button-icon-right">
-    <i class="{{icon}}"></i>
-  </span>
-</button>
+  <ng-content></ng-content>
+</button> 
