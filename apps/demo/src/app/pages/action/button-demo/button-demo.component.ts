@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, ElementRef, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
-import { ButtonComponent, ButtonSize, ButtonVariant } from '@skillvo-web/ui-components';
+import { ButtonComponent } from '@skillvo-web/ui-components';
 import { RouterModule } from '@angular/router';
 import { DemoShellComponent } from '../../../core/components/demo-shell/demo-shell.component';
 import { ComponentDemo, EventDefinition, PropertyDefinition, PropertyType } from '../../../core/interfaces/component-demo.interface';
