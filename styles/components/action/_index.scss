@@ -1,15 +1,17 @@
 // ========================================
 // Action Components Index
 // ========================================
+// Version: 1.1.0
+// Last Updated: June 30, 2024
 // This file imports necessary abstracts and base files before forwarding components
 
 @use '../../abstracts' as *;
 @use '../../base' as *;
 
 // Forward all action components
-@forward './button';
-@forward './icon-button';
-@forward './floating-action-button';
-@forward './button-group';
-@forward './split-button';
-@forward './menu-button'; 
+@forward './button';           // Basic button
+@forward './icon-button';      // Icon-only button
+@forward './floating-action-button'; // Floating action button (FAB)
+@forward './button-group';     // Button group container
+@forward './split-button';     // Split button with dropdown
+@forward './menu-button';      // Menu button with dropdown 

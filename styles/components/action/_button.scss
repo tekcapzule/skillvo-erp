@@ -1,7 +1,7 @@
 /**
  * Button Component - Specific Styles
- * Version: 1.0.0
- * Last Updated: April 29, 2025
+ * Version: 1.1.0
+ * Last Updated: June 30, 2024
  * 
  * This file establishes the specific styles for the button component
  * in the SkillVo design system. This serves as the third level in our 
@@ -15,265 +15,262 @@
    TABLE OF CONTENTS:
    
    1. IMPORTS
-   2. VARIABLES
-   3. BUTTON BASE
-   4. BUTTON VARIANTS
-   5. BUTTON STATES
-   6. BUTTON WITH BADGES
-   7. BUTTON ANIMATIONS
-   8. RESPONSIVE ADJUSTMENTS
+   2. BUTTON BASE
+   3. BUTTON VARIANTS
+   4. BUTTON STATES
+   5. BUTTON WITH BADGES
+   6. BUTTON ANIMATIONS
+   7. RESPONSIVE ADJUSTMENTS
    ========================================================================== */
 
 /* ==========================================================================
    1. IMPORTS
    ========================================================================== */
-   @use './../../abstracts/' as *;
-   @use './../../base/' as *;
-   /* ==========================================================================
-      2. VARIABLES
-      ========================================================================== */
-   
-   // No additional variables needed as we're using the CSS vars from skillvo.css
-   // and the mixins from the base action controls
-   
-   /* ==========================================================================
-      3. BUTTON BASE
-      ========================================================================== */
-   
-   .sv-button {
-     // Extend the action control base to inherit all shared properties
-     @extend .sv-action-control-base;
-     
-     // Button-specific properties not covered by action control base
-     font-weight: var(--sv-font-medium);
-     transition: background-color var(--sv-motion-duration-short) var(--sv-motion-ease-standard),
-                 border-color var(--sv-motion-duration-short) var(--sv-motion-ease-standard),
-                 color var(--sv-motion-duration-short) var(--sv-motion-ease-standard),
-                 box-shadow var(--sv-motion-duration-short) var(--sv-motion-ease-standard),
-                 transform var(--sv-motion-duration-short) var(--sv-motion-ease-accelerate);
-                 
-     // Button-specific focus enhancement
-     &:focus-visible {
-       outline-width: var(--sv-focus-ring-width);
-       outline-color: var(--sv-focus-ring-color);
-     }
-   }
-   
-   /* ==========================================================================
-      4. BUTTON VARIANTS
-      ========================================================================== */
-   
-   // Use the component class prefix to create variants, extending those from action-controls
-   .sv-button {
-     // Primary button (already styled in action controls, add only button-specific properties)
-     &.sv-button-primary {
-       @extend .sv-action-primary;
-       font-weight: var(--sv-font-semibold);
-     }
-     
-     // Secondary button
-     &.sv-button-secondary {
-       @extend .sv-action-secondary;
-     }
-     
-     // Tertiary button (text/ghost)
-     &.sv-button-tertiary {
-       @extend .sv-action-tertiary;
-     }
-     
-     // Destructive button
-     &.sv-button-destructive {
-       @extend .sv-action-destructive;
-     }
-     
-     // Outline button (not defined in action controls)
-     &.sv-button-outline {
-       background-color: transparent;
-       border-color: var(--sv-primary);
-       color: var(--sv-primary);
-       
-       &:hover:not(:disabled):not(.disabled) {
-         background-color: rgba(var(--sv-primary-500-rgb), 0.05);
-       }
-       
-       &:active:not(:disabled):not(.disabled) {
-         background-color: rgba(var(--sv-primary-500-rgb), 0.1);
-       }
-     }
-     
-     // Link button (not defined in action controls)
-     &.sv-button-link {
-       background-color: transparent;
-       border-color: transparent;
-       color: var(--sv-primary);
-       padding-left: var(--sv-padding-2);
-       padding-right: var(--sv-padding-2);
-       min-width: auto;
-       text-decoration: none;
-       
-       &:hover:not(:disabled):not(.disabled) {
-         text-decoration: underline;
-         background-color: transparent;
-       }
-       
-       &:active:not(:disabled):not(.disabled) {
-         color: var(--sv-primary-dark);
-         transform: none;
-       }
-     }
-     
-     // Social media button variants
-     &.sv-button-social {
-       // Reset some properties to allow for brand colors
-       border-width: 0;
-       font-weight: var(--sv-font-semibold);
-       
-       // Common social button styles
-       &:focus {
-         box-shadow: var(--sv-shadow-focus);
-       }
-     }
-   }
-   
-   /* ==========================================================================
-      5. BUTTON STATES
-      ========================================================================== */
-   
-   // Additional button-specific states
-   .sv-button {
-     // Expanded state for dropdowns or menus
-     &[aria-expanded="true"] {
-       z-index: calc(var(--sv-z-index-dropdown) + 1);
-     }
-     
-     // Selected state (e.g., in toggle buttons)
-     &[aria-pressed="true"] {
-       background-color: var(--sv-bg-element-active);
-       border-color: var(--sv-primary);
-       
-       &.sv-button-primary {
-         background-color: var(--sv-primary-dark);
-       }
-       
-       &.sv-button-tertiary {
-         background-color: var(--sv-bg-element-hover);
-       }
-     }
-     
-     // Override disable state specifically for link buttons
-     &.sv-button-link {
-       &:disabled, &.disabled {
-         text-decoration: none;
-         background-color: transparent;
-       }
-     }
-   }
-   
-   /* ==========================================================================
-      6. BUTTON WITH BADGES
-      ========================================================================== */
-   
-   .sv-button {
-     // Style adjustments for buttons that contain badge elements
-     .sv-badge {
-       position: relative;
-       top: -1px;
-       margin-left: var(--sv-space-2);
-     }
-     
-     // Status badges positioned in corners
-     &.sv-button-with-status {
-       position: relative;
-       
-       .sv-status-badge {
-         position: absolute;
-         top: calc(-1 * var(--sv-size-2));
-         right: calc(-1 * var(--sv-size-2));
-         border: 2px solid var(--sv-bg-primary);
-         z-index: 1;
-       }
-     }
-   }
-   
-   /* ==========================================================================
-      7. BUTTON ANIMATIONS
-      ========================================================================== */
-   
-   .sv-button {
-     // Button-specific ripple effect animation
-     &.sv-button-with-ripple {
-       position: relative;
-       overflow: hidden;
-       
-       &::after {
-         content: "";
-         display: block;
-         position: absolute;
-         width: 100%;
-         height: 100%;
-         top: 0;
-         left: 0;
-         pointer-events: none;
-         background-image: radial-gradient(circle, #fff 10%, transparent 11%);
-         background-repeat: no-repeat;
-         background-position: 50%;
-         transform: scale(10, 10);
-         opacity: 0;
-         transition: transform 0.6s, opacity 0.6s;
-       }
-       
-       &:active::after {
-         transform: scale(0, 0);
-         opacity: 0.3;
-         transition: 0s;
-       }
-     }
-     
-     // Pulse animation for notification or highlight
-     &.sv-button-pulse {
-       animation: button-pulse 2s infinite;
-       
-       @keyframes button-pulse {
-         0% {
-           box-shadow: 0 0 0 0 rgba(var(--sv-primary-500-rgb), 0.7);
-         }
-         70% {
-           box-shadow: 0 0 0 10px rgba(var(--sv-primary-500-rgb), 0);
-         }
-         100% {
-           box-shadow: 0 0 0 0 rgba(var(--sv-primary-500-rgb), 0);
-         }
-       }
-       
-       // Respect reduced motion preferences
-       @media (prefers-reduced-motion: reduce) {
-         animation: none;
-       }
-     }
-   }
-   
-   /* ==========================================================================
-      8. RESPONSIVE ADJUSTMENTS
-      ========================================================================== */
-   
-   // Full width on smaller screens
-   .sv-button.sv-button-responsive {
-     @include breakpoint-down(sm) {
-       display: flex;
-       width: 100%;
-     }
-   }
-   
-   // Adjust text/icon size on very small screens
-   @include breakpoint-down(xs) {
-     .sv-button {
-       &.sv-ui-size-lg, &.sv-ui-size-xl {
-         font-size: var(--sv-text-base);
-         
-         .sv-icon {
-           width: var(--sv-icon-size-sm);
-           height: var(--sv-icon-size-sm);
-         }
-       }
-     }
-   }
+@use './../../abstracts/' as *;
+@use './../../base/' as *;
+
+/* ==========================================================================
+   2. BUTTON BASE
+   ========================================================================== */
+
+.sv-button {
+  // Extend the action control base to inherit all shared properties
+  @extend .sv-action-control-base;
+  
+  // Button-specific properties not covered by action control base
+  font-weight: var(--sv-font-medium);
+  transition: background-color var(--sv-motion-duration-short) var(--sv-motion-ease-standard),
+              border-color var(--sv-motion-duration-short) var(--sv-motion-ease-standard),
+              color var(--sv-motion-duration-short) var(--sv-motion-ease-standard),
+              box-shadow var(--sv-motion-duration-short) var(--sv-motion-ease-standard),
+              transform var(--sv-motion-duration-short) var(--sv-motion-ease-accelerate);
+              
+  // Button-specific focus enhancement
+  &:focus-visible {
+    outline-width: var(--sv-focus-ring-width);
+    outline-color: var(--sv-focus-ring-color);
+  }
+}
+
+/* ==========================================================================
+   3. BUTTON VARIANTS
+   ========================================================================== */
+
+.sv-button {
+  // Primary button (already styled in action controls, add only button-specific properties)
+  &.sv-button-primary {
+    @extend .sv-action-primary;
+    font-weight: var(--sv-font-semibold);
+  }
+  
+  // Secondary button
+  &.sv-button-secondary {
+    @extend .sv-action-secondary;
+  }
+  
+  // Tertiary button (text/ghost)
+  &.sv-button-tertiary {
+    @extend .sv-action-tertiary;
+  }
+  
+  // Destructive button
+  &.sv-button-destructive {
+    @extend .sv-action-destructive;
+  }
+  
+  // Outline button (not defined in action controls)
+  &.sv-button-outline {
+    background-color: transparent;
+    border-color: var(--sv-primary);
+    color: var(--sv-primary);
+    
+    &:hover:not(:disabled):not(.disabled) {
+      background-color: rgba(var(--sv-primary-500-rgb), 0.05);
+    }
+    
+    &:active:not(:disabled):not(.disabled) {
+      background-color: rgba(var(--sv-primary-500-rgb), 0.1);
+    }
+  }
+  
+  // Link button (not defined in action controls)
+  &.sv-button-link {
+    background-color: transparent;
+    border-color: transparent;
+    color: var(--sv-primary);
+    padding-left: var(--sv-space-2);
+    padding-right: var(--sv-space-2);
+    min-width: auto;
+    text-decoration: none;
+    
+    &:hover:not(:disabled):not(.disabled) {
+      text-decoration: underline;
+      background-color: transparent;
+    }
+    
+    &:active:not(:disabled):not(.disabled) {
+      color: var(--sv-primary-dark);
+      transform: none;
+    }
+  }
+  
+  // Social media button variants
+  &.sv-button-social {
+    // Reset some properties to allow for brand colors
+    border-width: 0;
+    font-weight: var(--sv-font-semibold);
+    
+    // Common social button styles
+    &:focus {
+      box-shadow: var(--sv-shadow-focus);
+    }
+  }
+}
+
+/* ==========================================================================
+   4. BUTTON STATES
+   ========================================================================== */
+
+.sv-button {
+  // Expanded state for dropdowns or menus
+  &[aria-expanded="true"] {
+    z-index: calc(var(--sv-z-index-dropdown) + 1);
+  }
+  
+  // Selected state (e.g., in toggle buttons)
+  &[aria-pressed="true"] {
+    background-color: var(--sv-bg-element-active);
+    border-color: var(--sv-primary);
+    
+    &.sv-button-primary {
+      background-color: var(--sv-primary-dark);
+    }
+    
+    &.sv-button-tertiary {
+      background-color: var(--sv-bg-element-hover);
+    }
+  }
+  
+  // Override disable state specifically for link buttons
+  &.sv-button-link {
+    &:disabled, &.disabled {
+      text-decoration: none;
+      background-color: transparent;
+    }
+  }
+}
+
+/* ==========================================================================
+   5. BUTTON WITH BADGES
+   ========================================================================== */
+
+.sv-button {
+  // Style adjustments for buttons that contain badge elements
+  .sv-badge {
+    position: relative;
+    top: -1px;
+    margin-left: var(--sv-space-2);
+  }
+  
+  // Status badges positioned in corners
+  &.sv-button-with-status {
+    position: relative;
+    
+    .sv-status-badge {
+      position: absolute;
+      top: calc(-1 * var(--sv-size-2));
+      right: calc(-1 * var(--sv-size-2));
+      border: 2px solid var(--sv-bg-primary);
+      z-index: 1;
+    }
+  }
+}
+
+/* ==========================================================================
+   6. BUTTON ANIMATIONS
+   ========================================================================== */
+
+.sv-button {
+  // Button-specific ripple effect animation
+  &.sv-button-with-ripple {
+    position: relative;
+    overflow: hidden;
+    
+    &::after {
+      content: "";
+      display: block;
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+      background-image: radial-gradient(circle, #fff 10%, transparent 11%);
+      background-repeat: no-repeat;
+      background-position: 50%;
+      transform: scale(10, 10);
+      opacity: 0;
+      transition: transform 0.6s, opacity 0.6s;
+    }
+    
+    &:active::after {
+      transform: scale(0, 0);
+      opacity: 0.3;
+      transition: 0s;
+    }
+  }
+  
+  // Pulse animation for notification or highlight
+  &.sv-button-pulse {
+    animation: button-pulse 2s infinite;
+    
+    @keyframes button-pulse {
+      0% {
+        box-shadow: 0 0 0 0 rgba(var(--sv-primary-500-rgb), 0.7);
+      }
+      70% {
+        box-shadow: 0 0 0 10px rgba(var(--sv-primary-500-rgb), 0);
+      }
+      100% {
+        box-shadow: 0 0 0 0 rgba(var(--sv-primary-500-rgb), 0);
+      }
+    }
+    
+    // Respect reduced motion preferences
+    @media (prefers-reduced-motion: reduce) {
+      animation: none;
+    }
+  }
+}
+
+/* ==========================================================================
+   7. RESPONSIVE ADJUSTMENTS
+   ========================================================================== */
+
+.sv-button {
+  // Full width on small screens
+  &.sv-button-responsive {
+    @media (max-width: 576px) {
+      width: 100%;
+    }
+  }
+  
+  // Collapse to icon-only on small screens
+  &.sv-button-collapse-on-mobile {
+    @media (max-width: 576px) {
+      padding: var(--sv-space-2);
+      min-width: var(--sv-min-touch-target);
+      aspect-ratio: 1/1;
+      
+      // Hide everything but the icon
+      > *:not(.sv-icon) {
+        display: none;
+      }
+      
+      // Center icon
+      > .sv-icon {
+        margin: 0;
+      }
+    }
+  }
+}

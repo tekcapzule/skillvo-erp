@@ -1,7 +1,7 @@
 /**
  * Icon Button Component - Specific Styles
- * Version: 1.0.0
- * Last Updated: April 29, 2025
+ * Version: 1.1.0
+ * Last Updated: June 30, 2024
  * 
  * This file establishes the specific styles for the icon button component
  * in the SkillVo design system. This serves as the third level in our 
@@ -15,318 +15,242 @@
    TABLE OF CONTENTS:
    
    1. IMPORTS
-   2. VARIABLES
-   3. ICON BUTTON BASE
-   4. ICON BUTTON VARIANTS
-   5. ICON BUTTON STATES
-   6. SIZE VARIATIONS
-   7. SPECIALIZED ICON BUTTONS
-   8. RESPONSIVE ADJUSTMENTS
+   2. ICON BUTTON BASE
+   3. ICON BUTTON VARIANTS
+   4. ICON BUTTON SIZES
+   5. ICON BUTTON WITH BADGE/INDICATOR
+   6. ACCESSIBILITY ENHANCEMENTS
    ========================================================================== */
 
 /* ==========================================================================
    1. IMPORTS
    ========================================================================== */
-   @use './../../abstracts/' as *;
-   @use './../../base/' as *;
-   /* ==========================================================================
-      2. VARIABLES
-      ========================================================================== */
-   
-   // No additional variables needed as we're using the CSS vars from skillvo.css
-   
-   /* ==========================================================================
-      3. ICON BUTTON BASE
-      ========================================================================== */
-   
-   .sv-icon-button {
-     // Extend the action control base
-     @extend .sv-action-control-base;
-     @extend .sv-action-icon-only; // This is defined in action-controls.scss
-     
-     // Icon button specific properties
-     display: inline-flex;
-     justify-content: center;
-     align-items: center;
-     padding: var(--sv-padding-2);
-     aspect-ratio: 1; // Ensure square button
-     border-radius: var(--sv-radius-md);
-     
-     // Center the icon visually with proper alignment
-     .sv-icon {
-       margin: 0;
-       vertical-align: middle;
-     }
-     
-     // Transition effects specific to icon buttons
-     transition: background-color var(--sv-motion-duration-short) var(--sv-motion-ease-standard),
-                 border-color var(--sv-motion-duration-short) var(--sv-motion-ease-standard),
-                 color var(--sv-motion-duration-short) var(--sv-motion-ease-standard),
-                 transform var(--sv-motion-duration-short) var(--sv-motion-ease-accelerate);
-   }
-   
-   /* ==========================================================================
-      4. ICON BUTTON VARIANTS
-      ========================================================================== */
-   
-   .sv-icon-button {
-     // Primary icon button
-     &.sv-icon-button-primary {
-       @extend .sv-action-primary;
-     }
-     
-     // Secondary icon button
-     &.sv-icon-button-secondary {
-       @extend .sv-action-secondary;
-     }
-     
-     // Tertiary icon button (ghost button)
-     &.sv-icon-button-tertiary {
-       @extend .sv-action-tertiary;
-     }
-     
-     // Destructive icon button
-     &.sv-icon-button-destructive {
-       @extend .sv-action-destructive;
-     }
-     
-     // Outlined icon button
-     &.sv-icon-button-outline {
-       background-color: transparent;
-       border: 1px solid var(--sv-border-medium);
-       color: var(--sv-text-primary);
-       
-       &:hover:not(:disabled):not(.disabled) {
-         border-color: var(--sv-border-dark);
-         background-color: var(--sv-bg-element-hover);
-       }
-     }
-     
-     // Minimal icon button (low emphasis)
-     &.sv-icon-button-minimal {
-       background-color: transparent;
-       border-color: transparent;
-       color: var(--sv-text-secondary);
-       
-       &:hover:not(:disabled):not(.disabled) {
-         color: var(--sv-text-primary);
-         background-color: var(--sv-bg-element-hover);
-       }
-     }
-     
-     // Circular icon button
-     &.sv-icon-button-circular {
-       border-radius: var(--sv-radius-full);
-     }
-   }
-   
-   /* ==========================================================================
-      5. ICON BUTTON STATES
-      ========================================================================== */
-   
-   .sv-icon-button {
-     // Active/pressed state
-     &[aria-pressed="true"] {
-       background-color: var(--sv-bg-element-active);
-       
-       &.sv-icon-button-primary {
-         background-color: var(--sv-primary-dark);
-       }
-       
-       &.sv-icon-button-minimal,
-       &.sv-icon-button-tertiary {
-         background-color: var(--sv-bg-element-hover);
-         color: var(--sv-primary);
-       }
-     }
-     
-     // Toggle button styling
-     &.sv-icon-button-toggle {
-       &[aria-pressed="true"] {
-         background-color: var(--sv-primary-light);
-         border-color: var(--sv-primary);
-         color: var(--sv-text-on-dark);
-       }
-     }
-     
-     // Badges and indicators
-     &.sv-icon-button-with-badge {
-       position: relative;
-       
-       .sv-badge {
-         position: absolute;
-         top: 0;
-         right: 0;
-         transform: translate(25%, -25%);
-         z-index: 1;
-       }
-     }
-     
-     // Focus state enhancement
-     &:focus-visible {
-       outline-offset: 3px;
-     }
-   }
-   
-   /* ==========================================================================
-      6. SIZE VARIATIONS
-      ========================================================================== */
-   
-   // Icon button xs size
-   .sv-icon-button.sv-ui-size-xs {
-     width: var(--sv-btn-size-sm);
-     height: var(--sv-btn-size-sm);
-     padding: var(--sv-padding-1);
-     
-     .sv-icon {
-       width: var(--sv-icon-size-xs);
-       height: var(--sv-icon-size-xs);
-     }
-   }
-   
-   // Icon button sm size
-   .sv-icon-button.sv-ui-size-sm {
-     width: var(--sv-btn-size-md);
-     height: var(--sv-btn-size-md);
-     padding: var(--sv-padding-1);
-     
-     .sv-icon {
-       width: var(--sv-icon-size-sm);
-       height: var(--sv-icon-size-sm);
-     }
-   }
-   
-   // Icon button md size (default)
-   .sv-icon-button.sv-ui-size-md {
-     width: var(--sv-btn-size-lg);
-     height: var(--sv-btn-size-lg);
-     padding: var(--sv-padding-2);
-     
-     .sv-icon {
-       width: var(--sv-icon-size-md);
-       height: var(--sv-icon-size-md);
-     }
-   }
-   
-   // Icon button lg size
-   .sv-icon-button.sv-ui-size-lg {
-     width: calc(var(--sv-btn-size-lg) * 1.2);
-     height: calc(var(--sv-btn-size-lg) * 1.2);
-     padding: var(--sv-padding-3);
-     
-     .sv-icon {
-       width: var(--sv-icon-size-lg);
-       height: var(--sv-icon-size-lg);
-     }
-   }
-   
-   // Icon button xl size
-   .sv-icon-button.sv-ui-size-xl {
-     width: calc(var(--sv-btn-size-lg) * 1.5);
-     height: calc(var(--sv-btn-size-lg) * 1.5);
-     padding: var(--sv-padding-4);
-     
-     .sv-icon {
-       width: var(--sv-icon-size-xl);
-       height: var(--sv-icon-size-xl);
-     }
-   }
-   
-   /* ==========================================================================
-      7. SPECIALIZED ICON BUTTONS
-      ========================================================================== */
-   
-   // Close button
-   .sv-icon-button.sv-close-button {
-     color: var(--sv-text-secondary);
-     background-color: transparent;
-     border-color: transparent;
-     padding: var(--sv-padding-1);
-     
-     &:hover:not(:disabled):not(.disabled) {
-       color: var(--sv-text-primary);
-       background-color: var(--sv-bg-element-hover);
-     }
-     
-     // X icon with CSS for consistent rendering
-     &::before, &::after {
-       content: '';
-       position: absolute;
-       width: 60%;
-       height: 2px;
-       background-color: currentColor;
-       top: 50%;
-       left: 50%;
-     }
-     
-     &::before {
-       transform: translate(-50%, -50%) rotate(45deg);
-     }
-     
-     &::after {
-       transform: translate(-50%, -50%) rotate(-45deg);
-     }
-   }
-   
-   // Expandable icon button (can show/hide text)
-   .sv-icon-button.sv-icon-button-expandable {
-     overflow: hidden;
-     white-space: nowrap;
-     transition: width var(--sv-motion-duration-medium) var(--sv-motion-ease-standard),
-                 padding var(--sv-motion-duration-medium) var(--sv-motion-ease-standard);
-     width: var(--sv-btn-size-lg);
-     
-     .sv-icon-text {
-       opacity: 0;
-       margin-left: var(--sv-space-2);
-       transition: opacity var(--sv-motion-duration-medium) var(--sv-motion-ease-standard);
-     }
-     
-     &:hover, &:focus {
-       width: auto;
-       padding-right: var(--sv-padding-4);
-       
-       .sv-icon-text {
-         opacity: 1;
-       }
-     }
-     
-     // Respect reduced motion preferences
-     @media (prefers-reduced-motion: reduce) {
-       transition: none;
-       
-       .sv-icon-text {
-         transition: none;
-       }
-     }
-   }
-   
-   /* ==========================================================================
-      8. RESPONSIVE ADJUSTMENTS
-      ========================================================================== */
-   
-   // Adjustments for small screens
-   @include breakpoint-down(sm) {
-     // Increase touch target size for better mobile usability
-     .sv-icon-button {
-       min-width: var(--sv-min-touch-target);
-       min-height: var(--sv-min-touch-target);
-       
-       &.sv-ui-size-xs, &.sv-ui-size-sm {
-         min-width: calc(var(--sv-min-touch-target) * 0.85);
-         min-height: calc(var(--sv-min-touch-target) * 0.85);
-       }
-     }
-     
-     // Hide expandable text on small screens
-     .sv-icon-button.sv-icon-button-expandable {
-       &:hover, &:focus {
-         width: var(--sv-btn-size-lg);
-         padding-right: var(--sv-padding-2);
-         
-         .sv-icon-text {
-           display: none;
-         }
-       }
-     }
-   }
+@use './../../abstracts/' as *;
+@use './../../base/' as *;
+
+/* ==========================================================================
+   2. ICON BUTTON BASE
+   ========================================================================== */
+
+.sv-icon-button {
+  // Extend the action control base to inherit all shared properties
+  @extend .sv-action-control-base;
+  
+  // Make icon buttons square by default
+  aspect-ratio: 1/1;
+  padding: var(--sv-space-2);
+  
+  // Special styling for icons within the button
+  > .sv-icon {
+    flex-shrink: 0;
+    width: var(--sv-icon-size-md);
+    height: var(--sv-icon-size-md);
+  }
+  
+  // Override the base control's hover state
+  &:hover:not(:disabled):not(.disabled) {
+    transform: scale(1.05);
+  }
+  
+  // Override the base control's active state
+  &:active:not(:disabled):not(.disabled) {
+    transform: scale(0.95);
+  }
+}
+
+/* ==========================================================================
+   3. ICON BUTTON VARIANTS
+   ========================================================================== */
+
+.sv-icon-button {
+  // Apply the same variant styles as regular buttons
+  &.sv-icon-button-primary {
+    @extend .sv-action-primary;
+  }
+  
+  &.sv-icon-button-secondary {
+    @extend .sv-action-secondary;
+  }
+  
+  &.sv-icon-button-tertiary {
+    @extend .sv-action-tertiary;
+  }
+  
+  &.sv-icon-button-destructive {
+    @extend .sv-action-destructive;
+  }
+  
+  // Ghost icon button (transparent background)
+  &.sv-icon-button-ghost {
+    background-color: transparent;
+    border-color: transparent;
+    color: var(--sv-text-primary);
+    
+    &:hover:not(:disabled):not(.disabled) {
+      background-color: var(--sv-bg-element-hover);
+      color: var(--sv-primary);
+    }
+    
+    &:active:not(:disabled):not(.disabled) {
+      background-color: var(--sv-bg-element-active);
+    }
+  }
+  
+  // Subtle icon button (very light background)
+  &.sv-icon-button-subtle {
+    background-color: var(--sv-bg-element-light);
+    border-color: transparent;
+    color: var(--sv-text-primary);
+    
+    &:hover:not(:disabled):not(.disabled) {
+      background-color: var(--sv-bg-element-hover);
+      color: var(--sv-text-accent);
+    }
+  }
+  
+  // Circular icon button
+  &.sv-icon-button-circular {
+    border-radius: var(--sv-radius-full);
+  }
+}
+
+/* ==========================================================================
+   4. ICON BUTTON SIZES
+   ========================================================================== */
+
+.sv-icon-button {
+  // Small size icon button
+  &.sv-size-sm {
+    padding: var(--sv-space-1);
+    
+    > .sv-icon {
+      width: var(--sv-icon-size-sm);
+      height: var(--sv-icon-size-sm);
+    }
+  }
+  
+  // Large size icon button
+  &.sv-size-lg {
+    padding: var(--sv-space-3);
+    
+    > .sv-icon {
+      width: var(--sv-icon-size-lg);
+      height: var(--sv-icon-size-lg);
+    }
+  }
+}
+
+/* ==========================================================================
+   5. ICON BUTTON WITH BADGE/INDICATOR
+   ========================================================================== */
+
+.sv-icon-button {
+  // Icon button with notification badge
+  &.sv-icon-button-with-badge {
+    position: relative;
+    
+    .sv-badge {
+      position: absolute;
+      top: 0;
+      right: 0;
+      transform: translate(25%, -25%);
+      z-index: 1;
+    }
+  }
+  
+  // Icon button with status indicator (dot)
+  &.sv-icon-button-with-status {
+    position: relative;
+    
+    &::after {
+      content: "";
+      position: absolute;
+      width: var(--sv-size-2);
+      height: var(--sv-size-2);
+      border-radius: var(--sv-radius-full);
+      background-color: currentColor;
+      top: var(--sv-space-1);
+      right: var(--sv-space-1);
+    }
+    
+    &.sv-status-success::after {
+      background-color: var(--sv-success);
+    }
+    
+    &.sv-status-error::after {
+      background-color: var(--sv-error);
+    }
+    
+    &.sv-status-warning::after {
+      background-color: var(--sv-warning);
+    }
+    
+    &.sv-status-info::after {
+      background-color: var(--sv-info);
+    }
+  }
+}
+
+/* ==========================================================================
+   6. ACCESSIBILITY ENHANCEMENTS
+   ========================================================================== */
+
+.sv-icon-button {
+  // Ensure proper focus visibility for icon buttons
+  &:focus-visible {
+    outline: var(--sv-focus-ring-width) solid var(--sv-focus-ring-color);
+    outline-offset: var(--sv-focus-ring-offset);
+  }
+  
+  // Enhanced keyboard focus indication
+  &.sv-focus-enhanced:focus-visible {
+    box-shadow: 0 0 0 var(--sv-focus-ring-width) var(--sv-focus-ring-color);
+  }
+  
+  // Include text label for screen readers when needed
+  &.sv-a11y-has-label {
+    position: relative;
+    
+    .sv-a11y-label {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border-width: 0;
+    }
+  }
+  
+  // Provide additional tooltip on hover for context
+  &[title] {
+    position: relative;
+    
+    &:hover::before {
+      content: attr(title);
+      position: absolute;
+      bottom: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: var(--sv-space-1) var(--sv-space-2);
+      background-color: var(--sv-bg-tooltip);
+      color: var(--sv-text-on-dark);
+      border-radius: var(--sv-radius-sm);
+      font-size: var(--sv-text-xs);
+      white-space: nowrap;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.2s;
+      z-index: var(--sv-z-index-tooltip);
+    }
+    
+    @media (prefers-reduced-motion: no-preference) {
+      &:hover::before {
+        opacity: 1;
+        transition-delay: 0.5s;
+      }
+    }
+  }
+}

@@ -1,7 +1,7 @@
 /**
  * Split Button Component - Specific Styles
- * Version: 1.0.0
- * Last Updated: April 29, 2025
+ * Version: 1.1.0
+ * Last Updated: June 30, 2024
  * 
  * This file establishes the specific styles for the split button component
  * in the SkillVo design system. This serves as the third level in our 
@@ -15,482 +15,297 @@
    TABLE OF CONTENTS:
    
    1. IMPORTS
-   2. VARIABLES
-   3. SPLIT BUTTON BASE
+   2. SPLIT BUTTON CONTAINER
+   3. SPLIT BUTTON PARTS
    4. SPLIT BUTTON VARIANTS
-   5. SPLIT BUTTON SIZES
-   6. SPLIT BUTTON STATES
-   7. DROPDOWN TOGGLE STYLING
-   8. RESPONSIVE ADJUSTMENTS
+   5. SPLIT BUTTON STATES
+   6. SPLIT BUTTON DROPDOWN
+   7. SPLIT BUTTON SIZES
+   8. SPLIT BUTTON ANIMATIONS
    ========================================================================== */
 
 /* ==========================================================================
    1. IMPORTS
    ========================================================================== */
-   @use './../../abstracts/' as *;
-   @use './../../base/' as *;
-   @use './button' as *;
-   /* ==========================================================================
-      2. VARIABLES
-      ========================================================================== */
-   
-   // Width of dropdown toggle part
-   $split-button-toggle-width-factor: 0.35; // As a factor of height
-   $split-button-divider-color: var(--sv-border-medium);
-   
-   /* ==========================================================================
-      3. SPLIT BUTTON BASE
-      ========================================================================== */
-   
-   .sv-split-button {
-     // Container for the split button
-     position: relative;
-     display: inline-flex;
-     vertical-align: middle;
-     
-     // Main action button
-     .sv-split-button-action {
-       // Extend button styles
-       @extend .sv-button;
-       
-       // Remove right border radius when adjacent to toggle
-       border-top-right-radius: 0;
-       border-bottom-right-radius: 0;
-       
-       // Prevent action button from growing
-       flex-grow: 1;
-     }
-     
-     // Dropdown toggle part
-     .sv-split-button-toggle {
-       // Extend button styles
-       @extend .sv-button;
-       
-       // Remove left border radius when adjacent to action
-       border-top-left-radius: 0;
-       border-bottom-left-radius: 0;
-       
-       // Set minimum width based on height
-       min-width: auto;
-       width: auto;
-       padding-left: var(--sv-padding-2);
-       padding-right: var(--sv-padding-2);
-       
-       // Collapse border with main button
-       margin-left: -1px;
-       
-       // Position above the action button when focused
-       position: relative;
-       
-       // Center dropdown icon
-       display: flex;
-       align-items: center;
-       justify-content: center;
-       
-       // Dropdown caret icon
-       &::after {
-         content: "";
-         display: inline-block;
-         width: 0.5em;
-         height: 0.5em;
-         margin-left: 0;
-         border: 1px solid currentColor;
-         border-width: 0 1px 1px 0;
-         transform: rotate(45deg);
-       }
-     }
-     
-     // Divider line
-     .sv-split-button-divider {
-       position: absolute;
-       top: var(--sv-space-2);
-       bottom: var(--sv-space-2);
-       left: calc(100% - var(--sv-size-8));
-       width: 1px;
-       background-color: $split-button-divider-color;
-       z-index: 1;
-       pointer-events: none;
-     }
-   }
-   
-   /* ==========================================================================
-      4. SPLIT BUTTON VARIANTS
-      ========================================================================== */
-   
-   // Primary split button
-   .sv-split-button.sv-split-button-primary {
-     .sv-split-button-action,
-     .sv-split-button-toggle {
-       @extend .sv-action-primary;
-     }
-     
-     .sv-split-button-divider {
-       background-color: rgba(255, 255, 255, 0.3);
-     }
-   }
-   
-   // Secondary split button
-   .sv-split-button.sv-split-button-secondary {
-     .sv-split-button-action,
-     .sv-split-button-toggle {
-       @extend .sv-action-secondary;
-     }
-   }
-   
-   // Outline split button
-   .sv-split-button.sv-split-button-outline {
-     .sv-split-button-action,
-     .sv-split-button-toggle {
-       background-color: transparent;
-       border-color: var(--sv-primary);
-       color: var(--sv-primary);
-       
-       &:hover:not(:disabled):not(.disabled) {
-         background-color: rgba(var(--sv-primary-500-rgb), 0.05);
-       }
-       
-       &:active:not(:disabled):not(.disabled) {
-         background-color: rgba(var(--sv-primary-500-rgb), 0.1);
-       }
-     }
-   }
-   
-   // Tertiary split button
-   .sv-split-button.sv-split-button-tertiary {
-     .sv-split-button-action,
-     .sv-split-button-toggle {
-       @extend .sv-action-tertiary;
-     }
-     
-     .sv-split-button-divider {
-       background-color: var(--sv-border-light);
-     }
-   }
-   
-   // Destructive split button
-   .sv-split-button.sv-split-button-destructive {
-     .sv-split-button-action,
-     .sv-split-button-toggle {
-       @extend .sv-action-destructive;
-     }
-     
-     .sv-split-button-divider {
-       background-color: rgba(255, 255, 255, 0.3);
-     }
-   }
-   
-   /* ==========================================================================
-      5. SPLIT BUTTON SIZES
-      ========================================================================== */
-   
-   // XS size
-   .sv-split-button.sv-ui-size-xs {
-     .sv-split-button-action,
-     .sv-split-button-toggle {
-       @extend .sv-ui-size-xs;
-     }
-     
-     .sv-split-button-toggle {
-       padding-left: var(--sv-padding-1);
-       padding-right: var(--sv-padding-1);
-       
-       &::after {
-         width: 0.4em;
-         height: 0.4em;
-       }
-     }
-     
-     .sv-split-button-divider {
-       top: var(--sv-space-1);
-       bottom: var(--sv-space-1);
-     }
-   }
-   
-   // SM size
-   .sv-split-button.sv-ui-size-sm {
-     .sv-split-button-action,
-     .sv-split-button-toggle {
-       @extend .sv-ui-size-sm;
-     }
-     
-     .sv-split-button-toggle {
-       padding-left: var(--sv-padding-1);
-       padding-right: var(--sv-padding-1);
-     }
-     
-     .sv-split-button-divider {
-       top: var(--sv-space-1);
-       bottom: var(--sv-space-1);
-     }
-   }
-   
-   // MD size (default)
-   .sv-split-button.sv-ui-size-md {
-     .sv-split-button-action,
-     .sv-split-button-toggle {
-       @extend .sv-ui-size-md;
-     }
-   }
-   
-   // LG size
-   .sv-split-button.sv-ui-size-lg {
-     .sv-split-button-action,
-     .sv-split-button-toggle {
-       @extend .sv-ui-size-lg;
-     }
-     
-     .sv-split-button-toggle {
-       padding-left: var(--sv-padding-3);
-       padding-right: var(--sv-padding-3);
-       
-       &::after {
-         width: 0.6em;
-         height: 0.6em;
-       }
-     }
-     
-     .sv-split-button-divider {
-       top: var(--sv-space-3);
-       bottom: var(--sv-space-3);
-     }
-   }
-   
-   // XL size
-   .sv-split-button.sv-ui-size-xl {
-     .sv-split-button-action,
-     .sv-split-button-toggle {
-       @extend .sv-ui-size-xl;
-     }
-     
-     .sv-split-button-toggle {
-       padding-left: var(--sv-padding-4);
-       padding-right: var(--sv-padding-4);
-       
-       &::after {
-         width: 0.7em;
-         height: 0.7em;
-       }
-     }
-     
-     .sv-split-button-divider {
-       top: var(--sv-space-4);
-       bottom: var(--sv-space-4);
-     }
-   }
-   
-   /* ==========================================================================
-      6. SPLIT BUTTON STATES
-      ========================================================================== */
-   
-   .sv-split-button {
-     // Focus states - ensure proper z-indexing
-     .sv-split-button-action:focus,
-     .sv-split-button-toggle:focus {
-       z-index: 2;
-       position: relative;
-     }
-     
-     // Disabled state - apply to entire split button
-     &.disabled,
-     &:disabled {
-       pointer-events: none;
-       
-       .sv-split-button-action,
-       .sv-split-button-toggle {
-         @include disabled-state;
-       }
-       
-       .sv-split-button-divider {
-         opacity: 0.5;
-       }
-     }
-     
-     // Loading state affects the action button
-     &.loading,
-     &.is-loading,
-     &[aria-busy="true"],
-     .sv-split-button-action.loading,
-     .sv-split-button-action.is-loading,
-     .sv-split-button-action[aria-busy="true"] {
-       .sv-split-button-action {
-         @include loading-state;
-       }
-       
-       .sv-split-button-toggle {
-         opacity: 0.7;
-         pointer-events: none;
-       }
-     }
-     
-     // Toggle button expanded state
-     .sv-split-button-toggle[aria-expanded="true"] {
-       background-color: var(--sv-bg-element-active);
-       border-color: var(--sv-border-dark);
-       z-index: 2;
-       
-       // Primary variant
-       .sv-split-button-primary & {
-         background-color: var(--sv-primary-dark);
-         border-color: var(--sv-primary-dark);
-       }
-       
-       // Destructive variant
-       .sv-split-button-destructive & {
-         background-color: var(--sv-error-dark, var(--sv-error));
-         border-color: var(--sv-error-dark, var(--sv-error));
-       }
-     }
-   }
-   
-   /* ==========================================================================
-      7. DROPDOWN TOGGLE STYLING
-      ========================================================================== */
-   
-   .sv-split-button {
-     // Dropdown toggle with custom icon
-     &.sv-split-button-custom-toggle {
-       .sv-split-button-toggle::after {
-         display: none;
-       }
-       
-       .sv-split-button-toggle-icon {
-         display: inline-flex;
-         align-items: center;
-         justify-content: center;
-       }
-     }
-     
-     // Dropdown menu container
-     .sv-split-button-dropdown {
-       position: absolute;
-       top: 100%;
-       right: 0;
-       z-index: var(--sv-z-index-dropdown);
-       display: none;
-       min-width: 10rem;
-       padding: var(--sv-padding-2) 0;
-       margin-top: var(--sv-space-1);
-       background-color: var(--sv-bg-surface);
-       border: 1px solid var(--sv-border-medium);
-       border-radius: var(--sv-radius-md);
-       box-shadow: var(--sv-shadow-md);
-       
-       // Show dropdown
-       &.show {
-         display: block;
-       }
-       
-       // Dropdown items
-       .sv-split-button-item {
-         display: block;
-         width: 100%;
-         padding: var(--sv-padding-2) var(--sv-padding-3);
-         clear: both;
-         text-align: inherit;
-         white-space: nowrap;
-         background-color: transparent;
-         border: 0;
-         color: var(--sv-text-primary);
-         
-         &:hover {
-           text-decoration: none;
-           background-color: var(--sv-bg-element-hover);
-         }
-         
-         &:active {
-           background-color: var(--sv-bg-element-active);
-         }
-         
-         &.disabled,
-         &:disabled {
-           color: var(--sv-text-tertiary);
-           pointer-events: none;
-           background-color: transparent;
-         }
-       }
-       
-       // Divider in dropdown
-       .sv-split-button-divider {
-         height: 0;
-         margin: var(--sv-space-2) 0;
-         overflow: hidden;
-         border-top: 1px solid var(--sv-border-light);
-         position: static;
-         width: 100%;
-       }
-     }
-     
-     // Handle dropdown placement variations
-     &.sv-split-button-dropup {
-       .sv-split-button-dropdown {
-         top: auto;
-         bottom: 100%;
-         margin-top: 0;
-         margin-bottom: var(--sv-space-1);
-       }
-     }
-     
-     &.sv-split-button-dropstart {
-       .sv-split-button-dropdown {
-         top: 0;
-         right: auto;
-         left: 0;
-         margin-top: 0;
-         margin-right: var(--sv-space-1);
-       }
-     }
-     
-     &.sv-split-button-dropend {
-       .sv-split-button-dropdown {
-         top: 0;
-         right: 100%;
-         left: auto;
-         margin-top: 0;
-         margin-left: var(--sv-space-1);
-       }
-     }
-   }
-   
-   /* ==========================================================================
-      8. RESPONSIVE ADJUSTMENTS
-      ========================================================================== */
-   
-   // Full-width on mobile
-   .sv-split-button.sv-split-button-responsive {
-     @include breakpoint-down(sm) {
-       display: flex;
-       width: 100%;
-       
-       .sv-split-button-action {
-         flex: 1;
-       }
-       
-       // Ensure toggle doesn't grow disproportionately
-       .sv-split-button-toggle {
-         flex: 0 0 auto;
-       }
-     }
-   }
-   
-   // Toggle placement adjustments
-   @include breakpoint-down(xs) {
-     .sv-split-button {
-       // Smaller toggle on very small screens
-       .sv-split-button-toggle {
-         padding-left: var(--sv-padding-1);
-         padding-right: var(--sv-padding-1);
-         
-         &::after {
-           width: 0.4em;
-           height: 0.4em;
-         }
-       }
-       
-       // Full width dropdown
-       .sv-split-button-dropdown {
-         width: 100%;
-         left: 0;
-         right: 0;
-       }
-     }
-   }
+@use './../../abstracts/' as *;
+@use './../../base/' as *;
+
+/* ==========================================================================
+   2. SPLIT BUTTON CONTAINER
+   ========================================================================== */
+
+.sv-split-button {
+  // Container for both parts of the split button
+  position: relative;
+  display: inline-flex;
+  vertical-align: middle;
+  
+  // Proper spacing for the two parts
+  .sv-split-button-action,
+  .sv-split-button-toggle {
+    position: relative;
+  }
+  
+  // Remove radius between adjacent parts
+  .sv-split-button-action {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    margin-right: -1px; // Border collapse
+  }
+  
+  .sv-split-button-toggle {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+}
+
+/* ==========================================================================
+   3. SPLIT BUTTON PARTS
+   ========================================================================== */
+
+.sv-split-button {
+  // Main action button
+  .sv-split-button-action {
+    @extend .sv-action-control-base;
+    min-width: auto;
+    
+    // Prevent jumping on active state
+    &:active:not(:disabled):not(.disabled) {
+      transform: none;
+    }
+  }
+  
+  // Toggle button (dropdown)
+  .sv-split-button-toggle {
+    @extend .sv-action-control-base;
+    padding: var(--sv-space-1) var(--sv-space-2);
+    min-width: auto;
+    
+    // Chevron indicator
+    &::after {
+      content: "";
+      display: inline-block;
+      width: 0.5em;
+      height: 0.5em;
+      border-style: solid;
+      border-width: 0 0.1em 0.1em 0;
+      transform: rotate(45deg) translateY(-0.15em);
+      transition: transform var(--sv-motion-duration-short) var(--sv-motion-ease-standard);
+    }
+    
+    // Prevent jumping on active state
+    &:active:not(:disabled):not(.disabled) {
+      transform: none;
+    }
+  }
+}
+
+/* ==========================================================================
+   4. SPLIT BUTTON VARIANTS
+   ========================================================================== */
+
+.sv-split-button {
+  // Primary split button
+  &.sv-split-button-primary {
+    .sv-split-button-action,
+    .sv-split-button-toggle {
+      @extend .sv-action-primary;
+    }
+    
+    // Border between the parts
+    .sv-split-button-toggle {
+      border-left-color: rgba(255, 255, 255, 0.2);
+    }
+  }
+  
+  // Secondary split button
+  &.sv-split-button-secondary {
+    .sv-split-button-action,
+    .sv-split-button-toggle {
+      @extend .sv-action-secondary;
+    }
+  }
+  
+  // Tertiary split button
+  &.sv-split-button-tertiary {
+    .sv-split-button-action,
+    .sv-split-button-toggle {
+      @extend .sv-action-tertiary;
+    }
+  }
+  
+  // Destructive split button
+  &.sv-split-button-destructive {
+    .sv-split-button-action,
+    .sv-split-button-toggle {
+      @extend .sv-action-destructive;
+    }
+    
+    // Border between the parts
+    .sv-split-button-toggle {
+      border-left-color: rgba(255, 255, 255, 0.2);
+    }
+  }
+  
+  // Outline split button
+  &.sv-split-button-outline {
+    .sv-split-button-action,
+    .sv-split-button-toggle {
+      background-color: transparent;
+      border-color: var(--sv-primary);
+      color: var(--sv-primary);
+      
+      &:hover:not(:disabled):not(.disabled) {
+        background-color: rgba(var(--sv-primary-500-rgb), 0.05);
+      }
+      
+      &:active:not(:disabled):not(.disabled) {
+        background-color: rgba(var(--sv-primary-500-rgb), 0.1);
+      }
+    }
+  }
+}
+
+/* ==========================================================================
+   5. SPLIT BUTTON STATES
+   ========================================================================== */
+
+.sv-split-button {
+  // Focused state (highlight the focused part)
+  .sv-split-button-action:focus,
+  .sv-split-button-toggle:focus {
+    z-index: 1;
+  }
+  
+  // Hover state (highlight the hovered part)
+  .sv-split-button-action:hover,
+  .sv-split-button-toggle:hover {
+    z-index: 2;
+  }
+  
+  // Expanded state (dropdown open)
+  .sv-split-button-toggle[aria-expanded="true"] {
+    z-index: 3;
+    
+    // Rotate chevron
+    &::after {
+      transform: rotate(-135deg) translateX(0.2em);
+    }
+  }
+  
+  // Disabled state
+  &.disabled,
+  &:disabled {
+    .sv-split-button-action,
+    .sv-split-button-toggle {
+      pointer-events: none;
+      opacity: var(--sv-opacity-disabled);
+    }
+  }
+}
+
+/* ==========================================================================
+   6. SPLIT BUTTON DROPDOWN
+   ========================================================================== */
+
+.sv-split-button {
+  // Menu positioning
+  .sv-menu {
+    min-width: 100%;
+    top: 100%;
+    right: 0;
+    margin-top: var(--sv-space-1);
+    
+    // Full width if menu should match the button width
+    &.sv-menu-full-width {
+      width: 100%;
+    }
+  }
+}
+
+/* ==========================================================================
+   7. SPLIT BUTTON SIZES
+   ========================================================================== */
+
+.sv-split-button {
+  // Small size
+  &.sv-size-sm {
+    .sv-split-button-action {
+      padding: var(--sv-space-1) var(--sv-space-2);
+      font-size: var(--sv-text-sm);
+    }
+    
+    .sv-split-button-toggle {
+      padding: var(--sv-space-1) var(--sv-space-1);
+      
+      &::after {
+        width: 0.4em;
+        height: 0.4em;
+      }
+    }
+  }
+  
+  // Large size
+  &.sv-size-lg {
+    .sv-split-button-action {
+      padding: var(--sv-space-3) var(--sv-space-4);
+      font-size: var(--sv-text-lg);
+    }
+    
+    .sv-split-button-toggle {
+      padding: var(--sv-space-3) var(--sv-space-3);
+      
+      &::after {
+        width: 0.6em;
+        height: 0.6em;
+      }
+    }
+  }
+}
+
+/* ==========================================================================
+   8. SPLIT BUTTON ANIMATIONS
+   ========================================================================== */
+
+.sv-split-button {
+  // Ripple effect
+  &.sv-split-button-with-ripple {
+    .sv-split-button-action,
+    .sv-split-button-toggle {
+      position: relative;
+      overflow: hidden;
+      
+      &::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: radial-gradient(circle, rgba(255, 255, 255, 0.3) 0%, transparent 70%);
+        transform: scale(0);
+        opacity: 0;
+        pointer-events: none;
+        transition: transform 0.3s, opacity 0.3s;
+      }
+      
+      &:active::before {
+        transform: scale(3);
+        opacity: 1;
+        transition: 0s;
+      }
+    }
+  }
+  
+  // Respect reduced motion preferences
+  @media (prefers-reduced-motion: reduce) {
+    &.sv-split-button-with-ripple {
+      .sv-split-button-action,
+      .sv-split-button-toggle {
+        &::before {
+          transition: none;
+        }
+      }
+    }
+  }
+}
