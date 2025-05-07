@@ -66,7 +66,7 @@ $list-transition-timing: var(--sv-motion-ease-standard);
 
 .sv-list {
   // Extend base data display class
-  @extend .sv-data-display-control-base !optional;
+  @extend .sv-data-display-control-base;
   
   // Reset list styles
   list-style: none;

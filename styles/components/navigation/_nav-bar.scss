@@ -24,6 +24,7 @@
    1. IMPORTS
    ========================================================================== */
 @use './../../abstracts' as *;
+@use './../../base/' as *;
 @use './../../base/utils/mixins/state' as state;
 @use './../../base/utils/mixins/layout' as layout;
 @use './../../base/utils/mixins/responsive' as responsive;
@@ -56,7 +57,7 @@ $nav-bar-icon-spacing: var(--sv-space-2);
 
 .sv-nav-bar {
   // Extend the navigation control base class
-  @extend .sv-nav-control-base !optional;
+  @extend .sv-nav-control-base;
   
   // Nav bar specific styles
   width: 100%; // Full width by default

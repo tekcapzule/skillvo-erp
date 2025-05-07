@@ -46,7 +46,7 @@ $toggle-track-color-on: var(--sv-primary);
 
 .sv-toggle {
   // Extend the base selection control class
-  @extend .sv-selection-control-base !optional;
+  @extend .sv-selection-control-base;
   display: inline-flex;
   align-items: center;
   

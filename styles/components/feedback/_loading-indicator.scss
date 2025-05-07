@@ -33,6 +33,7 @@
    1. IMPORTS
    ========================================================================== */
 @use './../../abstracts' as *;
+@use './../../base/' as *;
 @use './../../base/utils/mixins/state' as state;
 @use './../../base/utils/mixins/layout' as layout;
 @use './../../base/utils/mixins/typography' as typography;
@@ -77,7 +78,7 @@ $loader-overlay-z-index: var(--sv-z-index-overlay);
 
 .sv-loading {
   // Extend the feedback control base to inherit all shared properties
-  @extend .sv-feedback-control-base !optional;
+  @extend .sv-feedback-control-base;
   
   // Reset padding and borders from feedback-base
   padding: 0;

@@ -24,6 +24,7 @@
    1. IMPORTS
    ========================================================================== */
 @use './../../abstracts' as *;
+@use './../../base/' as *;
 @use './../../base/utils/mixins/state' as state;
 @use './../../base/utils/mixins/layout' as layout;
 @use './../../base/utils/mixins/responsive' as responsive;
@@ -67,7 +68,7 @@ $tabs-pill-padding-x: var(--sv-space-4);
   
   &__list {
     // Extend the navigation control base class
-    @extend .sv-nav-control-base !optional;
+    @extend .sv-nav-control-base;
     
     // Tab list specific styles
     display: flex;

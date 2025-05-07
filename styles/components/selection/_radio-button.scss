@@ -43,7 +43,7 @@ $radio-animation-easing: var(--sv-motion-ease-standard);
 
 .sv-radio {
   // Extend the base selection control class
-  @extend .sv-selection-control-base !optional;
+  @extend .sv-selection-control-base ;
   
   // Radio-specific control styles
   &__control {

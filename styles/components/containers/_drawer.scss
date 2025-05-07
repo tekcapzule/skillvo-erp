@@ -103,7 +103,7 @@ $drawer-animation-timing: var(--sv-motion-ease-standard);
 
 .sv-drawer {
   // Extend the container base class
-  @extend .sv-container-control-base !optional;
+  @extend .sv-container-control-base ;
   
   // Drawer-specific overrides
   position: fixed;

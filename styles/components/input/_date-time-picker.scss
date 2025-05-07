@@ -24,6 +24,7 @@
    1. IMPORTS & VARIABLES
    ========================================================================== */
 @use './../../abstracts' as *;
+@use './../../base/' as *;
 @use './../../base/utils/mixins/state' as state;
 @use './../../base/utils/mixins/layout' as layout;
 @use './../../base/utils/mixins/responsive' as responsive;
@@ -47,7 +48,7 @@ $date-picker-range-calendar-gap: var(--sv-space-2);
 .sv-time-picker,
 .sv-datetime-picker {
   // Extend the input control base styles
-  @extend .sv-input-control-base !optional;
+  @extend .sv-input-control-base;
   
   // Add consistent transitions
   transition: border-color $date-picker-transition-duration $date-picker-transition-timing,
@@ -61,7 +62,7 @@ $date-picker-range-calendar-gap: var(--sv-space-2);
   }
   
   &__field {
-    @extend .sv-input-control-base__field !optional;
+    @extend .sv-input-control-base__field ;
     width: 100%;
     cursor: pointer;
     
@@ -75,11 +76,11 @@ $date-picker-range-calendar-gap: var(--sv-space-2);
   }
   
   &__label {
-    @extend .sv-input-control-base__label !optional;
+    @extend .sv-input-control-base__label ;
   }
   
   &__helper-text {
-    @extend .sv-input-control-base__helper-text !optional;
+    @extend .sv-input-control-base__helper-text;
   }
   
   &__toggle {
@@ -501,7 +502,7 @@ $date-picker-range-calendar-gap: var(--sv-space-2);
    ========================================================================== */
 
 .sv-date-range-picker {
-  @extend .sv-date-picker !optional;
+  @extend .sv-date-picker ;
   
   &__container {
     position: relative;

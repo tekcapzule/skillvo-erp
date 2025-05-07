@@ -25,6 +25,7 @@
    1. IMPORTS
    ========================================================================== */
 @use './../../abstracts' as *;
+@use './../../base/' as *;
 @use './../../base/utils/mixins/state' as state;
 @use './../../base/utils/mixins/layout' as layout;
 @use './../../base/utils/mixins/responsive' as responsive;
@@ -65,7 +66,7 @@ $tag-transition-timing: var(--sv-motion-ease-standard);
 
 .sv-tag {
   // Extend the information display base class
-  @extend .sv-information-display-base !optional;
+  @extend .sv-information-display-base ;
   
   // Override and add tag-specific styles
   display: inline-flex;

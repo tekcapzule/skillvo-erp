@@ -29,7 +29,8 @@
 /* ==========================================================================
    1. IMPORTS
    ========================================================================== */
-@use './../../abstracts' as *;
+@use './../../abstracts' as *;  
+@use './../../base/' as *;
 @use './../../base/utils/mixins/state' as state;
 @use './../../base/utils/mixins/layout' as layout;
 @use './../../base/utils/mixins/typography' as typography;
@@ -69,7 +70,7 @@ $dialog-backdrop-z-index: calc(#{$dialog-z-index} - 1);
 
 .sv-dialog {
   // Extend the feedback control base to inherit all shared properties
-  @extend .sv-feedback-control-base !optional;
+  @extend .sv-feedback-control-base;
   
   // Dialog-specific layout and spacing
   padding: 0; // Padding managed by child elements

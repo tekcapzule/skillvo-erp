@@ -24,6 +24,7 @@
    1. IMPORTS & VARIABLES
    ========================================================================== */
 @use './../../abstracts' as *;
+@use './../../base/' as *;
 @use './../../base/utils/mixins/state' as state;
 @use './../../base/utils/mixins/layout' as layout;
 @use './../../base/utils/mixins/responsive' as responsive;
@@ -45,7 +46,7 @@ $file-upload-action-button-size: 2rem;
 
 .sv-file-upload {
   // Extend the input control base styles
-  @extend .sv-input-control-base !optional;
+  @extend .sv-input-control-base;
   
   // Reset height for file inputs
   height: auto;

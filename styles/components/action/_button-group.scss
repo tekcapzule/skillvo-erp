@@ -97,7 +97,7 @@
 .sv-button-group.sv-button-group-primary {
   > .sv-button,
   > .sv-icon-button {
-    @extend .sv-action-primary !optional;
+    @extend .sv-action-primary;
     
     // Enhance visibility of borders for adjacent primary buttons
     border-right-color: rgba(255, 255, 255, 0.2);
@@ -116,7 +116,7 @@
 .sv-button-group.sv-button-group-secondary {
   > .sv-button,
   > .sv-icon-button {
-    @extend .sv-action-secondary !optional;
+    @extend .sv-action-secondary;
   }
 }
 

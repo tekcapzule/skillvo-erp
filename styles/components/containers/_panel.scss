@@ -31,6 +31,7 @@
 
 // Import necessary mixins
 @use './../../abstracts' as *;
+@use './../../base/' as *;
 @use './../../base/utils/mixins/state' as state;
 @use './../../base/utils/mixins/layout' as layout;
 @use './../../base/utils/mixins/responsive' as responsive;
@@ -61,7 +62,7 @@ $panel-subtitle-color: var(--sv-text-secondary);
  */
 .sv-panel {
   // Extend the container control base class
-  @extend .sv-container-control-base !optional;
+  @extend .sv-container-control-base ;
   
   // Panel-specific overrides - only add what's different from the base
   border-radius: $panel-default-radius;

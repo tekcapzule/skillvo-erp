@@ -27,6 +27,7 @@
    1. IMPORTS
    ========================================================================== */
 @use './../../abstracts' as *;
+@use './../../base/' as *;
 @use './../../base/utils/mixins/state' as state;
 @use './../../base/utils/mixins/layout' as layout;
 @use './../../base/utils/mixins/typography' as typography;
@@ -65,7 +66,7 @@ $snackbar-z-index: var(--sv-z-index-tooltip);
 
 .sv-snackbar {
   // Extend the feedback control base to inherit all shared properties
-  @extend .sv-feedback-control-base !optional;
+  @extend .sv-feedback-control-base;
   
   // Snackbar-specific layout and spacing
   min-width: $snackbar-min-width;

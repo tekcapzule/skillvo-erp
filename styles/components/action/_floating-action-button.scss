@@ -29,6 +29,7 @@
    1. IMPORTS
    ========================================================================== */
 @use './../../abstracts' as *;
+@use './../../base/' as *;
 @use './../../base/utils/mixins/state' as state;
 @use './../../base/utils/mixins/layout' as layout;
 @use './../../base/utils/mixins/responsive' as responsive;
@@ -59,7 +60,7 @@ $fab-pulse-shadow-color: rgba(var(--sv-primary-rgb), 0.7);
 
 .sv-fab {
   // Extend the action control base to inherit all shared properties
-  @extend .sv-action-control-base !optional;
+  @extend .sv-action-control-base;
   
   // FAB-specific properties
   position: fixed;
@@ -99,12 +100,12 @@ $fab-pulse-shadow-color: rgba(var(--sv-primary-rgb), 0.7);
 .sv-fab {
   // Primary FAB (default)
   &.sv-fab-primary {
-    @extend .sv-action-primary !optional;
+    @extend .sv-action-primary;
   }
   
   // Secondary FAB
   &.sv-fab-secondary {
-    @extend .sv-action-secondary !optional;
+    @extend .sv-action-secondary;
   }
   
   // Subtle FAB

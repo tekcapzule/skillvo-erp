@@ -44,7 +44,7 @@ $checkbox-indeterminate-width: 50%;
 
 .sv-checkbox {
   // Extend the base selection control class
-  @extend .sv-selection-control-base !optional;
+  @extend .sv-selection-control-base ;
   
   // Checkbox-specific control styles
   &__control {

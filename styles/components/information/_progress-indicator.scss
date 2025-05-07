@@ -25,6 +25,7 @@
    1. IMPORTS
    ========================================================================== */
 @use './../../abstracts' as *;
+@use './../../base/' as *;
 @use './../../base/utils/mixins/state' as state;
 @use './../../base/utils/mixins/layout' as layout;
 @use './../../base/utils/mixins/responsive' as responsive;
@@ -67,7 +68,7 @@ $progress-circular-duration: 1.4s;
 
 .sv-progress {
   // Extend the information display base class
-  @extend .sv-information-display-base !optional;
+  @extend .sv-information-display-base ;
   
   // Override and add progress indicator-specific styles
   display: flex;

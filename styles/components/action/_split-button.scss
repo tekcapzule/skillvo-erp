@@ -29,6 +29,7 @@
    1. IMPORTS
    ========================================================================== */
 @use './../../abstracts' as *;
+@use './../../base/' as *;
 @use './../../base/utils/mixins/state' as state;
 @use './../../base/utils/mixins/layout' as layout;
 @use './../../base/utils/mixins/responsive' as responsive;
@@ -91,7 +92,7 @@ $split-button-font-size-lg: var(--sv-text-lg);
 .sv-split-button {
   // Main action button
   .sv-split-button-action {
-    @extend .sv-action-control-base !optional;
+    @extend .sv-action-control-base;
     min-width: auto;
     
     // Prevent jumping on active state
@@ -102,7 +103,7 @@ $split-button-font-size-lg: var(--sv-text-lg);
   
   // Toggle button (dropdown)
   .sv-split-button-toggle {
-    @extend .sv-action-control-base !optional;
+    @extend .sv-action-control-base;
     padding: $split-button-toggle-padding;
     min-width: auto;
     
@@ -134,7 +135,7 @@ $split-button-font-size-lg: var(--sv-text-lg);
   &.sv-split-button-primary {
     .sv-split-button-action,
     .sv-split-button-toggle {
-      @extend .sv-action-primary !optional;
+      @extend .sv-action-primary;
     }
     
     // Border between the parts
@@ -147,7 +148,7 @@ $split-button-font-size-lg: var(--sv-text-lg);
   &.sv-split-button-secondary {
     .sv-split-button-action,
     .sv-split-button-toggle {
-      @extend .sv-action-secondary !optional;
+      @extend .sv-action-secondary;
     }
   }
   
@@ -155,7 +156,7 @@ $split-button-font-size-lg: var(--sv-text-lg);
   &.sv-split-button-tertiary {
     .sv-split-button-action,
     .sv-split-button-toggle {
-      @extend .sv-action-tertiary !optional;
+      @extend .sv-action-tertiary;
     }
   }
   
@@ -163,7 +164,7 @@ $split-button-font-size-lg: var(--sv-text-lg);
   &.sv-split-button-destructive {
     .sv-split-button-action,
     .sv-split-button-toggle {
-      @extend .sv-action-destructive !optional;
+      @extend .sv-action-destructive;
     }
     
     // Border between the parts

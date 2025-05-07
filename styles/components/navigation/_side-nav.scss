@@ -23,7 +23,8 @@
 /* ==========================================================================
    1. IMPORTS
    ========================================================================== */
-@use './../../abstracts' as *;
+@use './../../abstracts' as *;  
+@use './../../base/' as *;
 @use './../../base/utils/mixins/state' as state;
 @use './../../base/utils/mixins/layout' as layout;
 @use './../../base/utils/mixins/responsive' as responsive;
@@ -54,7 +55,7 @@ $step-line-indicator-size: var(--sv-size-3);
 
 .sv-step-nav {
   // Extend the navigation control base class
-  @extend .sv-nav-control-base !optional;
+  @extend .sv-nav-control-base ;
   
   // Container styles
   display: flex;

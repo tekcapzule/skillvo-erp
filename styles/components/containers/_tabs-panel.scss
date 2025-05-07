@@ -58,7 +58,7 @@ $tabs-indicator-size: 2px;
 
 .sv-tabs {
   // Extend the container base class
-  @extend .sv-container-control-base !optional;
+  @extend .sv-container-control-base ;
   
   // Tabs-specific overrides
   display: flex;

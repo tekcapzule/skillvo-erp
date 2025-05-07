@@ -24,6 +24,7 @@
    1. IMPORTS
    ========================================================================== */
 @use './../../abstracts' as *;
+@use './../../base/' as *;
 @use './../../base/utils/mixins/state' as state;
 @use './../../base/utils/mixins/layout' as layout;
 @use './../../base/utils/mixins/responsive' as responsive;
@@ -66,7 +67,7 @@ $status-pulse-duration: 2s;
 
 .sv-status {
   // Extend the information display base class
-  @extend .sv-information-display-base !optional;
+  @extend .sv-information-display-base ;
   
   // Override and add status indicator-specific styles
   display: inline-flex;

@@ -60,7 +60,7 @@ $sidebar-animation-timing: var(--sv-motion-ease-standard);
 
 .sv-sidebar {
   // Extend the container base class
-  @extend .sv-container-control-base !optional;
+  @extend .sv-container-control-base ;
   
   // Sidebar-specific overrides
   display: flex;

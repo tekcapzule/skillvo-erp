@@ -23,6 +23,7 @@
    1. IMPORTS
    ========================================================================== */
 @use './../../abstracts' as *;
+@use './../../base/' as *;
 @use './../../base/utils/mixins/state' as state;
 @use './../../base/utils/mixins/layout' as layout;
 @use './../../base/utils/mixins/responsive' as responsive;
@@ -52,7 +53,7 @@ $pagination-icon-size: var(--sv-icon-size-sm);
 
 .sv-pagination {
   // Extend the navigation control base class
-  @extend .sv-nav-control-base !optional;
+  @extend .sv-nav-control-base ;
   
   // Container styles
   display: flex;

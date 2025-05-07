@@ -32,6 +32,7 @@
    ========================================================================== */
 @use 'sass:map';
 @use './../../abstracts' as *;
+@use './../core/_base-control' as *;
 @use './../utils/mixins/state' as state;
 @use './../utils/mixins/layout' as layout;
 @use './../utils/mixins/typography' as typography;
@@ -68,7 +69,7 @@ $feedback-close-button-size: var(--sv-size-8);
  */
 .sv-feedback-control-base {
   // Inherit all base UI control styles
-  @extend .sv-ui-control-base !optional;
+  @extend .sv-ui-control-base;
   
   // Box model adjustments for feedback elements
   display: flex;

@@ -27,6 +27,7 @@
    1. IMPORTS
    ========================================================================== */
 @use './../../abstracts' as *;
+@use './../../base/' as *;
 @use './../../base/utils/mixins/state' as state;
 @use './../../base/utils/mixins/layout' as layout;
 @use './../../base/utils/mixins/typography' as typography;
@@ -62,7 +63,7 @@ $error-transition-timing: var(--sv-motion-ease-standard);
 
 .sv-error {
   // Extend the feedback control base to inherit all shared properties
-  @extend .sv-feedback-control-base !optional;
+  @extend .sv-feedback-control-base;
   
   // Error message specific layout and spacing
   display: flex;

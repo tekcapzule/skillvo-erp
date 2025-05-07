@@ -32,6 +32,7 @@
    ========================================================================== */
 @use 'sass:map';
 @use './../../abstracts' as *;
+@use './../core/_base-control' as *;
 @use './../utils/mixins/state' as state;
 @use './../utils/mixins/layout' as layout;
 @use './../utils/mixins/typography' as typography;
@@ -64,9 +65,9 @@ $data-font-size-header: var(--sv-font-size-sm);
  * 
  * This class extends sv-ui-control-base and adds data display specific styling.
  */
-.sv-data-display-base {
+.sv-data-display-control-base {
   // Inherit all base UI control styles
-  @extend .sv-ui-control-base !optional;
+  @extend .sv-ui-control-base;
   
   // Box model adjustments for data displays
   display: block;

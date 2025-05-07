@@ -33,6 +33,7 @@
    ========================================================================== */
 @use 'sass:map';
 @use './../../abstracts' as *;
+@use './../core/_base-control' as *;
 @use './../utils/mixins/state' as state;
 @use './../utils/mixins/layout' as layout;
 @use './../utils/mixins/typography' as typography;
@@ -63,7 +64,7 @@ $indicator-size-ratio: 0.5; // Size of the indicator in relation to the control
  */
 .sv-selection-control-base {
   // Inherit all base UI control styles
-  @extend .sv-ui-control-base !optional;
+  @extend .sv-ui-control-base;
   
   // Basic layout and appearance
   position: relative;

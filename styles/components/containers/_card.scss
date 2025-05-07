@@ -31,6 +31,7 @@
 
 // Import necessary mixins
 @use './../../abstracts' as *;
+@use './../../base/' as *;
 @use './../../base/utils/mixins/state' as state;
 @use './../../base/utils/mixins/layout' as layout;
 @use './../../base/utils/mixins/responsive' as responsive;
@@ -63,7 +64,7 @@ $card-media-aspect-ratio: math.div(16, 9);
  */
 .sv-card {
   // Extend the container control base class
-  @extend .sv-container-control-base !optional;
+  @extend .sv-container-control-base;
   
   // Card-specific overrides - only add what's different from the base
   border-radius: $card-default-radius;

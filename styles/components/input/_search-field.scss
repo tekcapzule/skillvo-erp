@@ -23,6 +23,7 @@
    1. IMPORTS & VARIABLES
    ========================================================================== */
 @use './../../abstracts' as *;
+@use './../../base/' as *;
 @use './../../base/utils/mixins/state' as state;
 @use './../../base/utils/mixins/layout' as layout;
 @use './../../base/utils/mixins/responsive' as responsive;
@@ -45,7 +46,7 @@ $search-field-dropdown-shadow: var(--sv-shadow-md);
 
 .sv-search-field {
   // Extend the input control base styles
-  @extend .sv-input-control-base !optional;
+  @extend .sv-input-control-base ;
   
   // Unique properties for search field
   position: relative;
@@ -65,7 +66,7 @@ $search-field-dropdown-shadow: var(--sv-shadow-md);
   }
   
   &__input {
-    @extend .sv-input-control-base__field !optional;
+    @extend .sv-input-control-base__field ;
     padding-left: calc($search-field-icon-size + var(--sv-space-5));
     padding-right: calc($search-field-clear-button-size + var(--sv-space-3));
     
@@ -79,11 +80,11 @@ $search-field-dropdown-shadow: var(--sv-shadow-md);
   }
   
   &__label {
-    @extend .sv-input-control-base__label !optional;
+    @extend .sv-input-control-base__label ;
   }
   
   &__helper-text {
-    @extend .sv-input-control-base__helper-text !optional;
+    @extend .sv-input-control-base__helper-text ;
   }
   
   // Enhanced focus behavior
