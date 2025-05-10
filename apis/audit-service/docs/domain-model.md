@@ -38,8 +38,6 @@ The Audit Management bounded context is responsible for capturing, storing, and 
 | entityId    | String   | Unique ID of the affected entity                |
 | ipAddress   | String   | IP address of the actor                         |
 | remarks     | String   | Additional remarks (optional)                   |
-| oldValue    | JSON     | Previous state of the entity (if applicable)    |
-| newValue    | JSON     | New state of the entity (if applicable)         |
 | addedBy     | String   | Added system or user id                         |
 | updatedBy   | String   | Updated system or user id                       |
 | addedOn     | DateTime | UTC Datetime                                    |
