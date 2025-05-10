@@ -71,8 +71,6 @@ public interface AuditRepository {
 | actorType   | String   | Type of actor (User or System)                  |
 | ipAddress   | String   | IP address of the actor                         |
 | remarks     | String   | Additional comments                             |
-| oldValue    | String   | JSON string of previous state                   |
-| newValue    | String   | JSON string of new state                        |
 | addedBy     | String   | Created by                                      |
 | updatedBy   | String   | Updated by                                      |
 | addedOn     | String   | Creation timestamp in ISO format                |
