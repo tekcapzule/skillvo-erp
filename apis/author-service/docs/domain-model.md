@@ -1,229 +1,153 @@
-# Author Service - Domain Model
+---
+owner: SkillVo Team
+last_updated: 2023-06-15
+---
 
-**Owner**: SkillVo Platform Team  
-**Last Updated**: 2023-08-01
+# Author Service Domain Model
 
 ## Domain Overview
 
-The Author Management bounded context is responsible for managing course authors, tracking their contributions, and maintaining their profiles, performance, and recognitions within the SkillVo Learn module. This domain focuses on the author's lifecycle, their expertise, and their contributions to the learning platform.
+The Author Management bounded context is responsible for managing course authors and maintaining their profiles within the SkillVo Learn module. This domain concerns all aspects of author registration, profile management, and course assignment within the platform.
 
 ### Business Domain Terminology
 
-- **Author**: A content creator who develops courses in the SkillVo platform
-- **Contribution**: A record linking an author to a course with a specific role (Primary Author, Co-Author, Reviewer)
-- **Badge**: A recognition awarded to authors based on performance or achievement
-- **Expertise**: Subject matter areas in which an author is proficient
+- **Author**: An individual who creates or contributes to educational content on the SkillVo platform
+- **Tenant**: A separate organizational entity using the SkillVo platform (multi-tenancy support)
+- **Course**: Educational content created by authors for learners
 
 ## Aggregates
 
-### AuthorProfile Aggregate
+### Author Aggregate
 
-The AuthorProfile aggregate represents the core entity in the Author Management bounded context. It encapsulates the author's identity, status, and professional information.
+The Author aggregate represents a content creator within the SkillVo platform.
 
 #### Purpose and Invariants
 
-- Maintain the complete author profile information
-- Ensure each author has a unique identifier within a tenant
-- Track author status for platform access control
-- Preserve the history of author profile changes
+- Maintains the integrity of author information
+- Ensures each author has a unique identifier within a tenant
+- Tracks the authorship relationship between authors and courses
+- Manages author status changes through the author lifecycle
 
 #### Attributes
 
-| Attribute  | Type         | Description                        |
-|------------|--------------|----------------------------------- |
-| authorId   | UUID         | Unique identifier for the author   |
-| tenantId   | String       | Multi-tenant scope                 |
-| email      | String       | Email id                           |
-| firstName  | String       | First name                         |
-| lastName   | String       | Last name                          |
-| courses    | List<Course> | Authored courses                   |
-| status     | Status       | Enum: Active, Inactive             |
-| addedBy    | String       | Added system or user id            |
-| updatedBy  | String       | Updated system or user id          |
-| addedOn    | DateTime     | UTC Datetime                       |
-| updatedOn  | DateTime     | UTC Datetime                       |
+| Attribute   | Type         | Description                          |
+|-------------|--------------|--------------------------------------|
+| authorId    | UUID         | Unique identifier for the author     |
+| tenantId    | String       | Multi-tenant scope                   |
+| email       | String       | Email id                             |
+| firstName   | String       | First name                           |
+| lastName    | String       | Last name                            |
+| courses     | List<Course> | Authored courses                     |
+| status      | Status       | Enum: Active, Inactive, Archived     |
+| addedBy     | String       | Added system or user id              |
+| updatedBy   | String       | Updated system or user id            |
+| addedOn     | DateTime     | UTC Datetime                         |
+| updatedOn   | DateTime     | UTC Datetime                         |
 
 #### Business Rules and Constraints
 
-1. An author must belong to exactly one tenant
-2. Author email must be unique within a tenant
-3. Author status must be either ACTIVE or INACTIVE
-4. Author profile creation must capture creation metadata (who and when)
-5. Any updates to the profile must capture modification metadata
+1. An author must have a unique email address within a tenant
+2. An author can only be in one of three states: Active, Inactive, or Archived
+3. Once archived, an author cannot be reactivated
+4. Author email address must be valid and verified
+5. First name and last name are required fields
 
 #### Lifecycle States
 
-1. **Creation**: Author profile is created with minimal required information
-2. **Active**: Author can create and manage courses
-3. **Inactive**: Author is deactivated and cannot create new courses
+1. **Active**: Author can create and modify courses
+2. **Inactive**: Author is suspended and cannot create or modify courses temporarily
+3. **Archived**: Author is soft-deleted from the system (historical records maintained)
 
 ## Entities
 
-### Contribution Entity
+### Course Entity
 
-The Contribution entity represents the relationship between an author and a course.
-
-#### Purpose and Relationship to Aggregate
-
-- Tracks the author's role and involvement with specific courses
-- Belongs to the AuthorProfile aggregate
-- Captures the nature of the author's contribution to each course
-
-#### Attributes
-
-| Attribute       | Type     | Description                                           |
-|-----------------|----------|-------------------------------------------------------|
-| authorId        | UUID     | Reference to the author                               |
-| courseId        | String   | Reference to the course                               |
-| contributionType| String   | Enum: PRIMARY_AUTHOR, CO_AUTHOR, REVIEWER             |
-| addedOn         | DateTime | When the contribution was recorded                    |
-| status          | String   | Enum: ACTIVE, INACTIVE                                |
-
-#### Business Rules
-
-1. An author can have multiple contributions to different courses
-2. An author can have only one type of contribution to a single course
-3. Contribution types determine the author's permissions and recognition for the course
-
-### Badge Entity
-
-The Badge entity represents achievements and recognitions awarded to authors.
+Represents a course that has been authored by an Author.
 
 #### Purpose and Relationship to Aggregate
 
-- Recognizes author achievements and expertise
-- Belongs to the AuthorProfile aggregate
-- Enhances author credibility and visibility in the platform
+- Represents educational content created by an author
+- Part of the Author aggregate to track what courses an author has created
+- Contains essential information about courses for author profile display
 
 #### Attributes
 
-| Attribute  | Type     | Description                           |
-|------------|----------|---------------------------------------|
-| authorId   | UUID     | Reference to the author               |
-| badgeName  | String   | Name of the badge or title            |
-| awardedOn  | DateTime | When the badge was awarded            |
-| awardedBy  | String   | System or user who awarded the badge  |
+| Attribute   | Type         | Description                          |
+|-------------|--------------|--------------------------------------|
+| courseId    | String       | Unique identifier of the course      |
+| title       | String       | Course title                         |
+| description | String       | Course description                   |
+| topicCode   | String       | Topic classification code            |
+| level       | Level        | Enum: Beginner, Intermediate, Advanced |
+| learningMode| LearningMode | Enum: Online, Offline, Hybrid        |
+| status      | Status       | Enum: DRAFT, PUBLISHED, ARCHIVED     |
 
 #### Business Rules
 
-1. Badges are permanent once awarded
-2. Multiple badges can be awarded to a single author
-3. Certain badges may grant special privileges in the platform
+1. A course must have a title and description
+2. Each course must have a specified difficulty level
+3. Courses can be in different stages of completion (draft, published, archived)
 
 ## Value Objects
 
-### Course Value Object
+### Status
 
-The Course value object represents the essential information about a course that an author has contributed to.
+Represents the current state of an Author in the system.
 
 #### Purpose and Immutability Guarantee
 
-- Provides read-only access to course details relevant to authors
-- Immutable representation of course information
-- Reference to the full course details in the Course bounded context
+- Encapsulates the possible states an author can be in
+- Immutable after creation to ensure state transitions are handled properly
 
 #### Attributes and Validation Rules
 
-| Attribute     | Type     | Description                 | Validation Rules                       |
-|---------------|----------|-----------------------------|----------------------------------------|
-| courseId      | String   | Unique identifier           | Non-empty string                       |
-| title         | String   | Course title                | Non-empty string                       |
-| description   | String   | Brief course description    | Optional                               |
-| topic         | Topic    | Course's main subject area  | Must be a valid Topic enumeration      |
-| level         | Level    | Course difficulty level     | Must be a valid Level enumeration      |
-| learningMode  | LearningMode | Mode of learning        | Must be a valid LearningMode enumeration|
-| status        | Status   | Course publication status   | Must be a valid Status enumeration     |
+- **Value**: ACTIVE, INACTIVE, ARCHIVED
+- Validation ensures only these predefined states are allowed
 
-### Topic Value Object
-
-Represents a subject area category.
-
-#### Attributes and Validation Rules
-
-| Attribute   | Type   | Description          | Validation Rules                  |
-|-------------|--------|----------------------|-----------------------------------|
-| topicId     | String | Topic identifier     | Non-empty string                  |
-| name        | String | Topic name           | Non-empty string                  |
-| description | String | Topic description    | Optional                          |
-
-### Level Enumeration
+### Level
 
 Represents the difficulty level of a course.
 
-- BEGINNER
-- INTERMEDIATE
-- ADVANCED
-- EXPERT
+#### Purpose and Immutability Guarantee
 
-### LearningMode Enumeration
+- Defines the skill level required for a course
+- Immutable after course creation
 
-Represents the delivery format of a course.
+#### Attributes and Validation Rules
 
-- SELF_PACED
-- INSTRUCTOR_LED
-- BLENDED
-- WORKSHOP
+- **Value**: BEGINNER, INTERMEDIATE, ADVANCED
+- Validation ensures only these predefined levels are allowed
 
-### Status Enumeration
+### LearningMode
 
-Represents the status of entities in the system.
+Represents how a course is delivered to learners.
 
-- ACTIVE
-- INACTIVE
-- DRAFT
-- PUBLISHED
-- ARCHIVED
+#### Purpose and Immutability Guarantee
+
+- Defines the delivery method of course content
+- Immutable after course creation
+
+#### Attributes and Validation Rules
+
+- **Value**: ONLINE, OFFLINE, HYBRID
+- Validation ensures only these predefined modes are allowed
 
 ## Domain Events
 
-### AuthorRegistered
+### AuthorCreated
 
-Triggered when a new author is registered in the system.
+Triggered when a new author profile is created in the system.
 
-#### Payload
+#### Event Payload
 
-| Field      | Type     | Description                            |
-|------------|----------|----------------------------------------|
-| authorId   | UUID     | Unique identifier for the author       |
-| tenantId   | String   | Tenant identifier                      |
-| createdAt  | DateTime | Timestamp of author registration       |
+| Field      | Type    | Description                    |
+|------------|---------|--------------------------------|
+| authorId   | UUID    | The ID of the created author   |
+| tenantId   | String  | The tenant ID                  |
+| emailId    | String  | The author's email address     |
 
-### CoursePublishedByAuthor
+#### When Published
 
-Triggered when an author publishes a new course.
-
-#### Payload
-
-| Field      | Type     | Description                            |
-|------------|----------|----------------------------------------|
-| courseId   | String   | Unique identifier for the course       |
-| authorId   | UUID     | Author who published the course        |
-| tenantId   | String   | Tenant identifier                      |
-| publishedAt| DateTime | Timestamp of course publication        |
-
-### AuthorPerformanceUpdated
-
-Triggered when an author's performance metrics are updated.
-
-#### Payload
-
-| Field        | Type     | Description                            |
-|--------------|----------|----------------------------------------|
-| authorId     | UUID     | Unique identifier for the author       |
-| tenantId     | String   | Tenant identifier                      |
-| rating       | Decimal  | Current average rating of author's courses |
-| totalCourses | Integer  | Total number of published courses      |
-| updatedAt    | DateTime | Timestamp of the update                |
-
-### BadgeAwarded
-
-Triggered when a badge is awarded to an author.
-
-#### Payload
-
-| Field      | Type     | Description                            |
-|------------|----------|----------------------------------------|
-| authorId   | UUID     | Unique identifier for the author       |
-| tenantId   | String   | Tenant identifier                      |
-| badgeName  | String   | Name of the badge awarded              |
-| awardedAt  | DateTime | Timestamp when badge was awarded       | 
+This event is published when:
+- A new author is successfully registered
+- The author's profile details are validated and stored 

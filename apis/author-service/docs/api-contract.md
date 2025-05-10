@@ -1,64 +1,70 @@
-# Author Service - API Contract
+---
+owner: SkillVo Team
+last_updated: 2023-06-15
+---
 
-**Owner**: SkillVo Platform Team  
-**Last Updated**: 2023-08-01
+# Author Service API Contract
 
 ## API Overview
 
-The Author Service API manages course author profiles, their contributions, and performance metrics within the SkillVo Learn module. It enables registering new authors, tracking their course contributions, and managing their recognition through badges and titles.
+The Author Service API provides endpoints for managing course authors within the SkillVo Learn module. It enables the registration, updating, and management of author profiles across the platform.
 
 ## Endpoints Documentation
 
-### 1. Register Author
+### 1. Create Author
 
 Creates a new author profile in the system.
 
 - **HTTP Method**: POST
-- **Path**: `/registerAuthor`
-- **Description**: Registers a new author profile in the system
+- **Path**: `/author/create`
+- **Description**: Registers a new author in the system with basic profile information
 
 #### Request Body
 
 ```json
 {
   "tenantId": "123",
-  "userId": "user-001",
-  "name": "Jane Doe",
-  "bio": "AI and ML instructor",
-  "expertise": ["Machine Learning", "Deep Learning"]
+  "email": "jane.doe@example.com",
+  "firstName": "Jane",
+  "lastName": "Doe"
 }
 ```
 
 #### Response
 
-- **Status Code**: 201 Created
-- **Response Body**:
+- **Success Status Code**: 201 Created
 
 ```json
 {
-  "authorId": "auth-001",
-  "tenantId": "123",
-  "name": "Jane Doe",
-  "bio": "AI and ML instructor",
-  "expertise": ["Machine Learning", "Deep Learning"],
-  "status": "ACTIVE",
-  "createdAt": "2023-08-01T12:00:00Z"
+  "status": "success",
+  "data": {
+    "authorId": "auth-001",
+    "tenantId": "123",
+    "email": "jane.doe@example.com",
+    "firstName": "Jane",
+    "lastName": "Doe",
+    "status": "ACTIVE",
+    "courses": [],
+    "addedBy": "system",
+    "updatedBy": "system",
+    "addedOn": "2023-06-15T10:30:00Z",
+    "updatedOn": "2023-06-15T10:30:00Z"
+  }
 }
 ```
 
-#### Error Responses
+- **Error Response Codes**:
+  - 400 Bad Request - Missing required fields
+  - 409 Conflict - Author with email already exists
+  - 500 Internal Server Error
 
-- **400 Bad Request**: Invalid input parameters
-- **409 Conflict**: Author already exists
-- **500 Internal Server Error**: Server processing error
-
-### 2. Update Author Profile
+### 2. Update Author
 
 Updates an existing author's profile information.
 
-- **HTTP Method**: PUT
-- **Path**: `/updateProfile`
-- **Description**: Updates author's profile details
+- **HTTP Method**: POST
+- **Path**: `/author/update`
+- **Description**: Updates an author's profile information
 
 #### Request Body
 
@@ -66,296 +72,205 @@ Updates an existing author's profile information.
 {
   "tenantId": "123",
   "authorId": "auth-001",
-  "name": "Jane Smith",
-  "bio": "AI, ML and Deep Learning instructor",
-  "expertise": ["Machine Learning", "Deep Learning", "Neural Networks"]
+  "email": "jane.doe@example.com",
+  "firstName": "Jane",
+  "lastName": "Doe"
 }
 ```
 
 #### Response
 
-- **Status Code**: 200 OK
-- **Response Body**:
+- **Success Status Code**: 200 OK
 
 ```json
 {
-  "authorId": "auth-001",
-  "tenantId": "123",
-  "name": "Jane Smith",
-  "bio": "AI, ML and Deep Learning instructor",
-  "expertise": ["Machine Learning", "Deep Learning", "Neural Networks"],
-  "status": "ACTIVE",
-  "updatedAt": "2023-08-01T14:30:00Z"
+  "status": "success",
+  "data": {
+    "authorId": "auth-001",
+    "tenantId": "123",
+    "email": "jane.doe@example.com",
+    "firstName": "Jane",
+    "lastName": "Doe",
+    "status": "ACTIVE",
+    "courses": [],
+    "addedBy": "system",
+    "updatedBy": "user-123",
+    "addedOn": "2023-06-15T10:30:00Z",
+    "updatedOn": "2023-06-15T11:45:00Z"
+  }
 }
 ```
 
-#### Error Responses
+- **Error Response Codes**:
+  - 400 Bad Request - Invalid request format
+  - 404 Not Found - Author not found
+  - 500 Internal Server Error
 
-- **400 Bad Request**: Invalid input parameters
-- **404 Not Found**: Author not found
-- **500 Internal Server Error**: Server processing error
+### 3. Get Author
 
-### 3. Record Contribution
-
-Records an author's contribution to a course.
+Retrieves an author's profile by ID.
 
 - **HTTP Method**: POST
-- **Path**: `/recordContribution`
-- **Description**: Links an author to a course with a specific contribution type
+- **Path**: `/author/get`
+- **Description**: Fetches an author's profile information
 
 #### Request Body
 
 ```json
 {
   "tenantId": "123",
-  "authorId": "auth-001",
-  "courseId": "course-xyz",
-  "contributionType": "PRIMARY_AUTHOR",
-  "createdAt": "2023-08-01T15:00:00Z"
+  "authorId": "auth-001"
 }
 ```
 
 #### Response
 
-- **Status Code**: 201 Created
-- **Response Body**:
+- **Success Status Code**: 200 OK
 
 ```json
 {
-  "tenantId": "123",
-  "authorId": "auth-001",
-  "courseId": "course-xyz",
-  "contributionType": "PRIMARY_AUTHOR",
-  "createdAt": "2023-08-01T15:00:00Z",
-  "status": "ACTIVE"
+  "status": "success",
+  "data": {
+    "authorId": "auth-001",
+    "tenantId": "123",
+    "email": "jane.doe@example.com",
+    "firstName": "Jane",
+    "lastName": "Doe",
+    "status": "ACTIVE", 
+    "courses": [
+      {
+        "courseId": "course-001",
+        "title": "Introduction to Machine Learning",
+        "description": "A beginner's guide to ML concepts",
+        "topicCode": "ML-101",
+        "level": "BEGINNER",
+        "learningMode": "ONLINE",
+        "status": "PUBLISHED"
+      }
+    ],
+    "addedBy": "system",
+    "updatedBy": "user-123",
+    "addedOn": "2023-06-15T10:30:00Z",
+    "updatedOn": "2023-06-15T11:45:00Z"
+  }
 }
 ```
 
-#### Error Responses
+- **Error Response Codes**:
+  - 400 Bad Request - Invalid request format
+  - 404 Not Found - Author not found
+  - 500 Internal Server Error
 
-- **400 Bad Request**: Invalid input parameters
-- **404 Not Found**: Author or course not found
-- **409 Conflict**: Contribution already exists
-- **500 Internal Server Error**: Server processing error
+### 4. Activate Author
 
-### 4. Get Author Profile
-
-Retrieves a specific author's profile.
-
-- **HTTP Method**: GET
-- **Path**: `/getProfile`
-- **Description**: Retrieves author profile by ID
-
-#### Request Parameters
-
-- `tenantId` (string, required): The tenant identifier
-- `authorId` (string, required): The author identifier
-
-#### Response
-
-- **Status Code**: 200 OK
-- **Response Body**:
-
-```json
-{
-  "authorId": "auth-001",
-  "tenantId": "123",
-  "name": "Jane Smith",
-  "bio": "AI, ML and Deep Learning instructor",
-  "expertise": ["Machine Learning", "Deep Learning", "Neural Networks"],
-  "courses": [
-    {
-      "courseId": "course-xyz",
-      "title": "Introduction to Machine Learning",
-      "contributionType": "PRIMARY_AUTHOR"
-    }
-  ],
-  "badges": ["Top Contributor"],
-  "status": "ACTIVE",
-  "createdAt": "2023-08-01T12:00:00Z",
-  "updatedAt": "2023-08-01T14:30:00Z"
-}
-```
-
-#### Error Responses
-
-- **400 Bad Request**: Invalid input parameters
-- **404 Not Found**: Author not found
-- **500 Internal Server Error**: Server processing error
-
-### 5. List Authors
-
-Lists authors with optional filtering.
-
-- **HTTP Method**: GET
-- **Path**: `/listAuthors`
-- **Description**: Lists authors with optional filters
-
-#### Request Parameters
-
-- `tenantId` (string, required): The tenant identifier
-- `status` (string, optional): Filter by author status (ACTIVE, INACTIVE)
-- `expertise` (string, optional): Filter by expertise area
-- `limit` (integer, optional): Maximum number of results to return
-- `nextToken` (string, optional): Pagination token
-
-#### Response
-
-- **Status Code**: 200 OK
-- **Response Body**:
-
-```json
-{
-  "authors": [
-    {
-      "authorId": "auth-001",
-      "tenantId": "123",
-      "name": "Jane Smith",
-      "expertise": ["Machine Learning", "Deep Learning", "Neural Networks"],
-      "status": "ACTIVE"
-    },
-    {
-      "authorId": "auth-002",
-      "tenantId": "123",
-      "name": "John Doe",
-      "expertise": ["Web Development", "JavaScript"],
-      "status": "ACTIVE"
-    }
-  ],
-  "nextToken": "eyJsYXN0RXZhbHVhdGVkS2V5Ijp7IklEIjp7IlMiOiJhdXRoLTAwMyJ9fX0="
-}
-```
-
-#### Error Responses
-
-- **400 Bad Request**: Invalid input parameters
-- **500 Internal Server Error**: Server processing error
-
-### 6. List Contributions
-
-Lists courses authored by a specific author.
-
-- **HTTP Method**: GET
-- **Path**: `/listContributions`
-- **Description**: Lists courses authored by a user
-
-#### Request Parameters
-
-- `tenantId` (string, required): The tenant identifier
-- `authorId` (string, required): The author identifier
-- `contributionType` (string, optional): Filter by contribution type (PRIMARY_AUTHOR, CO_AUTHOR, REVIEWER)
-- `limit` (integer, optional): Maximum number of results to return
-- `nextToken` (string, optional): Pagination token
-
-#### Response
-
-- **Status Code**: 200 OK
-- **Response Body**:
-
-```json
-{
-  "contributions": [
-    {
-      "courseId": "course-xyz",
-      "title": "Introduction to Machine Learning",
-      "description": "Learn the basics of machine learning",
-      "topic": "Data Science",
-      "level": "BEGINNER",
-      "contributionType": "PRIMARY_AUTHOR",
-      "status": "PUBLISHED"
-    },
-    {
-      "courseId": "course-abc",
-      "title": "Advanced Deep Learning",
-      "description": "Master deep learning techniques",
-      "topic": "Data Science",
-      "level": "ADVANCED",
-      "contributionType": "CO_AUTHOR",
-      "status": "DRAFT"
-    }
-  ],
-  "nextToken": "eyJsYXN0RXZhbHVhdGVkS2V5Ijp7IklEIjp7IlMiOiJjb3Vyc2UtMDA1In19fQ=="
-}
-```
-
-#### Error Responses
-
-- **400 Bad Request**: Invalid input parameters
-- **404 Not Found**: Author not found
-- **500 Internal Server Error**: Server processing error
-
-### 7. Award Badge
-
-Assigns a badge or title to an author.
+Reactivates a previously suspended author.
 
 - **HTTP Method**: POST
-- **Path**: `/awardBadge`
-- **Description**: Assigns badge or title to an author
+- **Path**: `/author/activate`
+- **Description**: Reactivates a blocked or suspended author profile
 
 #### Request Body
 
 ```json
 {
   "tenantId": "123",
-  "authorId": "auth-001",
-  "badge": "Top Contributor"
+  "authorId": "auth-001"
 }
 ```
 
 #### Response
 
-- **Status Code**: 200 OK
-- **Response Body**:
+- **Success Status Code**: 200 OK
 
 ```json
 {
-  "authorId": "auth-001",
-  "tenantId": "123",
-  "badge": "Top Contributor",
-  "awardedAt": "2023-08-01T16:45:00Z"
+  "status": "success",
+  "data": {
+    "authorId": "auth-001",
+    "status": "ACTIVE",
+    "updatedBy": "admin-user",
+    "updatedOn": "2023-06-15T14:25:00Z"
+  }
 }
 ```
 
-#### Error Responses
+- **Error Response Codes**:
+  - 400 Bad Request - Invalid request format
+  - 404 Not Found - Author not found
+  - 500 Internal Server Error
 
-- **400 Bad Request**: Invalid input parameters
-- **404 Not Found**: Author not found
-- **500 Internal Server Error**: Server processing error
+### 5. Suspend Author
 
-### 8. Deactivate Author
+Temporarily suspends an author.
 
-Deactivates an author profile.
-
-- **HTTP Method**: PUT
-- **Path**: `/deactivateAuthor`
-- **Description**: Deactivates or bans an author
+- **HTTP Method**: POST
+- **Path**: `/author/suspend`
+- **Description**: Temporarily suspends an author's access and activity
 
 #### Request Body
 
 ```json
 {
   "tenantId": "123",
-  "authorId": "auth-001",
-  "reason": "Author requested account deactivation"
+  "authorId": "auth-001"
 }
 ```
 
 #### Response
 
-- **Status Code**: 200 OK
-- **Response Body**:
+- **Success Status Code**: 200 OK
 
 ```json
 {
-  "authorId": "auth-001",
-  "tenantId": "123",
-  "status": "INACTIVE",
-  "deactivatedAt": "2023-08-01T17:30:00Z"
+  "status": "success",
+  "data": {
+    "authorId": "auth-001",
+    "status": "INACTIVE",
+    "updatedBy": "admin-user",
+    "updatedOn": "2023-06-15T16:10:00Z"
+  }
 }
 ```
 
-#### Error Responses
+- **Error Response Codes**:
+  - 400 Bad Request - Invalid request format
+  - 404 Not Found - Author not found
+  - 500 Internal Server Error
 
-- **400 Bad Request**: Invalid input parameters
-- **404 Not Found**: Author not found
-- **500 Internal Server Error**: Server processing error 
+### 6. Delete Author
+
+Soft-deletes (archives) an author profile.
+
+- **HTTP Method**: POST
+- **Path**: `/author/delete`
+- **Description**: Archives an author profile (soft deletion)
+
+#### Request Body
+
+```json
+{
+  "tenantId": "123",
+  "authorId": "auth-001"
+}
+```
+
+#### Response
+
+- **Success Status Code**: 200 OK
+
+```json
+{
+  "status": "success",
+  "data": {
+    "authorId": "auth-001",
+    "status": "ARCHIVED",
+    "updatedBy": "admin-user",
+    "updatedOn": "2023-06-15T17:45:00Z"
+  }
+}
+```
+
+- **Error Response Codes**:
+  - 400 Bad Request - Invalid request format
+  - 404 Not Found - Author not found
+  - 500 Internal Server Error 
