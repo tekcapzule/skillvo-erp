@@ -28,8 +28,6 @@ The Audit Service API provides endpoints for capturing, storing, and retrieving 
   "entityId": "string",
   "ipAddress": "string",
   "remarks": "string",
-  "oldValue": "object",
-  "newValue": "object",
   "addedBy": "string",
   "updatedBy": "string"
 }
@@ -46,11 +44,7 @@ The Audit Service API provides endpoints for capturing, storing, and retrieving 
   "entityType": "Course",
   "entityId": "course-456",
   "ipAddress": "192.168.0.1",
-  "remarks": "Course created",
-  "oldValue": null,
-  "newValue": {
-    "title": "New Course Title"
-  },
+  "remarks": "Course created",  
   "addedBy": "system",
   "updatedBy": "system"
 }
