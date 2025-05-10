@@ -35,6 +35,24 @@ Create an API contract document that includes:
      - Response status codes and meanings
      - Response body schema with JSON example
      - Error responses and handling
+3. **Sample API response**
+     - Wrap the response with status and data tags like in the below example. 
+{
+  "status": "success",
+  "data": {
+    "authorId": "auth-001",
+    "tenantId": "123",
+    "email": "jane.doe@example.com",
+    "firstName": "Jane",
+    "lastName": "Doe",
+    "status": "ACTIVE",
+    "courses": [],
+    "addedBy": "system",
+    "updatedBy": "user-123",
+    "addedOn": "2023-06-15T10:30:00Z",
+    "updatedOn": "2023-06-15T11:45:00Z"
+  }
+}
 
 
 ## File 2: domain-model.md
@@ -93,3 +111,4 @@ Create a service design document that includes:
 
 1. Create a `docs` directory in your microservice root if it doesn't exist
 2. Create each file separately based on the microservice documentation provided.
+3. Refer author-service docs and make the docs consistant - apis/author-service/docs
